@@ -215,7 +215,8 @@ type_polymorphic_record_parameter_value :: proc($T: typeid, index: int) -> $V --
 type_is_specialized_polymorphic_record   :: proc($T: typeid) -> bool ---
 type_is_unspecialized_polymorphic_record :: proc($T: typeid) -> bool ---
 
-type_is_subtype_of :: proc($T, $U: typeid) -> bool ---
+type_is_subtype_of  :: proc($T, $U: typeid) -> bool ---
+type_is_superset_of :: proc($Super, $Sub: typeid) -> bool ---
 
 type_field_index_of :: proc($T: typeid, $name: string) -> uintptr ---
 
@@ -243,6 +244,11 @@ type_canonical_name :: proc($T: typeid) -> string ---
 constant_utf16_cstring :: proc($literal: string) -> [^]u16 ---
 
 constant_log2 :: proc($v: $T) -> T where type_is_integer(T) ---
+
+constant_floor :: proc($v: $T) -> T where type_is_integer(T) || type_is_float(T) ---
+constant_trunc :: proc($v: $T) -> T where type_is_integer(T) || type_is_float(T) ---
+constant_ceil  :: proc($v: $T) -> T where type_is_integer(T) || type_is_float(T) ---
+constant_round :: proc($v: $T) -> T where type_is_integer(T) || type_is_float(T) ---
 
 // SIMD related
 simd_add  :: proc(a, b: #simd[N]T) -> #simd[N]T ---

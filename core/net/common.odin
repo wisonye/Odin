@@ -1,4 +1,3 @@
-#+build windows, linux, darwin, freebsd
 package net
 
 /*
@@ -14,7 +13,7 @@ package net
 	Copyright 2022 Colin Davidson  <colrdavidson@gmail.com>
 	Copyright 2022 Jeroen van Rijn <nom@duclavier.com>.
 	Copyright 2024 Feoramund       <rune@swevencraft.org>.
-	Made available under Odin's BSD-3 license.
+	Made available under Odin's license.
 
 	List of contributors:
 		Tetralux:        Initial implementation
@@ -91,6 +90,7 @@ Parse_Endpoint_Error :: enum u32 {
 Resolve_Error :: enum u32 {
 	None = 0,
 	Unable_To_Resolve = 1,
+	Allocation_Failure,
 }
 
 DNS_Error :: enum u32 {
@@ -144,11 +144,11 @@ Address :: union {IP4_Address, IP6_Address}
 IP4_Loopback :: IP4_Address{127, 0, 0, 1}
 IP6_Loopback :: IP6_Address{0, 0, 0, 0, 0, 0, 0, 1}
 
-IP4_Any := IP4_Address{}
-IP6_Any := IP6_Address{}
+IP4_Any :: IP4_Address{}
+IP6_Any :: IP6_Address{}
 
-IP4_mDNS_Broadcast := Endpoint{address=IP4_Address{224, 0, 0, 251}, port=5353}
-IP6_mDNS_Broadcast := Endpoint{address=IP6_Address{65282, 0, 0, 0, 0, 0, 0, 251}, port = 5353}
+IP4_mDNS_Broadcast :: Endpoint{address=IP4_Address{224, 0, 0, 251}, port=5353}
+IP6_mDNS_Broadcast :: Endpoint{address=IP6_Address{65282, 0, 0, 0, 0, 0, 0, 251}, port = 5353}
 
 Endpoint :: struct {
 	address: Address,

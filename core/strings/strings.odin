@@ -438,7 +438,7 @@ equal_fold :: proc(u, v: string) -> (res: bool) {
 
 		r := unicode.simple_fold(sr)
 		for r != sr && r < tr {
-			r = unicode.simple_fold(sr)
+			r = unicode.simple_fold(r)
 		}
 		if r == tr {
 			continue loop
@@ -2932,7 +2932,6 @@ Output:
 	abc1    abc2    abc3
 
 */
-
 expand_tabs :: proc(s: string, tab_size: int, allocator := context.allocator) -> (res: string, err: mem.Allocator_Error) #optional_allocator_error {
 	if tab_size <= 0 {
 		panic("tab size must be positive")

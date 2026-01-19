@@ -1133,7 +1133,11 @@ gb_internal void check_assignment(CheckerContext *c, Operand *operand, Type *typ
 				x.mode = Addressing_Value;
 				x.type = t;
 				if (check_is_assignable_to(c, &x, type)) {
-					add_entity_use(c, operand->expr, e);
+					if (operand->expr->kind == Ast_SelectorExpr) {
+						add_entity_use(c, operand->expr->SelectorExpr.selector, e);
+					} else {
+						add_entity_use(c, operand->expr, e);
+					}
 					good = true;
 					break;
 				}
@@ -2116,9 +2120,6 @@ gb_internal bool check_representable_as_constant(CheckerContext *c, ExactValue i
 		}
 		return in_value.kind == ExactValue_String;
 	} else if (is_type_integer(type) || is_type_rune(type)) {
-		if (in_value.kind == ExactValue_Bool) {
-			return false;
-		}
 		ExactValue v = exact_value_to_integer(in_value);
 		if (v.kind != ExactValue_Integer) {
 			return false;
@@ -3529,28 +3530,17 @@ gb_internal bool check_cast_internal(CheckerContext *c, Operand *x, Type *type) 
 		Type *elem = core_array_type(bt);
 
 		if (core_type(bt)->kind == Type_Basic) {
-			if (check_representable_as_constant(c, x->value, type, &x->value)) {
-				return true;
-			}
-			goto check_castable;
-		} else if (!are_types_identical(elem, bt) &&
-		           elem->kind == Type_Basic &&
-		           check_representable_as_constant(c, x->value, elem, &x->value)) {
-			if (check_representable_as_constant(c, x->value, type, &x->value)) {
-				return true;
-			}
-			goto check_castable;
+			return check_representable_as_constant(c, x->value, type, &x->value) ||
+			       (is_type_pointer(type) && check_is_castable_to(c, x, type));
+		} else if (!are_types_identical(elem, bt) && elem->kind == Type_Basic && x->type->kind == Type_Basic) {
+			return check_representable_as_constant(c, x->value, elem, &x->value) || 
+			       (is_type_pointer(elem) && check_is_castable_to(c, x, elem));
 		} else if (check_is_castable_to(c, x, type)) {
 			x->value = {};
 			x->mode = Addressing_Value;
 			return true;
 		}
-
-		return false;
-	}
-
-check_castable:
-	if (check_is_castable_to(c, x, type)) {
+	} else if (check_is_castable_to(c, x, type)) {
 		if (x->mode != Addressing_Constant) {
 			x->mode = Addressing_Value;
 		} else if (is_type_slice(type) && is_type_string(x->type)) {
@@ -4172,7 +4162,7 @@ gb_internal void check_binary_expr(CheckerContext *c, Operand *x, Ast *node, Typ
 	default:
 		if (is_ise_expr(be->left)) {
 			// Evalute the right before the left for an '.X' expression
-			check_expr_or_type(c, y, be->right, type_hint);
+			check_expr_or_type(c, y, be->right, token_is_comparison(op.kind) ? nullptr : type_hint);
 
 			if (can_use_other_type_as_type_hint(use_lhs_as_type_hint, y->type)) { // RHS in this case
 				check_expr_or_type(c, x, be->left, y->type);
@@ -4184,7 +4174,7 @@ gb_internal void check_binary_expr(CheckerContext *c, Operand *x, Ast *node, Typ
 			if (can_use_other_type_as_type_hint(use_lhs_as_type_hint, x->type)) {
 				check_expr_with_type_hint(c, y, be->right, x->type);
 			} else {
-				check_expr_with_type_hint(c, y, be->right, type_hint);
+				check_expr_with_type_hint(c, y, be->right, token_is_comparison(op.kind) ? nullptr : type_hint);
 			}
 		}
 		break;
@@ -4454,6 +4444,9 @@ gb_internal void check_binary_expr(CheckerContext *c, Operand *x, Ast *node, Typ
 					break;
 				}
 			}
+		} else if (is_type_array_like(x->type)) {
+			x->mode = Addressing_Value;
+			return;
 		} else {
 			x->value = exact_binary_operator_value(op.kind, a, b);
 		}
@@ -8148,6 +8141,7 @@ gb_internal ExprKind check_call_expr_as_type_cast(CheckerContext *c, Operand *op
 
 			if (operand->mode != Addressing_Invalid) {
 				update_untyped_expr_type(c, arg, t, false);
+				check_representable_as_constant(c, operand->value, t, &operand->value);
 			}
 			break;
 		}
@@ -8171,13 +8165,7 @@ gb_internal void check_objc_call_expr(CheckerContext *c, Operand *operand, Ast *
 	Type *return_type = proc.result_count == 0 ? nullptr : proc.results->Tuple.variables[0]->type;
 	bool is_return_instancetype = return_type != nullptr && return_type == t_objc_instancetype;
 
-	if (params.count == 0 || !is_type_objc_ptr_to_object(params[0]->type)) {
-		if (!proc_entity->Procedure.is_objc_class_method) {
-			// Not a class method, invalid call
-			error(call, "Invalid Objective-C call: The Objective-C method is not a class method but this first parameter is not an Objective-C object pointer.");
-			return;
-		}
-
+	if (proc_entity->Procedure.is_objc_class_method) {
 		if (is_return_instancetype) {
 			if (ce->proc->kind == Ast_SelectorExpr) {
 				ast_node(se, SelectorExpr, ce->proc);
@@ -8193,7 +8181,8 @@ gb_internal void check_objc_call_expr(CheckerContext *c, Operand *operand, Ast *
 
 		self_type    = t_objc_Class;
 		params_start = 0;
-	} else if (ce->args.count > 0) {
+	} else {
+		GB_ASSERT(ce->args.count > 0);
 		GB_ASSERT(is_type_objc_ptr_to_object(params[0]->type));
 
 		if (ce->args[0]->tav.objc_super_target) {
@@ -8225,7 +8214,7 @@ gb_internal void check_objc_call_expr(CheckerContext *c, Operand *operand, Ast *
 	add_objc_proc_type(c, call, return_type, param_types);
 }
 
-gb_internal ExprKind check_call_expr(CheckerContext *c, Operand *operand, Ast *call, Ast *proc, Slice<Ast *> const &args, ProcInlining inlining, Type *type_hint) {
+gb_internal ExprKind check_call_expr(CheckerContext *c, Operand *operand, Ast *call, Ast *proc, Slice<Ast *> const &args, ProcInlining inlining, ProcTailing tailing, Type *type_hint) {
 	if (proc != nullptr &&
 	    proc->kind == Ast_BasicDirective) {
 		ast_node(bd, BasicDirective, proc);
@@ -8256,7 +8245,10 @@ gb_internal ExprKind check_call_expr(CheckerContext *c, Operand *operand, Ast *c
 			return Expr_Expr;
 		}
 		if (inlining != ProcInlining_none) {
-			error(call, "Inlining operators are not allowed on built-in procedures");
+			error(call, "Inlining directives are not allowed on built-in procedures");
+		}
+		if (tailing != ProcTailing_none) {
+			error(call, "Tailing directives are not allowed on built-in procedures");
 		}
 	} else {
 		if (proc != nullptr) {
@@ -8398,6 +8390,7 @@ gb_internal ExprKind check_call_expr(CheckerContext *c, Operand *operand, Ast *c
 	}
 
 	bool is_call_inlined = false;
+	bool is_call_tailed = true;
 
 	switch (inlining) {
 	case ProcInlining_inline:
@@ -8430,6 +8423,23 @@ gb_internal ExprKind check_call_expr(CheckerContext *c, Operand *operand, Ast *c
 				}
 			}
 		}
+	}
+
+	switch (tailing) {
+	case ProcTailing_none:
+		break;
+	case ProcTailing_must_tail:
+		is_call_tailed = true;
+		if (c->curr_proc_sig == nullptr || !are_types_identical(c->curr_proc_sig, pt)) {
+			ERROR_BLOCK();
+			gbString a = type_to_string(pt);
+			gbString b = type_to_string(c->curr_proc_sig);
+			error(call, "Use of '#must_tail' of a procedure must have the same type as the procedure it was called within");
+			error_line("\tCall type: %s, parent type: %s", a, b);
+			gb_string_free(b);
+			gb_string_free(a);
+		}
+		break;
 	}
 
 	{
@@ -9200,6 +9210,52 @@ gb_internal ExprKind check_basic_directive_expr(CheckerContext *c, Operand *o, A
 	return kind;
 }
 
+
+gb_internal void check_expr_as_value_for_ternary(CheckerContext *c, Operand *o, Ast *e, Type *type_hint) {
+	check_expr_base(c, o, e, type_hint);
+	check_not_tuple(c, o);
+	error_operand_no_value(o);
+
+	switch (o->mode) {
+	case Addressing_Type: {
+		ERROR_BLOCK();
+		gbString expr_str = expr_to_string(o->expr);
+		defer (gb_string_free(expr_str));
+
+		error(o->expr, "A type '%s' cannot be used as a runtime value", expr_str);
+
+		error_line("\tSuggestion: If a runtime 'typeid' is wanted, use 'typeid_of' to convert a type\n");
+
+		o->mode = Addressing_Invalid;
+
+	} break;
+
+	case Addressing_Builtin: {
+		ERROR_BLOCK();
+		gbString expr_str = expr_to_string(o->expr);
+		defer (gb_string_free(expr_str));
+
+		error(o->expr, "A built-in procedure '%s' cannot be used as a runtime value", expr_str);
+
+		error_line("\tNote: Built-in procedures are implemented by the compiler and might not be actually instantiated procedures\n");
+
+		o->mode = Addressing_Invalid;
+	} break;
+
+	case Addressing_ProcGroup: {
+		ERROR_BLOCK();
+		gbString expr_str = expr_to_string(o->expr);
+		defer (gb_string_free(expr_str));
+
+		error(o->expr, "Cannot use overloaded procedure '%s' as a runtime value", expr_str);
+
+		error_line("\tNote: Please specify which procedure in the procedure group to use, via cast or type inference\n");
+
+		o->mode = Addressing_Invalid;
+	} break;
+	}
+}
+
 gb_internal ExprKind check_ternary_if_expr(CheckerContext *c, Operand *o, Ast *node, Type *type_hint) {
 	ExprKind kind = Expr_Expr;
 	Operand cond = {Addressing_Invalid};
@@ -9213,7 +9269,7 @@ gb_internal ExprKind check_ternary_if_expr(CheckerContext *c, Operand *o, Ast *n
 
 	Operand x = {Addressing_Invalid};
 	Operand y = {Addressing_Invalid};
-	check_expr_or_type(c, &x, te->x, type_hint);
+	check_expr_as_value_for_ternary(c, &x, te->x, type_hint);
 	node->viral_state_flags |= te->x->viral_state_flags;
 
 	if (te->y != nullptr) {
@@ -9221,7 +9277,7 @@ gb_internal ExprKind check_ternary_if_expr(CheckerContext *c, Operand *o, Ast *n
 		if (type_hint == nullptr && is_type_typed(x.type)) {
 			th = x.type;
 		}
-		check_expr_or_type(c, &y, te->y, th);
+		check_expr_as_value_for_ternary(c, &y, te->y, th);
 		node->viral_state_flags |= te->y->viral_state_flags;
 	} else {
 		error(node, "A ternary expression must have an else clause");
@@ -9246,6 +9302,20 @@ gb_internal ExprKind check_ternary_if_expr(CheckerContext *c, Operand *o, Ast *n
 	if (y.mode == Addressing_Invalid) {
 		x.mode = Addressing_Invalid;
 		return kind;
+	}
+
+	if (x.mode == Addressing_Builtin && y.mode == Addressing_Builtin) {
+		if (type_hint == nullptr) {
+			error(node, "Built-in procedures cannot be used within a ternary expression since they have no well-defined signature");
+			return kind;
+		}
+	}
+
+	if (x.mode == Addressing_ProcGroup && y.mode == Addressing_ProcGroup) {
+		if (type_hint == nullptr) {
+			error(node, "Procedure groups cannot be used within a ternary expression since they have no well-defined signature that can be inferred without a context");
+			return kind;
+		}
 	}
 
 	// NOTE(bill, 2023-01-30): Allow for expression like this:
@@ -9777,6 +9847,57 @@ gb_internal void check_compound_literal_field_values(CheckerContext *c, Slice<As
 		check_assignment(c, &o, field->type, assignment_str);
 
 		c->bit_field_bit_size = prev_bit_field_bit_size;
+	}
+
+	if (bt->kind == Type_Struct && bt->Struct.is_all_or_none && elems.count > 0 && bt->Struct.fields.count > 0) {
+		PtrSet<Entity *> missing_fields = {};
+		defer (ptr_set_destroy(&missing_fields));
+
+		for_array(i, bt->Struct.fields) {
+			Entity *field = bt->Struct.fields[i];
+			String name = field->token.string;
+			if (is_blank_ident(name) || name == "") {
+				continue;
+			}
+			bool found = string_set_exists(&fields_visited, name);
+			String *raw_union = string_map_get(&fields_visited_through_raw_union, name);
+			if (!found && raw_union == nullptr) {
+				ptr_set_add(&missing_fields, field);
+			}
+		}
+
+		if (missing_fields.count > 0) {
+			Ast *expr = o->expr;
+			if (expr == nullptr) {
+				GB_ASSERT(elems.count > 0);
+				expr = elems[elems.count-1];
+			}
+
+			ERROR_BLOCK();
+
+			if (build_context.terse_errors) {
+				gbString fields_string = gb_string_make(heap_allocator(), "");
+				defer (gb_string_free(fields_string));
+				isize i = 0;
+				FOR_PTR_SET(field, missing_fields) {
+					if (i > 0) {
+						fields_string = gb_string_appendc(fields_string, ", ");
+					}
+					String name = field->token.string;
+					fields_string = gb_string_append_length(fields_string, name.text, name.len);
+					i += 1;
+				}
+
+				error(expr, "All or none of the fields must be assigned to a struct with '#all_or_none' applied, missing fields: %s", fields_string);
+			} else {
+				error(expr, "All or none of the fields must be assigned to a struct with '#all_or_none' applied, missing fields:");
+				FOR_PTR_SET(field, missing_fields) {
+					gbString s = type_to_string(field->type);
+					error_line("\t%.*s: %s\n", LIT(field->token.string), s);
+					gb_string_free(s);
+				}
+			}
+		}
 	}
 }
 
@@ -11458,6 +11579,15 @@ gb_internal ExprKind check_expr_base_internal(CheckerContext *c, Operand *o, Ast
 		return kind;
 	case_end;
 
+	case_ast_node(ht, HelperType, node);
+		Type *type = check_type(c, ht->type);
+		if (type != nullptr && type != t_invalid) {
+			o->mode = Addressing_Type;
+			o->type = type;
+		}
+		return kind;
+	case_end;
+
 	case_ast_node(i, Implicit, node);
 		switch (i->kind) {
 		case Token_context:
@@ -11720,7 +11850,7 @@ gb_internal ExprKind check_expr_base_internal(CheckerContext *c, Operand *o, Ast
 	case_end;
 
 	case_ast_node(ce, CallExpr, node);
-		return check_call_expr(c, o, node, ce->proc, ce->args, ce->inlining, type_hint);
+		return check_call_expr(c, o, node, ce->proc, ce->args, ce->inlining, ce->tailing, type_hint);
 	case_end;
 
 	case_ast_node(de, DerefExpr, node);
@@ -11991,6 +12121,25 @@ gb_internal bool is_exact_value_zero(ExactValue const &v) {
 
 
 
+gb_internal bool compare_exact_values_compound_lit(TokenKind op, ExactValue x, ExactValue y, bool *do_break_) {
+	ast_node(x_cl, CompoundLit, x.value_compound);
+	ast_node(y_cl, CompoundLit, y.value_compound);
+
+	if (x_cl->elems.count != y_cl->elems.count) {
+		if (do_break_) *do_break_ = true;
+	}
+
+	bool test = op == Token_CmpEq;
+
+	for (isize i = 0; i < x_cl->elems.count; i++) {
+		Ast *lhs = x_cl->elems[i];
+		Ast *rhs = y_cl->elems[i];
+		if (compare_exact_values(op, lhs->tav.value, rhs->tav.value) != test) {
+			return !test;
+		}
+	}
+	return test;
+}
 
 
 
@@ -12442,6 +12591,12 @@ gb_internal gbString write_expr_to_string(gbString str, Ast *node, bool shorthan
 	case_end;
 
 	case_ast_node(ce, CallExpr, node);
+		switch (ce->tailing) {
+		case ProcTailing_must_tail:
+			str = gb_string_appendc(str, "#must_tail ");
+			break;
+		}
+
 		switch (ce->inlining) {
 		case ProcInlining_inline:
 			str = gb_string_appendc(str, "#force_inline ");

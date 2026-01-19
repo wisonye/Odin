@@ -1473,6 +1473,7 @@ gb_internal void check_proc_decl(CheckerContext *ctx, Entity *e, DeclInfo *d) {
 
 	e->Procedure.no_sanitize_address = ac.no_sanitize_address;
 	e->Procedure.no_sanitize_memory  = ac.no_sanitize_memory;
+	e->Procedure.no_sanitize_thread  = ac.no_sanitize_thread;
 
 	e->deprecated_message = ac.deprecated_message;
 	e->warning_message = ac.warning_message;
@@ -1607,8 +1608,7 @@ gb_internal void check_proc_decl(CheckerContext *ctx, Entity *e, DeclInfo *d) {
 		if (is_arch_wasm() && foreign_library != nullptr) {
 			// NOTE(bill): this must be delayed because the foreign import paths might not be evaluated yet until much later
 			mpsc_enqueue(&ctx->info->foreign_decls_to_check, e);
-		} else {
-			// TODO(harold): Check if it's an objective-C foreign, if so, I don't think we need to check it.
+		} else if (!e->Procedure.is_objc_impl_or_import) {
 			check_foreign_procedure(ctx, e, d);
 		}
 	} else {

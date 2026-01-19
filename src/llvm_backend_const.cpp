@@ -185,8 +185,7 @@ gb_internal LLVMValueRef llvm_const_named_struct(lbModule *m, Type *t, LLVMValue
 	}
 	Type *bt = base_type(t);
 	GB_ASSERT(bt->kind == Type_Struct || bt->kind == Type_Union);
-	
-	GB_ASSERT(value_count_ == bt->Struct.fields.count);
+	GB_ASSERT(bt->kind != Type_Struct || value_count_ == bt->Struct.fields.count);
 	
 	auto field_remapping = lb_get_struct_remapping(m, t);
 	unsigned values_with_padding_count = elem_count;
@@ -499,6 +498,13 @@ gb_internal LLVMValueRef lb_big_int_to_llvm(lbModule *m, Type *original_type, Bi
 	if (big_int_is_zero(a)) {
 		return LLVMConstNull(lb_type(m, original_type));
 	}
+	
+	BigInt val = {};
+	big_int_init(&val, a);
+
+	if (big_int_is_neg(&val)) {
+		mp_incr(&val);
+	}
 
 	size_t sz = cast(size_t)type_size_of(original_type);
 	u64 rop64[4] = {}; // 2 u64 is the maximum we will ever need, so doubling it will be fine :P
@@ -510,10 +516,10 @@ gb_internal LLVMValueRef lb_big_int_to_llvm(lbModule *m, Type *original_type, Bi
 	size_t nails = 0;
 	mp_endian endian = MP_LITTLE_ENDIAN;
 
-	max_count = mp_pack_count(a, nails, size);
+	max_count = mp_pack_count(&val, nails, size);
 	if (sz < max_count) {
 		debug_print_big_int(a);
-		gb_printf_err("%s -> %tu\n", type_to_string(original_type), sz);;
+		gb_printf_err("%s -> %tu\n", type_to_string(original_type), sz);
 	}
 	GB_ASSERT_MSG(sz >= max_count, "max_count: %tu, sz: %tu, written: %tu, type %s", max_count, sz, written, type_to_string(original_type));
 	GB_ASSERT(gb_size_of(rop64) >= sz);
@@ -521,7 +527,7 @@ gb_internal LLVMValueRef lb_big_int_to_llvm(lbModule *m, Type *original_type, Bi
 	mp_err err = mp_pack(rop, sz, &written,
 	                     MP_LSB_FIRST,
 	                     size, endian, nails,
-	                     a);
+	                     &val);
 	GB_ASSERT(err == MP_OKAY);
 
 	if (!is_type_endian_little(original_type)) {
@@ -532,12 +538,18 @@ gb_internal LLVMValueRef lb_big_int_to_llvm(lbModule *m, Type *original_type, Bi
 		}
 	}
 
+	if (big_int_is_neg(a)) {
+		// sizeof instead of sz for sign extend to work properly
+		for (size_t i = 0; i < sizeof rop64; i++) {
+			rop[i] = ~rop[i];
+		}
+	} 
+
+	big_int_dealloc(&val);
+
 	GB_ASSERT(!is_type_array(original_type));
 
 	LLVMValueRef value = LLVMConstIntOfArbitraryPrecision(lb_type(m, original_type), cast(unsigned)((sz+7)/8), cast(u64 *)rop);
-	if (big_int_is_neg(a)) {
-		value = LLVMConstNeg(value);
-	}
 
 	return value;
 }
@@ -689,6 +701,22 @@ gb_internal lbValue lb_const_value(lbModule *m, Type *type, ExactValue value, lb
 		if (bt->Union.variants.count == 0) {
 			return lb_const_nil(m, original_type);
 		} else if (bt->Union.variants.count == 1) {
+			if (value.kind == ExactValue_Compound) {
+				ast_node(cl, CompoundLit, value.value_compound);
+				if (cl->elems.count == 0) {
+					if (cl->type == nullptr) {
+						return lb_const_nil(m, original_type);
+					}
+					if (are_types_identical(type_of_expr(cl->type), original_type)) {
+						return lb_const_nil(m, original_type);
+					}
+				}
+			}
+
+			if (value_type == t_untyped_nil) {
+				return lb_const_nil(m, original_type);
+			}
+
 			Type *t = bt->Union.variants[0];
 			lbValue cv =  lb_const_value(m, t, value, cc);
 			GB_ASSERT(LLVMIsConstant(cv.value));
@@ -729,6 +757,8 @@ gb_internal lbValue lb_const_value(lbModule *m, Type *type, ExactValue value, lb
 				} else if (value.kind == ExactValue_Invalid) {
 					return lb_const_nil(m, original_type);
 				}
+			} else if (value_type == t_untyped_nil) {
+				return lb_const_nil(m, original_type);
 			}
 
 			GB_ASSERT_MSG(value_type != nullptr, "%s :: %s", type_to_string(original_type), exact_value_to_string(value));
@@ -785,13 +815,21 @@ gb_internal lbValue lb_const_value(lbModule *m, Type *type, ExactValue value, lb
 
 	if (value.kind == ExactValue_Procedure) {
 		lbValue res = {};
-		Ast *expr = unparen_expr(value.value_procedure);
-		GB_ASSERT(expr != nullptr);
-		if (expr->kind == Ast_ProcLit) {
-			res = lb_generate_anonymous_proc_lit(m, str_lit("_proclit"), expr);
-		} else {
+		for (;;) {
+			Ast *expr = unparen_expr(value.value_procedure);
+			GB_ASSERT(expr != nullptr);
+			if (expr->kind == Ast_ProcLit) {
+				res = lb_generate_anonymous_proc_lit(m, str_lit("_proclit"), expr);
+				break;
+			}
 			Entity *e = entity_from_expr(expr);
-			res = lb_find_procedure_value_from_entity(m, e);
+			GB_ASSERT(e != nullptr);
+			if (e->kind != Entity_Constant) {
+				res = lb_find_procedure_value_from_entity(m, e);
+				break;
+			}
+			value = e->Constant.value;
+			GB_ASSERT(value.kind == ExactValue_Procedure);
 		}
 		if (res.value == nullptr) {
 			// This is an unspecialized polymorphic procedure, return nil or dummy value

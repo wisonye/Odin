@@ -11,7 +11,7 @@ package net
 	Copyright 2022 Colin Davidson  <colrdavidson@gmail.com>
 	Copyright 2022 Jeroen van Rijn <nom@duclavier.com>.
 	Copyright 2024 Feoramund       <rune@swevencraft.org>.
-	Made available under Odin's BSD-3 license.
+	Made available under Odin's license.
 
 	List of contributors:
 		Tetralux:        Initial implementation
@@ -63,7 +63,7 @@ _dial_error :: proc() -> Dial_Error {
 		return .Already_Connecting
 	case .WSAEADDRNOTAVAIL, .WSAEAFNOSUPPORT, .WSAEFAULT, .WSAENOTSOCK, .WSAEINPROGRESS, .WSAEINVAL:
 		return .Invalid_Argument
-	case .WSAECONNREFUSED:
+	case .WSAECONNREFUSED, .CONNECTION_REFUSED:
 		return .Refused
 	case .WSAEISCONN:
 		return .Already_Connected
@@ -122,7 +122,7 @@ _accept_error :: proc() -> Accept_Error {
 		return .Aborted
 	case .WSAEFAULT, .WSAEINPROGRESS, .WSAENOTSOCK:
 		return .Invalid_Argument
-	case .WSAEINTR:
+	case .WSAEINTR, .OPERATION_ABORTED:
 		return .Interrupted
 	case .WSAEINVAL:
 		return .Not_Listening

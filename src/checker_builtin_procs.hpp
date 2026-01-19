@@ -49,6 +49,11 @@ enum BuiltinProcId {
 
 	BuiltinProc_constant_log2,
 
+	BuiltinProc_constant_floor,
+	BuiltinProc_constant_trunc,
+	BuiltinProc_constant_ceil,
+	BuiltinProc_constant_round,
+
 	BuiltinProc_transpose,
 	BuiltinProc_outer_product,
 	BuiltinProc_hadamard_product,
@@ -331,6 +336,7 @@ BuiltinProc__type_simple_boolean_end,
 	BuiltinProc_type_polymorphic_record_parameter_value,
 
 	BuiltinProc_type_is_subtype_of,
+	BuiltinProc_type_is_superset_of,
 
 	BuiltinProc_type_field_index_of,
 
@@ -420,7 +426,11 @@ gb_global BuiltinProc builtin_procs[BuiltinProc_COUNT] = {
 
 	{STR_LIT("has_target_feature"), 1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 
-	{STR_LIT("constant_log2"), 1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("constant_log2"),     1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("constant_floor"),    1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("constant_trunc"),    1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("constant_ceil"),     1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("constant_round"),    1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 
 	{STR_LIT("transpose"),        1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("outer_product"),    2, false, Expr_Expr, BuiltinProcPkg_intrinsics},
@@ -615,17 +625,18 @@ gb_global BuiltinProc builtin_procs[BuiltinProc_COUNT] = {
 
 	{STR_LIT(""), 0, false, Expr_Stmt, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_boolean"),           1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_bit_field"),         1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_integer"),           1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_rune"),              1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_float"),             1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_complex"),           1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_quaternion"),        1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
-	{STR_LIT("type_is_typeid"),            1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
-	{STR_LIT("type_is_any"),               1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_string"),            1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_string16"),          1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
-	{STR_LIT("type_is_cstring"),            1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
-	{STR_LIT("type_is_cstring16"),          1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_cstring"),           1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_cstring16"),         1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_typeid"),            1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_any"),               1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 
 	{STR_LIT("type_is_endian_platform"),   1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_endian_little"),     1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
@@ -656,7 +667,6 @@ gb_global BuiltinProc builtin_procs[BuiltinProc_COUNT] = {
 	{STR_LIT("type_is_enum"),              1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_proc"),              1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_bit_set"),           1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
-	{STR_LIT("type_is_bit_field"),         1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_simd_vector"),       1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_matrix"),            1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 	{STR_LIT("type_is_raw_union"),         1, false, Expr_Expr, BuiltinProcPkg_intrinsics},
@@ -699,6 +709,7 @@ gb_global BuiltinProc builtin_procs[BuiltinProc_COUNT] = {
 	{STR_LIT("type_polymorphic_record_parameter_value"), 2, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 
 	{STR_LIT("type_is_subtype_of"), 2, false, Expr_Expr, BuiltinProcPkg_intrinsics},
+	{STR_LIT("type_is_superset_of"), 2, false, Expr_Expr, BuiltinProcPkg_intrinsics },
 
 	{STR_LIT("type_field_index_of"), 2, false, Expr_Expr, BuiltinProcPkg_intrinsics},
 

@@ -23,22 +23,8 @@
 #include <llvm-c/Transforms/Vectorize.h>
 #endif
 
-#if LLVM_VERSION_MAJOR < 11
-#error "LLVM Version 11 is the minimum required"
-#elif LLVM_VERSION_MAJOR == 12 && !(LLVM_VERSION_MINOR > 0 || LLVM_VERSION_PATCH > 0)
-#error "If LLVM Version 12.x.y is wanted, at least LLVM 12.0.1 is required"
-#endif
-
-#if LLVM_VERSION_MAJOR > 12 || (LLVM_VERSION_MAJOR == 12 && LLVM_VERSION_MINOR >= 0 && LLVM_VERSION_PATCH > 0)
-#define ODIN_LLVM_MINIMUM_VERSION_12 1
-#else
-#define ODIN_LLVM_MINIMUM_VERSION_12 0
-#endif
-
-#if LLVM_VERSION_MAJOR > 13 || (LLVM_VERSION_MAJOR == 13 && LLVM_VERSION_MINOR >= 0 && LLVM_VERSION_PATCH > 0)
-#define ODIN_LLVM_MINIMUM_VERSION_13 1
-#else
-#define ODIN_LLVM_MINIMUM_VERSION_13 0
+#if LLVM_VERSION_MAJOR < 14
+#error "LLVM Version 14 is the minimum required"
 #endif
 
 #if LLVM_VERSION_MAJOR > 14 || (LLVM_VERSION_MAJOR == 14 && LLVM_VERSION_MINOR >= 0 && LLVM_VERSION_PATCH > 0)
@@ -359,6 +345,7 @@ struct lbProcedure {
 	Ast *        body;
 	u64          tags;
 	ProcInlining inlining;
+	ProcTailing  tailing;
 	bool         is_foreign;
 	bool         is_export;
 	bool         is_entry_point;
@@ -431,10 +418,12 @@ gb_internal bool lb_init_generator(lbGenerator *gen, Checker *c);
 gb_internal String lb_mangle_name(Entity *e);
 gb_internal String lb_get_entity_name(lbModule *m, Entity *e);
 
+gb_internal LLVMAttributeRef lb_create_string_attribute(LLVMContextRef ctx, String const &key, String const &value);
 gb_internal LLVMAttributeRef lb_create_enum_attribute(LLVMContextRef ctx, char const *name, u64 value=0);
 gb_internal LLVMAttributeRef lb_create_enum_attribute_with_type(LLVMContextRef ctx, char const *name, LLVMTypeRef type);
 gb_internal void lb_add_proc_attribute_at_index(lbProcedure *p, isize index, char const *name, u64 value);
 gb_internal void lb_add_proc_attribute_at_index(lbProcedure *p, isize index, char const *name);
+gb_internal void lb_add_nocapture_proc_attribute_at_index(lbProcedure *p, isize index);
 gb_internal lbProcedure *lb_create_procedure(lbModule *module, Entity *entity, bool ignore_body=false);
 
 
@@ -496,7 +485,7 @@ gb_internal void lb_emit_defer_stmts(lbProcedure *p, lbDeferExitKind kind, lbBlo
 gb_internal void lb_emit_defer_stmts(lbProcedure *p, lbDeferExitKind kind, lbBlock *block, Ast *node);
 gb_internal lbValue lb_emit_transmute(lbProcedure *p, lbValue value, Type *t);
 gb_internal lbValue lb_emit_comp(lbProcedure *p, TokenKind op_kind, lbValue left, lbValue right);
-gb_internal lbValue lb_emit_call(lbProcedure *p, lbValue value, Array<lbValue> const &args, ProcInlining inlining = ProcInlining_none);
+gb_internal lbValue lb_emit_call(lbProcedure *p, lbValue value, Array<lbValue> const &args, ProcInlining inlining = ProcInlining_none, ProcTailing tailing = ProcTailing_none);
 gb_internal lbValue lb_emit_conv(lbProcedure *p, lbValue value, Type *t);
 gb_internal lbValue lb_emit_comp_against_nil(lbProcedure *p, TokenKind op_kind, lbValue x);
 
@@ -682,6 +671,7 @@ enum lbCallingConventionKind : unsigned {
 	lbCallingConvention_PreserveAll = 15,
 	lbCallingConvention_Swift = 16,
 	lbCallingConvention_CXX_FAST_TLS = 17,
+	lbCallingConvention_PreserveNone = 21,
 	lbCallingConvention_FirstTargetCC = 64,
 	lbCallingConvention_X86_StdCall = 64,
 	lbCallingConvention_X86_FastCall = 65,
@@ -734,6 +724,10 @@ lbCallingConventionKind const lb_calling_convention_map[ProcCC_MAX] = {
 
 	lbCallingConvention_Win64,        // ProcCC_Win64,
 	lbCallingConvention_X86_64_SysV,  // ProcCC_SysV,
+
+	lbCallingConvention_PreserveNone,  // ProcCC_PreserveNone,
+	lbCallingConvention_PreserveMost,  // ProcCC_PreserveMost,
+	lbCallingConvention_PreserveAll,   // ProcCC_PreserveAll,
 
 };
 

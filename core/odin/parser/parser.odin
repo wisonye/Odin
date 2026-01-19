@@ -99,18 +99,14 @@ end_pos :: proc(tok: tokenizer.Token) -> tokenizer.Pos {
 	pos := tok.pos
 	pos.offset += len(tok.text)
 
-	if tok.kind == .Comment {
-		if tok.text[:2] != "/*" {
-			pos.column += len(tok.text)
-		} else {
-			for i := 0; i < len(tok.text); i += 1 {
-				c := tok.text[i]
-				if c == '\n' {
-					pos.line += 1
-					pos.column = 1
-				} else {
-					pos.column += 1
-				}
+	if (tok.kind == .Comment && tok.text[:2] == "/*") || (tok.kind == .String && tok.text[:1] == "`") {
+		for i := 0; i < len(tok.text); i += 1 {
+			c := tok.text[i]
+			if c == '\n' {
+				pos.line += 1
+				pos.column = 1
+			} else {
+				pos.column += 1
 			}
 		}
 	} else {
@@ -1532,8 +1528,8 @@ parse_stmt :: proc(p: ^Parser) -> ^ast.Stmt {
 			es.expr = ce
 			return es
 
-		case "force_inline", "force_no_inline":
-			expr := parse_inlining_operand(p, true, tag)
+		case "force_inline", "force_no_inline", "must_tail":
+			expr := parse_inlining_or_tailing_operand(p, true, tag)
 			es := ast.new(ast.Expr_Stmt, expr.pos, expr)
 			es.expr = expr
 			return es
@@ -2239,10 +2235,11 @@ parse_proc_type :: proc(p: ^Parser, tok: tokenizer.Token) -> ^ast.Proc_Type {
 	return pt
 }
 
-parse_inlining_operand :: proc(p: ^Parser, lhs: bool, tok: tokenizer.Token) -> ^ast.Expr {
+parse_inlining_or_tailing_operand :: proc(p: ^Parser, lhs: bool, tok: tokenizer.Token) -> ^ast.Expr {
 	expr := parse_unary_expr(p, lhs)
 
 	pi := ast.Proc_Inlining.None
+	pt := ast.Proc_Tailing.None
 	#partial switch tok.kind {
 	case .Inline:
 		pi = .Inline
@@ -2254,6 +2251,8 @@ parse_inlining_operand :: proc(p: ^Parser, lhs: bool, tok: tokenizer.Token) -> ^
 			pi = .Inline
 		case "force_no_inline":
 			pi = .No_Inline
+		case "must_tail":
+			pt = .Must_Tail
 		}
 	}
 
@@ -2263,13 +2262,19 @@ parse_inlining_operand :: proc(p: ^Parser, lhs: bool, tok: tokenizer.Token) -> ^
 			if e.inlining != .None && e.inlining != pi {
 				error(p, expr.pos, "both 'inline' and 'no_inline' cannot be applied to a procedure literal")
 			}
+			if pt != .None {
+				error(p, expr.pos, "'#must_tail' can only be applied to a procedure call, not the procedure literal")
+			}
+
 			e.inlining = pi
+			e.tailing  = pt
 			return expr
 		case ^ast.Call_Expr:
 			if e.inlining != .None && e.inlining != pi {
 				error(p, expr.pos, "both 'inline' and 'no_inline' cannot be applied to a procedure call")
 			}
 			e.inlining = pi
+			e.tailing  = pt
 			return expr
 		}
 	}
@@ -2455,7 +2460,7 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 			return rt
 
 		case "force_inline", "force_no_inline":
-			return parse_inlining_operand(p, lhs, name)
+			return parse_inlining_or_tailing_operand(p, lhs, name)
 		case:
 			expr := parse_expr(p, lhs)
 			end := expr.pos if expr != nil else end_pos(tok)
@@ -2468,7 +2473,7 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 
 	case .Inline, .No_Inline:
 		tok := advance_token(p)
-		return parse_inlining_operand(p, lhs, tok)
+		return parse_inlining_or_tailing_operand(p, lhs, tok)
 
 	case .Proc:
 		tok := expect_token(p, .Proc)
@@ -2658,11 +2663,12 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 		align:           ^ast.Expr
 		min_field_align: ^ast.Expr
 		max_field_align: ^ast.Expr
-		is_packed:    bool
-		is_raw_union: bool
-		is_no_copy:   bool
-		fields:       ^ast.Field_List
-		name_count:   int
+		is_packed:       bool
+		is_raw_union:    bool
+		is_no_copy:      bool
+		is_all_or_none:  bool
+		fields:          ^ast.Field_List
+		name_count:      int
 
 		if allow_token(p, .Open_Paren) {
 			param_count: int
@@ -2684,6 +2690,11 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 					error(p, tag.pos, "duplicate struct tag '#%s'", tag.text)
 				}
 				is_packed = true
+			case "all_or_none":
+				if is_all_or_none {
+					error(p, tag.pos, "duplicate struct tag '#%s'", tag.text)
+				}
+				is_all_or_none = true
 			case "align":
 				if align != nil {
 					error(p, tag.pos, "duplicate struct tag '#%s'", tag.text)
@@ -2726,6 +2737,11 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 			error(p, tok.pos, "'#raw_union' cannot also be '#packed")
 		}
 
+		if is_raw_union && is_all_or_none {
+			is_all_or_none = false
+			error(p, tok.pos, "'#raw_union' cannot also be '#all_or_none")
+		}
+
 		where_token: tokenizer.Token
 		where_clauses: []^ast.Expr
 
@@ -2745,17 +2761,18 @@ parse_operand :: proc(p: ^Parser, lhs: bool) -> ^ast.Expr {
 		close := expect_closing_brace_of_field_list(p)
 
 		st := ast.new(ast.Struct_Type, tok.pos, end_pos(close))
-		st.poly_params     = poly_params
-		st.align           = align
-		st.min_field_align = min_field_align
-		st.max_field_align = max_field_align
-		st.is_packed       = is_packed
-		st.is_raw_union    = is_raw_union
-		st.is_no_copy      = is_no_copy
-		st.fields          = fields
-		st.name_count      = name_count
-		st.where_token     = where_token
-		st.where_clauses   = where_clauses
+		st.poly_params       = poly_params
+		st.align             = align
+		st.min_field_align   = min_field_align
+		st.max_field_align   = max_field_align
+		st.is_packed         = is_packed
+		st.is_raw_union      = is_raw_union
+		st.is_no_copy        = is_no_copy
+		st.is_all_or_none    = is_all_or_none
+		st.fields            = fields
+		st.name_count        = name_count
+		st.where_token       = where_token
+		st.where_clauses     = where_clauses
 		return st
 
 	case .Union:
@@ -3210,6 +3227,17 @@ parse_call_expr :: proc(p: ^Parser, operand: ^ast.Expr) -> ^ast.Expr {
 	return ce
 }
 
+empty_selector_expr :: proc(tok: tokenizer.Token, operand: ^ast.Expr) -> ^ast.Selector_Expr {
+	field := ast.new(ast.Ident, tok.pos, end_pos(tok))
+	field.name = ""
+
+	sel := ast.new(ast.Selector_Expr, operand.pos, field)
+	sel.expr  = operand
+	sel.op = tok
+	sel.field = field
+
+	return sel
+}
 
 parse_atom_expr :: proc(p: ^Parser, value: ^ast.Expr, lhs: bool) -> (operand: ^ast.Expr) {
 	operand = value
@@ -3343,8 +3371,7 @@ parse_atom_expr :: proc(p: ^Parser, value: ^ast.Expr, lhs: bool) -> (operand: ^a
 
 			case:
 				error(p, p.curr_tok.pos, "expected a selector")
-				advance_token(p)
-				operand = ast.new(ast.Bad_Expr, operand.pos, end_pos(tok))
+				operand = empty_selector_expr(tok, operand)
 			}
 
 		case .Arrow_Right:
@@ -3361,8 +3388,7 @@ parse_atom_expr :: proc(p: ^Parser, value: ^ast.Expr, lhs: bool) -> (operand: ^a
 				operand = sel
 			case:
 				error(p, p.curr_tok.pos, "expected a selector")
-				advance_token(p)
-				operand = ast.new(ast.Bad_Expr, operand.pos, end_pos(tok))
+				operand = empty_selector_expr(tok, operand)
 			}
 
 		case .Pointer:

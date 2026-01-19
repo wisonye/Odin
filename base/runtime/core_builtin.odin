@@ -267,7 +267,10 @@ non_zero_resize :: proc{
 
 // Shrinks the capacity of a dynamic array or map down to the current length, or the given capacity.
 @builtin
-shrink :: proc{shrink_dynamic_array, shrink_map}
+shrink :: proc{
+	shrink_dynamic_array,
+	shrink_map,
+}
 
 // `free` will try to free the passed pointer, with the given `allocator` if the allocator supports this operation.
 @builtin
@@ -357,7 +360,7 @@ new_aligned :: proc($T: typeid, alignment: int, allocator := context.allocator, 
 
 @(builtin, require_results)
 new_clone :: proc(data: $T, allocator := context.allocator, loc := #caller_location) -> (t: ^T, err: Allocator_Error) #optional_allocator_error {
-	t = (^T)(raw_data(mem_alloc_bytes(size_of(T), align_of(T), allocator, loc) or_return))
+	t = (^T)(raw_data(mem_alloc_non_zeroed(size_of(T), align_of(T), allocator, loc) or_return))
 	if t != nil {
 		t^ = data
 	}
@@ -430,7 +433,6 @@ _make_dynamic_array_len_cap :: proc(array: ^Raw_Dynamic_Array, size_of_elem, ali
 	array.data = raw_data(data)
 	array.len = 0 if use_zero else len
 	array.cap = 0 if use_zero else cap
-	array.allocator = allocator
 	return
 }
 
@@ -794,7 +796,11 @@ inject_at_elem_string :: proc(array: ^$T/[dynamic]$E/u8, #any_int index: int, ar
 }
 
 // `inject_at` injects something into a dynamic array at a specified index and moves the previous elements after that index "across"
-@builtin inject_at :: proc{inject_at_elem, inject_at_elems, inject_at_elem_string}
+@builtin inject_at :: proc{
+	inject_at_elem,
+	inject_at_elems,
+	inject_at_elem_string,
+}
 
 
 
@@ -858,7 +864,6 @@ assign_at :: proc{
 	assign_at_elems,
 	assign_at_elem_string,
 }
-
 
 
 
@@ -1000,6 +1005,7 @@ non_zero_resize_dynamic_array :: proc(array: ^$T/[dynamic]$E, #any_int length: i
 // If `len(array) < new_cap`, then `len(array)` will be left unchanged.
 //
 // Note: Prefer the procedure group `shrink`
+@builtin
 shrink_dynamic_array :: proc(array: ^$T/[dynamic]$E, #any_int new_cap := -1, loc := #caller_location) -> (did_shrink: bool, err: Allocator_Error) {
 	return _shrink_dynamic_array((^Raw_Dynamic_Array)(array), size_of(E), align_of(E), new_cap, loc)
 }

@@ -15,6 +15,8 @@
 #define LLVM_WEAK_MONOMORPHIZATION (USE_SEPARATE_MODULES && build_context.internal_weak_monomorphization)
 #endif
 
+#define LLVM_SET_INTERNAL_WEAK_LINKAGE(value) LLVMSetLinkage(value, USE_SEPARATE_MODULES ? LLVMWeakAnyLinkage : LLVMInternalLinkage);
+
 
 #include "llvm_backend.hpp"
 #include "llvm_abi.cpp"
@@ -37,12 +39,10 @@ gb_internal String get_default_microarchitecture() {
 		// x86-64-v2: (close to Nehalem) CMPXCHG16B, LAHF-SAHF, POPCNT, SSE3, SSE4.1, SSE4.2, SSSE3
 		// x86-64-v3: (close to Haswell) AVX, AVX2, BMI1, BMI2, F16C, FMA, LZCNT, MOVBE, XSAVE
 		// x86-64-v4: AVX512F, AVX512BW, AVX512CD, AVX512DQ, AVX512VL
-		if (ODIN_LLVM_MINIMUM_VERSION_12) {
-			if (build_context.metrics.os == TargetOs_freestanding) {
-				default_march = str_lit("x86-64");
-			} else {
-				default_march = str_lit("x86-64-v2");
-			}
+		if (build_context.metrics.os == TargetOs_freestanding) {
+			default_march = str_lit("x86-64");
+		} else {
+			default_march = str_lit("x86-64-v2");
 		}
 	} else if (build_context.metrics.arch == TargetArch_riscv64) {
 		default_march = str_lit("generic-rv64");
@@ -172,7 +172,7 @@ gb_internal void lb_correct_entity_linkage(lbGenerator *gen) {
 		if (ec.e->kind == Entity_Variable) {
 			other_global = LLVMGetNamedGlobal(ec.other_module->mod, ec.cname);
 			if (other_global) {
-				LLVMSetLinkage(other_global, LLVMWeakAnyLinkage);
+				LLVM_SET_INTERNAL_WEAK_LINKAGE(other_global);
 				if (!ec.e->Variable.is_export && !ec.e->Variable.is_foreign) {
 					LLVMSetVisibility(other_global, LLVMHiddenVisibility);
 				}
@@ -180,7 +180,7 @@ gb_internal void lb_correct_entity_linkage(lbGenerator *gen) {
 		} else if (ec.e->kind == Entity_Procedure) {
 			other_global = LLVMGetNamedFunction(ec.other_module->mod, ec.cname);
 			if (other_global) {
-				LLVMSetLinkage(other_global, LLVMWeakAnyLinkage);
+				LLVM_SET_INTERNAL_WEAK_LINKAGE(other_global);
 				if (!ec.e->Procedure.is_export && !ec.e->Procedure.is_foreign) {
 					LLVMSetVisibility(other_global, LLVMHiddenVisibility);
 				}
@@ -2085,15 +2085,16 @@ gb_internal void lb_create_startup_runtime_generate_body(lbModule *m, lbProcedur
 			continue;
 		}
 
-		if (type_size_of(e->type) > 8) {
+		if (false && type_size_of(e->type) > 8) {
 			String ename = lb_get_entity_name(m, e);
 			gbString name = gb_string_make(permanent_allocator(), "");
 			name = gb_string_appendc(name, "__$startup$");
 			name = gb_string_append_length(name, ename.text, ename.len);
 
 			lbProcedure *dummy = lb_create_dummy_procedure(m, make_string_c(name), dummy_type);
+			dummy->is_startup = true;
 			LLVMSetVisibility(dummy->value, LLVMHiddenVisibility);
-			LLVMSetLinkage(dummy->value, LLVMWeakAnyLinkage);
+			LLVM_SET_INTERNAL_WEAK_LINKAGE(p->value);
 
 			lb_begin_procedure_body(dummy);
 			lb_init_global_var(m, dummy, e, init_expr, var);
@@ -2110,7 +2111,7 @@ gb_internal void lb_create_startup_runtime_generate_body(lbModule *m, lbProcedur
 
 	for (Entity *e : info->init_procedures) {
 		lbValue value = lb_find_procedure_value_from_entity(m, e);
-		lb_emit_call(p, value, {}, ProcInlining_none);
+		lb_emit_call(p, value, {}, ProcInlining_none, ProcTailing_none);
 	}
 
 
@@ -2128,7 +2129,7 @@ gb_internal lbProcedure *lb_create_startup_runtime(lbModule *main_module, lbProc
 
 	// Make sure shared libraries call their own runtime startup on Linux.
 	LLVMSetVisibility(p->value, LLVMHiddenVisibility);
-	LLVMSetLinkage(p->value, LLVMWeakAnyLinkage);
+	LLVM_SET_INTERNAL_WEAK_LINKAGE(p->value);
 
 	p->global_variables = &global_variables;
 	p->objc_names       = objc_names;
@@ -2148,7 +2149,7 @@ gb_internal lbProcedure *lb_create_cleanup_runtime(lbModule *main_module) { // C
 
 	// Make sure shared libraries call their own runtime cleanup on Linux.
 	LLVMSetVisibility(p->value, LLVMHiddenVisibility);
-	LLVMSetLinkage(p->value, LLVMWeakAnyLinkage);
+	LLVM_SET_INTERNAL_WEAK_LINKAGE(p->value);
 
 	lb_begin_procedure_body(p);
 
@@ -2156,7 +2157,7 @@ gb_internal lbProcedure *lb_create_cleanup_runtime(lbModule *main_module) { // C
 
 	for (Entity *e : info->fini_procedures) {
 		lbValue value = lb_find_procedure_value_from_entity(main_module, e);
-		lb_emit_call(p, value, {}, ProcInlining_none);
+		lb_emit_call(p, value, {}, ProcInlining_none, ProcTailing_none);
 	}
 
 	lb_end_procedure_body(p);
@@ -2555,6 +2556,8 @@ gb_internal WORKER_TASK_PROC(lb_generate_missing_procedures_to_check_worker_proc
 }
 
 gb_internal void lb_generate_missing_procedures(lbGenerator *gen, bool do_threading) {
+	isize retry_count = 0;
+retry:;
 	if (do_threading) {
 		for (auto const &entry : gen->modules) {
 			lbModule *m = entry.value;
@@ -2572,6 +2575,14 @@ gb_internal void lb_generate_missing_procedures(lbGenerator *gen, bool do_thread
 
 	for (auto const &entry : gen->modules) {
 		lbModule *m = entry.value;
+		if (m->missing_procedures_to_check.count != 0) {
+			if (retry_count > gen->modules.count) {
+				GB_ASSERT(m->missing_procedures_to_check.count == 0);
+			}
+
+			retry_count += 1;
+			goto retry;
+		}
 		GB_ASSERT(m->missing_procedures_to_check.count == 0);
 		GB_ASSERT(m->procedures_to_generate.count == 0);
 	}
@@ -2839,7 +2850,7 @@ gb_internal lbProcedure *lb_create_main_procedure(lbModule *m, lbProcedure *star
 	}
 
 	lbValue startup_runtime_value = {startup_runtime->value, startup_runtime->type};
-	lb_emit_call(p, startup_runtime_value, {}, ProcInlining_none);
+	lb_emit_call(p, startup_runtime_value, {}, ProcInlining_none, ProcTailing_none);
 
 	if (build_context.command_kind == Command_test) {
 		Type *t_Internal_Test = find_type_in_pkg(m->info, str_lit("testing"), str_lit("Internal_Test"));
@@ -2892,19 +2903,30 @@ gb_internal lbProcedure *lb_create_main_procedure(lbModule *m, lbProcedure *star
 		args[0] = lb_addr_load(p, all_tests_slice);
 		lbValue result = lb_emit_call(p, runner, args);
 
-		lbValue exit_runner = lb_find_package_value(m, str_lit("os"), str_lit("exit"));
+		lbValue exit_runner = {};
+		{
+			AstPackage *pkg = get_runtime_package(m->info);
+
+			String name = str_lit("exit");
+			Entity *e = scope_lookup_current(pkg->scope, name);
+			if (e == nullptr) {
+				compiler_error("Could not find type declaration for '%.*s.%.*s'\n", LIT(pkg->name), LIT(name));
+			}
+			exit_runner = lb_find_value_from_entity(m, e);
+		}
+
 		auto exit_args = array_make<lbValue>(temporary_allocator(), 1);
 		exit_args[0] = lb_emit_select(p, result, lb_const_int(m, t_int, 0), lb_const_int(m, t_int, 1));
-		lb_emit_call(p, exit_runner, exit_args, ProcInlining_none);
+		lb_emit_call(p, exit_runner, exit_args, ProcInlining_none, ProcTailing_none);
 	} else {
 		if (m->info->entry_point != nullptr) {
 			lbValue entry_point = lb_find_procedure_value_from_entity(m, m->info->entry_point);
-			lb_emit_call(p, entry_point, {}, ProcInlining_no_inline);
+			lb_emit_call(p, entry_point, {}, ProcInlining_no_inline, ProcTailing_none);
 		}
 
 		if (call_cleanup) {
 			lbValue cleanup_runtime_value = {cleanup_runtime->value, cleanup_runtime->type};
-			lb_emit_call(p, cleanup_runtime_value, {}, ProcInlining_none);
+			lb_emit_call(p, cleanup_runtime_value, {}, ProcInlining_none, ProcTailing_none);
 		}
 
 		if (is_dll_main) {
@@ -3038,8 +3060,14 @@ gb_internal bool lb_generate_code(lbGenerator *gen) {
 	LLVMCodeModel code_mode = LLVMCodeModelDefault;
 	if (is_arch_wasm()) {
 		code_mode = LLVMCodeModelJITDefault;
+		debugf("LLVM code mode: LLVMCodeModelJITDefault\n");
 	} else if (is_arch_x86() && build_context.metrics.os == TargetOs_freestanding) {
 		code_mode = LLVMCodeModelKernel;
+		debugf("LLVM code mode: LLVMCodeModelKernel\n");
+	}
+
+	if (code_mode == LLVMCodeModelDefault) {
+		debugf("LLVM code mode: LLVMCodeModelDefault\n");
 	}
 
 	String llvm_cpu = get_final_microarchitecture();
@@ -3392,7 +3420,7 @@ gb_internal bool lb_generate_code(lbGenerator *gen) {
 			LLVMSetLinkage(g.value, LLVMDLLExportLinkage);
 			LLVMSetDLLStorageClass(g.value, LLVMDLLExportStorageClass);
 		} else if (!is_foreign) {
-			LLVMSetLinkage(g.value, USE_SEPARATE_MODULES ? LLVMWeakAnyLinkage : LLVMInternalLinkage);
+			LLVM_SET_INTERNAL_WEAK_LINKAGE(g.value);
 		}
 		lb_set_linkage_from_entity_flags(m, g.value, e->flags);
 		LLVMSetAlignment(g.value, cast(u32)type_align_of(e->type));

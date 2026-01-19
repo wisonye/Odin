@@ -36,3 +36,33 @@ test_decoding :: proc(t: ^testing.T) {
 		testing.expect_value(t, v, test.vector)
 	}
 }
+
+@(test)
+test_roundtrip :: proc(t: ^testing.T) {
+	values: [1024]u8
+	for &v, i in values[:] {
+		v = u8(i)
+	}
+
+	encoded := base64.encode(values[:]); defer delete(encoded)
+	decoded := base64.decode(encoded);   defer delete(decoded)
+
+	for v, i in decoded {
+		testing.expect_value(t, v, values[i])
+	}
+}
+
+@(test)
+test_base64url :: proc(t: ^testing.T) {
+	plain := ">>>"
+	url := "Pj4-"
+
+	encoded := base64.encode(transmute([]byte)plain, base64.ENC_URL_TABLE)
+	defer delete(encoded)
+	testing.expect_value(t, encoded, url)
+
+	decoded := string(base64.decode(url, base64.DEC_URL_TABLE))
+	defer delete(decoded)
+	testing.expect_value(t, decoded, plain)
+
+}

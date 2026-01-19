@@ -790,8 +790,10 @@ gb_internal void check_scope_usage_internal(Checker *c, Scope *scope, u64 vet_fl
 			// Is >256 KiB good enough?
 			if (sz > 1ll<<18) {
 				bool is_ref = false;
-				if((e->flags & EntityFlag_ForValue) != 0) {
+				if ((e->flags & EntityFlag_ForValue) != 0) {
 					is_ref = type_deref(e->Variable.for_loop_parent_type) != NULL;
+				} else if ((e->flags & EntityFlag_SwitchValue) != 0) {
+					is_ref = !(e->flags & EntityFlag_Value);
 				}
 				if(!is_ref) {
 					gbString type_str = type_to_string(e->type);
@@ -919,6 +921,22 @@ gb_internal AstPackage *get_core_package(CheckerInfo *info, String name) {
 			gb_printf_err("%.*s\n", LIT(entry.key));
 		}
 		GB_ASSERT_MSG(found != nullptr, "Missing core package %.*s", LIT(name));
+	}
+	return *found;
+}
+
+
+gb_internal AstPackage *try_get_core_package(CheckerInfo *info, String name) {
+	if (name == "runtime") {
+		return get_runtime_package(info);
+	}
+
+	gbAllocator a = heap_allocator();
+	String path = get_fullpath_core_collection(a, name, nullptr);
+	defer (gb_free(a, path.text));
+	auto found = string_map_get(&info->packages, path);
+	if (found == nullptr) {
+		return nullptr;
 	}
 	return *found;
 }
@@ -1512,17 +1530,16 @@ gb_internal void destroy_checker_info(CheckerInfo *i) {
 	map_destroy(&i->load_directory_map);
 }
 
-gb_internal CheckerContext make_checker_context(Checker *c) {
-	CheckerContext ctx = {};
-	ctx.checker   = c;
-	ctx.info      = &c->info;
-	ctx.scope     = builtin_pkg->scope;
-	ctx.pkg       = builtin_pkg;
+gb_internal void init_checker_context(CheckerContext *ctx, Checker *c) {
+	ctx->checker   = c;
+	ctx->info      = &c->info;
+	ctx->scope     = builtin_pkg->scope;
+	ctx->pkg       = builtin_pkg;
 
-	ctx.type_path = new_checker_type_path(heap_allocator());
-	ctx.type_level = 0;
-	return ctx;
+	ctx->type_path = new_checker_type_path(heap_allocator());
+	ctx->type_level = 0;
 }
+
 gb_internal void destroy_checker_context(CheckerContext *ctx) {
 	destroy_checker_type_path(ctx->type_path, heap_allocator());
 }
@@ -1587,7 +1604,7 @@ gb_internal void init_checker(Checker *c) {
 	mpsc_init(&c->global_untyped_queue, a); // , 1<<20);
 	mpsc_init(&c->soa_types_to_complete, a); // , 1<<20);
 
-	c->builtin_ctx = make_checker_context(c);
+	init_checker_context(&c->builtin_ctx, c);
 }
 
 gb_internal void destroy_checker(Checker *c) {
@@ -3563,7 +3580,7 @@ gb_internal DECL_ATTRIBUTE_PROC(proc_decl_attribute) {
 		return true;
 	} else if (name == "test") {
 		if (value != nullptr) {
-			error(value, "'%.*s' expects no parameter, or a string literal containing \"file\" or \"package\"", LIT(name));
+			error(value, "Expected no value for '%.*s'", LIT(name));
 		}
 		ac->test = true;
 		return true;
@@ -3611,13 +3628,13 @@ gb_internal DECL_ATTRIBUTE_PROC(proc_decl_attribute) {
 		return true;
 	} else if (name == "init") {
 		if (value != nullptr) {
-			error(value, "'%.*s' expects no parameter, or a string literal containing \"file\" or \"package\"", LIT(name));
+			error(value, "Expected no value for '%.*s'", LIT(name));
 		}
 		ac->init = true;
 		return true;
 	} else if (name == "fini") {
 		if (value != nullptr) {
-			error(value, "'%.*s' expects no parameter, or a string literal containing \"file\" or \"package\"", LIT(name));
+			error(value, "Expected no value for '%.*s'", LIT(name));
 		}
 		ac->fini = true;
 		return true;
@@ -3973,6 +3990,12 @@ gb_internal DECL_ATTRIBUTE_PROC(proc_decl_attribute) {
 		}
 		ac->no_sanitize_memory = true;
 		return true;
+	}  else if (name == "no_sanitize_thread") {
+		if (value != nullptr) {
+			error(value, "'%.*s' expects no parameter", LIT(name));
+		}
+		ac->no_sanitize_thread = true;
+		return true;
 	}
 	return false;
 }
@@ -4009,6 +4032,7 @@ gb_internal DECL_ATTRIBUTE_PROC(var_decl_attribute) {
 		} else if (ev.kind == ExactValue_String) {
 			String model = ev.value_string;
 			if (model == "default" ||
+			    model == "globaldynamic" ||
 			    model == "localdynamic" ||
 			    model == "initialexec" ||
 			    model == "localexec") {
@@ -4017,6 +4041,7 @@ gb_internal DECL_ATTRIBUTE_PROC(var_decl_attribute) {
 				ERROR_BLOCK();
 				error(elem, "Invalid thread local model '%.*s'. Valid models:", LIT(model));
 				error_line("\tdefault\n");
+				error_line("\tglobaldynamic\n");
 				error_line("\tlocaldynamic\n");
 				error_line("\tinitialexec\n");
 				error_line("\tlocalexec\n");
@@ -4944,7 +4969,7 @@ gb_internal void check_collect_entities(CheckerContext *c, Slice<Ast *> const &n
 
 gb_internal CheckerContext *create_checker_context(Checker *c) {
 	CheckerContext *ctx = gb_alloc_item(permanent_allocator(), CheckerContext);
-	*ctx = make_checker_context(c);
+	init_checker_context(ctx, c);
 	return ctx;
 }
 
@@ -5389,7 +5414,8 @@ gb_internal DECL_ATTRIBUTE_PROC(foreign_import_decl_attribute) {
 }
 
 gb_internal void check_foreign_import_fullpaths(Checker *c) {
-	CheckerContext ctx = make_checker_context(c);
+	CheckerContext ctx = {};
+	init_checker_context(&ctx, c);
 
 	UntypedExprInfoMap untyped = {};
 	defer (map_destroy(&untyped));
@@ -5772,7 +5798,7 @@ gb_internal void check_collect_entities_all(Checker *c) {
 	for (isize i = 0; i < thread_count; i++) {
 		auto *wd = &collect_entity_worker_data[i];
 		wd->c = c;
-		wd->ctx = make_checker_context(c);
+		init_checker_context(&wd->ctx, c);
 		map_init(&wd->untyped);
 	}
 
@@ -5813,7 +5839,7 @@ gb_internal void check_export_entities(Checker *c) {
 	for (isize i = 0; i < thread_count; i++) {
 		auto *wd = &collect_entity_worker_data[i];
 		map_clear(&wd->untyped);
-		wd->ctx = make_checker_context(c);
+		init_checker_context(&wd->ctx, c);
 	}
 
 	for (auto const &entry : c->info.packages) {
@@ -5880,7 +5906,8 @@ gb_internal void check_import_entities(Checker *c) {
 	}
 
 	TIME_SECTION("check_import_entities - collect file decls");
-	CheckerContext ctx = make_checker_context(c);
+	CheckerContext ctx = {};
+	init_checker_context(&ctx, c);
 
 	UntypedExprInfoMap untyped = {};
 	defer (map_destroy(&untyped));
@@ -6229,7 +6256,8 @@ gb_internal bool check_proc_info(Checker *c, ProcInfo *pi, UntypedExprInfoMap *u
 		}
 	}
 
-	CheckerContext ctx = make_checker_context(c);
+	CheckerContext ctx = {};
+	init_checker_context(&ctx, c);
 	defer (destroy_checker_context(&ctx));
 	reset_checker_context(&ctx, pi->file, untyped);
 	ctx.decl = pi->decl;
@@ -7015,8 +7043,10 @@ gb_internal void check_objc_context_provider_procedures(Checker *c) {
 	}
 }
 
-gb_internal void check_unique_package_names(Checker *c) {
+gb_internal bool check_unique_package_names(Checker *c) {
 	ERROR_BLOCK();
+
+	bool ok = true;
 
 	StringMap<AstPackage *> pkgs = {}; // Key: package name
 	string_map_init(&pkgs, 2*c->info.packages.count);
@@ -7042,6 +7072,7 @@ gb_internal void check_unique_package_names(Checker *c) {
 			continue;
 		}
 
+		ok = false;
 
 		begin_error_block();
 		error(curr, "Duplicate declaration of 'package %.*s'", LIT(name));
@@ -7064,6 +7095,8 @@ gb_internal void check_unique_package_names(Checker *c) {
 
 		end_error_block();
 	}
+
+	return ok;
 }
 
 gb_internal void check_add_entities_from_queues(Checker *c) {
@@ -7446,7 +7479,7 @@ gb_internal void check_parsed_files(Checker *c) {
 	debugf("Total Procedure Bodies Checked: %td\n", total_bodies_checked.load(std::memory_order_relaxed));
 
 	TIME_SECTION("check unique package names");
-	check_unique_package_names(c);
+	bool package_names_are_unique = check_unique_package_names(c);
 
 	TIME_SECTION("sanity checks");
 	check_merge_queues_into_arrays(c);
@@ -7503,7 +7536,8 @@ gb_internal void check_parsed_files(Checker *c) {
 			c->info.type_info_types_hash_map[index] = tt;
 
 			bool exists = map_set_if_not_previously_exists(&c->info.min_dep_type_info_index_map, tt.hash, index);
-			if (exists) {
+			// Because we've already written a nice error about a duplicate package declaration, skip this panic if the package names aren't unique.
+			if (package_names_are_unique && exists) {
 				for (auto const &entry : c->info.min_dep_type_info_index_map) {
 					if (entry.key != tt.hash) {
 						continue;

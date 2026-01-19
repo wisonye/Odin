@@ -334,6 +334,7 @@ enum BuildFlagKind {
 
 	BuildFlag_ShowDefineables,
 	BuildFlag_ExportDefineables,
+	BuildFlag_IgnoreUnusedDefineables,
 
 	BuildFlag_Vet,
 	BuildFlag_VetShadowing,
@@ -361,6 +362,8 @@ enum BuildFlagKind {
 
 	BuildFlag_RelocMode,
 	BuildFlag_DisableRedZone,
+
+	BuildFlag_DisableUnwind,
 
 	BuildFlag_DisallowDo,
 	BuildFlag_DefaultToNilAllocator,
@@ -563,6 +566,7 @@ gb_internal bool parse_build_flags(Array<String> args) {
 
 	add_flag(&build_flags, BuildFlag_ShowDefineables,         str_lit("show-defineables"),          BuildFlagParam_None,    Command__does_check);
 	add_flag(&build_flags, BuildFlag_ExportDefineables,       str_lit("export-defineables"),        BuildFlagParam_String,  Command__does_check);
+	add_flag(&build_flags, BuildFlag_IgnoreUnusedDefineables, str_lit("ignore-unused-defineables"), BuildFlagParam_None,    Command__does_check);
 
 	add_flag(&build_flags, BuildFlag_Vet,                     str_lit("vet"),                       BuildFlagParam_None,    Command__does_check);
 	add_flag(&build_flags, BuildFlag_VetUnused,               str_lit("vet-unused"),                BuildFlagParam_None,    Command__does_check);
@@ -589,6 +593,8 @@ gb_internal bool parse_build_flags(Array<String> args) {
 
 	add_flag(&build_flags, BuildFlag_RelocMode,               str_lit("reloc-mode"),                BuildFlagParam_String,  Command__does_build);
 	add_flag(&build_flags, BuildFlag_DisableRedZone,          str_lit("disable-red-zone"),          BuildFlagParam_None,    Command__does_build);
+
+	add_flag(&build_flags, BuildFlag_DisableUnwind,           str_lit("disable-unwind"),          BuildFlagParam_None,    Command__does_build);
 
 	add_flag(&build_flags, BuildFlag_DisallowDo,              str_lit("disallow-do"),               BuildFlagParam_None,    Command__does_check);
 	add_flag(&build_flags, BuildFlag_DefaultToNilAllocator,   str_lit("default-to-nil-allocator"),  BuildFlagParam_None,    Command__does_check);
@@ -943,6 +949,11 @@ gb_internal bool parse_build_flags(Array<String> args) {
 								bad_flags = true;
 							}
 
+							break;
+						}
+						case BuildFlag_IgnoreUnusedDefineables: {
+							GB_ASSERT(value.kind == ExactValue_Invalid);
+							build_context.ignore_unused_defineables = true;
 							break;
 						}
 						case BuildFlag_ShowSystemCalls: {
@@ -1302,23 +1313,17 @@ gb_internal bool parse_build_flags(Array<String> args) {
 							build_context.vet_flags |= VetFlag_All;
 							break;
 
-						case BuildFlag_VetUnusedVariables: build_context.vet_flags |= VetFlag_UnusedVariables; break;
-						case BuildFlag_VetUnusedImports:   build_context.vet_flags |= VetFlag_UnusedImports;   break;
-						case BuildFlag_VetUnused:          build_context.vet_flags |= VetFlag_Unused;          break;
-						case BuildFlag_VetShadowing:       build_context.vet_flags |= VetFlag_Shadowing;       break;
-						case BuildFlag_VetUsingStmt:       build_context.vet_flags |= VetFlag_UsingStmt;       break;
-						case BuildFlag_VetUsingParam:      build_context.vet_flags |= VetFlag_UsingParam;      break;
-						case BuildFlag_VetStyle:           build_context.vet_flags |= VetFlag_Style;           break;
-						case BuildFlag_VetSemicolon:       build_context.vet_flags |= VetFlag_Semicolon;       break;
-						case BuildFlag_VetCast:            build_context.vet_flags |= VetFlag_Cast;            break;
-						case BuildFlag_VetTabs:            build_context.vet_flags |= VetFlag_Tabs;            break;
-						case BuildFlag_VetUnusedProcedures:
-							build_context.vet_flags |= VetFlag_UnusedProcedures;
-							if (!set_flags[BuildFlag_VetPackages]) {
-								gb_printf_err("-%.*s must be used with -vet-packages\n", LIT(name));
-								bad_flags = true;
-							}
-							break;
+						case BuildFlag_VetUnusedVariables:  build_context.vet_flags |= VetFlag_UnusedVariables;  break;
+						case BuildFlag_VetUnusedImports:    build_context.vet_flags |= VetFlag_UnusedImports;    break;
+						case BuildFlag_VetUnused:           build_context.vet_flags |= VetFlag_Unused;           break;
+						case BuildFlag_VetShadowing:        build_context.vet_flags |= VetFlag_Shadowing;        break;
+						case BuildFlag_VetUsingStmt:        build_context.vet_flags |= VetFlag_UsingStmt;        break;
+						case BuildFlag_VetUsingParam:       build_context.vet_flags |= VetFlag_UsingParam;       break;
+						case BuildFlag_VetStyle:            build_context.vet_flags |= VetFlag_Style;            break;
+						case BuildFlag_VetSemicolon:        build_context.vet_flags |= VetFlag_Semicolon;        break;
+						case BuildFlag_VetCast:             build_context.vet_flags |= VetFlag_Cast;             break;
+						case BuildFlag_VetTabs:             build_context.vet_flags |= VetFlag_Tabs;             break;
+						case BuildFlag_VetUnusedProcedures: build_context.vet_flags |= VetFlag_UnusedProcedures; break;
 
 						case BuildFlag_VetPackages:
 							{
@@ -1423,6 +1428,10 @@ gb_internal bool parse_build_flags(Array<String> args) {
 						case BuildFlag_DisableRedZone:
 							build_context.disable_red_zone = true;
 							break;
+						case BuildFlag_DisableUnwind:
+							build_context.disable_unwind = true;
+							break;
+
 						case BuildFlag_DisallowDo:
 							build_context.disallow_do = true;
 							break;
@@ -1569,8 +1578,10 @@ gb_internal bool parse_build_flags(Array<String> args) {
 								build_context.integer_division_by_zero_behaviour = IntegerDivisionByZero_Zero;
 							} else if (str_eq_ignore_case(value.value_string, "self")) {
 								build_context.integer_division_by_zero_behaviour = IntegerDivisionByZero_Self;
-							}else {
-								gb_printf_err("-integer-division-by-zero options are 'trap', 'zero', and 'self'.\n");
+							} else if (str_eq_ignore_case(value.value_string, "all-bits")) {
+								build_context.integer_division_by_zero_behaviour = IntegerDivisionByZero_AllBits;
+							} else {
+								gb_printf_err("-integer-division-by-zero options are 'trap', 'zero', 'self', and 'all-bits'.\n");
 								bad_flags = true;
 							}
 							break;
@@ -1779,6 +1790,11 @@ gb_internal bool parse_build_flags(Array<String> args) {
 			did_you_mean_flag(name);
 			bad_flags = true;
 		}
+	}
+
+	if (set_flags[BuildFlag_VetUnusedProcedures] && !set_flags[BuildFlag_VetPackages]) {
+		gb_printf_err("-vet-unused-procedures must be used with -vet-packages\n");
+		bad_flags = true;
 	}
 
 	if ((!(build_context.export_timings_format == TimingsExportUnspecified)) && (build_context.export_timings_file.len == 0)) {
@@ -2289,9 +2305,10 @@ gb_internal void export_linked_libraries(LinkerData *gen) {
 
 	for (auto *e : gen->foreign_libraries) {
 		GB_ASSERT(e->kind == Entity_LibraryName);
+		ast_node(imp, ForeignImportDecl, e->LibraryName.decl);
 
-		for (auto lib_path : e->LibraryName.paths) {
-			lib_path = string_trim_whitespace(lib_path);
+		for (isize i = 0; i < e->LibraryName.paths.count; i++) {
+			String lib_path = string_trim_whitespace(e->LibraryName.paths[i]);
 			if (lib_path.len == 0) {
 				continue;
 			}
@@ -2312,16 +2329,15 @@ gb_internal void export_linked_libraries(LinkerData *gen) {
 			}
 
 			gb_fprintf(&f, "\t");
-			ast_node(imp, ForeignImportDecl, e->LibraryName.decl);
-			for (Ast* file_path : imp->filepaths) {
-				GB_ASSERT(file_path->tav.mode == Addressing_Constant && file_path->tav.value.kind == ExactValue_String);
-				String file_path_str = file_path->tav.value.value_string;
 
-				if (string_starts_with(file_path_str, str_lit("system:"))) {
-					gb_fprintf(&f, "system");
-				} else {
-					gb_fprintf(&f, "user");
-				}
+			Ast *file_path = imp->filepaths[i];
+			GB_ASSERT(file_path->tav.mode == Addressing_Constant && file_path->tav.value.kind == ExactValue_String);
+			String file_path_str = file_path->tav.value.value_string;
+
+			if (string_starts_with(file_path_str, str_lit("system:"))) {
+				gb_fprintf(&f, "system");
+			} else {
+				gb_fprintf(&f, "user");
 			}
 
 			gb_fprintf(&f, "\n");
@@ -2882,6 +2898,10 @@ gb_internal int print_show_help(String const arg0, String command, String option
 			print_usage_line(2, "Shows an overview of all the #config/#defined usages in the project.");
 		}
 
+		if (print_flag("-ignore-unused-defineables")) {
+			print_usage_line(2, "Silence warning/error if a -define doesn't have at least one #config/#defined usage.");
+		}
+
 		if (print_flag("-show-system-calls")) {
 			print_usage_line(2, "Prints the whole command and arguments for calls to external tools like linker and assembler.");
 		}
@@ -2959,6 +2979,10 @@ gb_internal int print_show_help(String const arg0, String command, String option
 	if (check) {
 		if (print_flag("-target:<string>")) {
 			print_usage_line(2, "Sets the target for the executable to be built in.");
+			print_usage_line(2, "Examples:");
+				print_usage_line(3, "-target:linux_amd64");
+				print_usage_line(3, "-target:windows_amd64");
+				print_usage_line(3, "-target:\"?\" for a list");
 		}
 
 		if (print_flag("-terse-errors")) {
@@ -3840,6 +3864,7 @@ int main(int arg_count, char const **arg_ptr) {
 	if (build_context.show_debug_messages) {
 		debugf("Selected microarch: %.*s\n", LIT(march));
 		debugf("Default microarch features: %.*s\n", LIT(default_features));
+		debugf("Target triplet: %.*s\n", LIT(build_context.metrics.target_triplet));
 		for_array(i, build_context.build_paths) {
 			String build_path = path_to_string(heap_allocator(), build_context.build_paths[i]);
 			debugf("build_paths[%ld]: %.*s\n", i, LIT(build_path));
@@ -3890,7 +3915,9 @@ int main(int arg_count, char const **arg_ptr) {
 
 	MAIN_TIME_SECTION("type check");
 	check_parsed_files(checker);
-	check_defines(&build_context, checker);
+	if (!build_context.ignore_unused_defineables) {
+		check_defines(&build_context, checker);
+	}
 	if (any_errors()) {
 		print_all_errors();
 		return 1;
