@@ -83,12 +83,13 @@ TOKEN_KIND(Token__ComparisonEnd, ""), \
 	TOKEN_KIND(Token_BackSlash,     "\\"),  \
 TOKEN_KIND(Token__OperatorEnd, ""), \
 \
+TOKEN_KIND(Token_import,      "#import"),      \
+TOKEN_KIND(Token_foreign,     "#foreign"),     \
+TOKEN_KIND(Token_when,        "#if"),        \
+\
 TOKEN_KIND(Token__KeywordBegin, ""), \
-	TOKEN_KIND(Token_import,      "import"),      \
-	TOKEN_KIND(Token_foreign,     "foreign"),     \
 	TOKEN_KIND(Token_package,     "package"),     \
 	TOKEN_KIND(Token_typeid,      "typeid"),      \
-	TOKEN_KIND(Token_when,        "when"),        \
 	TOKEN_KIND(Token_where,       "where"),       \
 	TOKEN_KIND(Token_if,          "if"),          \
 	TOKEN_KIND(Token_else,        "else"),        \
@@ -1047,8 +1048,70 @@ gb_internal void tokenizer_get_token(Tokenizer *t, Token *token, int repeat=0) {
 				break;
 			}
 			break;
+
 		case '#':
+            struct NewDirectiveMapping {
+				char const *name;
+				isize len;
+				TokenKind kind;
+			};
+            static NewDirectiveMapping const new_directives[] = {
+                {"import",  6, Token_import},
+                {"if",      2, Token_when},
+                {"foreign", 7, Token_foreign},
+            };
+
+			// Init kind
 			token->kind = Token_Hash;
+
+			//
+			// Loop through the new directive mapping array, peek at the word directly following
+			// the `#` to see whether the entire word is one of the new directives.
+			//
+            for (isize index = 0; index < gb_count_of(new_directives); index++) {
+                NewDirectiveMapping const &directive_to_check = new_directives[index];
+
+				// If the first character doesn't match, then go and try next one.
+                if (cast(Rune)directive_to_check.name[0] != t->curr_rune) {
+                    continue;
+                }
+
+                bool match = true;
+                for (isize i = 1; i < directive_to_check.len; i++) {
+                    if (peek_byte(t, i-1) != cast(u8)directive_to_check.name[i]) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (!match) {
+                    continue;
+                }
+
+				//
+				// Exclude the following bad matches:
+				//
+                // - "#importer"
+				// -"#iffy" must stay '#' + identifier
+				//
+                if (rune_is_letter_or_digit(peek_byte(t, directive_to_check.len-1))) {
+                    continue;
+                }
+
+				//
+				// If matched, consume the all token runes and reset the token kind!!!
+				//
+                for (isize i = 0; i < directive_to_check.len; i++) {
+                    advance_to_next_rune(t);
+                }
+                token->kind = directive_to_check.kind;
+
+				// Done, jump directly
+                goto new_directive_matched;
+            }
+
+			// --------------------------------------------------------------------
+			// The original token logic
+			//
 			if (t->curr_rune == '!') {
 				token->kind = Token_Comment;
 				tokenizer_skip_line(t);
@@ -1067,7 +1130,13 @@ gb_internal void tokenizer_get_token(Tokenizer *t, Token *token, int repeat=0) {
 					advance_to_next_rune(t);
 				}
 			}
+			// --------------------------------------------------------------------
+
+			// New jump point
+            new_directive_matched:;
+
 			break;
+
 		case '/':
 			token->kind = Token_Quo;
 			switch (t->curr_rune) {
