@@ -1,99 +1,27 @@
-<p align="center">
-    <img src="misc/logo-slim.png" alt="Odin logo" style="width:65%">
-    <br/>
-   The Data-Oriented Language for Sane Software Development.
-    <br/>
-    <br/>
-    <a href="https://github.com/odin-lang/odin/releases/latest">
-        <img src="https://img.shields.io/github/release/odin-lang/odin.svg">
-    </a>
-    <a href="https://github.com/odin-lang/odin/releases/latest">
-        <img src="https://img.shields.io/badge/platforms-Windows%20|%20Linux%20|%20macOS-green.svg">
-    </a>
-    <br>
-    <a href="https://discord.com/invite/sVBPHEv">
-        <img src="https://img.shields.io/discord/568138951836172421?logo=discord">
-    </a>
-    <a href="https://github.com/odin-lang/odin/actions">
-        <img src="https://github.com/odin-lang/odin/actions/workflows/ci.yml/badge.svg?branch=master&event=push">
-    </a>
-</p>
+# This is a fork of [The Odin Programming Language](https://github.com/odin-lang/Odin)
 
-# The Odin Programming Language
+I tried both `Odin` and `Jai` for a while, and I love both. In the past few months, I have used both of them to experiment with the following side-projects:
 
+- Common utilities, ported from my C utils, which include: Hex, logger, memory-prints, commands, terminal, IO multiplexing (TCP/UDP/IPC, etc.
 
-Odin is a general-purpose programming language with distinct typing, built for high performance, modern systems, and built-in data-oriented data types. The Odin Programming Language, the C alternative for the joy of programming.
+- `libuv-like` event loop for my own TUI framework
 
-Website: [https://odin-lang.org/](https://odin-lang.org/)
+- TUI widgets
 
-```odin
-package main
+- Ported all my fish/bash scripts to both of them. YES, you can use `Jai` or `Odin` like a scripting language: run a source file directly without producing the actual binary file, absolutely no problem:)
 
-import "core:fmt"
+</br>
 
-main :: proc() {
-	program := "+ + * 😃 - /"
-	accumulator := 0
+Honestly, I prefer `Jai` over `Odin`. But unfortunately, `Jai` doesn't support BSDs yet (my daily OS is **FreeBSD**), and I don't think Jonathan plans to support them either; that's why `Odin` is my C alernative choose so far.
 
-	for token in program {
-		switch token {
-		case '+': accumulator += 1
-		case '-': accumulator -= 1
-		case '*': accumulator *= 2
-		case '/': accumulator /= 2
-		case '😃': accumulator *= accumulator
-		case: // Ignore everything else
-		}
-	}
+To get better programming user experiences, I made the following change to `Odin`.
 
-	fmt.printf("The program \"%s\" calculates the value %d\n",
-	           program, accumulator)
-}
+Consistent `#` prefix for compile-time directives:
 
-```
+- `import` becomes `#import` - Compile-time module importing.
 
-## Documentation
+- `when` becomes `#if` — Compile-time conditional compilation.
 
-#### [Getting Started](https://odin-lang.org/docs/install)
+- `foreign` becomes `#foreign` — Compile-time foreign blocks and foreign library declarations.
 
-Instructions for downloading and installing the Odin compiler and libraries.
-
-#### [Nightly Builds](https://odin-lang.org/docs/nightly/)
-
-Get the latest nightly builds of Odin.
-
-### Learning Odin
-
-#### [Overview of Odin](https://odin-lang.org/docs/overview)
-
-An overview of the Odin programming language.
-
-#### [Frequently Asked Questions (FAQ)](https://odin-lang.org/docs/faq)
-
-Answers to common questions about Odin.
-
-#### [Packages](https://pkg.odin-lang.org/)
-
-Documentation for all the official packages part of the [core](https://pkg.odin-lang.org/core/) and [vendor](https://pkg.odin-lang.org/vendor/) library collections.
-
-#### [Examples](https://github.com/odin-lang/examples)
-
-Examples on how to write idiomatic Odin code. Shows how to accomplish specific tasks in Odin, as well as how to use packages from `core` and `vendor`.
-
-#### [Odin Documentation](https://odin-lang.org/docs/)
-
-Documentation for the Odin language itself.
-
-#### [Odin Discord](https://discord.gg/sVBPHEv)
-
-Get live support and talk with other Odin programmers on the Odin Discord.
-
-### Articles
-
-#### [The Odin Blog](https://odin-lang.org/news/)
-
-The official blog of the Odin programming language, featuring announcements, news, and in-depth articles by the Odin team and guests.
-
-## Warnings
-
-* The Odin compiler is still in development.
+All those changes are just my personal preferences, nothing related to `Jai vs Odin` arguments; they're very different from the design, just the syntax looks a bit similar.
