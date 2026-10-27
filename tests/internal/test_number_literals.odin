@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:testing"
-import "core:strconv"
+#import "core:testing"
+#import "core:strconv"
 
 // Regression tests for numeric literal parsing and constant folding:
 //   * an integer literal with a large exponent (e.g. `98765e309`) is an exact arbitrary-precision

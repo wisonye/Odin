@@ -1,11 +1,11 @@
 // Tests for the constant time RSA primitives
 package test_core_crypto_bigint
 
-import "base:runtime"
-import "core:crypto/_bigint"
-import "core:log"
-import "core:slice"
-import "core:testing"
+#import "base:runtime"
+#import "core:crypto/_bigint"
+#import "core:log"
+#import "core:slice"
+#import "core:testing"
 
 ROUNDS :: 100_000
 

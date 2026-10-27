@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVRoutingPlaybackArbiter", objc_superclass=NS.Object)
 RoutingPlaybackArbiter :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RoutingPlaybackArbiter, objc_selector="sharedRoutingPlaybackArbiter", objc_name="sharedRoutingPlaybackArbiter", objc_is_class_method=true)
 	RoutingPlaybackArbiter_sharedRoutingPlaybackArbiter :: proc() -> ^RoutingPlaybackArbiter ---
 
@@ -37,4 +37,4 @@ foreign lib {
 RoutingPlaybackParticipant :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

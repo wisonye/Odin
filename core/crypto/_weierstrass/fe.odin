@@ -1,8 +1,8 @@
 package _weierstrass
 
-import p256r1 "core:crypto/_fiat/field_p256r1"
-import p384r1 "core:crypto/_fiat/field_p384r1"
-import subtle "core:crypto/_subtle"
+#import p256r1 "core:crypto/_fiat/field_p256r1"
+#import p384r1 "core:crypto/_fiat/field_p384r1"
+#import subtle "core:crypto/_subtle"
 
 Field_Element_p256r1 :: p256r1.Montgomery_Domain_Field_Element
 Field_Element_p384r1 :: p384r1.Montgomery_Domain_Field_Element

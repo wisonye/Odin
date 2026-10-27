@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="NSScreen", objc_superclass=NS.Object)
 Screen :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Screen, objc_selector="canRepresentDisplayGamut:", objc_name="canRepresentDisplayGamut")
 	Screen_canRepresentDisplayGamut :: proc(self: ^Screen, displayGamut: DisplayGamut) -> bool ---
 

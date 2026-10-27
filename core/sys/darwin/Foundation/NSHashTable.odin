@@ -10,7 +10,7 @@ HashTable :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HashTable, objc_selector="initWithOptions:capacity:", objc_name="initWithOptions")
 	HashTable_initWithOptions :: proc(self: ^HashTable, options: PointerFunctionsOptions, initialCapacity: UInteger) -> instancetype ---
 

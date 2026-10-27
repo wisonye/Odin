@@ -1,6 +1,6 @@
 package uring
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 // Do not perform any I/O. This is useful for testing the performance of the uring implementation itself.
 nop :: proc(ring: ^Ring, user_data: u64) -> (sqe: ^linux.IO_Uring_SQE, ok: bool) {
@@ -78,7 +78,7 @@ Unlike poll or epoll without EPOLLONESHOT, by default this interface always work
 That is, once the poll operation is completed, it will have to be resubmitted.
 
 If IORING_POLL_ADD_MULTI is set in the SQE len field, then the poll will work in multi shot mode instead.
-That means it'll repatedly trigger when the requested event becomes true, and hence multiple CQEs can be generated from this single SQE.
+That means it'll repatedly trigger #if the requested event becomes true, and hence multiple CQEs can be generated from this single SQE.
 The CQE flags field will have IORING_CQE_F_MORE set on completion if the application should expect further CQE entries from the original request.
 If this flag isn't set on completion, then the poll request has been terminated and no further events will be generated.
 This mode is available since 5.13.
@@ -190,7 +190,7 @@ Issue the equivalent of a sendmsg(2) system call.
 See also sendmsg(2) for the general description of the related system call.
 
 poll_first: if set, uring will assume the socket is currently full and attempting to send data will be unsuccessful.
-For this case, uring will arm internal poll and trigger a send of the data when there is enough space available.
+For this case, uring will arm internal poll and trigger a send of the data #if there is enough space available.
 This initial send attempt can be wasteful for the case where the socket is expected to be full, setting this flag will
 bypass the initial send attempt and go straight to arming poll.
 If poll does indicate that data can be sent, the operation will proceed.
@@ -214,7 +214,7 @@ sendmsg :: proc(ring: ^Ring, user_data: u64, fd: linux.Fd, msghdr: ^linux.Msg_Hd
 Works just like sendmsg, but receives instead of sends.
 
 poll_first: If set, uring will assume the socket is currently empty and attempting to receive data will be unsuccessful.
-For this case, uring will arm internal poll and trigger a receive of the data when the socket has data to be read.
+For this case, uring will arm internal poll and trigger a receive of the data #if the socket has data to be read.
 This initial receive attempt can be wasteful for the case where the socket is expected to be empty, setting this flag will bypass the initial receive attempt and go straight to arming poll.
 If poll does indicate that data is ready to be received, the operation will proceed.
 
@@ -239,7 +239,7 @@ Issue the equivalent of a send(2) system call.
 See also send(2) for the general description of the related system call.
 
 poll_first: If set, uring will assume the socket is currently full and attempting to send data will be unsuccessful.
-For this case, uring will arm internal poll and trigger a send of the data when there is enough space available.
+For this case, uring will arm internal poll and trigger a send of the data #if there is enough space available.
 This initial send attempt can be wasteful for the case where the socket is expected to be full, setting this flag will bypass the initial send attempt and go straight to arming poll.
 If poll does indicate that data can be sent, the operation will proceed.
 
@@ -274,7 +274,7 @@ sendto :: proc(ring: ^Ring, user_data: u64, sockfd: linux.Fd, buf: []byte, flags
 Works just like send, but receives instead of sends.
 
 poll_first: If set, uring will assume the socket is currently empty and attempting to receive data will be unsuccessful.
-For this case, uring will arm internal poll and trigger a receive of the data when the socket has data to be read.
+For this case, uring will arm internal poll and trigger a receive of the data #if the socket has data to be read.
 This initial receive attempt can be wasteful for the case where the socket is expected to be empty, setting this flag will bypass the initial receive attempt and go straight to arming poll.
 If poll does indicate that data is ready to be received, the operation will proceed.
 
@@ -297,7 +297,7 @@ recv :: proc(ring: ^Ring, user_data: u64, sockfd: linux.Fd, buf: []byte, flags: 
 /*
 Register a timeout operation.
 
-The timeout will complete when either the timeout expires, or after the specified number of
+The timeout will complete #if either the timeout expires, or after the specified number of
 events complete (if `count` is greater than `0`).
 
 `flags` may be `0` for a relative timeout, or `IORING_TIMEOUT_ABS` for an absolute timeout.

@@ -1,10 +1,10 @@
 package test_core_odin_parser
 
-import "base:runtime"
-import "core:testing"
-import "core:slice"
-import "core:odin/ast"
-import "core:odin/parser"
+#import "base:runtime"
+#import "core:testing"
+#import "core:slice"
+#import "core:odin/ast"
+#import "core:odin/parser"
 
 @test
 test_parse_file_tags :: proc(t: ^testing.T) {

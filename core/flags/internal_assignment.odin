@@ -1,14 +1,14 @@
 #+private
 package flags
 
-import "base:intrinsics"
-@require import "base:runtime"
-import "core:container/bit_array"
-@require import "core:fmt"
-@require import "core:mem"
-import "core:reflect"
-@require import "core:strconv"
-@require import "core:strings"
+#import "base:intrinsics"
+@require #import "base:runtime"
+#import "core:container/bit_array"
+@require #import "core:fmt"
+@require #import "core:mem"
+#import "core:reflect"
+@require #import "core:strconv"
+@require #import "core:strings"
 
 // Push a positional argument onto a data struct, checking for specified
 // positionals first before adding it to a fallback field.
@@ -33,7 +33,7 @@ push_positional :: #force_no_inline proc (model: ^$T, parser: ^Parser, arg: stri
 	field, index, has_pos_assigned := get_field_by_pos(model, pos)
 
 	if !has_pos_assigned {
-		when intrinsics.type_has_field(T, INTERNAL_OVERFLOW_FLAG) {
+		#if intrinsics.type_has_field(T, INTERNAL_OVERFLOW_FLAG) {
 			// Add it to the fallback array.
 			field = reflect.struct_field_by_name(T, INTERNAL_OVERFLOW_FLAG)
 		} else {

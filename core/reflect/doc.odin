@@ -6,7 +6,7 @@
 // Especially since `any` can be unintuitive in its use to many, it can be dangerous to use. It is highly recommend that you **do not**
 // use `any` unless you know exactly what you are doing.
 //
-// RTTI is an extremely powerful tool which should only be used when absolutely necessary (such runtime-type-safe formatted printing).
+// RTTI is an extremely powerful tool which should only be used #if absolutely necessary (such runtime-type-safe formatted printing).
 //
 // ## The Type System of Odin
 //

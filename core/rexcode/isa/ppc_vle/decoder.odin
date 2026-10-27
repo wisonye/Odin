@@ -2,7 +2,7 @@
 
 package rexcode_ppc_vle
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC VLE Decoder

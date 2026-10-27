@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKOctree", objc_superclass=NS.Object)
 Octree :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Octree, objc_selector="octreeWithBoundingBox:minimumCellSize:", objc_name="octreeWithBoundingBox", objc_is_class_method=true)
 	Octree_octreeWithBoundingBox :: proc(box: Box, minCellSize: cffi.float) -> instancetype ---
 
@@ -52,7 +52,7 @@ Octree_removeElement :: proc {
 @(objc_class="GKOctreeNode", objc_superclass=NS.Object)
 OctreeNode :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OctreeNode, objc_selector="box", objc_name="box")
 	OctreeNode_box :: proc(self: ^OctreeNode) -> Box ---
 }

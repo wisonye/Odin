@@ -1,12 +1,12 @@
 #+build windows
 package sys_windows
 
-foreign import advapi32 "system:Advapi32.lib"
+#foreign #import advapi32 "system:Advapi32.lib"
 
 HCRYPTPROV :: distinct HANDLE
 
 @(default_calling_convention="system")
-foreign advapi32 {
+#foreign advapi32 {
 	@(link_name = "SystemFunction036")
 	RtlGenRandom :: proc(RandomBuffer: ^u8, RandomBufferLength: ULONG) -> BOOLEAN ---
 	OpenProcessToken :: proc(ProcessHandle: HANDLE,
@@ -33,7 +33,7 @@ foreign advapi32 {
 
 // Necessary to create a token to impersonate a user with for CreateProcessAsUser
 @(default_calling_convention="system")
-foreign advapi32 {
+#foreign advapi32 {
 	LogonUserW :: proc(
 		lpszUsername: LPCWSTR,
 		lpszDomain: LPCWSTR,

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKGoal", objc_superclass=NS.Object)
 Goal :: struct {
@@ -11,7 +11,7 @@ Goal :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Goal, objc_selector="goalToSeekAgent:", objc_name="goalToSeekAgent", objc_is_class_method=true)
 	Goal_goalToSeekAgent :: proc(agent: ^Agent) -> instancetype ---
 

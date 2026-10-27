@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSStepper", objc_superclass=Control)
 Stepper :: struct {
@@ -12,7 +12,7 @@ Stepper :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Stepper, objc_selector="minValue", objc_name="minValue")
 	Stepper_minValue :: proc(self: ^Stepper) -> cffi.double ---
 
@@ -49,7 +49,7 @@ foreign lib {
 StepperCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StepperCell, objc_selector="minValue", objc_name="minValue")
 	StepperCell_minValue :: proc(self: ^StepperCell) -> cffi.double ---
 
@@ -86,7 +86,7 @@ foreign lib {
 StepperTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StepperTouchBarItem, objc_selector="stepperTouchBarItemWithIdentifier:formatter:", objc_name="stepperTouchBarItemWithIdentifier_formatter", objc_is_class_method=true)
 	StepperTouchBarItem_stepperTouchBarItemWithIdentifier_formatter :: proc(identifier: ^NS.String, formatter: ^NS.Formatter) -> instancetype ---
 

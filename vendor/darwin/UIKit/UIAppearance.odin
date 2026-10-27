@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIAppearance")
 Appearance :: struct {
@@ -12,7 +12,7 @@ Appearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Appearance, objc_selector="appearance", objc_name="appearance", objc_is_class_method=true)
 	Appearance_appearance :: proc() -> instancetype ---
 
@@ -47,4 +47,4 @@ AppearanceContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

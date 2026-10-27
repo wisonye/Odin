@@ -10,12 +10,12 @@ package test_core_compress
 	A test suite for ZLIB, GZIP and Shoco.
 */
 
-import "core:testing"
+#import "core:testing"
 
-import "core:compress/zlib"
-import "core:compress/gzip"
-import "core:compress/shoco"
-import "core:bytes"
+#import "core:compress/zlib"
+#import "core:compress/gzip"
+#import "core:compress/shoco"
+#import "core:bytes"
 
 @test
 zlib_test :: proc(t: ^testing.T) {

@@ -8,13 +8,13 @@ package regex_parser
 		Feoramund: Initial implementation.
 */
 
-import "base:intrinsics"
-import "core:strconv"
-import "core:strings"
-import "core:text/regex/common"
-import "core:text/regex/tokenizer"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "core:strconv"
+#import "core:strings"
+#import "core:text/regex/common"
+#import "core:text/regex/tokenizer"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 Token      :: tokenizer.Token
 Token_Kind :: tokenizer.Token_Kind

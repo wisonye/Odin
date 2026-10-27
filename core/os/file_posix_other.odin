@@ -2,9 +2,9 @@
 #+build openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _posix_absolute_path :: proc(fd: posix.FD, name: string, allocator: runtime.Allocator) -> (path: cstring, err: Error) {
 	temp_allocator := TEMP_ALLOCATOR_GUARD({ allocator })

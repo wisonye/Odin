@@ -1,19 +1,19 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // signal.h - signals
 
-foreign lib {
+#foreign lib {
 	/*
 	Raise a signal to the process/group specified by pid.
 
@@ -141,7 +141,7 @@ foreign lib {
 	sigrelse :: proc(sig: Signal) -> result ---
 
 	/*
-	Changes the restart behavior when a function is interrupted by the specified signal.
+	Changes the restart behavior #if a function is interrupted by the specified signal.
 
 	If flag is true, SA_RESTART is removed, added otherwise.
 
@@ -307,7 +307,7 @@ Any_Code :: enum c.int {
 }
 
 SA_Flags_Bits :: enum c.int {
-	// Do not generate SIGCHLD when children stop or stopped children continue.
+	// Do not generate SIGCHLD #if children stop or stopped children continue.
 	NOCLDSTOP  = log2(SA_NOCLDSTOP),
 	// Cause signal delivery to occur on an alternate stack.
 	ONSTACK    = log2(SA_ONSTACK),
@@ -343,7 +343,7 @@ Sig :: enum c.int {
 	SETMASK = SIG_SETMASK,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LSIGPROCMASK :: "__sigprocmask14"
 	@(private) LSIGACTION   :: "__sigaction_siginfo"
 	@(private) LSIGADDSET   :: "__sigaddset14"
@@ -367,7 +367,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LSIGSUSPEND  :: "sigsuspend"
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	// Request that signal be held
 	SIG_HOLD :: rawptr(uintptr(5))
@@ -505,7 +505,7 @@ when ODIN_OS == .Darwin {
 	SI_ASYNCIO :: 0x10004
 	SI_MESGQ   :: 0x10005
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	// Request that signal be held
 	SIG_HOLD :: rawptr(uintptr(3))
@@ -567,9 +567,9 @@ when ODIN_OS == .Darwin {
 	SS_ONSTACK :: 0x0001
 	SS_DISABLE :: 0x0004
 
-	when ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
+	#if ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
 		MINSIGSTKSZ :: 1024 * 4
-	} else when ODIN_ARCH == .amd64 || ODIN_ARCH == .i386 {
+	} else #if ODIN_ARCH == .amd64 || ODIN_ARCH == .i386 {
 		MINSIGSTKSZ :: 512 * 4
 	}
 
@@ -671,7 +671,7 @@ when ODIN_OS == .Darwin {
 	SI_ASYNCIO :: 0x10004
 	SI_MESGQ   :: 0x10005
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	// Request that signal be held
 	SIG_HOLD :: rawptr(uintptr(3))
@@ -851,7 +851,7 @@ when ODIN_OS == .Darwin {
 	SI_ASYNCIO :: -3
 	SI_MESGQ   :: -4
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	// Request that signal be held
 	SIG_HOLD :: rawptr(uintptr(3))
@@ -1010,7 +1010,7 @@ when ODIN_OS == .Darwin {
 	SI_ASYNCIO :: -4 // NOTE: not implemented
 	SI_MESGQ   :: -5 // NOTE: not implemented
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	// Request that signal be held
 	SIG_HOLD :: rawptr(uintptr(2))
@@ -1072,7 +1072,7 @@ when ODIN_OS == .Darwin {
 	SS_ONSTACK :: 1
 	SS_DISABLE :: 2
 
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		MINSIGSTKSZ :: 6144
 		SIGSTKSZ    :: 12288
 	} else {
@@ -1089,7 +1089,7 @@ when ODIN_OS == .Darwin {
 	@(private)
 	__SI_MAX_SIZE :: 128
 
-	when size_of(int) == 8 {
+	#if size_of(int) == 8 {
 		@(private)
 		_pad0 :: struct {
 			_pad0: c.int,

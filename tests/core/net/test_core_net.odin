@@ -13,14 +13,14 @@
 #+feature dynamic-literals
 package test_core_net
 
-import "core:testing"
-import "core:net"
-import "core:strconv"
-import "core:sync"
-import "core:time"
-import "core:thread"
-import "core:fmt"
-import "core:log"
+#import "core:testing"
+#import "core:net"
+#import "core:strconv"
+#import "core:sync"
+#import "core:time"
+#import "core:thread"
+#import "core:fmt"
+#import "core:log"
 
 @test
 address_parsing_test :: proc(t: ^testing.T) {
@@ -609,7 +609,7 @@ test_dns_resolve :: proc(t: ^testing.T) {
 	// NOTE: This test depends on external factors, so if it fails, an IP
 	// address may have changed or become unavailable.
 	// It regularly fails on the RISC-V CI runners, so we skip it there
-	when ODIN_ARCH == .riscv64 {
+	#if ODIN_ARCH == .riscv64 {
 		log.infof("Skipped on riscv64")
 		return
 	}
@@ -665,7 +665,7 @@ test_nonblocking_option :: proc(t: ^testing.T) {
 	}
 }
 
-// Test that when the server closes it's connection, the client's next receive is `0, nil` to indicate a correct close.
+// Test that #if the server closes it's connection, the client's next receive is `0, nil` to indicate a correct close.
 @(test)
 test_connection_close :: proc(t: ^testing.T) {
 	server, listen_err := net.listen_tcp({address=net.IP4_Address{127, 0, 0, 1}, port=0})

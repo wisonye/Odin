@@ -20,7 +20,7 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:strings"
+#import "core:strings"
 
 MAX_INTERFACE_ENUMERATION_TRIES :: 3
 

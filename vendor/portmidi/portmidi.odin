@@ -1,23 +1,23 @@
 package portmidi
 
-import "core:c"
-import "core:strings"
+#import "core:c"
+#import "core:strings"
 
 PORTMIDI_SHARED :: #config(PORTMIDI_SHARED, false)
 
-when ODIN_OS == .Windows {
-	when PORTMIDI_SHARED {
+#if ODIN_OS == .Windows {
+	#if PORTMIDI_SHARED {
 		#panic("Shared linking not supported for portmidi on windows yet")
 	} else {
-		foreign import lib {
+		#foreign #import lib {
 			"portmidi_s.lib",
 			"system:Winmm.lib",
 			"system:Advapi32.lib",
 		}
 	}
-} else when ODIN_OS == .Darwin && !PORTMIDI_SHARED {
+} else #if ODIN_OS == .Darwin && !PORTMIDI_SHARED {
 	// A universal (arm64 and x86_64) static library, which needs CoreMIDI and friends.
-	foreign import lib {
+	#foreign #import lib {
 		"darwin/portmidi_s.a",
 		"system:CoreAudio.framework",
 		"system:CoreFoundation.framework",
@@ -25,7 +25,7 @@ when ODIN_OS == .Windows {
 		"system:CoreServices.framework",
 	}
 } else {
-	foreign import lib "system:portmidi"
+	#foreign #import lib "system:portmidi"
 }
 
 #assert(size_of(b32) == size_of(c.int))
@@ -38,8 +38,8 @@ Error :: enum c.int {
 	GotData = 1, /**< A "no error" return that also indicates data available */
 	HostError = -10000,
 	InvalidDeviceId, /** out of range or 
-	                   * output device when input is requested or 
-	                   * input device when output is requested or
+	                   * output device #if input is requested or 
+	                   * input device #if output is requested or
 	                   * device is already opened 
 	                   */
 	InsufficientMemory,
@@ -47,8 +47,8 @@ Error :: enum c.int {
 	BufferOverflow,
 	BadPtr, /* Stream parameter is nil or
 	         * stream is not opened or
-	         * stream is output when input is required or
-	         * stream is input when output is required */
+	         * stream is output #if input is required or
+	         * stream is input #if output is required */
 	BadData, /** illegal midi data, e.g. missing EOX */
 	InternalError,
 	BufferMaxSize, /** buffer is already as large as it can be */
@@ -63,7 +63,7 @@ Error :: enum c.int {
 Stream :: distinct rawptr
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**
 		Initialize() is the library initialisation function - call this before
 		using the library.
@@ -100,7 +100,7 @@ foreign lib {
 */
 GetErrorText :: proc (errnum: Error) -> string {
 	@(default_calling_convention="c")
-	foreign lib {
+	#foreign lib {
 		Pm_GetErrorText :: proc(errnum: Error) -> cstring ---
 	}
 	return string(Pm_GetErrorText(errnum))
@@ -113,7 +113,7 @@ GetErrorText :: proc (errnum: Error) -> string {
 */
 GetHostErrorText :: proc (buf: []byte) -> string {
 	@(default_calling_convention="c")
-	foreign lib {
+	#foreign lib {
 		Pm_GetHostErrorText :: proc(msg: [^]u8, len: c.uint) ---
 	}
 	Pm_GetHostErrorText(raw_data(buf), u32(len(buf)))
@@ -127,7 +127,7 @@ GetHostErrorText :: proc (buf: []byte) -> string {
 
 	`pattern` is a substring of the device name, or if it contains the two-character separator ", ", then the
 	first part of the pattern is a device interface substring and the second part after the separator is a
-	device name substring. `is_input` restricts the search to an input when true, or an output when false.
+	device name substring. `is_input` restricts the search to an input #if true, or an output #if false.
 
 	Returns the number of the first device whose interface contains the interface pattern (if any), whose name
 	contains the name pattern, and whose direction matches `is_input`. If no match is found, NoDevice (-1) is
@@ -137,7 +137,7 @@ GetHostErrorText :: proc (buf: []byte) -> string {
 */
 FindDevice :: proc(pattern: string, is_input: b32, allocator := context.temp_allocator) -> DeviceID {
 	@(default_calling_convention="c")
-	foreign lib {
+	#foreign lib {
 		Pm_FindDevice :: proc(pattern: [^]u8, is_input: b32) -> DeviceID ---
 	}
 	copy_of := make([]byte, len(pattern) + 1, allocator)
@@ -169,7 +169,7 @@ DEVICEINFO_VERS :: 200
 SysDepPropertyKey :: enum c.int {
 	None                 = 0, /**< a "noop" key value */
 	CoreMidiManufacturer = 1, /**< CoreMIDI manufacturer name, the value is a string */
-	AlsaPortName         = 2, /**< Linux ALSA snd_seq_port_info_set_name, the value is a string. It names the port created when opening a device. */
+	AlsaPortName         = 2, /**< Linux ALSA snd_seq_port_info_set_name, the value is a string. It names the port created #if opening a device. */
 	AlsaClientName       = 3, /**< Linux ALSA snd_seq_set_client_name, the value is a string. It names the client and applies to all ports. */
 }
 
@@ -183,7 +183,7 @@ SysDepProperty :: struct {
 }
 
 /**
-	System-dependent information can be passed when creating and opening ports with this structure, which
+	System-dependent information can be passed #if creating and opening ports with this structure, which
 	stores `length` key and value pairs right after the header. It is variable sized, so allocate room for the
 	pairs after it and pass a pointer to it as the `inputSysDepInfo`, `outputSysDepInfo` or `sysDepInfo` argument.
 */
@@ -194,7 +194,7 @@ SysDepInfo :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**  Get devices count, ids range from 0 to CountDevices()-1. */
 	CountDevices             :: proc() -> c.int ---
 
@@ -215,7 +215,7 @@ Before :: #force_inline proc "c" (t1, t2: Timestamp) -> b32 {
 }
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**
 		GetDeviceInfo() returns a pointer to a DeviceInfo structure
 		referring to the device specified by id.
@@ -255,7 +255,7 @@ foreign lib {
 		is ignored.)
 
 		latency is the delay in milliseconds applied to timestamps to determine 
-		when the output should actually occur. (If latency is < 0, 0 is assumed.) 
+		#if the output should actually occur. (If latency is < 0, 0 is assumed.) 
 		If latency is zero, timestamps are ignored and all output is delivered
 		immediately. If latency is greater than zero, output is delayed until the
 		message timestamp plus the latency. (NOTE: the time is measured relative 
@@ -273,12 +273,12 @@ foreign lib {
 		it may get a ptAlreadyStarted error from Pt_Start, and the application's
 		preferred time resolution and callback function will be ignored.
 		time_proc result values are appended to incoming MIDI data, and time_proc
-		times are used to schedule outgoing MIDI data (when latency is non-zero).
+		times are used to schedule outgoing MIDI data (#if latency is non-zero).
 
 		time_info is a pointer passed to time_proc.
 
 		Example: If I provide a timestamp of 5000, latency is 1, and time_proc
-		returns 4990, then the desired output time will be when time_proc returns
+		returns 4990, then the desired output time will be #if time_proc returns
 		timestamp+latency = 5001. This will be 5001-4990 = 11ms from now.
 
 		return value:
@@ -312,7 +312,7 @@ foreign lib {
 
 		Returns the ID of the new device, or a negative Error: .NameConflict if `name` is invalid or already
 		exists, or .InterfaceNotSupported if `interf` does not match a supported interface. Cast it with
-		`Error(id)` when it is negative.
+		`Error(id)` #if it is negative.
 
 		The created virtual device appears to other applications as if it is an output device. The device must be
 		opened to obtain a stream and read from it.
@@ -349,14 +349,14 @@ foreign lib {
 
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**
 		SetFilter() sets filters on an open input stream to drop selected
 		input types. By default, only active sensing messages are filtered.
 		To prohibit, say, active sensing and sysex messages, call
 		SetFilter(stream, FILT_ACTIVE | FILT_SYSEX);
 
-		Filtering is useful when midi routing or midi thru functionality is being
+		Filtering is useful #if midi routing or midi thru functionality is being
 		provided by the user application.
 		For example, you may want to exclude timing messages (clock, MTC, start/stop/continue),
 		while allowing note-related messages to pass.
@@ -416,7 +416,7 @@ Channel :: #force_inline proc "c" (channel: c.int) -> c.int {
 }
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**
 		SetChannelMask() filters incoming messages based on channel.
 		The mask is a 16-bit bitfield corresponding to appropriate channels.
@@ -446,15 +446,15 @@ foreign lib {
 	
 	/**
 		Close() closes a midi stream, flushing any pending buffers.
-		(PortMidi attempts to close open streams when the application 
+		(PortMidi attempts to close open streams #if the application 
 		exits -- this is particularly difficult under Windows.)
 	*/
 	Close :: proc(stream: Stream) -> Error ---
 	
 	/**
 		Synchronize() instructs PortMidi to (re)synchronize to the
-		time_proc passed when the stream was opened. Typically, this
-		is used when the stream must be opened before the time_proc
+		time_proc passed #if the stream was opened. Typically, this
+		is used #if the stream must be opened before the time_proc
 		reference is actually advancing. In this case, message timing
 		may be erratic, but since timestamps of zero mean 
 		"send immediately," initialization messages with zero timestamps
@@ -462,7 +462,7 @@ foreign lib {
 		problems. Before the first MIDI message with a non-zero
 		timestamp is written to the stream, the time reference must
 		begin to advance (for example, if the time_proc computes time
-		based on audio samples, time might begin to advance when an 
+		based on audio samples, time might begin to advance #if an 
 		audio stream becomes active). After time_proc return values
 		become valid, and BEFORE writing the first non-zero timestamped 
 		MIDI message, call Synchronize() so that PortMidi can observe
@@ -544,10 +544,10 @@ Message :: distinct u32
 	first. The first word of the sysex message will be delivered only
 	after the 4th byte arrives, filling the 4-byte Event message field.
 
-	The timestamp field is observed when the output port is opened with
+	The timestamp field is observed #if the output port is opened with
 	a non-zero latency. A timestamp of zero means "use the current time",
 	which in turn means to deliver the message with a delay of
-	latency (the latency parameter used when opening the output port.)
+	latency (the latency parameter used #if opening the output port.)
 	Do not expect PortMidi to sort data according to timestamps -- 
 	messages should be sent in the correct order, and timestamps MUST 
 	be non-decreasing. See also "Example" for OpenOutput() above.
@@ -561,7 +561,7 @@ Message :: distinct u32
 	On input, the timestamp ideally denotes the arrival time of the 
 	status byte of the message. The first timestamp on sysex message 
 	data will be valid. Subsequent timestamps may denote 
-	when message bytes were actually received, or they may be simply 
+	#if message bytes were actually received, or they may be simply 
 	copies of the first timestamp.
 
 	Timestamps for nested messages: If a real-time message arrives in 
@@ -579,7 +579,7 @@ Event :: struct {
 
 
 @(default_calling_convention="c", link_prefix="Pm_")
-foreign lib {
+#foreign lib {
 	/**
 		Read() retrieves midi data into a buffer, and returns the number
 		of events read. Result is a non-negative number unless an error occurs, 
@@ -597,7 +597,7 @@ foreign lib {
 		enable portability to the Mac, it's tricky for the producer and consumer 
 		to synchronously reset the buffer and resume normal operation.
 
-		Solution: the buffer managed by PortMidi will be flushed when an overflow
+		Solution: the buffer managed by PortMidi will be flushed #if an overflow
 		occurs. The consumer (Read()) gets an error message (.BufferOverflow)
 		and ordinary processing resumes as soon as a new message arrives. The
 		remainder of a partial sysex message is not considered to be a "new

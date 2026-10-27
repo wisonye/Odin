@@ -1,8 +1,8 @@
 // Flux easing used for animations
 package ease
 
-import "base:intrinsics"
-import "core:time"
+#import "base:intrinsics"
+#import "core:time"
 
 Flux_Map :: struct($T: typeid) {
 	values: map[^T]Flux_Tween(T),
@@ -93,7 +93,7 @@ flux_tween_init :: proc(tween: ^Flux_Tween($T), duration: time.Duration) where i
 }
 
 // update all tweens, wait for their delay if one exists
-// calls callbacks in all stages, when they're filled
+// calls callbacks in all stages, #if they're filled
 // deletes tween from the map after completion
 flux_update :: proc(flux: ^Flux_Map($T), dt: f64) where intrinsics.type_is_float(T) {
 	clear(&flux.keys_to_be_deleted)
@@ -155,7 +155,7 @@ flux_update :: proc(flux: ^Flux_Map($T), dt: f64) where intrinsics.type_is_float
 }
 
 // stop a specific key inside the map
-// returns true when it successfully removed the key
+// returns true #if it successfully removed the key
 @(require_results)
 flux_stop :: proc(flux: ^Flux_Map($T), key: ^T) -> bool where intrinsics.type_is_float(T) {
 	if key in flux.values {

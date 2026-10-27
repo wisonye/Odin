@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_CoreHaptics
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CHHapticAdvancedPatternPlayer")
 HapticAdvancedPatternPlayer :: struct {
@@ -12,7 +12,7 @@ HapticAdvancedPatternPlayer :: struct {
 	using _: HapticPatternPlayer,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticAdvancedPatternPlayer, objc_selector="pauseAtTime:error:", objc_name="pauseAtTime_error")
 	HapticAdvancedPatternPlayer_pauseAtTime_error :: proc(self: ^HapticAdvancedPatternPlayer, time: NS.TimeInterval, outError: ^^NS.Error) -> bool ---
 
@@ -78,7 +78,7 @@ HapticAdvancedPatternPlayer_seekToOffset :: #force_inline proc "c" (self: ^Hapti
 @(objc_class="CHHapticDeviceCapability")
 HapticDeviceCapability :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticDeviceCapability, objc_selector="attributesForEventParameter:eventType:error:", objc_name="attributesForEventParameter_error")
 	HapticDeviceCapability_attributesForEventParameter_error :: proc(self: ^HapticDeviceCapability, inParameter: ^NS.String, type: ^NS.String, outError: ^^NS.Error) -> ^HapticParameterAttributes ---
 
@@ -111,7 +111,7 @@ HapticDeviceCapability_attributesForDynamicParameter :: #force_inline proc "c" (
 @(objc_class="CHHapticDynamicParameter", objc_superclass=NS.Object)
 HapticDynamicParameter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticDynamicParameter, objc_selector="init", objc_name="init")
 	HapticDynamicParameter_init :: proc(self: ^HapticDynamicParameter) -> instancetype ---
 
@@ -138,7 +138,7 @@ foreign lib {
 @(objc_class="CHHapticEngine", objc_superclass=NS.Object)
 HapticEngine :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticEngine, objc_selector="capabilitiesForHardware", objc_name="capabilitiesForHardware", objc_is_class_method=true)
 	HapticEngine_capabilitiesForHardware :: proc() -> ^HapticDeviceCapability ---
 
@@ -294,7 +294,7 @@ HapticEngine_playPatternFromData :: #force_inline proc "c" (self: ^HapticEngine,
 @(objc_class="CHHapticEvent", objc_superclass=NS.Object)
 HapticEvent :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticEvent, objc_selector="init", objc_name="init")
 	HapticEvent_init :: proc(self: ^HapticEvent) -> instancetype ---
 
@@ -347,7 +347,7 @@ HapticEvent_initWithAudioResourceID :: proc {
 @(objc_class="CHHapticEventParameter", objc_superclass=NS.Object)
 HapticEventParameter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticEventParameter, objc_selector="init", objc_name="init")
 	HapticEventParameter_init :: proc(self: ^HapticEventParameter) -> instancetype ---
 
@@ -371,7 +371,7 @@ HapticParameterAttributes :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticParameterAttributes, objc_selector="minValue", objc_name="minValue")
 	HapticParameterAttributes_minValue :: proc(self: ^HapticParameterAttributes) -> cffi.float ---
 
@@ -386,7 +386,7 @@ foreign lib {
 @(objc_class="CHHapticParameterCurve", objc_superclass=NS.Object)
 HapticParameterCurve :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticParameterCurve, objc_selector="init", objc_name="init")
 	HapticParameterCurve_init :: proc(self: ^HapticParameterCurve) -> instancetype ---
 
@@ -410,7 +410,7 @@ foreign lib {
 @(objc_class="CHHapticParameterCurveControlPoint", objc_superclass=NS.Object)
 HapticParameterCurveControlPoint :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticParameterCurveControlPoint, objc_selector="init", objc_name="init")
 	HapticParameterCurveControlPoint_init :: proc(self: ^HapticParameterCurveControlPoint) -> instancetype ---
 
@@ -434,7 +434,7 @@ foreign lib {
 @(objc_class="CHHapticPattern", objc_superclass=NS.Object)
 HapticPattern :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticPattern, objc_selector="init", objc_name="init")
 	HapticPattern_init :: proc(self: ^HapticPattern) -> instancetype ---
 
@@ -497,7 +497,7 @@ HapticPatternPlayer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticPatternPlayer, objc_selector="startAtTime:error:", objc_name="startAtTime_error")
 	HapticPatternPlayer_startAtTime_error :: proc(self: ^HapticPatternPlayer, time: NS.TimeInterval, outError: ^^NS.Error) -> bool ---
 

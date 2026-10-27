@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCSwitchElement")
 SwitchElement :: struct {
@@ -11,7 +11,7 @@ SwitchElement :: struct {
 	using _: PhysicalInputElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SwitchElement, objc_selector="positionInput", objc_name="positionInput")
 	SwitchElement_positionInput :: proc(self: ^SwitchElement) -> ^SwitchPositionInput ---
 }
@@ -34,7 +34,7 @@ SwitchPositionInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SwitchPositionInput, objc_selector="positionDidChangeHandler", objc_name="positionDidChangeHandler")
 	SwitchPositionInput_positionDidChangeHandler :: proc(self: ^SwitchPositionInput) -> ^Objc_Block(proc "c" ()) ---
 

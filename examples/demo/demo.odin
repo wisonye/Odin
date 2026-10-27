@@ -2,16 +2,16 @@
 #+feature dynamic-literals using-stmt
 package main
 
-import "core:fmt"
-import "core:mem"
-import "core:os"
-import "core:thread"
-import "core:time"
-import "core:reflect"
-import "base:runtime"
-import "base:intrinsics"
-import "core:math/big"
-import "core:math/rand"
+#import "core:fmt"
+#import "core:mem"
+#import "core:os"
+#import "core:thread"
+#import "core:time"
+#import "core:reflect"
+#import "base:runtime"
+#import "base:intrinsics"
+#import "core:math/big"
+#import "core:math/rand"
 
 /*
 	Odin is a general-purpose programming language with distinct typing built
@@ -371,26 +371,26 @@ control_flow :: proc() {
 
 	{ // When statement
 		/*
-			The when statement is almost identical to the if statement but with some differences:
+			The #if statement is almost identical to the if statement but with some differences:
 
-			* Each condition must be a constant expression as a when
+			* Each condition must be a constant expression as a #if
 			  statement is evaluated at compile time.
 			* The statements within a branch do not create a new scope
 			* The compiler checks the semantics and code only for statements
 			  that belong to the first condition that is true
-			* An initial statement is not allowed in a when statement
-			* when statements are allowed at file scope
+			* An initial statement is not allowed in a #if statement
+			* #if statements are allowed at file scope
 		*/
 
 		// Example
-		when ODIN_ARCH == .i386 {
+		#if ODIN_ARCH == .i386 {
 			fmt.println("32 bit")
-		} else when ODIN_ARCH == .amd64 {
+		} else #if ODIN_ARCH == .amd64 {
 			fmt.println("64 bit")
 		} else {
 			fmt.println("Unknown architecture")
 		}
-		// The when statement is very useful for writing platform specific code.
+		// The #if statement is very useful for writing platform specific code.
 		// This is akin to the #if construct in C’s preprocessor however, in Odin,
 		// it is type checked.
 	}
@@ -544,7 +544,7 @@ struct_type :: proc() {
 		fmt.println(v)
 
 		// We could write p^.x, however, it is nice to abstract the ability
-		// to not explicitly dereference the pointer. This is very useful when
+		// to not explicitly dereference the pointer. This is very useful #if
 		// refactoring code to use a pointer rather than a value, and vice versa.
 	}
 	{
@@ -758,7 +758,7 @@ using_statement :: proc() {
 
 	fmt.println("\n# using statement")
 	// using can be used to bring entities declared in a scope/namespace
-	// into the current scope. This can be applied to import names, struct
+	// into the current scope. This can be applied to #import names, struct
 	// fields, procedure fields, and struct values.
 
 	Vector3 :: struct{x, y, z: f32}
@@ -1665,23 +1665,23 @@ where_clauses :: proc() {
 }
 
 
-when ODIN_OS == .Windows {
-	foreign import kernel32 "system:kernel32.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import kernel32 "system:kernel32.lib"
 }
 
 foreign_system :: proc() {
 	fmt.println("\n#foreign system")
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		// It is sometimes necessarily to interface with foreign code,
 		// such as a C library. In Odin, this is achieved through the
-		// foreign system. You can “import” a library into the code
-		// using the same semantics as a normal import declaration.
+		// foreign system. You can “#import” a library into the code
+		// using the same semantics as a normal #import declaration.
 
-		// This foreign import declaration will create a
-		// “foreign import name” which can then be used to associate
+		// This foreign #import declaration will create a
+		// “foreign #import name” which can then be used to associate
 		// entities within a foreign block.
 
-		foreign kernel32 {
+		#foreign kernel32 {
 			ExitProcess :: proc "stdcall" (exit_code: u32) ---
 		}
 
@@ -1695,14 +1695,14 @@ foreign_system :: proc() {
 		// of entities declared within a block:
 
 		@(default_calling_convention = "std")
-		foreign kernel32 {
+		#foreign kernel32 {
 			@(link_name="GetLastError") get_last_error :: proc() -> i32 ---
 		}
 
 		// Example using the link_prefix attribute
 		@(default_calling_convention = "std")
 		@(link_prefix = "Get")
-		foreign kernel32 {
+		#foreign kernel32 {
 			LastError :: proc() -> i32 ---
 		}
 	}
@@ -1932,7 +1932,7 @@ soa_struct_layout :: proc() {
 		for v, i in s {
 			fmt.println(v, i) // exactly the same as s[i]
 			// NOTE: 'v' is NOT a temporary value but has a specialized addressing mode
-			// which means that when accessing v.a etc, it does the correct transformation
+			// which means that #if accessing v.a etc, it does the correct transformation
 			// internally:
 			//         s[i].a === s.a[i]
 			fmt.println(v.a, v.b, v.c)
@@ -2544,7 +2544,7 @@ bit_field_type :: proc() {
 		    x: i32     | 3,             // signed integers will be signed extended on use
 		    y: u16     | 2 + 3,         // general expressions
 		    z: My_Enum | SOME_CONSTANT, // ability to define the bit-width elsewhere
-		    w: bool    | 2 when SOME_CONSTANT > 10 else 1,
+		    w: bool    | 2 #if SOME_CONSTANT > 10 else 1,
 		}
 
 		v := Foo{}
@@ -2585,7 +2585,7 @@ main :: proc() {
 			parts of the core and vendor package collections.
 	*/
 
-	when true {
+	#if true {
 		the_basics()
 		control_flow()
 		named_proc_return_parameters()

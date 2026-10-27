@@ -1,6 +1,6 @@
 package os
 
-import "core:container/queue"
+#import "core:container/queue"
 
 /*
 A recursive directory walker.
@@ -136,9 +136,9 @@ If an error occurred opening a directory, you may get zero'd info struct and
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:strings"
-	import "core:os"
+	#import "core:fmt"
+	#import "core:strings"
+	#import "core:os"
 
 	main :: proc() {
 		w := os.walker_create("core")

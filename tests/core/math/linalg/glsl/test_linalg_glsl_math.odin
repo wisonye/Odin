@@ -1,10 +1,10 @@
 // Tests "linalg_glsl_math.odin" in "core:math/linalg/glsl".
 package test_core_math_linalg_glsl_math
 
-import glsl "core:math/linalg/glsl"
+#import glsl "core:math/linalg/glsl"
 
-import "core:math"
-import "core:testing"
+#import "core:math"
+#import "core:testing"
 
 @test
 test_fract_f32 :: proc(t: ^testing.T) {

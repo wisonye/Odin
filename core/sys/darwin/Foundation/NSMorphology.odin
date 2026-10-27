@@ -9,7 +9,7 @@ Morphology :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Morphology, objc_selector="grammaticalGender", objc_name="grammaticalGender")
 	Morphology_grammaticalGender :: proc(self: ^Morphology) -> GrammaticalGender ---
 
@@ -88,7 +88,7 @@ MorphologyCustomPronoun :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MorphologyCustomPronoun, objc_selector="isSupportedForLanguage:", objc_name="isSupportedForLanguage", objc_is_class_method=true)
 	MorphologyCustomPronoun_isSupportedForLanguage :: proc(language: ^String) -> bool ---
 
@@ -134,7 +134,7 @@ MorphologyPronoun :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MorphologyPronoun, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	MorphologyPronoun_new :: proc() -> ^MorphologyPronoun ---
 

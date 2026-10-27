@@ -1,7 +1,7 @@
 /*
 Gathers system information on `Windows`, `Linux`, `macOS`, `FreeBSD` & `OpenBSD`.
 
-Simply import the package and you'll have access to the OS version, RAM amount
+Simply #import the package and you'll have access to the OS version, RAM amount
 and CPU information.
 
 On Windows, GPUs will also be enumerated using the registry.
@@ -12,8 +12,8 @@ CPU feature flags can be tested against `cpu_features`, where applicable, e.g.:
 Example:
 	package main
 
-	import "core:fmt"
-	import si "core:sys/info"
+	#import "core:fmt"
+	#import si "core:sys/info"
 
 	main :: proc() {
 		fmt.printfln("Odin:      %v",  ODIN_VERSION)

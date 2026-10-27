@@ -2,16 +2,16 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSTypesetter", objc_superclass=NS.Object)
 Typesetter :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Typesetter, objc_selector="substituteFontForFont:", objc_name="substituteFontForFont")
 	Typesetter_substituteFontForFont :: proc(self: ^Typesetter, originalFont: ^Font) -> ^Font ---
 
@@ -207,7 +207,7 @@ Typesetter_getLineFragmentRect :: proc {
 ATSTypesetter :: struct { using _: Typesetter}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ATSTypesetter, objc_selector="sharedTypesetter", objc_name="sharedTypesetter", objc_is_class_method=true)
 	ATSTypesetter_sharedTypesetter :: proc() -> ^ATSTypesetter ---
 

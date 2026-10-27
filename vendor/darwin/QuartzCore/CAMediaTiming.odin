@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_QuartzCore
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAMediaTiming")
 MediaTiming :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaTiming, objc_selector="beginTime", objc_name="beginTime")
 	MediaTiming_beginTime :: proc(self: ^MediaTiming) -> CF.TimeInterval ---
 
@@ -67,7 +67,7 @@ MediaTimingFunction :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaTimingFunction, objc_selector="functionWithName:", objc_name="functionWithName", objc_is_class_method=true)
 	MediaTimingFunction_functionWithName :: proc(name: ^NS.String) -> instancetype ---
 

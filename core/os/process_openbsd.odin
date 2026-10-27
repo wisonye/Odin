@@ -2,12 +2,12 @@
 #+build openbsd
 package os
 
-import "core:c"
+#import "core:c"
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	@(link_name="getthrid")       _unix_getthrid       :: proc() -> int ---
 	@(link_name="sysconf")        _sysconf             :: proc(name: c.int) -> c.long ---
 }

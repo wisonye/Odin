@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSBezierPath", objc_superclass=NS.Object)
 BezierPath :: struct {
@@ -13,7 +13,7 @@ BezierPath :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BezierPath, objc_selector="bezierPath", objc_name="bezierPath", objc_is_class_method=true)
 	BezierPath_bezierPath :: proc() -> ^BezierPath ---
 

@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSGestureRecognizer", objc_superclass=NS.Object)
 GestureRecognizer :: struct {
@@ -13,7 +13,7 @@ GestureRecognizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GestureRecognizer, objc_selector="initWithTarget:action:", objc_name="initWithTarget")
 	GestureRecognizer_initWithTarget :: proc(self: ^GestureRecognizer, target: id, action: SEL) -> instancetype ---
 
@@ -200,7 +200,7 @@ GestureRecognizerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GestureRecognizerDelegate, objc_selector="gestureRecognizer:shouldAttemptToRecognizeWithEvent:", objc_name="gestureRecognizer_shouldAttemptToRecognizeWithEvent")
 	GestureRecognizerDelegate_gestureRecognizer_shouldAttemptToRecognizeWithEvent :: proc(self: ^GestureRecognizerDelegate, gestureRecognizer: ^GestureRecognizer, event: ^Event) -> bool ---
 
@@ -228,7 +228,7 @@ ClickGestureRecognizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ClickGestureRecognizer, objc_selector="buttonMask", objc_name="buttonMask")
 	ClickGestureRecognizer_buttonMask :: proc(self: ^ClickGestureRecognizer) -> NS.UInteger ---
 
@@ -253,7 +253,7 @@ foreign lib {
 MagnificationGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MagnificationGestureRecognizer, objc_selector="magnification", objc_name="magnification")
 	MagnificationGestureRecognizer_magnification :: proc(self: ^MagnificationGestureRecognizer) -> CG.Float ---
 
@@ -269,7 +269,7 @@ PanGestureRecognizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PanGestureRecognizer, objc_selector="translationInView:", objc_name="translationInView")
 	PanGestureRecognizer_translationInView :: proc(self: ^PanGestureRecognizer, view: ^View) -> CG.Point ---
 
@@ -300,7 +300,7 @@ PressGestureRecognizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PressGestureRecognizer, objc_selector="buttonMask", objc_name="buttonMask")
 	PressGestureRecognizer_buttonMask :: proc(self: ^PressGestureRecognizer) -> NS.UInteger ---
 
@@ -331,7 +331,7 @@ foreign lib {
 RotationGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RotationGestureRecognizer, objc_selector="rotation", objc_name="rotation")
 	RotationGestureRecognizer_rotation :: proc(self: ^RotationGestureRecognizer) -> CG.Float ---
 

@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 IOStatus :: enum c.int {
 	READY,     /**< Everything is ready (no errors and not EOF). */
@@ -49,7 +49,7 @@ PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER   :: "SDL.iostream.dynamic.memory"
 PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER :: "SDL.iostream.dynamic.chunksize"
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results) IOFromFile       :: proc(file: cstring, mode: cstring) -> ^IOStream ---
 	@(require_results) IOFromMem        :: proc(mem: rawptr, size: uint) -> ^IOStream ---
 	@(require_results) IOFromConstMem   :: proc(mem: rawptr, size: uint) -> ^IOStream ---

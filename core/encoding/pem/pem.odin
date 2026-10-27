@@ -1,11 +1,11 @@
 package pem
 
-import "base:runtime"
-import "core:bufio"
-import "core:bytes"
-import "core:crypto"
-import "core:encoding/base64"
-import "core:strings"
+#import "base:runtime"
+#import "core:bufio"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:encoding/base64"
+#import "core:strings"
 
 @(private)
 BASE64_FULL_LINE_LENGTH :: 64

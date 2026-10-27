@@ -23,8 +23,8 @@ cryptographically-secure, per RFC 9562's suggestion.
 Example:	
 	package main
 
-	import "core:crypto"
-	import "core:encoding/uuid"
+	#import "core:crypto"
+	#import "core:encoding/uuid"
 
 	main :: proc() {
 		my_uuid: uuid.Identifier

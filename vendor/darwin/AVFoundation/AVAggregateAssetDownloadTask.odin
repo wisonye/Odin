@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVAggregateAssetDownloadTask", objc_superclass=NS.URLSessionTask)
 AggregateAssetDownloadTask :: struct { using _: NS.URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AggregateAssetDownloadTask, objc_selector="init", objc_name="init")
 	AggregateAssetDownloadTask_init :: proc(self: ^AggregateAssetDownloadTask) -> instancetype ---
 

@@ -18,7 +18,7 @@ package sha3
         zhibog, dotbmp:  Initial implementation.
 */
 
-import "../_sha3"
+#import "../_sha3"
 
 // DIGEST_SIZE_224 is the SHA3-224 digest size.
 DIGEST_SIZE_224 :: 28

@@ -1,12 +1,12 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:encoding/hex"
-import "core:log"
-import "core:testing"
+#import "base:runtime"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:testing"
 
-import "core:crypto/aes"
-import "core:crypto/sha2"
+#import "core:crypto/aes"
+#import "core:crypto/sha2"
 
 @(test)
 test_aes :: proc(t: ^testing.T) {

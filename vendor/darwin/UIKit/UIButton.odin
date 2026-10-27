@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIButton", objc_superclass=Control)
 Button :: struct {
@@ -12,7 +12,7 @@ Button :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Button, objc_selector="initWithFrame:", objc_name="initWithFrame_")
 	Button_initWithFrame_ :: proc(self: ^Button, frame: CG.Rect) -> instancetype ---
 
@@ -287,7 +287,7 @@ ButtonConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ButtonConfiguration, objc_selector="plainButtonConfiguration", objc_name="plainButtonConfiguration", objc_is_class_method=true)
 	ButtonConfiguration_plainButtonConfiguration :: proc() -> instancetype ---
 

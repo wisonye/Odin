@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKLeaderboard", objc_superclass=NS.Object)
 Leaderboard :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Leaderboard, objc_selector="loadLeaderboardsWithIDs:completionHandler:", objc_name="loadLeaderboardsWithIDs", objc_is_class_method=true)
 	Leaderboard_loadLeaderboardsWithIDs :: proc(leaderboardIDs: ^NS.Array, completionHandler: ^Objc_Block(proc "c" ( leaderboards: ^NS.Array, error: ^NS.Error ))) ---
 
@@ -142,7 +142,7 @@ Leaderboard_submitScore :: proc {
 @(objc_class="GKLeaderboardEntry", objc_superclass=NS.Object)
 LeaderboardEntry :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LeaderboardEntry, objc_selector="init", objc_name="init")
 	LeaderboardEntry_init :: proc(self: ^LeaderboardEntry) -> instancetype ---
 
@@ -169,7 +169,7 @@ foreign lib {
 @(objc_class="GKLeaderboardScore", objc_superclass=NS.Object)
 LeaderboardScore :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LeaderboardScore, objc_selector="player", objc_name="player")
 	LeaderboardScore_player :: proc(self: ^LeaderboardScore) -> ^Player ---
 
@@ -203,7 +203,7 @@ LeaderboardSet :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LeaderboardSet, objc_selector="loadLeaderboardSetsWithCompletionHandler:", objc_name="loadLeaderboardSetsWithCompletionHandler", objc_is_class_method=true)
 	LeaderboardSet_loadLeaderboardSetsWithCompletionHandler :: proc(completionHandler: ^Objc_Block(proc "c" ( leaderboardSets: ^NS.Array, error: ^NS.Error ))) ---
 
@@ -233,7 +233,7 @@ foreign lib {
 @(objc_class="GKLeaderboardViewController", objc_superclass=GameCenterViewController)
 LeaderboardViewController :: struct { using _: GameCenterViewController}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LeaderboardViewController, objc_selector="timeScope", objc_name="timeScope")
 	LeaderboardViewController_timeScope :: proc(self: ^LeaderboardViewController) -> LeaderboardTimeScope ---
 
@@ -260,7 +260,7 @@ LeaderboardViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LeaderboardViewControllerDelegate, objc_selector="leaderboardViewControllerDidFinish:", objc_name="leaderboardViewControllerDidFinish")
 	LeaderboardViewControllerDelegate_leaderboardViewControllerDidFinish :: proc(self: ^LeaderboardViewControllerDelegate, viewController: ^LeaderboardViewController) ---
 }

@@ -1,10 +1,10 @@
 package diff
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strings"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strings"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 // How text is split into tokens.
 Token :: enum u8 {
@@ -14,7 +14,7 @@ Token :: enum u8 {
 }
 
 /*
-	What to ignore when comparing tokens. Each flag applies to every token's text. A final "\n" is never
+	What to ignore #if comparing tokens. Each flag applies to every token's text. A final "\n" is never
 	ignored: a last line without one still differs from the same line with one.
 */
 Text_Flag :: enum u8 {

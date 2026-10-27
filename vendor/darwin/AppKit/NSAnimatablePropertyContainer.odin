@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSAnimatablePropertyContainer")
 AnimatablePropertyContainer :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatablePropertyContainer, objc_selector="animator", objc_name="animator")
 	AnimatablePropertyContainer_animator :: proc(self: ^AnimatablePropertyContainer) -> instancetype ---
 

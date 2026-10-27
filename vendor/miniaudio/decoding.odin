@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -20,7 +20,7 @@ decoding_backend_config :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	decoding_backend_config_init :: proc(preferredFormat: format, seekPointCount: u32) -> decoding_backend_config ---
 }
 
@@ -87,7 +87,7 @@ decoder :: struct  {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	decoder_config_init         :: proc(outputFormat: format, outputChannels, outputSampleRate: u32) -> decoder_config ---
 	decoder_config_init_default :: proc() -> decoder_config ---
 

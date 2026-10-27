@@ -2,11 +2,11 @@
 // `run.bat` and `run.sh` first check `test_pr_7848` with `-overlay`, `-workspace`, and `-export-semantics`
 package test_pr_7848
 
-import "core:encoding/json"
-import "core:os"
-import "core:strings"
-import "core:testing"
-import tf "core:odin/tool-format"
+#import "core:encoding/json"
+#import "core:os"
+#import "core:strings"
+#import "core:testing"
+#import tf "core:odin/tool-format"
 
 @(private="file")
 load :: proc(t: ^testing.T, path: string) -> (s: tf.Semantics) {
@@ -163,13 +163,13 @@ test_pr_7848_export :: proc(t: ^testing.T) {
 		}
 	}
 
-	// the `when` branch that is not taken
+	// the `#if` branch that is not taken
 	untaken := offset_of(t, path, "c += 100")
 	inactive := false
 	for j := 0; j+1 < len(b.inactive); j += 2 {
 		inactive ||= int(b.inactive[j]) <= untaken && untaken < int(b.inactive[j+1])
 	}
-	testing.expect(t, inactive, "the untaken `when` branch should be inactive")
+	testing.expect(t, inactive, "the untaken `#if` branch should be inactive")
 	testing.expect_value(t, len(tf.find_idents(b.uses, untaken)), 0)
 }
 

@@ -21,10 +21,10 @@ package encoding_unicode_entity
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:runtime"
-import "core:unicode/utf8"
-import "core:unicode"
-import "core:strings"
+#import "base:runtime"
+#import "core:unicode/utf8"
+#import "core:unicode"
+#import "core:strings"
 
 MAX_RUNE_CODEPOINT :: int(unicode.MAX_RUNE)
 

@@ -1,26 +1,26 @@
 // Bindings for [[ stb_image.h ; https://github.com/nothings/stb/blob/master/stb_image.h ]].
 package stb_image
 
-import "core:c"
+#import "core:c"
 
 @(private)
 LIB :: (
-	     "../lib/stb_image.lib"      when ODIN_OS == .Windows
-	else "../lib/stb_image.a"        when ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
-	else "../lib/darwin/stb_image.a" when ODIN_OS == .Darwin
-	else "../lib/stb_image_wasm.o"   when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	     "../lib/stb_image.lib"      #if ODIN_OS == .Windows
+	else "../lib/stb_image.a"        #if ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
+	else "../lib/darwin/stb_image.a" #if ODIN_OS == .Darwin
+	else "../lib/stb_image_wasm.o"   #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 	else ""
 )
 
-when LIB != "" {
-	when !#exists(LIB) {
+#if LIB != "" {
+	#if !#exists(LIB) {
 		// The STB libraries are shipped with the compiler on Windows so a Windows specific message should not be needed.
 		#panic("Could not find the compiled STB libraries, they can be compiled by running `\"" + ODIN_ROOT + "vendor/stb/src/build_stb.sh\"`")
 	}
 }
 
-foreign import stbi {
-	LIB when LIB != "" else "system:stb_image",
+#foreign #import stbi {
+	LIB #if LIB != "" else "system:stb_image",
 }
 
 NO_STDIO :: ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
@@ -37,9 +37,9 @@ Io_Callbacks :: struct {
 	eof:  proc "c" (user: rawptr) -> c.int,                             // returns nonzero if we are at end of file/data
 }
 
-when !NO_STDIO {
+#if !NO_STDIO {
 	@(default_calling_convention="c", link_prefix="stbi_")
-	foreign stbi {
+	#foreign stbi {
 		////////////////////////////////////
 		//
 		// 8-bits-per-channel interface
@@ -74,7 +74,7 @@ when !NO_STDIO {
 }
 
 @(default_calling_convention="c", link_prefix="stbi_")
-foreign stbi {
+#foreign stbi {
 	////////////////////////////////////
 	//
 	// 8-bits-per-channel interface

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CoreMedia
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import Sec "core:sys/darwin/Security"
-import AT "vendor:darwin/AudioToolbox"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import Sec "core:sys/darwin/Security"
+#import AT "vendor:darwin/AudioToolbox"
 
 _ :: Sec
 
@@ -19,7 +19,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreMedia.framework",
 }
 
@@ -34,7 +34,7 @@ CVPixelBufferRef     :: struct {}
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="kCMTimeInvalid")
 	kTimeInvalid: Time
 
@@ -83,7 +83,7 @@ foreign lib {
 	@(link_name="kCMTimeMappingTargetKey")
 	kTimeMappingTargetKey: CF.StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kCMSEncoderDigestAlgorithmSHA1")
 		kSEncoderDigestAlgorithmSHA1: CF.StringRef
 
@@ -1291,7 +1291,7 @@ foreign lib {
 	@(link_name="CMTimeMappingShow")
 	TimeMappingShow :: proc(mapping: TimeMapping) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="CMSDecoderGetTypeID")
 		SDecoderGetTypeID :: proc() -> CF.TypeID ---
 
@@ -2385,7 +2385,7 @@ foreign lib {
 	@(link_name="CMAudioClockCreate")
 	AudioClockCreate :: proc(allocator: CF.AllocatorRef, clockOut: ^ClockRef) -> CF.OSStatus ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="CMAudioDeviceClockCreate")
 		AudioDeviceClockCreate :: proc(allocator: CF.AllocatorRef, deviceUID: CF.StringRef, clockOut: ^ClockRef) -> CF.OSStatus ---
 
@@ -2406,7 +2406,7 @@ foreign lib {
 
 
 ASK                             :: 22
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	BITMAPCALLBACKPROCPTR_DEFINED   :: 1
 }
 TIMEBASE_USE_SOURCE_TERMINOLOGY :: 1
@@ -2670,7 +2670,7 @@ PersistentTrackID :: cffi.int32_t
 TimeValue :: cffi.int64_t
 TimeScale :: cffi.int32_t
 TimeEpoch :: cffi.int64_t
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SDecoderRef :: ^_CMSDecoder
 	SEncoderRef :: ^_CMSEncoder
 	IconRef :: ^OpaqueIconRef
@@ -2805,7 +2805,7 @@ TimeRoundingMethod :: enum cffi.uint {
 	Default                     = 1,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SSignerStatus :: enum cffi.uint {
 		Unsigned             = 0,
 		Valid                = 1,
@@ -2954,7 +2954,7 @@ TimeMapping :: struct #align (4) {
 	target: TimeRange,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	_CMSDecoder :: struct {}
 
 	_CMSEncoder :: struct {}
@@ -3616,7 +3616,7 @@ OpaqueCMClock :: struct {}
 
 OpaqueCMTimebase :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	AppleProfileHeader :: struct #raw_union #align (2) {
 		cm2: _2Header,
 		cm4: _4Header,

@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import CF "core:sys/darwin/CoreFoundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="MTL4CommandAllocator")
 MTL4CommandAllocator :: struct {
@@ -13,7 +13,7 @@ MTL4CommandAllocator :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandAllocator, objc_selector="allocatedSize", objc_name="allocatedSize")
 	MTL4CommandAllocator_allocatedSize :: proc(self: ^MTL4CommandAllocator) -> cffi.uint64_t ---
 
@@ -34,7 +34,7 @@ MTL4CommandAllocatorDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandAllocatorDescriptor, objc_selector="label", objc_name="label")
 	MTL4CommandAllocatorDescriptor_label :: proc(self: ^MTL4CommandAllocatorDescriptor) -> ^NS.String ---
 
@@ -49,7 +49,7 @@ MTL4CommandBuffer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandBuffer, objc_selector="beginCommandBufferWithAllocator:", objc_name="beginCommandBufferWithAllocator_")
 	MTL4CommandBuffer_beginCommandBufferWithAllocator_ :: proc(self: ^MTL4CommandBuffer, allocator: ^MTL4CommandAllocator) ---
 
@@ -120,7 +120,7 @@ MTL4CommandBufferOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandBufferOptions, objc_selector="logState", objc_name="logState")
 	MTL4CommandBufferOptions_logState :: proc(self: ^MTL4CommandBufferOptions) -> ^LogState ---
 
@@ -135,7 +135,7 @@ MTL4CommandEncoder :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandEncoder, objc_selector="barrierAfterQueueStages:beforeStages:visibilityOptions:", objc_name="barrierAfterQueueStages")
 	MTL4CommandEncoder_barrierAfterQueueStages :: proc(self: ^MTL4CommandEncoder, afterQueueStages: Stages, beforeStages: Stages, visibilityOptions: MTL4VisibilityOptions) ---
 
@@ -180,7 +180,7 @@ MTL4ComputeCommandEncoder :: struct {
 	using _: MTL4CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4ComputeCommandEncoder, objc_selector="stages", objc_name="stages")
 	MTL4ComputeCommandEncoder_stages :: proc(self: ^MTL4ComputeCommandEncoder) -> Stages ---
 
@@ -339,7 +339,7 @@ MTL4MachineLearningCommandEncoder :: struct {
 	using _: MTL4CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4MachineLearningCommandEncoder, objc_selector="setPipelineState:", objc_name="setPipelineState")
 	MTL4MachineLearningCommandEncoder_setPipelineState :: proc(self: ^MTL4MachineLearningCommandEncoder, pipelineState: ^MTL4MachineLearningPipelineState) ---
 
@@ -357,7 +357,7 @@ MTL4RenderCommandEncoder :: struct {
 	using _: MTL4CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderCommandEncoder, objc_selector="setColorAttachmentMap:", objc_name="setColorAttachmentMap")
 	MTL4RenderCommandEncoder_setColorAttachmentMap :: proc(self: ^MTL4RenderCommandEncoder, mapping: ^LogicalToPhysicalColorAttachmentMap) ---
 
@@ -513,7 +513,7 @@ MTL4CommandQueue :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandQueue, objc_selector="commit:count:", objc_name="commit_count")
 	MTL4CommandQueue_commit_count :: proc(self: ^MTL4CommandQueue, commandBuffers: ^^MTL4CommandBuffer, count: NS.UInteger) ---
 
@@ -578,7 +578,7 @@ MTL4CommandQueueDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommandQueueDescriptor, objc_selector="label", objc_name="label")
 	MTL4CommandQueueDescriptor_label :: proc(self: ^MTL4CommandQueueDescriptor) -> ^NS.String ---
 

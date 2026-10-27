@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSMenu", objc_superclass=NS.Object)
 Menu :: struct {
@@ -18,7 +18,7 @@ Menu :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Menu, objc_selector="initWithTitle:", objc_name="initWithTitle")
 	Menu_initWithTitle :: proc(self: ^Menu, title: ^NS.String) -> instancetype ---
 
@@ -286,7 +286,7 @@ MenuDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuDelegate, objc_selector="menuNeedsUpdate:", objc_name="menuNeedsUpdate")
 	MenuDelegate_menuNeedsUpdate :: proc(self: ^MenuDelegate, menu: ^Menu) ---
 
@@ -331,7 +331,7 @@ MenuItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuItem, objc_selector="separatorItem", objc_name="separatorItem", objc_is_class_method=true)
 	MenuItem_separatorItem :: proc() -> ^MenuItem ---
 
@@ -548,7 +548,7 @@ foreign lib {
 MenuItemProtocol :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSMenuItemBadge", objc_superclass=NS.Object)
@@ -558,7 +558,7 @@ MenuItemBadge :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuItemBadge, objc_selector="updatesWithCount:", objc_name="updatesWithCount", objc_is_class_method=true)
 	MenuItemBadge_updatesWithCount :: proc(itemCount: NS.Integer) -> instancetype ---
 
@@ -601,7 +601,7 @@ MenuItemBadge_initWithCount :: proc {
 MenuItemCell :: struct { using _: ButtonCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuItemCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	MenuItemCell_initTextCell :: proc(self: ^MenuItemCell, string: ^NS.String) -> instancetype ---
 
@@ -683,7 +683,7 @@ MenuItemValidation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuItemValidation, objc_selector="validateMenuItem:", objc_name="validateMenuItem")
 	MenuItemValidation_validateMenuItem :: proc(self: ^MenuItemValidation, menuItem: ^MenuItem) -> bool ---
 }
@@ -693,7 +693,7 @@ foreign lib {
 MenuToolbarItem :: struct { using _: ToolbarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuToolbarItem, objc_selector="menu", objc_name="menu")
 	MenuToolbarItem_menu :: proc(self: ^MenuToolbarItem) -> ^Menu ---
 

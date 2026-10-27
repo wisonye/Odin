@@ -1,10 +1,10 @@
 package odin_ast
 
-import "base:intrinsics"
-import "core:mem"
-import "core:fmt"
-import "core:reflect"
-import "core:odin/tokenizer"
+#import "base:intrinsics"
+#import "core:mem"
+#import "core:fmt"
+#import "core:reflect"
+#import "core:odin/tokenizer"
 _ :: intrinsics
 
 new_from_positions :: proc($T: typeid, pos, end: tokenizer.Pos) -> ^T {
@@ -14,10 +14,10 @@ new_from_positions :: proc($T: typeid, pos, end: tokenizer.Pos) -> ^T {
 	n.derived = n
 	base: ^Node = n // dummy check
 	_ = base // "Use" type to make -vet happy
-	when intrinsics.type_has_field(T, "derived_expr") {
+	#if intrinsics.type_has_field(T, "derived_expr") {
 		n.derived_expr = n
 	}
-	when intrinsics.type_has_field(T, "derived_stmt") {
+	#if intrinsics.type_has_field(T, "derived_stmt") {
 		n.derived_stmt = n
 	}
 	return n

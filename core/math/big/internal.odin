@@ -17,7 +17,7 @@ package math_big
 	to use these procedures instead of their public counterparts.
 
 	Most inputs and outputs are expected to be passed an initialized `Int`, for example.
-	Exceptions include `quotient` and `remainder`, which are allowed to be `nil` when the calling code doesn't need them.
+	Exceptions include `quotient` and `remainder`, which are allowed to be `nil` #if the calling code doesn't need them.
 
 	Check the comments above each `internal_*` implementation to see what constraints it expects to have met.
 
@@ -27,10 +27,10 @@ package math_big
 	TODO: Handle +/- Infinity and NaN.
 */
 
-import "base:builtin"
-import "base:intrinsics"
-import "base:runtime"
-@(require) import rnd "core:math/rand"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "base:runtime"
+@(require) #import rnd "core:math/rand"
 
 /*
 	Low-level addition, unsigned. Handbook of Applied Cryptography, algorithm 14.7.
@@ -2338,7 +2338,7 @@ internal_get_low_u64 :: proc(a: ^Int) -> u64 #no_bounds_check {
 	}
 	
 	v := u64(a.digit[0])
-	when size_of(DIGIT) == 4 {
+	#if size_of(DIGIT) == 4 {
 		if a.used > 1 {
 			return u64(a.digit[1])<<32 | v
 		}
@@ -2355,7 +2355,7 @@ internal_int_get :: proc(a: ^Int, $T: typeid) -> (res: T, err: Error) where intr
 		Calculate target bit size.
 	*/
 	target_bit_size := int(size_of(T) * 8)
-	when !intrinsics.type_is_unsigned(T) {
+	#if !intrinsics.type_is_unsigned(T) {
 		if a.sign == .Zero_or_Positive {
 			target_bit_size -= 1
 		}
@@ -2379,7 +2379,7 @@ internal_int_get :: proc(a: ^Int, $T: typeid) -> (res: T, err: Error) where intr
 		res |=  T(a.digit[i - 1])
 	}
 
-	when !intrinsics.type_is_unsigned(T) {
+	#if !intrinsics.type_is_unsigned(T) {
 		/*
 			Set the sign.
 		*/
@@ -2791,7 +2791,7 @@ internal_int_count_lsb :: proc(a: ^Int) -> (count: int, err: Error) {
 	x: int
 	#no_bounds_check for x = 0; x < a.used && a.digit[x] == 0; x += 1 {}
 
-	when true {
+	#if true {
 		q := a.digit[x]
 		x *= _DIGIT_BITS
 		x += internal_count_lsb(q)
@@ -2824,9 +2824,9 @@ internal_platform_count_lsb :: #force_inline proc(a: $T) -> (count: int)
 internal_count_lsb :: proc { internal_int_count_lsb, internal_platform_count_lsb, }
 
 internal_int_random_digit :: proc() -> (res: DIGIT) {
-	when _DIGIT_TYPE_BITS == 64 { // DIGIT = u64
+	#if _DIGIT_TYPE_BITS == 64 { // DIGIT = u64
 		return DIGIT(rnd.uint64()) & _MASK
-	} else when _DIGIT_TYPE_BITS == 32 { // DIGIT = u32
+	} else #if _DIGIT_TYPE_BITS == 32 { // DIGIT = u32
 		return DIGIT(rnd.uint32()) & _MASK
 	} else {
 		panic("Unsupported DIGIT size.")

@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSScroller", objc_superclass=Control)
 Scroller :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Scroller, objc_selector="scrollerWidthForControlSize:scrollerStyle:", objc_name="scrollerWidthForControlSize_scrollerStyle", objc_is_class_method=true)
 	Scroller_scrollerWidthForControlSize_scrollerStyle :: proc(controlSize: ControlSize, scrollerStyle: ScrollerStyle) -> CG.Float ---
 

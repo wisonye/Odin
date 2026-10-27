@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIResolvedShape", objc_superclass=NS.Object)
 ResolvedShape :: struct {
@@ -12,7 +12,7 @@ ResolvedShape :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ResolvedShape, objc_selector="shapeByApplyingInsets:", objc_name="shapeByApplyingInsets")
 	ResolvedShape_shapeByApplyingInsets :: proc(self: ^ResolvedShape, insets: EdgeInsets) -> ^ResolvedShape ---
 

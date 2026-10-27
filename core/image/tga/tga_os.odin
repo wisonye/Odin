@@ -1,8 +1,8 @@
 #+build !js
 package tga
 
-import "core:os"
-import "core:bytes"
+#import "core:os"
+#import "core:bytes"
 
 load :: proc{load_from_file, load_from_bytes, load_from_context}
 

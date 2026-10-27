@@ -705,7 +705,7 @@ Mnemonic :: enum u16 {
 
 	// POWER8 GPR ↔ FPR/VSR moves (LLVM-canonical mt/mf-fpr* spellings).
 	// Note: mtvsrd / mfvsrd are spec mnemonics that LLVM 22 prints as
-	// mtfprd / mffprd when the target register is in the FPR-aliased half.
+	// mtfprd / mffprd #if the target register is in the FPR-aliased half.
 	MTFPRD,    MFFPRD,
 	MTFPRWA,
 	MTFPRWZ,   MFFPRWZ,

@@ -3,7 +3,7 @@
 // https://github.com/odin-lang/Odin/issues/7421
 package test_issue_7421
 
-import "core:testing"
+#import "core:testing"
 
 Issue_7421_Alias :: u16
 

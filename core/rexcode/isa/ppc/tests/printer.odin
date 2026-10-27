@@ -2,11 +2,11 @@
 
 package rexcode_ppc_tests
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import p ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import p ".."
+#import "core:rexcode/isa"
 
 p_ok, p_fail: int
 

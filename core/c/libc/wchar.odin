@@ -2,16 +2,16 @@ package libc
 
 // 7.29 Extended multibyte and wide character utilities
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.29.2 Formatted wide character input/output functions
 	fwprintf  :: proc(stream: ^FILE, format: [^]wchar_t, #c_vararg arg: ..any) -> int ---
 	fwscanf   :: proc(stream: ^FILE, format: [^]wchar_t, #c_vararg arg: ..any) -> int ---
@@ -105,7 +105,7 @@ WEOF      :: ~wint_t(0)
 
 // The v* procedures take a pointer to the va_list on every target, see va_list_arg.
 @(default_calling_convention="c", private)
-foreign libc {
+#foreign libc {
 	@(link_name="vfwprintf") _vfwprintf :: proc(stream: ^FILE, format: [^]wchar_t, arg: va_list_arg) -> int ---
 	@(link_name="vfwscanf")  _vfwscanf  :: proc(stream: ^FILE, format: [^]wchar_t, arg: va_list_arg) -> int ---
 	@(link_name="vswprintf") _vswprintf :: proc(s: [^]wchar_t, n: size_t, format: [^]wchar_t, arg: va_list_arg) -> int ---

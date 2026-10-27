@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(require_results, enable_target_feature="bmi")
 _andn_u32 :: #force_inline proc "c" (a, b: u32) -> u32 {
@@ -71,7 +71,7 @@ _tzcnt_u64 :: #force_inline proc "c" (a: u64) -> u64 {
 }
 
 @(private, default_calling_convention = "none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.bmi.bextr.32")
 	bextr_u32 :: proc(a, control: u32) -> u32 ---
 	@(link_name = "llvm.x86.bmi.bextr.64")

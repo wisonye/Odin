@@ -9,8 +9,8 @@ with the total number known at compile time but the exact
 number to be used determined at runtime.
 
 Example:
-	import "core:fmt"
-	import "core:container/small_array"
+	#import "core:fmt"
+	#import "core:container/small_array"
 
 	create :: proc() -> (result: small_array.Small_Array(10, rune)) {
 		// appending single elements

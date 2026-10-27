@@ -2,12 +2,12 @@ package vendor_gl
 
 #assert(size_of(bool) == size_of(u8))
 
-import "base:runtime"
-import "core:fmt"
+#import "base:runtime"
+#import "core:fmt"
 _ :: runtime
 _ :: fmt
 
-when !GL_DEBUG {
+#if !GL_DEBUG {
 	// VERSION_1_0
 	CullFace               :: proc "c" (mode: u32)                                                                                         {        impl_CullFace(mode)                                                                         }
 	FrontFace              :: proc "c" (mode: u32)                                                                                         {        impl_FrontFace(mode)                                                                        }

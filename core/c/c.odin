@@ -1,28 +1,28 @@
 // Defines the basic types used by `C` programs for foreign function and data structure interop.
 package c
 
-import builtin    "base:builtin"
-import intrinsics "base:intrinsics"
+#import builtin    "base:builtin"
+#import intrinsics "base:intrinsics"
 
 char           :: builtin.u8  // assuming -funsigned-char
 
 schar          :: builtin.i8
 short          :: builtin.i16
 int            :: builtin.i32
-long           :: builtin.i32 when (ODIN_OS == .Windows || size_of(builtin.rawptr) == 4) else builtin.i64
+long           :: builtin.i32 #if (ODIN_OS == .Windows || size_of(builtin.rawptr) == 4) else builtin.i64
 longlong       :: builtin.i64
 
 uchar          :: builtin.u8
 ushort         :: builtin.u16
 uint           :: builtin.u32
-ulong          :: builtin.u32 when (ODIN_OS == .Windows || size_of(builtin.rawptr) == 4) else builtin.u64
+ulong          :: builtin.u32 #if (ODIN_OS == .Windows || size_of(builtin.rawptr) == 4) else builtin.u64
 ulonglong      :: builtin.u64
 
 bool           :: builtin.bool
 
 size_t         :: builtin.uint
 ssize_t        :: builtin.int
-wchar_t        :: builtin.u16 when (ODIN_OS == .Windows) else builtin.u32
+wchar_t        :: builtin.u16 #if (ODIN_OS == .Windows) else builtin.u32
 
 float          :: builtin.f32
 double         :: builtin.f64
@@ -58,15 +58,15 @@ uint_least64_t :: builtin.u64
 // Darwin
 // https://github.com/apple-oss-distributions/Libc/blob/main/include/stdint.h
 //
-when ODIN_ARCH == .i386 {
-	when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD { // https://cgit.freebsd.org/src/tree/sys/i386/include/_types.h
+#if ODIN_ARCH == .i386 {
+	#if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD { // https://cgit.freebsd.org/src/tree/sys/i386/include/_types.h
 		int_fast8_t    :: builtin.i32
 		uint_fast8_t   :: builtin.u32
 		int_fast16_t   :: builtin.i32
 		uint_fast16_t  :: builtin.u32
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Darwin { // https://github.com/apple-oss-distributions/Libc/blob/main/include/stdint.h#L39
+	} else #if ODIN_OS == .Darwin { // https://github.com/apple-oss-distributions/Libc/blob/main/include/stdint.h#L39
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: builtin.i16
@@ -83,29 +83,29 @@ when ODIN_ARCH == .i386 {
 	}
 	int_fast64_t   :: builtin.i64
 	uint_fast64_t  :: builtin.u64
-} else when ODIN_ARCH == .amd64 {
-	when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD { // https://cgit.freebsd.org/src/tree/sys/x86/include/_types.h#n66
+} else #if ODIN_ARCH == .amd64 {
+	#if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD { // https://cgit.freebsd.org/src/tree/sys/x86/include/_types.h#n66
 		int_fast8_t    :: builtin.i32
 		uint_fast8_t   :: builtin.u32
 		int_fast16_t   :: builtin.i32
 		uint_fast16_t  :: builtin.u32
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Darwin {
+	} else #if ODIN_OS == .Darwin {
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: builtin.i16
 		uint_fast16_t  :: builtin.u16
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Windows {
+	} else #if ODIN_OS == .Windows {
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: builtin.i32
 		uint_fast16_t  :: builtin.u32
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Linux {
+	} else #if ODIN_OS == .Linux {
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: long // todo: musl is i32 to match BSD spec. No way to target it yet
@@ -123,21 +123,21 @@ when ODIN_ARCH == .i386 {
 	int_fast64_t   :: builtin.i64
 	uint_fast64_t  :: builtin.u64
 } else {
-	when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+	#if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 		int_fast8_t    :: builtin.i32
 		uint_fast8_t   :: builtin.u32
 		int_fast16_t   :: builtin.i32
 		uint_fast16_t  :: builtin.u32
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Darwin {
+	} else #if ODIN_OS == .Darwin {
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: builtin.i16
 		uint_fast16_t  :: builtin.u16
 		int_fast32_t   :: builtin.i32
 		uint_fast32_t  :: builtin.u32
-	} else when ODIN_OS == .Linux {
+	} else #if ODIN_OS == .Linux {
 		int_fast8_t    :: builtin.i8
 		uint_fast8_t   :: builtin.u8
 		int_fast16_t   :: long // todo: musl is i32 to match BSD spec. No way to target it yet

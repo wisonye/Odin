@@ -1,7 +1,7 @@
 // A signed fixed-point scale must be less than the bit width, which LLVM requires.
 package test_issues
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 main :: proc() {
 	a, b: i32 = 3, 2

@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSControl", objc_superclass=View)
 Control :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Control, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	Control_initWithFrame :: proc(self: ^Control, frameRect: NS.Rect) -> instancetype ---
 
@@ -266,7 +266,7 @@ ControlTextEditingDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ControlTextEditingDelegate, objc_selector="controlTextDidBeginEditing:", objc_name="controlTextDidBeginEditing")
 	ControlTextEditingDelegate_controlTextDidBeginEditing :: proc(self: ^ControlTextEditingDelegate, obj: ^NS.Notification) ---
 

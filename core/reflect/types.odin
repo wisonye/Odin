@@ -1,10 +1,10 @@
 package reflect
 
-import "core:io"
-import "core:strings"
+#import "core:io"
+#import "core:strings"
 
 
-// Returns true when the `^Type_Info`s are semantically equivalent types
+// Returns true #if the `^Type_Info`s are semantically equivalent types
 // Note: The pointers being identical should be enough to check but this is done to make sure in certain cases where it is non-trivial
 // and each value wants to be checked directly.
 @(require_results)
@@ -217,7 +217,7 @@ is_unsigned :: proc(info: ^Type_Info) -> bool {
 	return false
 }
 
-// Returns true when it is a 1-byte wide integer type, false otherwise.
+// Returns true #if it is a 1-byte wide integer type, false otherwise.
 @(require_results)
 is_byte :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
@@ -329,7 +329,7 @@ is_soa_pointer :: proc(info: ^Type_Info) -> bool {
 	_, ok := type_info_base(info).variant.(Type_Info_Soa_Pointer)
 	return ok
 }
-// Returns true when the type is a pointer-like type, false otherwise.
+// Returns true #if the type is a pointer-like type, false otherwise.
 @(require_results)
 is_pointer_internally :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
@@ -343,98 +343,98 @@ is_pointer_internally :: proc(info: ^Type_Info) -> bool {
 	}
 	return false
 }
-// Returns true when the type is a procedure type, false otherwise.
+// Returns true #if the type is a procedure type, false otherwise.
 @(require_results)
 is_procedure :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Procedure)
 	return ok
 }
-// Returns true when the type is a fixed-array type ([N]T), false otherwise.
+// Returns true #if the type is a fixed-array type ([N]T), false otherwise.
 @(require_results)
 is_array :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Array)
 	return ok
 }
-// Returns true when the type is an enumerated-array type ([Enum]T), false otherwise.
+// Returns true #if the type is an enumerated-array type ([Enum]T), false otherwise.
 @(require_results)
 is_enumerated_array :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Enumerated_Array)
 	return ok
 }
-// Returns true when the type is a dynamic-array type ([dynamic]T), false otherwise.
+// Returns true #if the type is a dynamic-array type ([dynamic]T), false otherwise.
 @(require_results)
 is_dynamic_array :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Dynamic_Array)
 	return ok
 }
-// Returns true when the type is a map type (map[K]V), false otherwise.
+// Returns true #if the type is a map type (map[K]V), false otherwise.
 @(require_results)
 is_dynamic_map :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Map)
 	return ok
 }
-// Returns true when the type is a bit_set type, false otherwise.
+// Returns true #if the type is a bit_set type, false otherwise.
 @(require_results)
 is_bit_set :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Bit_Set)
 	return ok
 }
-// Returns true when the type is a slice type ([]T), false otherwise.
+// Returns true #if the type is a slice type ([]T), false otherwise.
 @(require_results)
 is_slice :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Slice)
 	return ok
 }
-// Returns true when the type represents a set of parameters for a procedure (inputs or outputs), false otherwise.
+// Returns true #if the type represents a set of parameters for a procedure (inputs or outputs), false otherwise.
 @(require_results)
 is_parameters :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Parameters)
 	return ok
 }
-// Returns true when the type is a struct type, `#raw_union` will be false. All other types will be false otherwise.
+// Returns true #if the type is a struct type, `#raw_union` will be false. All other types will be false otherwise.
 @(require_results)
 is_struct :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	s, ok := type_info_base(info).variant.(Type_Info_Struct)
 	return ok && .raw_union not_in s.flags
 }
-// Returns true when the type is a struct type with `#raw_union` applied, when `#raw_union` is not applied, the value will be false. All other types will be false otherwise.
+// Returns true #if the type is a struct type with `#raw_union` applied, #if `#raw_union` is not applied, the value will be false. All other types will be false otherwise.
 @(require_results)
 is_raw_union :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	s, ok := type_info_base(info).variant.(Type_Info_Struct)
 	return ok && .raw_union in s.flags
 }
-// Returns true when the type is a union type (not `#raw_union`), false otherwise.
+// Returns true #if the type is a union type (not `#raw_union`), false otherwise.
 @(require_results)
 is_union :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Union)
 	return ok
 }
-// Returns true when the type is an enum type, false otherwise.
+// Returns true #if the type is an enum type, false otherwise.
 @(require_results)
 is_enum :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Enum)
 	return ok
 }
-// Returns true when the type is a #simd-array type (#simd[N]T), false otherwise.
+// Returns true #if the type is a #simd-array type (#simd[N]T), false otherwise.
 @(require_results)
 is_simd_vector :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
 	_, ok := type_info_base(info).variant.(Type_Info_Simd_Vector)
 	return ok
 }
-// Returns true when the type is a fixed-capacity dynamic-array type ([dynamic; N]T), false otherwise.
+// Returns true #if the type is a fixed-capacity dynamic-array type ([dynamic; N]T), false otherwise.
 @(require_results)
 is_fixed_capacity_dynamic_array :: proc(info: ^Type_Info) -> bool {
 	if info == nil { return false }
@@ -443,8 +443,8 @@ is_fixed_capacity_dynamic_array :: proc(info: ^Type_Info) -> bool {
 }
 
 
-// Returns true when the core-type is represented with a platform-native endian type, and returns false otherwise.
-// This will also return false when the type is not an integer, pointer, or bit_set.
+// Returns true #if the core-type is represented with a platform-native endian type, and returns false otherwise.
+// This will also return false #if the type is not an integer, pointer, or bit_set.
 // If the type is the same as the platform-native endian type (e.g. `u32le` on a little-endian system), this will return false.
 @(require_results)
 is_endian_platform :: proc(info: ^Type_Info) -> bool {
@@ -464,8 +464,8 @@ is_endian_platform :: proc(info: ^Type_Info) -> bool {
 	return false
 }
 
-// Returns true when the core-type is represented with a platform-native endian type or the same endianness as the system.
-// This will also return false when the type is not an integer, pointer, or bit_set.
+// Returns true #if the core-type is represented with a platform-native endian type or the same endianness as the system.
+// This will also return false #if the type is not an integer, pointer, or bit_set.
 // If the type is the same as the platform-native endian type (e.g. `u32le` on a little-endian system), this will return true.
 @(require_results)
 is_endian_little :: proc(info: ^Type_Info) -> bool {
@@ -491,8 +491,8 @@ is_endian_little :: proc(info: ^Type_Info) -> bool {
 	return ODIN_ENDIAN == .Little
 }
 
-// Returns true when the core-type is represented with a platform-native endian type or the same endianness as the system.
-// This will also return false when the type is not an integer, pointer, or bit_set.
+// Returns true #if the core-type is represented with a platform-native endian type or the same endianness as the system.
+// This will also return false #if the type is not an integer, pointer, or bit_set.
 // If the type is the same as the platform-native endian type (e.g. `u32be` on a big-endian system), this will return true.
 @(require_results)
 is_endian_big :: proc(info: ^Type_Info) -> bool {

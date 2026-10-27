@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLDrawable")
 Drawable :: struct {
@@ -12,7 +12,7 @@ Drawable :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Drawable, objc_selector="present", objc_name="present")
 	Drawable_present :: proc(self: ^Drawable) ---
 

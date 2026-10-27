@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSBackgroundExtensionView", objc_superclass=View)
 BackgroundExtensionView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundExtensionView, objc_selector="contentView", objc_name="contentView")
 	BackgroundExtensionView_contentView :: proc(self: ^BackgroundExtensionView) -> ^View ---
 
@@ -28,7 +28,7 @@ foreign lib {
 ClipView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ClipView, objc_selector="viewFrameChanged:", objc_name="viewFrameChanged")
 	ClipView_viewFrameChanged :: proc(self: ^ClipView, notification: ^NS.Notification) ---
 
@@ -101,7 +101,7 @@ foreign lib {
 VisualEffectView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VisualEffectView, objc_selector="viewDidMoveToWindow", objc_name="viewDidMoveToWindow")
 	VisualEffectView_viewDidMoveToWindow :: proc(self: ^VisualEffectView) ---
 

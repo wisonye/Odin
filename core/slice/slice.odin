@@ -1,9 +1,9 @@
 // Utility procedures for working with slices, including sorting and searching them.
 package slice
 
-import "base:intrinsics"
-import "base:builtin"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:builtin"
+#import "base:runtime"
 
 _ :: intrinsics
 _ :: builtin
@@ -54,8 +54,8 @@ The length is rounded down to the nearest whole number of items.
 
 Example:
 
-	import "core:fmt"
-	import "core:slice"
+	#import "core:fmt"
+	#import "core:slice"
 
 	i64s_as_i32s :: proc() {
 		large_items := []i64{1, 2, 3, 4}
@@ -85,7 +85,7 @@ Output:
 */
 @(require_results)
 reinterpret :: proc "contextless" ($T: typeid/[]$U, s: []$V) -> []U {
-	when size_of(U) == 0 || size_of(V) == 0 {
+	#if size_of(U) == 0 || size_of(V) == 0 {
 		return nil
 	} else {
 		bytes := to_bytes(s)
@@ -96,7 +96,7 @@ reinterpret :: proc "contextless" ($T: typeid/[]$U, s: []$V) -> []U {
 
 
 swap :: proc(array: $T/[]$E, a, b: int) {
-	when size_of(E) > 8 {
+	#if size_of(E) > 8 {
 		ptr_swap_non_overlapping(&array[a], &array[b], size_of(E))
 	} else {
 		array[a], array[b] = array[b], array[a]
@@ -329,7 +329,7 @@ equal :: proc "contextless" (a, b: $T/[]$E) -> bool where intrinsics.type_is_com
 	if len(a) != len(b) {
 		return false
 	}
-	when intrinsics.type_is_simple_compare(E) {
+	#if intrinsics.type_is_simple_compare(E) {
 		return runtime.memory_compare(raw_data(a), raw_data(b), len(a)*size_of(E)) == 0
 	} else {
 		for i in 0..<len(a) {
@@ -921,8 +921,8 @@ Removes the first n elements (`elems`) from a slice of slices, spanning inner sl
 If `elems` is out of bounds (more than the total) this will trigger a bounds check.
 
 Example:
-	import "core:fmt"
-	import "core:slice"
+	#import "core:fmt"
+	#import "core:slice"
 
 	advance_slices_example :: proc() {
 		slices := [][]byte {

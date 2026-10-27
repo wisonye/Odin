@@ -1,8 +1,8 @@
 package test_core_strconv
 
-import "core:math"
-import "core:strconv"
-import "core:testing"
+#import "core:math"
+#import "core:strconv"
+#import "core:testing"
 
 @(test)
 test_float :: proc(t: ^testing.T) {

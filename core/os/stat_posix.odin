@@ -2,10 +2,10 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/posix"
-import "core:time"
+#import "core:sys/posix"
+#import "core:time"
 
 internal_stat :: proc(stat: posix.stat_t, fullpath: string) -> (fi: File_Info) {
 	fi.fullpath = fullpath
@@ -101,7 +101,7 @@ _lstat :: proc(name: string, allocator: runtime.Allocator) -> (fi: File_Info, er
 
 	// NOTE: can't use realpath or open (+ fcntl F_GETPATH) here because it tries to resolve symlinks.
 
-	// NOTE: This might not be correct when given "/symlink/foo.txt",
+	// NOTE: This might not be correct #if given "/symlink/foo.txt",
 	// you would want that to resolve "/symlink", but not resolve "foo.txt".
 
 	fullpath := clean_path(name, temp_allocator) or_return

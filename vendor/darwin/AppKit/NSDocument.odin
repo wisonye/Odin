@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSDocument", objc_superclass=NS.Object)
 Document :: struct {
@@ -14,7 +14,7 @@ Document :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Document, objc_selector="init", objc_name="init")
 	Document_init :: proc(self: ^Document) -> instancetype ---
 
@@ -715,7 +715,7 @@ DocumentController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentController, objc_selector="init", objc_name="init")
 	DocumentController_init :: proc(self: ^DocumentController) -> instancetype ---
 
@@ -975,7 +975,7 @@ DocumentController_reopenDocumentForURL_withContentsOfURL :: #force_inline proc 
 PersistentDocument :: struct { using _: Document}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PersistentDocument, objc_selector="configurePersistentStoreCoordinatorForURL:ofType:modelConfiguration:storeOptions:error:", objc_name="configurePersistentStoreCoordinatorForURL_ofType_modelConfiguration_storeOptions_error")
 	PersistentDocument_configurePersistentStoreCoordinatorForURL_ofType_modelConfiguration_storeOptions_error :: proc(self: ^PersistentDocument, url: ^NS.URL, fileType: ^NS.String, configuration: ^NS.String, storeOptions: ^NS.Dictionary, error: ^^NS.Error) -> bool ---
 

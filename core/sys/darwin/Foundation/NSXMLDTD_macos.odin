@@ -6,7 +6,7 @@ package darwin_Foundation
 XMLDTD :: struct { using _: XMLNode}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLDTD, objc_selector="init", objc_name="init")
 	XMLDTD_init :: proc(self: ^XMLDTD) -> instancetype ---
 
@@ -85,7 +85,7 @@ XMLDTD_initWithData :: #force_inline proc "c" (self: ^XMLDTD, data: ^Data, mask:
 XMLDTDNode :: struct { using _: XMLNode}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLDTDNode, objc_selector="initWithXMLString:", objc_name="initWithXMLString")
 	XMLDTDNode_initWithXMLString :: proc(self: ^XMLDTDNode, string: ^String) -> instancetype ---
 

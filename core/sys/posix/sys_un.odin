@@ -1,11 +1,11 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
 // sys/un.h = definitions for UNIX domain sockets
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	sockaddr_un :: struct {
 		sun_len:    c.uchar,     /* sockaddr len including nil */
@@ -13,7 +13,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		sun_path:   [104]c.char, /* [PSX] socket pathname */
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	sockaddr_un :: struct {
 		sun_family: sa_family_t, /* [PSX] address family */

@@ -1,9 +1,9 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** Computes a buffer that will be large enough to hold the compressed
 	 * data. This may include some extra padding for headers / scratch */
 	compress_max_buffer_size :: proc(in_bytes: c.size_t) -> c.size_t ---
@@ -67,7 +67,7 @@ foreign lib {
 	 * This is useful for building user-facing routines and similar
 	 * string-based storage where you may not want the integer.
 	 *
-	 * This will return an out of range value (the C enum's `LAST_TYPE`) when the name is invalid
+	 * This will return an out of range value (the C enum's `LAST_TYPE`) #if the name is invalid
 	 * or otherwise unrecognised.
 	 */
 	compression_type_from_name :: proc(compname: cstring) -> compression_t ---
@@ -80,7 +80,7 @@ foreign lib {
 
 	/** Routine to query whether the compression mechanism is lossy.
 	 *
-	 * Returns 1 when the compression type is valid and does NOT preserve
+	 * Returns 1 #if the compression type is valid and does NOT preserve
 	 * data integrity, 0 otherwise.
 	 */
 	compression_is_lossy :: proc(comptype: compression_t) -> c.int ---
@@ -88,7 +88,7 @@ foreign lib {
 	/** Routine to query whether the compression mechanism is valid for deep
 	 * compression.
 	 *
-	 * Returns 1 when the compression type is valid to compress deep data, 0 otherwise.
+	 * Returns 1 #if the compression type is valid to compress deep data, 0 otherwise.
 	 */
 	compression_is_valid_for_deep :: proc(comptype: compression_t) -> c.int ---
 

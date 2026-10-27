@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:fmt"
-import "core:testing"
+#import "core:fmt"
+#import "core:testing"
 
 Buggy_Struct :: struct {
 	a: int,

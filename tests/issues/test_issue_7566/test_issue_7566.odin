@@ -2,7 +2,7 @@
 // Polymorphic instances whose constant parameters are spelt the same but have different values
 package test_issue_7566
 
-import "core:testing"
+#import "core:testing"
 
 Dim :: enum{ C, F }
 Dims :: [Dim]int

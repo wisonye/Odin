@@ -1,9 +1,9 @@
 package uuid
 
-import "base:runtime"
-import "core:io"
-import "core:strconv"
-import "core:strings"
+#import "base:runtime"
+#import "core:io"
+#import "core:strconv"
+#import "core:strings"
 
 /*
 Write a UUID in the 8-4-4-4-12 format.

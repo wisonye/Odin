@@ -10,14 +10,14 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import "base:runtime"
-import "core:fmt"
-import "core:log"
-import "core:strings"
-import "core:sync/chan"
-import "core:time"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:log"
+#import "core:strings"
+#import "core:sync/chan"
+#import "core:time"
 
-when USING_SHORT_LOGS {
+#if USING_SHORT_LOGS {
 	Default_Test_Logger_Opts :: runtime.Logger_Options {
 		.Level,
 		.Terminal_Color,
@@ -83,7 +83,7 @@ format_log_text :: proc(level: runtime.Logger_Level, text: string, options: runt
 
 	log.do_level_header(options, &buf, level)
 	log.do_time_header(options, &buf, at_time)
-	when GO_TO_ERROR {
+	#if GO_TO_ERROR {
 		do_go_to_error_friendly_location(options, &buf, location)
 	} else {
 		log.do_location_header(options, &buf, location)

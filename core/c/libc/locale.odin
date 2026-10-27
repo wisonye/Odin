@@ -1,18 +1,18 @@
 package libc
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // locale.h - category macros
 
-foreign libc {
+#foreign libc {
 	/*
 	Sets the components of an object with the type lconv with the values appropriate for the
 	formatting of numeric quantities (monetary and otherwise) according to the rules of the current
@@ -46,13 +46,13 @@ Locale_Category :: enum c.int {
 	TIME     = LC_TIME,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LSETLOCALE :: "__setlocale50"
 } else {
 	@(private) LSETLOCALE :: "setlocale"
 }
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	lconv :: struct {
 		decimal_point:        cstring,
 		thousand_sep:         cstring,
@@ -110,7 +110,7 @@ when ODIN_OS == .Windows {
 	}
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD  || ODIN_OS == .OpenBSD || ODIN_OS == .Windows {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD  || ODIN_OS == .OpenBSD || ODIN_OS == .Windows {
 
 	LC_ALL      :: 0
 	LC_COLLATE  :: 1
@@ -120,7 +120,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD  || ODIN_OS
 	LC_NUMERIC  :: 4
 	LC_TIME     :: 5
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	LC_CTYPE    :: 0
 	LC_NUMERIC  :: 1

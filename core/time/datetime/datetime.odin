@@ -6,7 +6,7 @@ Reingold & Dershowitz
 */
 package datetime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 Obtain an ordinal from a date.

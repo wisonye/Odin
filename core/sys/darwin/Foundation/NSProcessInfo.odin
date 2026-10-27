@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSProcessInfo", objc_superclass=Object)
 ProcessInfo :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ProcessInfo, objc_selector="operatingSystem", objc_name="operatingSystem")
 	ProcessInfo_operatingSystem :: proc(self: ^ProcessInfo) -> UInteger ---
 

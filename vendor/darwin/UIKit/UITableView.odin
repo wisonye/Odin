@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UITableView", objc_superclass=ScrollView)
 TableView :: struct {
@@ -14,7 +14,7 @@ TableView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableView, objc_selector="initWithFrame:style:", objc_name="initWithFrame")
 	TableView_initWithFrame :: proc(self: ^TableView, frame: CG.Rect, style: TableViewStyle) -> instancetype ---
 
@@ -424,7 +424,7 @@ TableViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDelegate, objc_selector="tableView:willDisplayCell:forRowAtIndexPath:", objc_name="tableView_willDisplayCell_forRowAtIndexPath")
 	TableViewDelegate_tableView_willDisplayCell_forRowAtIndexPath :: proc(self: ^TableViewDelegate, tableView: ^TableView, cell: ^TableViewCell, indexPath: ^NS.IndexPath) ---
 
@@ -593,7 +593,7 @@ TableViewDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDataSource, objc_selector="tableView:numberOfRowsInSection:", objc_name="tableView_numberOfRowsInSection")
 	TableViewDataSource_tableView_numberOfRowsInSection :: proc(self: ^TableViewDataSource, tableView: ^TableView, section: NS.Integer) -> NS.Integer ---
 
@@ -637,7 +637,7 @@ TableViewCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewCell, objc_selector="initWithStyle:reuseIdentifier:", objc_name="initWithStyle")
 	TableViewCell_initWithStyle :: proc(self: ^TableViewCell, style: TableViewCellStyle, reuseIdentifier: ^NS.String) -> instancetype ---
 
@@ -942,7 +942,7 @@ TableViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewController, objc_selector="initWithStyle:", objc_name="initWithStyle")
 	TableViewController_initWithStyle :: proc(self: ^TableViewController, style: TableViewStyle) -> instancetype ---
 
@@ -979,7 +979,7 @@ TableViewDataSourcePrefetching :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDataSourcePrefetching, objc_selector="tableView:prefetchRowsAtIndexPaths:", objc_name="tableView_prefetchRowsAtIndexPaths")
 	TableViewDataSourcePrefetching_tableView_prefetchRowsAtIndexPaths :: proc(self: ^TableViewDataSourcePrefetching, tableView: ^TableView, indexPaths: ^NS.Array) ---
 
@@ -995,7 +995,7 @@ TableViewDiffableDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDiffableDataSource, objc_selector="initWithTableView:cellProvider:", objc_name="initWithTableView")
 	TableViewDiffableDataSource_initWithTableView :: proc(self: ^TableViewDiffableDataSource, tableView: ^TableView, cellProvider: TableViewDiffableDataSourceCellProvider) -> instancetype ---
 
@@ -1059,7 +1059,7 @@ TableViewDragDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDragDelegate, objc_selector="tableView:itemsForBeginningDragSession:atIndexPath:", objc_name="tableView_itemsForBeginningDragSession_atIndexPath")
 	TableViewDragDelegate_tableView_itemsForBeginningDragSession_atIndexPath :: proc(self: ^TableViewDragDelegate, tableView: ^TableView, session: ^DragSession, indexPath: ^NS.IndexPath) -> ^NS.Array ---
 
@@ -1090,7 +1090,7 @@ TableViewDropDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropDelegate, objc_selector="tableView:performDropWithCoordinator:", objc_name="tableView_performDropWithCoordinator")
 	TableViewDropDelegate_tableView_performDropWithCoordinator :: proc(self: ^TableViewDropDelegate, tableView: ^TableView, coordinator: ^TableViewDropCoordinator) ---
 
@@ -1121,7 +1121,7 @@ TableViewDropCoordinator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropCoordinator, objc_selector="dropItem:toPlaceholder:", objc_name="dropItem_toPlaceholder")
 	TableViewDropCoordinator_dropItem_toPlaceholder :: proc(self: ^TableViewDropCoordinator, dragItem: ^DragItem, placeholder: ^TableViewDropPlaceholder) -> ^TableViewDropPlaceholderContext ---
 
@@ -1163,7 +1163,7 @@ TableViewDropItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropItem, objc_selector="dragItem", objc_name="dragItem")
 	TableViewDropItem_dragItem :: proc(self: ^TableViewDropItem) -> ^DragItem ---
 
@@ -1179,7 +1179,7 @@ foreign lib {
 TableViewDropPlaceholder :: struct { using _: TableViewPlaceholder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropPlaceholder, objc_selector="previewParametersProvider", objc_name="previewParametersProvider")
 	TableViewDropPlaceholder_previewParametersProvider :: proc(self: ^TableViewDropPlaceholder) -> ^Objc_Block(proc "c" () -> ^DragPreviewParameters) ---
 
@@ -1195,7 +1195,7 @@ TableViewDropPlaceholderContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropPlaceholderContext, objc_selector="commitInsertionWithDataSourceUpdates:", objc_name="commitInsertionWithDataSourceUpdates")
 	TableViewDropPlaceholderContext_commitInsertionWithDataSourceUpdates :: proc(self: ^TableViewDropPlaceholderContext, dataSourceUpdates: ^Objc_Block(proc "c" ( insertionIndexPath: ^NS.IndexPath ))) -> bool ---
 
@@ -1211,7 +1211,7 @@ foreign lib {
 TableViewDropProposal :: struct { using _: DropProposal}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDropProposal, objc_selector="initWithDropOperation:intent:", objc_name="initWithDropOperation")
 	TableViewDropProposal_initWithDropOperation :: proc(self: ^TableViewDropProposal, operation: DropOperation, intent: TableViewDropIntent) -> instancetype ---
 
@@ -1224,7 +1224,7 @@ foreign lib {
 TableViewFocusUpdateContext :: struct { using _: FocusUpdateContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewFocusUpdateContext, objc_selector="previouslyFocusedIndexPath", objc_name="previouslyFocusedIndexPath")
 	TableViewFocusUpdateContext_previouslyFocusedIndexPath :: proc(self: ^TableViewFocusUpdateContext) -> ^NS.IndexPath ---
 
@@ -1237,7 +1237,7 @@ foreign lib {
 TableViewHeaderFooterView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewHeaderFooterView, objc_selector="initWithReuseIdentifier:", objc_name="initWithReuseIdentifier")
 	TableViewHeaderFooterView_initWithReuseIdentifier :: proc(self: ^TableViewHeaderFooterView, reuseIdentifier: ^NS.String) -> instancetype ---
 
@@ -1316,7 +1316,7 @@ foreign lib {
 TableViewPlaceholder :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewPlaceholder, objc_selector="initWithInsertionIndexPath:reuseIdentifier:rowHeight:", objc_name="initWithInsertionIndexPath")
 	TableViewPlaceholder_initWithInsertionIndexPath :: proc(self: ^TableViewPlaceholder, insertionIndexPath: ^NS.IndexPath, reuseIdentifier: ^NS.String, rowHeight: CG.Float) -> instancetype ---
 
@@ -1341,7 +1341,7 @@ TableViewRowAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewRowAction, objc_selector="rowActionWithStyle:title:handler:", objc_name="rowActionWithStyle", objc_is_class_method=true)
 	TableViewRowAction_rowActionWithStyle :: proc(style: TableViewRowActionStyle, title: ^NS.String, handler: ^Objc_Block(proc "c" ( action: ^TableViewRowAction, indexPath: ^NS.IndexPath ))) -> instancetype ---
 

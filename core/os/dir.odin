@@ -1,8 +1,8 @@
 package os
 
-import "base:runtime"
-import "core:slice"
-import "core:strings"
+#import "base:runtime"
+#import "core:slice"
+#import "core:strings"
 
 read_dir :: read_directory
 
@@ -160,8 +160,8 @@ extend its lifetime.
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:os"
+	#import "core:fmt"
+	#import "core:os"
 
 	main :: proc() {
 		f, oerr := os.open("core")
@@ -209,7 +209,7 @@ read_directory_iterator :: proc(it: ^Read_Directory_Iterator) -> (fi: File_Info,
 
 // Recursively copies a directory to `dst` from `src`
 copy_directory_all :: proc(dst, src: string, dst_perm := Permissions_Default) -> Error {
-	when #defined(_copy_directory_all_native) {
+	#if #defined(_copy_directory_all_native) {
 		return _copy_directory_all_native(dst, src, dst_perm)
 	} else {
 		return _copy_directory_all(dst, src, dst_perm)

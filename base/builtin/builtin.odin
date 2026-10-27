@@ -1,7 +1,7 @@
 // This is purely for documentation
 package builtin
 
-import "base:runtime"
+#import "base:runtime"
 
 nil   :: nil
 false :: 0!=0

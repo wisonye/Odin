@@ -1,8 +1,8 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:simd"
 _ :: simd
 
 @(require_results, enable_target_feature="ssse3")
@@ -38,22 +38,22 @@ _mm_alignr_epi8 :: #force_inline proc "c" (a, b: __m128i, $IMM8: u32) -> __m128i
 	return transmute(__m128i)simd.shuffle(
 		transmute(i8x16)b,
 		transmute(i8x16)a,
-		0  when shift > 32 else shift - 16 + 0  when shift > 16 else shift + 0,
-		1  when shift > 32 else shift - 16 + 1  when shift > 16 else shift + 1,
-		2  when shift > 32 else shift - 16 + 2  when shift > 16 else shift + 2,
-		3  when shift > 32 else shift - 16 + 3  when shift > 16 else shift + 3,
-		4  when shift > 32 else shift - 16 + 4  when shift > 16 else shift + 4,
-		5  when shift > 32 else shift - 16 + 5  when shift > 16 else shift + 5,
-		6  when shift > 32 else shift - 16 + 6  when shift > 16 else shift + 6,
-		7  when shift > 32 else shift - 16 + 7  when shift > 16 else shift + 7,
-		8  when shift > 32 else shift - 16 + 8  when shift > 16 else shift + 8,
-		9  when shift > 32 else shift - 16 + 9  when shift > 16 else shift + 9,
-		10 when shift > 32 else shift - 16 + 10 when shift > 16 else shift + 10,
-		11 when shift > 32 else shift - 16 + 11 when shift > 16 else shift + 11,
-		12 when shift > 32 else shift - 16 + 12 when shift > 16 else shift + 12,
-		13 when shift > 32 else shift - 16 + 13 when shift > 16 else shift + 13,
-		14 when shift > 32 else shift - 16 + 14 when shift > 16 else shift + 14,
-		15 when shift > 32 else shift - 16 + 15 when shift > 16 else shift + 15,
+		0  #if shift > 32 else shift - 16 + 0  #if shift > 16 else shift + 0,
+		1  #if shift > 32 else shift - 16 + 1  #if shift > 16 else shift + 1,
+		2  #if shift > 32 else shift - 16 + 2  #if shift > 16 else shift + 2,
+		3  #if shift > 32 else shift - 16 + 3  #if shift > 16 else shift + 3,
+		4  #if shift > 32 else shift - 16 + 4  #if shift > 16 else shift + 4,
+		5  #if shift > 32 else shift - 16 + 5  #if shift > 16 else shift + 5,
+		6  #if shift > 32 else shift - 16 + 6  #if shift > 16 else shift + 6,
+		7  #if shift > 32 else shift - 16 + 7  #if shift > 16 else shift + 7,
+		8  #if shift > 32 else shift - 16 + 8  #if shift > 16 else shift + 8,
+		9  #if shift > 32 else shift - 16 + 9  #if shift > 16 else shift + 9,
+		10 #if shift > 32 else shift - 16 + 10 #if shift > 16 else shift + 10,
+		11 #if shift > 32 else shift - 16 + 11 #if shift > 16 else shift + 11,
+		12 #if shift > 32 else shift - 16 + 12 #if shift > 16 else shift + 12,
+		13 #if shift > 32 else shift - 16 + 13 #if shift > 16 else shift + 13,
+		14 #if shift > 32 else shift - 16 + 14 #if shift > 16 else shift + 14,
+		15 #if shift > 32 else shift - 16 + 15 #if shift > 16 else shift + 15,
 	)
 }
 
@@ -106,7 +106,7 @@ _mm_sign_epi32 :: #force_inline proc "c" (a, b: __m128i) -> __m128i {
 
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.ssse3.pshuf.b.128")
 	pshufb128    :: proc(a, b: u8x16) -> u8x16 ---
 	@(link_name = "llvm.x86.ssse3.phadd.w.128")

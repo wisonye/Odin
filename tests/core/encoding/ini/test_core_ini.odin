@@ -1,9 +1,9 @@
 #+feature dynamic-literals
 package test_core_ini
 
-import "core:encoding/ini"
-import "core:strings"
-import "core:testing"
+#import "core:encoding/ini"
+#import "core:strings"
+#import "core:testing"
 
 @test
 parse_ini :: proc(t: ^testing.T) {

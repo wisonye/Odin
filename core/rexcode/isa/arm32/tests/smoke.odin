@@ -2,9 +2,9 @@
 
 package rexcode_arm32_tests
 
-import "core:fmt"
-import "core:os"
-import a "../"
+#import "core:fmt"
+#import "core:os"
+#import a "../"
 
 ok_count, fail_count: int
 

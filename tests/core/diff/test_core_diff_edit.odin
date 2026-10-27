@@ -1,9 +1,9 @@
 package test_core_diff
 
-import "core:diff"
-import "core:math/rand"
-import "core:slice"
-import "core:testing"
+#import "core:diff"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:testing"
 
 /*
 	Harness

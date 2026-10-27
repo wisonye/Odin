@@ -34,11 +34,11 @@ Point_p384r1 :: struct {
 
 @(require_results)
 pt_set_xy_bytes :: proc "contextless" (p: ^$T, x_raw, y_raw: []byte) -> bool {
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		FE_SZ :: FE_SIZE_P256R1
 		x, y: Field_Element_p256r1
 		defer fe_clear_vec([]^Field_Element_p256r1{&x, &y})
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		FE_SZ :: FE_SIZE_P384R1
 		x, y: Field_Element_p384r1
 		defer fe_clear_vec([]^Field_Element_p384r1{&x, &y})
@@ -69,11 +69,11 @@ pt_set_xy_bytes :: proc "contextless" (p: ^$T, x_raw, y_raw: []byte) -> bool {
 
 @(require_results)
 pt_set_x_bytes :: proc "contextless" (p: ^$T, x_raw: []byte, y_is_odd: int) -> bool {
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		FE_SZ :: FE_SIZE_P256R1
 		x, y, yy, y_neg: Field_Element_p256r1
 		defer fe_clear_vec([]^Field_Element_p256r1{&x, &y, &yy, &y_neg})
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		FE_SZ :: FE_SIZE_P384R1
 		x, y, yy, y_neg: Field_Element_p384r1
 		defer fe_clear_vec([]^Field_Element_p384r1{&x, &y, &yy, &y_neg})
@@ -106,9 +106,9 @@ pt_set_x_bytes :: proc "contextless" (p: ^$T, x_raw: []byte, y_is_odd: int) -> b
 
 @(require_results)
 pt_bytes :: proc "contextless" (x, y: []byte, p: ^$T) -> bool {
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		FE_SZ :: FE_SIZE_P256R1
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		FE_SZ :: FE_SIZE_P384R1
 	} else {
 		#panic("weierstrass: invalid curve")
@@ -178,11 +178,11 @@ pt_add :: proc "contextless" (p, a, b: ^$T) {
 	//
 	// The operation costs are `12M + 2mb + 29a`.
 
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		t0, t1, t2, t3, t4, b_fe: Field_Element_p256r1
 		x3, y3, z3: Field_Element_p256r1
 		defer fe_clear_vec([]^Field_Element_p256r1{&t0, &t1, &t2, &t3, &t4, &x3, &y3, &z3})
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		t0, t1, t2, t3, t4, b_fe: Field_Element_p384r1
 		x3, y3, z3: Field_Element_p384r1
 		defer fe_clear_vec([]^Field_Element_p384r1{&t0, &t1, &t2, &t3, &t4, &x3, &y3, &z3})
@@ -286,11 +286,11 @@ pt_add_mixed :: proc "contextless" (p, a: ^$T, x2, y2: ^$U) {
 	// The operation costs are `11M + 2mb + 23a` saving
 	// `1M + 6a` over `pt_add`.
 
-	when T == Point_p256r1 && U == Field_Element_p256r1 {
+	#if T == Point_p256r1 && U == Field_Element_p256r1 {
 		t0, t1, t2, t3, t4, b_fe: Field_Element_p256r1
 		x3, y3, z3: Field_Element_p256r1
 		defer fe_clear_vec([]^Field_Element_p256r1{&t0, &t1, &t2, &t3, &t4, &x3, &y3, &z3})
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		t0, t1, t2, t3, t4, b_fe: Field_Element_p384r1
 		x3, y3, z3: Field_Element_p384r1
 		defer fe_clear_vec([]^Field_Element_p384r1{&t0, &t1, &t2, &t3, &t4, &x3, &y3, &z3})
@@ -377,11 +377,11 @@ pt_double :: proc "contextless" (p, a: ^$T) {
 	//
 	// The operation costs are `8M + 3S + 2mb + 21a`.
 
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		t0, t1, t2, t3, b_fe: Field_Element_p256r1
 		x3, y3, z3: Field_Element_p256r1
 		defer fe_clear_vec([]^Field_Element_p256r1{&t0, &t1, &t2, &t3, &x3, &y3, &z3})
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		t0, t1, t2, t3, b_fe: Field_Element_p384r1
 		x3, y3, z3: Field_Element_p384r1
 		defer fe_clear_vec([]^Field_Element_p384r1{&t0, &t1, &t2, &t3, &x3, &y3, &z3})
@@ -485,9 +485,9 @@ pt_rescale :: proc "contextless" (p, a: ^$T) {
 
 	was_identity := pt_is_identity(a)
 
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		z_inv: Field_Element_p256r1
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		z_inv: Field_Element_p384r1
 	} else {
 		#panic("weierstrass: invalid curve")
@@ -513,9 +513,9 @@ pt_cond_select :: proc "contextless" (p, a, b: ^$T, ctrl: int) {
 
 @(require_results)
 pt_equal :: proc "contextless" (a, b: ^$T) -> int {
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		x1z2, x2z1, y1z2, y2z1: Field_Element_p256r1
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		x1z2, x2z1, y1z2, y2z1: Field_Element_p384r1
 	} else {
 		#panic("weierstrass: invalid curve")

@@ -1,7 +1,7 @@
 package ecdsa
 
-import "core:crypto/hash"
-import secec "core:crypto/_weierstrass"
+#import "core:crypto/hash"
+#import secec "core:crypto/_weierstrass"
 
 // verify_raw returns true if and only if (⟺) sig is a valid signature by pub_key over
 // msg, hased using hash_algo, per the verification procedure specifed
@@ -62,11 +62,11 @@ verify_asn1 :: proc(pub_key: ^Public_Key, hash_algo: hash.Algorithm, msg, sig: [
 
 @(private,require_results)
 verify_internal :: proc(pub_key: ^$T, hash_algo: hash.Algorithm, sig_r, sig_s, msg: []byte) -> bool {
-	when T == secec.Point_p256r1 {
+	#if T == secec.Point_p256r1 {
 		r, s, e, v: secec.Scalar_p256r1 = ---, ---, ---, ---
 		u1, u2, s_inv: secec.Scalar_p256r1 = ---, ---, ---
 		SC_SZ :: secec.SC_SIZE_P256R1
-	} else when T == secec.Point_p384r1 {
+	} else #if T == secec.Point_p384r1 {
 		r, s, e, v: secec.Scalar_p384r1 = ---, ---, ---, ---
 		u1, u2, s_inv: secec.Scalar_p384r1 = ---, ---, ---
 		SC_SZ :: secec.SC_SIZE_P384R1

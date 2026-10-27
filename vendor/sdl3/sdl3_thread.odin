@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Thread :: struct {}
 ThreadID :: distinct Uint64
@@ -26,7 +26,7 @@ ThreadFunction :: #type proc "c" (data: rawptr) -> c.int
 TLSDestructorCallback :: #type proc "c" (value: rawptr)
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Release)
 	CreateThreadRuntime :: proc(fn: ThreadFunction, name: cstring, data: rawptr, pfnBeginThread: FunctionPointer, pfnEndThread: FunctionPointer) -> ^Thread ---
 	@(synchronizes=.Release)
@@ -51,8 +51,8 @@ PROP_THREAD_CREATE_STACKSIZE_NUMBER       :: "SDL.thread.create.stacksize"
 
 
 BeginThreadFunction :: proc "c" () -> FunctionPointer {
-	when ODIN_OS == .Windows {
-		foreign {
+	#if ODIN_OS == .Windows {
+		#foreign {
 			_beginthreadex :: proc "c" (
 			        security: rawptr,
 			        stack_size: c.uint,
@@ -69,8 +69,8 @@ BeginThreadFunction :: proc "c" () -> FunctionPointer {
 }
 
 EndThreadFunction :: proc "c" () -> FunctionPointer {
-	when ODIN_OS == .Windows {
-		foreign {
+	#if ODIN_OS == .Windows {
+		#foreign {
 			_endthreadex :: proc "c" (retval: c.uint) ---
 		}
 		return FunctionPointer(_endthreadex)
@@ -80,7 +80,7 @@ EndThreadFunction :: proc "c" () -> FunctionPointer {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetThreadName            :: proc(thread: ^Thread) -> cstring ---
 	GetCurrentThreadID       :: proc() -> ThreadID ---
 	GetThreadID              :: proc(thread: ^Thread) -> ThreadID ---
@@ -90,7 +90,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetCurrentThreadPriority :: proc(priority: ThreadPriority) -> bool ---
 	@(synchronizes=.Acquire)
 	WaitThread               :: proc(thread: ^Thread, status: ^c.int) ---

@@ -21,8 +21,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:time"
-import "core:sys/linux"
+#import "core:time"
+#import "core:sys/linux"
 
 _SOCKET_OPTION_BROADCAST                 :: linux.Socket_Option.BROADCAST
 _SOCKET_OPTION_REUSE_ADDRESS             :: linux.Socket_Option.REUSEADDR

@@ -2,7 +2,7 @@ package time
 // Parsing RFC 3339 date/time strings into time.Time.
 // See https://www.rfc-editor.org/rfc/rfc3339 for the definition
 
-import dt "core:time/datetime"
+#import dt "core:time/datetime"
 
 /*
 Parse an RFC 3339 string into time with a UTC offset applied to it.

@@ -6,7 +6,7 @@ package darwin_Foundation
 DistributedNotificationCenter :: struct { using _: NotificationCenter}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DistributedNotificationCenter, objc_selector="notificationCenterForType:", objc_name="notificationCenterForType", objc_is_class_method=true)
 	DistributedNotificationCenter_notificationCenterForType :: proc(notificationCenterType: ^String) -> ^DistributedNotificationCenter ---
 

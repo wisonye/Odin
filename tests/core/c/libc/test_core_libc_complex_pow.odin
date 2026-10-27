@@ -1,8 +1,8 @@
 package test_core_libc
 
-import "core:testing"
-import "core:c/libc"
-import "core:log"
+#import "core:testing"
+#import "core:c/libc"
+#import "core:log"
 
 reldiff :: proc(lhs, rhs: $T) -> f64  {
 	if lhs == rhs {

@@ -1,13 +1,13 @@
 package edwards_tools
 
-import ed "core:crypto/_edwards25519"
-import field "core:crypto/_fiat/field_curve25519"
-import scalar "core:crypto/_fiat/field_scalar25519"
-import "core:encoding/endian"
-import "core:fmt"
-import path "core:path/filepath"
-import "core:os"
-import "core:strings"
+#import ed "core:crypto/_edwards25519"
+#import field "core:crypto/_fiat/field_curve25519"
+#import scalar "core:crypto/_fiat/field_scalar25519"
+#import "core:encoding/endian"
+#import "core:fmt"
+#import path "core:path/filepath"
+#import "core:os"
+#import "core:strings"
 
 // Yes this leaks memory, fite me IRL.
 
@@ -90,9 +90,9 @@ main :: proc() {
 	fmt.wprintln(w, "")
 	fmt.wprintln(w, GENERATED)
 	fmt.wprintln(w, "")
-	fmt.wprintln(w, "import \"core:crypto\"")
+	fmt.wprintln(w, "#import \"core:crypto\"")
 	fmt.wprintln(w, "")
-	fmt.wprintln(w, "when crypto.COMPACT_IMPLS == false {")
+	fmt.wprintln(w, "#if crypto.COMPACT_IMPLS == false {")
 
 	fmt.wprintln(w, "\t@(private,rodata)")
 	fmt.wprintln(w, "\tGen_Multiply_Table_edwards25519_lo := [32]Basepoint_Multiply_Table {")

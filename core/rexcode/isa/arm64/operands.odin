@@ -12,7 +12,7 @@ package rexcode_arm64
 //   [Xn, #imm]                    OFFSET (signed 9 or unsigned scaled 12)
 //   [Xn, #imm]!                   PRE_INDEXED (writeback before)
 //   [Xn], #imm                    POST_INDEXED (writeback after)
-//   [Xn, Xm{, LSL #s}]            REG_OFFSET (shift = log2(size) when present)
+//   [Xn, Xm{, LSL #s}]            REG_OFFSET (shift = log2(size) #if present)
 //   [Xn, Wm, SXTW|UXTW|SXTX #s]   EXT_REG_OFFSET
 //   label                         LITERAL (PC-relative for LDR literal)
 //
@@ -220,7 +220,7 @@ op_za_slice :: #force_inline proc "contextless" (tile, ws, offset, elem: u8, ver
 // -----------------------------------------------------------------------------
 // SVE Z-register builders -- encode the element arrangement in op.size
 // (B=1, H=2, S=4, D=8). Matcher uses op.size to disambiguate the right
-// table form when multiple element sizes share a base mnemonic.
+// table form #if multiple element sizes share a base mnemonic.
 // -----------------------------------------------------------------------------
 
 @(require_results)
@@ -282,7 +282,7 @@ sve_esize_code :: #force_inline proc "contextless" (esize: u32) -> u8 {
 }
 
 // A predicate register's governing qualifier, carried in Operand.size and read
-// only when the register's class is REG_P. SVE writes it as a suffix -- `p0/z`
+// only #if the register's class is REG_P. SVE writes it as a suffix -- `p0/z`
 // zeroes the inactive lanes, `p0/m` leaves them alone -- and an assembler will
 // not take the instruction without it where the form calls for one.
 PQUAL_ZERO  :: u8(1)

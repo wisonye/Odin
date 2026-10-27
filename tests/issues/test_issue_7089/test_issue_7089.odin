@@ -1,6 +1,6 @@
 package test_issue_7089
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_issue_7089 :: proc(t: ^testing.T) {

@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import "system:Comctl32.lib"
+#foreign #import "system:Comctl32.lib"
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	InitCommonControlsEx  :: proc(picce: ^INITCOMMONCONTROLSEX) -> BOOL ---
 	LoadIconWithScaleDown :: proc(hinst: HINSTANCE, pszName: PCWSTR, cx: c_int, cy: c_int, phico: ^HICON) -> HRESULT ---
 	SetWindowSubclass     :: proc(hwnd: HWND, pfnSubclass: SUBCLASSPROC, uIdSubclass: UINT_PTR, dwRefData: DWORD_PTR) ---
@@ -186,7 +186,7 @@ IMAGEINFO :: struct {
 LPIMAGEINFO :: ^IMAGEINFO
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	ImageList_Create             :: proc(cx, cy: c_int, flags: UINT, cInitial, cGrow: c_int) -> HIMAGELIST ---
 	ImageList_Destroy            :: proc(himl: HIMAGELIST) -> BOOL ---
 	ImageList_GetImageCount      :: proc(himl: HIMAGELIST) -> c_int ---
@@ -250,7 +250,7 @@ SBN_SIMPLEMODECHANGE :: SBN_FIRST - 0
 SB_SIMPLEID :: 0xFF
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	DrawStatusTextW :: proc(hDC: HDC, lprc: ^RECT, pszText: LPCWSTR, uFlags: UINT) ---
 	CreateStatusWindowW :: proc(style: LONG, lpszText: LPCWSTR, hwndParent: HWND, wID: UINT) -> HWND ---
 }
@@ -259,7 +259,7 @@ foreign Comctl32 {
 MINSYSCOMMAND :: SC_SIZE
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	MenuHelp :: proc(uMsg: UINT, wParam: WPARAM, lParam: LPARAM, hMainMenu: HMENU, hInst: HINSTANCE, hwndStatus: HWND, lpwIDs: ^UINT) ---
 	ShowHideMenuCtl :: proc(hWnd: HWND, uFlags: UINT_PTR, lpInfo: LPINT) -> BOOL ---
 	GetEffectiveClientRect :: proc(hWnd: HWND, lprc: LPRECT, lpInfo: ^INT) ---
@@ -274,7 +274,7 @@ DL_MOVECURSOR :: 3
 DRAGLISTMSGSTRING :: "commctrl_DragListMsg"
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	MakeDragList :: proc(hLB: HWND) -> BOOL ---
 	DrawInsert :: proc(handParent: HWND, hLB: HWND, nItem: c_int) ---
 	LBItemFromPt :: proc(hLB: HWND, pt: POINT, bAutoScroll: BOOL) -> c_int ---
@@ -506,7 +506,7 @@ NMTTCUSTOMDRAW :: struct {
 LPNMTTCUSTOMDRAW :: ^NMTTCUSTOMDRAW
 
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	CreateToolbarEx :: proc(hwnd: HWND, ws: DWORD, wID: UINT, nBitmaps: c_int, hBMInst: HINSTANCE, wBMID: UINT_PTR, lpButtons: LPCTBBUTTON, iNumButtons: c_int, dxButton,dyButton: c_int, dxBitmap,dyBitmap: c_int, uStructSize: UINT) -> HWND ---
 	CreateMappedBitmap :: proc(hInstance: HINSTANCE, idBitmap: INT_PTR, wFlags: UINT, lpColorMap: LPCOLORMAP, iNumMaps: c_int) -> HBITMAP ---
 }
@@ -636,7 +636,7 @@ Edit_TakeFocus :: #force_inline proc "system" (hwndCtl: HWND) {
 
 // Up Down Control
 @(default_calling_convention="system")
-foreign Comctl32 {
+#foreign Comctl32 {
 	CreateUpDownControl :: proc(dwStyle: DWORD, x,y: c_int, cx,cy: c_int, hParent: HWND, nID: c_int, hInst: HINSTANCE, hBuddy: HWND, nUpper,nLower,nPos: c_int) -> HWND ---
 }
 

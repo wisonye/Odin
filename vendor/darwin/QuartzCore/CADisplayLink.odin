@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_QuartzCore
 
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CADisplayLink", objc_superclass=NS.Object)
 DisplayLink :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DisplayLink, objc_selector="displayLinkWithTarget:selector:", objc_name="displayLinkWithTarget", objc_is_class_method=true)
 	DisplayLink_displayLinkWithTarget :: proc(target: id, sel: SEL) -> ^DisplayLink ---
 

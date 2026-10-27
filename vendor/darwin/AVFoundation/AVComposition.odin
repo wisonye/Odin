@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="AVComposition", objc_superclass=Asset)
 Composition :: struct {
@@ -14,7 +14,7 @@ Composition :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Composition, objc_selector="tracks", objc_name="tracks")
 	Composition_tracks :: proc(self: ^Composition) -> ^NS.Array ---
 
@@ -62,7 +62,7 @@ foreign lib {
 @(objc_class="AVMutableComposition", objc_superclass=Composition)
 MutableComposition :: struct { using _: Composition}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableComposition, objc_selector="composition", objc_name="composition", objc_is_class_method=true)
 	MutableComposition_composition :: proc() -> instancetype ---
 
@@ -150,7 +150,7 @@ MutableCompositionInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCompositionTrack", objc_superclass=AssetTrack)
 CompositionTrack :: struct { using _: AssetTrack}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompositionTrack, objc_selector="segmentForTrackTime:", objc_name="segmentForTrackTime")
 	CompositionTrack_segmentForTrackTime :: proc(self: ^CompositionTrack, trackTime: CM.Time) -> ^CompositionTrackSegment ---
 
@@ -177,7 +177,7 @@ foreign lib {
 @(objc_class="AVMutableCompositionTrack", objc_superclass=CompositionTrack)
 MutableCompositionTrack :: struct { using _: CompositionTrack}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableCompositionTrack, objc_selector="insertTimeRange:ofTrack:atTime:error:", objc_name="insertTimeRange_error")
 	MutableCompositionTrack_insertTimeRange_error :: proc(self: ^MutableCompositionTrack, timeRange: CM.TimeRange, track: ^AssetTrack, startTime: CM.Time, outError: ^^NS.Error) -> bool ---
 
@@ -284,7 +284,7 @@ CompositionTrackFormatDescriptionReplacement :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompositionTrackFormatDescriptionReplacement, objc_selector="originalFormatDescription", objc_name="originalFormatDescription")
 	CompositionTrackFormatDescriptionReplacement_originalFormatDescription :: proc(self: ^CompositionTrackFormatDescriptionReplacement) -> CM.FormatDescriptionRef ---
 
@@ -296,7 +296,7 @@ foreign lib {
 @(objc_class="AVCompositionTrackSegment", objc_superclass=AssetTrackSegment)
 CompositionTrackSegment :: struct { using _: AssetTrackSegment}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompositionTrackSegment, objc_selector="compositionTrackSegmentWithURL:trackID:sourceTimeRange:targetTimeRange:", objc_name="compositionTrackSegmentWithURL", objc_is_class_method=true)
 	CompositionTrackSegment_compositionTrackSegmentWithURL :: proc(_URL: ^NS.URL, trackID: CM.PersistentTrackID, sourceTimeRange: CM.TimeRange, targetTimeRange: CM.TimeRange) -> instancetype ---
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKPointOfInterestFilter", objc_superclass=NS.Object)
 PointOfInterestFilter :: struct {
@@ -11,7 +11,7 @@ PointOfInterestFilter :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PointOfInterestFilter, objc_selector="initIncludingCategories:", objc_name="initIncludingCategories")
 	PointOfInterestFilter_initIncludingCategories :: proc(self: ^PointOfInterestFilter, categories: ^NS.Array) -> instancetype ---
 

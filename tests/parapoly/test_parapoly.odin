@@ -8,8 +8,8 @@ package test_parapoly
 // This package is intentionally NOT part of the CI test set (tests/internal, tests/core, ...); run it
 // directly with:  odin test tests/parapoly
 
-import "core:testing"
-import "core:reflect"
+#import "core:testing"
+#import "core:reflect"
 
 // --- helpers (package-level: polymorphic procs/types must be top-level) -----------------------------
 
@@ -171,7 +171,7 @@ parapoly_deferred_ternary :: proc(t: ^testing.T) { // both-branch-untyped ternar
 	c := true
 	pp_def_push(&a, c ? {1, 2} : {3, 4})                 // ?:
 	pp_def_push(&a, {5, 6} if !c else {7, 8})            // if/else
-	pp_def_push(&a, {9, 9} when ODIN_DEBUG else {8, 8})  // when (a[2], value depends on build)
+	pp_def_push(&a, {9, 9} #if ODIN_DEBUG else {8, 8})  // #if (a[2], value depends on build)
 	pp_def_push(&a, c ? {1, 1} : (c ? {2, 2} : {3, 3}))  // nested
 	testing.expect(t, a[0] == [2]int{1, 2}, "ternary ?: deferred arg")
 	testing.expect(t, a[1] == [2]int{7, 8}, "ternary if/else deferred arg")

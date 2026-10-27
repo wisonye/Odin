@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UICornerConfiguration", objc_superclass=NS.Object)
 CornerConfiguration :: struct {
@@ -12,7 +12,7 @@ CornerConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CornerConfiguration, objc_selector="configurationWithRadius:", objc_name="configurationWithRadius", objc_is_class_method=true)
 	CornerConfiguration_configurationWithRadius :: proc(radius: ^CornerRadius) -> instancetype ---
 
@@ -73,7 +73,7 @@ CornerRadius :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CornerRadius, objc_selector="fixedRadius:", objc_name="fixedRadius", objc_is_class_method=true)
 	CornerRadius_fixedRadius :: proc(radius: CG.Float) -> instancetype ---
 

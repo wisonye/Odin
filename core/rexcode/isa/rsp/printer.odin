@@ -2,11 +2,11 @@
 
 package rexcode_rsp
 
-import "core:strings"
-import "core:reflect"
-import "core:os"
-import "core:io"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:os"
+#import "core:io"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // N64 RSP PRINTER
@@ -18,7 +18,7 @@ import "core:rexcode/isa"
 //     for VR_ELEM operands (`vmulf $v0, $v1, $v2[3]`).
 //   - Vector flag regs print as `vco`, `vcc`, `vce`.
 //   - Vector memory is `e[N], offset(base)` matching N64 toolchain output.
-//   - CP0 DMA registers print by enum name when known.
+//   - CP0 DMA registers print by enum name #if known.
 //
 // All seven sink families (sbprint / print / aprint / tprint / bprint /
 // fprint / wprint) wrap the same core `sbprint`.
@@ -355,7 +355,7 @@ write_operand :: proc(
 		write_register(sb, op.reg, opts.uppercase, 0xFF)
 
 	case .VECTOR_REG:
-		// Print element only when non-zero (idiomatic disassembly).
+		// Print element only #if non-zero (idiomatic disassembly).
 		elem := op.element
 		if elem == 0 { elem = 0xFF }
 		write_register(sb, op.reg, opts.uppercase, elem)

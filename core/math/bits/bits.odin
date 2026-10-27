@@ -1,7 +1,7 @@
 // Bit-level operations, including the ability to set or toggle individual bits in an integer.
 package math_bits
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // The minimum value held by a `u8`. The same value as `min(u8)`, except untyped.
 U8_MIN  :: 0
@@ -23,7 +23,7 @@ U32_MAX :: 1 << 32 - 1
 // The maximum value held by a `u64`. The same value as `max(u64)`, except untyped.
 U64_MAX :: 1 << 64 - 1
 // The maximum value held by a `uint`. The same value as `max(uint)`, except untyped.
-UINT_MAX :: U64_MAX when size_of(uint) == 8 else U32_MAX
+UINT_MAX :: U64_MAX #if size_of(uint) == 8 else U32_MAX
 
 // The minimum value held by an `i8`. The same value as `min(i8)`, except untyped.
 I8_MIN  :: - 1 << 7
@@ -34,7 +34,7 @@ I32_MIN :: - 1 << 31
 // The minimum value held by an `i64`. The same value as `min(i64)`, except untyped.
 I64_MIN :: - 1 << 63
 // The minimum value held by an `int`. The same value as `min(int)`, except untyped.
-INT_MIN :: I64_MIN when size_of(int) == 8 else I32_MIN
+INT_MIN :: I64_MIN #if size_of(int) == 8 else I32_MIN
 
 // The maximum value held by an `i8`. The same value as `max(i8)`, except untyped.
 I8_MAX  :: 1 <<  7 - 1
@@ -45,7 +45,7 @@ I32_MAX :: 1 << 31 - 1
 // The maximum value held by an `i64`. The same value as `max(i64)`, except untyped.
 I64_MAX :: 1 << 63 - 1
 // The maximum value held by an `int`. The same value as `max(int)`, except untyped.
-INT_MAX :: I64_MAX when size_of(int) == 8 else I32_MAX
+INT_MAX :: I64_MAX #if size_of(int) == 8 else I32_MAX
 
 count_ones           :: intrinsics.count_ones
 count_zeros          :: intrinsics.count_zeros
@@ -74,8 +74,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:math/bits"
+	#import "core:fmt"
+	#import "core:math/bits"
 
 	log2_example :: proc() {
 		for i in u8(1)..=8 {
@@ -121,8 +121,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:math/bits"
+	#import "core:fmt"
+	#import "core:math/bits"
 
 	rotate_left8_example :: proc() {
 		x := u8(13)
@@ -258,7 +258,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_be_u16  :: proc "contextless" (i:  u16) ->  u16 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+from_be_u16  :: proc "contextless" (i:  u16) ->  u16 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -270,7 +270,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_be_u32  :: proc "contextless" (i:  u32) ->  u32 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+from_be_u32  :: proc "contextless" (i:  u32) ->  u32 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -282,7 +282,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_be_u64  :: proc "contextless" (i:  u64) ->  u64 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+from_be_u64  :: proc "contextless" (i:  u64) ->  u64 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -294,7 +294,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_be_uint :: proc "contextless" (i: uint) -> uint { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+from_be_uint :: proc "contextless" (i: uint) -> uint { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`
@@ -320,7 +320,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_le_u16  :: proc "contextless" (i:  u16) ->  u16 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+from_le_u16  :: proc "contextless" (i:  u16) ->  u16 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -332,7 +332,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_le_u32  :: proc "contextless" (i:  u32) ->  u32 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+from_le_u32  :: proc "contextless" (i:  u32) ->  u32 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -344,7 +344,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_le_u64  :: proc "contextless" (i:  u64) ->  u64 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+from_le_u64  :: proc "contextless" (i:  u64) ->  u64 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -356,7 +356,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-from_le_uint :: proc "contextless" (i: uint) -> uint { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+from_le_uint :: proc "contextless" (i: uint) -> uint { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`
@@ -382,7 +382,7 @@ Inputs:
 Returns:
 - res: `i`, optionally byte-swapped
 */
-to_be_u16  :: proc "contextless" (i:  u16) ->  u16 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+to_be_u16  :: proc "contextless" (i:  u16) ->  u16 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -394,7 +394,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_be_u32  :: proc "contextless" (i:  u32) ->  u32 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+to_be_u32  :: proc "contextless" (i:  u32) ->  u32 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -406,7 +406,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_be_u64  :: proc "contextless" (i:  u64) ->  u64 { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+to_be_u64  :: proc "contextless" (i:  u64) ->  u64 { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a little endian target.
@@ -418,7 +418,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_be_uint :: proc "contextless" (i: uint) -> uint { when ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
+to_be_uint :: proc "contextless" (i: uint) -> uint { #if ODIN_ENDIAN == .Big { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`
@@ -444,7 +444,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_le_u16  :: proc "contextless" (i:  u16) ->  u16 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+to_le_u16  :: proc "contextless" (i:  u16) ->  u16 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -456,7 +456,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_le_u32  :: proc "contextless" (i:  u32) ->  u32 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+to_le_u32  :: proc "contextless" (i:  u32) ->  u32 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -468,7 +468,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_le_u64  :: proc "contextless" (i:  u64) ->  u64 { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+to_le_u64  :: proc "contextless" (i:  u64) ->  u64 { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 /*
 Returns unsigned integer `i`, byte-swapped if we're on a big endian target.
@@ -480,7 +480,7 @@ Returns:
 - res: `i`, optionally byte-swapped
 */
 @(require_results)
-to_le_uint :: proc "contextless" (i: uint) -> uint { when ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
+to_le_uint :: proc "contextless" (i: uint) -> uint { #if ODIN_ENDIAN == .Little { return i } else { return byte_swap(i) } }
 
 // returns the minimum number of bits required to represent x
 @(require_results)
@@ -536,7 +536,7 @@ len_u64 :: proc "contextless" (x: u64) -> (n: int) {
 // returns the minimum number of bits required to represent x
 @(require_results)
 len_uint :: proc "contextless" (x: uint) -> (n: int) {
-	when size_of(uint) == size_of(u64) {
+	#if size_of(uint) == size_of(u64) {
 		return len_u64(u64(x))
 	} else {
 		return len_u32(u32(x))
@@ -602,7 +602,7 @@ Returns:
 */
 @(require_results)
 add_uint :: proc "contextless" (x, y, carry: uint) -> (sum, carry_out: uint) {
-	when size_of(uint) == size_of(u64) {
+	#if size_of(uint) == size_of(u64) {
 		a, b := add_u64(u64(x), u64(y), u64(carry))
 	} else {
 		#assert(size_of(uint) == size_of(u32))
@@ -681,7 +681,7 @@ Returns:
 */
 @(require_results)
 sub_uint :: proc "contextless" (x, y, borrow: uint) -> (diff, borrow_out: uint) {
-	when size_of(uint) == size_of(u64) {
+	#if size_of(uint) == size_of(u64) {
 		a, b := sub_u64(u64(x), u64(y), u64(borrow))
 	} else {
 		#assert(size_of(uint) == size_of(u32))
@@ -753,7 +753,7 @@ Returns:
 */
 @(require_results)
 mul_uint :: proc "contextless" (x, y: uint) -> (hi, lo: uint) {
-	when size_of(uint) == size_of(u32) {
+	#if size_of(uint) == size_of(u32) {
 		a, b := mul_u32(u32(x), u32(y))
 	} else {
 		#assert(size_of(uint) == size_of(u64))
@@ -868,7 +868,7 @@ Returns:
 */
 @(require_results)
 div_uint :: proc "odin" (hi, lo, y: uint) -> (quo, rem: uint) {
-	when size_of(uint) == size_of(u32) {
+	#if size_of(uint) == size_of(u32) {
 		a, b := div_u32(u32(hi), u32(lo), u32(y))
 	} else {
 		#assert(size_of(uint) == size_of(u64))

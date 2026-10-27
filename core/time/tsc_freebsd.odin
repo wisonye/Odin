@@ -2,10 +2,10 @@
 #+build freebsd
 package time
 
-import "core:c"
+#import "core:c"
 
-foreign import libc "system:c"
-foreign libc {
+#foreign #import libc "system:c"
+#foreign libc {
 	@(link_name="sysctlbyname") _sysctlbyname :: proc(path: cstring, oldp: rawptr, oldlenp: rawptr, newp: rawptr, newlen: int) -> c.int ---
 }
 

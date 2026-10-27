@@ -1,15 +1,15 @@
 // Bindings for [[ Direct3D Shader Compiler ; https://learn.microsoft.com/en-us/windows/win32/api/d3dcompiler/ ]].
 package directx_d3d_compiler
 
-foreign import d3dcompiler "d3dcompiler_47.lib"
-import win32 "core:sys/windows"
+#foreign #import d3dcompiler "d3dcompiler_47.lib"
+#import win32 "core:sys/windows"
 
 D3DCOMPILER_DLL_A :: "d3dcompiler_47.dll"
 COMPILER_VERSION :: 47
 
-import "../dxgi"
-import "../d3d11"
-import "../d3d_common"
+#import "../dxgi"
+#import "../d3d11"
+#import "../d3d_common"
 
 BOOL            :: dxgi.BOOL
 IID             :: dxgi.IID
@@ -24,7 +24,7 @@ LPCSTR   :: win32.LPCSTR
 LPCWSTR  :: win32.LPCWSTR
 
 @(default_calling_convention="system", link_prefix="D3D")
-foreign d3dcompiler {
+#foreign d3dcompiler {
 	ReadFileToBlob                 :: proc(pFileName: LPCWSTR, ppContents: ^^ID3DBlob) -> HRESULT ---
 	WriteBlobToFile                :: proc(pBlob: ^ID3DBlob, pFileName: LPCWSTR, bOverwrite: BOOL) -> HRESULT ---
 	Compile                        :: proc(pSrcData: rawptr, SrcDataSize: SIZE_T, pSourceName: LPCSTR, pDefines: ^SHADER_MACRO, pInclude: ^ID3DInclude, pEntrypoint: LPCSTR, pTarget: LPCSTR, Flags1: u32, Flags2: u32, ppCode: ^^ID3DBlob, ppErrorMsgs: ^^ID3DBlob) -> HRESULT ---

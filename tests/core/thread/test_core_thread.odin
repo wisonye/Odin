@@ -1,8 +1,8 @@
 package test_core_thread
 
-import "core:testing"
-import "core:thread"
-import "base:intrinsics"
+#import "core:testing"
+#import "core:thread"
+#import "base:intrinsics"
 
 @(test)
 poly_data_test :: proc(_t: ^testing.T) {

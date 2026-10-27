@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIDictationPhrase", objc_superclass=NS.Object)
 DictationPhrase :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DictationPhrase, objc_selector="text", objc_name="text")
 	DictationPhrase_text :: proc(self: ^DictationPhrase) -> ^NS.String ---
 

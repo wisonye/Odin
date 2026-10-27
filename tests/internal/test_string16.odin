@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // The compiler folds constant `string16` operations at check time and emits the same
 // operations at runtime. Every case below computes a value both ways and compares them,

@@ -1,6 +1,6 @@
 package strconv
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 Scans a hexadecimal floating-point number at the start of `s`.
@@ -36,7 +36,7 @@ scan_hex_float :: proc "contextless" (s: string) -> (mantissa: u64, exp: int, ne
 		saw_digits ||= s[i] == '0'
 		i += 1
 	}
-	when FAST_FLOAT {
+	#if FAST_FLOAT {
 		for i+8 <= n && nd+8 <= MAX_HEX_DIGITS {
 			v := read8_to_u64(s, i)
 			if !is_eight_hex_digits(v) {
@@ -78,7 +78,7 @@ scan_hex_float :: proc "contextless" (s: string) -> (mantissa: u64, exp: int, ne
 				i += 1
 			}
 		}
-		when FAST_FLOAT {
+		#if FAST_FLOAT {
 			for i+8 <= n && nd+8 <= MAX_HEX_DIGITS {
 				v := read8_to_u64(s, i)
 				if !is_eight_hex_digits(v) {

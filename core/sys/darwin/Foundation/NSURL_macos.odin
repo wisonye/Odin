@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_Foundation
 
-import "base:intrinsics"
-import cffi "core:c"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="NSURLDownload", objc_superclass=Object)
 URLDownload :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=URLDownload, objc_selector="canResumeDownloadDecodedWithEncodingMIMEType:", objc_name="canResumeDownloadDecodedWithEncodingMIMEType", objc_is_class_method=true)
 	URLDownload_canResumeDownloadDecodedWithEncodingMIMEType :: proc(MIMEType: ^String) -> bool ---
 
@@ -46,7 +46,7 @@ URLDownloadDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=URLDownloadDelegate, objc_selector="downloadDidBegin:", objc_name="downloadDidBegin")
 	URLDownloadDelegate_downloadDidBegin :: proc(self: ^URLDownloadDelegate, download: ^URLDownload) ---
 
@@ -95,14 +95,14 @@ foreign lib {
 URLDownloadInternal :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSURLHandle", objc_superclass=Object)
 URLHandle :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=URLHandle, objc_selector="registerURLHandleClass:", objc_name="registerURLHandleClass", objc_is_class_method=true)
 	URLHandle_registerURLHandleClass :: proc(anURLHandleSubclass: Class) ---
 
@@ -181,7 +181,7 @@ foreign lib {
 URLHandleClient :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=URLHandleClient, objc_selector="URLHandle:resourceDataDidBecomeAvailable:", objc_name="URLHandle_resourceDataDidBecomeAvailable")
 	URLHandleClient_URLHandle_resourceDataDidBecomeAvailable :: proc(self: ^URLHandleClient, sender: ^URLHandle, newBytes: ^Data) ---
 

@@ -2,10 +2,10 @@
 #+build netbsd
 package os
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
 @(private)
-foreign libc {
+#foreign libc {
 	_lwp_self     :: proc() -> i32 ---
 
 	@(link_name="sysctlbyname")

@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSMatrix", objc_superclass=Control)
 Matrix :: struct {
@@ -14,7 +14,7 @@ Matrix :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Matrix, objc_selector="initWithFrame:", objc_name="initWithFrame_")
 	Matrix_initWithFrame_ :: proc(self: ^Matrix, frameRect: NS.Rect) -> instancetype ---
 
@@ -346,4 +346,4 @@ MatrixDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

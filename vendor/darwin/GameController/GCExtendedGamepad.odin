@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCExtendedGamepad", objc_superclass=PhysicalInputProfile)
 ExtendedGamepad :: struct { using _: PhysicalInputProfile}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtendedGamepad, objc_selector="saveSnapshot", objc_name="saveSnapshot")
 	ExtendedGamepad_saveSnapshot :: proc(self: ^ExtendedGamepad) -> ^ExtendedGamepadSnapshot ---
 
@@ -76,7 +76,7 @@ foreign lib {
 @(objc_class="GCExtendedGamepadSnapshot", objc_superclass=ExtendedGamepad)
 ExtendedGamepadSnapshot :: struct { using _: ExtendedGamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtendedGamepadSnapshot, objc_selector="initWithSnapshotData:", objc_name="initWithSnapshotData")
 	ExtendedGamepadSnapshot_initWithSnapshotData :: proc(self: ^ExtendedGamepadSnapshot, data: ^NS.Data) -> instancetype ---
 
@@ -94,7 +94,7 @@ foreign lib {
 @(objc_class="GCDualSenseGamepad", objc_superclass=ExtendedGamepad)
 DualSenseGamepad :: struct { using _: ExtendedGamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DualSenseGamepad, objc_selector="touchpadButton", objc_name="touchpadButton")
 	DualSenseGamepad_touchpadButton :: proc(self: ^DualSenseGamepad) -> ^ControllerButtonInput ---
 
@@ -115,7 +115,7 @@ foreign lib {
 @(objc_class="GCDualShockGamepad", objc_superclass=ExtendedGamepad)
 DualShockGamepad :: struct { using _: ExtendedGamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DualShockGamepad, objc_selector="touchpadButton", objc_name="touchpadButton")
 	DualShockGamepad_touchpadButton :: proc(self: ^DualShockGamepad) -> ^ControllerButtonInput ---
 
@@ -130,7 +130,7 @@ foreign lib {
 @(objc_class="GCXboxGamepad", objc_superclass=ExtendedGamepad)
 XboxGamepad :: struct { using _: ExtendedGamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XboxGamepad, objc_selector="paddleButton1", objc_name="paddleButton1")
 	XboxGamepad_paddleButton1 :: proc(self: ^XboxGamepad) -> ^ControllerButtonInput ---
 

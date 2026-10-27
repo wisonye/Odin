@@ -2,8 +2,8 @@
 
 package rexcode_x86
 
-import "core:fmt"
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // SECTION: 8. DECODER
@@ -409,7 +409,7 @@ decode_opcode :: proc(state: ^Decoder_State) -> (entry: ^Decode_Entry, vex_entry
 	// For 0F/0F38/0F3A, 0x66 can be mandatory prefix - try with prefix first, fallback to no prefix
 	// F2/F3 are always mandatory (part of opcode identity); 0x66 may be either a
 	// mandatory prefix (SSE) or an operand-size override, so it yields to F2/F3
-	// when both are present -- e.g. CRC32/POPCNT/LZCNT/TZCNT with a 16-bit operand
+	// #if both are present -- e.g. CRC32/POPCNT/LZCNT/TZCNT with a 16-bit operand
 	// (`66 F2/F3 ...`), where F2/F3 selects the opcode and 66h only sets operand
 	// size (tracked separately via state.prefix_66).
 	prefix: u8 = 0
@@ -664,7 +664,7 @@ decode_opcode :: proc(state: ^Decoder_State) -> (entry: ^Decode_Entry, vex_entry
 		if state.rex & 0x08 != 0 {
 			target_size = .RM64
 		} else if state.prefix_66 && !mand_66 {
-			// 66h is operand-size only when it wasn't consumed as the mandatory
+			// 66h is operand-size only #if it wasn't consumed as the mandatory
 			// prefix. For 66-mandatory SSE ops (ADCX, MOVMSKPD, PMOVMSKB, ...) the
 			// GPR operand stays 32-bit unless REX.W.
 			target_size = .RM16
@@ -682,7 +682,7 @@ decode_opcode :: proc(state: ^Decoder_State) -> (entry: ^Decode_Entry, vex_entry
 			e := &LEGACY_DECODE_ENTRIES[base + i]
 			// Only forms that actually consume this ModR/M byte as reg/mem (a /digit
 			// or plain ModR/M) belong here; fixed-ModR/M forms (FCOS etc., matched
-			// above when mod==11) have needs_modrm=false and must not be considered
+			// above #if mod==11) have needs_modrm=false and must not be considered
 			// for a memory ModR/M, else they'd win the tie and drop the ModR/M byte.
 			if !e.flags.needs_modrm {
 				continue
@@ -1064,7 +1064,7 @@ decode_single_operand_vex :: proc(state: ^Decoder_State, op_type: Operand_Type, 
 	#partial switch op_enc {
 	case .REG:
 		// Register in ModR/M.reg, extended by VEX.R
-		// vex_r is true when the encoded bit is 0, meaning extension is active
+		// vex_r is true #if the encoded bit is 0, meaning extension is active
 		// VEX.R -> +8, EVEX.R' -> +16 (branchless; vex_r/evex_r2 true means extend)
 		register_number := modrm_info.reg + (u8(state.vex_r) << 3) + (u8(state.vex_type == .EVEX && state.evex_r2) << 4)
 		reg := decode_register(register_number, op_type, 0)
@@ -1073,7 +1073,7 @@ decode_single_operand_vex :: proc(state: ^Decoder_State, op_type: Operand_Type, 
 	case .MR:
 		if modrm_info.mod == 3 {
 			// Register in ModR/M.rm, extended by VEX.B
-			// vex_b is true when the encoded bit is 0, meaning extension is active
+			// vex_b is true #if the encoded bit is 0, meaning extension is active
 			register_number := modrm_info.rm + (u8(state.vex_b) << 3)  // VEX.B -> +8 (branchless)
 			reg := decode_register(register_number, op_type, 0)
 			return op_reg(reg), .NONE
@@ -1313,7 +1313,7 @@ decode_reserve :: proc(
 //
 // The relocs parameter is optional input - if provided, relocations are used
 // to give labels proper names. If empty or missing info, labels get placeholder
-// names based on offset when printed.
+// names based on offset #if printed.
 //
 decode :: proc(
 	data:         []u8,
@@ -1452,7 +1452,7 @@ decode :: proc(
 		// Fill instruction length and flags (for round-trip encode/decode)
 		inst.length = u8(state.position)
 		inst.flags.lock = state.has_lock
-		// F2/F3 is a REP/REPNE prefix only when it was NOT consumed as this
+		// F2/F3 is a REP/REPNE prefix only #if it was NOT consumed as this
 		// instruction's mandatory prefix. POPCNT/LZCNT/TZCNT/CRC32 and the SSE ops
 		// carry F3/F2 as part of the opcode; flagging it as REP would duplicate the
 		// byte on re-encode. (entry.flags.prefix: 0=none, 1=66, 2=F3, 3=F2; VEX
@@ -1489,7 +1489,7 @@ decode :: proc(
 			info.evex_z = state.evex_z
 			info.opmask = state.evex_aaa
 		} else if state.vex_type != nil {
-			// Fallback when vex_entry is nil (shouldn't happen normally)
+			// Fallback #if vex_entry is nil (shouldn't happen normally)
 			info.vex_l = state.vex_l == 0 ? .L0 : (state.vex_l == 1 ? .L1 : .L2)
 			info.vex_w = state.vex_w ? .W1 : .W0
 			info.evex_b = state.evex_b

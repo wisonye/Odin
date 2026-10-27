@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // sys/uio.h - definitions for vector I/O operations
 
-foreign libc {
+#foreign libc {
 	/*
 	Equivalent to read() but takes a vector of inputs.
 
@@ -31,7 +31,7 @@ foreign libc {
 	writev :: proc(fildes: FD, iov: [^]iovec, iovcnt: c.int) -> c.ssize_t ---
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	iovec :: struct {
 		iov_base: rawptr,   /* [PSX] base address of I/O memory region */

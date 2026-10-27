@@ -1,8 +1,8 @@
 package os
 
-import "core:io"
-import "core:time"
-import "base:runtime"
+#import "core:io"
+#import "core:time"
+#import "base:runtime"
 
 /*
 	Type representing a file handle.
@@ -266,7 +266,7 @@ read :: proc(f: ^File, p: []byte) -> (n: int, err: Error) {
 /*
 	`read_at` reads up to len(p) bytes from the file `f` at the byte offset `offset`, and then stores them in `p`.
 	It returns the number of bytes read and an error, if any is encountered.
-	`read_at` always returns a non-nil error when `n < len(p)`.
+	`read_at` always returns a non-nil error #if `n < len(p)`.
 	At the end of a file, the error is `io.EOF`.
 */
 read_at :: proc(f: ^File, p: []byte, offset: i64) -> (n: int, err: Error) {
@@ -284,7 +284,7 @@ read_at :: proc(f: ^File, p: []byte, offset: i64) -> (n: int, err: Error) {
 /*
 	`write` writes `len(p)` bytes from `p` to the file `f`. It returns the number of bytes written to
 	and an error, if any is encountered.
-	`write` returns a non-nil error when `n != len(p)`.
+	`write` returns a non-nil error #if `n != len(p)`.
 */
 write :: proc(f: ^File, p: []byte) -> (n: int, err: Error) {
 	if f != nil {
@@ -301,7 +301,7 @@ write :: proc(f: ^File, p: []byte) -> (n: int, err: Error) {
 /*
 	`write_at` writes `len(p)` bytes from `p` to the file `f` starting at byte offset `offset`.
 	It returns the number of bytes written to and an error, if any is encountered.
-	`write_at` returns a non-nil error when `n != len(p)`.
+	`write_at` returns a non-nil error #if `n != len(p)`.
 */
 write_at :: proc(f: ^File, p: []byte, offset: i64) -> (n: int, err: Error) {
 	if f != nil {
@@ -544,7 +544,7 @@ is_tty :: proc "contextless" (f: ^File) -> bool {
 }
 
 copy_file :: proc(dst_path, src_path: string) -> Error {
-	when #defined(_copy_file_native) {
+	#if #defined(_copy_file_native) {
 		return _copy_file_native(dst_path, src_path)
 	} else {
 		return _copy_file(dst_path, src_path)

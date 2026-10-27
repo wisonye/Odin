@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="MDLColorSpec")
 ColorSpec :: struct { using _: intrinsics.objc_object}

@@ -1,8 +1,8 @@
 #+build amd64
 package test_internal
 
-import "core:sys/info"
-import "core:testing"
+#import "core:sys/info"
+#import "core:testing"
 
 // A `%k` opmask register was rejected wherever the instruction wants an opmask operand,
 // so these templates did not compile.

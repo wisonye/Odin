@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import gdi32 "system:Gdi32.lib"
+#foreign #import gdi32 "system:Gdi32.lib"
 
 @(default_calling_convention="system")
-foreign gdi32 {
+#foreign gdi32 {
 	GetDeviceCaps  :: proc(hdc: HDC, index: INT) -> INT ---
 	GetStockObject :: proc(i: INT) -> HGDIOBJ ---
 	SelectObject   :: proc(hdc: HDC, h: HGDIOBJ) -> HGDIOBJ ---

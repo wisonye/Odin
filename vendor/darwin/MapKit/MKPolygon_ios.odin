@@ -6,7 +6,7 @@ package darwin_MapKit
 PolygonView :: struct { using _: OverlayPathView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PolygonView, objc_selector="initWithPolygon:", objc_name="initWithPolygon")
 	PolygonView_initWithPolygon :: proc(self: ^PolygonView, polygon: ^Polygon) -> instancetype ---
 

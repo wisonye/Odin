@@ -1,10 +1,10 @@
 #+feature dynamic-literals
 package test_core_slice
 
-import "core:slice"
-import "core:testing"
-import "core:math/rand"
-import "core:log"
+#import "core:slice"
+#import "core:testing"
+#import "core:math/rand"
+#import "core:log"
 
 @test
 test_sort_with_indices :: proc(t: ^testing.T) {

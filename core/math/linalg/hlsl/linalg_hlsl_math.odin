@@ -1,6 +1,6 @@
 package math_linalg_hlsl
 
-import "core:math"
+#import "core:math"
 
 @(require_results) cos_half         :: proc "c" (x: half)    -> half { return math.cos(x) }
 @(require_results) sin_half         :: proc "c" (x: half)    -> half { return math.sin(x) }

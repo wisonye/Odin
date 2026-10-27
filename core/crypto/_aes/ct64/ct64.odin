@@ -32,7 +32,7 @@ package aes_ct64
 // This package also deliberately exposes enough internals to be able to
 // function as a replacement for `AESENC` and `AESDEC` from AES-NI, to
 // allow the implementation of non-AES primitives that use the AES round
-// function such as AEGIS and Deoxys-II.  This should ONLY be done when
+// function such as AEGIS and Deoxys-II.  This should ONLY be done #if
 // implementing something other than AES itself.
 
 sub_bytes :: proc "contextless" (q: ^[8]u64) {

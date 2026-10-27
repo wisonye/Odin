@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import CG "core:sys/darwin/CoreGraphics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 _ :: CG
 
@@ -13,7 +13,7 @@ Value :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Value, objc_selector="getValue:size:", objc_name="getValue_size")
 	Value_getValue_size :: proc(self: ^Value, value: rawptr, size: UInteger) ---
 
@@ -56,7 +56,7 @@ foreign lib {
 	@(objc_type=Value, objc_selector="rangeValue", objc_name="rangeValue")
 	Value_rangeValue :: proc(self: ^Value) -> _NSRange ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Value, objc_selector="valueWithPoint:", objc_name="valueWithPoint", objc_is_class_method=true)
 		Value_valueWithPoint :: proc(point: CG.Point) -> ^Value ---
 
@@ -95,7 +95,7 @@ Value_getValue :: proc {
 @(objc_class="NSValueTransformer", objc_superclass=Object)
 ValueTransformer :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ValueTransformer, objc_selector="setValueTransformer:forName:", objc_name="setValueTransformer", objc_is_class_method=true)
 	ValueTransformer_setValueTransformer :: proc(transformer: ^ValueTransformer, name: ^String) ---
 
@@ -122,7 +122,7 @@ foreign lib {
 @(objc_class="NSSecureUnarchiveFromDataTransformer", objc_superclass=ValueTransformer)
 SecureUnarchiveFromDataTransformer :: struct { using _: ValueTransformer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SecureUnarchiveFromDataTransformer, objc_selector="allowedTopLevelClasses", objc_name="allowedTopLevelClasses", objc_is_class_method=true)
 	SecureUnarchiveFromDataTransformer_allowedTopLevelClasses :: proc() -> ^Array ---
 }

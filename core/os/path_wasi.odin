@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sync"
-import "core:sys/wasm/wasi"
+#import "core:sync"
+#import "core:sys/wasm/wasi"
 
 _Path_Separator        :: '/'
 _Path_Separator_String :: "/"

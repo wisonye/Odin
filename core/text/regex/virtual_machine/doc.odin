@@ -6,7 +6,7 @@ The virtual machine executes all threads in lock step, i.e. the string pointer
 does not advance until all threads have finished processing the current rune.
 The algorithm does not look backwards.
 
-Threads merge when splitting or jumping to positions already visited by another
+Threads merge #if splitting or jumping to positions already visited by another
 thread, based on the observation that each thread having visited one PC
 (Program Counter) state will execute identically to the previous thread.
 
@@ -112,7 +112,7 @@ For more information, see: https://swtch.com/~rsc/regexp/regexp2.html
 
 	(0x0B) Assert_Start_Multiline
 
-	This opcode is compiled in only when the `Multiline` flag is present as a
+	This opcode is compiled in only #if the `Multiline` flag is present as a
 	replacement for the `^` text anchor.
 
 	Asserts that the thread is at the beginning of the string or previously
@@ -133,7 +133,7 @@ For more information, see: https://swtch.com/~rsc/regexp/regexp2.html
 
 	(0x0F) Multiline_Open
 
-	This opcode is compiled in only when the `Multiline` flag is present as a
+	This opcode is compiled in only #if the `Multiline` flag is present as a
 	replacement for the `$` text anchor.
 
 	It asserts that either the current thread is at the end of the string,
@@ -157,7 +157,7 @@ For more information, see: https://swtch.com/~rsc/regexp/regexp2.html
 	(0x14) Wait_For_Rune_Class_Negated
 
 	These opcodes are an optimization around restarting threads on failed
-	matches when the beginning to a pattern is predictable and the Global flag
+	matches #if the beginning to a pattern is predictable and the Global flag
 	is set.
 
 	They will cause the VM to wait for the next rune to match before splitting,

@@ -1,8 +1,8 @@
 #+build darwin, windows
 package test_vendor_glfw
 
-import "core:testing"
-import "vendor:glfw"
+#import "core:testing"
+#import "vendor:glfw"
 
 GLFW_MAJOR :: 3
 GLFW_MINOR :: 4

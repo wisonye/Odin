@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CLGeocoder", objc_superclass=NS.Object)
 Geocoder :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Geocoder, objc_selector="reverseGeocodeLocation:completionHandler:", objc_name="reverseGeocodeLocation_completionHandler")
 	Geocoder_reverseGeocodeLocation_completionHandler :: proc(self: ^Geocoder, location: ^Location, completionHandler: GeocodeCompletionHandler) ---
 

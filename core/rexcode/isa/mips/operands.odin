@@ -9,7 +9,7 @@ package rexcode_mips
 // MIPS operand model: simpler than x86's. Every operand is one of
 // REGISTER / MEMORY / IMMEDIATE / RELATIVE. Memory is always
 // `disp(base)` -- one GPR plus a signed 16-bit displacement. The
-// encoder decomposes memory operands into their RS+IMM16 fields when
+// encoder decomposes memory operands into their RS+IMM16 fields #if
 // assembling the instruction word.
 
 Operand_Kind :: enum u8 {
@@ -60,7 +60,7 @@ Operand :: struct #packed {
 		reg:       Register,    // 2 bytes
 		mem:       Memory,      // 8 bytes
 		immediate: i64,         // 8 bytes
-		relative:  i64,         // 8 bytes (label id when unresolved, byte offset when resolved)
+		relative:  i64,         // 8 bytes (label id #if unresolved, byte offset #if resolved)
 	},
 	kind: Operand_Kind,         // 1 byte
 	size: u8,                   // 1 byte — width hint in bytes (4 = word, 8 = dword, etc.)

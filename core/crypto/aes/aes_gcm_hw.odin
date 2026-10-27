@@ -1,13 +1,13 @@
 #+build amd64,arm64,arm32
 package aes
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:crypto/_aes"
-@(require) import "core:crypto/_aes/ct64"
-import aes_hw "core:crypto/_aes/hw"
-import "core:encoding/endian"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:crypto/_aes"
+@(require) #import "core:crypto/_aes/ct64"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:encoding/endian"
+#import "core:simd"
 
 @(private)
 gcm_seal_hw :: proc(ctx: ^Context_Impl_Hardware, dst, tag, iv, aad, plaintext: []byte) {
@@ -18,7 +18,7 @@ gcm_seal_hw :: proc(ctx: ^Context_Impl_Hardware, dst, tag, iv, aad, plaintext: [
 	init_ghash_hw(ctx, &h, &j0, &j0_enc, iv)
 
 	// Note: Our GHASH implementation handles appending padding.
-	when aes_hw.HAS_GHASH {
+	#if aes_hw.HAS_GHASH {
 		aes_hw.ghash(s[:], h[:], aad)
 	} else {
 		ct64.ghash(s[:], h[:], aad)
@@ -40,7 +40,7 @@ gcm_open_hw :: proc(ctx: ^Context_Impl_Hardware, dst, iv, aad, ciphertext, tag: 
 	s: [_aes.GHASH_TAG_SIZE]byte
 	init_ghash_hw(ctx, &h, &j0, &j0_enc, iv)
 
-	when aes_hw.HAS_GHASH {
+	#if aes_hw.HAS_GHASH {
 		aes_hw.ghash(s[:], h[:], aad)
 	} else {
 		ct64.ghash(s[:], h[:], aad)
@@ -80,7 +80,7 @@ init_ghash_hw :: proc(
 	} else {
 		// If len(IV) != 96, then let s = 128 ceil(len(IV)/128) - len(IV),
 		// and let J0 = GHASHH(IV || 0^(s+64) || ceil(len(IV))^64).
-		when aes_hw.HAS_GHASH {
+		#if aes_hw.HAS_GHASH {
 			aes_hw.ghash(j0[:], h[:], iv)
 		} else {
 			ct64.ghash(j0[:], h[:], iv)
@@ -88,7 +88,7 @@ init_ghash_hw :: proc(
 
 		tmp: [_aes.GHASH_BLOCK_SIZE]byte
 		endian.unchecked_put_u64be(tmp[8:], u64(l) * 8)
-		when aes_hw.HAS_GHASH {
+		#if aes_hw.HAS_GHASH {
 			aes_hw.ghash(j0[:], h[:], tmp[:])
 		} else {
 			ct64.ghash(j0[:], h[:], tmp[:])
@@ -111,7 +111,7 @@ final_ghash_hw :: proc(
 	endian.unchecked_put_u64be(blk[0:], u64(a_len) * 8)
 	endian.unchecked_put_u64be(blk[8:], u64(t_len) * 8)
 
-	when aes_hw.HAS_GHASH {
+	#if aes_hw.HAS_GHASH {
 		aes_hw.ghash(s[:], h[:], blk[:])
 	} else {
 		ct64.ghash(s[:], h[:], blk[:])
@@ -152,7 +152,7 @@ gctr_hw :: proc(
 	nr_blocks := len(src) / BLOCK_SIZE
 	for nr_blocks >= CTR_STRIDE_HW {
 		if !is_seal {
-			when aes_hw.HAS_GHASH {
+			#if aes_hw.HAS_GHASH {
 				aes_hw.ghash(s[:], h[:], src[:CTR_STRIDE_BYTES_HW])
 			} else {
 				ct64.ghash(s[:], h[:], src[:CTR_STRIDE_BYTES_HW])
@@ -199,7 +199,7 @@ gctr_hw :: proc(
 		xor_blocks_hw(dst, src, blks[:])
 
 		if is_seal {
-			when aes_hw.HAS_GHASH {
+			#if aes_hw.HAS_GHASH {
 				aes_hw.ghash(s[:], h[:], dst[:CTR_STRIDE_BYTES_HW])
 			} else {
 				ct64.ghash(s[:], h[:], dst[:CTR_STRIDE_BYTES_HW])
@@ -215,7 +215,7 @@ gctr_hw :: proc(
 	for n := len(src); n > 0; {
 		l := min(n, BLOCK_SIZE)
 		if !is_seal {
-			when aes_hw.HAS_GHASH {
+			#if aes_hw.HAS_GHASH {
 				aes_hw.ghash(s[:], h[:], src[:l])
 			} else {
 				ct64.ghash(s[:], h[:], src[:l])
@@ -252,7 +252,7 @@ gctr_hw :: proc(
 			copy(dst, blk[:l])
 		}
 		if is_seal {
-			when aes_hw.HAS_GHASH {
+			#if aes_hw.HAS_GHASH {
 				aes_hw.ghash(s[:], h[:], dst[:l])
 			} else {
 				ct64.ghash(s[:], h[:], dst[:l])
@@ -274,7 +274,7 @@ gctr_hw :: proc(
 // src/check_expr.cpp(8104): Assertion Failure: `c->curr_proc_decl->entity`
 @(private = "file", enable_target_feature = aes_hw.TARGET_FEATURES)
 hw_inc_ctr32 :: #force_inline proc "contextless" (src: ^simd.u8x16, ctr: u32) -> (simd.u8x16, u32) {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		ctr_be := intrinsics.byte_swap(ctr)
 	} else {
 		ctr_be := ctr

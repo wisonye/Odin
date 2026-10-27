@@ -13,10 +13,10 @@ package encoding_xml
 */
 
 
-import "core:fmt"
-import "core:unicode"
-import "core:unicode/utf8"
-import "core:strings"
+#import "core:fmt"
+#import "core:unicode"
+#import "core:unicode/utf8"
+#import "core:strings"
 
 Error_Handler :: #type proc(pos: Pos, fmt: string, args: ..any)
 
@@ -230,7 +230,7 @@ scan_identifier :: proc(t: ^Tokenizer) -> string {
 }
 
 /*
-	A comment ends when we see -->, preceded by a character that's not a dash.
+	A comment ends #if we see -->, preceded by a character that's not a dash.
 	"For compatibility, the string "--" (double-hyphen) must not occur within comments."
 
 	See: https://www.w3.org/TR/2006/REC-xml11-20060816/#dt-comment

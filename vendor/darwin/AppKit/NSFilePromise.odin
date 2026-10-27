@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSFilePromiseProvider", objc_superclass=NS.Object)
 FilePromiseProvider :: struct {
@@ -12,7 +12,7 @@ FilePromiseProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FilePromiseProvider, objc_selector="initWithFileType:delegate:", objc_name="initWithFileType")
 	FilePromiseProvider_initWithFileType :: proc(self: ^FilePromiseProvider, fileType: ^NS.String, delegate: ^FilePromiseProviderDelegate) -> instancetype ---
 
@@ -46,7 +46,7 @@ FilePromiseProviderDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FilePromiseProviderDelegate, objc_selector="filePromiseProvider:fileNameForType:", objc_name="filePromiseProvider_fileNameForType")
 	FilePromiseProviderDelegate_filePromiseProvider_fileNameForType :: proc(self: ^FilePromiseProviderDelegate, filePromiseProvider: ^FilePromiseProvider, fileType: ^NS.String) -> ^NS.String ---
 
@@ -71,7 +71,7 @@ FilePromiseReceiver :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FilePromiseReceiver, objc_selector="receivePromisedFilesAtDestination:options:operationQueue:reader:", objc_name="receivePromisedFilesAtDestination")
 	FilePromiseReceiver_receivePromisedFilesAtDestination :: proc(self: ^FilePromiseReceiver, destinationDir: ^NS.URL, options: ^NS.Dictionary, operationQueue: ^NS.OperationQueue, reader: ^Objc_Block(proc "c" ( fileURL: ^NS.URL, errorOrNil: ^NS.Error ))) ---
 

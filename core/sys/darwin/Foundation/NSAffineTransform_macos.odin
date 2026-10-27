@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_Foundation
 
-import CG "core:sys/darwin/CoreGraphics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSAffineTransform", objc_superclass=Object)
 AffineTransform :: struct {
@@ -12,7 +12,7 @@ AffineTransform :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AffineTransform, objc_selector="transform", objc_name="transform", objc_is_class_method=true)
 	AffineTransform_transform :: proc() -> ^AffineTransform ---
 

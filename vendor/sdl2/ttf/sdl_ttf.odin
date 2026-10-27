@@ -1,13 +1,13 @@
 // Bindings for [[ SDL2 TTF ; https://wiki.libsdl.org/SDL2_ttf/FrontPage ]].
 package sdl2_ttf
 
-import "core:c"
-import SDL ".."
+#import "core:c"
+#import SDL ".."
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL2_ttf.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL2_ttf.lib"
 } else {
-	foreign import lib "system:SDL2_ttf"
+	#foreign #import lib "system:SDL2_ttf"
 }
 
 bool :: SDL.bool
@@ -87,7 +87,7 @@ RenderUNICODE :: #force_inline proc "c" (font: ^Font, text: [^]u16, fg, bg: SDL.
 }
 
 @(default_calling_convention="c", link_prefix="TTF_")
-foreign lib {
+#foreign lib {
 	Linked_Version :: proc() -> ^SDL.version ---
 
 	/* The versions of the libraries SDL_ttf is built with, valid once SDL_ttf is initialized. */

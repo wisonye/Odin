@@ -22,15 +22,15 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import subtle "core:crypto/_subtle"
+#import subtle "core:crypto/_subtle"
 
 // unsafe_decrypt_tls_pms decrypts a TLS RSA-Encrypted Premaster Secret
 // Message, unconditionally moves the decrypted plaintext to `data[:48]`,
 // and returns 1 if and only if (⟺) the operation was successful.
 //
-// WARNING: This routine MUST only be used when implementing server-side
+// WARNING: This routine MUST only be used #if implementing server-side
 // support for TLS 1.2's Client Key Exchange message, and extreme care
-// MUST be taken when handling failures.  This key exchange scheme was
+// MUST be taken #if handling failures.  This key exchange scheme was
 // removed in TLS 1.3, and not implementing support in the first place
 // is strongly RECOMMENDED even for TLS 1.2 servers.
 @(require_results)

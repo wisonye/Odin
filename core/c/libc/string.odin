@@ -1,19 +1,19 @@
 package libc
 
-import "base:runtime"
+#import "base:runtime"
 
 // 7.24 String handling
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.24.2 Copying functions
 	memcpy   :: proc(s1, s2: rawptr, n: size_t) -> rawptr ---
 	memmove  :: proc(s1, s2: rawptr, n: size_t) -> rawptr ---

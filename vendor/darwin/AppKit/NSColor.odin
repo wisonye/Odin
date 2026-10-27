@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSColor", objc_superclass=NS.Object)
 Color :: struct {
@@ -16,7 +16,7 @@ Color :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Color, objc_selector="init", objc_name="init")
 	Color_init :: proc(self: ^Color) -> instancetype ---
 
@@ -518,7 +518,7 @@ ColorChanging :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorChanging, objc_selector="changeColor:", objc_name="changeColor")
 	ColorChanging_changeColor :: proc(self: ^ColorChanging, sender: ^ColorPanel) ---
 }
@@ -531,7 +531,7 @@ ColorList :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorList, objc_selector="colorListNamed:", objc_name="colorListNamed", objc_is_class_method=true)
 	ColorList_colorListNamed :: proc(name: ^NS.String) -> ^ColorList ---
 
@@ -595,7 +595,7 @@ ColorList_writeToURL :: #force_inline proc "c" (self: ^ColorList, url: ^NS.URL) 
 ColorPanel :: struct { using _: Panel}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPanel, objc_selector="dragColor:withEvent:fromView:", objc_name="dragColor", objc_is_class_method=true)
 	ColorPanel_dragColor :: proc(color: ^Color, event: ^Event, sourceView: ^View) -> bool ---
 
@@ -671,7 +671,7 @@ ColorPicker :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPicker, objc_selector="initWithPickerMask:colorPanel:", objc_name="initWithPickerMask")
 	ColorPicker_initWithPickerMask :: proc(self: ^ColorPicker, mask: NS.UInteger, owningColorPanel: ^ColorPanel) -> instancetype ---
 
@@ -708,7 +708,7 @@ foreign lib {
 ColorPickerTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPickerTouchBarItem, objc_selector="colorPickerWithIdentifier:", objc_name="colorPickerWithIdentifier_", objc_is_class_method=true)
 	ColorPickerTouchBarItem_colorPickerWithIdentifier_ :: proc(identifier: ^NS.String) -> instancetype ---
 
@@ -784,7 +784,7 @@ ColorPickingCustom :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPickingCustom, objc_selector="supportsMode:", objc_name="supportsMode")
 	ColorPickingCustom_supportsMode :: proc(self: ^ColorPickingCustom, mode: ColorPanelMode) -> bool ---
 
@@ -803,7 +803,7 @@ foreign lib {
 ColorPickingDefault :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPickingDefault, objc_selector="initWithPickerMask:colorPanel:", objc_name="initWithPickerMask")
 	ColorPickingDefault_initWithPickerMask :: proc(self: ^ColorPickingDefault, mask: NS.UInteger, owningColorPanel: ^ColorPanel) -> instancetype ---
 
@@ -840,7 +840,7 @@ foreign lib {
 ColorSampler :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorSampler, objc_selector="showSamplerWithSelectionHandler:", objc_name="showSamplerWithSelectionHandler")
 	ColorSampler_showSamplerWithSelectionHandler :: proc(self: ^ColorSampler, selectionHandler: ^Objc_Block(proc "c" ( selectedColor: ^Color ))) ---
 }
@@ -853,7 +853,7 @@ ColorSpace :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorSpace, objc_selector="initWithICCProfileData:", objc_name="initWithICCProfileData")
 	ColorSpace_initWithICCProfileData :: proc(self: ^ColorSpace, iccData: ^NS.Data) -> instancetype ---
 
@@ -926,7 +926,7 @@ foreign lib {
 ColorWell :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorWell, objc_selector="colorWellWithStyle:", objc_name="colorWellWithStyle", objc_is_class_method=true)
 	ColorWell_colorWellWithStyle :: proc(style: ColorWellStyle) -> instancetype ---
 

@@ -2,19 +2,19 @@
 #+private file
 package debug_trace
 
-@require import "base:runtime"
+@require #import "base:runtime"
 
-@require import "core:strings"
-@require import "core:sys/posix"
+@require #import "core:strings"
+@require #import "core:sys/posix"
 
-when !INSTRUMENTATION_MODE {
+#if !INSTRUMENTATION_MODE {
 
-foreign import system "system:System.framework"
+#foreign #import system "system:System.framework"
 
 // NOTE: CoreSymbolication is a private framework, Apple is allowed to break it and doesn't provide
 // headers, although the API has as of my knowledge been the same in the past 10 years at least.
 @(extra_linker_flags="-iframework /System/Library/PrivateFrameworks")
-foreign import symbolication "system:CoreSymbolication.framework"
+#foreign #import symbolication "system:CoreSymbolication.framework"
 
 @(private="package")
 _Capture_Entry :: rawptr
@@ -100,7 +100,7 @@ CSSymbolOwnerRef  :: distinct CSTypeRef
 
 CSNow :: 0x80000000
 
-foreign symbolication {
+#foreign symbolication {
 	@(link_name="CSIsNull")
 	_CSIsNull :: proc(ref: CSTypeRef) -> bool ---
 	@(link_name="CSRelease")
@@ -148,7 +148,7 @@ Register :: enum i32 {
 	IP = -1,
 }
 
-foreign system {
+#foreign system {
 	unw_getcontext :: proc(ctx: ^unw_context_t) -> i32 ---
 	unw_init_local :: proc(cursor: ^unw_cursor_t, ctx: ^unw_context_t) -> i32 ---
 	unw_get_reg    :: proc(cursor: ^unw_cursor_t, name: Register, reg: ^uintptr) -> i32 ---

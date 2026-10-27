@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MTL4PipelineOptions", objc_superclass=NS.Object)
 MTL4PipelineOptions :: struct {
@@ -11,7 +11,7 @@ MTL4PipelineOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PipelineOptions, objc_selector="shaderValidation", objc_name="shaderValidation")
 	MTL4PipelineOptions_shaderValidation :: proc(self: ^MTL4PipelineOptions) -> ShaderValidation ---
 
@@ -32,7 +32,7 @@ MTL4PipelineDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PipelineDescriptor, objc_selector="label", objc_name="label")
 	MTL4PipelineDescriptor_label :: proc(self: ^MTL4PipelineDescriptor) -> ^NS.String ---
 
@@ -50,7 +50,7 @@ foreign lib {
 @(objc_class="MTL4ComputePipelineDescriptor", objc_superclass=MTL4PipelineDescriptor)
 MTL4ComputePipelineDescriptor :: struct { using _: MTL4PipelineDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4ComputePipelineDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4ComputePipelineDescriptor_reset :: proc(self: ^MTL4ComputePipelineDescriptor) ---
 
@@ -105,7 +105,7 @@ MTL4MachineLearningPipelineState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4MachineLearningPipelineState, objc_selector="label", objc_name="label")
 	MTL4MachineLearningPipelineState_label :: proc(self: ^MTL4MachineLearningPipelineState) -> ^NS.String ---
 
@@ -123,7 +123,7 @@ foreign lib {
 @(objc_class="MTL4MachineLearningPipelineDescriptor", objc_superclass=MTL4PipelineDescriptor)
 MTL4MachineLearningPipelineDescriptor :: struct { using _: MTL4PipelineDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4MachineLearningPipelineDescriptor, objc_selector="setInputDimensions:atBufferIndex:", objc_name="setInputDimensions_atBufferIndex")
 	MTL4MachineLearningPipelineDescriptor_setInputDimensions_atBufferIndex :: proc(self: ^MTL4MachineLearningPipelineDescriptor, dimensions: ^TensorExtents, bufferIndex: NS.Integer) ---
 
@@ -161,7 +161,7 @@ MTL4MachineLearningPipelineDescriptor_setInputDimensions :: proc {
 @(objc_class="MTL4MachineLearningPipelineReflection", objc_superclass=NS.Object)
 MTL4MachineLearningPipelineReflection :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4MachineLearningPipelineReflection, objc_selector="bindings", objc_name="bindings")
 	MTL4MachineLearningPipelineReflection_bindings :: proc(self: ^MTL4MachineLearningPipelineReflection) -> ^NS.Array ---
 }
@@ -173,7 +173,7 @@ MTL4PipelineDataSetSerializer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PipelineDataSetSerializer, objc_selector="serializeAsArchiveAndFlushToURL:error:", objc_name="serializeAsArchiveAndFlushToURL_error")
 	MTL4PipelineDataSetSerializer_serializeAsArchiveAndFlushToURL_error :: proc(self: ^MTL4PipelineDataSetSerializer, url: ^NS.URL, error: ^^NS.Error) -> bool ---
 
@@ -203,7 +203,7 @@ MTL4PipelineDataSetSerializerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PipelineDataSetSerializerDescriptor, objc_selector="configuration", objc_name="configuration")
 	MTL4PipelineDataSetSerializerDescriptor_configuration :: proc(self: ^MTL4PipelineDataSetSerializerDescriptor) -> MTL4PipelineDataSetSerializerConfiguration ---
 
@@ -218,7 +218,7 @@ MTL4PipelineStageDynamicLinkingDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PipelineStageDynamicLinkingDescriptor, objc_selector="maxCallStackDepth", objc_name="maxCallStackDepth")
 	MTL4PipelineStageDynamicLinkingDescriptor_maxCallStackDepth :: proc(self: ^MTL4PipelineStageDynamicLinkingDescriptor) -> NS.UInteger ---
 
@@ -242,7 +242,7 @@ foreign lib {
 @(objc_class="MTL4RenderPipelineDescriptor", objc_superclass=MTL4PipelineDescriptor)
 MTL4RenderPipelineDescriptor :: struct { using _: MTL4PipelineDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4RenderPipelineDescriptor_reset :: proc(self: ^MTL4RenderPipelineDescriptor) ---
 
@@ -344,7 +344,7 @@ foreign lib {
 @(objc_class="MTL4MeshRenderPipelineDescriptor", objc_superclass=MTL4PipelineDescriptor)
 MTL4MeshRenderPipelineDescriptor :: struct { using _: MTL4PipelineDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4MeshRenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4MeshRenderPipelineDescriptor_reset :: proc(self: ^MTL4MeshRenderPipelineDescriptor) ---
 
@@ -503,7 +503,7 @@ MTL4RenderPipelineBinaryFunctionsDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPipelineBinaryFunctionsDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4RenderPipelineBinaryFunctionsDescriptor_reset :: proc(self: ^MTL4RenderPipelineBinaryFunctionsDescriptor) ---
 
@@ -545,7 +545,7 @@ MTL4RenderPipelineColorAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPipelineColorAttachmentDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4RenderPipelineColorAttachmentDescriptor_reset :: proc(self: ^MTL4RenderPipelineColorAttachmentDescriptor) ---
 
@@ -611,7 +611,7 @@ MTL4RenderPipelineColorAttachmentDescriptorArray :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPipelineColorAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	MTL4RenderPipelineColorAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^MTL4RenderPipelineColorAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^MTL4RenderPipelineColorAttachmentDescriptor ---
 
@@ -629,7 +629,7 @@ MTL4RenderPipelineDynamicLinkingDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPipelineDynamicLinkingDescriptor, objc_selector="vertexLinkingDescriptor", objc_name="vertexLinkingDescriptor")
 	MTL4RenderPipelineDynamicLinkingDescriptor_vertexLinkingDescriptor :: proc(self: ^MTL4RenderPipelineDynamicLinkingDescriptor) -> ^MTL4PipelineStageDynamicLinkingDescriptor ---
 
@@ -650,7 +650,7 @@ foreign lib {
 @(objc_class="MTL4TileRenderPipelineDescriptor", objc_superclass=MTL4PipelineDescriptor)
 MTL4TileRenderPipelineDescriptor :: struct { using _: MTL4PipelineDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4TileRenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	MTL4TileRenderPipelineDescriptor_reset :: proc(self: ^MTL4TileRenderPipelineDescriptor) ---
 

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // pwd.h - password structure
 
-foreign lib {
+#foreign lib {
 	/*
 	Rewinds the user database so that the next getpwent() returns the first entry.
 
@@ -119,7 +119,7 @@ foreign lib {
 	getpwuid_r :: proc(uid: uid_t, pwd: ^passwd, buffer: [^]byte, bufsize: c.size_t, result: ^^passwd) -> Errno ---
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LGETPWENT  :: "__getpwent50"
 	@(private) LGETPWNAM  :: "__getpwnam50"
 	@(private) LGETPWNAMR :: "__getpwnam_r50"
@@ -133,7 +133,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LGETPWUIDR :: "getpwuid_r"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	passwd :: struct {
 		pw_name:   cstring, /* [PSX] user name */
@@ -148,7 +148,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 		pw_expire: time_t,  /* account expiration */
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	passwd :: struct {
 		pw_name:   cstring, /* [PSX] user name */
@@ -164,7 +164,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 		pw_fields: c.int,
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	passwd :: struct {
 		pw_name:   cstring, /* [PSX] user name */

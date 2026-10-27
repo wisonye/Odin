@@ -1,6 +1,6 @@
 package test_issue_1730
 
-import "core:testing"
+#import "core:testing"
 
 // Tests issue #1730 https://github.com/odin-lang/Odin/issues/1730
 @(test)

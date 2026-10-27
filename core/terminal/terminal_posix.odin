@@ -2,8 +2,8 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package terminal
 
-import "base:runtime"
-import "core:os"
+#import "base:runtime"
+#import "core:os"
 
 _is_terminal :: proc "contextless" (f: ^os.File) -> bool {
 	return os.is_tty(f)

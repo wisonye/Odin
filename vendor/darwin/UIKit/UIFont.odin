@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIFont", objc_superclass=NS.Object)
 Font :: struct {
@@ -14,7 +14,7 @@ Font :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Font, objc_selector="preferredFontForTextStyle:", objc_name="preferredFontForTextStyle_", objc_is_class_method=true)
 	Font_preferredFontForTextStyle_ :: proc(style: ^NS.String) -> ^Font ---
 
@@ -128,7 +128,7 @@ FontDescriptor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontDescriptor, objc_selector="init", objc_name="init")
 	FontDescriptor_init :: proc(self: ^FontDescriptor) -> instancetype ---
 
@@ -213,7 +213,7 @@ FontDescriptor_preferredFontDescriptorWithTextStyle :: proc {
 FontMetrics :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontMetrics, objc_selector="metricsForTextStyle:", objc_name="metricsForTextStyle", objc_is_class_method=true)
 	FontMetrics_metricsForTextStyle :: proc(textStyle: ^NS.String) -> instancetype ---
 
@@ -264,7 +264,7 @@ FontMetrics_scaledValueForValue :: proc {
 FontPickerViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontPickerViewController, objc_selector="initWithConfiguration:", objc_name="initWithConfiguration")
 	FontPickerViewController_initWithConfiguration :: proc(self: ^FontPickerViewController, configuration: ^FontPickerViewControllerConfiguration) -> instancetype ---
 
@@ -295,7 +295,7 @@ FontPickerViewControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontPickerViewControllerDelegate, objc_selector="fontPickerViewControllerDidCancel:", objc_name="fontPickerViewControllerDidCancel")
 	FontPickerViewControllerDelegate_fontPickerViewControllerDidCancel :: proc(self: ^FontPickerViewControllerDelegate, viewController: ^FontPickerViewController) ---
 
@@ -311,7 +311,7 @@ FontPickerViewControllerConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontPickerViewControllerConfiguration, objc_selector="filterPredicateForFilteredLanguages:", objc_name="filterPredicateForFilteredLanguages", objc_is_class_method=true)
 	FontPickerViewControllerConfiguration_filterPredicateForFilteredLanguages :: proc(filteredLanguages: ^NS.Array) -> ^NS.Predicate ---
 

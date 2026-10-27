@@ -1,9 +1,9 @@
 package chacha20
 
-import "base:intrinsics"
-import "core:crypto/_chacha20/ref"
-import "core:crypto/_chacha20/simd128"
-import "core:crypto/_chacha20/simd256"
+#import "base:intrinsics"
+#import "core:crypto/_chacha20/ref"
+#import "core:crypto/_chacha20/simd128"
+#import "core:crypto/_chacha20/simd256"
 
 // DEFAULT_IMPLEMENTATION is the implementation that will be used by
 // default if possible.

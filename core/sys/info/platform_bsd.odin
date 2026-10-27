@@ -1,12 +1,12 @@
 #+build openbsd, netbsd
 package sysinfo
 
-import "base:runtime"
-import "core:strings"
-import sys "core:sys/unix"
+#import "base:runtime"
+#import "core:strings"
+#import sys "core:sys/unix"
 
 _os_version :: proc (allocator: runtime.Allocator, loc := #caller_location) -> (res: OS_Version, ok: bool) {
-	when ODIN_OS == .NetBSD {
+	#if ODIN_OS == .NetBSD {
 		res.platform = .NetBSD
 	} else {
 		res.platform = .OpenBSD

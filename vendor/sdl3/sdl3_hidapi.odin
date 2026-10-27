@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 
 hid_device :: struct {}
@@ -78,7 +78,7 @@ hid_device_info :: struct {
 PROP_HIDAPI_LIBUSB_DEVICE_HANDLE_POINTER :: "SDL.hidapi.libusb.device.handle"
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	hid_init                     :: proc() -> c.int ---
 	hid_exit                     :: proc() -> c.int ---
 	hid_device_change_count      :: proc() -> Uint32 ---

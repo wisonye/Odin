@@ -1,13 +1,13 @@
 package test_core_crypto
 
-import "core:bytes"
-import "core:fmt"
-import "core:log"
-import "core:testing"
+#import "core:bytes"
+#import "core:fmt"
+#import "core:log"
+#import "core:testing"
 
-import "core:crypto"
-import "core:crypto/mldsa"
-import "core:crypto/mlkem"
+#import "core:crypto"
+#import "core:crypto/mldsa"
+#import "core:crypto/mlkem"
 
 @(test)
 test_mlkem :: proc(t: ^testing.T) {

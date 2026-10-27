@@ -1,15 +1,15 @@
 package crypto_hash
 
-import "core:crypto/blake2b"
-import "core:crypto/blake2s"
-import "core:crypto/sha2"
-import "core:crypto/sha3"
-import "core:crypto/sm3"
-import "core:crypto/legacy/keccak"
-import "core:crypto/legacy/md5"
-import "core:crypto/legacy/sha1"
+#import "core:crypto/blake2b"
+#import "core:crypto/blake2s"
+#import "core:crypto/sha2"
+#import "core:crypto/sha3"
+#import "core:crypto/sm3"
+#import "core:crypto/legacy/keccak"
+#import "core:crypto/legacy/md5"
+#import "core:crypto/legacy/sha1"
 
-import "core:reflect"
+#import "core:reflect"
 
 // MAX_DIGEST_SIZE is the maximum size digest that can be returned by any
 // of the Algorithms supported via this package.

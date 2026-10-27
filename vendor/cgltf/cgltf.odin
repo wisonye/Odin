@@ -3,29 +3,29 @@ package cgltf
 
 @(private)
 LIB :: (
-	     "lib/cgltf.lib"      when ODIN_OS == .Windows
-	else "lib/cgltf.a"        when ODIN_OS == .Linux
-	else "lib/darwin/cgltf.a" when ODIN_OS == .Darwin
-	else "lib/cgltf_wasm.o"   when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	     "lib/cgltf.lib"      #if ODIN_OS == .Windows
+	else "lib/cgltf.a"        #if ODIN_OS == .Linux
+	else "lib/darwin/cgltf.a" #if ODIN_OS == .Darwin
+	else "lib/cgltf_wasm.o"   #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 	else ""
 )
 
-when LIB != "" {
-	when !#exists(LIB) {
+#if LIB != "" {
+	#if !#exists(LIB) {
 		// Windows library is shipped with the compiler, so a Windows specific message should not be needed.
 		#panic("Could not find the compiled cgltf library, it can be compiled by running `\"" + ODIN_ROOT + "vendor/cgltf/src/build_cgltf.sh\"`")
 	}
 }
 
-when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib "lib/cgltf_wasm.o"
-} else when LIB != "" {
-	foreign import lib { LIB }
+#if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib "lib/cgltf_wasm.o"
+} else #if LIB != "" {
+	#foreign #import lib { LIB }
 } else {
-	foreign import lib "system:cgltf"
+	#foreign #import lib "system:cgltf"
 }
 
-import "core:c"
+#import "core:c"
 
 
 file_type :: enum c.int {
@@ -648,7 +648,7 @@ data :: struct {
 
 @(require_results)
 parse :: proc "c" (#by_ptr options: options, data_ptr: rawptr, size: uint) -> (out_data: ^data, res: result) {
-	foreign lib {
+	#foreign lib {
 		cgltf_parse :: proc "c" (
 			#by_ptr options: options,
 			data_ptr: rawptr,
@@ -661,7 +661,7 @@ parse :: proc "c" (#by_ptr options: options, data_ptr: rawptr, size: uint) -> (o
 
 @(require_results)
 parse_file :: proc "c" (#by_ptr options: options, path: cstring) -> (out_data: ^data, res: result) {
-	foreign lib {
+	#foreign lib {
 		cgltf_parse_file :: proc "c" (
 			#by_ptr options: options,
 			path: cstring,
@@ -673,7 +673,7 @@ parse_file :: proc "c" (#by_ptr options: options, path: cstring) -> (out_data: ^
 
 @(require_results)
 load_buffer_base64 :: proc "c" (#by_ptr options: options, size: uint, base64: cstring) -> (out_data: rawptr, res: result) {
-	foreign lib {
+	#foreign lib {
 		cgltf_load_buffer_base64 :: proc "c" (#by_ptr options: options, size: uint, base64: cstring, out_data: ^rawptr) -> result ---
 	}
 	res = cgltf_load_buffer_base64(options, size, base64, &out_data)
@@ -682,7 +682,7 @@ load_buffer_base64 :: proc "c" (#by_ptr options: options, size: uint, base64: cs
 
 @(default_calling_convention="c")
 @(link_prefix="cgltf_")
-foreign lib {
+#foreign lib {
 	@(require_results)
 	load_buffers :: proc(
 		#by_ptr options: options,

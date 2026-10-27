@@ -20,9 +20,9 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:c"
-import win "core:sys/windows"
-import "core:time"
+#import "core:c"
+#import win "core:sys/windows"
+#import "core:time"
 
 _SOCKET_OPTION_BROADCAST                 :: win.SO_BROADCAST
 _SOCKET_OPTION_REUSE_ADDRESS             :: win.SO_REUSEADDR

@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 GameController :: struct {}
@@ -93,7 +93,7 @@ GameControllerAddMappingsFromFile :: #force_inline proc "c" (file: cstring) -> c
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GameControllerAddMappingsFromRW     :: proc(rw: ^RWops, freerw: bool) -> c.int ---
 
 	GameControllerAddMapping            :: proc(mappingString: cstring) -> c.int ---

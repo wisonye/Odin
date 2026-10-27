@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import "system:bthprops.lib"
+#foreign #import "system:bthprops.lib"
 
 HBLUETOOTH_DEVICE_FIND :: distinct HANDLE
 HBLUETOOTH_RADIO_FIND  :: distinct HANDLE
@@ -52,7 +52,7 @@ BLUETOOTH_DEVICE_INFO :: struct {
 }
 
 @(default_calling_convention="system")
-foreign bthprops {
+#foreign bthprops {
 	/*
 		Version
 	*/

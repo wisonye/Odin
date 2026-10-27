@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 /**
@@ -62,7 +62,7 @@ AUDIO_F32LSB    :: 0x8120  /**< 32-bit floating point samples */
 AUDIO_F32MSB    :: 0x9120  /**< As above, but big-endian byte order */
 AUDIO_F32       :: AUDIO_F32LSB
 
-when ODIN_ENDIAN == .Little {
+#if ODIN_ENDIAN == .Little {
 	AUDIO_U16SYS :: AUDIO_U16LSB
 	AUDIO_S16SYS :: AUDIO_S16LSB
 	AUDIO_S32SYS :: AUDIO_S32LSB
@@ -133,7 +133,7 @@ AudioCVT :: struct #packed {
 AudioDeviceID :: distinct u32
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumAudioDrivers :: proc() -> c.int ---
 	GetAudioDriver     :: proc(index: c.int) -> cstring ---
 
@@ -165,7 +165,7 @@ AudioStatus :: enum c.int {
 	PAUSED,
 }
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetAudioStatus :: proc() -> AudioStatus ---
 	GetAudioDeviceStatus :: proc(dev: AudioDeviceID) -> AudioStatus --- /* Audio State */
 }
@@ -175,7 +175,7 @@ foreign lib {
 AudioStream :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	PauseAudio       :: proc(pause_on: bool) ---
 	PauseAudioDevice :: proc(dev: AudioDeviceID, pause_on: bool) --- /* Pause audio functions */
 }
@@ -190,7 +190,7 @@ LoadWAV :: #force_inline proc "c" (file: cstring, spec: ^AudioSpec, audio_buf: ^
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	LoadWAV_RW :: proc(src: ^RWops, freesrc: bool, spec: ^AudioSpec, audio_buf: ^[^]u8, audio_len: ^u32) -> ^AudioSpec ---
 	FreeWAV    :: proc(audio_buf: [^]u8) ---
 }
@@ -198,7 +198,7 @@ foreign lib {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	BuildAudioCVT :: proc(cvt:          ^AudioCVT,
 	                      src_format:   AudioFormat,
 	                      src_channels: u8,
@@ -230,7 +230,7 @@ foreign lib {
 MIX_MAXVOLUME :: 128
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	MixAudio           :: proc(dst: [^]u8, src: [^]u8, len: u32, volume: c.int)                      ---
 	MixAudioFormat     :: proc(dst: [^]u8, src: [^]u8, format: AudioFormat, len: u32, volume: c.int) ---
 	QueueAudio         :: proc(dev: AudioDeviceID, data: rawptr, len: u32) -> c.int              ---

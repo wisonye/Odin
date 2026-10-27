@@ -571,7 +571,7 @@ System_Error :: enum DWORD {
 	INVALID_SEGMENT_NUMBER = 0xB4,
 	// The operating system cannot run %1.
 	INVALID_ORDINAL = 0xB6,
-	// Cannot create a file when that file already exists.
+	// Cannot create a file #if that file already exists.
 	ALREADY_EXISTS = 0xB7,
 	// The flag passed is not correct.
 	INVALID_FLAG_NUMBER = 0xBA,
@@ -842,9 +842,9 @@ System_Error :: enum DWORD {
 	INVALID_LDT_SIZE = 0x231,
 	// Indicates that the starting value for the LDT information was not an integral multiple of the selector size.
 	INVALID_LDT_OFFSET = 0x233,
-	// Indicates that the user supplied an invalid descriptor when trying to set up Ldt descriptors.
+	// Indicates that the user supplied an invalid descriptor #if trying to set up Ldt descriptors.
 	INVALID_LDT_DESCRIPTOR = 0x234,
-	// Indicates a process has too many threads to perform the requested action. For example, assignment of a primary token may only be performed when a process has zero or one threads.
+	// Indicates a process has too many threads to perform the requested action. For example, assignment of a primary token may only be performed #if a process has zero or one threads.
 	TOO_MANY_THREADS = 0x235,
 	// An attempt was made to operate on a thread within a specific process, but the thread specified is not in the process specified.
 	THREAD_NOT_IN_PROCESS = 0x236,
@@ -942,7 +942,7 @@ System_Error :: enum DWORD {
 	IP_ADDRESS_CONFLICT2 = 0x264,
 	// {Low On Registry Space} The system has reached the maximum size allowed for the system part of the registry. Additional storage requests will be ignored.
 	REGISTRY_QUOTA_LIMIT = 0x265,
-	// A callback return system service cannot be executed when no callback is active.
+	// A callback return system service cannot be executed #if no callback is active.
 	NO_CALLBACK_ACTIVE = 0x266,
 	// The password provided is too short to meet the policy of your user account. Please choose a longer password.
 	PWD_TOO_SHORT = 0x267,
@@ -1371,7 +1371,7 @@ System_Error :: enum DWORD {
 	SERVICE_NOT_ACTIVE = 0x426,
 	// The service process could not connect to the service controller.
 	FAILED_SERVICE_CONTROLLER_CONNECT = 0x427,
-	// An exception occurred in the service when handling the control request.
+	// An exception occurred in the service #if handling the control request.
 	EXCEPTION_IN_SERVICE = 0x428,
 	// The database specified does not exist.
 	DATABASE_DOES_NOT_EXIST = 0x429,
@@ -1427,7 +1427,7 @@ System_Error :: enum DWORD {
 	PARTITION_FAILURE = 0x451,
 	// When accessing a new tape of a multivolume partition, the current block size is incorrect.
 	INVALID_BLOCK_LENGTH = 0x452,
-	// Tape partition information could not be found when loading a tape.
+	// Tape partition information could not be found #if loading a tape.
 	DEVICE_NOT_PARTITIONED = 0x453,
 	// Unable to lock the media eject mechanism.
 	UNABLE_TO_LOCK_MEDIA = 0x454,
@@ -1645,7 +1645,7 @@ System_Error :: enum DWORD {
 	NOT_LOGGED_ON = 0x4DD,
 	// Continue with work in progress.
 	CONTINUE = 0x4DE,
-	// An attempt was made to perform an initialization operation when initialization has already been completed.
+	// An attempt was made to perform an initialization operation #if initialization has already been completed.
 	ALREADY_INITIALIZED = 0x4DF,
 	// No more local devices.
 	NO_MORE_DEVICES = 0x4E0,
@@ -1653,7 +1653,7 @@ System_Error :: enum DWORD {
 	NO_SUCH_SITE = 0x4E1,
 	// A domain controller with the specified name already exists.
 	DOMAIN_CONTROLLER_EXISTS = 0x4E2,
-	// This operation is supported only when you are connected to the server.
+	// This operation is supported only #if you are connected to the server.
 	ONLY_IF_CONNECTED = 0x4E3,
 	// The group policy framework should call the extension even if there are no changes.
 	OVERRIDE_NOCHANGES = 0x4E4,
@@ -1685,7 +1685,7 @@ System_Error :: enum DWORD {
 	DOWNGRADE_DETECTED = 0x4F1,
 	// The machine is locked and cannot be shut down without the force option.
 	MACHINE_LOCKED = 0x4F7,
-	// An application-defined callback gave invalid data when called.
+	// An application-defined callback gave invalid data #if called.
 	CALLBACK_SUPPLIED_INVALID_DATA = 0x4F9,
 	// The group policy framework should call the extension in the synchronous foreground policy refresh.
 	SYNC_FOREGROUND_REFRESH_REQUIRED = 0x4FA,
@@ -2077,7 +2077,7 @@ System_Error :: enum DWORD {
 	RESTART_APPLICATION = 0x5BB,
 	// The caller made the connection request in the wrong routing compartment.
 	WRONG_COMPARTMENT = 0x5BC,
-	// There was an AuthIP failure when attempting to connect to the remote host.
+	// There was an AuthIP failure #if attempting to connect to the remote host.
 	AUTHIP_FAILURE = 0x5BD,
 	// Insufficient NVRAM resources exist to complete the requested service. A reboot might be required.
 	NO_NVRAM_RESOURCES = 0x5BE,
@@ -2199,7 +2199,7 @@ System_Error :: enum DWORD {
 	INVALID_PATCH_XML = 0x672,
 	// Windows Installer does not permit updating of managed advertised products. At least one feature of the product must be installed before applying the update.
 	PATCH_MANAGED_ADVERTISED_PRODUCT = 0x673,
-	// The Windows Installer service is not accessible in Safe Mode. Please try again when your computer is not in Safe Mode or you can use System Restore to return your machine to a previous good state.
+	// The Windows Installer service is not accessible in Safe Mode. Please try again #if your computer is not in Safe Mode or you can use System Restore to return your machine to a previous good state.
 	INSTALL_SERVICE_SAFEBOOT = 0x674,
 	// A fail fast exception occurred. Exception handlers will not be invoked and the process will be terminated immediately.
 	FAIL_FAST_EXCEPTION = 0x675,
@@ -2622,7 +2622,7 @@ System_Error :: enum DWORD {
 	INVALID_PRINT_MONITOR = 0xBBF,
 	// The specified print monitor is currently in use.
 	PRINT_MONITOR_IN_USE = 0xBC0,
-	// The requested operation is not allowed when there are jobs queued to the printer.
+	// The requested operation is not allowed #if there are jobs queued to the printer.
 	PRINTER_HAS_JOBS_QUEUED = 0xBC1,
 	// The requested operation is successful. Changes will not be effective until the system is rebooted.
 	SUCCESS_REBOOT_REQUIRED = 0xBC2,
@@ -3349,13 +3349,13 @@ System_Error :: enum DWORD {
 	LOG_CLIENT_NOT_REGISTERED = 0x19ED,
 	// A request has already been made to handle the log full condition.
 	LOG_FULL_HANDLER_IN_PROGRESS = 0x19EE,
-	// Log service encountered an error when attempting to read from a log container.
+	// Log service encountered an error #if attempting to read from a log container.
 	LOG_CONTAINER_READ_FAILED = 0x19EF,
-	// Log service encountered an error when attempting to write to a log container.
+	// Log service encountered an error #if attempting to write to a log container.
 	LOG_CONTAINER_WRITE_FAILED = 0x19F0,
-	// Log service encountered an error when attempting open a log container.
+	// Log service encountered an error #if attempting open a log container.
 	LOG_CONTAINER_OPEN_FAILED = 0x19F1,
-	// Log service encountered an invalid container state when attempting a requested action.
+	// Log service encountered an invalid container state #if attempting a requested action.
 	LOG_CONTAINER_STATE_INVALID = 0x19F2,
 	// Log service is not in the correct state to perform a requested action.
 	LOG_STATE_INVALID = 0x19F3,
@@ -3459,7 +3459,7 @@ System_Error :: enum DWORD {
 	CANT_CREATE_MORE_STREAM_MINIVERSIONS = 0x1A9C,
 	// The remote server sent mismatching version number or Fid for a file opened with transactions.
 	REMOTE_FILE_VERSION_MISMATCH = 0x1A9E,
-	// The handle has been invalidated by a transaction. The most likely cause is the presence of memory mapping on a file or an open handle when the transaction ended or rolled back to savepoint.
+	// The handle has been invalidated by a transaction. The most likely cause is the presence of memory mapping on a file or an open handle #if the transaction ended or rolled back to savepoint.
 	HANDLE_NO_LONGER_VALID = 0x1A9F,
 	// There is no transaction metadata on the file.
 	NO_TXF_METADATA = 0x1AA0,
@@ -3803,7 +3803,7 @@ System_Error :: enum DWORD {
 	DS_SORT_CONTROL_MISSING = 0x2045,
 	// The search results exceed the offset range specified.
 	DS_OFFSET_RANGE_ERROR = 0x2046,
-	// The directory service detected the subsystem that allocates relative identifiers is disabled. This can occur as a protective mechanism when the system determines a significant portion of relative identifiers (RIDs) have been exhausted. Please see https://go.microsoft.com/fwlink/p/?linkid=228610 for recommended diagnostic steps and the procedure to re-enable account creation.
+	// The directory service detected the subsystem that allocates relative identifiers is disabled. This can occur as a protective mechanism #if the system determines a significant portion of relative identifiers (RIDs) have been exhausted. Please see https://go.microsoft.com/fwlink/p/?linkid=228610 for recommended diagnostic steps and the procedure to re-enable account creation.
 	DS_RIDMGR_DISABLED = 0x2047,
 	// The root object must be the head of a naming context. The root object cannot have an instantiated parent.
 	DS_ROOT_MUST_BE_NC = 0x206D,
@@ -4818,7 +4818,7 @@ System_Error :: enum DWORD {
 	WSAENOBUFS = 0x2747,
 	// A connect request was made on an already connected socket.
 	WSAEISCONN = 0x2748,
-	// A request to send or receive data was disallowed because the socket is not connected and (when sending on a datagram socket using a sendto call) no address was supplied.
+	// A request to send or receive data was disallowed because the socket is not connected and (#if sending on a datagram socket using a sendto call) no address was supplied.
 	WSAENOTCONN = 0x2749,
 	// A request to send or receive data was disallowed because the socket had already been shut down in that direction with a previous shutdown call.
 	WSAESHUTDOWN = 0x274A,
@@ -5541,7 +5541,7 @@ System_Error :: enum DWORD {
 	EVT_VERSION_TOO_NEW = 0x3ABB,
 	// The channel at index %1!d! of the query can't be opened.
 	EVT_CANNOT_OPEN_CHANNEL_OF_QUERY = 0x3ABC,
-	// The publisher has been disabled and its resource is not available. This usually occurs when the publisher is in the process of being uninstalled or upgraded.
+	// The publisher has been disabled and its resource is not available. This usually occurs #if the publisher is in the process of being uninstalled or upgraded.
 	EVT_PUBLISHER_DISABLED = 0x3ABD,
 	// Attempted to create a numeric type that is outside of its valid range.
 	EVT_FILTER_OUT_OF_RANGE = 0x3ABE,
@@ -5623,7 +5623,7 @@ System_Error :: enum DWORD {
 	MCA_INVALID_VCP_VERSION = 0x3B61,
 	// The monitor does not comply with the MCCS specification it claims to support.
 	MCA_MONITOR_VIOLATES_MCCS_SPECIFICATION = 0x3B62,
-	// The MCCS version in a monitor's mccs_ver capability does not match the MCCS version the monitor reports when the VCP Version (0xDF) VCP code is used.
+	// The MCCS version in a monitor's mccs_ver capability does not match the MCCS version the monitor reports #if the VCP Version (0xDF) VCP code is used.
 	MCA_MCCS_VERSION_MISMATCH = 0x3B63,
 	// The Monitor Configuration API only works with monitors that support the MCCS 1.0 specification, MCCS 2.0 specification or the MCCS 2.0 Revision 1 specification.
 	MCA_UNSUPPORTED_MCCS_VERSION = 0x3B64,

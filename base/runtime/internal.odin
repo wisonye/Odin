@@ -1,32 +1,32 @@
 #+vet !cast
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(private="file")
 IS_WASM :: ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 
 @(private)
-RUNTIME_LINKAGE :: "strong"   when ODIN_USE_SEPARATE_MODULES else
-				   "internal" when ODIN_NO_ENTRY_POINT && (ODIN_BUILD_MODE == .Static || ODIN_BUILD_MODE == .Dynamic || ODIN_BUILD_MODE == .Object) else
-				   "strong"   when ODIN_BUILD_MODE == .Dynamic else
-				   "strong"   when !ODIN_NO_CRT else
+RUNTIME_LINKAGE :: "strong"   #if ODIN_USE_SEPARATE_MODULES else
+				   "internal" #if ODIN_NO_ENTRY_POINT && (ODIN_BUILD_MODE == .Static || ODIN_BUILD_MODE == .Dynamic || ODIN_BUILD_MODE == .Object) else
+				   "strong"   #if ODIN_BUILD_MODE == .Dynamic else
+				   "strong"   #if !ODIN_NO_CRT else
 				   "internal"
 RUNTIME_REQUIRE :: false // !ODIN_TILDE
 
 @(private)
-__float16 :: f16 when __ODIN_LLVM_F16_SUPPORTED else u16
+__float16 :: f16 #if __ODIN_LLVM_F16_SUPPORTED else u16
 
-HAS_HARDWARE_SIMD :: false when (ODIN_ARCH == .amd64 || ODIN_ARCH == .i386) && !intrinsics.has_target_feature("sse2") else
-	false when (ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32) && !intrinsics.has_target_feature("neon") else
-	false when (ODIN_ARCH == .wasm64p32 || ODIN_ARCH == .wasm32) && !intrinsics.has_target_feature("simd128") else
-	false when (ODIN_ARCH == .riscv64) && !intrinsics.has_target_feature("v") else
+HAS_HARDWARE_SIMD :: false #if (ODIN_ARCH == .amd64 || ODIN_ARCH == .i386) && !intrinsics.has_target_feature("sse2") else
+	false #if (ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32) && !intrinsics.has_target_feature("neon") else
+	false #if (ODIN_ARCH == .wasm64p32 || ODIN_ARCH == .wasm32) && !intrinsics.has_target_feature("simd128") else
+	false #if (ODIN_ARCH == .riscv64) && !intrinsics.has_target_feature("v") else
 	true
 
 // Size of a native SIMD register for the current compilation target
 NATIVE_SIMD_BIT_WIDTH ::
-	512 when (ODIN_ARCH == .amd64) && intrinsics.has_target_feature("avx512f") else
-	256 when (ODIN_ARCH == .amd64) && (intrinsics.has_target_feature("avx2") || intrinsics.has_target_feature("avx")) else
+	512 #if (ODIN_ARCH == .amd64) && intrinsics.has_target_feature("avx512f") else
+	256 #if (ODIN_ARCH == .amd64) && (intrinsics.has_target_feature("avx2") || intrinsics.has_target_feature("avx")) else
 	// Fallback for no hardware SIMD, but also SSE, NEON, SVE, RVV and WASM SIMD128.
 	128
 
@@ -283,10 +283,10 @@ memory_equal :: proc "contextless" (x, y: rawptr, n: int) -> bool {
 	m := uint(0)
 
 	if n >= 8 {
-		when HAS_HARDWARE_SIMD {
+		#if HAS_HARDWARE_SIMD {
 			// Avoid using 256-bit SIMD on platforms where its emulation is
 			// likely to be less than ideal.
-			when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+			#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 				m = n / 32 * 32
 				for /**/; i < m; i += 32 {
 					load_a := intrinsics.unaligned_load(cast(^#simd[32]u8)&a[i])
@@ -338,8 +338,8 @@ memory_compare :: proc "contextless" (x, y: rawptr, n: int) -> int #no_bounds_ch
 	i := uint(0)
 	m := uint(0)
 
-	when HAS_HARDWARE_SIMD {
-		when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+	#if HAS_HARDWARE_SIMD {
+		#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 			m = n / 32 * 32
 			for /**/; i < m; i += 32 {
 				load_a := intrinsics.unaligned_load(cast(^#simd[32]u8)&a[i])
@@ -407,8 +407,8 @@ memory_compare_zero :: proc "contextless" (a: rawptr, n: int) -> int #no_bounds_
 	bytes := ([^]u8)(a)
 
 	if n >= 8 {
-		when HAS_HARDWARE_SIMD {
-			when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+		#if HAS_HARDWARE_SIMD {
+			#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 				scanner32: #simd[32]u8
 				m = n / 32 * 32
 				for /**/; i < m; i += 32 {
@@ -459,8 +459,8 @@ memory_prefix_length :: proc "contextless" (x, y: rawptr, n: int) -> (idx: int) 
 	i := uint(0)
 	m := uint(0)
 
-	when HAS_HARDWARE_SIMD {
-		when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+	#if HAS_HARDWARE_SIMD {
+		#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 			m = n / 32 * 32
 			for /**/; i < m; i += 32 {
 				load_a := intrinsics.unaligned_load(cast(^#simd[32]u8)&a[i])
@@ -1188,7 +1188,7 @@ f16_to_f32 :: proc "contextless" (value_: __float16) -> f32 {
 // land in `s0` at both ends and every `_Float16` conversion in C code linked against this runtime
 // reads whatever the other register happened to hold. Everywhere else the helpers really do take
 // and return floats, so only arm32 changes shape.
-when ODIN_ARCH == .arm32 {
+#if ODIN_ARCH == .arm32 {
 	__f16_abi :: u16
 	__f32_abi :: u32
 	__f64_abi :: u64
@@ -1228,8 +1228,8 @@ extendhfsf2 :: proc "c" (value: __f16_abi) -> __f32_abi {
 	return transmute(__f32_abi)f16_to_f32(transmute(__float16)value)
 }
 
-when .Address in ODIN_SANITIZER_FLAGS {
-	foreign {
+#if .Address in ODIN_SANITIZER_FLAGS {
+	#foreign {
 		@(require)
 		__asan_unpoison_memory_region :: proc "system" (address: rawptr, size: uint) ---
 	}

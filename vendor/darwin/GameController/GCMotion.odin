@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCMotion", objc_superclass=NS.Object)
 Motion :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Motion, objc_selector="setGravity:", objc_name="setGravity")
 	Motion_setGravity :: proc(self: ^Motion, gravity: Acceleration) ---
 

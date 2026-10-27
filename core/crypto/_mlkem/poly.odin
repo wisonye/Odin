@@ -1,8 +1,8 @@
 #+private
 package _mlkem
 
-import "core:crypto"
-import subtle "core:crypto/_subtle"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
 
 // Elements of R_q = Z_q[X]/(X^n + 1). Represents polynomial
 // coeffs[0] + X*coeffs[1] + X^2*coeffs[2] + ... + X^{n-1}*coeffs[n-1]

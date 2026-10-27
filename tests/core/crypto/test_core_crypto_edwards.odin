@@ -1,10 +1,10 @@
 package test_core_crypto
 
-import "core:encoding/hex"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:testing"
 
-import field "core:crypto/_fiat/field_curve25519"
-import "core:crypto/ristretto255"
+#import field "core:crypto/_fiat/field_curve25519"
+#import "core:crypto/ristretto255"
 
 @(test)
 test_edwards25519_sqrt_ratio_m1 :: proc(t: ^testing.T) {

@@ -1,7 +1,7 @@
 // test issue for #6753 https://github.com/odin-lang/odin/issues/6753
 package test_issue_6753
-import "core:testing"
-import "core:fmt"
+#import "core:testing"
+#import "core:fmt"
 
 foo_concrete :: proc(x: int, g: proc(int) -> int) -> int {
 	return g(x)

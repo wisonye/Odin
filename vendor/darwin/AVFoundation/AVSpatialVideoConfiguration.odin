@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVSpatialVideoConfiguration", objc_superclass=NS.Object)
 SpatialVideoConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpatialVideoConfiguration, objc_selector="init", objc_name="init")
 	SpatialVideoConfiguration_init :: proc(self: ^SpatialVideoConfiguration) -> instancetype ---
 

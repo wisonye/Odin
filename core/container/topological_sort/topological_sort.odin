@@ -2,8 +2,8 @@
 // Odin's map type is being used to accelerate lookups.
 package container_topological_sort
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 _ :: intrinsics
 _ :: runtime
 

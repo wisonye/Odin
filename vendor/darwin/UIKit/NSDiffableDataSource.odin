@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSDiffableDataSourceSectionSnapshot", objc_superclass=NS.Object)
 NSDiffableDataSourceSectionSnapshot :: struct {
@@ -11,7 +11,7 @@ NSDiffableDataSourceSectionSnapshot :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSDiffableDataSourceSectionSnapshot, objc_selector="init", objc_name="init")
 	NSDiffableDataSourceSectionSnapshot_init :: proc(self: ^NSDiffableDataSourceSectionSnapshot) -> instancetype ---
 
@@ -105,7 +105,7 @@ NSDiffableDataSourceSectionSnapshot_snapshotOfParentItem :: proc {
 NSDiffableDataSourceSectionTransaction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSDiffableDataSourceSectionTransaction, objc_selector="sectionIdentifier", objc_name="sectionIdentifier")
 	NSDiffableDataSourceSectionTransaction_sectionIdentifier :: proc(self: ^NSDiffableDataSourceSectionTransaction) -> id ---
 
@@ -127,7 +127,7 @@ NSDiffableDataSourceSnapshot :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSDiffableDataSourceSnapshot, objc_selector="numberOfItemsInSection:", objc_name="numberOfItemsInSection")
 	NSDiffableDataSourceSnapshot_numberOfItemsInSection :: proc(self: ^NSDiffableDataSourceSnapshot, sectionIdentifier: id) -> NS.Integer ---
 
@@ -227,7 +227,7 @@ NSDiffableDataSourceSnapshot_appendItemsWithIdentifiers :: proc {
 NSDiffableDataSourceTransaction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSDiffableDataSourceTransaction, objc_selector="initialSnapshot", objc_name="initialSnapshot")
 	NSDiffableDataSourceTransaction_initialSnapshot :: proc(self: ^NSDiffableDataSourceTransaction) -> ^NSDiffableDataSourceSnapshot ---
 

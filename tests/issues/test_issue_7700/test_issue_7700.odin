@@ -2,9 +2,9 @@
 // A field of a constant `#soa` array is the array of that field of each element
 package test_issue_7700
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:testing"
 
 Field :: struct { name: string, type: typeid, n: int }
 

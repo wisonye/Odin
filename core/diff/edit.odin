@@ -1,6 +1,6 @@
 package diff
 
-import "base:runtime"
+#import "base:runtime"
 
 DEFAULT_CONTEXT_LEN :: 3
 

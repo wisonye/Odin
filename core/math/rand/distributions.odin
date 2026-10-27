@@ -1,7 +1,7 @@
 package rand
 
-import "base:runtime"
-import "core:math"
+#import "base:runtime"
+#import "core:math"
 
 float64_uniform :: float64_range
 float32_uniform :: float32_range

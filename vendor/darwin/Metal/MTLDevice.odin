@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLDevice")
 Device :: struct {
@@ -14,7 +14,7 @@ Device :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Device, objc_selector="newLogStateWithDescriptor:error:", objc_name="newLogStateWithDescriptor_error")
 	Device_newLogStateWithDescriptor_error :: proc(self: ^Device, descriptor: ^LogStateDescriptor, error: ^^NS.Error) -> ^LogState ---
 
@@ -327,7 +327,7 @@ foreign lib {
 	@(objc_type=Device, objc_selector="recommendedMaxWorkingSetSize", objc_name="recommendedMaxWorkingSetSize")
 	Device_recommendedMaxWorkingSetSize :: proc(self: ^Device) -> cffi.uint64_t ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Device, objc_selector="location", objc_name="location")
 		Device_location :: proc(self: ^Device) -> DeviceLocation ---
 
@@ -383,7 +383,7 @@ foreign lib {
 	@(objc_type=Device, objc_selector="areProgrammableSamplePositionsSupported", objc_name="areProgrammableSamplePositionsSupported")
 	Device_areProgrammableSamplePositionsSupported :: proc(self: ^Device) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Device, objc_selector="peerGroupID", objc_name="peerGroupID")
 		Device_peerGroupID :: proc(self: ^Device) -> cffi.uint64_t ---
 
@@ -427,7 +427,7 @@ foreign lib {
 	@(objc_type=Device, objc_selector="supportsPrimitiveMotionBlur", objc_name="supportsPrimitiveMotionBlur")
 	Device_supportsPrimitiveMotionBlur :: proc(self: ^Device) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Device, objc_selector="shouldMaximizeConcurrentCompilation", objc_name="shouldMaximizeConcurrentCompilation")
 		Device_shouldMaximizeConcurrentCompilation :: proc(self: ^Device) -> bool ---
 

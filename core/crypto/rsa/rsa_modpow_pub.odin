@@ -22,9 +22,9 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import bigint "core:crypto/_bigint"
-import "core:encoding/endian"
-import "core:slice"
+#import bigint "core:crypto/_bigint"
+#import "core:encoding/endian"
+#import "core:slice"
 
 @(private, require_results)
 public_modpow :: proc(x: []byte, pk: ^Public_Key) -> u32 {

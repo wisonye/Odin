@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLBuffer")
 Buffer :: struct {
@@ -11,7 +11,7 @@ Buffer :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Buffer, objc_selector="contents", objc_name="contents")
 	Buffer_contents :: proc(self: ^Buffer) -> rawptr ---
 
@@ -30,7 +30,7 @@ foreign lib {
 	@(objc_type=Buffer, objc_selector="removeAllDebugMarkers", objc_name="removeAllDebugMarkers")
 	Buffer_removeAllDebugMarkers :: proc(self: ^Buffer) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Buffer, objc_selector="newRemoteBufferViewForDevice:", objc_name="newRemoteBufferViewForDevice")
 		Buffer_newRemoteBufferViewForDevice :: proc(self: ^Buffer, device: ^Device) -> ^Buffer ---
 	}
@@ -38,7 +38,7 @@ foreign lib {
 	@(objc_type=Buffer, objc_selector="length", objc_name="length")
 	Buffer_length :: proc(self: ^Buffer) -> NS.UInteger ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Buffer, objc_selector="remoteStorageBuffer", objc_name="remoteStorageBuffer")
 		Buffer_remoteStorageBuffer :: proc(self: ^Buffer) -> ^Buffer ---
 	}
@@ -66,7 +66,7 @@ BufferBinding :: struct {
 	using _: Binding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BufferBinding, objc_selector="bufferAlignment", objc_name="bufferAlignment")
 	BufferBinding_bufferAlignment :: proc(self: ^BufferBinding) -> NS.UInteger ---
 
@@ -90,7 +90,7 @@ BufferLayoutDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BufferLayoutDescriptor, objc_selector="stride", objc_name="stride")
 	BufferLayoutDescriptor_stride :: proc(self: ^BufferLayoutDescriptor) -> NS.UInteger ---
 
@@ -114,7 +114,7 @@ foreign lib {
 @(objc_class="MTLBufferLayoutDescriptorArray", objc_superclass=NS.Object)
 BufferLayoutDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BufferLayoutDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	BufferLayoutDescriptorArray_objectAtIndexedSubscript :: proc(self: ^BufferLayoutDescriptorArray, index: NS.UInteger) -> ^BufferLayoutDescriptor ---
 

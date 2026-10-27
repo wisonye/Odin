@@ -1,6 +1,6 @@
 package linux
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(private)
 log2 :: intrinsics.constant_log2
@@ -157,7 +157,7 @@ Errno :: enum i32 {
 	RDONLY flag is not present, because it has the value of 0, i.e. it is the
 	default, unless WRONLY or RDWR is specified.
 */
-when ODIN_ARCH != .arm64 && ODIN_ARCH != .arm32 {
+#if ODIN_ARCH != .arm64 && ODIN_ARCH != .arm32 {
 	Open_Flags_Bits :: enum {
 		WRONLY    = 0,
 		RDWR      = 1,
@@ -1020,7 +1020,7 @@ Sig_Action_Flag :: enum u32 {
 }
 
 /*
-	Translation of code in Sig_Info for when signo is SIGCHLD
+	Translation of code in Sig_Info for #if signo is SIGCHLD
 */
 Sig_Child_Code :: enum {
 	NONE,
@@ -1381,11 +1381,11 @@ Socket_Option :: enum {
 	RESERVE_MEM                   = 73,
 	TXREHASH                      = 74,
 	RCVMARK                       = 75,
-	TIMESTAMP                     = TIMESTAMP_OLD    when _SOCKET_OPTION_OLD else TIMESTAMP_NEW,
-	TIMESTAMPNS                   = TIMESTAMPNS_OLD  when _SOCKET_OPTION_OLD else TIMESTAMPNS_NEW,
-	TIMESTAMPING                  = TIMESTAMPING_OLD when _SOCKET_OPTION_OLD else TIMESTAMPING_NEW,
-	RCVTIMEO                      = RCVTIMEO_OLD     when _SOCKET_OPTION_OLD else RCVTIMEO_NEW,
-	SNDTIMEO                      = SNDTIMEO_OLD     when _SOCKET_OPTION_OLD else SNDTIMEO_NEW,
+	TIMESTAMP                     = TIMESTAMP_OLD    #if _SOCKET_OPTION_OLD else TIMESTAMP_NEW,
+	TIMESTAMPNS                   = TIMESTAMPNS_OLD  #if _SOCKET_OPTION_OLD else TIMESTAMPNS_NEW,
+	TIMESTAMPING                  = TIMESTAMPING_OLD #if _SOCKET_OPTION_OLD else TIMESTAMPING_NEW,
+	RCVTIMEO                      = RCVTIMEO_OLD     #if _SOCKET_OPTION_OLD else RCVTIMEO_NEW,
+	SNDTIMEO                      = SNDTIMEO_OLD     #if _SOCKET_OPTION_OLD else SNDTIMEO_NEW,
 }
 
 @(private)
@@ -2032,7 +2032,7 @@ IO_Uring_Setup_Flags_Bits :: enum {
 	SUBMIT_ALL,
 	// Cooperative task running. When requests complete, they often require
 	// forcing the submitter to transition to the kernel to complete. If this
-	// flag is set, work will be done when the task transitions anyway, rather
+	// flag is set, work will be done #if the task transitions anyway, rather
 	// than force an inter-processor interrupt reschedule. This avoids interrupting
 	// a task running in userspace, and saves an IPI.
 	COOP_TASKRUN,

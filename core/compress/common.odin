@@ -9,9 +9,9 @@ package compress
 		Jeroen van Rijn: Initial implementation, optimization.
 */
 
-import "core:io"
-import "core:bytes"
-import "base:runtime"
+#import "core:io"
+#import "core:bytes"
+#import "base:runtime"
 
 /*
 	These settings bound how much compression algorithms will allocate for their output buffer.
@@ -31,7 +31,7 @@ COMPRESS_OUTPUT_ALLOCATE_MIN :: int(#config(COMPRESS_OUTPUT_ALLOCATE_MIN, 1 << 2
 	For reference, the largest payload size of a GZIP file is 4 GiB.
 
 */
-when size_of(uintptr) == 8 {
+#if size_of(uintptr) == 8 {
 
 	// For 64-bit platforms, we set the default max buffer size to 4 GiB,
 	// which is GZIP and PKZIP's max payload size.
@@ -136,7 +136,7 @@ Context_Memory_Input :: struct #packed {
 	size_packed:       i64,
 	size_unpacked:     i64,
 }
-when size_of(rawptr) == 8 {
+#if size_of(rawptr) == 8 {
 	#assert(size_of(Context_Memory_Input) == 64)
 }
 
@@ -299,7 +299,7 @@ peek_data_from_stream :: #force_inline proc(z: ^Context_Stream_Input, $T: typeid
 	if !e1 {
 		return T{}, .Unsupported
 	}
-	when size <= 128 {
+	#if size <= 128 {
 		b: [size]u8
 	} else {
 		b := make([]u8, size, context.temp_allocator)
@@ -326,7 +326,7 @@ peek_data_at_offset_from_stream :: #force_inline proc(z: ^Context_Stream_Input, 
 	if !e3 {
 		return T{}, .Unsupported
 	}
-	when size <= 128 {
+	#if size <= 128 {
 		b: [size]u8
 	} else {
 		b := make([]u8, size, context.temp_allocator)

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSFormatter", objc_superclass=Object)
 Formatter :: struct {
@@ -11,7 +11,7 @@ Formatter :: struct {
 	using _: Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Formatter, objc_selector="stringForObjectValue:", objc_name="stringForObjectValue")
 	Formatter_stringForObjectValue :: proc(self: ^Formatter, obj: id) -> ^String ---
 
@@ -43,7 +43,7 @@ Formatter_isPartialStringValid :: proc {
 @(objc_class="NSByteCountFormatter", objc_superclass=Formatter)
 ByteCountFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ByteCountFormatter, objc_selector="stringFromByteCount:countStyle:", objc_name="stringFromByteCount_countStyle", objc_is_class_method=true)
 	ByteCountFormatter_stringFromByteCount_countStyle :: proc(byteCount: cffi.longlong, countStyle: ByteCountFormatterCountStyle) -> ^String ---
 
@@ -132,7 +132,7 @@ ByteCountFormatter_stringFromMeasurement :: proc {
 @(objc_class="NSEnergyFormatter", objc_superclass=Formatter)
 EnergyFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnergyFormatter, objc_selector="stringFromValue:unit:", objc_name="stringFromValue")
 	EnergyFormatter_stringFromValue :: proc(self: ^EnergyFormatter, value: cffi.double, unit: EnergyFormatterUnit) -> ^String ---
 
@@ -174,7 +174,7 @@ ISO8601DateFormatter :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ISO8601DateFormatter, objc_selector="init", objc_name="init")
 	ISO8601DateFormatter_init :: proc(self: ^ISO8601DateFormatter) -> instancetype ---
 
@@ -212,7 +212,7 @@ ISO8601DateFormatter_stringFromDate :: proc {
 @(objc_class="NSLengthFormatter", objc_superclass=Formatter)
 LengthFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LengthFormatter, objc_selector="stringFromValue:unit:", objc_name="stringFromValue")
 	LengthFormatter_stringFromValue :: proc(self: ^LengthFormatter, value: cffi.double, unit: LengthFormatterUnit) -> ^String ---
 
@@ -251,7 +251,7 @@ foreign lib {
 @(objc_class="NSListFormatter", objc_superclass=Formatter)
 ListFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ListFormatter, objc_selector="localizedStringByJoiningStrings:", objc_name="localizedStringByJoiningStrings", objc_is_class_method=true)
 	ListFormatter_localizedStringByJoiningStrings :: proc(strings: ^Array) -> ^String ---
 
@@ -278,7 +278,7 @@ foreign lib {
 @(objc_class="NSMassFormatter", objc_superclass=Formatter)
 MassFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MassFormatter, objc_selector="stringFromValue:unit:", objc_name="stringFromValue")
 	MassFormatter_stringFromValue :: proc(self: ^MassFormatter, value: cffi.double, unit: MassFormatterUnit) -> ^String ---
 
@@ -317,7 +317,7 @@ foreign lib {
 @(objc_class="NSRelativeDateTimeFormatter", objc_superclass=Formatter)
 RelativeDateTimeFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RelativeDateTimeFormatter, objc_selector="localizedStringFromDateComponents:", objc_name="localizedStringFromDateComponents")
 	RelativeDateTimeFormatter_localizedStringFromDateComponents :: proc(self: ^RelativeDateTimeFormatter, dateComponents: ^DateComponents) -> ^String ---
 

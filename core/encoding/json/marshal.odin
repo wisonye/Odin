@@ -1,14 +1,14 @@
 package encoding_json
 
-import "core:mem"
-import "core:math"
-import "core:math/bits"
-import "base:runtime"
-import "core:strconv"
-import "core:strings"
-import "core:reflect"
-import "core:io"
-import "core:slice"
+#import "core:mem"
+#import "core:math"
+#import "core:math/bits"
+#import "base:runtime"
+#import "core:strconv"
+#import "core:strings"
+#import "core:reflect"
+#import "core:io"
+#import "core:slice"
 
 Marshal_Data_Error :: enum {
 	None,

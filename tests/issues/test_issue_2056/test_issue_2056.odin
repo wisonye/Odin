@@ -1,7 +1,7 @@
 // Tests issue #2056 https://github.com/odin-lang/Odin/issues/2056
 package test_issue_2056
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_scalar_matrix_conversion :: proc(t: ^testing.T) {

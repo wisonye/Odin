@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKEvent", objc_superclass=CalendarItem)
 Event :: struct { using _: CalendarItem}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Event, objc_selector="eventWithEventStore:", objc_name="eventWithEventStore", objc_is_class_method=true)
 	Event_eventWithEventStore :: proc(eventStore: ^EventStore) -> ^Event ---
 
@@ -76,7 +76,7 @@ foreign lib {
 @(objc_class="EKEventStore", objc_superclass=NS.Object)
 EventStore :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EventStore, objc_selector="authorizationStatusForEntityType:", objc_name="authorizationStatusForEntityType", objc_is_class_method=true)
 	EventStore_authorizationStatusForEntityType :: proc(entityType: EntityType) -> AuthorizationStatus ---
 

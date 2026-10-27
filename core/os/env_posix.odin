@@ -2,10 +2,10 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:strings"
-import "core:sys/posix"
+#import "core:strings"
+#import "core:sys/posix"
 
 _lookup_env_alloc :: proc(key: string, allocator: runtime.Allocator) -> (value: string, found: bool) {
 	if key == "" {

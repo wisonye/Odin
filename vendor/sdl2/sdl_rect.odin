@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 Point :: struct {
@@ -65,7 +65,7 @@ FRectEquals :: proc(a, b: ^FRect) -> bool {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	HasIntersection      :: proc(A, B: ^Rect) -> bool ---
 	IntersectRect        :: proc(A, B: ^Rect, result: ^Rect) -> bool ---
 	UnionRect            :: proc(A, B: ^Rect, result: ^Rect) ---

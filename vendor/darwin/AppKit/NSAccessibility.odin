@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSAccessibility")
 Accessibility :: struct {
@@ -14,7 +14,7 @@ Accessibility :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Accessibility, objc_selector="accessibilityLayoutPointForScreenPoint:", objc_name="accessibilityLayoutPointForScreenPoint")
 	Accessibility_accessibilityLayoutPointForScreenPoint :: proc(self: ^Accessibility, point: CG.Point) -> CG.Point ---
 
@@ -846,7 +846,7 @@ AccessibilityButton :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityButton, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilityButton_accessibilityLabel :: proc(self: ^AccessibilityButton) -> ^NS.String ---
 
@@ -862,7 +862,7 @@ AccessibilityCheckBox :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCheckBox, objc_selector="accessibilityValue", objc_name="accessibilityValue")
 	AccessibilityCheckBox_accessibilityValue :: proc(self: ^AccessibilityCheckBox) -> ^NS.Number ---
 }
@@ -872,7 +872,7 @@ foreign lib {
 AccessibilityColor :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityColor, objc_selector="accessibilityName", objc_name="accessibilityName")
 	AccessibilityColor_accessibilityName :: proc(self: ^AccessibilityColor) -> ^NS.String ---
 }
@@ -885,7 +885,7 @@ AccessibilityContainsTransientUI :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityContainsTransientUI, objc_selector="accessibilityPerformShowAlternateUI", objc_name="accessibilityPerformShowAlternateUI")
 	AccessibilityContainsTransientUI_accessibilityPerformShowAlternateUI :: proc(self: ^AccessibilityContainsTransientUI) -> bool ---
 
@@ -901,7 +901,7 @@ foreign lib {
 AccessibilityCustomAction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomAction, objc_selector="initWithName:handler:", objc_name="initWithName_handler")
 	AccessibilityCustomAction_initWithName_handler :: proc(self: ^AccessibilityCustomAction, name: ^NS.String, handler: ^Objc_Block(proc "c" () -> bool)) -> instancetype ---
 
@@ -944,7 +944,7 @@ AccessibilityCustomAction_initWithName :: proc {
 AccessibilityCustomRotor :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotor, objc_selector="initWithLabel:itemSearchDelegate:", objc_name="initWithLabel")
 	AccessibilityCustomRotor_initWithLabel :: proc(self: ^AccessibilityCustomRotor, label: ^NS.String, itemSearchDelegate: ^AccessibilityCustomRotorItemSearchDelegate) -> instancetype ---
 
@@ -981,14 +981,14 @@ foreign lib {
 AccessibilityCustomRotorItemLoadDelegate :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSAccessibilityCustomRotorItemResult", objc_superclass=NS.Object)
 AccessibilityCustomRotorItemResult :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotorItemResult, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	AccessibilityCustomRotorItemResult_new :: proc() -> ^AccessibilityCustomRotorItemResult ---
 
@@ -1028,7 +1028,7 @@ AccessibilityCustomRotorItemSearchDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotorItemSearchDelegate, objc_selector="rotor:resultForSearchParameters:", objc_name="rotor")
 	AccessibilityCustomRotorItemSearchDelegate_rotor :: proc(self: ^AccessibilityCustomRotorItemSearchDelegate, rotor: ^AccessibilityCustomRotor, searchParameters: ^AccessibilityCustomRotorSearchParameters) -> ^AccessibilityCustomRotorItemResult ---
 }
@@ -1038,7 +1038,7 @@ foreign lib {
 AccessibilityCustomRotorSearchParameters :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotorSearchParameters, objc_selector="currentItem", objc_name="currentItem")
 	AccessibilityCustomRotorSearchParameters_currentItem :: proc(self: ^AccessibilityCustomRotorSearchParameters) -> ^AccessibilityCustomRotorItemResult ---
 
@@ -1066,7 +1066,7 @@ AccessibilityElement :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityElement, objc_selector="accessibilityElementWithRole:frame:label:parent:", objc_name="accessibilityElementWithRole", objc_is_class_method=true)
 	AccessibilityElement_accessibilityElementWithRole :: proc(role: ^NS.String, frame: NS.Rect, label: ^NS.String, parent: id) -> id ---
 
@@ -1088,7 +1088,7 @@ AccessibilityElementProtocol :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityElementProtocol, objc_selector="accessibilityFrame", objc_name="accessibilityFrame")
 	AccessibilityElementProtocol_accessibilityFrame :: proc(self: ^AccessibilityElementProtocol) -> NS.Rect ---
 
@@ -1110,7 +1110,7 @@ AccessibilityElementLoading :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityElementLoading, objc_selector="accessibilityElementWithToken:", objc_name="accessibilityElementWithToken")
 	AccessibilityElementLoading_accessibilityElementWithToken :: proc(self: ^AccessibilityElementLoading, token: ^id) -> ^AccessibilityElementProtocol ---
 
@@ -1126,7 +1126,7 @@ AccessibilityGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSAccessibilityImage")
@@ -1136,7 +1136,7 @@ AccessibilityImage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityImage, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilityImage_accessibilityLabel :: proc(self: ^AccessibilityImage) -> ^NS.String ---
 }
@@ -1149,7 +1149,7 @@ AccessibilityLayoutArea :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityLayoutArea, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilityLayoutArea_accessibilityLabel :: proc(self: ^AccessibilityLayoutArea) -> ^NS.String ---
 
@@ -1171,7 +1171,7 @@ AccessibilityLayoutItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityLayoutItem, objc_selector="setAccessibilityFrame:", objc_name="setAccessibilityFrame")
 	AccessibilityLayoutItem_setAccessibilityFrame :: proc(self: ^AccessibilityLayoutItem, frame: NS.Rect) ---
 }
@@ -1184,7 +1184,7 @@ AccessibilityList :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSAccessibilityNavigableStaticText")
@@ -1194,7 +1194,7 @@ AccessibilityNavigableStaticText :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityNavigableStaticText, objc_selector="accessibilityStringForRange:", objc_name="accessibilityStringForRange")
 	AccessibilityNavigableStaticText_accessibilityStringForRange :: proc(self: ^AccessibilityNavigableStaticText, range: NS._NSRange) -> ^NS.String ---
 
@@ -1216,7 +1216,7 @@ AccessibilityOutline :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSAccessibilityProgressIndicator")
@@ -1226,7 +1226,7 @@ AccessibilityProgressIndicator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityProgressIndicator, objc_selector="accessibilityValue", objc_name="accessibilityValue")
 	AccessibilityProgressIndicator_accessibilityValue :: proc(self: ^AccessibilityProgressIndicator) -> ^NS.Number ---
 }
@@ -1239,7 +1239,7 @@ AccessibilityRadioButton :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityRadioButton, objc_selector="accessibilityValue", objc_name="accessibilityValue")
 	AccessibilityRadioButton_accessibilityValue :: proc(self: ^AccessibilityRadioButton) -> ^NS.Number ---
 }
@@ -1252,7 +1252,7 @@ AccessibilityRow :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityRow, objc_selector="accessibilityIndex", objc_name="accessibilityIndex")
 	AccessibilityRow_accessibilityIndex :: proc(self: ^AccessibilityRow) -> NS.Integer ---
 
@@ -1268,7 +1268,7 @@ AccessibilitySlider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilitySlider, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilitySlider_accessibilityLabel :: proc(self: ^AccessibilitySlider) -> ^NS.String ---
 
@@ -1290,7 +1290,7 @@ AccessibilityStaticText :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityStaticText, objc_selector="accessibilityValue", objc_name="accessibilityValue")
 	AccessibilityStaticText_accessibilityValue :: proc(self: ^AccessibilityStaticText) -> ^NS.String ---
 
@@ -1309,7 +1309,7 @@ AccessibilityStepper :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityStepper, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilityStepper_accessibilityLabel :: proc(self: ^AccessibilityStepper) -> ^NS.String ---
 
@@ -1331,7 +1331,7 @@ AccessibilitySwitch :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilitySwitch, objc_selector="accessibilityValue", objc_name="accessibilityValue")
 	AccessibilitySwitch_accessibilityValue :: proc(self: ^AccessibilitySwitch) -> ^NS.String ---
 
@@ -1350,7 +1350,7 @@ AccessibilityTable :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityTable, objc_selector="accessibilityLabel", objc_name="accessibilityLabel")
 	AccessibilityTable_accessibilityLabel :: proc(self: ^AccessibilityTable) -> ^NS.String ---
 

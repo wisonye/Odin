@@ -19,11 +19,11 @@ package main
 //
 // Run:  cd isa/arm32 && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import a "../"
+#import a "../"
 
 main :: proc() {
 	fmt.println("Dumping AArch32 verification manifest...")
@@ -139,7 +139,7 @@ operand_safe_fill :: proc(enc: a.Operand_Encoding) -> u32 {
 	// For Q registers: each Q is two D-regs so safe Q values are EVEN
 	// (Q1 = D2/D3 → Vd=2; Q2 = D4/D5 → Vn=4; Q3 = D6/D7 → Vm=6). This also
 	// satisfies MVE Q-encoding which expects bits 15:13 = Qd[2:0] with bit
-	// 12 = 0 (and our NEON-style packing makes bit 12 = 0 when Vd is even).
+	// 12 = 0 (and our NEON-style packing makes bit 12 = 0 #if Vd is even).
 	case .VD_S, .VD_D:         return u32(1) << 12     // S1/D1
 	case .VD_Q:                return u32(2) << 12     // Q1 = D2:D3
 	case .VN_S, .VN_D:         return u32(2) << 16     // S2/D2

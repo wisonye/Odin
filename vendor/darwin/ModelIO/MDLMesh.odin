@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_ModelIO
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MDLMesh", objc_superclass=Object)
 Mesh :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Mesh, objc_selector="initWithBufferAllocator:", objc_name="initWithBufferAllocator")
 	Mesh_initWithBufferAllocator :: proc(self: ^Mesh, bufferAllocator: ^MeshBufferAllocator) -> instancetype ---
 
@@ -211,7 +211,7 @@ MeshBuffer :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBuffer, objc_selector="fillData:offset:", objc_name="fillData")
 	MeshBuffer_fillData :: proc(self: ^MeshBuffer, data: ^NS.Data, offset: NS.UInteger) ---
 
@@ -238,7 +238,7 @@ MeshBufferAllocator :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferAllocator, objc_selector="newZone:", objc_name="newZone")
 	MeshBufferAllocator_newZone :: proc(self: ^MeshBufferAllocator, capacity: NS.UInteger) -> ^MeshBufferZone ---
 
@@ -273,7 +273,7 @@ MeshBufferData :: struct {
 	using _: MeshBuffer,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferData, objc_selector="initWithType:length:", objc_name="initWithType_length")
 	MeshBufferData_initWithType_length :: proc(self: ^MeshBufferData, type: MeshBufferType, length: NS.UInteger) -> instancetype ---
 
@@ -303,7 +303,7 @@ MeshBufferDataAllocator :: struct {
 @(objc_class="MDLMeshBufferMap", objc_superclass=NS.Object)
 MeshBufferMap :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferMap, objc_selector="initWithBytes:deallocator:", objc_name="initWithBytes")
 	MeshBufferMap_initWithBytes :: proc(self: ^MeshBufferMap, bytes: rawptr, deallocator: ^Objc_Block(proc "c" ())) -> instancetype ---
 
@@ -318,7 +318,7 @@ MeshBufferZone :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferZone, objc_selector="capacity", objc_name="capacity")
 	MeshBufferZone_capacity :: proc(self: ^MeshBufferZone) -> NS.UInteger ---
 
@@ -333,7 +333,7 @@ MeshBufferZoneDefault :: struct {
 	using _: MeshBufferZone,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferZoneDefault, objc_selector="capacity", objc_name="capacity")
 	MeshBufferZoneDefault_capacity :: proc(self: ^MeshBufferZoneDefault) -> NS.UInteger ---
 

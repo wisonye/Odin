@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSArchiver", objc_superclass=Coder)
 Archiver :: struct { using _: Coder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Archiver, objc_selector="initForWritingWithMutableData:", objc_name="initForWritingWithMutableData")
 	Archiver_initForWritingWithMutableData :: proc(self: ^Archiver, mdata: ^MutableData) -> instancetype ---
 
@@ -42,7 +42,7 @@ foreign lib {
 Unarchiver :: struct { using _: Coder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Unarchiver, objc_selector="initForReadingWithData:", objc_name="initForReadingWithData")
 	Unarchiver_initForReadingWithData :: proc(self: ^Unarchiver, data: ^Data) -> instancetype ---
 

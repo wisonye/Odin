@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="GKMatch", objc_superclass=NS.Object)
 Match :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Match, objc_selector="sendData:toPlayers:dataMode:error:", objc_name="sendData_toPlayers_dataMode_error")
 	Match_sendData_toPlayers_dataMode_error :: proc(self: ^Match, data: ^NS.Data, players: ^NS.Array, mode: MatchSendDataMode, error: ^^NS.Error) -> bool ---
 
@@ -84,7 +84,7 @@ MatchDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MatchDelegate, objc_selector="match:didReceiveData:fromRemotePlayer:", objc_name="match_didReceiveData_fromRemotePlayer")
 	MatchDelegate_match_didReceiveData_fromRemotePlayer :: proc(self: ^MatchDelegate, match: ^Match, data: ^NS.Data, player: ^Player) ---
 
@@ -128,7 +128,7 @@ MatchDelegate_match :: proc {
 @(objc_class="GKMatchRequest", objc_superclass=NS.Object)
 MatchRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MatchRequest, objc_selector="maxPlayersAllowedForMatchOfType:", objc_name="maxPlayersAllowedForMatchOfType", objc_is_class_method=true)
 	MatchRequest_maxPlayersAllowedForMatchOfType :: proc(matchType: MatchType) -> NS.UInteger ---
 

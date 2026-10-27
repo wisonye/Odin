@@ -1,8 +1,8 @@
 // Tests issue #7008 https://github.com/odin-lang/Odin/issues/7008
 package test_issue_7008
 
-import "core:testing"
-import "core:slice"
+#import "core:testing"
+#import "core:slice"
 
 Bar :: struct {
 	p: ^Foo,

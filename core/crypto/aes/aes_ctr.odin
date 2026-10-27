@@ -1,9 +1,9 @@
 package aes
 
-import "core:bytes"
-import "core:crypto/_aes/ct64"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:bytes"
+#import "core:crypto/_aes/ct64"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // CTR_IV_SIZE is the size of the CTR mode IV in bytes.
 CTR_IV_SIZE :: 16

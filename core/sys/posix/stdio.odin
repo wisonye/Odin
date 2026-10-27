@@ -1,19 +1,19 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // stdio.h - standard buffered input/output
 
-foreign lib {
+#foreign lib {
 	/*
-	Generates a string that, when used as a pathname,
+	Generates a string that, #if used as a pathname,
 	refers to the current controlling terminal for the current process.
 
 	If s is nil, the returned string might be static and overwritten by subsequent calls or other factors.
@@ -151,21 +151,21 @@ foreign lib {
 	renameat :: proc(oldfd: FD, old: cstring, newfd: FD, new: cstring) -> result ---
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	L_ctermid :: 1024
 	L_tmpnam  :: 1024
 
 	P_tmpdir :: "/var/tmp/"
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	L_ctermid :: 1024
 	L_tmpnam  :: 1024
 
 	P_tmpdir :: "/tmp/"
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	L_ctermid :: 20 // 20 on musl, 9 on glibc
 	L_tmpnam  :: 20

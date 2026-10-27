@@ -8,7 +8,7 @@ package rexcode_isa
 //
 // Pass 2 of decode: turn the list of branch targets discovered during
 // instruction decoding into label definitions, reusing label IDs from a
-// caller-supplied relocations array when available (so symbolic names
+// caller-supplied relocations array #if available (so symbolic names
 // from the encoder survive the round trip).
 
 // Branch target discovered while decoding. Each branch operand a

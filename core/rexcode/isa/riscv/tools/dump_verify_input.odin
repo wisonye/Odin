@@ -14,11 +14,11 @@ package main
 //
 // Run:  cd isa/riscv && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import r "../"
+#import r "../"
 
 main :: proc() {
 	fmt.println("Dumping RISC-V verification manifest...")

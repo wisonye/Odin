@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKEntity", objc_superclass=NS.Object)
 Entity :: struct {
@@ -11,7 +11,7 @@ Entity :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Entity, objc_selector="entity", objc_name="entity", objc_is_class_method=true)
 	Entity_entity :: proc() -> instancetype ---
 

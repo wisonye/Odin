@@ -7,7 +7,7 @@
 #+private
 package container_pool
 
-import "base:runtime"
+#import "base:runtime"
 
 _Pool_Arena :: runtime.Arena
 

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/ipc.h = XSI interprocess communication access structure
 
-foreign lib {
+#foreign lib {
 	/*
 	Generate an IPC key.
 
@@ -37,7 +37,7 @@ IPC_Flag_Bits :: enum c.int {
 }
 IPC_Flags :: bit_set[IPC_Flag_Bits; c.int]
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	key_t :: distinct c.int32_t
 
@@ -61,7 +61,7 @@ when ODIN_OS == .Darwin {
 	IPC_SET  :: 1
 	IPC_STAT :: 2
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	key_t :: distinct c.long
 
@@ -85,7 +85,7 @@ when ODIN_OS == .Darwin {
 	IPC_SET  :: 1
 	IPC_STAT :: 2
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	key_t :: distinct c.int32_t
 

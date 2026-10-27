@@ -1,9 +1,9 @@
 package test_vendor_sdl2
 
-import "core:log"
-import "core:testing"
-import SDL "vendor:sdl2"
-import IMG "vendor:sdl2/image"
+#import "core:log"
+#import "core:testing"
+#import SDL "vendor:sdl2"
+#import IMG "vendor:sdl2/image"
 
 // Links `vendor:sdl2/image` and prints its version as a line `VERSION SDL2_image <version>`. On Windows it must be the version
 // the bindings were written for, and initializing the image formats loads the libraries that SDL2_image needs for them, which are
@@ -13,7 +13,7 @@ import IMG "vendor:sdl2/image"
 test_sdl_image :: proc(t: ^testing.T) {
 	linked := IMG.Linked_Version()
 	log.infof("VERSION SDL2_image %v.%v.%v", linked.major, linked.minor, linked.patch)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		dll      := [3]int{int(linked.major), int(linked.minor), int(linked.patch)}
 		bindings := [3]int{IMG.MAJOR_VERSION, IMG.MINOR_VERSION, IMG.PATCHLEVEL}
 		testing.expectf(t, dll == bindings, "the SDL2_image DLL is %v but the bindings are for %v", dll, bindings)
@@ -23,7 +23,7 @@ test_sdl_image :: proc(t: ^testing.T) {
 	got := IMG.Init(wanted)
 	defer IMG.Quit()
 	log.infof("SDL2_image formats %v", got)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		testing.expectf(t, got == wanted, "SDL2_image could only initialize %v of %v, its DLLs are missing or the wrong version", got, wanted)
 	}
 

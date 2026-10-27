@@ -1,10 +1,10 @@
 #+build windows, linux, darwin
 package test_vendor_lua_55
 
-import "core:testing"
-import "core:c"
-import lua "vendor:lua/5.5"
-import "base:runtime"
+#import "core:testing"
+#import "core:c"
+#import lua "vendor:lua/5.5"
+#import "base:runtime"
 
 @(test)
 // Test context.allocator and returning a string

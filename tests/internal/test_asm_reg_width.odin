@@ -1,7 +1,7 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // Implicit register writes (`rdtsc` -> EDX:EAX, `cqo` -> RDX) carry no operand width, and the
 // sub-register width analysis treated them as defining 0 bits, so any later full-width read of

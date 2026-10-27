@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import posix "core:sys/posix"
+#import NS "core:sys/darwin/Foundation"
+#import posix "core:sys/posix"
 
 @(objc_class="NSRunningApplication", objc_superclass=NS.Object)
 RunningApplication :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RunningApplication, objc_selector="hide", objc_name="hide")
 	RunningApplication_hide :: proc(self: ^RunningApplication) -> bool ---
 

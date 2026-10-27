@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIAlertAction", objc_superclass=NS.Object)
 AlertAction :: struct {
@@ -13,7 +13,7 @@ AlertAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlertAction, objc_selector="actionWithTitle:style:handler:", objc_name="actionWithTitle", objc_is_class_method=true)
 	AlertAction_actionWithTitle :: proc(title: ^NS.String, style: AlertActionStyle, handler: ^Objc_Block(proc "c" ( action: ^AlertAction ))) -> instancetype ---
 
@@ -35,7 +35,7 @@ foreign lib {
 AlertController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlertController, objc_selector="alertControllerWithTitle:message:preferredStyle:", objc_name="alertControllerWithTitle", objc_is_class_method=true)
 	AlertController_alertControllerWithTitle :: proc(title: ^NS.String, message: ^NS.String, preferredStyle: AlertControllerStyle) -> instancetype ---
 
@@ -84,7 +84,7 @@ foreign lib {
 AlertView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlertView, objc_selector="initWithTitle:message:delegate:cancelButtonTitle:otherButtonTitles:", objc_name="initWithTitle")
 	AlertView_initWithTitle :: proc(self: ^AlertView, title: ^NS.String, message: ^NS.String, delegate: id, cancelButtonTitle: ^NS.String, otherButtonTitles: ^NS.String) -> instancetype ---
 
@@ -157,7 +157,7 @@ AlertViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlertViewDelegate, objc_selector="alertView:clickedButtonAtIndex:", objc_name="alertView_clickedButtonAtIndex")
 	AlertViewDelegate_alertView_clickedButtonAtIndex :: proc(self: ^AlertViewDelegate, alertView: ^AlertView, buttonIndex: NS.Integer) ---
 

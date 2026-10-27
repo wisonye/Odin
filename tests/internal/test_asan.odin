@@ -1,7 +1,7 @@
 // Intended to contain code that would trigger asan easily if the abi was set up badly.
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_12_bytes :: proc(t: ^testing.T) {

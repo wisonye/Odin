@@ -2,13 +2,13 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:time"
-import "core:strings"
+#import "core:time"
+#import "core:strings"
 
-import kq "core:sys/kqueue"
-import    "core:sys/posix"
+#import kq "core:sys/kqueue"
+#import    "core:sys/posix"
 
 _get_uid :: proc() -> int {
 	return int(posix.getuid())

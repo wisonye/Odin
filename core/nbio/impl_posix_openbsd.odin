@@ -1,7 +1,7 @@
 #+private
 package nbio
 
-import "core:net"
+#import "core:net"
 
 posix_listen_error   :: net._listen_error
 posix_accept_error   :: net._accept_error

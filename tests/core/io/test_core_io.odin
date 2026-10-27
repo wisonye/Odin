@@ -1,12 +1,12 @@
 package test_core_io
 
-import "core:bufio"
-import "core:bytes"
-import "core:io"
-import "core:log"
-import "core:os"
-import "core:strings"
-import "core:testing"
+#import "core:bufio"
+#import "core:bytes"
+#import "core:io"
+#import "core:log"
+#import "core:os"
+#import "core:strings"
+#import "core:testing"
 
 Passed_Tests :: distinct io.Stream_Mode_Set
 
@@ -438,7 +438,7 @@ test_bytes_buffer_stream :: proc(t: ^testing.T) {
 		bytes.buffer_init(&bb, buf[:end])
 
 		// `bytes.Buffer` has a behavior of decreasing its size with each read
-		// until it eventually clears the underlying buffer when it runs out of
+		// until it eventually clears the underlying buffer #if it runs out of
 		// data to read.
 		results, ok = _test_stream(t, bytes.buffer_to_stream(&bb), buf[:end],
 			reading_consumes = true, resets_on_empty = true)

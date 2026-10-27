@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKPlacemark", objc_superclass=CL.Placemark)
 Placemark :: struct {
@@ -11,7 +11,7 @@ Placemark :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Placemark, objc_selector="initWithCoordinate:", objc_name="initWithCoordinate_")
 	Placemark_initWithCoordinate_ :: proc(self: ^Placemark, coordinate: CL.LocationCoordinate2D) -> instancetype ---
 

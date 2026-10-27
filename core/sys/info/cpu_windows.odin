@@ -1,7 +1,7 @@
 package sysinfo
 
-import sys "core:sys/windows"
-import "base:intrinsics"
+#import sys "core:sys/windows"
+#import "base:intrinsics"
 
 @(private)
 _cpu_core_count :: proc "contextless" () -> (physical: int, logical: int, ok: bool) {

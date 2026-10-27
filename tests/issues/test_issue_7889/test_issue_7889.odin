@@ -1,6 +1,6 @@
 package test_issue_7889
 
-import "core:testing"
+#import "core:testing"
 
 // Indexing a swizzle, or taking a selector of one, asked the backend for the swizzle's pointer, which it does
 // not have, and crashed the compiler. An index now reads from a copy of the swizzle, as it is never assignable,

@@ -9,7 +9,7 @@ RegularExpression :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RegularExpression, objc_selector="regularExpressionWithPattern:options:error:", objc_name="regularExpressionWithPattern_error", objc_is_class_method=true)
 	RegularExpression_regularExpressionWithPattern_error :: proc(pattern: ^String, options: RegularExpressionOptions, error: ^^Error) -> ^RegularExpression ---
 

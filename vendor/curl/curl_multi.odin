@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 CURLM :: struct {}
 
@@ -63,7 +63,7 @@ waitfd :: struct {
 
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * Name:    curl_multi_init()
 	 *
@@ -156,7 +156,7 @@ foreign lib {
 	  *
 	  * Returns: CURLMcode type, general multi error code. *NOTE* that this only
 	  *          returns errors etc regarding the whole multi stack. There might
-	  *          still have occurred problems on individual transfers even when
+	  *          still have occurred problems on individual transfers even #if
 	  *          this returns OK.
 	  */
 	multi_perform :: proc(multi_handle: ^CURLM, running_handles: ^c.int) -> Mcode ---
@@ -262,7 +262,7 @@ multi_timer_callback :: #type proc "c" (multi: ^CURLM,          /* multi handle 
 
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	multi_socket_action :: proc(multi_handle:    ^CURLM,
 	                            s:               socket_t,
 	                            ev_bitmask:      c.int,
@@ -382,7 +382,7 @@ Minfo :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * Name:    curl_multi_setopt()
 	 *
@@ -421,14 +421,14 @@ foreign lib {
 	 *
 	 * Desc:    Retrieves a numeric value for the `CURLMINFO_*` enums.
 	 *
-	 * Returns: CULRM_OK or error when value could not be obtained.
+	 * Returns: CULRM_OK or error #if value could not be obtained.
 	*/
 	multi_get_offt :: proc(multi_handle: ^CURLM, info: Minfo, value: ^off_t) -> Mcode ---
 }
 
 
 /*
- * Notifications dispatched by a multi handle, when enabled.
+ * Notifications dispatched by a multi handle, #if enabled.
  */
 MULTI_NOTIFY :: enum c.uint {
 	INFO_READ = 0,
@@ -441,7 +441,7 @@ MULTI_NOTIFY :: enum c.uint {
 curl_notify_function :: #type proc "c" (multi_handle: ^CURLM, notification: MULTI_NOTIFY, easy: ^CURL, user_data: rawptr)
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	multi_notify_disable :: proc(multi: ^CURLM, notification: MULTI_NOTIFY) -> Mcode ---
 	multi_notify_enable  :: proc(multi: ^CURLM, notification: MULTI_NOTIFY) -> Mcode ---
 }
@@ -449,7 +449,7 @@ foreign lib {
 /*
  * Name: curl_push_callback
  *
- * Desc: This callback gets called when a new stream is being pushed by the
+ * Desc: This callback gets called #if a new stream is being pushed by the
  *       server. It approves or denies the new stream. It can also decide
  *       to completely fail the connection.
  *
@@ -469,7 +469,7 @@ push_callback :: #type proc "c"(parent:      ^CURL,
                                 userp:       rawptr) -> c.int
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	pushheader_bynum  :: proc(h: ^pushheaders, num: c.size_t) -> cstring ---
 	pushheader_byname :: proc(h: ^pushheaders, name: cstring) -> cstring ---
 

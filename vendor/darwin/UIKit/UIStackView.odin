@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIStackView", objc_superclass=View)
 StackView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StackView, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	StackView_initWithFrame :: proc(self: ^StackView, frame: CG.Rect) -> instancetype ---
 

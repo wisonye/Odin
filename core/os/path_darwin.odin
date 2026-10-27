@@ -1,9 +1,9 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/darwin"
-import "core:sys/posix"
+#import "core:sys/darwin"
+#import "core:sys/posix"
 
 _get_executable_path :: proc(allocator: runtime.Allocator) -> (path: string, err: Error) {
 	buffer: [darwin.PIDPATHINFO_MAXSIZE]byte = ---

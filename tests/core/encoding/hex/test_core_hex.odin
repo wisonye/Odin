@@ -1,7 +1,7 @@
 package test_core_hex
 
-import "core:encoding/hex"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:testing"
 
 CASES :: [][2]string{
 	{"11", "3131"},

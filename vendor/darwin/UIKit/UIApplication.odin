@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIApplication", objc_superclass=Responder)
 Application :: struct { using _: Responder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Application, objc_selector="beginIgnoringInteractionEvents", objc_name="beginIgnoringInteractionEvents")
 	Application_beginIgnoringInteractionEvents :: proc(self: ^Application) ---
 
@@ -297,7 +297,7 @@ ApplicationDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ApplicationDelegate, objc_selector="applicationDidFinishLaunching:", objc_name="applicationDidFinishLaunching")
 	ApplicationDelegate_applicationDidFinishLaunching :: proc(self: ^ApplicationDelegate, application: ^Application) ---
 
@@ -472,7 +472,7 @@ ApplicationShortcutIcon :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ApplicationShortcutIcon, objc_selector="iconWithType:", objc_name="iconWithType", objc_is_class_method=true)
 	ApplicationShortcutIcon_iconWithType :: proc(type: ApplicationShortcutIconType) -> instancetype ---
 
@@ -492,7 +492,7 @@ ApplicationShortcutItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ApplicationShortcutItem, objc_selector="init", objc_name="init")
 	ApplicationShortcutItem_init :: proc(self: ^ApplicationShortcutItem) -> instancetype ---
 
@@ -532,7 +532,7 @@ ApplicationShortcutItem_initWithType :: proc {
 MutableApplicationShortcutItem :: struct { using _: ApplicationShortcutItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableApplicationShortcutItem, objc_selector="type", objc_name="type")
 	MutableApplicationShortcutItem_type :: proc(self: ^MutableApplicationShortcutItem) -> ^NS.String ---
 

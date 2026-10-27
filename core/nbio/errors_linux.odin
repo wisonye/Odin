@@ -1,7 +1,7 @@
 #+private
 package nbio
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 PLATFORM_ERR_UNSUPPORTED       :: linux.Errno.ENOSYS
 PLATFORM_ERR_ALLOCATION_FAILED :: linux.Errno.ENOMEM

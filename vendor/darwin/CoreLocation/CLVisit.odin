@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLVisit", objc_superclass=NS.Object)
 Visit :: struct {
@@ -11,7 +11,7 @@ Visit :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Visit, objc_selector="arrivalDate", objc_name="arrivalDate")
 	Visit_arrivalDate :: proc(self: ^Visit) -> ^NS.Date ---
 

@@ -1,15 +1,15 @@
 #+build darwin
 package unix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:sys/darwin"
+#import "core:sys/darwin"
 
 _ :: darwin
 
 sysctl :: proc "contextless" (mib: []i32, val: ^$T) -> (ok: bool) {
 	result_size := uint(size_of(T))
-	when ODIN_NO_CRT {
+	#if ODIN_NO_CRT {
 		res := darwin.syscall_sysctl(
 			raw_data(mib), len(mib),
 			val, &result_size,
@@ -17,7 +17,7 @@ sysctl :: proc "contextless" (mib: []i32, val: ^$T) -> (ok: bool) {
 		)
 		return res == 0
 	} else {
-		foreign {
+		#foreign {
 			@(link_name="sysctl") _sysctl :: proc(
 				name: [^]i32, namelen: u32,
 				oldp: rawptr, oldlenp: ^uint,
@@ -35,7 +35,7 @@ sysctl :: proc "contextless" (mib: []i32, val: ^$T) -> (ok: bool) {
 
 sysctlbyname :: proc "contextless" (name: cstring, val: ^$T) -> (ok: bool) {
 	result_size := uint(size_of(T))
-	when ODIN_NO_CRT {
+	#if ODIN_NO_CRT {
 		res := darwin.syscall_sysctlbyname(
 			string(name),
 			val, &result_size,
@@ -43,7 +43,7 @@ sysctlbyname :: proc "contextless" (name: cstring, val: ^$T) -> (ok: bool) {
 		)
 		return res == 0
 	} else {
-		foreign {
+		#foreign {
 			@(link_name="sysctlbyname") _sysctlbyname :: proc(
 				name: cstring,
 				oldp: rawptr, oldlenp: ^uint,

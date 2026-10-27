@@ -19,7 +19,7 @@
 // reference entities (results, types, functions) by `Id`, resolved structurally.
 package rexcode_spirv
 
-import "core:rexcode/ir"
+#import "core:rexcode/ir"
 
 // =============================================================================
 // SECTION: Re-exported shared vocabulary (the IR naming contract, ir_design §4)

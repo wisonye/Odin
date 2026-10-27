@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // ulimit.h - ulimit commands
 
-foreign lib {
+#foreign lib {
 	/*
 	Control process limits.
 
@@ -32,7 +32,7 @@ Ulimit_Cmd :: enum c.int {
 	SETFSIZE = UL_SETFSIZE,
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD  || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD  || ODIN_OS == .Linux {
 
 	UL_GETFSIZE :: 1
 	UL_SETFSIZE :: 2

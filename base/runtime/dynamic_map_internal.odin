@@ -1,7 +1,7 @@
 #+build !bedrock
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 _ :: intrinsics
 
 // High performance, cache-friendly, open-addressed Robin Hood hashing hash map
@@ -35,7 +35,7 @@ _ :: intrinsics
 // friendly way. This is enabled through the use of a special meta-type called
 // a Map_Cell which packs as many values of a given type into a local array adding
 // internal padding to round to MAP_CACHE_LINE_SIZE. One other benefit to storing
-// the internal data in this manner is false sharing no longer occurs when using
+// the internal data in this manner is false sharing no longer occurs #if using
 // a map, enabling efficient concurrent access of the map data structure with
 // minimal locking if desired.
 
@@ -83,7 +83,7 @@ map_cell_index_dynamic :: #force_inline proc "contextless" (base: uintptr, #no_a
 	offset  := index*stride
 	if padding != 0 {
 		r := MAP_CELL_RECIPROCALS[n]
-		when size_of(uintptr) == 8 {
+		#if size_of(uintptr) == 8 {
 			cell_index := uintptr((u128(index)*u128(r)) >> 64) // NOTE(bill): on many platforms, this use of `u128` is actually a single instruction
 		} else {
 			lo := u64(index)*(r & 0xffff_ffff)
@@ -102,30 +102,30 @@ map_cell_index_dynamic :: #force_inline proc "contextless" (base: uintptr, #no_a
 // Cell structure.
 @(require_results)
 map_cell_index_static :: #force_inline proc "contextless" (cells: [^]Map_Cell($T), index: uintptr) -> ^T #no_bounds_check {
-	N :: size_of(Map_Cell(T){}.data) / size_of(T) when size_of(T) > 0 else 1
+	N :: size_of(Map_Cell(T){}.data) / size_of(T) #if size_of(T) > 0 else 1
 
 	#assert(N <= MAP_CACHE_LINE_SIZE)
 
-	when size_of(Map_Cell(T)) == size_of([N]T) {
+	#if size_of(Map_Cell(T)) == size_of([N]T) {
 		// No padding case, can treat as a regular array of []T.
 
 		return &([^]T)(cells)[index]
-	} else when (N & (N - 1)) == 0 && N <= 8*size_of(uintptr) {
+	} else #if (N & (N - 1)) == 0 && N <= 8*size_of(uintptr) {
 		// Likely case, N is a power of two because T is a power of two.
 
 		// Unique case, no need to index data here since only one element.
-		when N == 1 {
+		#if N == 1 {
 			return &cells[index].data[0]
 		}
 
 		// Compute the integer log 2 of N, this is the shift amount to index the
 		// correct cell. Odin's intrinsics.count_leading_zeros does not produce a
 		// constant, hence this approach. We only need to check up to N = 64.
-		SHIFT :: 1 when N == 2  else
-		         2 when N == 4  else
-		         3 when N == 8  else
-		         4 when N == 16 else
-		         5 when N == 32 else 6
+		SHIFT :: 1 #if N == 2  else
+		         2 #if N == 4  else
+		         3 #if N == 8  else
+		         4 #if N == 16 else
+		         5 #if N == 32 else 6
 		#assert(SHIFT <= MAP_CACHE_LINE_LOG2)
 		return &cells[index >> SHIFT].data[index & (N - 1)]
 	} else {
@@ -169,7 +169,7 @@ map_resize_threshold :: #force_inline proc "contextless" (m: Raw_Map) -> uintptr
 // The data stores the log2 capacity in the lower six bits. This is primarily
 // used in the implementation rather than map_cap since the check for data = 0
 // isn't necessary in the implementation. cap() on the otherhand needs to work
-// when called on an empty map.
+// #if called on an empty map.
 @(require_results)
 map_log2_cap :: #force_inline proc "contextless" (m: Raw_Map) -> uintptr {
 	return m.data & (64 - 1)
@@ -211,7 +211,7 @@ map_seed :: #force_inline proc "contextless" (m: Raw_Map) -> uintptr {
 
 @(require_results)
 map_seed_from_map_data :: #force_inline proc "contextless" (data: uintptr) -> uintptr {
-	when size_of(uintptr) == size_of(u64) {
+	#if size_of(uintptr) == size_of(u64) {
 		p := u128(data) * 0x94d049bb133111eb
 		return uintptr(p) ~ uintptr(p >> 64)
 	} else {
@@ -1004,7 +1004,7 @@ default_hasher :: #force_inline proc "contextless" (data: rawptr, seed: uintptr,
 default_hasher_fixed :: #force_inline proc "contextless" (data: rawptr, seed: uintptr, N: int) -> uintptr {
 	@(require_results)
 	hash_fold :: #force_inline proc "contextless" (x, y: uintptr) -> uintptr {
-		when size_of(uintptr) == 8 {
+		#if size_of(uintptr) == 8 {
 			p := u128(x) * u128(y)
 			return uintptr(p) ~ uintptr(p >> 64)
 		} else {
@@ -1013,8 +1013,8 @@ default_hasher_fixed :: #force_inline proc "contextless" (data: rawptr, seed: ui
 		}
 	}
 
-	HASH_K0 :: 0x9e3779b97f4a7c15 when size_of(uintptr) == 8 else 0x9e3779b9
-	HASH_K1 :: 0xbf58476d1ce4e5b9 when size_of(uintptr) == 8 else 0x85ebca6b
+	HASH_K0 :: 0x9e3779b97f4a7c15 #if size_of(uintptr) == 8 else 0x9e3779b9
+	HASH_K1 :: 0xbf58476d1ce4e5b9 #if size_of(uintptr) == 8 else 0x85ebca6b
 
 	W :: size_of(uintptr)
 	p := uintptr(data)

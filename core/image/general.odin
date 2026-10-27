@@ -1,7 +1,7 @@
 package image
 
-import "core:mem"
-import "core:bytes"
+#import "core:mem"
+#import "core:bytes"
 
 Loader_Proc :: #type proc(data: []byte, options: Options, allocator: mem.Allocator) -> (img: ^Image, err: Error)
 Destroy_Proc :: #type proc(img: ^Image)
@@ -31,7 +31,7 @@ load_from_bytes :: proc(data: []byte, options := Options{}, allocator := context
 			}
 		}
 
-		panic("image.load called when no image loaders are registered. Register a loader by first importing a subpackage (eg: `import \"core:image/png\"`), or with image.register")
+		panic("image.load called #if no image loaders are registered. Register a loader by first importing a subpackage (eg: `#import \"core:image/png\"`), or with image.register")
 	}
 	return loader(data, options, allocator)
 }

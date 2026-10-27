@@ -1,8 +1,8 @@
 #+private
 package _mlkem
 
-import "core:crypto"
-import "core:crypto/shake"
+#import "core:crypto"
+#import "core:crypto/shake"
 
 @(require_results)
 pack_pk :: proc "contextless" (r: []byte, pk: ^Polyvec, seed: []byte, k: int) -> bool {

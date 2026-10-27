@@ -1,12 +1,12 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:encoding/hex"
-import "core:testing"
-import "core:crypto/argon2id"
-import "core:crypto/hash"
-import "core:crypto/hkdf"
-import "core:crypto/pbkdf2"
+#import "base:runtime"
+#import "core:encoding/hex"
+#import "core:testing"
+#import "core:crypto/argon2id"
+#import "core:crypto/hash"
+#import "core:crypto/hkdf"
+#import "core:crypto/pbkdf2"
 
 @(test)
 test_argon2id :: proc(t: ^testing.T) {

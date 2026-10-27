@@ -13,10 +13,10 @@ package rexcode_arm64_tests
 // every common addressing mode, condition codes, FP/NEON registers, and the
 // MRS/MSR system-register path.
 
-import "core:fmt"
-import "core:strings"
-import "core:time"
-import a "../"
+#import "core:fmt"
+#import "core:strings"
+#import "core:time"
+#import a "../"
 
 @(private="file")
 Working_Set :: struct {

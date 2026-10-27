@@ -1,8 +1,8 @@
 package chacha20_ref
 
-import "core:crypto/_chacha20"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:crypto/_chacha20"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // At least with LLVM21 force_inline produces identical perf to
 // manual inlining, yay.

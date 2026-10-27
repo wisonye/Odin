@@ -31,7 +31,7 @@ You can set the context that is used for allocations by setting the global varia
 It will default to the `runtime.default_context`.
 
 Have a look at the [[example build file; https://github.com/odin-lang/examples/blob/master/wgpu/glfw-triangle/build_web.sh]] and [[html file; https://github.com/odin-lang/examples/blob/master/wgpu/glfw-triangle/web/index.html]]
-to see how it looks when set up, doing the `--import-memory` and the likes
+to see how it looks #if set up, doing the `--#import-memory` and the likes
 is not strictly necessary but allows your app more memory than the minimal default.
 
 The bindings work on both `-target:js_wasm32` and `-target:js_wasm64p32`.
@@ -59,7 +59,7 @@ GLFW supports Wayland from version 3.4 onwards and only if it is compiled with `
 
 Odin links against your system's glfw library (probably installed through a package manager).
 If that version is lower than 3.4 or hasn't been compiled with the previously mentioned define,
-you will have to compile glfw from source yourself and adjust the `foreign import` declarations in `vendor:glfw/bindings` to
+you will have to compile glfw from source yourself and adjust the `foreign #import` declarations in `vendor:glfw/bindings` to
 point to it.
 */
 package wgpu

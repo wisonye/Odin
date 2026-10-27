@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import darwin "core:sys/darwin"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import darwin "core:sys/darwin"
 
 @(objc_class="MTLResource")
 Resource :: struct {
@@ -12,7 +12,7 @@ Resource :: struct {
 	using _: Allocation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Resource, objc_selector="setPurgeableState:", objc_name="setPurgeableState")
 	Resource_setPurgeableState :: proc(self: ^Resource, state: PurgeableState) -> PurgeableState ---
 
@@ -63,7 +63,7 @@ ResourceStateCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceStateCommandEncoder, objc_selector="updateTextureMappings:mode:regions:mipLevels:slices:numRegions:", objc_name="updateTextureMappings_")
 	ResourceStateCommandEncoder_updateTextureMappings_ :: proc(self: ^ResourceStateCommandEncoder, texture: ^Texture, mode: SparseTextureMappingMode, regions: ^Region, mipLevels: ^NS.UInteger, slices: ^NS.UInteger, numRegions: NS.UInteger) ---
 
@@ -107,7 +107,7 @@ ResourceStatePassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceStatePassDescriptor, objc_selector="resourceStatePassDescriptor", objc_name="resourceStatePassDescriptor", objc_is_class_method=true)
 	ResourceStatePassDescriptor_resourceStatePassDescriptor :: proc() -> ^ResourceStatePassDescriptor ---
 
@@ -122,7 +122,7 @@ ResourceStatePassSampleBufferAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceStatePassSampleBufferAttachmentDescriptor, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	ResourceStatePassSampleBufferAttachmentDescriptor_sampleBuffer :: proc(self: ^ResourceStatePassSampleBufferAttachmentDescriptor) -> ^CounterSampleBuffer ---
 
@@ -146,7 +146,7 @@ foreign lib {
 @(objc_class="MTLResourceStatePassSampleBufferAttachmentDescriptorArray", objc_superclass=NS.Object)
 ResourceStatePassSampleBufferAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceStatePassSampleBufferAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	ResourceStatePassSampleBufferAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^ResourceStatePassSampleBufferAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^ResourceStatePassSampleBufferAttachmentDescriptor ---
 
@@ -161,7 +161,7 @@ ResourceViewPool :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceViewPool, objc_selector="copyResourceViewsFromPool:sourceRange:destinationIndex:", objc_name="copyResourceViewsFromPool")
 	ResourceViewPool_copyResourceViewsFromPool :: proc(self: ^ResourceViewPool, sourcePool: ^ResourceViewPool, sourceRange: NS._NSRange, destinationIndex: NS.UInteger) -> ResourceID ---
 
@@ -185,7 +185,7 @@ ResourceViewPoolDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResourceViewPoolDescriptor, objc_selector="resourceViewCount", objc_name="resourceViewCount")
 	ResourceViewPoolDescriptor_resourceViewCount :: proc(self: ^ResourceViewPoolDescriptor) -> NS.UInteger ---
 

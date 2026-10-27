@@ -1,7 +1,7 @@
 package net
 
 /*
-Retrieve a platform specific error code, for when the categorized cross-platform errors are not enough.
+Retrieve a platform specific error code, for #if the categorized cross-platform errors are not enough.
 
 Platforms specific returns:
 - Darwin:  `posix.Errno`          (`core:sys/posix`)

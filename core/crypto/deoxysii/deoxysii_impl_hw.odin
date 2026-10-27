@@ -1,20 +1,20 @@
 #+build amd64,arm64,arm32
 package deoxysii
 
-import "base:intrinsics"
-import "core:crypto"
-import aes_hw "core:crypto/_aes/hw"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:simd"
 
 // This processes a maximum of 4 blocks at a time, as that is suitable
 // for most current hardware that doesn't say "Xeon".
 //
 // TODO/perf: ARM should be able to do 8 at a time.
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(private="file")
 	TARGET_FEATURES :: "sse2,ssse3,aes"
-} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
+} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
 	@(private="file")
 	TARGET_FEATURES :: "neon,aes"
 }
@@ -53,7 +53,7 @@ auth_tweak :: #force_inline proc "contextless" (
 	prefix:   simd.u8x16,
 	block_nr: int,
 ) -> simd.u8x16 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		block_nr_u64 := intrinsics.byte_swap(u64(block_nr))
 	} else {
 		block_nr_u64 := u64(block_nr)
@@ -70,7 +70,7 @@ enc_tweak :: #force_inline proc "contextless" (
 	tag:      simd.u8x16,
 	block_nr: int,
 ) -> simd.u8x16 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		block_nr_u64 := intrinsics.byte_swap(u64(block_nr))
 	} else {
 		block_nr_u64 := u64(block_nr)

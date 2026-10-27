@@ -6,9 +6,9 @@ See:
 */
 package kmac
 
-import "../_sha3"
-import "core:crypto"
-import "core:crypto/shake"
+#import "../_sha3"
+#import "core:crypto"
+#import "core:crypto/shake"
 
 // MIN_KEY_SIZE_128 is the minimum key size for KMAC128 in bytes.
 MIN_KEY_SIZE_128 :: 128 / 8

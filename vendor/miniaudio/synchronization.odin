@@ -1,16 +1,16 @@
 package miniaudio
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	/*
 	Locks a spinlock.
 	*/
 	spinlock_lock :: proc(/*volatile*/ pSpinlock: ^spinlock) -> result ---
 
 	/*
-	Locks a spinlock, but does not yield() when looping.
+	Locks a spinlock, but does not yield() #if looping.
 	*/
 	spinlock_lock_noyield :: proc(/*volatile*/ pSpinlock: ^spinlock) -> result ---
 
@@ -19,7 +19,7 @@ foreign lib {
 	*/
 	spinlock_unlock :: proc(/*volatile*/ pSpinlock: ^spinlock) -> result ---
 
-when !NO_THREADING {
+#if !NO_THREADING {
 	/*
 	Creates a mutex.
 
@@ -75,7 +75,7 @@ when !NO_THREADING {
 Fence
 =====
 This locks while the counter is larger than 0. Counter can be incremented and decremented by any
-thread, but care needs to be taken when waiting. It is possible for one thread to acquire the
+thread, but care needs to be taken #if waiting. It is possible for one thread to acquire the
 fence just as another thread returns from ma_fence_wait().
 
 The idea behind a fence is to allow you to wait for a group of operations to complete. When an
@@ -86,12 +86,12 @@ counter hits zero.
 If threading is disabled, ma_fence_wait() will spin on the counter.
 */
 fence :: struct {
-	e:       (struct {} when NO_THREADING else event),
-	counter: (u32 when NO_THREADING else struct {}),
+	e:       (struct {} #if NO_THREADING else event),
+	counter: (u32 #if NO_THREADING else struct {}),
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	fence_init    :: proc(pFence: ^fence) -> result ---
 	fence_uninit  :: proc(pFence: ^fence) ---
 	fence_acquire :: proc(pFence: ^fence) -> result ---    /* Increment counter. */
@@ -110,7 +110,7 @@ async_notification_callbacks :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	async_notification_signal :: proc(pNotification: ^async_notification) -> result ---
 }
 
@@ -118,7 +118,7 @@ foreign lib {
 /*
 Simple polling notification.
 
-This just sets a variable when the notification has been signalled which is then polled with ma_async_notification_poll_is_signalled()
+This just sets a variable #if the notification has been signalled which is then polled with ma_async_notification_poll_is_signalled()
 */
 async_notification_poll :: struct {
 		cb:        async_notification_callbacks,
@@ -126,7 +126,7 @@ async_notification_poll :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	async_notification_poll_init         :: proc(pNotificationPoll: ^async_notification_poll) -> result ---
 	async_notification_poll_is_signalled :: proc(pNotificationPoll: ^async_notification_poll) -> b32 ---
 }
@@ -139,11 +139,11 @@ This uses an ma_event. If threading is disabled (MA_NO_THREADING), initializatio
 */
 async_notification_event :: struct {
 	cb: async_notification_callbacks,
-	e:  (struct {} when NO_THREADING else event),
+	e:  (struct {} #if NO_THREADING else event),
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	async_notification_event_init   :: proc(pNotificationEvent: ^async_notification_event) -> result ---
 	async_notification_event_uninit :: proc(pNotificationEvent: ^async_notification_event) -> result ---
 	async_notification_event_wait   :: proc(pNotificationEvent: ^async_notification_event) -> result ---

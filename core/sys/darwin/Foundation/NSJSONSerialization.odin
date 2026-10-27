@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSJSONSerialization", objc_superclass=Object)
 JSONSerialization :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=JSONSerialization, objc_selector="isValidJSONObject:", objc_name="isValidJSONObject", objc_is_class_method=true)
 	JSONSerialization_isValidJSONObject :: proc(obj: id) -> bool ---
 

@@ -83,7 +83,7 @@ panic_allocator_proc :: proc(allocator_data: rawptr, mode: Allocator_Mode,
 
 // panic_allocator returns an allocator which will panic for any non-zero-sized allocation or `query_info`
 //
-// This is extremely useful for to check when something does a memory operation when it should not, and thus panic.
+// This is extremely useful for to check #if something does a memory operation #if it should not, and thus panic.
 @(require_results)
 panic_allocator :: proc() -> Allocator {
 	return Allocator{

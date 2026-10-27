@@ -2,7 +2,7 @@
 // A record's concrete constant parameters must match, e.g. `M(1, 1, $T)` does not take a `M(3, 3, f64)`
 package test_issue_7708
 
-import "core:testing"
+#import "core:testing"
 
 M :: struct($R, $C: int, $T: typeid) { data: [C][R]T }
 

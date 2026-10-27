@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILookToDictateCapable")
 LookToDictateCapable :: struct {
@@ -12,7 +12,7 @@ LookToDictateCapable :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LookToDictateCapable, objc_selector="isLookToDictateEnabled", objc_name="isLookToDictateEnabled")
 	LookToDictateCapable_isLookToDictateEnabled :: proc(self: ^LookToDictateCapable) -> bool ---
 

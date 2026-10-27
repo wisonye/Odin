@@ -1,9 +1,9 @@
 package bufio
 
-import "base:runtime"
-import "core:io"
-import "core:unicode/utf8"
-import "core:bytes"
+#import "base:runtime"
+#import "core:io"
+#import "core:unicode/utf8"
+#import "core:bytes"
 
 // Reader is a buffered wrapper for an io.Reader
 Reader :: struct {

@@ -1,10 +1,10 @@
 package test_wycheproof
 
-@(require) import "core:encoding/json"
-@(require) import "core:log"
-@(require) import "core:os"
+@(require) #import "core:encoding/json"
+@(require) #import "core:log"
+@(require) #import "core:os"
 
-import "../common"
+#import "../common"
 
 Result :: string
 

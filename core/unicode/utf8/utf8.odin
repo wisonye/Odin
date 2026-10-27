@@ -1,7 +1,7 @@
 // Procedures and constants to support text-encoding in the `UTF-8` character encoding.
 package utf8
 
-@(require) import "base:runtime"
+@(require) #import "base:runtime"
 
 RUNE_ERROR :: '\ufffd'
 RUNE_SELF  :: 0x80

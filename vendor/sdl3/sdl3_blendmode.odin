@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 BlendMode :: distinct bit_set[BlendModeFlag; Uint32]
 
@@ -45,7 +45,7 @@ BlendFactor :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	ComposeCustomBlendMode :: proc(srcColorFactor: BlendFactor,
 	                               dstColorFactor: BlendFactor,
 	                               colorOperation: BlendOperation,

@@ -31,9 +31,9 @@ CVSMPTETime :: struct {
 OptionFlags :: u64
 DisplayLinkOutputCallback :: #type proc "c" (displayLink: DisplayLinkRef, #by_ptr inNow: TimeStamp, #by_ptr inOutputTime: TimeStamp, flagsIn: OptionFlags, flagsOut: ^OptionFlags, displayLinkContext: rawptr) -> Return
 
-foreign import CoreVideo "system:CoreVideo.framework"
+#foreign #import CoreVideo "system:CoreVideo.framework"
 @(link_prefix="CV")
-foreign CoreVideo {
+#foreign CoreVideo {
 	DisplayLinkCreateWithActiveCGDisplays :: proc "c" (displayLinkOut: ^DisplayLinkRef) -> Return ---
 	DisplayLinkStart :: proc "c" (displayLink: DisplayLinkRef) -> Return ---
 	DisplayLinkStop :: proc "c" (displayLink: DisplayLinkRef) -> Return ---

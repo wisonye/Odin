@@ -1,7 +1,7 @@
 package aes_ct64
 
-import "core:crypto/_aes"
-import "core:encoding/endian"
+#import "core:crypto/_aes"
+#import "core:encoding/endian"
 
 @(require_results)
 load_interleaved :: proc "contextless" (src: []byte) -> (u64, u64) #no_bounds_check {

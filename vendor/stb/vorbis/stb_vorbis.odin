@@ -1,29 +1,29 @@
 // Bindings for [[ stb_vorbis.c ; https://github.com/nothings/stb/blob/master/stb_vorbis.c ]].
 package stb_vorbis
 
-import c "core:c"
+#import c "core:c"
 
 @(private)
 LIB :: (
-	     "../lib/stb_vorbis.lib"      when ODIN_OS == .Windows
-	else "../lib/stb_vorbis.a"        when ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
-	else "../lib/darwin/stb_vorbis.a" when ODIN_OS == .Darwin
-	else "../lib/stb_vorbis_wasm.o"   when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	     "../lib/stb_vorbis.lib"      #if ODIN_OS == .Windows
+	else "../lib/stb_vorbis.a"        #if ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
+	else "../lib/darwin/stb_vorbis.a" #if ODIN_OS == .Darwin
+	else "../lib/stb_vorbis_wasm.o"   #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 	else ""
 )
 
-when LIB != "" {
-	when !#exists(LIB) {
+#if LIB != "" {
+	#if !#exists(LIB) {
 		#panic("Could not find the compiled STB libraries, they can be compiled by running `\"" + ODIN_ROOT + "vendor/stb/src/build_stb.sh\"`")
 	}
 }
 
-when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib "../lib/stb_vorbis_wasm.o"
-} else when LIB != "" {
-	foreign import lib { LIB }
+#if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib "../lib/stb_vorbis_wasm.o"
+} else #if LIB != "" {
+	#foreign #import lib { LIB }
 } else {
-	foreign import lib "system:stb_vorbis"
+	#foreign #import lib "system:stb_vorbis"
 }
 
 NO_STDIO :: ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
@@ -83,7 +83,7 @@ vorbis_comment :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stb_vorbis_")
-foreign lib {
+#foreign lib {
 	// get general information about the file
 	get_info :: proc(f: ^vorbis) -> vorbis_info ---
 
@@ -120,7 +120,7 @@ foreign lib {
 // specification does not bound the size of an individual frame.
 
 @(default_calling_convention="c", link_prefix="stb_vorbis_")
-foreign lib {
+#foreign lib {
 	// create a vorbis decoder by passing in the initial data block containing
 	//    the ogg&vorbis headers (you don't need to do parse them, just provide
 	//    the first N bytes of the file--you're told if it's not enough, see below)
@@ -196,8 +196,8 @@ foreign lib {
 // just want to go ahead and use pushdata.)
 
 @(default_calling_convention="c", link_prefix="stb_vorbis_")
-foreign lib {
-	when !NO_STDIO {
+#foreign lib {
+	#if !NO_STDIO {
 		// decode an entire file and output the data interleaved into a malloc()ed
 		// buffer stored in *output. The return value is the number of samples
 		// decoded, or -1 if the file could not be opened or was not an ogg vorbis file.
@@ -213,7 +213,7 @@ foreign lib {
 	open_memory :: proc(data: [^]byte, len: c.int,
 	                    error: ^Error, alloc_buffer: ^vorbis_alloc) -> ^vorbis ---
 
-	when !NO_STDIO {
+	#if !NO_STDIO {
 		// create an ogg vorbis decoder from a filename via fopen(). on failure,
 		// returns NULL and sets *error (possibly to VORBIS_file_open_failure).
 		open_filename :: proc(filename: cstring,
@@ -242,7 +242,7 @@ foreign lib {
 	// after calling seek_frame(), the next call to `get_frame_*()` will include
 	// the specified sample. after calling stb_vorbis_seek(), the next call to
 	// `stb_vorbis_get_samples_*` will start with the specified sample. If you
-	// do not need to seek to EXACTLY the target sample when using `get_samples_*`,
+	// do not need to seek to EXACTLY the target sample #if using `get_samples_*`,
 	// you can also use seek_frame().
 	seek_frame :: proc(f: ^vorbis, sample_number: c.uint) -> c.int ---
 	seek       :: proc(f: ^vorbis, sample_number: c.uint) -> c.int ---
@@ -356,7 +356,7 @@ MAX_CHANNELS :: 16  // enough for anyone?
 
 // PUSHDATA_CRC_COUNT [number]
 //     after a flush_pushdata(), stb_vorbis begins scanning for the
-//     next valid page, without backtracking. when it finds something
+//     next valid page, without backtracking. #if it finds something
 //     that looks like a page, it streams through it and verifies its
 //     CRC32. Should that validation fail, it keeps scanning. But it's
 //     possible that _while_ streaming through to check the CRC32 of

@@ -2,7 +2,7 @@
 // in the checker and, for any class method, in the backend.
 package test_issue_objc_class_method_calls
 
-import "pkg"
+#import "pkg"
 
 main :: proc() {
 	a := pkg.String.make()

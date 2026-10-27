@@ -6,9 +6,9 @@ See: [[ https://gravitymoth.com/spall/ ]]
 Example:
 	package main
 
-	import "base:runtime"
-	import "core:prof/spall"
-	import "core:sync"
+	#import "base:runtime"
+	#import "core:prof/spall"
+	#import "core:sync"
 
 	spall_ctx: spall.Context
 	@(thread_local) spall_buffer: spall.Buffer

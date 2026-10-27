@@ -1,7 +1,7 @@
 package mem
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
 /*
 The size, in bytes, of a single byte.
@@ -334,8 +334,8 @@ and returns an integer count of the `T` between them.
 
 Example:
 
-	import "core:mem"
-	import "core:fmt"
+	#import "core:mem"
+	#import "core:fmt"
 
 	ptr_sub_example :: proc() {
 		arr: [2]int
@@ -418,7 +418,7 @@ amount of objects to cover the memory region pointed to by `slice`.
 */
 @(require_results)
 slice_data_cast :: proc "contextless" ($T: typeid/[]$A, slice: $S/[]$B) -> T {
-	when size_of(A) == 0 || size_of(B) == 0 {
+	#if size_of(A) == 0 || size_of(B) == 0 {
 		return nil
 	} else {
 		s := transmute(Raw_Slice)slice

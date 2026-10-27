@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSEditor")
 Editor :: struct {
@@ -12,7 +12,7 @@ Editor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Editor, objc_selector="discardEditing", objc_name="discardEditing")
 	Editor_discardEditing :: proc(self: ^Editor) ---
 
@@ -43,7 +43,7 @@ EditorRegistration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EditorRegistration, objc_selector="objectDidBeginEditing:", objc_name="objectDidBeginEditing")
 	EditorRegistration_objectDidBeginEditing :: proc(self: ^EditorRegistration, editor: ^Editor) ---
 

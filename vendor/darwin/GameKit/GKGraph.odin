@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GKGraph", objc_superclass=NS.Object)
 Graph :: struct {
@@ -12,7 +12,7 @@ Graph :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Graph, objc_selector="graphWithNodes:", objc_name="graphWithNodes", objc_is_class_method=true)
 	Graph_graphWithNodes :: proc(nodes: ^NS.Array) -> instancetype ---
 
@@ -42,7 +42,7 @@ GraphNode :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphNode, objc_selector="addConnectionsToNodes:bidirectional:", objc_name="addConnectionsToNodes")
 	GraphNode_addConnectionsToNodes :: proc(self: ^GraphNode, nodes: ^NS.Array, bidirectional: bool) ---
 
@@ -69,7 +69,7 @@ foreign lib {
 @(objc_class="GKGraphNode2D", objc_superclass=GraphNode)
 GraphNode2D :: struct { using _: GraphNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphNode2D, objc_selector="nodeWithPoint:", objc_name="nodeWithPoint", objc_is_class_method=true)
 	GraphNode2D_nodeWithPoint :: proc(point: ^vector_float2) -> instancetype ---
 
@@ -87,7 +87,7 @@ foreign lib {
 @(objc_class="GKGraphNode3D", objc_superclass=GraphNode)
 GraphNode3D :: struct { using _: GraphNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphNode3D, objc_selector="nodeWithPoint:", objc_name="nodeWithPoint", objc_is_class_method=true)
 	GraphNode3D_nodeWithPoint :: proc(point: ^vector_float3) -> instancetype ---
 
@@ -105,7 +105,7 @@ foreign lib {
 @(objc_class="GKGridGraph", objc_superclass=Graph)
 GridGraph :: struct { using _: Graph}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GridGraph, objc_selector="graphFromGridStartingAt:width:height:diagonalsAllowed:", objc_name="graphFromGridStartingAt_width_height_diagonalsAllowed", objc_is_class_method=true)
 	GridGraph_graphFromGridStartingAt_width_height_diagonalsAllowed :: proc(position: ^[2]cffi.int, width: cffi.int, height: cffi.int, diagonalsAllowed: bool) -> instancetype ---
 
@@ -158,7 +158,7 @@ GridGraph_initFromGridStartingAt :: proc {
 @(objc_class="GKGridGraphNode", objc_superclass=GraphNode)
 GridGraphNode :: struct { using _: GraphNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GridGraphNode, objc_selector="nodeWithGridPosition:", objc_name="nodeWithGridPosition", objc_is_class_method=true)
 	GridGraphNode_nodeWithGridPosition :: proc(gridPosition: ^[2]cffi.int) -> instancetype ---
 
@@ -173,7 +173,7 @@ foreign lib {
 @(objc_class="GKMeshGraph", objc_superclass=Graph)
 MeshGraph :: struct { using _: Graph}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshGraph, objc_selector="graphWithBufferRadius:minCoordinate:maxCoordinate:nodeClass:", objc_name="graphWithBufferRadius_minCoordinate_maxCoordinate_nodeClass", objc_is_class_method=true)
 	MeshGraph_graphWithBufferRadius_minCoordinate_maxCoordinate_nodeClass :: proc(bufferRadius: cffi.float, min: ^vector_float2, max: ^vector_float2, nodeClass: Class) -> instancetype ---
 

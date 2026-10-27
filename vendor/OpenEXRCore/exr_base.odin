@@ -3,29 +3,29 @@ package vendor_openexr
 
 OPENEXRCORE_SHARED :: #config(OPENEXRCORE_SHARED, false)
 
-when ODIN_OS == .Windows {
-	when OPENEXRCORE_SHARED {
+#if ODIN_OS == .Windows {
+	#if OPENEXRCORE_SHARED {
 		#panic("Dynamic linking is not supported for OpenEXRCore yet")
 	} else {
-		foreign import lib_ "OpenEXRCore-3_5.lib"
+		#foreign #import lib_ "OpenEXRCore-3_5.lib"
 	}
-} else when ODIN_OS == .Darwin {
-	when OPENEXRCORE_SHARED {
+} else #if ODIN_OS == .Darwin {
+	#if OPENEXRCORE_SHARED {
 		#panic("Dynamic linking is not supported for OpenEXRCore yet")
 	} else {
 		// The library contains C++ code (OpenJPH, for the HTJ2K and LJ2K codecs), so it needs the C++ runtime.
-		foreign import lib_ {
+		#foreign #import lib_ {
 			"darwin/OpenEXRCore-3_5.a",
 			"system:c++",
 		}
 	}
 } else {
-	foreign import lib_ "system:OpenEXRCore-3_5"
+	#foreign #import lib_ "system:OpenEXRCore-3_5"
 }
 
 lib :: lib_
 
-import "core:c"
+#import "core:c"
 
 /** @brief Function pointer used to hold a malloc-like routine.
  *
@@ -61,7 +61,7 @@ memory_allocation_func_t :: proc "c" (bytes: c.size_t) -> rawptr
 memory_free_func_t :: proc "c" (ptr: rawptr)
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Retrieve the current library version. The @p extra string is for
 	 * custom installs, and is a static string, do not free the returned
 	 * pointer.
@@ -205,7 +205,7 @@ foreign lib {
 	 * allocations necessary for files, attributes, and other temporary
 	 * memory.
 	 *
-	 * These routines may be overridden when creating a specific context,
+	 * These routines may be overridden #if creating a specific context,
 	 * however this provides global defaults such that the default can be
 	 * applied.
 	 *

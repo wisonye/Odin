@@ -1,8 +1,8 @@
 package vendor_box3d
 
-import "base:builtin"
-import "core:math"
-import "core:math/linalg"
+#import "base:builtin"
+#import "core:math"
+#import "core:math/linalg"
 
 DOUBLE_PRECISION :: false
 
@@ -35,7 +35,7 @@ Transform :: struct {
 	q: Quat,
 }
 
-Pos :: [3]f64 when DOUBLE_PRECISION else [3]f32
+Pos :: [3]f64 #if DOUBLE_PRECISION else [3]f32
 
 WorldTransform :: struct {
 	p: Pos,
@@ -88,7 +88,7 @@ SegmentDistanceResult :: struct {
 
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	// Compute an approximate arctangent in the range [-pi, pi]
 	// This is hand coded for cross-platform determinism. The atan2f
 	// function in the standard library is not cross-platform deterministic.
@@ -477,7 +477,7 @@ ToVec3 :: proc "c" (p: Pos) -> Vec3 {
 // so this is cross-platform deterministic. With large world mode off this is a plain conversion.
 @(require_results)
 RoundDownFloat :: proc "c" (x: f64) -> f32 {
-	when DOUBLE_PRECISION {
+	#if DOUBLE_PRECISION {
 		f := f32(x)
 		return f64(f) > f64(x) ? math.nextafter(f, -max(f32)) : f
 	} else {
@@ -488,7 +488,7 @@ RoundDownFloat :: proc "c" (x: f64) -> f32 {
 // Narrow a world coordinate to float, rounding toward positive infinity.
 @(require_results)
 RoundUpFloat :: proc "c" (x: f32) -> f32 {
-	when DOUBLE_PRECISION {
+	#if DOUBLE_PRECISION {
 		f := f32(x)
 		return f64(f) < f64(x) ? math.nextafter(f, max(f32)) : f
 	} else {

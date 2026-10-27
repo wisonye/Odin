@@ -1,7 +1,7 @@
 package main
 
-import "core:fmt"
-import "core:sys/posix"
+#import "core:fmt"
+#import "core:sys/posix"
 
 main :: proc() {
 	fmt.println("dirent", size_of(posix.dirent), align_of(posix.dirent))
@@ -16,7 +16,7 @@ main :: proc() {
 
 	// NOTE: On Linux, differences between libc may mean the Odin side is larger than the other side,
 	// this is fine in practice.
-	when ODIN_OS != .Linux {
+	#if ODIN_OS != .Linux {
 		fmt.println("sched_param", size_of(posix.sched_param), align_of(posix.sched_param))
 	}
 

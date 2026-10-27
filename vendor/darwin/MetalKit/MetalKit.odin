@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MetalKit
 
-import "base:intrinsics"
-import MTL "vendor:darwin/Metal"
-import MDL "vendor:darwin/ModelIO"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import MTL "vendor:darwin/Metal"
+#import MDL "vendor:darwin/ModelIO"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:MetalKit.framework",
 }
 
@@ -24,7 +24,7 @@ foreign import lib {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="MTKTextureLoaderErrorDomain")
 	TextureLoaderErrorDomain: ^NS.String
 

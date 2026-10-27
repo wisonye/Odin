@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLVertexDescriptor", objc_superclass=NS.Object)
 VertexDescriptor :: struct {
@@ -10,7 +10,7 @@ VertexDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexDescriptor, objc_selector="initWithVertexDescriptor:", objc_name="initWithVertexDescriptor")
 	VertexDescriptor_initWithVertexDescriptor :: proc(self: ^VertexDescriptor, vertexDescriptor: ^VertexDescriptor) -> instancetype ---
 
@@ -52,7 +52,7 @@ VertexAttribute :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexAttribute, objc_selector="initWithName:format:offset:bufferIndex:", objc_name="initWithName")
 	VertexAttribute_initWithName :: proc(self: ^VertexAttribute, name: ^NS.String, format: VertexFormat, offset: NS.UInteger, bufferIndex: NS.UInteger) -> instancetype ---
 
@@ -97,7 +97,7 @@ foreign lib {
 @(objc_class="MDLVertexAttributeData", objc_superclass=NS.Object)
 VertexAttributeData :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexAttributeData, objc_selector="map", objc_name="map")
 	VertexAttributeData_map :: proc(self: ^VertexAttributeData) -> ^MeshBufferMap ---
 
@@ -136,7 +136,7 @@ VertexBufferLayout :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexBufferLayout, objc_selector="initWithStride:", objc_name="initWithStride")
 	VertexBufferLayout_initWithStride :: proc(self: ^VertexBufferLayout, stride: NS.UInteger) -> instancetype ---
 

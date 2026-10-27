@@ -1,8 +1,8 @@
 #+private
 package os
 
-import "base:runtime"
-import win32 "core:sys/windows"
+#import "base:runtime"
+#import win32 "core:sys/windows"
 
 _temp_dir :: proc(allocator: runtime.Allocator) -> (string, runtime.Allocator_Error) {
 	n := win32.GetTempPathW(0, nil)

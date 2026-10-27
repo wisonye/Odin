@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSEntityDescription")
 EntityDescription :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

@@ -5,8 +5,8 @@ package libc
 thrd_start_t :: proc "c" (rawptr) -> int
 tss_dtor_t   :: proc "c" (rawptr)
 
-when ODIN_OS == .Windows {
-	foreign import libc {
+#if ODIN_OS == .Windows {
+	#foreign #import libc {
 		"system:libucrt.lib", 
 		"system:msvcprt.lib",
 	}
@@ -36,7 +36,7 @@ when ODIN_OS == .Windows {
 	// differently. Thus we need to alias the correct symbol names with Odin's
 	// link_name attribute.
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		// 7.26.2 Initialization functions
 		@(synchronizes=.Acquire)
 		@(link_name="_Call_once")     call_once     :: proc(flag: ^once_flag, func: proc "c" ()) ---
@@ -81,8 +81,8 @@ when ODIN_OS == .Windows {
 }
 
 // GLIBC and MUSL compatible constants and types.
-when ODIN_OS == .Linux {
-	foreign import libc {
+#if ODIN_OS == .Linux {
+	#foreign #import libc {
 		"system:c",
 		"system:pthread",
 	}
@@ -103,10 +103,10 @@ when ODIN_OS == .Linux {
 	thrd_t              :: distinct ulong
 	tss_t               :: distinct uint
 	cnd_t               :: struct #raw_union { _: [12]int, _: [12 * size_of(int) / size_of(rawptr)]rawptr, }
-	mtx_t               :: struct #raw_union { _: [10 when size_of(long) == 8 else 6]int, _: [5 when size_of(long) == 8 else 6]rawptr, }
+	mtx_t               :: struct #raw_union { _: [10 #if size_of(long) == 8 else 6]int, _: [5 #if size_of(long) == 8 else 6]rawptr, }
 
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		// 7.26.2 Initialization functions
 		@(synchronizes=.Acquire)
 		call_once     :: proc(flag: ^once_flag, func: proc "c" ()) ---
@@ -152,6 +152,6 @@ when ODIN_OS == .Linux {
 }
 
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	// TODO: find out what this is meant to be!
 }

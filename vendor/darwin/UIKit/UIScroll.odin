@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIScrollEdgeEffect", objc_superclass=NS.Object)
 ScrollEdgeEffect :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollEdgeEffect, objc_selector="init", objc_name="init")
 	ScrollEdgeEffect_init :: proc(self: ^ScrollEdgeEffect) -> instancetype ---
 
@@ -35,7 +35,7 @@ foreign lib {
 ScrollEdgeEffectStyle :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollEdgeEffectStyle, objc_selector="init", objc_name="init")
 	ScrollEdgeEffectStyle_init :: proc(self: ^ScrollEdgeEffectStyle) -> instancetype ---
 
@@ -61,7 +61,7 @@ ScrollView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollView, objc_selector="adjustedContentInsetDidChange", objc_name="adjustedContentInsetDidChange")
 	ScrollView_adjustedContentInsetDidChange :: proc(self: ^ScrollView) ---
 
@@ -380,7 +380,7 @@ ScrollViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollViewDelegate, objc_selector="scrollViewDidScroll:", objc_name="scrollViewDidScroll")
 	ScrollViewDelegate_scrollViewDidScroll :: proc(self: ^ScrollViewDelegate, scrollView: ^ScrollView) ---
 
@@ -432,7 +432,7 @@ ScrollViewAccessibilityDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollViewAccessibilityDelegate, objc_selector="accessibilityScrollStatusForScrollView:", objc_name="accessibilityScrollStatusForScrollView")
 	ScrollViewAccessibilityDelegate_accessibilityScrollStatusForScrollView :: proc(self: ^ScrollViewAccessibilityDelegate, scrollView: ^ScrollView) -> ^NS.String ---
 

@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKAchievement", objc_superclass=NS.Object)
 Achievement :: struct {
@@ -13,7 +13,7 @@ Achievement :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Achievement, objc_selector="loadAchievementsWithCompletionHandler:", objc_name="loadAchievementsWithCompletionHandler", objc_is_class_method=true)
 	Achievement_loadAchievementsWithCompletionHandler :: proc(completionHandler: ^Objc_Block(proc "c" ( achievements: ^NS.Array, error: ^NS.Error ))) ---
 
@@ -103,7 +103,7 @@ Achievement_reportAchievements :: proc {
 @(objc_class="GKAchievementChallenge", objc_superclass=Challenge)
 AchievementChallenge :: struct { using _: Challenge}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AchievementChallenge, objc_selector="achievement", objc_name="achievement")
 	AchievementChallenge_achievement :: proc(self: ^AchievementChallenge) -> ^Achievement ---
 }
@@ -116,7 +116,7 @@ AchievementDescription :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AchievementDescription, objc_selector="loadAchievementDescriptionsWithCompletionHandler:", objc_name="loadAchievementDescriptionsWithCompletionHandler", objc_is_class_method=true)
 	AchievementDescription_loadAchievementDescriptionsWithCompletionHandler :: proc(completionHandler: ^Objc_Block(proc "c" ( descriptions: ^NS.Array, error: ^NS.Error ))) ---
 
@@ -173,7 +173,7 @@ foreign lib {
 @(objc_class="GKAchievementViewController", objc_superclass=GameCenterViewController)
 AchievementViewController :: struct { using _: GameCenterViewController}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AchievementViewController, objc_selector="achievementDelegate", objc_name="achievementDelegate")
 	AchievementViewController_achievementDelegate :: proc(self: ^AchievementViewController) -> ^AchievementViewControllerDelegate ---
 
@@ -188,7 +188,7 @@ AchievementViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AchievementViewControllerDelegate, objc_selector="achievementViewControllerDidFinish:", objc_name="achievementViewControllerDidFinish")
 	AchievementViewControllerDelegate_achievementViewControllerDidFinish :: proc(self: ^AchievementViewControllerDelegate, viewController: ^AchievementViewController) ---
 }

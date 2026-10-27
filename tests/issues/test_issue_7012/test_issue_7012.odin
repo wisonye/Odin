@@ -1,7 +1,7 @@
 // Tests issue https://github.com/odin-lang/Odin/issues/7012
 package test_issue_7012
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 Foo :: struct($T: typeid) {
 	x: T,

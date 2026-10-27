@@ -1,9 +1,9 @@
 // Tests "math.odin" in "core:math".
 package test_core_math
 
-import "core:math"
-import "core:strconv"
-import "core:testing"
+#import "core:math"
+#import "core:strconv"
+#import "core:testing"
 
 @test
 test_classify_f16 :: proc(t: ^testing.T) {

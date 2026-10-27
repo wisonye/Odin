@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 AUDIO_MASK_BITSIZE    :: 0xFF
 AUDIO_MASK_FLOAT      :: 1<<8
@@ -33,9 +33,9 @@ AudioFormat :: enum c.int {
 	                     /* DEFINE_AUDIO_FORMAT(1, 1, 1, 32), */
 
 	/* These represent the current system's byteorder. */
-	S16 = S16LE when BYTEORDER == LIL_ENDIAN else S16BE,
-	S32 = S32LE when BYTEORDER == LIL_ENDIAN else S32BE,
-	F32 = F32LE when BYTEORDER == LIL_ENDIAN else F32BE,
+	S16 = S16LE #if BYTEORDER == LIL_ENDIAN else S16BE,
+	S32 = S32LE #if BYTEORDER == LIL_ENDIAN else S32BE,
+	F32 = F32LE #if BYTEORDER == LIL_ENDIAN else F32BE,
 }
 
 @(require_results) AUDIO_BITSIZE        :: #force_inline proc "c" (x: AudioFormat) -> Uint16 { return (Uint16(x) & AUDIO_MASK_BITSIZE)       }
@@ -74,7 +74,7 @@ AudioPostmixCallback            :: #type proc "c" (userdata: rawptr, spec: ^Audi
 AUDIOSTREAM_AUTO_CLEANUP_BOOLEAN :: "SDL.audiostream.auto_cleanup"
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumAudioDrivers             :: proc() -> c.int ---
 	GetAudioDriver                 :: proc(index: c.int) -> cstring ---
 	GetCurrentAudioDriver          :: proc() -> cstring ---

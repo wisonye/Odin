@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIActivity", objc_superclass=NS.Object)
 Activity :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Activity, objc_selector="canPerformWithActivityItems:", objc_name="canPerformWithActivityItems")
 	Activity_canPerformWithActivityItems :: proc(self: ^Activity, activityItems: ^NS.Array) -> bool ---
 
@@ -48,7 +48,7 @@ ActivityCollaborationModeRestriction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityCollaborationModeRestriction, objc_selector="initWithDisabledMode:", objc_name="initWithDisabledMode_")
 	ActivityCollaborationModeRestriction_initWithDisabledMode_ :: proc(self: ^ActivityCollaborationModeRestriction, disabledMode: ActivityCollaborationMode) -> instancetype ---
 
@@ -105,7 +105,7 @@ ActivityIndicatorView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityIndicatorView, objc_selector="initWithActivityIndicatorStyle:", objc_name="initWithActivityIndicatorStyle")
 	ActivityIndicatorView_initWithActivityIndicatorStyle :: proc(self: ^ActivityIndicatorView, style: ActivityIndicatorViewStyle) -> instancetype ---
 
@@ -151,7 +151,7 @@ ActivityItemProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityItemProvider, objc_selector="init", objc_name="init")
 	ActivityItemProvider_init :: proc(self: ^ActivityItemProvider) -> instancetype ---
 
@@ -176,7 +176,7 @@ ActivityItemSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityItemSource, objc_selector="activityViewControllerPlaceholderItem:", objc_name="activityViewControllerPlaceholderItem")
 	ActivityItemSource_activityViewControllerPlaceholderItem :: proc(self: ^ActivityItemSource, activityViewController: ^ActivityViewController) -> id ---
 
@@ -207,7 +207,7 @@ ActivityItemsConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityItemsConfiguration, objc_selector="activityItemsConfigurationWithObjects:", objc_name="activityItemsConfigurationWithObjects", objc_is_class_method=true)
 	ActivityItemsConfiguration_activityItemsConfigurationWithObjects :: proc(objects: ^NS.Array) -> instancetype ---
 
@@ -271,7 +271,7 @@ ActivityItemsConfigurationProviding :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityItemsConfigurationProviding, objc_selector="activityItemsConfiguration", objc_name="activityItemsConfiguration")
 	ActivityItemsConfigurationProviding_activityItemsConfiguration :: proc(self: ^ActivityItemsConfigurationProviding) -> ^ActivityItemsConfigurationReading ---
 }
@@ -284,7 +284,7 @@ ActivityItemsConfigurationReading :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityItemsConfigurationReading, objc_selector="activityItemsConfigurationSupportsInteraction:", objc_name="activityItemsConfigurationSupportsInteraction")
 	ActivityItemsConfigurationReading_activityItemsConfigurationSupportsInteraction :: proc(self: ^ActivityItemsConfigurationReading, interaction: ^NS.String) -> bool ---
 
@@ -309,7 +309,7 @@ foreign lib {
 ActivityViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActivityViewController, objc_selector="init", objc_name="init")
 	ActivityViewController_init :: proc(self: ^ActivityViewController) -> instancetype ---
 

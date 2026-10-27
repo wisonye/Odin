@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKGame")
 Game :: struct { using _: intrinsics.objc_object}
@@ -13,7 +13,7 @@ Game :: struct { using _: intrinsics.objc_object}
 @(objc_class="GKGameActivity", objc_superclass=NS.Object)
 GameActivity :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameActivity, objc_selector="init", objc_name="init")
 	GameActivity_init :: proc(self: ^GameActivity) -> instancetype ---
 
@@ -156,7 +156,7 @@ GameActivity_startWithDefinition_ :: #force_inline proc "c" (activityDefinition:
 @(objc_class="GKGameActivityDefinition", objc_superclass=NS.Object)
 GameActivityDefinition :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameActivityDefinition, objc_selector="init", objc_name="init")
 	GameActivityDefinition_init :: proc(self: ^GameActivityDefinition) -> instancetype ---
 
@@ -216,7 +216,7 @@ foreign lib {
 @(objc_class="GKGameActivityListener")
 GameActivityListener :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameActivityListener, objc_selector="player:wantsToPlayGameActivity:completionHandler:", objc_name="player")
 	GameActivityListener_player :: proc(self: ^GameActivityListener, player: ^Player, activity: ^GameActivity, completionHandler: ^Objc_Block(proc "c" ( handled: bool ))) ---
 }
@@ -228,24 +228,24 @@ GameCenterControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameCenterControllerDelegate, objc_selector="gameCenterViewControllerDidFinish:", objc_name="gameCenterViewControllerDidFinish")
 	GameCenterControllerDelegate_gameCenterViewControllerDidFinish :: proc(self: ^GameCenterControllerDelegate, gameCenterViewController: ^GameCenterViewController) ---
 }
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="GKGameCenterViewController", objc_superclass=UI_ViewController)
 	GameCenterViewController :: struct {
 		using _: UI_ViewController,
 		using _: ViewController,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="GKGameCenterViewController", objc_superclass=UI_NavigationController)
 	GameCenterViewController :: struct { using _: UI_NavigationController}
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameCenterViewController, objc_selector="gameCenterDelegate", objc_name="gameCenterDelegate")
 	GameCenterViewController_gameCenterDelegate :: proc(self: ^GameCenterViewController) -> ^GameCenterControllerDelegate ---
 
@@ -303,7 +303,7 @@ GameModel :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameModel, objc_selector="setGameModel:", objc_name="setGameModel")
 	GameModel_setGameModel :: proc(self: ^GameModel, gameModel: ^GameModel) ---
 
@@ -339,7 +339,7 @@ GameModelPlayer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameModelPlayer, objc_selector="playerId", objc_name="playerId")
 	GameModelPlayer_playerId :: proc(self: ^GameModelPlayer) -> NS.Integer ---
 }
@@ -351,7 +351,7 @@ GameModelUpdate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameModelUpdate, objc_selector="value", objc_name="value")
 	GameModelUpdate_value :: proc(self: ^GameModelUpdate) -> NS.Integer ---
 
@@ -363,7 +363,7 @@ foreign lib {
 @(objc_class="GKGameSession", objc_superclass=NS.Object)
 GameSession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameSession, objc_selector="createSessionInContainer:withTitle:maxConnectedPlayers:completionHandler:", objc_name="createSessionInContainer", objc_is_class_method=true)
 	GameSession_createSessionInContainer :: proc(containerName: ^NS.String, title: ^NS.String, maxPlayers: NS.Integer, completionHandler: ^Objc_Block(proc "c" ( session: ^GameSession, error: ^NS.Error ))) ---
 
@@ -438,7 +438,7 @@ GameSessionEventListener :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GameSessionEventListener, objc_selector="session:didAddPlayer:", objc_name="session_didAddPlayer")
 	GameSessionEventListener_session_didAddPlayer :: proc(self: ^GameSessionEventListener, session: ^GameSession, player: ^CloudPlayer) ---
 

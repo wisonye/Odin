@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLMatrix4x4Array", objc_superclass=NS.Object)
 Matrix4x4Array :: struct {
@@ -10,7 +10,7 @@ Matrix4x4Array :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Matrix4x4Array, objc_selector="clear", objc_name="clear")
 	Matrix4x4Array_clear :: proc(self: ^Matrix4x4Array) ---
 

@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIDevice", objc_superclass=NS.Object)
 Device :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Device, objc_selector="beginGeneratingDeviceOrientationNotifications", objc_name="beginGeneratingDeviceOrientationNotifications")
 	Device_beginGeneratingDeviceOrientationNotifications :: proc(self: ^Device) ---
 

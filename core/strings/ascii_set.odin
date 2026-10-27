@@ -1,6 +1,6 @@
 package strings
 
-import "core:unicode/utf8"
+#import "core:unicode/utf8"
 
 /*
 Ascii_Set is designed to store ASCII characters efficiently as a bit-array

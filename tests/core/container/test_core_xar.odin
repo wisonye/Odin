@@ -1,7 +1,7 @@
 package test_core_container
 
-import "core:container/xar"
-import "core:testing"
+#import "core:container/xar"
+#import "core:testing"
 
 @test
 test_xar_pointer_stability :: proc(t: ^testing.T) {

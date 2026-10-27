@@ -1,7 +1,7 @@
 package time
 // Parsing ISO 8601 date/time strings into time.Time.
 
-import dt "core:time/datetime"
+#import dt "core:time/datetime"
 
 /*
 Parse an ISO 8601 string into a time with UTC offset applied to it.

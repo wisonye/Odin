@@ -5,7 +5,7 @@ package darwin_MapKit
 @(objc_class="MKCompassButton", objc_superclass=UI_View)
 CompassButton :: struct { using _: UI_View}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompassButton, objc_selector="compassButtonWithMapView:", objc_name="compassButtonWithMapView", objc_is_class_method=true)
 	CompassButton_compassButtonWithMapView :: proc(mapView: ^MapView) -> instancetype ---
 

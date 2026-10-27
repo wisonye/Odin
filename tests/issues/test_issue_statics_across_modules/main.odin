@@ -1,9 +1,9 @@
 // The statics of a proc literal that several modules emit are one variable
 package test_issue_statics_across_modules
 
-import "core:testing"
-import "a"
-import "b"
+#import "core:testing"
+#import "a"
+#import "b"
 
 @(test)
 test_statics_across_modules :: proc(t: ^testing.T) {

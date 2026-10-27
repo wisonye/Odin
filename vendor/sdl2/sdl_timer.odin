@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 TimerCallback :: proc "c" (interval: u32, param: rawptr) -> u32
@@ -18,7 +18,7 @@ TICKS_PASSED :: #force_inline proc "c" (A, B: u32) -> bool {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetTicks                :: proc() -> u32 ---
 	GetTicks64              :: proc() -> u64 ---
 	GetPerformanceCounter   :: proc() -> u64 ---

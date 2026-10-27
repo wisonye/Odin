@@ -1,6 +1,6 @@
 package test_issue_7853
 
-import "core:testing"
+#import "core:testing"
 
 // The bounds of a `switch` range case were not converted to the type of the switch tag, unlike a single case
 // value, so untyped bounds took their own default type. Against a `cstring` tag they became `string`, and

@@ -1,8 +1,8 @@
 package test_encoding_base32
 
-import "core:testing"
-import "core:bytes"
-import "core:encoding/base32"
+#import "core:testing"
+#import "core:bytes"
+#import "core:encoding/base32"
 
 Error :: base32.Error
 

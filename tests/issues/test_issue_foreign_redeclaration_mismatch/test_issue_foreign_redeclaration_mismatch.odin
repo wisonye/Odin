@@ -2,17 +2,17 @@
 // signatures this different were accepted whenever the two names differed in length
 package test_issue_foreign_redeclaration_mismatch
 
-foreign import lib "this_library_does_not_exist"
+#foreign #import lib "this_library_does_not_exist"
 
 Ints :: struct { a: i32, b: i32 }
 Floats :: struct { c: f32, d: f32 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="mismatched") mismatched_1 :: proc(x: []Ints) ---
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="mismatched") mismatched_2 :: proc(x: []Floats) ---
 }

@@ -2,9 +2,9 @@
 
 package rexcode_ppc_tests
 
-import "core:fmt"
-import "core:os"
-import p ".."
+#import "core:fmt"
+#import "core:os"
+#import p ".."
 
 // Iterate every entry in the encoding table, build a canonical wire word
 // from base bits + safe-fill operand values, and verify the decoder finds

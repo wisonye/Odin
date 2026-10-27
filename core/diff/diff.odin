@@ -1,7 +1,7 @@
 package diff
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 // The algorithm used to compute a diff.
 Algorithm :: enum u8 {
@@ -90,7 +90,7 @@ stats :: proc "contextless" (c: Changes) -> (s: Stats) {
 	return
 }
 
-// Returns `2*equal / (n+m)`, from 0 (nothing in common) to 1 (identical); 1 when both inputs are empty.
+// Returns `2*equal / (n+m)`, from 0 (nothing in common) to 1 (identical); 1 #if both inputs are empty.
 @(require_results)
 similarity :: proc "contextless" (c: Changes) -> f64 {
 	if c.n + c.m == 0 {
@@ -179,9 +179,9 @@ diff_by_buffer :: proc(
 	- `allocator` gives the returned memory. Free it with the same allocator.
 	- `transient_allocator` gives the scratch. It lives only for the call.
 
-	The result is allocated first and the scratch last. The scratch is freed before returning, even when
+	The result is allocated first and the scratch last. The scratch is freed before returning, even #if
 	allocating it fails. Heap allocators never leak. Allocators that free in reverse order (e.g. `mem.Stack`)
-	work when passed as both.
+	work #if passed as both.
 
 	One bump arena passed as both cannot free the scratch. It stays until the arena is reset. Use separate
 	arenas for the two lifetimes, or a `*_buffer` procedure with scratch from a temporary region of the arena.
@@ -393,7 +393,7 @@ _set_bit_range :: proc "contextless" (bits: []u64, lo, hi: int) {
 	}
 }
 
-// Returns how many bits from `lo` up to `hi` are all set, or all clear when `set` is false.
+// Returns how many bits from `lo` up to `hi` are all set, or all clear #if `set` is false.
 @(require_results)
 _bit_run :: proc "contextless" (bits: []u64, lo, hi: int, set: bool) -> int {
 	for i := lo; i < hi; /**/ {

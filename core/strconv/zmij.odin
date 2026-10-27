@@ -5,8 +5,8 @@ package strconv
 // Made available under the Boost Software License 1.0,
 // 	see LICENSE at the bottom of the file.
 
-import "base:runtime"
-import "core:math/bits"
+#import "base:runtime"
+#import "core:math/bits"
 
 /*
 Computes the shortest decimal digits that parse back to the float with the given bits.
@@ -33,9 +33,9 @@ _shortest_decimal :: #force_inline proc "contextless" (buf: []byte, mant: u64, e
 	sig, last_digit: u64
 	dec_exp: int
 	has_last_digit: bool
-	when MANTBITS == 52 { // f64
+	#if MANTBITS == 52 { // f64
 		sig, dec_exp, last_digit, has_last_digit = _to_decimal_f64(mant, exp - 1075, regular)
-	} else when MANTBITS == 23 { // f32
+	} else #if MANTBITS == 23 { // f32
 		sig, dec_exp, last_digit, has_last_digit = _to_decimal_f32(mant, exp - 150, regular)
 	} else { // f16
 		sig, dec_exp, last_digit, has_last_digit = _to_decimal_f32(mant, exp - 25, regular)
@@ -43,7 +43,7 @@ _shortest_decimal :: #force_inline proc "contextless" (buf: []byte, mant: u64, e
 
 	// Write `sig` as 16 digits for f64 or 8 for f32, with leading zeros, then the extra digit.
 	start, end, n: int
-	when MANTBITS == 52 {
+	#if MANTBITS == 52 {
 		// sig < 10^16, so hi and lo have at most 8 digits each.
 		hi := _div_1e8(sig)
 		lo := sig - hi*100_000_000
@@ -204,11 +204,11 @@ Formats an f16, f32 or f64 with the shortest output, or with a precision if the 
 - ok: false if the value is not handled
 */
 _ftoa_fast :: #force_inline proc "contextless" (buf: []byte, val: $T, fmt: byte, precision: int) -> (res: []byte, ok: bool) where T == f16 || T == f32 || T == f64 {
-	when T == f64 {
+	#if T == f64 {
 		MANTBITS :: 52
 		EXPBITS  :: 11
 		float_bits := transmute(u64)val
-	} else when T == f16 {
+	} else #if T == f16 {
 		MANTBITS :: 10
 		EXPBITS  :: 5
 		float_bits := u64(transmute(u16)val)

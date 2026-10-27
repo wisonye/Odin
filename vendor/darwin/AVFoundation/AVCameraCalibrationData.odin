@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVCameraCalibrationData", objc_superclass=NS.Object)
 CameraCalibrationData :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CameraCalibrationData, objc_selector="init", objc_name="init")
 	CameraCalibrationData_init :: proc(self: ^CameraCalibrationData) -> instancetype ---
 

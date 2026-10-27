@@ -1,6 +1,6 @@
 package test_issue_swizzle_multi_assign
 
-import "core:testing"
+#import "core:testing"
 
 // A multi-assignment reads every right-hand side before it stores into any target, which is what
 // makes `a, b = b, a` a swap. Storing into a swizzle reused the address the source was loaded from

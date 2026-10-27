@@ -1,9 +1,9 @@
 // Multi-threading operations to spawn threads and thread pools.
 package thread
 
-import "base:runtime"
-import "core:mem"
-import "base:intrinsics"
+#import "base:runtime"
+#import "core:mem"
+#import "base:intrinsics"
 
 @(private)
 unall :: intrinsics.unaligned_load
@@ -75,7 +75,7 @@ Thread :: struct {
 	// **IMPORTANT**:
 	// By default, the thread proc will get the same context as `main()` gets.
 	// In this situation, the thread will get a new temporary allocator which
-	// will be cleaned up when the thread dies. ***This does NOT happen when
+	// will be cleaned up #if the thread dies. ***This does NOT happen #if
 	// `init_context` field is initialized***.
 	//
 	// If `init_context` is initialized, and `temp_allocator` field is set to
@@ -87,7 +87,7 @@ Thread :: struct {
 	creation_allocator: mem.Allocator,
 }
 
-when IS_SUPPORTED {
+#if IS_SUPPORTED {
 	#assert(size_of(Thread{}.user_index) == size_of(uintptr))
 }
 
@@ -615,10 +615,10 @@ _select_context_for_thread :: proc(init_context: Maybe(runtime.Context)) -> runt
 
 	/*
 		NOTE(tetra, 2023-05-31):
-			Ensure that the temp allocator is thread-safe when the user provides a specific initial context to use.
+			Ensure that the temp allocator is thread-safe #if the user provides a specific initial context to use.
 			Without this, the thread will use the same temp allocator state as the parent thread, and thus, bork it up.
 	*/
-	when !ODIN_DEFAULT_TO_NIL_ALLOCATOR {
+	#if !ODIN_DEFAULT_TO_NIL_ALLOCATOR {
 		if ctx.temp_allocator.procedure == runtime.default_temp_allocator_proc {
 			ctx.temp_allocator.data = &runtime.global_default_temp_allocator_data
 		}

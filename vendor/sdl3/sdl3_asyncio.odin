@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 AsyncIO :: struct {}
 
@@ -24,13 +24,13 @@ AsyncIOOutcome :: struct {
 	offset:            Uint64,          /**< offset in the SDL_AsyncIO where data was read/written. */
 	bytes_requested:   Uint64,          /**< number of bytes the task was to read/write. */
 	bytes_transferred: Uint64,          /**< actual number of bytes that were read/written. */
-	userdata:          rawptr,          /**< pointer provided by the app when starting the task */
+	userdata:          rawptr,          /**< pointer provided by the app #if starting the task */
 }
 
 AsyncIOQueue :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	AsyncIOFromFile     :: proc(file: cstring, mode: cstring) -> ^AsyncIO ---
 	GetAsyncIOSize      :: proc(asyncio: ^AsyncIO) -> Sint64 ---
 	ReadAsyncIO         :: proc(asyncio: ^AsyncIO, ptr: rawptr, offset, size: Uint64, queue: ^AsyncIOQueue, userdata: rawptr) -> bool ---

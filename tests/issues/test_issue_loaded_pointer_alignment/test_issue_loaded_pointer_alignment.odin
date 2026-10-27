@@ -1,7 +1,7 @@
 package test_issues
 
-import "core:simd"
-import "core:testing"
+#import "core:simd"
+#import "core:testing"
 
 Packed :: struct #packed {
 	v:    #simd[16]u8,

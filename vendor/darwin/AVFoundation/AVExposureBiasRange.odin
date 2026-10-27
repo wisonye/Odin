@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVExposureBiasRange", objc_superclass=NS.Object)
 ExposureBiasRange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExposureBiasRange, objc_selector="init", objc_name="init")
 	ExposureBiasRange_init :: proc(self: ^ExposureBiasRange) -> instancetype ---
 

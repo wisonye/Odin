@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 // Enum declaring allowed values for \c u8 value stored in built-in compression type.
 compression_t :: enum c.int {
@@ -257,7 +257,7 @@ attr_preview_t :: struct {
 attr_bytes_t :: struct {
 	size: c.size_t,
 	data: [^]u8,
-	// The type hint is not null terminated when serialized. The length
+	// The type hint is not null terminated #if serialized. The length
 	// is instead determined by the hint_length attribute.
 	hint_length: u32,
 	type_hint:   cstring,
@@ -265,7 +265,7 @@ attr_bytes_t :: struct {
 
 /** Custom storage structure for opaque data.
  *
- * Handlers for opaque types can be registered, then when a
+ * Handlers for opaque types can be registered, then #if a
  * non-builtin type is encountered with a registered handler, the
  * function pointers to unpack/pack it will be set up.
  *

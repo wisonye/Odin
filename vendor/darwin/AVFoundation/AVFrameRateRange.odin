@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVFrameRateRange", objc_superclass=NS.Object)
 FrameRateRange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FrameRateRange, objc_selector="init", objc_name="init")
 	FrameRateRange_init :: proc(self: ^FrameRateRange) -> instancetype ---
 

@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // Adds packed double-precision (64-bit) floating-point elements in `a` and `b`.
 @(require_results, enable_target_feature="avx")
@@ -560,7 +560,7 @@ _mm256_cvttps_epi32 :: #force_inline proc "c" (a: __m256) -> __m256i {
 // Extracts 128 bits (composed of 4 packed single-precision (32-bit) floating-point elements) from `a`, selected with `imm8`.
 @(require_results, enable_target_feature="avx")
 _mm256_extractf128_ps :: #force_inline proc "c" (a: __m256, $IMM1: u8) -> __m128 where IMM1 < 2 {
-	when IMM1 == 0 {
+	#if IMM1 == 0 {
 		return intrinsics.simd_shuffle(a, _mm256_undefined_ps(), 0, 1, 2, 3)
 	} else {
 		return intrinsics.simd_shuffle(a, _mm256_undefined_ps(), 4, 5, 6, 7)
@@ -570,7 +570,7 @@ _mm256_extractf128_ps :: #force_inline proc "c" (a: __m256, $IMM1: u8) -> __m128
 // Extracts 128 bits (composed of 2 packed double-precision (64-bit) floating-point elements) from `a`, selected with `imm8`.
 @(require_results, enable_target_feature="avx")
 _mm256_extractf128_pd :: #force_inline proc "c" (a: __m256d, $IMM1: u8) -> __m128d where IMM1 < 2 {
-	when IMM1 == 0 {
+	#if IMM1 == 0 {
 		return intrinsics.simd_shuffle(a, _mm256_undefined_pd(), 0, 1)
 	} else {
 		return intrinsics.simd_shuffle(a, _mm256_undefined_pd(), 2, 3)
@@ -580,7 +580,7 @@ _mm256_extractf128_pd :: #force_inline proc "c" (a: __m256d, $IMM1: u8) -> __m12
 // Extracts 128 bits (composed of integer data) from `a`, selected with `imm8`.
 @(require_results, enable_target_feature="avx")
 _mm256_extractf128_si256 :: #force_inline proc "c" (a: __m256i, $IMM1: u8) -> __m128i where IMM1 < 2 {
-	when IMM1 == 0 {
+	#if IMM1 == 0 {
 		dst := intrinsics.simd_shuffle(transmute(#simd[4]i64)a, (#simd[4]i64)(0), 0, 1)
 		return transmute(__m128i)dst
 	} else {
@@ -740,11 +740,11 @@ _mm256_permute2f128_si256 :: #force_inline proc "c" (a, b: __m256i, $IMM8: u8) -
 		r,
 		__m256i(0),
 
-		4 when ((IMM8 & 0xf) & 0b1000) != 0 else 0,
-		4 when ((IMM8 & 0xf) & 0b1000) != 0 else 1,
+		4 #if ((IMM8 & 0xf) & 0b1000) != 0 else 0,
+		4 #if ((IMM8 & 0xf) & 0b1000) != 0 else 1,
 
-		4 when (((IMM8 & 0xf0)>>4) & 0b1000) != 0 else 2,
-		4 when (((IMM8 & 0xf0)>>4) & 0b1000) != 0 else 3,
+		4 #if (((IMM8 & 0xf0)>>4) & 0b1000) != 0 else 2,
+		4 #if (((IMM8 & 0xf0)>>4) & 0b1000) != 0 else 3,
 	)
 }
 
@@ -783,7 +783,7 @@ _mm256_broadcast_pd :: #force_inline proc "c" (a: ^__m128d) -> __m256d {
 // at the location specified by `imm8`.
 @(require_results, enable_target_feature="sse,avx")
 _mm256_insertf128_ps :: #force_inline proc "c" (a: __m256, b: __m128, $IMM1: u8) -> __m256 where IMM1 < 2 {
-	when IMM1 == 0  {
+	#if IMM1 == 0  {
 		return intrinsics.simd_shuffle(
 			a,
 			_mm256_castps128_ps256(b),
@@ -803,7 +803,7 @@ _mm256_insertf128_ps :: #force_inline proc "c" (a: __m256, b: __m128, $IMM1: u8)
 // at the location specified by `imm8`.
 @(require_results, enable_target_feature="sse2,avx")
 _mm256_insertf128_pd :: #force_inline proc "c" (a: __m256d, b: __m128d, $IMM1: u8) -> __m256d where IMM1 < 2 {
-	when IMM1 == 0 {
+	#if IMM1 == 0 {
 		return intrinsics.simd_shuffle(
 			a,
 			_mm256_castpd128_pd256(b),
@@ -821,7 +821,7 @@ _mm256_insertf128_pd :: #force_inline proc "c" (a: __m256d, b: __m128d, $IMM1: u
 // Copies `a` to result, then inserts 128 bits from `b` into result at the location specified by `imm8`.
 @(require_results, enable_target_feature="avx")
 _mm256_insertf128_si256 :: #force_inline proc "c" (a: __m256i, b: __m128i, $IMM1: u8) -> __m256i where IMM1 < 2 {
-	when IMM1 == 0 {
+	#if IMM1 == 0 {
 		return intrinsics.simd_shuffle(
 			a,
 			_mm256_castsi128_si256(b),
@@ -959,7 +959,7 @@ _mm256_storeu_si256 :: #force_inline proc "c" (mem_addr: ^__m256i, a: __m256i) {
 }
 
 // Loads packed double-precision (64-bit) floating-point elements from memory
-// into result using `mask` (elements are zeroed out when the high bit of the
+// into result using `mask` (elements are zeroed out #if the high bit of the
 // corresponding element is not set).
 @(require_results, enable_target_feature="avx")
 _mm256_maskload_pd :: #force_inline proc "c" (mem_addr: ^f64, mask: __m256i) -> __m256d {
@@ -977,7 +977,7 @@ _mm256_maskstore_pd :: #force_inline proc "c" (mem_addr: ^f64, mask: __m256i, a:
 
 
 // Loads packed double-precision (64-bit) floating-point elements from memory
-// into result using `mask` (elements are zeroed out when the high bit of the
+// into result using `mask` (elements are zeroed out #if the high bit of the
 // corresponding element is not set).
 @(require_results, enable_target_feature="sse2,avx")
 _mm_maskload_pd :: #force_inline proc "c" (mem_addr: ^f64, mask: __m128i) -> __m128d {
@@ -994,7 +994,7 @@ _mm_maskstore_pd :: #force_inline proc "c" (mem_addr: ^f64, mask: __m128i, a: __
 }
 
 // Loads packed single-precision (32-bit) floating-point elements from memory
-// into result using `mask` (elements are zeroed out when the high bit of the
+// into result using `mask` (elements are zeroed out #if the high bit of the
 // corresponding element is not set).
 @(require_results, enable_target_feature="avx")
 _mm256_maskload_ps :: #force_inline proc "c" (mem_addr: ^f32, mask: __m256i) -> __m256 {
@@ -1011,7 +1011,7 @@ _mm256_maskstore_ps :: #force_inline proc "c" (mem_addr: ^f32, mask: __m256i, a:
 }
 
 // Loads packed single-precision (32-bit) floating-point elements from memory
-// into result using `mask` (elements are zeroed out when the high bit of the
+// into result using `mask` (elements are zeroed out #if the high bit of the
 // corresponding element is not set).
 @(require_results, enable_target_feature="sse,avx")
 _mm_maskload_ps :: #force_inline proc "c" (mem_addr: ^f32, mask: __m128i) -> __m128 {
@@ -1050,7 +1050,7 @@ _mm256_movedup_pd :: #force_inline proc "c" (a: __m256d) -> __m256d {
 
 
 // Loads 256-bits of integer data from unaligned memory into result.
-// This intrinsic may perform better than `_mm256_loadu_si256` when the
+// This intrinsic may perform better than `_mm256_loadu_si256` #if the
 // data crosses a cache line boundary.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_lddqu_si256)
@@ -1811,7 +1811,7 @@ _mm256_extract_epi64 :: #force_inline proc "c" (a: __m256i, $idx: u32) -> i64 {
 
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.avx.round.pd.256")      llvm_roundpd256    :: proc(a: __m256d, #const b: u32) -> __m256d ---
 	@(link_name="llvm.x86.avx.round.ps.256")      llvm_roundps256    :: proc(a: __m256, #const b: u32) -> __m256 ---
 	@(link_name="llvm.x86.avx.dp.ps.256")         llvm_vdpps         :: proc(a, b: __m256, #const imm8: u8) -> __m256 ---

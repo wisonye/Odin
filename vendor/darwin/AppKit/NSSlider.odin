@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSSlider", objc_superclass=Control)
 Slider :: struct {
@@ -13,7 +13,7 @@ Slider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Slider, objc_selector="acceptsFirstMouse:", objc_name="acceptsFirstMouse")
 	Slider_acceptsFirstMouse :: proc(self: ^Slider, event: ^Event) -> bool ---
 
@@ -146,7 +146,7 @@ SliderAccessory :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderAccessory, objc_selector="accessoryWithImage:", objc_name="accessoryWithImage", objc_is_class_method=true)
 	SliderAccessory_accessoryWithImage :: proc(image: ^Image) -> ^SliderAccessory ---
 
@@ -172,7 +172,7 @@ SliderAccessoryBehavior :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderAccessoryBehavior, objc_selector="behaviorWithTarget:action:", objc_name="behaviorWithTarget", objc_is_class_method=true)
 	SliderAccessoryBehavior_behaviorWithTarget :: proc(target: id, action: SEL) -> ^SliderAccessoryBehavior ---
 
@@ -197,7 +197,7 @@ foreign lib {
 SliderCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderCell, objc_selector="knobRectFlipped:", objc_name="knobRectFlipped")
 	SliderCell_knobRectFlipped :: proc(self: ^SliderCell, flipped: bool) -> NS.Rect ---
 
@@ -330,7 +330,7 @@ SliderCell_drawKnob :: proc {
 SliderTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderTouchBarItem, objc_selector="view", objc_name="view")
 	SliderTouchBarItem_view :: proc(self: ^SliderTouchBarItem) -> ^View ---
 

@@ -1,7 +1,7 @@
 #+build amd64,arm64,arm32
 package aes
 
-import aes_hw "core:crypto/_aes/hw"
+#import aes_hw "core:crypto/_aes/hw"
 
 // is_hardware_accelerated returns true if and only if (⟺) hardware accelerated AES
 // is supported.

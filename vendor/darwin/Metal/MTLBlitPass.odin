@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLBlitPassDescriptor", objc_superclass=NS.Object)
 BlitPassDescriptor :: struct {
@@ -10,7 +10,7 @@ BlitPassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BlitPassDescriptor, objc_selector="blitPassDescriptor", objc_name="blitPassDescriptor", objc_is_class_method=true)
 	BlitPassDescriptor_blitPassDescriptor :: proc() -> ^BlitPassDescriptor ---
 
@@ -25,7 +25,7 @@ BlitPassSampleBufferAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BlitPassSampleBufferAttachmentDescriptor, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	BlitPassSampleBufferAttachmentDescriptor_sampleBuffer :: proc(self: ^BlitPassSampleBufferAttachmentDescriptor) -> ^CounterSampleBuffer ---
 
@@ -49,7 +49,7 @@ foreign lib {
 @(objc_class="MTLBlitPassSampleBufferAttachmentDescriptorArray", objc_superclass=NS.Object)
 BlitPassSampleBufferAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BlitPassSampleBufferAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	BlitPassSampleBufferAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^BlitPassSampleBufferAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^BlitPassSampleBufferAttachmentDescriptor ---
 

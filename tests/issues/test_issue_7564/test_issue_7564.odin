@@ -1,4 +1,4 @@
-// Tests issue #7564: #location in a global variable caused a backend crash when read.
+// Tests issue #7564: #location in a global variable caused a backend crash #if read.
 // https://github.com/odin-lang/Odin/issues/7564
 package test_issue_7564
 

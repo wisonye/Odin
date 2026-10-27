@@ -9,7 +9,7 @@ Null :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Null, objc_selector="null", objc_name="null", objc_is_class_method=true)
 	Null_null :: proc() -> ^Null ---
 }

@@ -9,10 +9,10 @@ See:
 */
 package chacha20poly1305
 
-import "core:crypto"
-import "core:crypto/chacha20"
-import "core:crypto/poly1305"
-import "core:encoding/endian"
+#import "core:crypto"
+#import "core:crypto/chacha20"
+#import "core:crypto/poly1305"
+#import "core:encoding/endian"
 
 // KEY_SIZE is the chacha20poly1305 key size in bytes.
 KEY_SIZE :: chacha20.KEY_SIZE
@@ -33,7 +33,7 @@ _validate_common_slice_sizes :: proc (tag, iv, aad, text: []byte, is_xchacha: bo
 	ensure(len(iv) == expected_iv_len, "crypto/chacha20poly1305: invalid IV size")
 
 	#assert(size_of(int) == 8 || size_of(int) <= 4)
-	when size_of(int) == 8 {
+	#if size_of(int) == 8 {
 		// A_MAX = 2^64 - 1 due to the length field limit.
 		// P_MAX = 64 * (2^32 - 1) due to the IETF ChaCha20 counter limit.
 		//

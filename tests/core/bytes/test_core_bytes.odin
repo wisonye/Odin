@@ -1,8 +1,8 @@
 package test_core_bytes
 
-import "core:bytes"
-import "core:slice"
-import "core:testing"
+#import "core:bytes"
+#import "core:slice"
+#import "core:testing"
 
 @private SIMD_SCAN_WIDTH :: 8 * size_of(uintptr)
 

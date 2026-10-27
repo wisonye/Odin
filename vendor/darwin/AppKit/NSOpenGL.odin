@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSOpenGLContext", objc_superclass=NS.Object)
 OpenGLContext :: struct {
@@ -14,7 +14,7 @@ OpenGLContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLContext, objc_selector="initWithFormat:shareContext:", objc_name="initWithFormat")
 	OpenGLContext_initWithFormat :: proc(self: ^OpenGLContext, format: ^OpenGLPixelFormat, share: ^OpenGLContext) -> instancetype ---
 
@@ -96,7 +96,7 @@ foreign lib {
 OpenGLLayer :: struct { using _: CA.OpenGLLayer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLLayer, objc_selector="openGLPixelFormatForDisplayMask:", objc_name="openGLPixelFormatForDisplayMask")
 	OpenGLLayer_openGLPixelFormatForDisplayMask :: proc(self: ^OpenGLLayer, mask: cffi.uint32_t) -> ^OpenGLPixelFormat ---
 
@@ -133,7 +133,7 @@ foreign lib {
 OpenGLPixelBuffer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLPixelBuffer, objc_selector="initWithTextureTarget:textureInternalFormat:textureMaxMipMapLevel:pixelsWide:pixelsHigh:", objc_name="initWithTextureTarget")
 	OpenGLPixelBuffer_initWithTextureTarget :: proc(self: ^OpenGLPixelBuffer, target: CA.GLenum, format: CA.GLenum, maxLevel: CA.GLint, pixelsWide: CA.GLsizei, pixelsHigh: CA.GLsizei) -> instancetype ---
 
@@ -167,7 +167,7 @@ OpenGLPixelFormat :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLPixelFormat, objc_selector="initWithCGLPixelFormatObj:", objc_name="initWithCGLPixelFormatObj")
 	OpenGLPixelFormat_initWithCGLPixelFormatObj :: proc(self: ^OpenGLPixelFormat, format: CA.CGLPixelFormatObj) -> ^OpenGLPixelFormat ---
 
@@ -198,7 +198,7 @@ foreign lib {
 OpenGLView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLView, objc_selector="defaultPixelFormat", objc_name="defaultPixelFormat", objc_is_class_method=true)
 	OpenGLView_defaultPixelFormat :: proc() -> ^OpenGLPixelFormat ---
 

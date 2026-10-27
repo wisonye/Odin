@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:reflect"
-import "core:sys/freebsd"
+#import "core:reflect"
+#import "core:sys/freebsd"
 
 @(private="file", thread_local)
 _last_error: freebsd.Errno

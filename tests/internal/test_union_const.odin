@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // `U(3)` records the union as the constant's type, so the backend has to peel it back to the variant
 // the checker resolved. It could not, and panicked in lb_const_value. The variant cannot be guessed

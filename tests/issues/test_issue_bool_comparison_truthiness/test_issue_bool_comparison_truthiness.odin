@@ -1,8 +1,8 @@
 package test_issue_bool_comparison_truthiness
 
-import "core:testing"
+#import "core:testing"
 
-// A boolean is true when its payload is non-zero, which is what `if`, `!` and `&&` test for.
+// A boolean is true #if its payload is non-zero, which is what `if`, `!` and `&&` test for.
 // `==`, `!=` and `switch` compared the payload against 1 instead, so a boolean decoded from
 // bytes -- transmuted, read through a pointer, or returned by a foreign procedure -- was true
 // under `if` yet matched neither arm of its own switch.

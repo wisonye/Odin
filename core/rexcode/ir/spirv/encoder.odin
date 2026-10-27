@@ -2,7 +2,7 @@
 
 package rexcode_spirv
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // =============================================================================
 // SECTION: Encoder  (Module -> SPIR-V word stream)
@@ -356,7 +356,7 @@ compute_bound :: proc "contextless" (m: ^Module) -> u32 {
 }
 
 // encode: serialize `m` into `code` in spec layout order, returning the byte
-// count written. `bound` is computed when left 0 (else taken as-is, so a decoded
+// count written. `bound` is computed #if left 0 (else taken as-is, so a decoded
 // module re-encodes with its original bound).
 @(private="file")
 emit_module :: proc "contextless" (w: ^Writer, m: ^Module) {

@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // A multi-value call in a matrix or #simd literal fills as many elements as it returns,
 // as it does in array and struct literals.

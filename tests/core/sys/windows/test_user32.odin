@@ -1,8 +1,8 @@
 #+build windows
 package test_core_sys_windows
 
-import "core:testing"
-import win32 "core:sys/windows"
+#import "core:testing"
+#import win32 "core:sys/windows"
 
 @(test)
 verify_rawinput_code :: proc(t: ^testing.T) {

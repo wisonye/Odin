@@ -1,10 +1,10 @@
 // The `Odin` file parser to be used in tooling.
 package odin_parser
 
-import "core:odin/ast"
-import "core:odin/tokenizer"
+#import "core:odin/ast"
+#import "core:odin/tokenizer"
 
-import "core:fmt"
+#import "core:fmt"
 
 Warning_Handler :: #type proc(pos: tokenizer.Pos, fmt: string, args: ..any)
 Error_Handler   :: #type proc(pos: tokenizer.Pos, fmt: string, args: ..any)
@@ -791,12 +791,12 @@ parse_when_stmt :: proc(p: ^Parser) -> ^ast.When_Stmt {
 	p.expr_level = prev_level
 
 	if cond == nil {
-		error(p, p.curr_tok.pos, "expected a condition for when statement")
+		error(p, p.curr_tok.pos, "expected a condition for #if statement")
 	}
 	if allow_token(p, .Do) {
 		body = convert_stmt_to_body(p, parse_stmt(p))
 		if cond.pos.line != body.pos.line {
-			error(p, body.pos, "the body of a 'do' must be on the same line as when statement")
+			error(p, body.pos, "the body of a 'do' must be on the same line as #if statement")
 		}
 	} else {
 		body = parse_block_stmt(p, true, tok.pos)
@@ -817,7 +817,7 @@ parse_when_stmt :: proc(p: ^Parser) -> ^ast.When_Stmt {
 				error(p, else_stmt.pos, "the body of a 'do' must be on the same line as 'else'")
 			}
 		case:
-			error(p, p.curr_tok.pos, "expected when statement block statement")
+			error(p, p.curr_tok.pos, "expected #if statement block statement")
 			else_stmt = ast.new(ast.Bad_Stmt, p.curr_tok.pos, end_pos(p.curr_tok))
 		}
 	}
@@ -1318,7 +1318,7 @@ parse_foreign_decl :: proc(p: ^Parser) -> ^ast.Decl {
 		}
 
 		if name != nil && is_blank_ident(name) {
-			error(p, name.pos, "illegal foreign import name: '_'")
+			error(p, name.pos, "illegal foreign #import name: '_'")
 		}
 
 		fullpaths: [dynamic]^ast.Expr
@@ -1340,7 +1340,7 @@ parse_foreign_decl :: proc(p: ^Parser) -> ^ast.Decl {
 		}
 
 		if len(fullpaths) == 0 {
-			error(p, import_tok.pos, "foreign import without any paths")
+			error(p, import_tok.pos, "foreign #import without any paths")
 		}
 
 		decl := ast.new(ast.Foreign_Import_Decl, tok.pos, end_pos(p.prev_tok))
@@ -1639,7 +1639,7 @@ parse_stmt :: proc(p: ^Parser) -> ^ast.Stmt {
 			}
 			return stmt
 		case "include":
-			error(p, tag.pos, "#include is not a valid import declaration kind. Did you meant 'import'?")
+			error(p, tag.pos, "#include is not a valid #import declaration kind. Did you meant '#import'?")
 			return ast.new(ast.Bad_Stmt, tok.pos, end_pos(tag))
 		case:
 			stmt := parse_stmt(p)
@@ -3742,7 +3742,7 @@ parse_binary_expr :: proc(p: ^Parser, lhs: bool, prec_in: int) -> ^ast.Expr {
 			#partial switch op.kind {
 			case .If, .When:
 				if p.prev_tok.pos.line < op.pos.line {
-					// NOTE(bill): Check to see if the `if` or `when` is on the same line of the `lhs` condition
+					// NOTE(bill): Check to see if the `if` or `#if` is on the same line of the `lhs` condition
 					if p.expr_level <= 0 {
 						break loop
 					}
@@ -4040,7 +4040,7 @@ parse_import_decl :: proc(p: ^Parser, kind := Import_Decl_Kind.Standard) -> ^ast
 		import_name.pos = p.curr_tok.pos
 	}
 
-	path := expect_token_after(p, .String, "import")
+	path := expect_token_after(p, .String, "#import")
 
 	decl := ast.new(ast.Import_Decl, tok.pos, end_pos(path))
 	decl.docs       = docs
@@ -4051,7 +4051,7 @@ parse_import_decl :: proc(p: ^Parser, kind := Import_Decl_Kind.Standard) -> ^ast
 	decl.fullpath   = path.text
 
 	if p.curr_proc != nil {
-		error(p, decl.pos, "import declarations cannot be used within a procedure, it must be done at the file scope")
+		error(p, decl.pos, "#import declarations cannot be used within a procedure, it must be done at the file scope")
 	} else {
 		append(&p.file.imports, decl)
 	}

@@ -1,7 +1,7 @@
 #+build windows
 package mem
 
-import "core:sys/windows"
+#import "core:sys/windows"
 
 @(init, private, no_sanitize_address)
 query_page_size_init :: proc "contextless" () {

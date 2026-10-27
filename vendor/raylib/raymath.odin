@@ -1,7 +1,7 @@
 package raylib
 
-import "core:math"
-import "core:math/linalg"
+#import "core:math"
+#import "core:math/linalg"
 
 EPSILON :: 0.000001
 

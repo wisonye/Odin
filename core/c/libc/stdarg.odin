@@ -2,7 +2,7 @@ package libc
 
 // 7.16 Variable arguments
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 va_list  :: intrinsics.c_va_list
 
@@ -12,7 +12,7 @@ va_copy  :: intrinsics.c_va_copy
 
 // C passes a va_list by value. On x86-64 System V it is an array, which decays to a pointer
 // to its first element; everywhere else the value itself is passed.
-when ODIN_ARCH == .amd64 && ODIN_OS != .Windows {
+#if ODIN_ARCH == .amd64 && ODIN_OS != .Windows {
 	@(private) va_list_arg :: ^va_list
 } else {
 	@(private) va_list_arg :: va_list
@@ -21,7 +21,7 @@ when ODIN_ARCH == .amd64 && ODIN_OS != .Windows {
 // The va_list argument for a C function, from the pointer the v* procedures here take.
 @(private)
 va_list_arg_from :: #force_inline proc "contextless" (arg: ^va_list) -> va_list_arg {
-	when ODIN_ARCH == .amd64 && ODIN_OS != .Windows {
+	#if ODIN_ARCH == .amd64 && ODIN_OS != .Windows {
 		return arg
 	} else {
 		return arg^

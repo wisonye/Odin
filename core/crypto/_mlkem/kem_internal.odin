@@ -1,7 +1,7 @@
 package _mlkem
 
-import "core:crypto"
-import subtle "core:crypto/_subtle"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
 
 // This implementation is derived from the PQ-CRYSTALS reference
 // implementation [[ https://github.com/pq-crystals/kyber ]],

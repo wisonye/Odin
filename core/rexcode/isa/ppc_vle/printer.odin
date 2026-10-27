@@ -2,12 +2,12 @@
 
 package rexcode_ppc_vle
 
-import "core:strings"
-import "core:fmt"
-import "core:io"
-import "core:os"
-import "core:reflect"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:fmt"
+#import "core:io"
+#import "core:os"
+#import "core:reflect"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC VLE Printer

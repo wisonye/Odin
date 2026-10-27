@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import MTL "vendor:darwin/Metal"
+#import "base:intrinsics"
+#import MTL "vendor:darwin/Metal"
 
 @(objc_class="MTL4FXTemporalDenoisedScaler")
 MTL4FXTemporalDenoisedScaler :: struct {
@@ -11,7 +11,7 @@ MTL4FXTemporalDenoisedScaler :: struct {
 	using _: TemporalDenoisedScalerBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4FXTemporalDenoisedScaler, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	MTL4FXTemporalDenoisedScaler_encodeToCommandBuffer :: proc(self: ^MTL4FXTemporalDenoisedScaler, commandBuffer: ^MTL.MTL4CommandBuffer) ---
 }
@@ -23,7 +23,7 @@ MTL4FXTemporalScaler :: struct {
 	using _: TemporalScalerBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4FXTemporalScaler, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	MTL4FXTemporalScaler_encodeToCommandBuffer :: proc(self: ^MTL4FXTemporalScaler, commandBuffer: ^MTL.MTL4CommandBuffer) ---
 }

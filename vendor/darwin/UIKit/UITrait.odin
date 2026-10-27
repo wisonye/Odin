@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UITraitAccessibilityContrast", objc_superclass=NS.Object)
 TraitAccessibilityContrast :: struct {
@@ -13,7 +13,7 @@ TraitAccessibilityContrast :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitActiveAppearance", objc_superclass=NS.Object)
@@ -23,14 +23,14 @@ TraitActiveAppearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitChangeObservable")
 TraitChangeObservable :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TraitChangeObservable, objc_selector="registerForTraitChanges:withHandler:", objc_name="registerForTraitChanges_withHandler")
 	TraitChangeObservable_registerForTraitChanges_withHandler :: proc(self: ^TraitChangeObservable, traits: ^NS.Array, handler: TraitChangeHandler) -> ^TraitChangeRegistration ---
 
@@ -60,7 +60,7 @@ TraitChangeRegistration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitCollection", objc_superclass=NS.Object)
@@ -71,7 +71,7 @@ TraitCollection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TraitCollection, objc_selector="init", objc_name="init")
 	TraitCollection_init :: proc(self: ^TraitCollection) -> instancetype ---
 
@@ -276,7 +276,7 @@ foreign lib {
 TraitDefinition :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TraitDefinition, objc_selector="identifier", objc_name="identifier", objc_is_class_method=true)
 	TraitDefinition_identifier :: proc() -> ^NS.String ---
 
@@ -295,7 +295,7 @@ CGFloatTraitDefinition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CGFloatTraitDefinition, objc_selector="defaultValue", objc_name="defaultValue", objc_is_class_method=true)
 	CGFloatTraitDefinition_defaultValue :: proc() -> CG.Float ---
 }
@@ -308,7 +308,7 @@ NSIntegerTraitDefinition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSIntegerTraitDefinition, objc_selector="defaultValue", objc_name="defaultValue", objc_is_class_method=true)
 	NSIntegerTraitDefinition_defaultValue :: proc() -> NS.Integer ---
 }
@@ -321,7 +321,7 @@ ObjectTraitDefinition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ObjectTraitDefinition, objc_selector="defaultValue", objc_name="defaultValue", objc_is_class_method=true)
 	ObjectTraitDefinition_defaultValue :: proc() -> ^NS.ObjectProtocol ---
 }
@@ -334,7 +334,7 @@ TraitDisplayGamut :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitDisplayScale", objc_superclass=NS.Object)
@@ -344,7 +344,7 @@ TraitDisplayScale :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitEnvironment")
@@ -354,7 +354,7 @@ TraitEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TraitEnvironment, objc_selector="traitCollectionDidChange:", objc_name="traitCollectionDidChange")
 	TraitEnvironment_traitCollectionDidChange :: proc(self: ^TraitEnvironment, previousTraitCollection: ^TraitCollection) ---
 
@@ -370,7 +370,7 @@ TraitForceTouchCapability :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitHDRHeadroomUsageLimit", objc_superclass=NS.Object)
@@ -380,7 +380,7 @@ TraitHDRHeadroomUsageLimit :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitHorizontalSizeClass", objc_superclass=NS.Object)
@@ -390,7 +390,7 @@ TraitHorizontalSizeClass :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitImageDynamicRange", objc_superclass=NS.Object)
@@ -400,7 +400,7 @@ TraitImageDynamicRange :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitLayoutDirection", objc_superclass=NS.Object)
@@ -410,7 +410,7 @@ TraitLayoutDirection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitLegibilityWeight", objc_superclass=NS.Object)
@@ -420,7 +420,7 @@ TraitLegibilityWeight :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitListEnvironment", objc_superclass=NS.Object)
@@ -430,7 +430,7 @@ TraitListEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitOverrides")
@@ -440,7 +440,7 @@ TraitOverrides :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TraitOverrides, objc_selector="containsTrait:", objc_name="containsTrait")
 	TraitOverrides_containsTrait :: proc(self: ^TraitOverrides, trait: ^Class) -> bool ---
 
@@ -456,7 +456,7 @@ TraitPreferredContentSizeCategory :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitResolvesNaturalAlignmentWithBaseWritingDirection", objc_superclass=NS.Object)
@@ -466,7 +466,7 @@ TraitResolvesNaturalAlignmentWithBaseWritingDirection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitSceneCaptureState", objc_superclass=NS.Object)
@@ -476,7 +476,7 @@ TraitSceneCaptureState :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitSplitViewControllerLayoutEnvironment", objc_superclass=NS.Object)
@@ -486,7 +486,7 @@ TraitSplitViewControllerLayoutEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitTabAccessoryEnvironment", objc_superclass=NS.Object)
@@ -496,7 +496,7 @@ TraitTabAccessoryEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitToolbarItemPresentationSize", objc_superclass=NS.Object)
@@ -506,7 +506,7 @@ TraitToolbarItemPresentationSize :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitTypesettingLanguage", objc_superclass=NS.Object)
@@ -516,7 +516,7 @@ TraitTypesettingLanguage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitUserInterfaceIdiom", objc_superclass=NS.Object)
@@ -526,7 +526,7 @@ TraitUserInterfaceIdiom :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitUserInterfaceLevel", objc_superclass=NS.Object)
@@ -536,7 +536,7 @@ TraitUserInterfaceLevel :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitUserInterfaceStyle", objc_superclass=NS.Object)
@@ -546,7 +546,7 @@ TraitUserInterfaceStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITraitVerticalSizeClass", objc_superclass=NS.Object)
@@ -556,4 +556,4 @@ TraitVerticalSizeClass :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

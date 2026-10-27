@@ -19,14 +19,14 @@ This package implements procedures for working with vectors.
 */
 package simd
 
-import "base:builtin"
-import "base:intrinsics"
-import "base:runtime"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "base:runtime"
 
 /*
 Check if SIMD is software-emulated on a target platform.
 
-This value is `true`, when the compile-time target has the hardware support for
+This value is `true`, #if the compile-time target has the hardware support for
 at least 128-bit (or wider) SIMD. If the compile-time target lacks the hardware support
 for 128-bit SIMD, this value is `false`, and all SIMD operations will likely be
 emulated.
@@ -1330,8 +1330,8 @@ Example:
 	// to load valid positions of the `ptrs` array, and the array of defaults which
 	// will have `127` in each position as the default value.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_gather_example :: proc() {
 		v1 := [4] f32 {1, 2, 3, 4};
@@ -1403,8 +1403,8 @@ Example:
 	// vectors. The addresses of store destinations are written to the first and the
 	// third argument of the `ptr` vector, and the `mask` is set accordingly.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_scatter_example :: proc() {
 		v1 := [4] f32 {1, 2, 3, 4};
@@ -1479,8 +1479,8 @@ Example:
 	// third value (selected by the mask). The masked-off values are given the value
 	// of 127 (`0x7f`).
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_masked_load_example :: proc() {
 		src := [4] f32 {1, 2, 3, 4};
@@ -1543,8 +1543,8 @@ Example:
 	// Example below stores the value 127 into the first and the third slot of the
 	// vector `v`.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_masked_store_example :: proc() {
 		v := [4] f32 {1, 2, 3, 4};
@@ -1622,8 +1622,8 @@ Example:
 	// the third lane of the result vector. All the other lanes of the result vector
 	// will be initialized to the default value `127`.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_masked_expand_load_example :: proc() {
 		v := [2] f64 {1, 2};
@@ -1688,8 +1688,8 @@ Example:
 	// vector, the first and the third value. The items in the mask are set to `true`
 	// in those lanes.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_masked_compress_store_example :: proc() {
 		v := [2] f64 { };
@@ -2172,8 +2172,8 @@ Example:
 	// The example below shows how the indices are used to determine which lanes of the
 	// input vector get written into the result vector.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	swizzle_example :: proc() {
 		x := #simd [4]f32 { 1.5, 2.5, 3.5, 4.5 }
@@ -2241,8 +2241,8 @@ Example:
 	// Since lanes 0, 1, 4, 7 contain negative numbers, the most significant
 	// bits for them will be set.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_extract_msbs_example :: proc() {
 		v := #simd [8]i32 { -1, -2, +3, +4, -5, +6, +7, -8 }
@@ -2286,8 +2286,8 @@ Example:
 	// Since lanes 0, 2, 4, 6 contain odd integers, the least significant bits
 	// for these lanes are set.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_extract_lsbs_example :: proc() {
 		v := #simd [8]i32 { -1, -2, +3, +4, -5, +6, +7, -8 }
@@ -2337,8 +2337,8 @@ Example:
 	// The example below shows how the indices are used to determine lanes of the
 	// input vector that are shuffled into the result vector.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_shuffle_example :: proc() {
 		a := #simd [4]f32 { 1, 2, 3, 4 }
@@ -2408,8 +2408,8 @@ Example:
 	// The following example selects values from the two input vectors, `a` and `b`
 	// into a single vector.
 
-	import "core:fmt"
-	import "core:simd"
+	#import "core:fmt"
+	#import "core:simd"
 
 	simd_select_example :: proc() {
 		a := #simd [4] f64 { 1,2,3,4 }
@@ -2498,8 +2498,8 @@ Implementation:
 
 Example:
 
-	import "core:simd"
-	import "core:fmt"
+	#import "core:simd"
+	#import "core:fmt"
 
 	runtime_swizzle_example :: proc() {
 		table   := simd.u8x16{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}

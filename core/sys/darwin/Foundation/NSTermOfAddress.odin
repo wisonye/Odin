@@ -9,7 +9,7 @@ TermOfAddress :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TermOfAddress, objc_selector="neutral", objc_name="neutral", objc_is_class_method=true)
 	TermOfAddress_neutral :: proc() -> instancetype ---
 

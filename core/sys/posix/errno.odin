@@ -1,8 +1,8 @@
 #+build windows, darwin, linux, freebsd, openbsd, netbsd
 package posix
 
-import "core:c"
-import "core:c/libc"
+#import "core:c"
+#import "core:c/libc"
 
 // errno.h - system error numbers
 
@@ -109,7 +109,7 @@ Errno :: enum c.int {
 	EXDEV           = EXDEV,
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	EPERM           :: 1
 	ENOENT          :: 2
 	ESRCH           :: 3
@@ -188,7 +188,7 @@ when ODIN_OS == .Darwin {
 	ETIME           :: 101
 	ENOTRECOVERABLE :: 104
 	EOWNERDEAD      :: 105
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 	EPERM           :: 1
 	ENOENT          :: 2
 	ESRCH           :: 3
@@ -269,7 +269,7 @@ when ODIN_OS == .Darwin {
 	ENOSR           :: -1
 	ENOSTR          :: -1
 	ETIME           :: -1
-} else when ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 	EPERM           :: 1
 	ENOENT          :: 2
 	ESRCH           :: 3
@@ -335,7 +335,7 @@ when ODIN_OS == .Darwin {
 	ENOLCK          :: 77
 	ENOSYS          :: 78
 
-	when ODIN_OS == .NetBSD {
+	#if ODIN_OS == .NetBSD {
 		EOVERFLOW       :: 84
 		EIDRM           :: 82
 		ENOMSG          :: 83
@@ -368,7 +368,7 @@ when ODIN_OS == .Darwin {
 		ETIME           :: -1
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 	EPERM           :: 1
 	ENOENT          :: 2
 	ESRCH           :: 3
@@ -457,7 +457,7 @@ when ODIN_OS == .Darwin {
 
 	EOWNERDEAD      :: 130
 	ENOTRECOVERABLE :: 131
-} else when ODIN_OS == .Windows {
+} else #if ODIN_OS == .Windows {
 	E2BIG           :: 7
 	EACCES          :: 13
 	EADDRINUSE      :: 100

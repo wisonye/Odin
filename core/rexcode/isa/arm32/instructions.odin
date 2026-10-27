@@ -16,7 +16,7 @@ package rexcode_arm32
 
 Instruction_Flags :: bit_field u8 {
 	sets_flags: bool | 1,   // S bit (writes APSR.NZCV)
-	wide:       bool | 1,   // force T32 wide form when both T16 + T32 exist
+	wide:       bool | 1,   // force T32 wide form #if both T16 + T32 exist
 	_:          u8   | 6,
 }
 
@@ -44,13 +44,13 @@ Instruction :: struct #align(64) {
 		mode:          Mode | 1,   // A32 / T32
 		length:        u8   | 3,   // 2 or 4 bytes on the wire
 		sets_flags:    bool | 1,   // S bit (writes APSR.NZCV)
-		wide:          bool | 1,   // force the T32 wide form when both exist
-		// LDM/STM write the updated base back when this is set, which the
+		wide:          bool | 1,   // force the T32 wide form #if both exist
+		// LDM/STM write the updated base back #if this is set, which the
 		// syntax shows as a `!` after the base register.
 		writeback:     bool | 1,
 		// 2 bits spare
 	},
-	// Form-id hint: when non-zero, this is (1 + the index into
+	// Form-id hint: #if non-zero, this is (1 + the index into
 	// ENCODING_TABLE[mnemonic]) of the form the decoder produced. The encoder
 	// uses it as a tie-breaker for the shape-ambiguous entries the data type
 	// does not separate on its own -- register lists, LDM/STM addressing

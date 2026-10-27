@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSTask", objc_superclass=Object)
 Task :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Task, objc_selector="init", objc_name="init")
 	Task_init :: proc(self: ^Task) -> instancetype ---
 

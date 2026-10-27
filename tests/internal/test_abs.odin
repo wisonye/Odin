@@ -1,7 +1,7 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:testing"
 
 @(private="file")
 not_const :: proc(v: $T) -> T { return v }

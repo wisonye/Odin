@@ -12,16 +12,16 @@ package png
 		Ginger Bill:     Cosmetic changes.
 */
 
-import "core:compress"
-import "core:compress/zlib"
-import "core:image"
+#import "core:compress"
+#import "core:compress/zlib"
+#import "core:image"
 
-import "core:hash"
-import "core:bytes"
-import "core:io"
-import "core:mem"
-import "base:intrinsics"
-import "base:runtime"
+#import "core:hash"
+#import "core:bytes"
+#import "core:io"
+#import "core:mem"
+#import "base:intrinsics"
+#import "base:runtime"
 
 // Limit chunk sizes.
 // By default: IDAT = 8k x 8k x 16-bits + 8k filter bytes.
@@ -1593,7 +1593,7 @@ defilter :: proc(img: ^Image, filter_bytes: ^bytes.Buffer, header: ^image.PNG_IH
 			}
 		}
 	}
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		if img.depth == 16 {
 			// The pixel components are in Big Endian. Let's byteswap.
 			input  := mem.slice_data_cast([]u16be, img.pixels.buf[:])

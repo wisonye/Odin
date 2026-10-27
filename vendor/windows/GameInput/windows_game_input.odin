@@ -7,9 +7,9 @@
 */
 package windows_game_input
 
-foreign import wgi "system:gameinput.lib"
+#foreign #import wgi "system:gameinput.lib"
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
 HRESULT :: win.HRESULT
 HANDLE  :: win.HANDLE
@@ -1119,7 +1119,7 @@ IRawDeviceReport_Vtable :: struct {
 }
 
 @(default_calling_convention="system", link_prefix="GameInput")
-foreign wgi {
+#foreign wgi {
 	Create :: proc(gameInput: ^^IGameInput) -> HRESULT ---
 }
 

@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSGlassEffectContainerView", objc_superclass=View)
 GlassEffectContainerView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlassEffectContainerView, objc_selector="contentView", objc_name="contentView")
 	GlassEffectContainerView_contentView :: proc(self: ^GlassEffectContainerView) -> ^View ---
 
@@ -27,7 +27,7 @@ foreign lib {
 GlassEffectView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlassEffectView, objc_selector="contentView", objc_name="contentView")
 	GlassEffectView_contentView :: proc(self: ^GlassEffectView) -> ^View ---
 

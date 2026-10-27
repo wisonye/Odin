@@ -1,12 +1,12 @@
 #+private file
 package os
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:strings"
-import win32 "core:sys/windows"
-import "core:time"
+#import "core:strings"
+#import win32 "core:sys/windows"
+#import "core:time"
 
 @(private="package")
 _get_uid :: proc() -> int {

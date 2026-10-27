@@ -1,13 +1,13 @@
 package encoding_cbor
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:encoding/json"
-import "core:encoding/hex"
-import "core:io"
-import "core:mem"
-import "core:strconv"
-import "core:strings"
+#import "core:encoding/json"
+#import "core:encoding/hex"
+#import "core:io"
+#import "core:mem"
+#import "core:strconv"
+#import "core:strings"
 
 // If we are decoding a stream of either a map or list, the initial capacity will be this value.
 INITIAL_STREAMED_CONTAINER_CAPACITY :: 8
@@ -185,7 +185,7 @@ Marshal_Data_Error :: enum {
 	Invalid_CBOR_Tag, // When the struct tag `cbor_tag:""` is not a registered name or number.
 }
 
-// Error that is returned when a type couldn't be marshalled into or out of, as much information
+// Error that is returned #if a type couldn't be marshalled into or out of, as much information
 // as possible/available is added.
 Unsupported_Type_Error :: struct {
 	id:  typeid,
@@ -232,7 +232,7 @@ negative_u64_to_int :: #force_inline proc(u: Negative_U64) -> i128 {
 	return -1 - i128(u)
 }
 
-// Utility for converting between the different errors when they are subsets of the other.
+// Utility for converting between the different errors #if they are subsets of the other.
 err_conv :: proc {
 	encode_to_marshal_err,
 	encode_to_marshal_err_p2,
@@ -273,7 +273,7 @@ decode_to_unmarshal_err_p2 :: #force_inline proc(v: $T, v2: $T2, err: Decode_Err
 	return v, v2, err_conv(err)
 }
 
-// Recursively frees all memory allocated when decoding the passed value.
+// Recursively frees all memory allocated #if decoding the passed value.
 destroy :: proc(val: Value, allocator := context.allocator) {
 	context.allocator = allocator
 	#partial switch v in val {

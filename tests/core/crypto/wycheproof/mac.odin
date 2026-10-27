@@ -1,17 +1,17 @@
 package test_wycheproof
 
-import "core:encoding/hex"
+#import "core:encoding/hex"
 
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:testing"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:testing"
 
-import "core:crypto/hmac"
-import "core:crypto/kmac"
-import "core:crypto/siphash"
+#import "core:crypto/hmac"
+#import "core:crypto/kmac"
+#import "core:crypto/siphash"
 
-import "../common"
+#import "../common"
 
 @(test)
 test_mac :: proc(t: ^testing.T) {

@@ -1,6 +1,6 @@
 package wasapi
 
-import "core:sys/windows"
+#import "core:sys/windows"
 
 REFERENCE_TIME :: windows.LONGLONG
 
@@ -75,7 +75,7 @@ AUDIO_STREAM_CATEGORY :: enum u32 {
 //                                                    from the IAudioClient object.
 //
 //     AUDCLNT_STREAMFLAGS_EVENTCALLBACK -            An exclusive mode client will supply an event handle that will be
-//                                                    signaled when an IRP completes (or a waveRT buffer completes) telling
+//                                                    signaled #if an IRP completes (or a waveRT buffer completes) telling
 //                                                    it to fill the next buffer
 //
 //     AUDCLNT_STREAMFLAGS_NOPERSIST -                Session state will not be persisted
@@ -92,7 +92,7 @@ AUDIO_STREAM_CATEGORY :: enum u32 {
 //                                                    to convert between the uncompressed format supplied to
 //                                                    IAudioClient::Initialize and the audio engine mix format.
 //
-//     AUDCLNT_SESSIONFLAGS_EXPIREWHENUNOWNED -       Session expires when there are no streams and no owning
+//     AUDCLNT_SESSIONFLAGS_EXPIREWHENUNOWNED -       Session expires #if there are no streams and no owning
 //                                                    session controls.
 //
 //     AUDCLNT_SESSIONFLAGS_DISPLAY_HIDE -            Don't show volume control in the Volume Mixer.

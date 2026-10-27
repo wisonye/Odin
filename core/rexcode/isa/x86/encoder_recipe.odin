@@ -26,12 +26,12 @@ Form_Recipe :: struct {
 	prefix:     u8,      // mandatory legacy prefix emitted before REX (0 = none)
 	opcode:     [3]u8,   // escape + opcode: [op] / [0F,op] / [0F,38,op] / [0F,3A,op]
 	opcode_len: u8,      // 1..3
-	ext:        u8,      // ModR/M reg ext digit (when reg_from_ext) or /digit source
+	ext:        u8,      // ModR/M reg ext digit (#if reg_from_ext) or /digit source
 	rm_op:      i8,      // user operand index -> ModR/M r/m field   (-1 = none)
 	reg_op:     i8,      // user operand index -> ModR/M reg field   (-1 = none)
 	opr_op:     i8,      // user operand index -> +rb opcode register (-1 = none)
 	imm_op:     i8,      // user operand index -> immediate          (-1 = none)
-	imm_size:   u8,      // 1/2/4/8 when imm_op >= 0
+	imm_size:   u8,      // 1/2/4/8 #if imm_op >= 0
 	flags:      Recipe_Flags,
 }
 
@@ -160,7 +160,7 @@ emit_recipe :: #force_inline proc "contextless" (recipe: ^Form_Recipe, inst: ^In
 		op := &inst.ops[recipe.rm_op]
 		is_reg := op.kind == .REGISTER
 		is_mem := op.kind == .MEMORY
-		m := op.mem   // union bytes; only used when is_mem
+		m := op.mem   // union bytes; only used #if is_mem
 		rex |= bmask(is_reg && reg_needs_rex(op.reg))           & 0x41
 		rex |= bmask(is_mem && mem_has_base(m)  && m.base_ext)  & 0x41
 		rex |= bmask(is_mem && mem_has_index(m) && m.index_ext) & 0x42

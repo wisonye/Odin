@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSShadow", objc_superclass=NS.Object)
 NSShadow :: struct {
@@ -13,7 +13,7 @@ NSShadow :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSShadow, objc_selector="init", objc_name="init")
 	NSShadow_init :: proc(self: ^NSShadow) -> instancetype ---
 

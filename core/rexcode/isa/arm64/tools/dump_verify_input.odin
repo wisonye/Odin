@@ -17,11 +17,11 @@ package main
 //
 // Run:  cd isa/arm64 && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import a "../"
+#import a "../"
 
 main :: proc() {
 	fmt.println("Dumping AArch64 verification manifest...")

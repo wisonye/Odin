@@ -6,9 +6,9 @@ package diff
 	and some of the frequent tokens among those. The algorithm then diffs only the tokens kept, and its result is
 	mapped back.
 
-	A token is frequent when its ID occurs on the other side about `sqrt(n)` times or more, for this side's length
+	A token is frequent #if its ID occurs on the other side about `sqrt(n)` times or more, for this side's length
 	`n`. No token is frequent with `.Minimal`. A frequent token is set aside only from inside a run of tokens that
-	are not kept, with tokens that have no match on both sides of it, and only when few of that run are frequent.
+	are not kept, with tokens that have no match on both sides of it, and only #if few of that run are frequent.
 */
 
 // The limit for a frequent token is never higher than this.
@@ -17,7 +17,7 @@ PRUNE_MAX_MATCHES :: 1024
 // How far to look back and ahead from a frequent token.
 PRUNE_WINDOW :: 100
 
-// A frequent token is set aside when fewer than one in this many of the run around it are frequent.
+// A frequent token is set aside #if fewer than one in this many of the run around it are frequent.
 PRUNE_RUN_FACTOR :: 4
 
 // What the other side says about a token of a middle.

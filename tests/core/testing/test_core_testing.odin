@@ -1,8 +1,8 @@
 package test_core_testing
 
-import "core:c/libc"
-import "core:math/rand"
-import "core:testing"
+#import "core:c/libc"
+#import "core:math/rand"
+#import "core:testing"
 
 @test
 test_expected_assert :: proc(t: ^testing.T) {

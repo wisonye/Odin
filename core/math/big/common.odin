@@ -5,8 +5,8 @@ package math_big
 	Made available under Odin's license.
 */
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 /*
 	TODO: Make the tunables runtime adjustable where practical.
@@ -76,7 +76,7 @@ MAX_ITERATIONS_RANDOM_PRIME  := 1_000_000
 	Trade a smaller memory footprint for more processing overhead?
 */
 _LOW_MEMORY :: #config(MATH_BIG_SMALL_MEMORY, false)
-when _LOW_MEMORY {
+#if _LOW_MEMORY {
 	_DEFAULT_DIGIT_COUNT ::   8
 	_TAB_SIZE            ::  32
 	_MAX_WIN_SIZE        ::   5

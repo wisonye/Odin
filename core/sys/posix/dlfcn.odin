@@ -1,14 +1,14 @@
 #+build darwin, linux, freebsd, openbsd, netbsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
-	foreign import lib "system:dl"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
+	#foreign #import lib "system:dl"
 } else {
-	foreign import lib {
+	#foreign #import lib {
 		"system:c",
 		"system:dl",
 	}
@@ -16,7 +16,7 @@ when ODIN_OS == .Darwin {
 
 // dlfcn.h - dynamic linking
 
-foreign lib {
+#foreign lib {
 	/*
 	inform the system that the object referenced by a handle returned from a previous dlopen() 
 	invocation is no longer needed by the application.
@@ -88,7 +88,7 @@ RTLD_Flags :: bit_set[RTLD_Flag_Bits; c.int]
 
 Symbol_Table :: distinct rawptr
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	RTLD_LAZY    :: 0x1
 	RTLD_NOW     :: 0x2
@@ -97,7 +97,7 @@ when ODIN_OS == .Darwin {
 
 	RTLD_LOCAL   :: RTLD_Flags{RTLD_Flag_Bits(log2(_RTLD_LOCAL))}
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
 
 	RTLD_LAZY    :: 1
 	RTLD_NOW     :: 2
@@ -106,7 +106,7 @@ when ODIN_OS == .Darwin {
 
 	RTLD_LOCAL   :: RTLD_Flags{}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	RTLD_LAZY    :: 0x1
 	RTLD_NOW     :: 0x2
@@ -115,7 +115,7 @@ when ODIN_OS == .Darwin {
 
 	RTLD_LOCAL   :: RTLD_Flags{RTLD_Flag_Bits(log2(_RTLD_LOCAL))}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	RTLD_LAZY    :: 0x001
 	RTLD_NOW     :: 0x002

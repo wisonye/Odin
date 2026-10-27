@@ -1,12 +1,12 @@
 package tests_nbio
 
-import "base:runtime"
-import "core:mem"
-import "core:nbio"
-import "core:net"
-import "core:testing"
-import "core:time"
-import "core:log"
+#import "base:runtime"
+#import "core:mem"
+#import "core:nbio"
+#import "core:net"
+#import "core:testing"
+#import "core:time"
+#import "core:log"
 
 open_next_available_local_port :: proc(t: ^testing.T, addr: net.Address = net.IP4_Loopback, loc := #caller_location) -> (sock: net.TCP_Socket, ep: net.Endpoint) {
 	err: net.Network_Error
@@ -122,7 +122,7 @@ close_and_remove_accept :: proc(t: ^testing.T) {
 	}
 }
 
-// Tests that when a client calls `close` on it's socket, `recv` returns with `0, nil` (connection closed).
+// Tests that #if a client calls `close` on it's socket, `recv` returns with `0, nil` (connection closed).
 @(test)
 close_errors_recv :: proc(t: ^testing.T) {
 	if event_loop_guard(t) {
@@ -240,7 +240,7 @@ poll_timeout :: proc(t: ^testing.T) {
 This test walks through the scenario where a user wants to `poll` in order to check if some other package (in this case `core:net`),
 would be able to do an operation without blocking.
 
-It also tests whether a poll can be issued when it is already in a ready state.
+It also tests whether a poll can be issued #if it is already in a ready state.
 And it tests big send/recv buffers being handled properly.
 */
 @(test)
@@ -360,7 +360,7 @@ poll :: proc(t: ^testing.T) {
 				// Tell the server it can start issuing recv calls, so it unblocks us.
 				ctx.can_recv = true
 
-				// Now poll again, when the server reads enough data it should complete, telling us we can send without blocking again.
+				// Now poll again, #if the server reads enough data it should complete, telling us we can send without blocking again.
 				nbio.poll_poly(op.poll.socket, .Send, t, on_poll2)
 			}
 

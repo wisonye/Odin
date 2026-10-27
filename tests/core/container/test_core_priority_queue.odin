@@ -1,9 +1,9 @@
 package test_core_container
 
-import "base:runtime"
-import pq "core:container/priority_queue"
-import "core:math/rand"
-import "core:testing"
+#import "base:runtime"
+#import pq "core:container/priority_queue"
+#import "core:math/rand"
+#import "core:testing"
 
 @test
 test_priority_queue :: proc(t: ^testing.T) {

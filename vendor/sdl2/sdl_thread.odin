@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 Thread :: struct {}
@@ -25,7 +25,7 @@ ThreadPriority :: enum c.int {
 ThreadFunction :: proc "c" (data: rawptr) -> c.int
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Release)
 	CreateThread              :: proc(fn: ThreadFunction, name: cstring, data: rawptr) -> ^Thread ---
 	@(synchronizes=.Release)

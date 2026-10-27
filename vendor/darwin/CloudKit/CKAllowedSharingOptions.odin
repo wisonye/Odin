@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKAllowedSharingOptions", objc_superclass=NS.Object)
 AllowedSharingOptions :: struct {
@@ -11,7 +11,7 @@ AllowedSharingOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AllowedSharingOptions, objc_selector="initWithAllowedParticipantPermissionOptions:allowedParticipantAccessOptions:", objc_name="initWithAllowedParticipantPermissionOptions")
 	AllowedSharingOptions_initWithAllowedParticipantPermissionOptions :: proc(self: ^AllowedSharingOptions, allowedParticipantPermissionOptions: SharingParticipantPermissionOptions, allowedParticipantAccessOptions: SharingParticipantAccessOptions) -> instancetype ---
 

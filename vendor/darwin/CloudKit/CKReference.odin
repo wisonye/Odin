@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKReference", objc_superclass=NS.Object)
 Reference :: struct {
@@ -11,7 +11,7 @@ Reference :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Reference, objc_selector="init", objc_name="init")
 	Reference_init :: proc(self: ^Reference) -> instancetype ---
 

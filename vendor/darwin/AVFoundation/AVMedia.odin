@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVMediaDataStorage", objc_superclass=NS.Object)
 MediaDataStorage :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaDataStorage, objc_selector="init", objc_name="init")
 	MediaDataStorage_init :: proc(self: ^MediaDataStorage) -> instancetype ---
 
@@ -33,7 +33,7 @@ MediaExtensionProperties :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaExtensionProperties, objc_selector="init", objc_name="init")
 	MediaExtensionProperties_init :: proc(self: ^MediaExtensionProperties) -> instancetype ---
 
@@ -63,7 +63,7 @@ MediaPresentationSelector :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaPresentationSelector, objc_selector="displayNameForLocaleIdentifier:", objc_name="displayNameForLocaleIdentifier")
 	MediaPresentationSelector_displayNameForLocaleIdentifier :: proc(self: ^MediaPresentationSelector, localeIdentifier: ^NS.String) -> ^NS.String ---
 
@@ -81,7 +81,7 @@ MediaPresentationSetting :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaPresentationSetting, objc_selector="displayNameForLocaleIdentifier:", objc_name="displayNameForLocaleIdentifier")
 	MediaPresentationSetting_displayNameForLocaleIdentifier :: proc(self: ^MediaPresentationSetting, localeIdentifier: ^NS.String) -> ^NS.String ---
 
@@ -97,7 +97,7 @@ MediaSelection :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaSelection, objc_selector="selectedMediaOptionInMediaSelectionGroup:", objc_name="selectedMediaOptionInMediaSelectionGroup")
 	MediaSelection_selectedMediaOptionInMediaSelectionGroup :: proc(self: ^MediaSelection, mediaSelectionGroup: ^MediaSelectionGroup) -> ^MediaSelectionOptions ---
 
@@ -112,7 +112,7 @@ foreign lib {
 @(objc_class="AVMutableMediaSelection", objc_superclass=MediaSelection)
 MutableMediaSelection :: struct { using _: MediaSelection}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableMediaSelection, objc_selector="selectMediaOption:inMediaSelectionGroup:", objc_name="selectMediaOption")
 	MutableMediaSelection_selectMediaOption :: proc(self: ^MutableMediaSelection, mediaSelectionOption: ^MediaSelectionOptions, mediaSelectionGroup: ^MediaSelectionGroup) ---
 }
@@ -132,7 +132,7 @@ MediaSelectionGroup :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaSelectionGroup, objc_selector="mediaSelectionOptionWithPropertyList:", objc_name="mediaSelectionOptionWithPropertyList")
 	MediaSelectionGroup_mediaSelectionOptionWithPropertyList :: proc(self: ^MediaSelectionGroup, plist: id) -> ^MediaSelectionOptions ---
 
@@ -175,7 +175,7 @@ MediaSelectionOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaSelectionOptions, objc_selector="hasMediaCharacteristic:", objc_name="hasMediaCharacteristic")
 	MediaSelectionOptions_hasMediaCharacteristic :: proc(self: ^MediaSelectionOptions, mediaCharacteristic: ^NS.String) -> bool ---
 

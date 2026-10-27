@@ -1,7 +1,7 @@
 // Tests issue #2466 https://github.com/odin-lang/Odin/issues/2466
 package test_issue_2466
 
-import "core:testing"
+#import "core:testing"
 
 Bug :: struct  {
 	val: int,

@@ -1,10 +1,10 @@
 package sysinfo
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strconv"
-import "core:strings"
-import "core:sys/linux"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strconv"
+#import "core:strings"
+#import "core:sys/linux"
 
 @(private)
 _os_version :: proc (allocator: runtime.Allocator, loc := #caller_location) -> (res: OS_Version, ok: bool) {

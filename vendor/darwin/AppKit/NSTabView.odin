@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSTabView", objc_superclass=View)
 TabView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabView, objc_selector="selectTabViewItem:", objc_name="selectTabViewItem")
 	TabView_selectTabViewItem :: proc(self: ^TabView, tabViewItem: ^TabViewItem) ---
 
@@ -137,7 +137,7 @@ TabViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabViewDelegate, objc_selector="tabView:shouldSelectTabViewItem:", objc_name="tabView_shouldSelectTabViewItem")
 	TabViewDelegate_tabView_shouldSelectTabViewItem :: proc(self: ^TabViewDelegate, tabView: ^TabView, tabViewItem: ^TabViewItem) -> bool ---
 
@@ -160,7 +160,7 @@ TabViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabViewController, objc_selector="addTabViewItem:", objc_name="addTabViewItem")
 	TabViewController_addTabViewItem :: proc(self: ^TabViewController, tabViewItem: ^TabViewItem) ---
 
@@ -242,7 +242,7 @@ TabViewItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabViewItem, objc_selector="tabViewItemWithViewController:", objc_name="tabViewItemWithViewController", objc_is_class_method=true)
 	TabViewItem_tabViewItemWithViewController :: proc(viewController: ^ViewController) -> instancetype ---
 

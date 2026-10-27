@@ -1,9 +1,9 @@
 #+private
 package os
 
-import "core:slice"
-import "base:intrinsics"
-import "core:sys/wasm/wasi"
+#import "core:slice"
+#import "base:intrinsics"
+#import "core:sys/wasm/wasi"
 
 Read_Directory_Iterator_Impl :: struct {
 	fullpath: [dynamic]byte,

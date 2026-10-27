@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="NSSymbolContentTransition", objc_superclass=NS.Object)
 NSSymbolContentTransition :: struct {
@@ -13,7 +13,7 @@ NSSymbolContentTransition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolContentTransition, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	NSSymbolContentTransition_new :: proc() -> ^NSSymbolContentTransition ---
 
@@ -26,7 +26,7 @@ foreign lib {
 NSSymbolAutomaticContentTransition :: struct { using _: NSSymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolAutomaticContentTransition, objc_selector="transition", objc_name="transition", objc_is_class_method=true)
 	NSSymbolAutomaticContentTransition_transition :: proc() -> instancetype ---
 }
@@ -36,14 +36,14 @@ foreign lib {
 NSSymbolMagicReplaceContentTransition :: struct { using _: NSSymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSSymbolReplaceContentTransition", objc_superclass=NSSymbolContentTransition)
 NSSymbolReplaceContentTransition :: struct { using _: NSSymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolReplaceContentTransition, objc_selector="transition", objc_name="transition", objc_is_class_method=true)
 	NSSymbolReplaceContentTransition_transition :: proc() -> instancetype ---
 
@@ -75,7 +75,7 @@ NSSymbolEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolEffect, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	NSSymbolEffect_new :: proc() -> ^NSSymbolEffect ---
 
@@ -92,7 +92,7 @@ NSSymbolEffectOptions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolEffectOptions, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	NSSymbolEffectOptions_new :: proc() -> ^NSSymbolEffectOptions ---
 
@@ -142,7 +142,7 @@ NSSymbolEffectOptionsRepeatBehavior :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolEffectOptionsRepeatBehavior, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	NSSymbolEffectOptionsRepeatBehavior_new :: proc() -> ^NSSymbolEffectOptionsRepeatBehavior ---
 
@@ -176,7 +176,7 @@ NSSymbolEffectOptionsRepeatBehavior_behaviorPeriodicWithCount :: proc {
 NSSymbolAppearEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolAppearEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolAppearEffect_effect :: proc() -> instancetype ---
 
@@ -198,7 +198,7 @@ foreign lib {
 NSSymbolBounceEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolBounceEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolBounceEffect_effect :: proc() -> instancetype ---
 
@@ -220,7 +220,7 @@ foreign lib {
 NSSymbolBreatheEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolBreatheEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolBreatheEffect_effect :: proc() -> instancetype ---
 
@@ -242,7 +242,7 @@ foreign lib {
 NSSymbolDisappearEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolDisappearEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolDisappearEffect_effect :: proc() -> instancetype ---
 
@@ -264,7 +264,7 @@ foreign lib {
 NSSymbolDrawOffEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolDrawOffEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolDrawOffEffect_effect :: proc() -> instancetype ---
 
@@ -289,7 +289,7 @@ foreign lib {
 NSSymbolDrawOnEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolDrawOnEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolDrawOnEffect_effect :: proc() -> instancetype ---
 
@@ -308,7 +308,7 @@ foreign lib {
 NSSymbolPulseEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolPulseEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolPulseEffect_effect :: proc() -> instancetype ---
 
@@ -324,7 +324,7 @@ foreign lib {
 NSSymbolRotateEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolRotateEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolRotateEffect_effect :: proc() -> instancetype ---
 
@@ -346,7 +346,7 @@ foreign lib {
 NSSymbolScaleEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolScaleEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolScaleEffect_effect :: proc() -> instancetype ---
 
@@ -368,7 +368,7 @@ foreign lib {
 NSSymbolVariableColorEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolVariableColorEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolVariableColorEffect_effect :: proc() -> instancetype ---
 
@@ -396,7 +396,7 @@ foreign lib {
 NSSymbolWiggleEffect :: struct { using _: NSSymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSSymbolWiggleEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	NSSymbolWiggleEffect_effect :: proc() -> instancetype ---
 

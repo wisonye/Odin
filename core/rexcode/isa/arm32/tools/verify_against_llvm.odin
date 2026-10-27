@@ -25,10 +25,10 @@ package main
 //   /tmp/rexcode_arm32_verify_report.txt        (everything)
 //   /tmp/rexcode_arm32_verify_mismatches.txt    (only mismatches)
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:strconv"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:strconv"
 
 normalize_our :: proc(name: string) -> string {
 	s := strings.to_lower(name, context.temp_allocator)
@@ -179,7 +179,7 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		{"cx1a", "cdp2"}, {"cx2a", "cdp2"}, {"cx3a", "cdp2"},
 		{"cx1da", "cdp2"}, {"cx2da", "cdp2"}, {"cx3da", "cdp2"},
 		// VCX encodes in CDP space too, but the second-operand form often
-		// decodes as a different VCX variant when LLVM uses CDE.
+		// decodes as a different VCX variant #if LLVM uses CDE.
 		{"vcx1", "vcx2"}, {"vcx2", "vcx1"}, {"vcx1a", "vcx2a"}, {"vcx2a", "vcx1a"},
 		{"vcx3", "vcx1"}, {"vcx3a", "vcx1a"},
 		// ROR / RRX alias (ROR Rd, Rm with shift=0 disassembles as RRX Rd, Rm)
@@ -189,18 +189,18 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		{"dlstp", "lsls"}, {"wlstp", "lsls"}, {"lctp", "lsls"},
 		{"autg", "smmul"}, {"bti", "dbg"},
 		// MVE MAC reductions: VMLSLDAV/VRMLALDAVH/VRMLSLDAVH alias to vabav
-		// when LLVM doesn't have full mve.fp feature visibility
+		// #if LLVM doesn't have full mve.fp feature visibility
 		{"vmlsldav", "vabav"}, {"vmlsldavx", "vabav"},
 		{"vrmlsldavh", "vabav"}, {"vrmlsldavhx", "vabav"},
 		{"vrmlaldavh", "vrmlalvh"}, {"vrmlaldavha", "vrmlalvha"},
-		// SB → strb when triple doesn't support FEAT_SB
+		// SB → strb #if triple doesn't support FEAT_SB
 		{"sb", "strb"},
 		// B.W → beq alias (conditional branch with cond=AL printed as B)
 		{"b", "beq"}, {"b", "bne"}, {"b", "bcs"}, {"b", "bcc"},
 		{"b", "bmi"}, {"b", "bpl"}, {"b", "bvs"}, {"b", "bvc"},
 		{"b", "bhi"}, {"b", "bls"}, {"b", "bge"}, {"b", "blt"},
 		{"b", "bgt"}, {"b", "ble"}, {"b", "bal"},
-		// MSR T32 → lsls when feature not enabled (encoding overlap)
+		// MSR T32 → lsls #if feature not enabled (encoding overlap)
 		{"msr", "lsls"},
 		// Bit-pattern ambiguities: same encoding decoded different ways:
 		{"vmullb", "vqdmladh"}, {"vmullt", "vqdmladhx"},
@@ -212,7 +212,7 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		// VLD2R/3R/4R: A32 syntax has post-index `, r0` that my entry doesn't
 		// include — disasm differs in trailing operand only.
 		{"vld2r", "vld2"}, {"vld3r", "vld3"}, {"vld4r", "vld4"},
-		// CDP2 → vseleq when VFPv4+ enabled with same bit pattern
+		// CDP2 → vseleq #if VFPv4+ enabled with same bit pattern
 		{"cdp2", "vseleq"}, {"cdp2", "vselne"}, {"cdp2", "vselge"}, {"cdp2", "vselgt"},
 		// VSUDOT_LANE → vusdot per LLVM (same encoding, different order)
 		{"vsudot", "vusdot"},
@@ -231,7 +231,7 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		{"vldrd", "strh"}, {"vstrd", "strh"},
 		// PLDW / PLI / PLD share base "pld"
 		{"pldw", "pld"}, {"pli", "pld"},
-		// Coproc 10/11 aliases (CDP/LDC/STC -> VFP forms when coproc=10 or 11)
+		// Coproc 10/11 aliases (CDP/LDC/STC -> VFP forms #if coproc=10 or 11)
 		{"cdp", "vmla"}, {"cdp", "vmls"}, {"cdp", "vfma"}, {"cdp", "vfms"},
 		{"cdp", "vadd"}, {"cdp", "vsub"}, {"cdp", "vmul"}, {"cdp", "vdiv"},
 		{"cdp", "vneg"}, {"cdp", "vabs"}, {"cdp", "vsqrt"}, {"cdp", "vcmp"},

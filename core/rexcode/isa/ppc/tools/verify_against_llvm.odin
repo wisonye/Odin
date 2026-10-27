@@ -19,9 +19,9 @@ package main
 //
 // Run:  cd isa/ppc && odin run tools/verify_against_llvm.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
 Stat :: struct { ok, alias, unknown, mismatch: int }
 

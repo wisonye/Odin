@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_ModelIO
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLJointAnimation")
 JointAnimation :: struct { using _: intrinsics.objc_object}
@@ -16,7 +16,7 @@ PackedJointAnimation :: struct {
 	using _: JointAnimation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PackedJointAnimation, objc_selector="initWithName:jointPaths:", objc_name="initWithName")
 	PackedJointAnimation_initWithName :: proc(self: ^PackedJointAnimation, name: ^NS.String, jointPaths: ^NS.Array) -> instancetype ---
 

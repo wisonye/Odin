@@ -2,9 +2,9 @@
 #+feature dynamic-literals
 package test_core_hash
 
-import "core:hash/xxhash"
-import "core:testing"
-import "core:math/rand"
+#import "core:hash/xxhash"
+#import "core:testing"
+#import "core:math/rand"
 
 @test
 test_xxhash_zero_fixed :: proc(t: ^testing.T) {

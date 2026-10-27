@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_comparisons_5408 :: proc(t: ^testing.T) {

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLFunction")
 Function :: struct {
@@ -11,7 +11,7 @@ Function :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Function, objc_selector="newArgumentEncoderWithBufferIndex:", objc_name="newArgumentEncoderWithBufferIndex_")
 	Function_newArgumentEncoderWithBufferIndex_ :: proc(self: ^Function, bufferIndex: NS.UInteger) -> ^ArgumentEncoder ---
 
@@ -67,7 +67,7 @@ FunctionDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionDescriptor, objc_selector="functionDescriptor", objc_name="functionDescriptor", objc_is_class_method=true)
 	FunctionDescriptor_functionDescriptor :: proc() -> ^FunctionDescriptor ---
 
@@ -106,7 +106,7 @@ foreign lib {
 @(objc_class="MTLFunctionReflection", objc_superclass=NS.Object)
 FunctionReflection :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionReflection, objc_selector="bindings", objc_name="bindings")
 	FunctionReflection_bindings :: proc(self: ^FunctionReflection) -> ^NS.Array ---
 
@@ -118,7 +118,7 @@ foreign lib {
 @(objc_class="MTLFunctionConstant", objc_superclass=NS.Object)
 FunctionConstant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionConstant, objc_selector="name", objc_name="name")
 	FunctionConstant_name :: proc(self: ^FunctionConstant) -> ^NS.String ---
 
@@ -139,7 +139,7 @@ FunctionConstantValues :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionConstantValues, objc_selector="setConstantValue:type:atIndex:", objc_name="setConstantValue_type_atIndex")
 	FunctionConstantValues_setConstantValue_type_atIndex :: proc(self: ^FunctionConstantValues, value: rawptr, type: DataType, index: NS.UInteger) ---
 
@@ -168,7 +168,7 @@ FunctionHandle :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionHandle, objc_selector="functionType", objc_name="functionType")
 	FunctionHandle_functionType :: proc(self: ^FunctionHandle) -> FunctionType ---
 
@@ -189,7 +189,7 @@ FunctionLog :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionLog, objc_selector="type", objc_name="type")
 	FunctionLog_type :: proc(self: ^FunctionLog) -> FunctionLogType ---
 
@@ -210,7 +210,7 @@ FunctionLogDebugLocation :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionLogDebugLocation, objc_selector="functionName", objc_name="functionName")
 	FunctionLogDebugLocation_functionName :: proc(self: ^FunctionLogDebugLocation) -> ^NS.String ---
 
@@ -245,7 +245,7 @@ FunctionStitchingFunctionNode :: struct {
 	using _: FunctionStitchingNode,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionStitchingFunctionNode, objc_selector="initWithName:arguments:controlDependencies:", objc_name="initWithName")
 	FunctionStitchingFunctionNode_initWithName :: proc(self: ^FunctionStitchingFunctionNode, name: ^NS.String, arguments: ^NS.Array, controlDependencies: ^NS.Array) -> instancetype ---
 
@@ -275,7 +275,7 @@ FunctionStitchingGraph :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionStitchingGraph, objc_selector="initWithFunctionName:nodes:outputNode:attributes:", objc_name="initWithFunctionName")
 	FunctionStitchingGraph_initWithFunctionName :: proc(self: ^FunctionStitchingGraph, functionName: ^NS.String, nodes: ^NS.Array, outputNode: ^FunctionStitchingFunctionNode, attributes: ^NS.Array) -> instancetype ---
 
@@ -311,7 +311,7 @@ FunctionStitchingInputNode :: struct {
 	using _: FunctionStitchingNode,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FunctionStitchingInputNode, objc_selector="initWithArgumentIndex:", objc_name="initWithArgumentIndex")
 	FunctionStitchingInputNode_initWithArgumentIndex :: proc(self: ^FunctionStitchingInputNode, argument: NS.UInteger) -> instancetype ---
 
@@ -344,7 +344,7 @@ IntersectionFunctionTable :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IntersectionFunctionTable, objc_selector="setBuffer:offset:atIndex:", objc_name="setBuffer")
 	IntersectionFunctionTable_setBuffer :: proc(self: ^IntersectionFunctionTable, buffer: ^Buffer, offset: NS.UInteger, index: NS.UInteger) ---
 
@@ -421,7 +421,7 @@ IntersectionFunctionTableDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IntersectionFunctionTableDescriptor, objc_selector="intersectionFunctionTableDescriptor", objc_name="intersectionFunctionTableDescriptor", objc_is_class_method=true)
 	IntersectionFunctionTableDescriptor_intersectionFunctionTableDescriptor :: proc() -> ^IntersectionFunctionTableDescriptor ---
 

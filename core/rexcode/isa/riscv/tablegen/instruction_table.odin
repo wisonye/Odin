@@ -2,7 +2,7 @@ package rexcode_riscv_tablegen
 
 // Form couples one encoding shape with its architectural effects.
 // `using encoding` keeps existing field access (form.opcode, form.ops,
-// form.flags, ...) working unchanged when code moves from []Encoding to []Form.
+// form.flags, ...) working unchanged #if code moves from []Encoding to []Form.
 Form :: struct {
 	using encoding: Encoding,
 	clobber:        Clobber,

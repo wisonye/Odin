@@ -1,8 +1,8 @@
 package _edwards25519
 
-import "core:crypto"
-import field "core:crypto/_fiat/field_scalar25519"
-import subtle "core:crypto/_subtle"
+#import "core:crypto"
+#import field "core:crypto/_fiat/field_scalar25519"
+#import subtle "core:crypto/_subtle"
 
 ge_scalarmult :: proc "contextless" (ge, p: ^Group_Element, sc: ^Scalar) {
 	tmp: field.Non_Montgomery_Domain_Field_Element
@@ -40,7 +40,7 @@ ge_double_scalarmult_basepoint_vartime :: proc "contextless" (
 
 	A_tbl: Multiply_Table = ---
 	mul_tbl_set(&A_tbl, A, &tmp_add)
-	when crypto.COMPACT_IMPLS == true {
+	#if crypto.COMPACT_IMPLS == true {
 		G_tbl: Multiply_Table = ---
 		mul_tbl_set(&G_tbl, &GE_BASEPOINT, &tmp_add)
 	} else {
@@ -69,7 +69,7 @@ ge_double_scalarmult_basepoint_vartime :: proc "contextless" (
 			ge_double(&tmp, &tmp, &tmp_dbl)
 		}
 		mul_tbl_add(&tmp, &A_tbl, hi_a, &tmp_add, &tmp_addend, true)
-		when crypto.COMPACT_IMPLS == true {
+		#if crypto.COMPACT_IMPLS == true {
 			mul_tbl_add(&tmp, &G_tbl, hi_b, &tmp_add, &tmp_addend, true)
 		} else {
 			mul_bp_tbl_add(&tmp, GE_BASEPOINT_TABLE, hi_b, &tmp_add, &tmp_bp_addend, true)
@@ -80,7 +80,7 @@ ge_double_scalarmult_basepoint_vartime :: proc "contextless" (
 		ge_double(&tmp, &tmp, &tmp_dbl)
 		ge_double(&tmp, &tmp, &tmp_dbl)
 		mul_tbl_add(&tmp, &A_tbl, lo_a, &tmp_add, &tmp_addend, true)
-		when crypto.COMPACT_IMPLS == true {
+		#if crypto.COMPACT_IMPLS == true {
 			mul_tbl_add(&tmp, &G_tbl, lo_b, &tmp_add, &tmp_addend, true)
 		} else {
 			mul_bp_tbl_add(&tmp, GE_BASEPOINT_TABLE, lo_b, &tmp_add, &tmp_bp_addend, true)

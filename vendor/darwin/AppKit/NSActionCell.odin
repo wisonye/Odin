@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSActionCell", objc_superclass=Cell)
 ActionCell :: struct { using _: Cell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActionCell, objc_selector="target", objc_name="target")
 	ActionCell_target :: proc(self: ^ActionCell) -> id ---
 

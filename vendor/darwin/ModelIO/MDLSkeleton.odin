@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLSkeleton", objc_superclass=Object)
 Skeleton :: struct {
@@ -10,7 +10,7 @@ Skeleton :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Skeleton, objc_selector="initWithName:jointPaths:", objc_name="initWithName")
 	Skeleton_initWithName :: proc(self: ^Skeleton, name: ^NS.String, jointPaths: ^NS.Array) -> instancetype ---
 

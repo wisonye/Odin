@@ -1,11 +1,11 @@
 package miniaudio
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
-import "core:c"
+#import "core:c"
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	device_job_thread_config_init :: proc() -> device_job_thread_config ---
 
 	device_job_thread_init   :: proc(pConfig: ^device_job_thread_config, pAllocationCallbacks: ^allocation_callbacks, pJobThread: ^device_job_thread) -> result ---
@@ -26,7 +26,7 @@ foreign lib {
 
 	Remarks
 	-------
-	You must always use this to initialize the default state of the `ma_context_config` object. Not using this will result in your program breaking when miniaudio
+	You must always use this to initialize the default state of the `ma_context_config` object. Not using this will result in your program breaking #if miniaudio
 	is updated and new members are added to `ma_context_config`. It also sets logical defaults.
 
 	You can override members of the returned object by changing it's members directly.
@@ -132,7 +132,7 @@ foreign lib {
 					it so the ALSA backend includes all devices. Defaults to false.
 
 			pulse.pApplicationName
-					PulseAudio only. The application name to use when initializing the PulseAudio context with `pa_context_new()`.
+					PulseAudio only. The application name to use #if initializing the PulseAudio context with `pa_context_new()`.
 
 			pulse.pServerName
 					PulseAudio only. The name of the server to connect to with `pa_context_connect()`.
@@ -411,7 +411,7 @@ foreign lib {
 
 	You can pass in NULL for the playback or capture lists in which case they'll be ignored.
 
-	The returned pointers will become invalid upon the next call this this function, or when the context is uninitialized. Do not free the returned pointers.
+	The returned pointers will become invalid upon the next call this this function, or #if the context is uninitialized. Do not free the returned pointers.
 
 
 	See Also
@@ -564,7 +564,7 @@ foreign lib {
 
 	When delivering data to and from a device you need to make sure it's in the correct format which you can set through the device configuration. You just set the
 	format that you want to use and miniaudio will perform all of the necessary conversion for you internally. When delivering data to and from the callback you
-	can assume the format is the same as what you requested when you initialized the device. See Remarks for more details on miniaudio's data conversion pipeline.
+	can assume the format is the same as what you requested #if you initialized the device. See Remarks for more details on miniaudio's data conversion pipeline.
 
 
 	Parameters
@@ -603,7 +603,7 @@ foreign lib {
 			ma_context_init(NULL, 0, NULL, &context);
 			```
 
-	Do not set `pContext` to NULL if you are needing to open multiple devices. You can, however, use NULL when initializing the first device, and then use
+	Do not set `pContext` to NULL if you are needing to open multiple devices. You can, however, use NULL #if initializing the first device, and then use
 	device.pContext for the initialization of other devices.
 
 	The device can be configured via the `pConfig` argument. The config object is initialized with `ma_device_config_init()`. Individual configuration settings can
@@ -639,10 +639,10 @@ foreign lib {
 			noClip
         			When set to true, the contents of the output buffer are left alone after returning and it will be left up to the backend itself to decide whether or
         			not to clip. When set to false (default), the contents of the output buffer passed into the data callback will be clipped after returning. This only
-					applies when the playback sample format is f32.
+					applies #if the playback sample format is f32.
 
 			noDisableDenormals
-					By default, miniaudio will disable denormals when the data callback is called. Setting this to true will prevent the disabling of denormals.
+					By default, miniaudio will disable denormals #if the data callback is called. Setting this to true will prevent the disabling of denormals.
 
 			noFixedSizedCallback
         			Allows miniaudio to fire the data callback with any frame count. When this is set to false (the default), the data callback will be fired with a
@@ -653,13 +653,13 @@ foreign lib {
 					The callback to fire whenever data is ready to be delivered to or from the device.
 
 			notificationCallback
-					The callback to fire when something has changed with the device, such as whether or not it has been started or stopped.
+					The callback to fire #if something has changed with the device, such as whether or not it has been started or stopped.
 
 			pUserData
 					The user data pointer to use with the device. You can access this directly from the device object like `device.pUserData`.
 
 			resampling.algorithm
-					The resampling algorithm to use when miniaudio needs to perform resampling between the rate specified by `sampleRate` and the device's native rate. The
+					The resampling algorithm to use #if miniaudio needs to perform resampling between the rate specified by `sampleRate` and the device's native rate. The
 					default value is `ma_resample_algorithm_linear`, and the quality can be configured with `resampling.linear.lpfOrder`.
 
 			resampling.pBackendVTable
@@ -719,7 +719,7 @@ foreign lib {
 					WASAPI only. When set to true, disables WASAPI's automatic resampling and forces the use of miniaudio's resampler. Defaults to false.
 
 			wasapi.noDefaultQualitySRC
-					WASAPI only. Only used when `wasapi.noAutoConvertSRC` is set to false. When set to true, disables the use of `AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY`.
+					WASAPI only. Only used #if `wasapi.noAutoConvertSRC` is set to false. When set to true, disables the use of `AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY`.
 					You should usually leave this set to false, which is the default.
 
 			wasapi.noAutoStreamRouting
@@ -1149,7 +1149,7 @@ foreign lib {
 	that was specified at initialization time).
 
 	Backends are required to either pause the stream in-place or drain the buffer if pausing is not possible. The reason for this is that stopping the device and
-	the resuming it with ma_device_start() (which you might do when your program loses focus) may result in a situation where those samples are never output to the
+	the resuming it with ma_device_start() (which you might do #if your program loses focus) may result in a situation where those samples are never output to the
 	speakers or received from the microphone which can in turn result in de-syncs.
 
 	Do not call this in any callback.
@@ -1547,7 +1547,7 @@ foreign lib {
 			will be used for the calculation of the buffer size.
 
 	nativeSampleRate (in)
-			The device's native sample rate. This is only ever used when the `periodSizeInFrames` member of
+			The device's native sample rate. This is only ever used #if the `periodSizeInFrames` member of
 			`pDescriptor` is zero. In this case, `periodSizeInMilliseconds` will be used instead, in which
 			case a sample rate is required to convert to a size in frames.
 
@@ -1640,11 +1640,11 @@ foreign lib {
 	this function with `pBackends` set to NULL.
 
 	This will also enumerate the null backend. If you don't want to include this you need to check for `ma_backend_null`
-	when you enumerate over the returned backends and handle it appropriately. Alternatively, you can disable it at
+	#if you enumerate over the returned backends and handle it appropriately. Alternatively, you can disable it at
 	compile time with `MA_NO_NULL`.
 
 	The returned backends are determined based on compile time settings, not the platform it's currently running on. For
-	example, PulseAudio will be returned if it was enabled at compile time, even when the user doesn't actually have
+	example, PulseAudio will be returned if it was enabled at compile time, even #if the user doesn't actually have
 	PulseAudio installed.
 
 

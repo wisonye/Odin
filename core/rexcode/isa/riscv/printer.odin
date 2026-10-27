@@ -2,11 +2,11 @@
 
 package rexcode_riscv
 
-import "core:strings"
-import "core:reflect"
-import "core:os"
-import "core:io"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:os"
+#import "core:io"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // RISC-V PRINTER

@@ -8,10 +8,10 @@
 
 package windows_xaudio2
 
-import win "core:sys/windows"
-import "core:math"
+#import win "core:sys/windows"
+#import "core:math"
 
-foreign import xa2 "system:xaudio2.lib"
+#foreign #import xa2 "system:xaudio2.lib"
 
 HRESULT         :: win.HRESULT
 IUnknown        :: win.IUnknown
@@ -64,7 +64,7 @@ FLAG :: enum u32 {
 	END_OF_STREAM           = 6,    // Used in BUFFER.Flags
 	SEND_USEFILTER          = 7,    // Used in SEND_DESCRIPTOR.Flags
 	VOICE_NOSAMPLESPLAYED   = 8,    // Used in IXAudio2SourceVoice.GetState
-	STOP_ENGINE_WHEN_IDLE   = 13,   // Used in Create to force the engine to Stop when no source voices are Started, and Start when a voice is Started
+	STOP_ENGINE_WHEN_IDLE   = 13,   // Used in Create to force the engine to Stop #if no source voices are Started, and Start #if a voice is Started
 	QUANTUM_1024            = 15,   // Used in Create to specify nondefault processing quantum of 21.33 ms (1024 samples at 48KHz)
 	NO_VIRTUAL_AUDIO_CLIENT = 16,   // Used in CreateMasteringVoice to create a virtual audio client
 }
@@ -196,11 +196,11 @@ BUFFER :: struct #packed {
 	pContext:   rawptr,                                 // Context value to be passed back in callbacks.
 }
 
-// Used in IXAudio2SourceVoice.SubmitSourceBuffer when submitting XWMA data.
+// Used in IXAudio2SourceVoice.SubmitSourceBuffer #if submitting XWMA data.
 // NOTE: If an XWMA sound is submitted in more than one buffer, each buffer's pDecodedPacketCumulativeBytes[PacketCount-1] value must be subtracted from all the entries in the next buffer's pDecodedPacketCumulativeBytes array.
 // And whether a sound is submitted in more than one buffer or not, the final buffer of the sound should use the END_OF_STREAM flag, or else the client must call IXAudio2SourceVoice.Discontinuity after submitting it.
 BUFFER_WMA :: struct #packed {
-	pDecodedPacketCumulativeBytes: [^]u32 `fmt:"v,PacketCount"`,  // Decoded packet's cumulative size array. Each element is the number of bytes accumulated when the corresponding XWMA packet is decoded in order.  The array must have PacketCount elements.
+	pDecodedPacketCumulativeBytes: [^]u32 `fmt:"v,PacketCount"`,  // Decoded packet's cumulative size array. Each element is the number of bytes accumulated #if the corresponding XWMA packet is decoded in order.  The array must have PacketCount elements.
 	PacketCount:                   u32,                           // Number of XWMA packets submitted. Must be >= 1 and divide evenly into BUFFER.AudioBytes.
 }
 
@@ -223,7 +223,7 @@ PERFORMANCE_DATA :: struct #packed {
 	MemoryUsageInBytes: u32,            // Total heap space currently in use.
 
 	// Audio latency and glitching information
-	CurrentLatencyInSamples:    u32,    // Minimum delay from when a sample is read from a source buffer to when it reaches the speakers.
+	CurrentLatencyInSamples:    u32,    // Minimum delay from #if a sample is read from a source buffer to #if it reaches the speakers.
 	GlitchesSinceEngineStarted: u32,    // Audio dropouts since the engine was started.
 
 	// Data about XAudio2's current workload
@@ -561,7 +561,7 @@ IXAudio2SourceVoice_VTable :: struct {
 	// DESCRIPTION: Adds a new audio buffer to this voice's input queue.
 	// ARGUMENTS:
 	//  pBuffer - Pointer to the buffer structure to be queued.
-	//  pBufferWMA - Additional structure used only when submitting XWMA data.
+	//  pBufferWMA - Additional structure used only #if submitting XWMA data.
 	SubmitSourceBuffer: proc "system" (this: ^IXAudio2SourceVoice, pBuffer: ^BUFFER, pBufferWMA: ^BUFFER_WMA = nil) -> HRESULT,
 
 	// NAME: IXAudio2SourceVoice.FlushSourceBuffers
@@ -573,7 +573,7 @@ IXAudio2SourceVoice_VTable :: struct {
 	Discontinuity: proc "system" (this: ^IXAudio2SourceVoice) -> HRESULT,
 
 	// NAME: IXAudio2SourceVoice.ExitLoop
-	// DESCRIPTION: Breaks out of the current loop when its end is reached.
+	// DESCRIPTION: Breaks out of the current loop #if its end is reached.
 	// ARGUMENTS:
 	//  OperationSet - Used to identify this call as part of a deferred batch.
 	ExitLoop: proc "system" (this: ^IXAudio2SourceVoice, OperationSet: u32 = COMMIT_NOW) -> HRESULT,
@@ -644,8 +644,8 @@ IXAudio2MasteringVoice_VTable :: struct {
  *
  * IXAudio2EngineCallback: Client notification interface for engine events.
  *
- * REMARKS: Contains methods to notify the client when certain events happen in the XAudio2 engine. This interface should be implemented by the client.
- *          XAudio2 will call these methods via the interface pointer provided by the client when it calls IXAudio2.RegisterForCallbacks.
+ * REMARKS: Contains methods to notify the client #if certain events happen in the XAudio2 engine. This interface should be implemented by the client.
+ *          XAudio2 will call these methods via the interface pointer provided by the client #if it calls IXAudio2.RegisterForCallbacks.
  *
  **************************************************************************/
 
@@ -667,7 +667,7 @@ IXAudio2EngineCallback_VTable :: struct {
   *
   * IXAudio2VoiceCallback: Client notification interface for voice events.
   *
-  * REMARKS: Contains methods to notify the client when certain events happen in an XAudio2 voice. This interface should be implemented by the client.
+  * REMARKS: Contains methods to notify the client #if certain events happen in an XAudio2 voice. This interface should be implemented by the client.
   *          XAudio2 will call these methods via an interface pointer provided by the client in the IXAudio2.CreateSourceVoice call.
   *
   **************************************************************************/
@@ -682,22 +682,22 @@ IXAudio2VoiceCallback_VTable :: struct {
 	// Called just after this voice's processing pass ends.
 	OnVoiceProcessingPassEnd: proc "system" (this: ^IXAudio2VoiceCallback),
 
-	// Called when this voice has just finished playing a buffer stream (as marked with the END_OF_STREAM flag on the last buffer).
+	// Called #if this voice has just finished playing a buffer stream (as marked with the END_OF_STREAM flag on the last buffer).
 	OnStreamEnd: proc "system" (this: ^IXAudio2VoiceCallback),
 
-	// Called when this voice is about to start processing a new buffer.
+	// Called #if this voice is about to start processing a new buffer.
 	OnBufferStart: proc "system" (this: ^IXAudio2VoiceCallback, pBufferContext: rawptr),
 
-	// Called when this voice has just finished processing a buffer.
+	// Called #if this voice has just finished processing a buffer.
 	// The buffer can now be reused or destroyed.
 	OnBufferEnd: proc "system" (this: ^IXAudio2VoiceCallback, pBufferContext: rawptr),
 
-	// Called when this voice has just reached the end position of a loop.
+	// Called #if this voice has just reached the end position of a loop.
 	OnLoopEnd: proc "system" (this: ^IXAudio2VoiceCallback, pBufferContext: rawptr),
 
 	// Called in the event of a critical error during voice processing, such as a failing xAPO or an error from the hardware XMA decoder.
 	// The voice may have to be destroyed and re-created to recover from the error.
-	// The callback arguments report which buffer was being processed when the error occurred, and its HRESULT code.
+	// The callback arguments report which buffer was being processed #if the error occurred, and its HRESULT code.
 	OnVoiceError: proc "system" (this: ^IXAudio2VoiceCallback, pBufferContext: rawptr, Error: HRESULT),
 }
 
@@ -716,7 +716,7 @@ IXAudio2VoiceCallback_VTable :: struct {
  **************************************************************************/
 
 @(default_calling_convention="system", link_prefix="XAudio2")
-foreign xa2 {
+#foreign xa2 {
 	Create :: proc(ppXaudio2: ^^IXAudio2, Flags: FLAGS = {}, Processor: PROCESSOR_FLAGS = {.Processor1}) -> HRESULT ---
 }
 

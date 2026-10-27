@@ -44,7 +44,7 @@ Foo_Bar_Bar_Impl :: IBar {
 	},
 }
 
-when TEST_EXPECT_FAILURE {
+#if TEST_EXPECT_FAILURE {
 	// Will not be allowed in to be used in an implementation:
 	// The interface and implementation do not share the same address.
 	Invalid_Foo :: struct {
@@ -60,7 +60,7 @@ when TEST_EXPECT_FAILURE {
 	}
 }
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_const_array_fill_assignment :: proc(t: ^testing.T) {

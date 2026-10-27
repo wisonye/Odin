@@ -1,6 +1,6 @@
 package odin_tokenizer
 
-import "core:strings"
+#import "core:strings"
 
 Token :: struct {
 	kind: Token_Kind,
@@ -116,11 +116,11 @@ Token_Kind :: enum u32 {
 	B_Operator_End,
 
 	B_Keyword_Begin,
-		Import,      // import
+		Import,      // #import
 		Foreign,     // foreign
 		Package,     // package
 		Typeid,      // typeid
-		When,        // when
+		When,        // #if
 		Where,       // where
 		If,          // if
 		Else,        // else
@@ -251,11 +251,11 @@ tokens := [Token_Kind.COUNT]string {
 	"",
 
 	"",
-	"import",
+	"#import",
 	"foreign",
 	"package",
 	"typeid",
-	"when",
+	"#if",
 	"where",
 	"if",
 	"else",

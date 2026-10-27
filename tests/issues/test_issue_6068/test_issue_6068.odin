@@ -1,7 +1,7 @@
 // Tests issue #6068 https://github.com/odin-lang/Odin/issues/6068
 package test_issue_6068
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_issue_6068 :: proc(t: ^testing.T) {
@@ -45,7 +45,7 @@ test_issue_6068 :: proc(t: ^testing.T) {
 	}
 
 	// NOTE(ske): [llvm_backend_const.cpp:lb_big_int_to_llvm]
-	// floats behaved wonky when I tested because I forgot to sign extend whole
+	// floats behaved wonky #if I tested because I forgot to sign extend whole
 	// rop so I added more tests here to be safe
 	{
 		check_be : f64be = -1.234

@@ -2,9 +2,9 @@
 // procedure, so the runtime procedures it compares fields with must be dependencies however the type was reached
 package test_issue_equal_proc_dependencies
 
-import "base:runtime"
-import "core:fmt"
-import "core:testing"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:testing"
 
 Quaternion :: distinct quaternion128
 

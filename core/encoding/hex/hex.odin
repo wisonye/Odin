@@ -1,9 +1,9 @@
 // Encoding and decoding of hex-encoded binary, e.g. `0x23` -> `#`.
 package encoding_hex
 
-import "base:runtime"
-import "core:io"
-import "core:strings"
+#import "base:runtime"
+#import "core:io"
+#import "core:strings"
 
 /*
 Encodes a byte slice into a lowercase hex sequence

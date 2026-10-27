@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import cffi "core:c"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="NSUserActivity", objc_superclass=Object)
 UserActivity :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserActivity, objc_selector="initWithActivityType:", objc_name="initWithActivityType")
 	UserActivity_initWithActivityType :: proc(self: ^UserActivity, activityType: ^String) -> instancetype ---
 
@@ -143,7 +143,7 @@ UserActivityDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserActivityDelegate, objc_selector="userActivityWillSave:", objc_name="userActivityWillSave")
 	UserActivityDelegate_userActivityWillSave :: proc(self: ^UserActivityDelegate, userActivity: ^UserActivity) ---
 
@@ -158,7 +158,7 @@ foreign lib {
 @(objc_class="NSUserDefaults", objc_superclass=Object)
 UserDefaults :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserDefaults, objc_selector="resetStandardUserDefaults", objc_name="resetStandardUserDefaults", objc_is_class_method=true)
 	UserDefaults_resetStandardUserDefaults :: proc() ---
 

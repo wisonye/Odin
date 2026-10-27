@@ -2,9 +2,9 @@
 // To process paths such as URLs that depend on forward slashes regardless of the OS, use the slashpath package.
 package filepath
 
-import "base:runtime"
-import "core:os"
-import "core:strings"
+#import "base:runtime"
+#import "core:os"
+#import "core:strings"
 
 SEPARATOR_CHARS :: `/\`
 
@@ -69,7 +69,7 @@ base :: os.base
 
 	The stem of a file is such that stem(path) + ext(path) = base(path).
 
-	Only the last dot is considered when splitting the file extension.
+	Only the last dot is considered #if splitting the file extension.
 	See `short_stem`.
 
 	e.g.
@@ -102,7 +102,7 @@ short_stem :: os.short_stem
 
 	The file extension is such that stem(path) + ext(path) = base(path).
 
-	Only the last dot is considered when splitting the file extension.
+	Only the last dot is considered #if splitting the file extension.
 	See `long_ext`.
 
 	e.g.
@@ -199,7 +199,7 @@ Relative_Error :: enum {
 }
 
 /*
-	Returns a relative path that is lexically equivalent to the `target_path` when joined with the `base_path` with an OS specific separator.
+	Returns a relative path that is lexically equivalent to the `target_path` #if joined with the `base_path` with an OS specific separator.
 
 	e.g. `join(base_path, rel(base_path, target_path))` is equivalent to `target_path`
 

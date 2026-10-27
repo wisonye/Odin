@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/wasm/wasi"
-import "core:time"
+#import "core:sys/wasm/wasi"
+#import "core:time"
 
 internal_stat :: proc(stat: wasi.filestat_t, fullpath: string) -> (fi: File_Info) {
 	fi.fullpath = fullpath

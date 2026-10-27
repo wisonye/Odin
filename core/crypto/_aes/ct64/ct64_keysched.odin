@@ -22,9 +22,9 @@
 
 package aes_ct64
 
-import "core:crypto"
-import "core:crypto/_aes"
-import "core:encoding/endian"
+#import "core:crypto"
+#import "core:crypto/_aes"
+#import "core:encoding/endian"
 
 @(private, require_results)
 sub_word :: proc "contextless" (x: u32) -> u32 {

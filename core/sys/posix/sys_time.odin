@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/time.h - time types
 
-foreign lib {
+#foreign lib {
 	/*
 	Store the current value of timer into value.
 
@@ -48,14 +48,14 @@ foreign lib {
 ITimer :: enum c.int {
 	// Decrements in real time.
 	REAL    = ITIMER_REAL,
-	// Decrements in process virtual time, only when the process is executing.
+	// Decrements in process virtual time, only #if the process is executing.
 	VIRTUAL = ITIMER_VIRTUAL,
-	// Decrements both in process virtual time and when the system is running on 
+	// Decrements both in process virtual time and #if the system is running on 
 	// behalf of the process.
 	PROF    = ITIMER_PROF,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LGETITIMER    :: "__getitimer50"
 	@(private) LSETITIMER    :: "__setitimer50"
 	@(private) LGETTIMEOFDAY :: "__gettimeofday50"
@@ -67,7 +67,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LUTIMES       :: "utimes"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	itimerval :: struct {
 		it_interval: timeval, /* [PSX] timer interval */

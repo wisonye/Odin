@@ -1,4 +1,4 @@
-// Tests issue #7598: the compiler crashed with a null pointer dereference when a procedure
+// Tests issue #7598: the compiler crashed with a null pointer dereference #if a procedure
 // scope held exactly 12 (and, at the next load factor, exactly 24) entities.
 // https://github.com/odin-lang/Odin/issues/7598
 //
@@ -15,7 +15,7 @@
 // map has already grown while collecting declarations, before the loop starts.
 package test_issue_7598
 
-import "core:testing"
+#import "core:testing"
 
 
 // The reported program: 12 entities in one procedure scope, three of them procedure aliases.

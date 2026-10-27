@@ -2,19 +2,19 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import AT "vendor:darwin/AudioToolbox"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import CA "vendor:darwin/QuartzCore"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import AT "vendor:darwin/AudioToolbox"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="AVPlayer", objc_superclass=NS.Object)
 Player :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Player, objc_selector="init", objc_name="init")
 	Player_init :: proc(self: ^Player) -> instancetype ---
 
@@ -177,7 +177,7 @@ foreign lib {
 	@(objc_type=Player, objc_selector="setExternalPlaybackVideoGravity:", objc_name="setExternalPlaybackVideoGravity")
 	Player_setExternalPlaybackVideoGravity :: proc(self: ^Player, externalPlaybackVideoGravity: ^NS.String) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Player, objc_selector="allowsAirPlayVideo", objc_name="allowsAirPlayVideo")
 		Player_allowsAirPlayVideo :: proc(self: ^Player) -> bool ---
 	}
@@ -185,7 +185,7 @@ foreign lib {
 	@(objc_type=Player, objc_selector="outputObscuredDueToInsufficientExternalProtection", objc_name="outputObscuredDueToInsufficientExternalProtection")
 	Player_outputObscuredDueToInsufficientExternalProtection :: proc(self: ^Player) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Player, objc_selector="setAllowsAirPlayVideo:", objc_name="setAllowsAirPlayVideo")
 		Player_setAllowsAirPlayVideo :: proc(self: ^Player, allowsAirPlayVideo: bool) ---
 	}
@@ -193,7 +193,7 @@ foreign lib {
 	@(objc_type=Player, objc_selector="availableHDRModes", objc_name="availableHDRModes", objc_is_class_method=true)
 	Player_availableHDRModes :: proc() -> PlayerHDRMode ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Player, objc_selector="isAirPlayVideoActive", objc_name="isAirPlayVideoActive")
 		Player_isAirPlayVideoActive :: proc(self: ^Player) -> bool ---
 	}
@@ -201,7 +201,7 @@ foreign lib {
 	@(objc_type=Player, objc_selector="eligibleForHDRPlayback", objc_name="eligibleForHDRPlayback", objc_is_class_method=true)
 	Player_eligibleForHDRPlayback :: proc() -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Player, objc_selector="usesAirPlayVideoWhileAirPlayScreenIsActive", objc_name="usesAirPlayVideoWhileAirPlayScreenIsActive")
 		Player_usesAirPlayVideoWhileAirPlayScreenIsActive :: proc(self: ^Player) -> bool ---
 	}
@@ -209,7 +209,7 @@ foreign lib {
 	@(objc_type=Player, objc_selector="preferredVideoDecoderGPURegistryID", objc_name="preferredVideoDecoderGPURegistryID")
 	Player_preferredVideoDecoderGPURegistryID :: proc(self: ^Player) -> cffi.uint64_t ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Player, objc_selector="setUsesAirPlayVideoWhileAirPlayScreenIsActive:", objc_name="setUsesAirPlayVideoWhileAirPlayScreenIsActive")
 		Player_setUsesAirPlayVideoWhileAirPlayScreenIsActive :: proc(self: ^Player, usesAirPlayVideoWhileAirPlayScreenIsActive: bool) ---
 	}
@@ -321,7 +321,7 @@ PlayerInterstitialEvent :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerInterstitialEvent, objc_selector="init", objc_name="init")
 	PlayerInterstitialEvent_init :: proc(self: ^PlayerInterstitialEvent) -> instancetype ---
 
@@ -475,7 +475,7 @@ PlayerInterstitialEvent_interstitialEventWithPrimaryItem :: proc {
 @(objc_class="AVPlayerInterstitialEventController", objc_superclass=PlayerInterstitialEventMonitor)
 PlayerInterstitialEventController :: struct { using _: PlayerInterstitialEventMonitor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerInterstitialEventController, objc_selector="interstitialEventControllerWithPrimaryPlayer:", objc_name="interstitialEventControllerWithPrimaryPlayer", objc_is_class_method=true)
 	PlayerInterstitialEventController_interstitialEventControllerWithPrimaryPlayer :: proc(primaryPlayer: ^Player) -> instancetype ---
 
@@ -511,7 +511,7 @@ foreign lib {
 @(objc_class="AVPlayerInterstitialEventMonitor", objc_superclass=NS.Object)
 PlayerInterstitialEventMonitor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerInterstitialEventMonitor, objc_selector="interstitialEventMonitorWithPrimaryPlayer:", objc_name="interstitialEventMonitorWithPrimaryPlayer", objc_is_class_method=true)
 	PlayerInterstitialEventMonitor_interstitialEventMonitorWithPrimaryPlayer :: proc(primaryPlayer: ^Player) -> instancetype ---
 
@@ -544,7 +544,7 @@ PlayerItem :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItem, objc_selector="init", objc_name="init")
 	PlayerItem_init :: proc(self: ^PlayerItem) -> instancetype ---
 
@@ -857,7 +857,7 @@ foreign lib {
 	@(objc_type=PlayerItem, objc_selector="selectedMediaOptionInMediaSelectionGroup:", objc_name="selectedMediaOptionInMediaSelectionGroup")
 	PlayerItem_selectedMediaOptionInMediaSelectionGroup :: proc(self: ^PlayerItem, mediaSelectionGroup: ^MediaSelectionGroup) -> ^MediaSelectionOptions ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=PlayerItem, objc_selector="requestContentAuthorizationAsynchronouslyWithTimeoutInterval:completionHandler:", objc_name="requestContentAuthorizationAsynchronouslyWithTimeoutInterval")
 		PlayerItem_requestContentAuthorizationAsynchronouslyWithTimeoutInterval :: proc(self: ^PlayerItem, timeoutInterval: NS.TimeInterval, handler: ^Objc_Block(proc "c" ())) ---
 
@@ -932,7 +932,7 @@ PlayerItemAccessLog :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemAccessLog, objc_selector="init", objc_name="init")
 	PlayerItemAccessLog_init :: proc(self: ^PlayerItemAccessLog) -> instancetype ---
 
@@ -960,7 +960,7 @@ PlayerItemAccessLogEvent :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemAccessLogEvent, objc_selector="init", objc_name="init")
 	PlayerItemAccessLogEvent_init :: proc(self: ^PlayerItemAccessLogEvent) -> instancetype ---
 
@@ -1060,7 +1060,7 @@ PlayerItemErrorLog :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemErrorLog, objc_selector="init", objc_name="init")
 	PlayerItemErrorLog_init :: proc(self: ^PlayerItemErrorLog) -> instancetype ---
 
@@ -1088,7 +1088,7 @@ PlayerItemErrorLogEvent :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemErrorLogEvent, objc_selector="init", objc_name="init")
 	PlayerItemErrorLogEvent_init :: proc(self: ^PlayerItemErrorLogEvent) -> instancetype ---
 
@@ -1128,7 +1128,7 @@ PlayerItemErrorLogEventInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPlayerItemIntegratedTimeline", objc_superclass=NS.Object)
 PlayerItemIntegratedTimeline :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemIntegratedTimeline, objc_selector="init", objc_name="init")
 	PlayerItemIntegratedTimeline_init :: proc(self: ^PlayerItemIntegratedTimeline) -> instancetype ---
 
@@ -1171,7 +1171,7 @@ PlayerItemIntegratedTimelineObserver :: struct {
 @(objc_class="AVPlayerItemIntegratedTimelineSnapshot", objc_superclass=NS.Object)
 PlayerItemIntegratedTimelineSnapshot :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemIntegratedTimelineSnapshot, objc_selector="init", objc_name="init")
 	PlayerItemIntegratedTimelineSnapshot_init :: proc(self: ^PlayerItemIntegratedTimelineSnapshot) -> instancetype ---
 
@@ -1201,7 +1201,7 @@ foreign lib {
 @(objc_class="AVPlayerItemLegibleOutput", objc_superclass=PlayerItemOutput)
 PlayerItemLegibleOutput :: struct { using _: PlayerItemOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemLegibleOutput, objc_selector="setDelegate:queue:", objc_name="setDelegate")
 	PlayerItemLegibleOutput_setDelegate :: proc(self: ^PlayerItemLegibleOutput, delegate: ^PlayerItemLegibleOutputPushDelegate, delegateQueue: CF.dispatch_queue_t) ---
 
@@ -1238,7 +1238,7 @@ PlayerItemLegibleOutputPushDelegate :: struct {
 	using _: PlayerItemOutputPushDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemLegibleOutputPushDelegate, objc_selector="legibleOutput:didOutputAttributedStrings:nativeSampleBuffers:forItemTime:", objc_name="legibleOutput")
 	PlayerItemLegibleOutputPushDelegate_legibleOutput :: proc(self: ^PlayerItemLegibleOutputPushDelegate, output: ^PlayerItemLegibleOutput, strings: ^NS.Array, nativeSamples: ^NS.Array, itemTime: CM.Time) ---
 }
@@ -1255,7 +1255,7 @@ PlayerItemMediaDataCollectorInternal :: struct { using _: intrinsics.objc_object
 @(objc_class="AVPlayerItemMetadataCollector", objc_superclass=PlayerItemMediaDataCollector)
 PlayerItemMetadataCollector :: struct { using _: PlayerItemMediaDataCollector}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemMetadataCollector, objc_selector="initWithIdentifiers:classifyingLabels:", objc_name="initWithIdentifiers")
 	PlayerItemMetadataCollector_initWithIdentifiers :: proc(self: ^PlayerItemMetadataCollector, identifiers: ^NS.Array, classifyingLabels: ^NS.Array) -> instancetype ---
 
@@ -1280,7 +1280,7 @@ PlayerItemMetadataCollectorPushDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemMetadataCollectorPushDelegate, objc_selector="metadataCollector:didCollectDateRangeMetadataGroups:indexesOfNewGroups:indexesOfModifiedGroups:", objc_name="metadataCollector")
 	PlayerItemMetadataCollectorPushDelegate_metadataCollector :: proc(self: ^PlayerItemMetadataCollectorPushDelegate, metadataCollector: ^PlayerItemMetadataCollector, metadataGroups: ^NS.Array, indexesOfNewGroups: ^NS.IndexSet, indexesOfModifiedGroups: ^NS.IndexSet) ---
 }
@@ -1289,7 +1289,7 @@ foreign lib {
 @(objc_class="AVPlayerItemMetadataOutput", objc_superclass=PlayerItemOutput)
 PlayerItemMetadataOutput :: struct { using _: PlayerItemOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemMetadataOutput, objc_selector="initWithIdentifiers:", objc_name="initWithIdentifiers")
 	PlayerItemMetadataOutput_initWithIdentifiers :: proc(self: ^PlayerItemMetadataOutput, identifiers: ^NS.Array) -> instancetype ---
 
@@ -1320,7 +1320,7 @@ PlayerItemMetadataOutputPushDelegate :: struct {
 	using _: PlayerItemOutputPushDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemMetadataOutputPushDelegate, objc_selector="metadataOutput:didOutputTimedMetadataGroups:fromPlayerItemTrack:", objc_name="metadataOutput")
 	PlayerItemMetadataOutputPushDelegate_metadataOutput :: proc(self: ^PlayerItemMetadataOutputPushDelegate, output: ^PlayerItemMetadataOutput, groups: ^NS.Array, track: ^PlayerItemTrack) ---
 }
@@ -1329,14 +1329,14 @@ foreign lib {
 @(objc_class="AVPlayerItemOutput", objc_superclass=NS.Object)
 PlayerItemOutput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemOutput, objc_selector="itemTimeForHostTime:", objc_name="itemTimeForHostTime")
 	PlayerItemOutput_itemTimeForHostTime :: proc(self: ^PlayerItemOutput, hostTimeInSeconds: CF.TimeInterval) -> CM.Time ---
 
 	@(objc_type=PlayerItemOutput, objc_selector="itemTimeForMachAbsoluteTime:", objc_name="itemTimeForMachAbsoluteTime")
 	PlayerItemOutput_itemTimeForMachAbsoluteTime :: proc(self: ^PlayerItemOutput, machAbsoluteTime: cffi.int64_t) -> CM.Time ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=PlayerItemOutput, objc_selector="itemTimeForCVTimeStamp:", objc_name="itemTimeForCVTimeStamp")
 		PlayerItemOutput_itemTimeForCVTimeStamp :: proc(self: ^PlayerItemOutput, timestamp: CVTimeStamp) -> CM.Time ---
 	}
@@ -1359,7 +1359,7 @@ PlayerItemOutputPullDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemOutputPullDelegate, objc_selector="outputMediaDataWillChange:", objc_name="outputMediaDataWillChange")
 	PlayerItemOutputPullDelegate_outputMediaDataWillChange :: proc(self: ^PlayerItemOutputPullDelegate, sender: ^PlayerItemOutput) ---
 
@@ -1374,7 +1374,7 @@ PlayerItemOutputPushDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemOutputPushDelegate, objc_selector="outputSequenceWasFlushed:", objc_name="outputSequenceWasFlushed")
 	PlayerItemOutputPushDelegate_outputSequenceWasFlushed :: proc(self: ^PlayerItemOutputPushDelegate, output: ^PlayerItemOutput) ---
 }
@@ -1383,7 +1383,7 @@ foreign lib {
 @(objc_class="AVPlayerItemRenderedLegibleOutput", objc_superclass=PlayerItemOutput)
 PlayerItemRenderedLegibleOutput :: struct { using _: PlayerItemOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemRenderedLegibleOutput, objc_selector="init", objc_name="init")
 	PlayerItemRenderedLegibleOutput_init :: proc(self: ^PlayerItemRenderedLegibleOutput) -> instancetype ---
 
@@ -1422,7 +1422,7 @@ PlayerItemRenderedLegibleOutputPushDelegate :: struct {
 	using _: PlayerItemOutputPushDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemRenderedLegibleOutputPushDelegate, objc_selector="renderedLegibleOutput:didOutputRenderedCaptionImages:forItemTime:", objc_name="renderedLegibleOutput")
 	PlayerItemRenderedLegibleOutputPushDelegate_renderedLegibleOutput :: proc(self: ^PlayerItemRenderedLegibleOutputPushDelegate, output: ^PlayerItemRenderedLegibleOutput, captionImages: ^NS.Array, itemTime: CM.Time) ---
 }
@@ -1431,7 +1431,7 @@ foreign lib {
 @(objc_class="AVPlayerItemSegment", objc_superclass=NS.Object)
 PlayerItemSegment :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemSegment, objc_selector="init", objc_name="init")
 	PlayerItemSegment_init :: proc(self: ^PlayerItemSegment) -> instancetype ---
 
@@ -1458,7 +1458,7 @@ foreign lib {
 @(objc_class="AVPlayerItemTrack", objc_superclass=NS.Object)
 PlayerItemTrack :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemTrack, objc_selector="assetTrack", objc_name="assetTrack")
 	PlayerItemTrack_assetTrack :: proc(self: ^PlayerItemTrack) -> ^AssetTrack ---
 
@@ -1471,7 +1471,7 @@ foreign lib {
 	@(objc_type=PlayerItemTrack, objc_selector="currentVideoFrameRate", objc_name="currentVideoFrameRate")
 	PlayerItemTrack_currentVideoFrameRate :: proc(self: ^PlayerItemTrack) -> cffi.float ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=PlayerItemTrack, objc_selector="videoFieldMode", objc_name="videoFieldMode")
 		PlayerItemTrack_videoFieldMode :: proc(self: ^PlayerItemTrack) -> ^NS.String ---
 
@@ -1488,7 +1488,7 @@ PlayerItemTrackInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPlayerItemVideoOutput", objc_superclass=PlayerItemOutput)
 PlayerItemVideoOutput :: struct { using _: PlayerItemOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerItemVideoOutput, objc_selector="initWithPixelBufferAttributes:", objc_name="initWithPixelBufferAttributes")
 	PlayerItemVideoOutput_initWithPixelBufferAttributes :: proc(self: ^PlayerItemVideoOutput, pixelBufferAttributes: ^NS.Dictionary) -> instancetype ---
 
@@ -1522,7 +1522,7 @@ PlayerItemVideoOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPlayerLayer", objc_superclass=CA.Layer)
 PlayerLayer :: struct { using _: CA.Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerLayer, objc_selector="playerLayerWithPlayer:", objc_name="playerLayerWithPlayer", objc_is_class_method=true)
 	PlayerLayer_playerLayerWithPlayer :: proc(player: ^Player) -> ^PlayerLayer ---
 
@@ -1568,7 +1568,7 @@ PlayerLayerInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPlayerLooper", objc_superclass=NS.Object)
 PlayerLooper :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerLooper, objc_selector="init", objc_name="init")
 	PlayerLooper_init :: proc(self: ^PlayerLooper) -> instancetype ---
 
@@ -1625,7 +1625,7 @@ PlayerLooperInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPlayerMediaSelectionCriteria", objc_superclass=NS.Object)
 PlayerMediaSelectionCriteria :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerMediaSelectionCriteria, objc_selector="initWithPreferredLanguages:preferredMediaCharacteristics:", objc_name="initWithPreferredLanguages")
 	PlayerMediaSelectionCriteria_initWithPreferredLanguages :: proc(self: ^PlayerMediaSelectionCriteria, preferredLanguages: ^NS.Array, preferredMediaCharacteristics: ^NS.Array) -> instancetype ---
 
@@ -1646,7 +1646,7 @@ foreign lib {
 @(objc_class="AVPlayerPlaybackCoordinator", objc_superclass=PlaybackCoordinator)
 PlayerPlaybackCoordinator :: struct { using _: PlaybackCoordinator}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerPlaybackCoordinator, objc_selector="init", objc_name="init")
 	PlayerPlaybackCoordinator_init :: proc(self: ^PlayerPlaybackCoordinator) -> instancetype ---
 
@@ -1685,7 +1685,7 @@ PlayerPlaybackCoordinatorDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerPlaybackCoordinatorDelegate, objc_selector="playbackCoordinator:identifierForPlayerItem:", objc_name="playbackCoordinator_identifierForPlayerItem")
 	PlayerPlaybackCoordinatorDelegate_playbackCoordinator_identifierForPlayerItem :: proc(self: ^PlayerPlaybackCoordinatorDelegate, coordinator: ^PlayerPlaybackCoordinator, playerItem: ^PlayerItem) -> ^NS.String ---
 
@@ -1697,7 +1697,7 @@ foreign lib {
 @(objc_class="AVPlayerVideoOutput", objc_superclass=NS.Object)
 PlayerVideoOutput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerVideoOutput, objc_selector="init", objc_name="init")
 	PlayerVideoOutput_init :: proc(self: ^PlayerVideoOutput) -> instancetype ---
 
@@ -1715,7 +1715,7 @@ foreign lib {
 @(objc_class="AVPlayerVideoOutputConfiguration", objc_superclass=NS.Object)
 PlayerVideoOutputConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlayerVideoOutputConfiguration, objc_selector="init", objc_name="init")
 	PlayerVideoOutputConfiguration_init :: proc(self: ^PlayerVideoOutputConfiguration) -> instancetype ---
 
@@ -1739,7 +1739,7 @@ foreign lib {
 @(objc_class="AVQueuePlayer", objc_superclass=Player)
 QueuePlayer :: struct { using _: Player}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QueuePlayer, objc_selector="queuePlayerWithItems:", objc_name="queuePlayerWithItems", objc_is_class_method=true)
 	QueuePlayer_queuePlayerWithItems :: proc(items: ^NS.Array) -> instancetype ---
 

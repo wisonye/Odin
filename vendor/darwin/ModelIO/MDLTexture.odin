@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_ModelIO
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLTexture", objc_superclass=NS.Object)
 Texture :: struct {
@@ -13,7 +13,7 @@ Texture :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Texture, objc_selector="init", objc_name="init")
 	Texture_init :: proc(self: ^Texture) -> instancetype ---
 
@@ -132,7 +132,7 @@ Texture_writeToURL :: proc {
 @(objc_class="MDLCheckerboardTexture", objc_superclass=Texture)
 CheckerboardTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CheckerboardTexture, objc_selector="initWithDivisions:name:dimensions:channelCount:channelEncoding:color1:color2:", objc_name="initWithDivisions")
 	CheckerboardTexture_initWithDivisions :: proc(self: ^CheckerboardTexture, divisions: cffi.float, name: ^NS.String, dimensions: ^[2]cffi.int, channelCount: cffi.int, channelEncoding: TextureChannelEncoding, color1: CG.ColorRef, color2: CG.ColorRef) -> instancetype ---
 
@@ -159,7 +159,7 @@ foreign lib {
 @(objc_class="MDLColorSwatchTexture", objc_superclass=Texture)
 ColorSwatchTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorSwatchTexture, objc_selector="initWithColorTemperatureGradientFrom:toColorTemperature:name:textureDimensions:", objc_name="initWithColorTemperatureGradientFrom")
 	ColorSwatchTexture_initWithColorTemperatureGradientFrom :: proc(self: ^ColorSwatchTexture, colorTemperature1: cffi.float, colorTemperature2: cffi.float, name: ^NS.String, textureDimensions: ^[2]cffi.int) -> instancetype ---
 
@@ -171,7 +171,7 @@ foreign lib {
 @(objc_class="MDLNoiseTexture", objc_superclass=Texture)
 NoiseTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NoiseTexture, objc_selector="initVectorNoiseWithSmoothness:name:textureDimensions:channelEncoding:", objc_name="initVectorNoiseWithSmoothness")
 	NoiseTexture_initVectorNoiseWithSmoothness :: proc(self: ^NoiseTexture, smoothness: cffi.float, name: ^NS.String, textureDimensions: ^[2]cffi.int, channelEncoding: TextureChannelEncoding) -> instancetype ---
 
@@ -186,7 +186,7 @@ foreign lib {
 @(objc_class="MDLNormalMapTexture", objc_superclass=Texture)
 NormalMapTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NormalMapTexture, objc_selector="initByGeneratingNormalMapWithTexture:name:smoothness:contrast:", objc_name="initByGeneratingNormalMapWithTexture")
 	NormalMapTexture_initByGeneratingNormalMapWithTexture :: proc(self: ^NormalMapTexture, sourceTexture: ^Texture, name: ^NS.String, smoothness: cffi.float, contrast: cffi.float) -> instancetype ---
 }
@@ -195,7 +195,7 @@ foreign lib {
 @(objc_class="MDLSkyCubeTexture", objc_superclass=Texture)
 SkyCubeTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SkyCubeTexture, objc_selector="initWithName:channelEncoding:textureDimensions:turbidity:sunElevation:upperAtmosphereScattering:groundAlbedo:", objc_name="initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_upperAtmosphereScattering_groundAlbedo")
 	SkyCubeTexture_initWithName_channelEncoding_textureDimensions_turbidity_sunElevation_upperAtmosphereScattering_groundAlbedo :: proc(self: ^SkyCubeTexture, name: ^NS.String, channelEncoding: TextureChannelEncoding, textureDimensions: ^[2]cffi.int, turbidity: cffi.float, sunElevation: cffi.float, upperAtmosphereScattering: cffi.float, groundAlbedo: cffi.float) -> instancetype ---
 
@@ -296,7 +296,7 @@ SkyCubeTexture_initWithName :: proc {
 @(objc_class="MDLTextureFilter", objc_superclass=NS.Object)
 TextureFilter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureFilter, objc_selector="sWrapMode", objc_name="sWrapMode")
 	TextureFilter_sWrapMode :: proc(self: ^TextureFilter) -> MaterialTextureWrapMode ---
 
@@ -338,7 +338,7 @@ foreign lib {
 @(objc_class="MDLTextureSampler", objc_superclass=NS.Object)
 TextureSampler :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureSampler, objc_selector="texture", objc_name="texture")
 	TextureSampler_texture :: proc(self: ^TextureSampler) -> ^Texture ---
 
@@ -362,7 +362,7 @@ foreign lib {
 @(objc_class="MDLURLTexture", objc_superclass=Texture)
 URLTexture :: struct { using _: Texture}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLTexture, objc_selector="initWithURL:name:", objc_name="initWithURL")
 	URLTexture_initWithURL :: proc(self: ^URLTexture, _URL: ^NS.URL, name: ^NS.String) -> instancetype ---
 

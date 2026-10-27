@@ -6,8 +6,8 @@ See:
 */
 package hmac
 
-import "core:crypto"
-import "core:crypto/hash"
+#import "core:crypto"
+#import "core:crypto/hash"
 
 // sum will compute the HMAC with the specified algorithm and key
 // over msg, and write the computed tag to dst.  It requires that

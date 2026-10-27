@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKComponent", objc_superclass=NS.Object)
 Component :: struct {
@@ -11,7 +11,7 @@ Component :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Component, objc_selector="updateWithDeltaTime:", objc_name="updateWithDeltaTime")
 	Component_updateWithDeltaTime :: proc(self: ^Component, seconds: NS.TimeInterval) ---
 
@@ -32,7 +32,7 @@ ComponentSystem :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComponentSystem, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	ComponentSystem_objectAtIndexedSubscript :: proc(self: ^ComponentSystem, idx: NS.UInteger) -> id ---
 
@@ -71,7 +71,7 @@ SCNNodeComponent :: struct {
 	using _: AgentDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SCNNodeComponent, objc_selector="componentWithNode:", objc_name="componentWithNode", objc_is_class_method=true)
 	SCNNodeComponent_componentWithNode :: proc(node: ^SCNNode) -> instancetype ---
 
@@ -89,7 +89,7 @@ SKNodeComponent :: struct {
 	using _: AgentDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SKNodeComponent, objc_selector="componentWithNode:", objc_name="componentWithNode", objc_is_class_method=true)
 	SKNodeComponent_componentWithNode :: proc(node: ^SKNode) -> instancetype ---
 

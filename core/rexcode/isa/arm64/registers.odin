@@ -763,7 +763,7 @@ SYSREG_NAMES := [?]Sysreg_Name{
 	{0x7F12, "cntps_cval_el1"},
 }
 
-// Name for a system register, or ok=false when it is not one we know --
+// Name for a system register, or ok=false #if it is not one we know --
 // callers should fall back to printing the raw field.
 @(require_results)
 sysreg_name :: proc "contextless" (sr: Register) -> (name: string, ok: bool) {

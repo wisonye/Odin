@@ -1,14 +1,14 @@
 package test_vendor_stb
 
-import "core:c"
-import "core:c/libc"
-import "core:testing"
-import stbi "vendor:stb/image"
+#import "core:c"
+#import "core:c/libc"
+#import "core:testing"
+#import stbi "vendor:stb/image"
 
 // The extended API takes a pointer to `resizer`, so its layout has to match the C `STBIR_RESIZE` exactly.
 @(test)
 test_resizer_layout :: proc(t: ^testing.T) {
-	when size_of(rawptr) == 8 {
+	#if size_of(rawptr) == 8 {
 		testing.expect_value(t, size_of(stbi.resizer), 280)
 		testing.expect_value(t, align_of(stbi.resizer), 8)
 		testing.expect_value(t, offset_of(stbi.resizer, input_cb), 80)

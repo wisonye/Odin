@@ -1,9 +1,9 @@
 package bufio
 
-import "base:runtime"
-import "core:io"
-import "core:unicode/utf8"
-// import "core:bytes"
+#import "base:runtime"
+#import "core:io"
+#import "core:unicode/utf8"
+// #import "core:bytes"
 
 // Writer is a buffered wrapper for an io.Writer
 Writer :: struct {

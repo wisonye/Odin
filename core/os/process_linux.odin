@@ -2,14 +2,14 @@
 #+private file
 package os
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
-import "core:time"
-import "core:slice"
-import "core:strings"
-import "core:strconv"
-import "core:sys/linux"
+#import "core:time"
+#import "core:slice"
+#import "core:strings"
+#import "core:strconv"
+#import "core:sys/linux"
 
 PIDFD_UNASSIGNED  :: ~uintptr(0)
 

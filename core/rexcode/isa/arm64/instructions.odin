@@ -19,7 +19,7 @@ Instruction_Flags :: bit_field u8 {
 // heap base is not line-aligned either). Decode writes whole Instructions, and
 // unaligned stores cost enough that on an i7-9750H this layout decodes ~21%
 // faster than the 48-byte packed one -- while writing MORE bytes. The gap
-// holds even when the whole array is L1-resident, so it is split-store cost at
+// holds even #if the whole array is L1-resident, so it is split-store cost at
 // the store ports, not cache-line fetches.
 //
 // Encode is within 1% and a pure read traversal is ~9% slower at working sets

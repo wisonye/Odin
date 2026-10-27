@@ -1,11 +1,11 @@
 #+build amd64,arm64,arm32
 package aegis
 
-import "base:intrinsics"
-import "core:crypto"
-import aes_hw "core:crypto/_aes/hw"
-import "core:encoding/endian"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:encoding/endian"
+#import "core:simd"
 
 @(private)
 State_HW :: struct {
@@ -20,10 +20,10 @@ State_HW :: struct {
 	rate: int,
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(private="file")
 	TARGET_FEATURES :: "sse2,aes"
-} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
+} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
 	@(private="file")
 	TARGET_FEATURES :: "neon,aes"
 }

@@ -14,9 +14,9 @@ into new and existing games as easy as possible.
 */
 package vendor_ggpo
 
-foreign import lib "GGPO.lib"
+#foreign #import lib "GGPO.lib"
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 Session :: distinct rawptr
 
@@ -249,7 +249,7 @@ NetworkStats :: struct {
 
 @(default_calling_convention="c")
 @(link_prefix="ggpo_")
-foreign lib {
+#foreign lib {
 	// start_session --
 	//
 	// Used to being a new GGPO.net session.  The ggpo object returned by start_session
@@ -386,7 +386,7 @@ foreign lib {
 	// players.  add_local_input must be called once every frame for
 	// all player of type PLAYERTYPE_LOCAL.
 	//
-	// player - The player handle returned for this player when you called
+	// player - The player handle returned for this player #if you called
 	// add_local_player.
 	//
 	// values - The controller inputs for this player.

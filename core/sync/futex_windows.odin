@@ -2,18 +2,18 @@
 #+build windows
 package sync
 
-import "core:time"
+#import "core:time"
 
-foreign import Synchronization "system:Synchronization.lib"
+#foreign #import Synchronization "system:Synchronization.lib"
 @(default_calling_convention="system")
-foreign Synchronization {
+#foreign Synchronization {
 	WakeByAddressSingle :: proc(Address: rawptr) ---
 	WakeByAddressAll    :: proc(Address: rawptr) ---
 }
 
-foreign import Ntdll "system:Ntdll.lib"
+#foreign #import Ntdll "system:Ntdll.lib"
 @(default_calling_convention="system")
-foreign Ntdll {
+#foreign Ntdll {
 	RtlWaitOnAddress :: proc(Address: rawptr, CompareAddress: rawptr, AddressSize: uint, Timeout: ^i64) -> i32 ---
 	RtlNtStatusToDosError :: proc(status: i32) -> u32 ---
 	SetLastError :: proc(err: u32) ---
@@ -25,7 +25,7 @@ foreign Ntdll {
 	WaitOnAddress is implemented on top of RtlWaitOnAddress
 	BUT requires taking the return value of it and if it is non-zero
 	converting that status to a DOS error and then SetLastError
-	If this is not done, then things don't work as expected when
+	If this is not done, then things don't work as expected #if
 	an error occurs
 
 	GODDAMN MICROSOFT!

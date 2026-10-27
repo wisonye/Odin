@@ -1,7 +1,7 @@
 package mem
 
-import "base:runtime"
-// import "base:sanitizer"
+#import "base:runtime"
+// #import "base:sanitizer"
 
 /*
 Rollback stack default block size.
@@ -200,7 +200,7 @@ rb_alloc_bytes_non_zeroed :: proc(
 	parent: ^Rollback_Stack_Block
 
 	for block := stack.head; /**/; block = block.next_block {
-		when !ODIN_DISABLE_ASSERT {
+		#if !ODIN_DISABLE_ASSERT {
 			allocated_new_block: bool
 		}
 		if block == nil {
@@ -211,14 +211,14 @@ rb_alloc_bytes_non_zeroed :: proc(
 			new_block_size := max(minimum_size_required, stack.block_size)
 			block = rb_make_block(new_block_size, stack.block_allocator) or_return
 			parent.next_block = block
-			when !ODIN_DISABLE_ASSERT {
+			#if !ODIN_DISABLE_ASSERT {
 				allocated_new_block = true
 			}
 		}
 		start := raw_data(block.buffer)[block.offset:]
 		padding := cast(uintptr)calc_padding_with_header(cast(uintptr)start, cast(uintptr)alignment, size_of(Rollback_Stack_Header))
 		if block.offset + padding + cast(uintptr)size > cast(uintptr)len(block.buffer) {
-			when !ODIN_DISABLE_ASSERT {
+			#if !ODIN_DISABLE_ASSERT {
 				if allocated_new_block {
 					panic("Rollback Stack Allocator allocated a new block but did not use it.")
 				}
@@ -386,8 +386,8 @@ rollback_stack_init_dynamic :: proc(
 	location := #caller_location,
 ) -> Allocator_Error {
 	assert(block_size >= size_of(Rollback_Stack_Header) + size_of(rawptr), "Rollback Stack Allocator block size is too small.", location)
-	when size_of(int) > 4 {
-		// It's impossible to specify an argument in excess when your integer
+	#if size_of(int) > 4 {
+		// It's impossible to specify an argument in excess #if your integer
 		// size is insufficient; check only on platforms with big enough ints.
 		assert(block_size <= ROLLBACK_STACK_MAX_HEAD_BLOCK_SIZE, "Rollback Stack Allocators cannot support head blocks larger than 2 gigabytes.", location)
 	}
@@ -426,13 +426,13 @@ The Rollback Stack Allocator was designed for the test runner to be fast,
 able to grow, and respect the Tracking Allocator's requirement for
 individual frees. It is not overly concerned with fragmentation, however.
 
-It has support for expansion when configured with a block allocator and
+It has support for expansion #if configured with a block allocator and
 limited support for out-of-order frees.
 
 Allocation has constant-time best and usual case performance.
 At worst, it is linear according to the number of memory blocks.
 
-Allocation follows a first-fit strategy when there are multiple memory
+Allocation follows a first-fit strategy #if there are multiple memory
 blocks.
 
 Freeing has constant-time best and usual case performance.

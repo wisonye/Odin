@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSDraggingDestination")
 DraggingDestination :: struct {
@@ -13,7 +13,7 @@ DraggingDestination :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingDestination, objc_selector="draggingEntered:", objc_name="draggingEntered")
 	DraggingDestination_draggingEntered :: proc(self: ^DraggingDestination, sender: ^DraggingInfo) -> DragOperation ---
 
@@ -47,7 +47,7 @@ foreign lib {
 DraggingImageComponent :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingImageComponent, objc_selector="draggingImageComponentWithKey:", objc_name="draggingImageComponentWithKey", objc_is_class_method=true)
 	DraggingImageComponent_draggingImageComponentWithKey :: proc(key: ^NS.String) -> ^DraggingImageComponent ---
 
@@ -84,7 +84,7 @@ DraggingInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingInfo, objc_selector="slideDraggedImageTo:", objc_name="slideDraggedImageTo")
 	DraggingInfo_slideDraggedImageTo :: proc(self: ^DraggingInfo, screenPoint: CG.Point) ---
 
@@ -148,7 +148,7 @@ foreign lib {
 DraggingItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingItem, objc_selector="initWithPasteboardWriter:", objc_name="initWithPasteboardWriter")
 	DraggingItem_initWithPasteboardWriter :: proc(self: ^DraggingItem, pasteboardWriter: ^PasteboardWriting) -> instancetype ---
 
@@ -188,7 +188,7 @@ DraggingItem_setDraggingFrame :: proc {
 DraggingSession :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingSession, objc_selector="enumerateDraggingItemsWithOptions:forView:classes:searchOptions:usingBlock:", objc_name="enumerateDraggingItemsWithOptions")
 	DraggingSession_enumerateDraggingItemsWithOptions :: proc(self: ^DraggingSession, enumOpts: DraggingItemEnumerationOptions, view: ^View, classArray: ^NS.Array, searchOptions: ^NS.Dictionary, block: ^Objc_Block(proc "c" ( draggingItem: ^DraggingItem, idx: NS.Integer, stop: ^bool ))) ---
 
@@ -228,7 +228,7 @@ DraggingSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DraggingSource, objc_selector="draggingSession:sourceOperationMaskForDraggingContext:", objc_name="draggingSession_sourceOperationMaskForDraggingContext")
 	DraggingSource_draggingSession_sourceOperationMaskForDraggingContext :: proc(self: ^DraggingSource, session: ^DraggingSession, _context: DraggingContext) -> DragOperation ---
 

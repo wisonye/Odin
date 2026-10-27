@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:GameController.framework",
 }
 
@@ -28,7 +28,7 @@ foreign import lib {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="GCPoint2Zero")
 	Point2Zero: Point2
 
@@ -1229,7 +1229,7 @@ ControllerPlayerIndex :: enum cffi.long {
 	_4    = 3,
 }
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	UIEventType :: enum cffi.ulong {
 		Gamepad = 0,
 		Stylus  = 1,

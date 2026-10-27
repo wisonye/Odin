@@ -2,19 +2,19 @@
 #+build darwin
 package darwin_AVFoundation
 
-import "base:intrinsics"
-import cffi "core:c"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
 
 _ :: cffi
 _ :: CM
 _ :: NS
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="AVDisplayCriteria")
 	DisplayCriteria :: struct { using _: intrinsics.objc_object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="AVDisplayCriteria", objc_superclass=NS.Object)
 	DisplayCriteria :: struct {
 		using _: NS.Object,
@@ -22,8 +22,8 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=DisplayCriteria, objc_selector="init", objc_name="init")
 		DisplayCriteria_init :: proc(self: ^DisplayCriteria) -> instancetype ---
 

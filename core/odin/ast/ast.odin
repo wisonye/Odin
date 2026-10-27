@@ -1,7 +1,7 @@
 // Abstract Syntax Tree for the `Odin` parser packages.
 package odin_ast
 
-import "core:odin/tokenizer"
+#import "core:odin/tokenizer"
 
 Proc_Tag :: enum {
 	Bounds_Check,
@@ -149,7 +149,7 @@ Ellipsis :: struct {
 Proc_Lit :: struct {
 	using node: Expr,
 	type:          ^Proc_Type,
-	body:          ^Stmt, // nil when it represents a foreign procedure
+	body:          ^Stmt, // nil #if it represents a foreign procedure
 	tags:          Proc_Tags,
 	inlining:      Proc_Inlining,
 	tailing:       Proc_Tailing,
@@ -159,7 +159,7 @@ Proc_Lit :: struct {
 
 Comp_Lit :: struct {
 	using node: Expr,
-	type:  ^Expr, // nil when type is inferred
+	type:  ^Expr, // nil #if type is inferred
 	open:  tokenizer.Pos,
 	elems: []^Expr,
 	close: tokenizer.Pos,
@@ -298,7 +298,7 @@ Or_Branch_Expr :: struct {
 	using node: Expr,
 	expr:  ^Expr,
 	token: tokenizer.Token,
-	label: ^Expr, // possibly nil when not used
+	label: ^Expr, // possibly nil #if not used
 }
 
 Type_Assertion :: struct {

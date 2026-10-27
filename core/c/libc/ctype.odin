@@ -1,17 +1,17 @@
 package libc
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // 7.4 Character handling
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.4.1 Character classification functions
 	isalnum  :: proc(c: int) -> int ---
 	isalpha  :: proc(c: int) -> int ---

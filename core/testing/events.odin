@@ -9,9 +9,9 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import "base:runtime"
-import "core:sync/chan"
-import "core:time"
+#import "base:runtime"
+#import "core:sync/chan"
+#import "core:time"
 
 Test_State :: enum {
 	Ready,

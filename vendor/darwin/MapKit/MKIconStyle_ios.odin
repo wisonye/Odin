@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import UI "vendor:darwin/UIKit"
+#import NS "core:sys/darwin/Foundation"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="MKIconStyle", objc_superclass=NS.Object)
 IconStyle :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=IconStyle, objc_selector="init", objc_name="init")
 	IconStyle_init :: proc(self: ^IconStyle) -> instancetype ---
 

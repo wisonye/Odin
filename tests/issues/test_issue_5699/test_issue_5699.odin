@@ -1,7 +1,7 @@
 // Tests issue #5699 https://github.com/odin-lang/Odin/issues/5699
 package test_issue_5699
 
-import "core:testing"
+#import "core:testing"
 
 Issue5699_Value :: struct {
     value: i32,

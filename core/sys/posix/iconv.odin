@@ -1,20 +1,20 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	// NOTE: iconv is in a different library
-	foreign import lib "system:iconv"
+	#foreign #import lib "system:iconv"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // iconv.h - codeset conversion facility
 
 iconv_t :: distinct rawptr
 
-foreign lib {
+#foreign lib {
 	/*
 	Convert the sequence of characters from one codeset, in the array specified by inbuf,
 	into a sequence of corresponding characters in another codeset, in the array specified by outbuf.

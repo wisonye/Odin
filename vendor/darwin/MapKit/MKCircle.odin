@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="MKCircle", objc_superclass=Shape)
 Circle :: struct {
@@ -11,7 +11,7 @@ Circle :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Circle, objc_selector="circleWithCenterCoordinate:radius:", objc_name="circleWithCenterCoordinate", objc_is_class_method=true)
 	Circle_circleWithCenterCoordinate :: proc(coord: CL.LocationCoordinate2D, radius: CL.LocationDistance) -> instancetype ---
 
@@ -32,7 +32,7 @@ foreign lib {
 @(objc_class="MKCircleRenderer", objc_superclass=OverlayPathRenderer)
 CircleRenderer :: struct { using _: OverlayPathRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CircleRenderer, objc_selector="initWithCircle:", objc_name="initWithCircle")
 	CircleRenderer_initWithCircle :: proc(self: ^CircleRenderer, circle: ^Circle) -> instancetype ---
 

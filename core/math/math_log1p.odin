@@ -27,7 +27,7 @@ package math
 //      term is need. Let u=1+x rounded. Let c = (1+x)-u, then
 //      log(1+x) - log(u) ~ c/u. Thus, we proceed to compute log(u),
 //      and add back the correction term c/u.
-//      (Note: when x > 2**53, one can simply return log(x))
+//      (Note: #if x > 2**53, one can simply return log(x))
 //
 //   2. Approximation of log1p(f).
 //      Let s = f/(2+f) ; based on log(1+f) = log(1+s) - log(1-s)

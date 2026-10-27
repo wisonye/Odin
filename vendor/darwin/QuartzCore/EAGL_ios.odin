@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_QuartzCore
 
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="EAGLContext", objc_superclass=NS.Object)
 EAGLContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EAGLContext, objc_selector="init", objc_name="init")
 	EAGLContext_init :: proc(self: ^EAGLContext) -> instancetype ---
 
@@ -68,7 +68,7 @@ EAGLContext_initWithAPI :: proc {
 EAGLDrawable :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EAGLDrawable, objc_selector="drawableProperties", objc_name="drawableProperties")
 	EAGLDrawable_drawableProperties :: proc(self: ^EAGLDrawable) -> ^NS.Dictionary ---
 
@@ -81,7 +81,7 @@ foreign lib {
 EAGLSharegroup :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EAGLSharegroup, objc_selector="debugLabel", objc_name="debugLabel")
 	EAGLSharegroup_debugLabel :: proc(self: ^EAGLSharegroup) -> ^NS.String ---
 

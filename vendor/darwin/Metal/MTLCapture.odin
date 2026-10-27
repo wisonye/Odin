@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MTLCaptureDescriptor", objc_superclass=NS.Object)
 CaptureDescriptor :: struct {
@@ -11,7 +11,7 @@ CaptureDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDescriptor, objc_selector="captureObject", objc_name="captureObject")
 	CaptureDescriptor_captureObject :: proc(self: ^CaptureDescriptor) -> id ---
 
@@ -35,7 +35,7 @@ foreign lib {
 @(objc_class="MTLCaptureManager", objc_superclass=NS.Object)
 CaptureManager :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureManager, objc_selector="sharedCaptureManager", objc_name="sharedCaptureManager", objc_is_class_method=true)
 	CaptureManager_sharedCaptureManager :: proc() -> ^CaptureManager ---
 
@@ -95,7 +95,7 @@ CaptureScope :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureScope, objc_selector="beginScope", objc_name="beginScope")
 	CaptureScope_beginScope :: proc(self: ^CaptureScope) ---
 

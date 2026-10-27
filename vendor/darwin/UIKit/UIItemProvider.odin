@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIItemProviderPresentationSizeProviding")
 ItemProviderPresentationSizeProviding :: struct {
@@ -13,7 +13,7 @@ ItemProviderPresentationSizeProviding :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProviderPresentationSizeProviding, objc_selector="preferredPresentationSizeForItemProvider", objc_name="preferredPresentationSizeForItemProvider")
 	ItemProviderPresentationSizeProviding_preferredPresentationSizeForItemProvider :: proc(self: ^ItemProviderPresentationSizeProviding) -> CG.Size ---
 }
@@ -26,7 +26,7 @@ ItemProviderReadingAugmentationDesignating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProviderReadingAugmentationDesignating, objc_selector="_ui_augmentingNSItemProviderReadingClass", objc_name="_ui_augmentingNSItemProviderReadingClass", objc_is_class_method=true)
 	ItemProviderReadingAugmentationDesignating__ui_augmentingNSItemProviderReadingClass :: proc() -> ^Class ---
 }
@@ -36,7 +36,7 @@ foreign lib {
 ItemProviderReadingAugmentationProviding :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProviderReadingAugmentationProviding, objc_selector="objectWithItemProviderData:typeIdentifier:requestedClass:error:", objc_name="objectWithItemProviderData_error", objc_is_class_method=true)
 	ItemProviderReadingAugmentationProviding_objectWithItemProviderData_error :: proc(data: ^NS.Data, typeIdentifier: ^NS.String, requestedClass: Class, outError: ^^NS.Error) -> id ---
 

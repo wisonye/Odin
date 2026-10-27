@@ -1,9 +1,9 @@
 package wgpu_glfw_glue
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
-import     "vendor:glfw"
-import     "vendor:wgpu"
+#import     "vendor:glfw"
+#import     "vendor:wgpu"
 
 GetSurface :: proc(instance: wgpu.Instance, window: glfw.WindowHandle) -> wgpu.Surface {
 	hwnd      := glfw.GetWin32Window(window)

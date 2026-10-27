@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 waveform_type :: enum c.int {
 	sine,
@@ -65,7 +65,7 @@ noise :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	waveform_config_init :: proc(format: format, channels: u32, sampleRate: u32, type: waveform_type, amplitude: f64, frequency: f64) -> waveform_config ---
 
 	waveform_init              :: proc(pConfig: ^waveform_config, pWaveform: ^waveform) -> result ---

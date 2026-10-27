@@ -5,7 +5,7 @@ Targets glibc and musl compatibility.
 
 APIs that have been left out are due to not being useful,
 being fully replaced (and better) by other Odin packages,
-or when one of the targets hasn't implemented the API or option.
+or #if one of the targets hasn't implemented the API or option.
 
 The struct fields that are cross-platform are documented with `[PSX]`.
 Accessing these fields on one target should be the same on others.
@@ -49,9 +49,9 @@ Unimplemented headers:
 */
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
+#import "core:c"
 
 IS_SUPPORTED :: _IS_SUPPORTED
 
@@ -67,7 +67,7 @@ FD :: distinct c.int
 @(private)
 log2 :: intrinsics.constant_log2
 
-when ODIN_OS == .Darwin && ODIN_ARCH == .amd64 {
+#if ODIN_OS == .Darwin && ODIN_ARCH == .amd64 {
 	@(private)
 	INODE_SUFFIX :: "$INODE64"
 } else {

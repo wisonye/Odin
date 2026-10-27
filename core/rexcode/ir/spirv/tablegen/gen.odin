@@ -8,11 +8,11 @@
 //   odin run core/rexcode/ir/spirv/tablegen   # regenerate ../opcodes.odin + ../operand_kinds.odin
 package rexcode_spirv_tablegen
 
-import "core:encoding/json"
-import "core:os"
-import "core:fmt"
-import "core:strings"
-import "core:strconv"
+#import "core:encoding/json"
+#import "core:os"
+#import "core:fmt"
+#import "core:strings"
+#import "core:strconv"
 
 GRAMMAR_PATH :: #directory + "/spirv.core.grammar.json"
 OPCODES_OUT  :: #directory + "/../opcodes.odin"
@@ -457,8 +457,8 @@ to_lower :: proc(s: string) -> string {
 @(private="file")
 is_keyword :: proc(s: string) -> bool {
 	switch s {
-	case "return", "switch", "in", "map", "for", "if", "else", "when", "case",
-	     "struct", "enum", "union", "proc", "import", "package", "using", "defer",
+	case "return", "switch", "in", "map", "for", "if", "else", "#if", "case",
+	     "struct", "enum", "union", "proc", "#import", "package", "using", "defer",
 	     "context", "distinct", "bit_set", "matrix", "or_else", "or_return",
 	     "size_of", "align_of", "offset_of", "type_of", "typeid_of", "type_info_of",
 	     "len", "cap", "min", "max", "abs", "clamp", "swizzle", "make", "new",

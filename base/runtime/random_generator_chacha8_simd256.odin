@@ -1,7 +1,7 @@
 #+build amd64
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 #assert(ODIN_ENDIAN == .Little)
 
@@ -187,9 +187,9 @@ chacha8rand_refill_simd256 :: proc(r: ^Default_Random_State) {
 
 @(private = "file", require_results, enable_target_feature="avx2")
 _mm_mm256_extracti128_si256 :: #force_inline proc "c" (a: u32x8, $OFFSET: int) -> u32x4 {
-	when OFFSET == 0 {
+	#if OFFSET == 0 {
 		return intrinsics.simd_shuffle(a, a, 0, 1, 2, 3)
-	} else when OFFSET == 1 {
+	} else #if OFFSET == 1 {
 		return intrinsics.simd_shuffle(a, a, 4, 5, 6, 7)
 	} else {
 		#panic("chacha8rand: invalid offset")

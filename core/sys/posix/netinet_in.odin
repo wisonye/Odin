@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // netinet/in.h - Internet address family
 
-foreign lib {
+#foreign lib {
 	in6addr_any:      in6_addr
 	in6addr_loopback: in6_addr
 }
@@ -31,7 +31,7 @@ Protocol :: enum c.int {
 	UDP  = IPPROTO_UDP,
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	in_addr :: struct {
 		s_addr: in_addr_t, /* [PSX] big endian address */
@@ -45,7 +45,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		},
 	}
 
-	when ODIN_OS == .Linux {
+	#if ODIN_OS == .Linux {
 
 		sockaddr_in :: struct {
 			sin_family: sa_family_t, /* [PSX] AF_INET (but a smaller size) */

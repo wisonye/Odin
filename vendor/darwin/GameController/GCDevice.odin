@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GCDevice")
 Device :: struct {
@@ -12,7 +12,7 @@ Device :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Device, objc_selector="handlerQueue", objc_name="handlerQueue")
 	Device_handlerQueue :: proc(self: ^Device) -> ^NS.Object ---
 
@@ -33,7 +33,7 @@ foreign lib {
 @(objc_class="GCDeviceBattery", objc_superclass=NS.Object)
 DeviceBattery :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DeviceBattery, objc_selector="init", objc_name="init")
 	DeviceBattery_init :: proc(self: ^DeviceBattery) -> instancetype ---
 
@@ -52,7 +52,7 @@ DeviceCursor :: struct { using _: ControllerDirectionPad}
 @(objc_class="GCDeviceHaptics", objc_superclass=NS.Object)
 DeviceHaptics :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DeviceHaptics, objc_selector="init", objc_name="init")
 	DeviceHaptics_init :: proc(self: ^DeviceHaptics) -> instancetype ---
 
@@ -67,7 +67,7 @@ foreign lib {
 @(objc_class="GCDeviceLight", objc_superclass=NS.Object)
 DeviceLight :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DeviceLight, objc_selector="init", objc_name="init")
 	DeviceLight_init :: proc(self: ^DeviceLight) -> instancetype ---
 
@@ -85,7 +85,7 @@ DevicePhysicalInput :: struct {
 	using _: DevicePhysicalInputState,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DevicePhysicalInput, objc_selector="capture", objc_name="capture")
 	DevicePhysicalInput_capture :: proc(self: ^DevicePhysicalInput) -> ^DevicePhysicalInputState ---
 
@@ -127,7 +127,7 @@ DevicePhysicalInputState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DevicePhysicalInputState, objc_selector="objectForKeyedSubscript:", objc_name="objectForKeyedSubscript")
 	DevicePhysicalInputState_objectForKeyedSubscript :: proc(self: ^DevicePhysicalInputState, key: ^NS.String) -> ^PhysicalInputElement ---
 
@@ -163,7 +163,7 @@ DevicePhysicalInputStateDiff :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DevicePhysicalInputStateDiff, objc_selector="changeForElement:", objc_name="changeForElement")
 	DevicePhysicalInputStateDiff_changeForElement :: proc(self: ^DevicePhysicalInputStateDiff, element: ^PhysicalInputElement) -> DevicePhysicalInputElementChange ---
 

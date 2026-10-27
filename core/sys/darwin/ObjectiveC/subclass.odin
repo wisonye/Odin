@@ -1,8 +1,8 @@
 #+build darwin
 package darwin_ObjectiveC
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 /*
 Helpers for registering Objective-C subclasses at runtime whose methods are implemented

@@ -50,7 +50,7 @@ rotate_right_u64 :: #force_inline proc "contextless" (v: u64, r: u32, width: u32
 }
 
 // is_valid_bitmask_imm returns true if `value` is a valid AArch64 logical-
-// immediate when interpreted at the given width.
+// immediate #if interpreted at the given width.
 is_valid_bitmask_imm :: proc "contextless" (value: u64, is_64: bool) -> bool {
 	_, _, _, ok := encode_bitmask_imm(value, is_64)
 	return ok

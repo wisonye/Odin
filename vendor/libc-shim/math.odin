@@ -1,8 +1,8 @@
 package odin_libc
 
-import "base:builtin"
+#import "base:builtin"
 
-import "core:math"
+#import "core:math"
 
 @(require, linkage="strong", link_name="sqrtf")
 sqrtf :: proc "c" (v: f32) -> f32 {

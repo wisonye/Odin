@@ -1,7 +1,7 @@
 package encoding_json
 
-import "base:intrinsics"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "core:unicode/utf8"
 
 Pos :: struct {
 	offset: int,

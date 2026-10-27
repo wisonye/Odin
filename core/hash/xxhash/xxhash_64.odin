@@ -10,7 +10,7 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	64-bit hash functions
@@ -133,7 +133,7 @@ XXH64_endian_align :: proc(input: []u8, seed := XXH64_DEFAULT_SEED, alignment :=
 }
 
 XXH64 :: proc(input: []u8, seed := XXH64_DEFAULT_SEED) -> (digest: XXH64_hash) {
-	when false {
+	#if false {
 		/*
 			Simple version, good for code maintenance, but unfortunately slow for small inputs.
 		*/
@@ -147,7 +147,7 @@ XXH64 :: proc(input: []u8, seed := XXH64_DEFAULT_SEED) -> (digest: XXH64_hash) {
 		}
 		return XXH64_digest(&state)
 	} else {
-		when XXH_FORCE_ALIGN_CHECK {
+		#if XXH_FORCE_ALIGN_CHECK {
 			if uintptr(raw_data(input)) & uintptr(7) == 0 {
 				/*
 					Input is 8-bytes aligned, leverage the speed benefit.

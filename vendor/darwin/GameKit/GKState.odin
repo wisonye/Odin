@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKState", objc_superclass=NS.Object)
 State :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=State, objc_selector="state", objc_name="state", objc_is_class_method=true)
 	State_state :: proc() -> instancetype ---
 
@@ -34,7 +34,7 @@ foreign lib {
 @(objc_class="GKStateMachine", objc_superclass=NS.Object)
 StateMachine :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StateMachine, objc_selector="stateMachineWithStates:", objc_name="stateMachineWithStates", objc_is_class_method=true)
 	StateMachine_stateMachineWithStates :: proc(states: ^NS.Array) -> instancetype ---
 

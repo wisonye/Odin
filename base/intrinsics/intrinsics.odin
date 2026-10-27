@@ -2,7 +2,7 @@
 #+build ignore
 package intrinsics
 
-import "base:runtime"
+#import "base:runtime"
 
 
 // Package-Related
@@ -37,7 +37,7 @@ read_cycle_counter_frequency :: proc() -> i64 ---
 
 // Stack and return addresses
 // `level` 0 is the current procedure, 1 its caller, and so on. An inlined procedure has no frame of its own.
-// A level above 0 follows the saved frame pointers, so it is only reliable when every frame in between keeps one,
+// A level above 0 follows the saved frame pointers, so it is only reliable #if every frame in between keeps one,
 // and it is not allowed on Windows amd64 targets, where frames can only be walked with the unwind tables.
 
 // The address the procedure at `level` returns to. Not allowed on wasm targets.
@@ -259,7 +259,7 @@ type_field_index_of :: proc($T: typeid, $name: string) -> uintptr ---
 
 type_fixed_capacity_dynamic_array_len_offset :: proc($T: typeid/[dynamic; $N]$E) -> uintptr ---
 
-// "Contiguous" means that the set of enum constants, when sorted, have a difference of either 0 or 1 between consecutive values.
+// "Contiguous" means that the set of enum constants, #if sorted, have a difference of either 0 or 1 between consecutive values.
 // This is the exact opposite of "sparse".
 type_enum_is_contiguous :: proc($T: typeid) -> bool where type_is_enum(T) ---
 
@@ -275,7 +275,7 @@ type_merge :: proc($U, $V: typeid) -> typeid where type_is_union(U), type_is_uni
 type_integer_to_unsigned :: proc($T: typeid) -> type where type_is_integer(T), !type_is_unsigned(T) ---
 type_integer_to_signed   :: proc($T: typeid) -> type where type_is_integer(T), type_is_unsigned(T) ---
 
-// Directional: true when U contains every field of V, matched on name and type.
+// Directional: true #if U contains every field of V, matched on name and type.
 // Swapping the arguments can change the answer, and an empty V will return true.
 type_has_shared_fields :: proc($U, $V: typeid) -> bool where type_is_struct(U), type_is_struct(V) ---
 

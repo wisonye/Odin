@@ -1,14 +1,14 @@
 package darwin
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
-foreign import lib "system:System"
+#foreign #import lib "system:System"
 
-// Incomplete bindings to the proc API on MacOS, add to when needed.
+// Incomplete bindings to the proc API on MacOS, add to #if needed.
 
-foreign lib {
+#foreign lib {
 	proc_pidinfo     :: proc(pid: posix.pid_t, flavor: PID_Info_Flavor, arg: i64, buffer: rawptr, buffersize: i32) -> i32 ---
 	proc_pidpath     :: proc(pid: posix.pid_t, buffer: [^]byte, buffersize: u32) -> i32 ---
 	proc_listallpids :: proc(buffer: [^]i32, buffersize: i32) -> i32 ---

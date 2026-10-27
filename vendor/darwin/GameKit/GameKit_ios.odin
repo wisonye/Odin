@@ -3,7 +3,7 @@
 #+private package
 package darwin_GameKit
 
-import UI "vendor:darwin/UIKit"
+#import UI "vendor:darwin/UIKit"
 
 UI_ViewController :: UI.ViewController
 UI_Image :: UI.Image

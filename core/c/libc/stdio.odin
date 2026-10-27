@@ -1,17 +1,17 @@
 package libc
 
-import "core:c"
-import "core:io"
+#import "core:c"
+#import "core:io"
 
-when ODIN_OS == .Windows {
-	foreign import libc {
+#if ODIN_OS == .Windows {
+	#foreign #import libc {
 		"system:libucrt.lib",
 		"system:legacy_stdio_definitions.lib",
 	}
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // 7.21 Input/output
@@ -25,7 +25,7 @@ Whence :: enum int {
 }
 
 // MSVCRT compatible.
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	_IOFBF       :: 0x0000
 	_IONBF       :: 0x0004
 	_IOLBF       :: 0x0040
@@ -50,7 +50,7 @@ when ODIN_OS == .Windows {
 
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		__acrt_iob_func :: proc (index: uint) -> ^FILE ---
 	}
 
@@ -60,7 +60,7 @@ when ODIN_OS == .Windows {
 }
 
 // GLIBC and MUSL compatible.
-when ODIN_OS == .Linux {
+#if ODIN_OS == .Linux {
 	fpos_t        :: struct #raw_union { _: [16]char, _: longlong, _: double, }
 
 	_IOFBF        :: 0
@@ -83,14 +83,14 @@ when ODIN_OS == .Linux {
 
 	TMP_MAX       :: 308915776
 
-	foreign libc {
+	#foreign libc {
 		stderr: ^FILE
 		stdin:  ^FILE
 		stdout: ^FILE
 	}
 }
 
-when ODIN_OS == .JS {
+#if ODIN_OS == .JS {
 	fpos_t        :: struct #raw_union { _: [16]char, _: longlong, _: double, }
 
 	_IOFBF        :: 0
@@ -114,7 +114,7 @@ when ODIN_OS == .JS {
 	TMP_MAX       :: 308915776
 }
 
-when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+#if ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	fpos_t :: distinct i64
 
 	_IOFBF :: 0
@@ -134,7 +134,7 @@ when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 
 	TMP_MAX :: 308915776
 
-	foreign libc {
+	#foreign libc {
 		__sF: [3]FILE
 	}
 
@@ -143,7 +143,7 @@ when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	stderr: ^FILE = &__sF[2]
 }
 
-when ODIN_OS == .FreeBSD {
+#if ODIN_OS == .FreeBSD {
 	fpos_t :: distinct i64
 
 	_IOFBF :: 0
@@ -163,14 +163,14 @@ when ODIN_OS == .FreeBSD {
 
 	TMP_MAX :: 308915776
 
-	foreign libc {
+	#foreign libc {
 		@(link_name="__stderrp") stderr: ^FILE
 		@(link_name="__stdinp")  stdin:  ^FILE
 		@(link_name="__stdoutp") stdout: ^FILE
 	}
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	fpos_t :: distinct i64
 	
 	_IOFBF        :: 0
@@ -193,14 +193,14 @@ when ODIN_OS == .Darwin {
 
 	TMP_MAX       :: 308915776
 
-	foreign libc {
+	#foreign libc {
 		@(link_name="__stderrp") stderr: ^FILE
 		@(link_name="__stdinp")  stdin:  ^FILE
 		@(link_name="__stdoutp") stdout: ^FILE
 	}
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LRENAME  :: "__posix_rename"
 	@(private) LFGETPOS :: "__fgetpos50"
 	@(private) LFSETPOS :: "__fsetpos50"
@@ -211,7 +211,7 @@ when ODIN_OS == .NetBSD {
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.21.4 Operations on files
 	remove    :: proc(filename: cstring) -> int ---
 	@(link_name=LRENAME)
@@ -369,7 +369,7 @@ to_stream :: proc(file: ^FILE) -> io.Stream {
 
 // The v* procedures take a pointer to the va_list on every target, see va_list_arg.
 @(default_calling_convention="c", private)
-foreign libc {
+#foreign libc {
 	@(link_name="vfprintf")  _vfprintf  :: proc(stream: ^FILE, format: cstring, arg: va_list_arg) -> int ---
 	@(link_name="vfscanf")   _vfscanf   :: proc(stream: ^FILE, format: cstring, arg: va_list_arg) -> int ---
 	@(link_name="vprintf")   _vprintf   :: proc(format: cstring, arg: va_list_arg) -> int ---

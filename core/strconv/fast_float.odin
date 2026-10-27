@@ -1,7 +1,7 @@
 package strconv
 
-import "base:intrinsics"
-import "core:math/bits"
+#import "base:intrinsics"
+#import "core:math/bits"
 
 _ :: bits // needed for STRCONV_FAST_FLOAT=false
 
@@ -51,7 +51,7 @@ calls return the same bits, the result is correct. Otherwise, use a slow path.
 - The IEEE-754 bit pattern of the result, without the sign bit. An overflow gives the bit pattern of infinity.
 */
 fast_float_compute_float :: proc "contextless" ($T: typeid, q: int, w: u64) -> u64 where T == f32 || T == f64 #no_bounds_check {
-	when T == f64 {
+	#if T == f64 {
 		MANTISSA_EXPLICIT_BITS     :: 52
 		MINIMUM_EXPONENT           :: -1023
 		INFINITE_POWER             :: 0x7ff
@@ -184,7 +184,7 @@ parse_number_string :: #force_inline proc "contextless" (s: string) -> (mantissa
 	if i < n && s[i] == '.' {
 		i += 1
 		frac_start := i
-		when FAST_FLOAT {
+		#if FAST_FLOAT {
 			i, mantissa = loop_parse_if_eight_digits(s, i, mantissa)
 		}
 		for i < n && s[i] - '0' <= 9 {

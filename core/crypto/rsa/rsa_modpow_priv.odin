@@ -22,9 +22,9 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:crypto"
-import bigint "core:crypto/_bigint"
-import "core:slice"
+#import "core:crypto"
+#import bigint "core:crypto/_bigint"
+#import "core:slice"
 
 @(private, require_results)
 private_modpow :: proc(x: []byte, sk: ^Private_Key) -> u32 {
@@ -92,7 +92,7 @@ private_modpow :: proc(x: []byte, sk: ^Private_Key) -> u32 {
 	// We encode the modulus into bytes, to perform the comparison
 	// with bytes. We know that the product length, in bytes, is
 	// exactly xlen.
-	// The comparison actually computes the carry when subtracting
+	// The comparison actually computes the carry #if subtracting
 	// the modulus from the source value; that carry must be 1 for
 	// a value in the correct range. We keep it in r, which is our
 	// accumulator for the error code.

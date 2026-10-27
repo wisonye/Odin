@@ -2,7 +2,7 @@
 // A polymorphic procedure in a constant compound literal is its instance, not nil
 package test_issue_7316
 
-import "core:testing"
+#import "core:testing"
 
 Foo :: struct($N: int) {
 	data:   [N]u8,

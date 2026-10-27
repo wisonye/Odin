@@ -1,12 +1,12 @@
 #+build amd64
 package test_internal
 
-import "base:intrinsics"
-import "core:math"
-import "core:simd"
-import x86 "core:simd/x86"
-import "core:sys/info"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:math"
+#import "core:simd"
+#import x86 "core:simd/x86"
+#import "core:sys/info"
+#import "core:testing"
 
 // These wrappers used LLVM intrinsics that LLVM has since removed, so they failed to link.
 

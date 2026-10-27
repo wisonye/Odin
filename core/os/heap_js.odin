@@ -6,6 +6,6 @@ package os
 // It's only here so importing `core:os` on wasm panics cleanly,
 // without spamming about all sorts of missing procs and types.
 
-import "base:runtime"
+#import "base:runtime"
 
 _heap_allocator_proc :: runtime.wasm_allocator_proc

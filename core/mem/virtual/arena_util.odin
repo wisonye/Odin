@@ -1,6 +1,6 @@
 package mem_virtual
 
-import "base:runtime"
+#import "base:runtime"
 _ :: runtime
 
 // The `new` procedure allocates memory for a type `T` from a `virtual.Arena`. The second argument is a type,

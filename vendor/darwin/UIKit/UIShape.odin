@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIShape", objc_superclass=NS.Object)
 Shape :: struct {
@@ -14,7 +14,7 @@ Shape :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Shape, objc_selector="rectShapeWithCornerRadius:", objc_name="rectShapeWithCornerRadius_", objc_is_class_method=true)
 	Shape_rectShapeWithCornerRadius_ :: proc(cornerRadius: CG.Float) -> instancetype ---
 
@@ -86,7 +86,7 @@ ShapeProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ShapeProvider, objc_selector="resolvedShapeInContext:", objc_name="resolvedShapeInContext")
 	ShapeProvider_resolvedShapeInContext :: proc(self: ^ShapeProvider, _context: ^ShapeResolutionContext) -> ^ResolvedShape ---
 }
@@ -96,7 +96,7 @@ foreign lib {
 ShapeResolutionContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ShapeResolutionContext, objc_selector="init", objc_name="init")
 	ShapeResolutionContext_init :: proc(self: ^ShapeResolutionContext) -> instancetype ---
 

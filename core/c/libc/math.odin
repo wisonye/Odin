@@ -2,14 +2,14 @@ package libc
 
 // 7.12 Mathematics
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // To support C's tgmath behavior we use Odin's explicit procedure overloading,
@@ -17,7 +17,7 @@ when ODIN_OS == .Windows {
 // and keep them as private symbols of name "libc_"
 @(private="file")
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.12.4 Trigonometric functions
 	@(link_name="acos")       libc_acos       :: proc(x: double) -> double ---
 	@(link_name="acosf")      libc_acosf      :: proc(x: float) -> float ---

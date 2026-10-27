@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UITimingCurveProvider")
 TimingCurveProvider :: struct {
@@ -13,7 +13,7 @@ TimingCurveProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TimingCurveProvider, objc_selector="timingCurveType", objc_name="timingCurveType")
 	TimingCurveProvider_timingCurveType :: proc(self: ^TimingCurveProvider) -> TimingCurveType ---
 

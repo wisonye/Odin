@@ -5,8 +5,8 @@
 //       should make sense for any value of `x`.
 package test_issue_7689
 
-import "core:fmt"
-import "core:os"
+#import "core:fmt"
+#import "core:os"
 
 main :: proc() {
 	x := len(os.args)+1 // runtime value so nothing is folded

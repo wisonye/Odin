@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSStatusBar", objc_superclass=NS.Object)
 StatusBar :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StatusBar, objc_selector="statusItemWithLength:", objc_name="statusItemWithLength")
 	StatusBar_statusItemWithLength :: proc(self: ^StatusBar, length: CG.Float) -> ^StatusItem ---
 
@@ -31,7 +31,7 @@ foreign lib {
 StatusBarButton :: struct { using _: Button}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StatusBarButton, objc_selector="appearsDisabled", objc_name="appearsDisabled")
 	StatusBarButton_appearsDisabled :: proc(self: ^StatusBarButton) -> bool ---
 
@@ -44,7 +44,7 @@ foreign lib {
 StatusItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StatusItem, objc_selector="statusBar", objc_name="statusBar")
 	StatusItem_statusBar :: proc(self: ^StatusItem) -> ^StatusBar ---
 

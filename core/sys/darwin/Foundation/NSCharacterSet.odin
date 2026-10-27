@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSCharacterSet", objc_superclass=Object)
 CharacterSet :: struct {
@@ -13,7 +13,7 @@ CharacterSet :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CharacterSet, objc_selector="characterSetWithRange:", objc_name="characterSetWithRange", objc_is_class_method=true)
 	CharacterSet_characterSetWithRange :: proc(aRange: _NSRange) -> ^CharacterSet ---
 
@@ -120,7 +120,7 @@ MutableCharacterSet :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableCharacterSet, objc_selector="addCharactersInRange:", objc_name="addCharactersInRange")
 	MutableCharacterSet_addCharactersInRange :: proc(self: ^MutableCharacterSet, aRange: _NSRange) ---
 

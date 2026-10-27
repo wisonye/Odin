@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 SurfaceFlags :: distinct bit_set[SurfaceFlag; Uint32]
 
@@ -43,7 +43,7 @@ Surface :: struct {
 	pitch:    c.int,        /**< The distance in bytes between rows of pixels, read-only */
 	pixels:   rawptr,       /**< A pointer to the pixels of the surface, the pixels are writeable if non-NULL */
 
-	refcount: c.int,        /**< Application reference count, used when freeing surface */
+	refcount: c.int,        /**< Application reference count, used #if freeing surface */
 
 	reserved: rawptr,       /**< Reserved for internal use */
 }
@@ -56,7 +56,7 @@ PROP_SURFACE_HOTSPOT_Y_NUMBER        :: "SDL.surface.hotspot.y"
 PROP_SURFACE_ROTATION_FLOAT          :: "SDL.surface.rotation"
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	CreateSurface                :: proc(width, height: c.int, format: PixelFormat) -> ^Surface ---
 	CreateSurfaceFrom            :: proc(width, height: c.int, format: PixelFormat, pixels: rawptr, pitch: c.int) -> ^Surface ---
 	DestroySurface               :: proc(surface: ^Surface) ---

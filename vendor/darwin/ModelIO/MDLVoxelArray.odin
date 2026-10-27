@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_ModelIO
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLVoxelArray", objc_superclass=Object)
 VoxelArray :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VoxelArray, objc_selector="initWithAsset:divisions:patchRadius:", objc_name="initWithAsset_divisions_patchRadius")
 	VoxelArray_initWithAsset_divisions_patchRadius :: proc(self: ^VoxelArray, asset: ^Asset, divisions: cffi.int, patchRadius: cffi.float) -> instancetype ---
 

@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSBox", objc_superclass=View)
 Box :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Box, objc_selector="sizeToFit", objc_name="sizeToFit")
 	Box_sizeToFit :: proc(self: ^Box) ---
 

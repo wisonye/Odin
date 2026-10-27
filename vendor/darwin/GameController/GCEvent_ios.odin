@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCEventInteraction", objc_superclass=NS.Object)
 EventInteraction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EventInteraction, objc_selector="init", objc_name="init")
 	EventInteraction_init :: proc(self: ^EventInteraction) -> instancetype ---
 

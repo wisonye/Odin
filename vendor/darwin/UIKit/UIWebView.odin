@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIWebView", objc_superclass=View)
 WebView :: struct {
@@ -14,7 +14,7 @@ WebView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WebView, objc_selector="loadRequest:", objc_name="loadRequest")
 	WebView_loadRequest :: proc(self: ^WebView, request: ^NS.URLRequest) ---
 
@@ -156,7 +156,7 @@ WebViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WebViewDelegate, objc_selector="webView:shouldStartLoadWithRequest:navigationType:", objc_name="webView_shouldStartLoadWithRequest_navigationType")
 	WebViewDelegate_webView_shouldStartLoadWithRequest_navigationType :: proc(self: ^WebViewDelegate, webView: ^WebView, request: ^NS.URLRequest, navigationType: WebViewNavigationType) -> bool ---
 
@@ -181,4 +181,4 @@ WebViewDelegate_webView :: proc {
 WebViewInternal :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

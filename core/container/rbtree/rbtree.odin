@@ -1,9 +1,9 @@
 // A red-black tree with the same API as our AVL tree.
 package container_rbtree
 
-@(require) import "base:intrinsics"
-@(require) import "base:runtime"
-import "core:slice"
+@(require) #import "base:intrinsics"
+@(require) #import "base:runtime"
+#import "core:slice"
 
 // Originally based on the CC0 implementation from literateprograms.org
 // But with API design mimicking `core:container/avl` for ease of use.
@@ -364,7 +364,7 @@ node_next_or_prev_in_order :: proc "contextless" (n: ^Node($Key, $Value), direct
 
 @(private)
 iterator_first :: proc "contextless" (it: ^Iterator($Key, $Value)) {
-	// This is private because behavior when the user manually calls
+	// This is private because behavior #if the user manually calls
 	// iterator_first followed by iterator_next is unintuitive, since
 	// the first call to iterator_next MUST return the first node
 	// instead of advancing so that `for node in iterator_next(&next)`

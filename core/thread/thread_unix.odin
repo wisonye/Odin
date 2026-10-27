@@ -2,10 +2,10 @@
 #+private
 package thread
 
-import "base:runtime"
-import "core:sync"
-import "core:sys/posix"
-import "core:strings"
+#import "base:runtime"
+#import "core:sync"
+#import "core:sys/posix"
+#import "core:strings"
 
 _IS_SUPPORTED :: true
 // NOTE(tetra): Aligned here because of core/unix/pthread_linux.odin/pthread_t.
@@ -85,7 +85,7 @@ _create :: proc(procedure: Thread_Proc, priority: Thread_Priority, name: Maybe(s
 	// NOTE(tetra, 2019-11-01): These only fail if their argument is invalid.
 	res = posix.pthread_attr_setdetachstate(&attrs, .CREATE_JOINABLE)
 	assert(res == nil)
-	when ODIN_OS != .NetBSD {
+	#if ODIN_OS != .NetBSD {
 		res = posix.pthread_attr_setinheritsched(&attrs, .EXPLICIT_SCHED)
 		assert(res == nil)
 	}
@@ -98,7 +98,7 @@ _create :: proc(procedure: Thread_Proc, priority: Thread_Priority, name: Maybe(s
 
 	// Set thread priority.
 	policy: posix.Sched_Policy
-	when ODIN_OS != .NetBSD {
+	#if ODIN_OS != .NetBSD {
 		res = posix.pthread_attr_getschedpolicy(&attrs, &policy)
 		assert(res == nil)
 	}
@@ -198,7 +198,7 @@ _get_name :: proc(thread: ^Thread, allocator: runtime.Allocator, loc: runtime.So
 	
 	buf : [_MAX_PTHREAD_NAME_LENGTH]u8
 
-	when ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .OpenBSD {
 		pthread_get_name_np(tid, raw_data(buf[:]), len(buf))
 	} else {
 		pthread_getname_np(tid, raw_data(buf[:]), len(buf))
@@ -214,7 +214,7 @@ _set_name :: proc(thread: ^Thread) {
 		return
 	}
 
-	when ODIN_OS != .Darwin {
+	#if ODIN_OS != .Darwin {
 		tid := thread.unix_thread
 	}
 
@@ -224,11 +224,11 @@ _set_name :: proc(thread: ^Thread) {
 	defer delete(buf)
 	copy(buf[:len(buf) - 1], name)
 
-	when ODIN_OS == .Darwin {
+	#if ODIN_OS == .Darwin {
 		pthread_setname_np(raw_data(buf[:]))
-	} else when ODIN_OS == .OpenBSD {
+	} else #if ODIN_OS == .OpenBSD {
 		pthread_set_name_np(tid, raw_data(buf[:]))
-	} else when ODIN_OS == .NetBSD {
+	} else #if ODIN_OS == .NetBSD {
 		pthread_setname_np(tid, "%s", raw_data(buf[:]))
 	} else {
 		pthread_setname_np(tid, raw_data(buf[:]))

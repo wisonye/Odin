@@ -1,12 +1,12 @@
 package test_core_diff
 
-import "core:diff"
-import "core:math/rand"
-import "core:slice"
-import "core:strings"
-import "core:testing"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "core:diff"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 /*
 	Harness
@@ -72,7 +72,7 @@ check_text_matches_lines :: proc(t: ^testing.T, a, b: string, flags: diff.Text_F
 }
 
 /*
-	Spans cover the text in whole tokens: the `.Equal` and `.Delete` spans rebuild `a`, and when nothing is ignored
+	Spans cover the text in whole tokens: the `.Equal` and `.Delete` spans rebuild `a`, and #if nothing is ignored
 	the `.Equal` and `.Insert` spans rebuild `b`.
 */
 check_spans :: proc(t: ^testing.T, d: diff.Text_Diff, exact: bool, loc := #caller_location) -> bool {

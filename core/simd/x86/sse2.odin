@@ -1,8 +1,8 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:simd"
 
 // Provide a hint to the processor that the code sequence is a spin-wait loop.
 // This can help improve the performance and power consumption of spin-wait loops.
@@ -296,22 +296,22 @@ _mm_slli_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i whe
 	return transmute(__m128i)simd.shuffle(
 		simd.i8x16(0),
 		transmute(simd.i8x16)a,
-		0  when shift > 15 else (0  + 16 - shift),
-		1  when shift > 15 else (1  + 16 - shift),
-		2  when shift > 15 else (2  + 16 - shift),
-		3  when shift > 15 else (3  + 16 - shift),
-		4  when shift > 15 else (4  + 16 - shift),
-		5  when shift > 15 else (5  + 16 - shift),
-		6  when shift > 15 else (6  + 16 - shift),
-		7  when shift > 15 else (7  + 16 - shift),
-		8  when shift > 15 else (8  + 16 - shift),
-		9  when shift > 15 else (9  + 16 - shift),
-		10 when shift > 15 else (10 + 16 - shift),
-		11 when shift > 15 else (11 + 16 - shift),
-		12 when shift > 15 else (12 + 16 - shift),
-		13 when shift > 15 else (13 + 16 - shift),
-		14 when shift > 15 else (14 + 16 - shift),
-		15 when shift > 15 else (15 + 16 - shift),
+		0  #if shift > 15 else (0  + 16 - shift),
+		1  #if shift > 15 else (1  + 16 - shift),
+		2  #if shift > 15 else (2  + 16 - shift),
+		3  #if shift > 15 else (3  + 16 - shift),
+		4  #if shift > 15 else (4  + 16 - shift),
+		5  #if shift > 15 else (5  + 16 - shift),
+		6  #if shift > 15 else (6  + 16 - shift),
+		7  #if shift > 15 else (7  + 16 - shift),
+		8  #if shift > 15 else (8  + 16 - shift),
+		9  #if shift > 15 else (9  + 16 - shift),
+		10 #if shift > 15 else (10 + 16 - shift),
+		11 #if shift > 15 else (11 + 16 - shift),
+		12 #if shift > 15 else (12 + 16 - shift),
+		13 #if shift > 15 else (13 + 16 - shift),
+		14 #if shift > 15 else (14 + 16 - shift),
+		15 #if shift > 15 else (15 + 16 - shift),
 	)
 }
 
@@ -324,22 +324,22 @@ _mm_bslli_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i wh
 	return transmute(__m128i)simd.shuffle(
 		simd.i8x16(0),
 		transmute(simd.i8x16)a,
-		0  when shift > 15 else (0  + 16 - shift),
-		1  when shift > 15 else (1  + 16 - shift),
-		2  when shift > 15 else (2  + 16 - shift),
-		3  when shift > 15 else (3  + 16 - shift),
-		4  when shift > 15 else (4  + 16 - shift),
-		5  when shift > 15 else (5  + 16 - shift),
-		6  when shift > 15 else (6  + 16 - shift),
-		7  when shift > 15 else (7  + 16 - shift),
-		8  when shift > 15 else (8  + 16 - shift),
-		9  when shift > 15 else (9  + 16 - shift),
-		10 when shift > 15 else (10 + 16 - shift),
-		11 when shift > 15 else (11 + 16 - shift),
-		12 when shift > 15 else (12 + 16 - shift),
-		13 when shift > 15 else (13 + 16 - shift),
-		14 when shift > 15 else (14 + 16 - shift),
-		15 when shift > 15 else (15 + 16 - shift),
+		0  #if shift > 15 else (0  + 16 - shift),
+		1  #if shift > 15 else (1  + 16 - shift),
+		2  #if shift > 15 else (2  + 16 - shift),
+		3  #if shift > 15 else (3  + 16 - shift),
+		4  #if shift > 15 else (4  + 16 - shift),
+		5  #if shift > 15 else (5  + 16 - shift),
+		6  #if shift > 15 else (6  + 16 - shift),
+		7  #if shift > 15 else (7  + 16 - shift),
+		8  #if shift > 15 else (8  + 16 - shift),
+		9  #if shift > 15 else (9  + 16 - shift),
+		10 #if shift > 15 else (10 + 16 - shift),
+		11 #if shift > 15 else (11 + 16 - shift),
+		12 #if shift > 15 else (12 + 16 - shift),
+		13 #if shift > 15 else (13 + 16 - shift),
+		14 #if shift > 15 else (14 + 16 - shift),
+		15 #if shift > 15 else (15 + 16 - shift),
 	)
 }
 
@@ -352,22 +352,22 @@ _mm_srli_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i whe
 	return transmute(__m128i)simd.shuffle(
 		transmute(simd.i8x16)a,
 		simd.i8x16(0),
-		(0  + 16) when shift > 15 else (0  + shift),
-		(1  + 16) when shift > 15 else (1  + shift),
-		(2  + 16) when shift > 15 else (2  + shift),
-		(3  + 16) when shift > 15 else (3  + shift),
-		(4  + 16) when shift > 15 else (4  + shift),
-		(5  + 16) when shift > 15 else (5  + shift),
-		(6  + 16) when shift > 15 else (6  + shift),
-		(7  + 16) when shift > 15 else (7  + shift),
-		(8  + 16) when shift > 15 else (8  + shift),
-		(9  + 16) when shift > 15 else (9  + shift),
-		(10 + 16) when shift > 15 else (10 + shift),
-		(11 + 16) when shift > 15 else (11 + shift),
-		(12 + 16) when shift > 15 else (12 + shift),
-		(13 + 16) when shift > 15 else (13 + shift),
-		(14 + 16) when shift > 15 else (14 + shift),
-		(15 + 16) when shift > 15 else (15 + shift),
+		(0  + 16) #if shift > 15 else (0  + shift),
+		(1  + 16) #if shift > 15 else (1  + shift),
+		(2  + 16) #if shift > 15 else (2  + shift),
+		(3  + 16) #if shift > 15 else (3  + shift),
+		(4  + 16) #if shift > 15 else (4  + shift),
+		(5  + 16) #if shift > 15 else (5  + shift),
+		(6  + 16) #if shift > 15 else (6  + shift),
+		(7  + 16) #if shift > 15 else (7  + shift),
+		(8  + 16) #if shift > 15 else (8  + shift),
+		(9  + 16) #if shift > 15 else (9  + shift),
+		(10 + 16) #if shift > 15 else (10 + shift),
+		(11 + 16) #if shift > 15 else (11 + shift),
+		(12 + 16) #if shift > 15 else (12 + shift),
+		(13 + 16) #if shift > 15 else (13 + shift),
+		(14 + 16) #if shift > 15 else (14 + shift),
+		(15 + 16) #if shift > 15 else (15 + shift),
 	)
 }
 
@@ -380,22 +380,22 @@ _mm_bsrli_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i wh
 	return transmute(__m128i)simd.shuffle(
 		transmute(simd.i8x16)a,
 		simd.i8x16(0),
-		(0  + 16) when shift > 15 else (0  + shift),
-		(1  + 16) when shift > 15 else (1  + shift),
-		(2  + 16) when shift > 15 else (2  + shift),
-		(3  + 16) when shift > 15 else (3  + shift),
-		(4  + 16) when shift > 15 else (4  + shift),
-		(5  + 16) when shift > 15 else (5  + shift),
-		(6  + 16) when shift > 15 else (6  + shift),
-		(7  + 16) when shift > 15 else (7  + shift),
-		(8  + 16) when shift > 15 else (8  + shift),
-		(9  + 16) when shift > 15 else (9  + shift),
-		(10 + 16) when shift > 15 else (10 + shift),
-		(11 + 16) when shift > 15 else (11 + shift),
-		(12 + 16) when shift > 15 else (12 + shift),
-		(13 + 16) when shift > 15 else (13 + shift),
-		(14 + 16) when shift > 15 else (14 + shift),
-		(15 + 16) when shift > 15 else (15 + shift),
+		(0  + 16) #if shift > 15 else (0  + shift),
+		(1  + 16) #if shift > 15 else (1  + shift),
+		(2  + 16) #if shift > 15 else (2  + shift),
+		(3  + 16) #if shift > 15 else (3  + shift),
+		(4  + 16) #if shift > 15 else (4  + shift),
+		(5  + 16) #if shift > 15 else (5  + shift),
+		(6  + 16) #if shift > 15 else (6  + shift),
+		(7  + 16) #if shift > 15 else (7  + shift),
+		(8  + 16) #if shift > 15 else (8  + shift),
+		(9  + 16) #if shift > 15 else (9  + shift),
+		(10 + 16) #if shift > 15 else (10 + shift),
+		(11 + 16) #if shift > 15 else (11 + shift),
+		(12 + 16) #if shift > 15 else (12 + shift),
+		(13 + 16) #if shift > 15 else (13 + shift),
+		(14 + 16) #if shift > 15 else (14 + shift),
+		(15 + 16) #if shift > 15 else (15 + shift),
 	)
 }
 
@@ -404,7 +404,7 @@ _mm_bsrli_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i wh
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_slli_epi16)
 @(require_results, enable_target_feature="sse2")
 _mm_slli_epi16 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 16 {
+	#if IMM8 >= 16 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shl(transmute(simd.u16x8)a, simd.u16x8(IMM8))
@@ -424,7 +424,7 @@ _mm_sll_epi16 :: #force_inline proc "c" (a: __m128i, count: __m128i) -> __m128i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_slli_epi32)
 @(require_results, enable_target_feature="sse2")
 _mm_slli_epi32 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 32 {
+	#if IMM8 >= 32 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shl(transmute(simd.u32x4)a, simd.u32x4(IMM8))
@@ -444,7 +444,7 @@ _mm_sll_epi32 :: #force_inline proc "c" (a: __m128i, count: __m128i) -> __m128i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_slli_epi64)
 @(require_results, enable_target_feature="sse2")
 _mm_slli_epi64 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 64 {
+	#if IMM8 >= 64 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shl(transmute(simd.u64x2)a, simd.u64x2(IMM8))
@@ -496,7 +496,7 @@ _mm_sra_epi32 :: #force_inline proc "c" (a: __m128i, count: __m128i) -> __m128i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_srli_epi16)
 @(require_results, enable_target_feature="sse2")
 _mm_srli_epi16 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 16 {
+	#if IMM8 >= 16 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shr(transmute(simd.u16x8)a, simd.u16x8(IMM8))
@@ -516,7 +516,7 @@ _mm_srl_epi16 :: #force_inline proc "c" (a: __m128i, count: __m128i) -> __m128i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_srli_epi32)
 @(require_results, enable_target_feature="sse2")
 _mm_srli_epi32 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 32 {
+	#if IMM8 >= 32 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shr(transmute(simd.u32x4)a, simd.u32x4(IMM8))
@@ -536,7 +536,7 @@ _mm_srl_epi32 :: #force_inline proc "c" (a: __m128i, count: __m128i) -> __m128i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_srli_epi64)
 @(require_results, enable_target_feature="sse2")
 _mm_srli_epi64 :: #force_inline proc "c" (a: __m128i, $IMM8: i32) -> __m128i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 64 {
+	#if IMM8 >= 64 {
 		return __m128i(0)
 	} else {
 		return transmute(__m128i)simd.shr(transmute(simd.u64x2)a, simd.u64x2(IMM8))
@@ -846,7 +846,7 @@ _mm_loadu_si128 :: #force_inline proc "c" (mem_addr: ^__m128i) -> __m128i {
 }
 
 // Conditionally store 8-bit integer elements from `a` into memory using `mask`
-// (elements are not stored when the highest bit is not set in the corresponding element)
+// (elements are not stored #if the highest bit is not set in the corresponding element)
 // and a non-temporal memory hint. `mem_addr` does not need to be aligned on any particular boundary.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_maskmoveu_si128)
@@ -1128,7 +1128,7 @@ _mm_div_pd :: #force_inline proc "c" (a, b: __m128d) -> __m128d {
 // Compare the lower double-precision (64-bit) floating-point elements in `a` and `b`,
 // store the maximum value in the lower element of `dst`, and copy the upper element
 // from `a` to the upper element of `dst`. `dst` does not follow the IEEE Standard for
-// Floating-Point Arithmetic (IEEE 754) maximum value when inputs are NaN or signed-zero values.
+// Floating-Point Arithmetic (IEEE 754) maximum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_max_sd)
 @(require_results, enable_target_feature="sse2")
@@ -1138,7 +1138,7 @@ _mm_max_sd :: #force_inline proc "c" (a, b: __m128d) -> __m128d {
 
 // Compare packed double-precision (64-bit) floating-point elements in `a` and `b`,
 // and store packed maximum values in `dst`. `dst` does not follow the IEEE Standard for
-// Floating-Point Arithmetic (IEEE 754) maximum value when inputs are NaN or signed-zero values.
+// Floating-Point Arithmetic (IEEE 754) maximum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_max_pd)
 @(require_results, enable_target_feature="sse2")
@@ -1149,7 +1149,7 @@ _mm_max_pd :: #force_inline proc "c" (a, b: __m128d) -> __m128d {
 // Compare the lower double-precision (64-bit) floating-point elements in `a` and `b`,
 // store the minimum value in the lower element of `dst`, and copy the upper element
 // from `a` to the upper element of `dst`. `dst` does not follow the IEEE Standard for
-// Floating-Point Arithmetic (IEEE 754) minimum value when inputs are NaN or signed-zero values.
+// Floating-Point Arithmetic (IEEE 754) minimum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_min_sd)
 @(require_results, enable_target_feature="sse2")
@@ -1159,7 +1159,7 @@ _mm_min_sd :: #force_inline proc "c" (a, b: __m128d) -> __m128d {
 
 // Compare packed double-precision (64-bit) floating-point elements in `a` and `b`,
 // and store packed minimum values in `dst`. `dst` does not follow the IEEE Standard for
-// Floating-Point Arithmetic (IEEE 754) minimum value when inputs are NaN or signed-zero values.
+// Floating-Point Arithmetic (IEEE 754) minimum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_min_pd)
 @(require_results, enable_target_feature="sse2")
@@ -2054,7 +2054,7 @@ _mm_unpacklo_pd :: #force_inline proc "c" (a, b: __m128d) -> __m128d {
 	return simd.shuffle(a, b, 0, 2)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	// Store 128-bits (composed of 2 packed double-precision (64-bit) floating-point elements)
 	// from `a` into memory using a non-temporal memory hint. `mem_addr` must be aligned on a 16-byte boundary
 	// or a general-protection exception may be generated.
@@ -2182,7 +2182,7 @@ when ODIN_ARCH == .amd64 {
 }
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.sse2.pause")        llvm_pause      :: proc() ---
 	@(link_name="llvm.x86.sse2.clflush")      llvm_clflush    :: proc(p: rawptr) ---
 	@(link_name="llvm.x86.sse2.lfence")       llvm_lfence     :: proc() ---
@@ -2228,9 +2228,9 @@ foreign _ {
 	@(link_name="llvm.x86.sse2.cvttps2dq")    llvm_cvttps2dq  :: proc(a: simd.f32x4) -> simd.i32x4 ---
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(private="file", default_calling_convention="none")
-	foreign _ {
+	#foreign _ {
 		@(link_name="llvm.x86.sse2.cvtsd2si64")  llvm_cvtsd2si64  :: proc(a: simd.f64x2) -> i64 ---
 		@(link_name="llvm.x86.sse2.cvttsd2si64") llvm_cvttsd2si64 :: proc(a: simd.f64x2) -> i64 ---
 	}

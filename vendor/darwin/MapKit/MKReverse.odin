@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKReverseGeocodingRequest", objc_superclass=NS.Object)
 ReverseGeocodingRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ReverseGeocodingRequest, objc_selector="init", objc_name="init")
 	ReverseGeocodingRequest_init :: proc(self: ^ReverseGeocodingRequest) -> instancetype ---
 

@@ -1,11 +1,11 @@
 #+feature dynamic-literals
 package test_core_fmt
 
-import "base:runtime"
-import "core:fmt"
-import "core:math"
-import "core:mem"
-import "core:testing"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:math"
+#import "core:mem"
+#import "core:testing"
 
 @(test)
 test_fmt_memory :: proc(t: ^testing.T) {

@@ -18,9 +18,9 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:strings"
-import "core:unicode/utf8"
-import "core:encoding/hex"
+#import "core:strings"
+#import "core:unicode/utf8"
+#import "core:encoding/hex"
 
 split_url :: proc(url: string, allocator := context.allocator) -> (scheme, host, path: string, queries: map[string]string, fragment: string) {
 	s := url

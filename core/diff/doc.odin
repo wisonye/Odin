@@ -88,9 +88,9 @@ Going past either is an assertion failure.
 Example:
 	package main
 
-	import "core:diff"
-	import "core:os"
-	import "core:terminal"
+	#import "core:diff"
+	#import "core:os"
+	#import "core:terminal"
 
 	main :: proc() {
 		old := "one\ntwo\nthree\n"

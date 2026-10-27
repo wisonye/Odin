@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIDataSourceModelAssociation")
 DataSourceModelAssociation :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DataSourceModelAssociation, objc_selector="modelIdentifierForElementAtIndexPath:inView:", objc_name="modelIdentifierForElementAtIndexPath")
 	DataSourceModelAssociation_modelIdentifierForElementAtIndexPath :: proc(self: ^DataSourceModelAssociation, idx: ^NS.IndexPath, view: ^View) -> ^NS.String ---
 
@@ -25,7 +25,7 @@ DataSourceTranslating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DataSourceTranslating, objc_selector="presentationSectionIndexForDataSourceSectionIndex:", objc_name="presentationSectionIndexForDataSourceSectionIndex")
 	DataSourceTranslating_presentationSectionIndexForDataSourceSectionIndex :: proc(self: ^DataSourceTranslating, dataSourceSectionIndex: NS.Integer) -> NS.Integer ---
 

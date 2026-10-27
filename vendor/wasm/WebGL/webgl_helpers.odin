@@ -1,6 +1,6 @@
 package webgl
 
-import "core:fmt"
+#import "core:fmt"
 
 CreateProgramFromStrings :: proc(vs_sources, fs_sources: []string) -> (program: Program, ok: bool) {
 	ok = true

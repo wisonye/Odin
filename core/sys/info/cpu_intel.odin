@@ -1,7 +1,7 @@
 #+build i386, amd64
 package sysinfo
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // cpuid :: proc(ax, cx: u32) -> (eax, ebc, ecx, edx: u32) ---
 cpuid :: intrinsics.x86_cpuid
@@ -85,7 +85,7 @@ _init_cpu_features :: proc "contextless" () {
 	try_set(&_features, .os_xsave,  27, ecx1)
 	try_set(&_features, .rdrand,    30, ecx1)
 
-	when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+	#if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 		// xgetbv is an illegal instruction under FreeBSD 13, OpenBSD 7.1 and NetBSD 10
 		// return before probing further
 		return

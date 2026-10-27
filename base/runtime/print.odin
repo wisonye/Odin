@@ -5,7 +5,7 @@ _INTEGER_DIGITS :: "0123456789abcdefghijklmnopqrstuvwxyz"
 @(private="file")
 _INTEGER_DIGITS_VAR := _INTEGER_DIGITS
 
-when !ODIN_NO_RTTI {
+#if !ODIN_NO_RTTI {
 	print_any_single :: #force_no_inline proc "contextless" (arg: any) {
 		x := arg
 		if x.data == nil {
@@ -224,7 +224,7 @@ print_int     :: proc "contextless" (x: int)     { print_i64(i64(x)) }
 
 print_caller_location :: #force_no_inline proc "contextless" (loc: Source_Code_Location) {
 	print_string(loc.file_path)
-	when ODIN_ERROR_POS_STYLE == .Default {
+	#if ODIN_ERROR_POS_STYLE == .Default {
 		print_byte('(')
 		print_u64(u64(loc.line))
 		if loc.column != 0 {
@@ -232,7 +232,7 @@ print_caller_location :: #force_no_inline proc "contextless" (loc: Source_Code_L
 			print_u64(u64(loc.column))
 		}
 		print_byte(')')
-	} else when ODIN_ERROR_POS_STYLE == .Unix {
+	} else #if ODIN_ERROR_POS_STYLE == .Unix {
 		print_byte(':')
 		print_u64(u64(loc.line))
 		if loc.column != 0 {
@@ -245,7 +245,7 @@ print_caller_location :: #force_no_inline proc "contextless" (loc: Source_Code_L
 	}
 }
 print_typeid :: #force_no_inline proc "contextless" (id: typeid) {
-	when ODIN_NO_RTTI {
+	#if ODIN_NO_RTTI {
 		if id == nil {
 			print_string("nil")
 		} else {
@@ -593,7 +593,7 @@ write_i64 :: proc "contextless" (j: ^int, dst: []byte, x: i64) -> bool {
 write_caller_location :: #force_no_inline proc "contextless" (i: ^int, buf: []byte, loc: Source_Code_Location) -> bool {
 	write_string(i, buf, loc.file_path) or_return
 
-	when ODIN_ERROR_POS_STYLE == .Default {
+	#if ODIN_ERROR_POS_STYLE == .Default {
 		write_byte(i, buf, '(')           or_return
 		write_u64 (i, buf, u64(loc.line)) or_return
 		if loc.column != 0 {
@@ -602,7 +602,7 @@ write_caller_location :: #force_no_inline proc "contextless" (i: ^int, buf: []by
 		}
 		write_byte(i, buf, ')') or_return
 		return true
-	} else when ODIN_ERROR_POS_STYLE == .Unix {
+	} else #if ODIN_ERROR_POS_STYLE == .Unix {
 		write_byte(i, buf, ':')           or_return
 		write_u64 (i, buf, u64(loc.line)) or_return
 		if loc.column != 0 {
@@ -618,7 +618,7 @@ write_caller_location :: #force_no_inline proc "contextless" (i: ^int, buf: []by
 
 @(require_results)
 write_typeid :: #force_no_inline proc "contextless" (i: ^int, buf: []byte, id: typeid) -> bool {
-	when ODIN_NO_RTTI {
+	#if ODIN_NO_RTTI {
 		if id == nil {
 			write_string(i, buf, "nil") or_return
 		} else {

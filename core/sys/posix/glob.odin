@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // glob.h - pathname pattern-matching types
 
-foreign lib {
+#foreign lib {
 	/*
 	The glob() function is a pathname generator that shall implement the rules defined in 
 	[[ XCU Pattern Matching Notation; https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_13 ]],
@@ -42,7 +42,7 @@ Glob_Flag_Bits :: enum c.int {
 	// Make use of pglob->gl_offs. If this flag is set, pglob->gl_offs is used to specify how many null pointers to add to the beginning of pglob->gl_pathv.
 	// In other words, pglob->gl_pathv shall point to pglob->gl_offs null pointers, followed by pglob->gl_pathc pathname pointers, followed by a null pointer.
 	DOOFFS   = log2(GLOB_DOOFFS),
-	// Cause glob() to return when it encounters a directory that it cannot open or read. Ordinarily,
+	// Cause glob() to return #if it encounters a directory that it cannot open or read. Ordinarily,
 	// glob() continues to find matches.
 	ERR      = log2(GLOB_ERR),
 	// Each pathname that is a directory that matches pattern shall have a <slash> appended.
@@ -67,7 +67,7 @@ Glob_Result :: enum c.int {
 	NOSPACE = GLOB_NOSPACE,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LGLOB     :: "__glob30"
 	@(private) LGLOBFREE :: "__globfree30"
 } else {
@@ -75,7 +75,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LGLOBFREE :: "globfree"
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	glob_t :: struct {
 		gl_pathc:  c.size_t,                      /* [PSX] count of paths matched by pattern */
@@ -109,7 +109,7 @@ when ODIN_OS == .Darwin {
 	GLOB_NOMATCH :: -3
 	GLOB_NOSPACE :: -1
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
 
 	glob_t :: struct {
 		gl_pathc:  c.size_t,                      /* [PSX] count of paths matched by pattern */
@@ -134,14 +134,14 @@ when ODIN_OS == .Darwin {
 	GLOB_ERR      :: 0x0004
 	GLOB_MARK     :: 0x0008
 	GLOB_NOCHECK  :: 0x0010
-	GLOB_NOESCAPE :: 0x2000 when ODIN_OS == .FreeBSD else 0x0100
+	GLOB_NOESCAPE :: 0x2000 #if ODIN_OS == .FreeBSD else 0x0100
 	GLOB_NOSORT   :: 0x0020
 
 	GLOB_ABORTED :: -2
 	GLOB_NOMATCH :: -3
 	GLOB_NOSPACE :: -1
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	glob_t :: struct {
 		gl_pathc:  c.size_t,                      /* [PSX] count of paths matched by pattern */
@@ -175,7 +175,7 @@ when ODIN_OS == .Darwin {
 	GLOB_NOMATCH :: -3
 	GLOB_NOSPACE :: -1
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	glob_t :: struct {
 		gl_pathc:  c.size_t,                      /* [PSX] count of paths matched by pattern */

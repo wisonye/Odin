@@ -1,9 +1,9 @@
 #+build !windows
 package os
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strings"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strings"
 
 _user_cache_dir :: proc(allocator: runtime.Allocator) -> (dir: string, err: Error) {
 	#partial switch ODIN_OS {

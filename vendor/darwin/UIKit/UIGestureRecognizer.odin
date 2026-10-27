@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIGestureRecognizer", objc_superclass=NS.Object)
 GestureRecognizer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GestureRecognizer, objc_selector="initWithTarget:action:", objc_name="initWithTarget")
 	GestureRecognizer_initWithTarget :: proc(self: ^GestureRecognizer, target: id, action: SEL) -> instancetype ---
 
@@ -167,7 +167,7 @@ GestureRecognizerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GestureRecognizerDelegate, objc_selector="gestureRecognizerShouldBegin:", objc_name="gestureRecognizerShouldBegin")
 	GestureRecognizerDelegate_gestureRecognizerShouldBegin :: proc(self: ^GestureRecognizerDelegate, gestureRecognizer: ^GestureRecognizer) -> bool ---
 
@@ -195,7 +195,7 @@ foreign lib {
 HoverGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverGestureRecognizer, objc_selector="azimuthAngleInView:", objc_name="azimuthAngleInView")
 	HoverGestureRecognizer_azimuthAngleInView :: proc(self: ^HoverGestureRecognizer, view: ^View) -> CG.Float ---
 
@@ -217,7 +217,7 @@ foreign lib {
 LongPressGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LongPressGestureRecognizer, objc_selector="numberOfTapsRequired", objc_name="numberOfTapsRequired")
 	LongPressGestureRecognizer_numberOfTapsRequired :: proc(self: ^LongPressGestureRecognizer) -> NS.UInteger ---
 
@@ -248,7 +248,7 @@ foreign lib {
 PanGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PanGestureRecognizer, objc_selector="translationInView:", objc_name="translationInView")
 	PanGestureRecognizer_translationInView :: proc(self: ^PanGestureRecognizer, view: ^View) -> CG.Point ---
 
@@ -282,7 +282,7 @@ foreign lib {
 PinchGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PinchGestureRecognizer, objc_selector="scale", objc_name="scale")
 	PinchGestureRecognizer_scale :: proc(self: ^PinchGestureRecognizer) -> CG.Float ---
 
@@ -298,7 +298,7 @@ foreign lib {
 RotationGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RotationGestureRecognizer, objc_selector="rotation", objc_name="rotation")
 	RotationGestureRecognizer_rotation :: proc(self: ^RotationGestureRecognizer) -> CG.Float ---
 
@@ -314,7 +314,7 @@ foreign lib {
 SwipeGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SwipeGestureRecognizer, objc_selector="numberOfTouchesRequired", objc_name="numberOfTouchesRequired")
 	SwipeGestureRecognizer_numberOfTouchesRequired :: proc(self: ^SwipeGestureRecognizer) -> NS.UInteger ---
 
@@ -333,7 +333,7 @@ foreign lib {
 TapGestureRecognizer :: struct { using _: GestureRecognizer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TapGestureRecognizer, objc_selector="numberOfTapsRequired", objc_name="numberOfTapsRequired")
 	TapGestureRecognizer_numberOfTapsRequired :: proc(self: ^TapGestureRecognizer) -> NS.UInteger ---
 

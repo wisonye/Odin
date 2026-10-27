@@ -1,8 +1,8 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:simd"
 
 _MM_HINT_T0  : i32 : 3
 _MM_HINT_T1  : i32 : 2
@@ -174,7 +174,7 @@ _mm_rsqrt_ps :: #force_inline proc "c" (a: __m128) -> __m128 {
 // Compare the lower single-precision (32-bit) floating-point elements in `a` and `b`,
 // store the minimum value in the lower element of `dst`, and copy the upper 3 packed elements
 // from `a` to the upper element of `dst`. `dst` does not follow the IEEE Standard
-// for Floating-Point Arithmetic (IEEE 754) minimum value when inputs are NaN or signed-zero values.
+// for Floating-Point Arithmetic (IEEE 754) minimum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_min_ss)
 @(require_results, enable_target_feature="sse")
@@ -184,7 +184,7 @@ _mm_min_ss :: #force_inline proc "c" (a, b: __m128) -> __m128 {
 
 // Compare packed single-precision (32-bit) floating-point elements in `a` and `b`,
 // and store packed minimum values in `dst`. `dst` does not follow the IEEE Standard
-// for Floating-Point Arithmetic (IEEE 754) minimum value when inputs are NaN or signed-zero values.
+// for Floating-Point Arithmetic (IEEE 754) minimum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_min_ps)
 @(require_results, enable_target_feature="sse")
@@ -195,7 +195,7 @@ _mm_min_ps :: #force_inline proc "c" (a, b: __m128) -> __m128 {
 // Compare the lower single-precision (32-bit) floating-point elements in `a` and `b`,
 // store the maximum value in the lower element of `dst`, and copy the upper 3 packed elements
 // from `a` to the upper element of `dst`. `dst` does not follow the IEEE Standard
-// for Floating-Point Arithmetic (IEEE 754) maximum value when inputs are NaN or signed-zero values.
+// for Floating-Point Arithmetic (IEEE 754) maximum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_max_ss)
 @(require_results, enable_target_feature="sse")
@@ -205,7 +205,7 @@ _mm_max_ss :: #force_inline proc "c" (a, b: __m128) -> __m128 {
 
 // Compare packed single-precision (32-bit) floating-point elements in `a` and `b`,
 // and store packed maximum values in `dst`. `dst` does not follow the IEEE Standard
-// for Floating-Point Arithmetic (IEEE 754) maximum value when inputs are NaN or signed-zero values.
+// for Floating-Point Arithmetic (IEEE 754) maximum value #if inputs are NaN or signed-zero values.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_max_ps)
 @(require_results, enable_target_feature="sse")
@@ -1038,7 +1038,7 @@ _MM_TRANSPOSE4_PS :: #force_inline proc "c" (row0, row1, row2, row3: ^__m128) {
 	row3^ = _mm_movehl_ps(tmp3, tmp1)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	// Store 128-bits (composed of 4 packed single-precision (32-bit) floating-point elements)
 	// from `a` into memory using a non-temporal memory hint. `mem_addr` must be aligned on a 16-byte
 	// boundary or a general-protection exception may be generated.
@@ -1079,7 +1079,7 @@ when ODIN_ARCH == .amd64 {
 }
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.sse.rcp.ss")      llvm_rcpss       :: proc(a: simd.f32x4) -> simd.f32x4 ---
 	@(link_name="llvm.x86.sse.rcp.ps")      llvm_rcpps       :: proc(a: simd.f32x4) -> simd.f32x4 ---
 	@(link_name="llvm.x86.sse.rsqrt.ss")    llvm_rsqrtss     :: proc(a: simd.f32x4) -> simd.f32x4 ---
@@ -1110,9 +1110,9 @@ foreign _ {
 	@(link_name="llvm.prefetch.p0")         llvm_prefetch    :: proc(p: rawptr, rw: i32, loc: i32, ty: i32) ---
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(private="file", default_calling_convention="none")
-	foreign _ {
+	#foreign _ {
 		@(link_name="llvm.x86.sse.cvtss2si64")  llvm_cvtss2si64  :: proc(a: simd.f32x4) -> i64 ---
 		@(link_name="llvm.x86.sse.cvttss2si64") llvm_cvttss2si64 :: proc(a: simd.f32x4) -> i64 ---
 	}

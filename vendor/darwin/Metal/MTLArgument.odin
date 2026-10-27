@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MTLArgument", objc_superclass=NS.Object)
 Argument :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Argument, objc_selector="name", objc_name="name")
 	Argument_name :: proc(self: ^Argument) -> ^NS.String ---
 
@@ -65,7 +65,7 @@ ArgumentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ArgumentDescriptor, objc_selector="argumentDescriptor", objc_name="argumentDescriptor", objc_is_class_method=true)
 	ArgumentDescriptor_argumentDescriptor :: proc() -> ^ArgumentDescriptor ---
 
@@ -113,7 +113,7 @@ ArgumentEncoder :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ArgumentEncoder, objc_selector="setArgumentBuffer:offset:", objc_name="setArgumentBuffer_offset")
 	ArgumentEncoder_setArgumentBuffer_offset :: proc(self: ^ArgumentEncoder, argumentBuffer: ^Buffer, offset: NS.UInteger) ---
 

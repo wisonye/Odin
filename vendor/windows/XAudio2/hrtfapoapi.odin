@@ -2,9 +2,9 @@
 
 package windows_xaudio2
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
-foreign import hrtf "system:hrtfapo.lib"
+#foreign #import hrtf "system:hrtfapo.lib"
 
 HRTF_MAX_GAIN_LIMIT              :: 12.0
 HRTF_MIN_GAIN_LIMIT              :: -96.0
@@ -116,7 +116,7 @@ HrtfApoInit :: struct {
 //!     S_OK for success, any other value indicates failure.
 //!     Returns E_NOTIMPL on unsupported platforms.
 @(default_calling_convention="system")
-foreign hrtf {
+#foreign hrtf {
 	CreateHrtfApo :: proc(
 		//! Pointer to an HrtfApoInit struct. Specifies parameters for XAPO interface initialization.
 		#by_ptr init: HrtfApoInit,

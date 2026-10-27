@@ -1,8 +1,8 @@
 package test_core_endian
 
-import "core:encoding/endian"
-import "core:math/rand"
-import "core:testing"
+#import "core:encoding/endian"
+#import "core:math/rand"
+#import "core:testing"
 
 NUM_RANDOM_TESTS :: 1000
 SENTINEL         :: 0xAA

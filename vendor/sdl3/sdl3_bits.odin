@@ -1,7 +1,7 @@
 package sdl3
 
-import "base:intrinsics"
-import "core:c"
+#import "base:intrinsics"
+#import "core:c"
 
 @(require_results)
 MostSignificantBitIndex32 :: #force_inline proc "c" (x: Uint32) -> c.int {

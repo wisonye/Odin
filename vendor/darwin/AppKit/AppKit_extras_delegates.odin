@@ -4,11 +4,11 @@ package darwin_AppKit
 // Hand-written helpers which create `NSApplicationDelegate` and `NSWindowDelegate` objects
 // whose methods call the Odin procedures set in a template, without `@(objc_implement)`.
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strings"
-import NS   "core:sys/darwin/Foundation"
-import ObjC "core:sys/darwin/ObjectiveC"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strings"
+#import NS   "core:sys/darwin/Foundation"
+#import ObjC "core:sys/darwin/ObjectiveC"
 
 @(private) _UINTEGER_ENCODING :: "Q"
 @(private) _POINT_ENCODING    :: "{CGPoint=dd}"
@@ -55,10 +55,10 @@ ApplicationDelegateTemplate :: struct {
 	applicationDidFailToRegisterForRemoteNotificationsWithError: proc(application: ^Application, error: ^Error),
 	applicationDidReceiveRemoteNotification:                     proc(application: ^Application, userInfo: ^Dictionary),
 	// Handling CloudKit Invitations
-	// TODO: if/when we have cloud kit bindings implement
+	// TODO: if/#if we have cloud kit bindings implement
 	// applicationUserDidAcceptCloudKitShareWithMetadata:        proc(application: ^Application, metadata: ^CKShareMetadata),
 	// Handling SiriKit Intents
-	// TODO: if/when we have siri kit bindings implement
+	// TODO: if/#if we have siri kit bindings implement
 	// applicationHandlerForIntent:                              proc(application: ^Application, intent: ^INIntent) -> id,
 	// Opening Files
 	applicationOpenURLs:                                         proc(application: ^Application, urls: ^Array),

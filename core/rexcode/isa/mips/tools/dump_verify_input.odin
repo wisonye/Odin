@@ -15,11 +15,11 @@ package main
 //
 // Run:  cd isa/mips && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import m "../"
+#import m "../"
 
 main :: proc() {
 	fmt.println("Dumping MIPS verification manifest...")

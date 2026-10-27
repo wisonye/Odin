@@ -1,11 +1,11 @@
 package tests_nbio
 
-import "core:log"
-import "core:nbio"
-import "core:testing"
-import "core:thread"
-import "core:time"
-import "core:os"
+#import "core:log"
+#import "core:nbio"
+#import "core:testing"
+#import "core:thread"
+#import "core:time"
+#import "core:os"
 
 ev :: testing.expect_value
 e  :: testing.expect
@@ -30,7 +30,7 @@ event_loop_guard_exit :: proc(t: ^testing.T) {
 // Tests that all poly variants are correctly passing through arguments, and that
 // all procs eventually get their callback called.
 //
-// This is important because the poly procs are only checked when they are called,
+// This is important because the poly procs are only checked #if they are called,
 // So this will also catch any typos in their implementations.
 @(test)
 all_poly_work :: proc(tt: ^testing.T) {
@@ -179,7 +179,7 @@ two_ops_at_the_same_time :: proc(t: ^testing.T) {
 				ev(t, op.send.err, nil)
 				ev(t, op.send.sent, 4)
 
-				// Do another send after a bit, some backends don't trigger both ops when one was enough to
+				// Do another send after a bit, some backends don't trigger both ops #if one was enough to
 				// use up the socket.
 				nbio.timeout_poly3(time.Millisecond*10, t, op.send.socket.(nbio.UDP_Socket), op.send.endpoint.port, on_timeout2)
 			}

@@ -13,8 +13,8 @@ Note that the number (singular, dual, plural, whatever else) is not relevant: th
 
 `get_n()` is used for retrieving the translations of sentences which change according to the number of items referenced.
 The various signatures of `get_n()` have one more parameter, `n`, which will receive that number and be used
-to select the correct form according to the pluralizer attached to the message catalogue when initially loaded;
-for instance, to summarise a rather complex matter, some languages use the singular form when referring to 0 items and some use the (only in their case) plural forms;
+to select the correct form according to the pluralizer attached to the message catalogue #if initially loaded;
+for instance, to summarise a rather complex matter, some languages use the singular form #if referring to 0 items and some use the (only in their case) plural forms;
 also, languages may have more or less quantifier forms than a single singular form and a universal plural form:
 for instance, Chinese has just one form for any quantity, while Welsh may have up to 6 different forms for specific different quantities.
 
@@ -44,8 +44,8 @@ You can also assign it to a loaded catalog after parsing, of course.
 
 Example:
 
-	import "core:fmt"
-	import "core:text/i18n"
+	#import "core:fmt"
+	#import "core:text/i18n"
 
 	T  :: i18n.get
 	Tn :: i18n.get_n

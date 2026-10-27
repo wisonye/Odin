@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 easytype :: enum c.int {
 	OT_LONG,     /* long (a range of values) */
@@ -34,7 +34,7 @@ easyoption :: struct {
 
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	easy_option_by_name :: proc(name: cstring) -> ^easyoption ---
 	easy_option_by_id   :: proc(id: option) -> ^easyoption ---
 	easy_option_next    :: proc(prev: ^easyoption) -> ^easyoption ---

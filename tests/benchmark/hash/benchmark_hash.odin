@@ -1,11 +1,11 @@
 package benchmark_core_hash
 
-import "core:fmt"
-import "core:hash/xxhash"
-import "base:intrinsics"
-import "core:strings"
-import "core:testing"
-import "core:time"
+#import "core:fmt"
+#import "core:hash/xxhash"
+#import "base:intrinsics"
+#import "core:strings"
+#import "core:testing"
+#import "core:time"
 
 @(test)
 benchmark_hash :: proc(t: ^testing.T) {

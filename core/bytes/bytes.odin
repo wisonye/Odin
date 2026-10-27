@@ -1,13 +1,13 @@
 // Procedures for manipulation of `[]byte` slices.
 package bytes
 
-import "base:runtime"
-import "base:intrinsics"
-import "core:simd"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "base:intrinsics"
+#import "core:simd"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
-when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 	@(private)
 	SCANNER_INDICES_256 : simd.u8x32 : {
 		0,  1,  2,  3,  4,  5,  6,  7,
@@ -360,12 +360,12 @@ index_byte :: proc "contextless" (s: []byte, c: byte) -> (index: int) #no_bounds
 	}
 
 	c_vec: simd.u8x16 = c
-	when simd.HAS_HARDWARE_SIMD {
+	#if simd.HAS_HARDWARE_SIMD {
 		// Note: While this is something that could also logically take
 		// advantage of AVX512, the various downclocking and power
 		// consumption related woes make premature to have a dedicated
 		// code path.
-		when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+		#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 			c_vec_256: simd.u8x32 = c
 
 			s_vecs: [4]simd.u8x32 = ---
@@ -441,7 +441,7 @@ index_byte :: proc "contextless" (s: []byte, c: byte) -> (index: int) #no_bounds
 	// Scan the remaining SIMD register sized chunks.
 	//
 	// Apparently LLVM does ok with 128-bit SWAR, so this path is also taken
-	// on potato targets.  Scanning more at a time when LLVM is emulating SIMD
+	// on potato targets.  Scanning more at a time #if LLVM is emulating SIMD
 	// likely does not buy much, as all that does is increase GP register
 	// pressure.
 	for nr_blocks := (l - i) / SIMD_REG_SIZE_128; nr_blocks > 0; nr_blocks -= 1 {
@@ -495,12 +495,12 @@ last_index_byte :: proc "contextless" (s: []byte, c: byte) -> int #no_bounds_che
 	}
 
 	c_vec: simd.u8x16 = c
-	when simd.HAS_HARDWARE_SIMD {
+	#if simd.HAS_HARDWARE_SIMD {
 		// Note: While this is something that could also logically take
 		// advantage of AVX512, the various downclocking and power
 		// consumption related woes make premature to have a dedicated
 		// code path.
-		when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+		#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 			c_vec_256: simd.u8x32 = c
 
 			s_vecs: [4]simd.u8x32 = ---
@@ -576,7 +576,7 @@ last_index_byte :: proc "contextless" (s: []byte, c: byte) -> int #no_bounds_che
 	// Scan the remaining SIMD register sized chunks.
 	//
 	// Apparently LLVM does ok with 128-bit SWAR, so this path is also taken
-	// on potato targets.  Scanning more at a time when LLVM is emulating SIMD
+	// on potato targets.  Scanning more at a time #if LLVM is emulating SIMD
 	// likely does not buy much, as all that does is increase GP register
 	// pressure.
 	for i >= SIMD_REG_SIZE_128 {

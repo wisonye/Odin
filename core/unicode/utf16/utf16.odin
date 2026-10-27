@@ -1,8 +1,8 @@
 // Procedures and constants to support text-encoding in the `UTF-16` character encoding.
 package utf16
 
-@(require) import "base:runtime"
-import "core:unicode/utf8"
+@(require) #import "base:runtime"
+#import "core:unicode/utf8"
 
 REPLACEMENT_CHAR :: '\ufffd'
 MAX_RUNE         :: '\U0010ffff'

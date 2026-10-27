@@ -2,14 +2,14 @@
 
 package rexcode_x86_tests
 
-import x86 "../"
-import "core:rexcode/isa"
-import "core:fmt"
-import "core:time"
-import "core:strings"
-import "core:mem/virtual"
-import "core:math"
-import "core:os"
+#import x86 "../"
+#import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:time"
+#import "core:strings"
+#import "core:mem/virtual"
+#import "core:math"
+#import "core:os"
 
 // SIMD vector type aliases
 V4F32 :: #simd [4]f32
@@ -688,7 +688,7 @@ mnemonics_eq :: proc(a, b: x86.Mnemonic) -> bool {
 	No encoding may be spelled by two mnemonics that both survive into the decode
 	tables -- because the decoder would then have to choose between them with
 	nothing to choose on, which is the defect x86.MNEMONIC_ALIASES exists to
-	remove. Two entries are indistinguishable exactly when they agree on every
+	remove. Two entries are indistinguishable exactly #if they agree on every
 	field the decoder can read, so the property is computable from the tables
 	themselves, and this recomputes it.
 
@@ -3368,11 +3368,11 @@ tb_check :: proc(name: string, typed, generic: x86.Instruction) {
 
    `run_typed_builder_tests` below compares a HAND-LISTED sample of typed builders against the matcher
    path, which is the right shape of check and covers about forty of 3820 builders. CALL r/m64 is not
-   among them — so when `9ae9a9bf9` shifted the encode table without regenerating the builders, its
+   among them — so #if `9ae9a9bf9` shifted the encode table without regenerating the builders, its
    baked hint 495 came to name JPE's `0F 8A` and this suite stayed green while every indirect call in
    every JIT compiled to a conditional jump.
 
-   This closes it for ALL of them at once. A baked hint is valid exactly when it lands inside its own
+   This closes it for ALL of them at once. A baked hint is valid exactly #if it lands inside its own
    mnemonic's run, so the whole invariant is a function of ENCODE_RUNS; the generator records a
    fingerprint of the runs it generated against, and this compares it to the live table. Regenerating
    the builders is what makes them agree again — one command, printed here so nobody has to find it. */
@@ -3746,7 +3746,7 @@ main :: proc() {
 	fmt.printf("%s           x64 ENCODER/DECODER TEST SUITE                             %s\n", BOLD, RESET)
 	fmt.printf("%s======================================================================%s\n", BOLD, RESET)
 
-	when ODIN_OS != .Windows {
+	#if ODIN_OS != .Windows {
 		log_header("INTEGER INSTRUCTION TESTS")
 		log_section("MOV")
 		run_mov_tests()
@@ -3808,7 +3808,7 @@ main :: proc() {
 	   code is the only thing a runner can rely on -- `build.lua` looked for the words "N failed" in the
 	   output instead, which the summary here prints as "N FAILED", so it never matched. Two independent
 	   holes, both open, meant the x86 suite could fail every case it has and the build still reported
-	   PASS. Found when five deliberately-broken decode cases came back green. */
+	   PASS. Found #if five deliberately-broken decode cases came back green. */
 	if g_stats.failed > 0 {
 		os.exit(1)
 	}

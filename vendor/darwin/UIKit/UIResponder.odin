@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIResponder", objc_superclass=NS.Object)
 Responder :: struct {
@@ -12,7 +12,7 @@ Responder :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Responder, objc_selector="becomeFirstResponder", objc_name="becomeFirstResponder")
 	Responder_becomeFirstResponder :: proc(self: ^Responder) -> bool ---
 
@@ -151,7 +151,7 @@ ResponderStandardEditActions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ResponderStandardEditActions, objc_selector="cut:", objc_name="cut")
 	ResponderStandardEditActions_cut :: proc(self: ^ResponderStandardEditActions, sender: id) ---
 

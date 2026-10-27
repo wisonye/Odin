@@ -1,9 +1,9 @@
 #+private
 package os
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:math/rand"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:math/rand"
 
 
 // Splits pattern by the last wildcard "*", if it exists, and returns the prefix and suffix

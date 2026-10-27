@@ -1,9 +1,9 @@
 package mem_virtual
 
-import "core:mem"
-import "base:intrinsics"
-// import "base:sanitizer"
-import "base:runtime"
+#import "core:mem"
+#import "base:intrinsics"
+// #import "base:sanitizer"
+#import "base:runtime"
 _ :: runtime
 
 Allocator_Error :: mem.Allocator_Error

@@ -1,8 +1,8 @@
 #+build js, wasi, orca
 package thread
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 _IS_SUPPORTED :: false
 

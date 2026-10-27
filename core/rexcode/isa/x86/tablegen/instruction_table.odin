@@ -2,11 +2,11 @@
 
 package rexcode_x86_tablegen
 
-import "core:rexcode/isa/x86"
+#import "core:rexcode/isa/x86"
 
 // Form couples one encoding shape with its architectural effects.
 // `using encoding` keeps existing field access (form.opcode, form.ops,
-// form.flags, ...) working unchanged when code moves from []Encoding to []Form.
+// form.flags, ...) working unchanged #if code moves from []Encoding to []Form.
 Form :: struct {
 	using encoding: Encoding,
 	clobber:        Clobber,
@@ -50,7 +50,7 @@ Form :: struct {
 //   2. Slot trimming. OP slots that are .NONE in a given form are dropped from
 //      written/read.
 //   3. Per-form memory. writes_mem/reads_mem keep the union's DIRECTION but are
-//      asserted on a form only when that form actually carries a memory-capable
+//      asserted on a form only #if that form actually carries a memory-capable
 //      operand, OR the instruction addresses memory implicitly (stack, string,
 //      XLAT table, MASKMOVDQU/[rDI] store, VMCS). Consequently register-only
 //      forms of otherwise-memory instructions (e.g. MOV r,imm; FADD ST(0),ST(i);

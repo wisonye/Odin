@@ -2,9 +2,9 @@
 #+build freebsd
 package sync
 
-import "core:c"
-import "core:sys/freebsd"
-import "core:time"
+#import "core:c"
+#import "core:sys/freebsd"
+#import "core:time"
 
 _futex_wait :: proc "contextless" (f: ^Futex, expected: u32) -> bool {
 	timeout := freebsd.timespec {14400, 0} // 4 hours

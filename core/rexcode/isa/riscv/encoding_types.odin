@@ -2,7 +2,7 @@
 
 package rexcode_riscv
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // RISC-V ENCODING FUNDAMENTALS

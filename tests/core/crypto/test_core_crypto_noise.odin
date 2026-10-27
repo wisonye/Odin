@@ -1,15 +1,15 @@
 package test_core_crypto
 
-import "core:bytes"
-import "core:crypto"
-import "core:crypto/aead"
-import "core:crypto/ecdh"
-import "core:crypto/hash"
-import "core:crypto/noise"
-import "core:fmt"
-import "core:log"
-import "core:math/rand"
-import "core:testing"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:crypto/aead"
+#import "core:crypto/ecdh"
+#import "core:crypto/hash"
+#import "core:crypto/noise"
+#import "core:fmt"
+#import "core:log"
+#import "core:math/rand"
+#import "core:testing"
 
 @(private = "file")
 DH_CURVES :: []ecdh.Curve {

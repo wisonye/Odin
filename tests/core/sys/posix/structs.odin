@@ -1,9 +1,9 @@
 #+build linux, darwin, freebsd, openbsd, netbsd
 package tests_core_posix
 
-import "core:log"
-import "core:testing"
-import "core:sys/posix"
+#import "core:log"
+#import "core:testing"
+#import "core:sys/posix"
 
 // This test tests some of the process APIs of posix while also double checking size and alignment
 // of the structs we bound.

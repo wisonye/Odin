@@ -8,8 +8,8 @@ package crypto_hash
 		zhibog, dotbmp:  Initial implementation.
 */
 
-import "core:crypto"
-import "core:io"
+#import "core:crypto"
+#import "core:io"
 
 // hash_bytes will hash the given input and return the computed digest
 // in a newly allocated slice.

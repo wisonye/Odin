@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="AVAsset", objc_superclass=NS.Object)
 Asset :: struct {
@@ -16,7 +16,7 @@ Asset :: struct {
 	using _: AsynchronousKeyValueLoading,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Asset, objc_selector="assetWithURL:", objc_name="assetWithURL", objc_is_class_method=true)
 	Asset_assetWithURL :: proc(_URL: ^NS.URL) -> instancetype ---
 
@@ -170,7 +170,7 @@ AssetInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetCache", objc_superclass=NS.Object)
 AssetCache :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetCache, objc_selector="mediaSelectionOptionsInMediaSelectionGroup:", objc_name="mediaSelectionOptionsInMediaSelectionGroup")
 	AssetCache_mediaSelectionOptionsInMediaSelectionGroup :: proc(self: ^AssetCache, mediaSelectionGroup: ^MediaSelectionGroup) -> ^NS.Array ---
 
@@ -197,7 +197,7 @@ AssetDownloadDelegate :: struct {
 	using _: NS.URLSessionTaskDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadDelegate, objc_selector="URLSession:assetDownloadTask:didFinishDownloadingToURL:", objc_name="URLSession_assetDownloadTask_didFinishDownloadingToURL")
 	AssetDownloadDelegate_URLSession_assetDownloadTask_didFinishDownloadingToURL :: proc(self: ^AssetDownloadDelegate, session: ^NS.URLSession, assetDownloadTask: ^AssetDownloadTask, location: ^NS.URL) ---
 
@@ -230,7 +230,7 @@ foreign lib {
 @(objc_class="AVAssetDownloadConfiguration", objc_superclass=NS.Object)
 AssetDownloadConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadConfiguration, objc_selector="init", objc_name="init")
 	AssetDownloadConfiguration_init :: proc(self: ^AssetDownloadConfiguration) -> instancetype ---
 
@@ -278,7 +278,7 @@ AssetDownloadContentConfiguration :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadContentConfiguration, objc_selector="variantQualifiers", objc_name="variantQualifiers")
 	AssetDownloadContentConfiguration_variantQualifiers :: proc(self: ^AssetDownloadContentConfiguration) -> ^NS.Array ---
 
@@ -300,7 +300,7 @@ AssetDownloadStorageManagementPolicy :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadStorageManagementPolicy, objc_selector="priority", objc_name="priority")
 	AssetDownloadStorageManagementPolicy_priority :: proc(self: ^AssetDownloadStorageManagementPolicy) -> ^NS.String ---
 
@@ -312,7 +312,7 @@ foreign lib {
 @(objc_class="AVMutableAssetDownloadStorageManagementPolicy", objc_superclass=AssetDownloadStorageManagementPolicy)
 MutableAssetDownloadStorageManagementPolicy :: struct { using _: AssetDownloadStorageManagementPolicy}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableAssetDownloadStorageManagementPolicy, objc_selector="priority", objc_name="priority")
 	MutableAssetDownloadStorageManagementPolicy_priority :: proc(self: ^MutableAssetDownloadStorageManagementPolicy) -> ^NS.String ---
 
@@ -334,7 +334,7 @@ AssetDownloadStorageManagementPolicyInternal :: struct { using _: intrinsics.obj
 @(objc_class="AVAssetDownloadStorageManager", objc_superclass=NS.Object)
 AssetDownloadStorageManager :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadStorageManager, objc_selector="sharedDownloadStorageManager", objc_name="sharedDownloadStorageManager", objc_is_class_method=true)
 	AssetDownloadStorageManager_sharedDownloadStorageManager :: proc() -> ^AssetDownloadStorageManager ---
 
@@ -349,7 +349,7 @@ foreign lib {
 @(objc_class="AVAssetDownloadTask", objc_superclass=NS.URLSessionTask)
 AssetDownloadTask :: struct { using _: NS.URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadTask, objc_selector="init", objc_name="init")
 	AssetDownloadTask_init :: proc(self: ^AssetDownloadTask) -> instancetype ---
 
@@ -382,7 +382,7 @@ foreign lib {
 @(objc_class="AVAssetDownloadURLSession", objc_superclass=NS.URLSession)
 AssetDownloadURLSession :: struct { using _: NS.URLSession}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetDownloadURLSession, objc_selector="sessionWithConfiguration:assetDownloadDelegate:delegateQueue:", objc_name="sessionWithConfiguration_assetDownloadDelegate_delegateQueue", objc_is_class_method=true)
 	AssetDownloadURLSession_sessionWithConfiguration_assetDownloadDelegate_delegateQueue :: proc(configuration: ^NS.URLSessionConfiguration, delegate: ^AssetDownloadDelegate, delegateQueue: ^NS.OperationQueue) -> ^AssetDownloadURLSession ---
 
@@ -516,7 +516,7 @@ AssetDownloadURLSession_downloadTaskWithResumeData :: proc {
 @(objc_class="AVAssetExportSession", objc_superclass=NS.Object)
 AssetExportSession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetExportSession, objc_selector="init", objc_name="init")
 	AssetExportSession_init :: proc(self: ^AssetExportSession) -> instancetype ---
 
@@ -673,7 +673,7 @@ AssetExportSessionInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetImageGenerator", objc_superclass=NS.Object)
 AssetImageGenerator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetImageGenerator, objc_selector="init", objc_name="init")
 	AssetImageGenerator_init :: proc(self: ^AssetImageGenerator) -> instancetype ---
 
@@ -764,7 +764,7 @@ AssetImageGeneratorInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetPlaybackAssistant", objc_superclass=NS.Object)
 AssetPlaybackAssistant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetPlaybackAssistant, objc_selector="init", objc_name="init")
 	AssetPlaybackAssistant_init :: proc(self: ^AssetPlaybackAssistant) -> instancetype ---
 
@@ -782,7 +782,7 @@ foreign lib {
 @(objc_class="AVAssetReader", objc_superclass=NS.Object)
 AssetReader :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReader, objc_selector="init", objc_name="init")
 	AssetReader_init :: proc(self: ^AssetReader) -> instancetype ---
 
@@ -849,7 +849,7 @@ AssetReaderInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetReaderAudioMixOutput", objc_superclass=AssetReaderOutput)
 AssetReaderAudioMixOutput :: struct { using _: AssetReaderOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderAudioMixOutput, objc_selector="init", objc_name="init")
 	AssetReaderAudioMixOutput_init :: proc(self: ^AssetReaderAudioMixOutput) -> instancetype ---
 
@@ -892,7 +892,7 @@ AssetReaderCaptionValidationHandling :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderCaptionValidationHandling, objc_selector="captionAdaptor:didVendCaption:skippingUnsupportedSourceSyntaxElements:", objc_name="captionAdaptor")
 	AssetReaderCaptionValidationHandling_captionAdaptor :: proc(self: ^AssetReaderCaptionValidationHandling, adaptor: ^AssetReaderOutputCaptionAdaptor, caption: ^Caption, syntaxElements: ^NS.Array) ---
 }
@@ -901,7 +901,7 @@ foreign lib {
 @(objc_class="AVAssetReaderOutput", objc_superclass=NS.Object)
 AssetReaderOutput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderOutput, objc_selector="copyNextSampleBuffer", objc_name="copyNextSampleBuffer")
 	AssetReaderOutput_copyNextSampleBuffer :: proc(self: ^AssetReaderOutput) -> CM.SampleBufferRef ---
 
@@ -935,7 +935,7 @@ AssetReaderOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetReaderOutputCaptionAdaptor", objc_superclass=NS.Object)
 AssetReaderOutputCaptionAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderOutputCaptionAdaptor, objc_selector="init", objc_name="init")
 	AssetReaderOutputCaptionAdaptor_init :: proc(self: ^AssetReaderOutputCaptionAdaptor) -> instancetype ---
 
@@ -972,7 +972,7 @@ AssetReaderOutputCaptionAdaptorInternal :: struct { using _: intrinsics.objc_obj
 @(objc_class="AVAssetReaderOutputMetadataAdaptor", objc_superclass=NS.Object)
 AssetReaderOutputMetadataAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderOutputMetadataAdaptor, objc_selector="init", objc_name="init")
 	AssetReaderOutputMetadataAdaptor_init :: proc(self: ^AssetReaderOutputMetadataAdaptor) -> instancetype ---
 
@@ -1000,7 +1000,7 @@ AssetReaderOutputMetadataAdaptorInternal :: struct { using _: intrinsics.objc_ob
 @(objc_class="AVAssetReaderSampleReferenceOutput", objc_superclass=AssetReaderOutput)
 AssetReaderSampleReferenceOutput :: struct { using _: AssetReaderOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderSampleReferenceOutput, objc_selector="init", objc_name="init")
 	AssetReaderSampleReferenceOutput_init :: proc(self: ^AssetReaderSampleReferenceOutput) -> instancetype ---
 
@@ -1025,7 +1025,7 @@ AssetReaderSampleReferenceOutputInternal :: struct { using _: intrinsics.objc_ob
 @(objc_class="AVAssetReaderTrackOutput", objc_superclass=AssetReaderOutput)
 AssetReaderTrackOutput :: struct { using _: AssetReaderOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderTrackOutput, objc_selector="init", objc_name="init")
 	AssetReaderTrackOutput_init :: proc(self: ^AssetReaderTrackOutput) -> instancetype ---
 
@@ -1059,7 +1059,7 @@ AssetReaderTrackOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetReaderVideoCompositionOutput", objc_superclass=AssetReaderOutput)
 AssetReaderVideoCompositionOutput :: struct { using _: AssetReaderOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetReaderVideoCompositionOutput, objc_selector="init", objc_name="init")
 	AssetReaderVideoCompositionOutput_init :: proc(self: ^AssetReaderVideoCompositionOutput) -> instancetype ---
 
@@ -1096,7 +1096,7 @@ AssetReaderVideoCompositionOutputInternal :: struct { using _: intrinsics.objc_o
 @(objc_class="AVAssetResourceLoader", objc_superclass=NS.Object)
 AssetResourceLoader :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoader, objc_selector="init", objc_name="init")
 	AssetResourceLoader_init :: proc(self: ^AssetResourceLoader) -> instancetype ---
 
@@ -1132,7 +1132,7 @@ AssetResourceLoaderDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoaderDelegate, objc_selector="resourceLoader:shouldWaitForLoadingOfRequestedResource:", objc_name="resourceLoader_shouldWaitForLoadingOfRequestedResource")
 	AssetResourceLoaderDelegate_resourceLoader_shouldWaitForLoadingOfRequestedResource :: proc(self: ^AssetResourceLoaderDelegate, resourceLoader: ^AssetResourceLoader, loadingRequest: ^AssetResourceLoadingRequest) -> bool ---
 
@@ -1157,7 +1157,7 @@ AssetResourceLoaderInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetResourceLoadingContentInformationRequest", objc_superclass=NS.Object)
 AssetResourceLoadingContentInformationRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoadingContentInformationRequest, objc_selector="init", objc_name="init")
 	AssetResourceLoadingContentInformationRequest_init :: proc(self: ^AssetResourceLoadingContentInformationRequest) -> instancetype ---
 
@@ -1206,7 +1206,7 @@ AssetResourceLoadingContentInformationRequestInternal :: struct { using _: intri
 @(objc_class="AVAssetResourceLoadingDataRequest", objc_superclass=NS.Object)
 AssetResourceLoadingDataRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoadingDataRequest, objc_selector="init", objc_name="init")
 	AssetResourceLoadingDataRequest_init :: proc(self: ^AssetResourceLoadingDataRequest) -> instancetype ---
 
@@ -1237,7 +1237,7 @@ AssetResourceLoadingDataRequestInternal :: struct { using _: intrinsics.objc_obj
 @(objc_class="AVAssetResourceLoadingRequest", objc_superclass=NS.Object)
 AssetResourceLoadingRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoadingRequest, objc_selector="init", objc_name="init")
 	AssetResourceLoadingRequest_init :: proc(self: ^AssetResourceLoadingRequest) -> instancetype ---
 
@@ -1313,7 +1313,7 @@ AssetResourceLoadingRequestInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetResourceLoadingRequestor", objc_superclass=NS.Object)
 AssetResourceLoadingRequestor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResourceLoadingRequestor, objc_selector="init", objc_name="init")
 	AssetResourceLoadingRequestor_init :: proc(self: ^AssetResourceLoadingRequestor) -> instancetype ---
 
@@ -1336,7 +1336,7 @@ AssetResourceRenewalRequest :: struct { using _: AssetResourceLoadingRequest}
 @(objc_class="AVAssetSegmentReport", objc_superclass=NS.Object)
 AssetSegmentReport :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetSegmentReport, objc_selector="init", objc_name="init")
 	AssetSegmentReport_init :: proc(self: ^AssetSegmentReport) -> instancetype ---
 
@@ -1354,7 +1354,7 @@ foreign lib {
 @(objc_class="AVAssetSegmentReportSampleInformation", objc_superclass=NS.Object)
 AssetSegmentReportSampleInformation :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetSegmentReportSampleInformation, objc_selector="init", objc_name="init")
 	AssetSegmentReportSampleInformation_init :: proc(self: ^AssetSegmentReportSampleInformation) -> instancetype ---
 
@@ -1378,7 +1378,7 @@ foreign lib {
 @(objc_class="AVAssetSegmentTrackReport", objc_superclass=NS.Object)
 AssetSegmentTrackReport :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetSegmentTrackReport, objc_selector="init", objc_name="init")
 	AssetSegmentTrackReport_init :: proc(self: ^AssetSegmentTrackReport) -> instancetype ---
 
@@ -1409,7 +1409,7 @@ AssetTrack :: struct {
 	using _: AsynchronousKeyValueLoading,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetTrack, objc_selector="init", objc_name="init")
 	AssetTrack_init :: proc(self: ^AssetTrack) -> instancetype ---
 
@@ -1545,7 +1545,7 @@ AssetTrackGroup :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetTrackGroup, objc_selector="trackIDs", objc_name="trackIDs")
 	AssetTrackGroup_trackIDs :: proc(self: ^AssetTrackGroup) -> ^NS.Array ---
 }
@@ -1558,7 +1558,7 @@ AssetTrackGroupInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetTrackSegment", objc_superclass=NS.Object)
 AssetTrackSegment :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetTrackSegment, objc_selector="init", objc_name="init")
 	AssetTrackSegment_init :: proc(self: ^AssetTrackSegment) -> instancetype ---
 
@@ -1576,7 +1576,7 @@ foreign lib {
 @(objc_class="AVAssetVariant", objc_superclass=NS.Object)
 AssetVariant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariant, objc_selector="init", objc_name="init")
 	AssetVariant_init :: proc(self: ^AssetVariant) -> instancetype ---
 
@@ -1603,7 +1603,7 @@ foreign lib {
 @(objc_class="AVAssetVariantAudioAttributes", objc_superclass=NS.Object)
 AssetVariantAudioAttributes :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariantAudioAttributes, objc_selector="init", objc_name="init")
 	AssetVariantAudioAttributes_init :: proc(self: ^AssetVariantAudioAttributes) -> instancetype ---
 
@@ -1621,7 +1621,7 @@ foreign lib {
 @(objc_class="AVAssetVariantAudioRenditionSpecificAttributes", objc_superclass=NS.Object)
 AssetVariantAudioRenditionSpecificAttributes :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariantAudioRenditionSpecificAttributes, objc_selector="channelCount", objc_name="channelCount")
 	AssetVariantAudioRenditionSpecificAttributes_channelCount :: proc(self: ^AssetVariantAudioRenditionSpecificAttributes) -> NS.Integer ---
 
@@ -1642,7 +1642,7 @@ AssetVariantQualifier :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariantQualifier, objc_selector="init", objc_name="init")
 	AssetVariantQualifier_init :: proc(self: ^AssetVariantQualifier) -> instancetype ---
 
@@ -1734,7 +1734,7 @@ AssetVariantQualifier_predicateForAudioSampleRate :: proc {
 @(objc_class="AVAssetVariantVideoAttributes", objc_superclass=NS.Object)
 AssetVariantVideoAttributes :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariantVideoAttributes, objc_selector="init", objc_name="init")
 	AssetVariantVideoAttributes_init :: proc(self: ^AssetVariantVideoAttributes) -> instancetype ---
 
@@ -1761,7 +1761,7 @@ foreign lib {
 @(objc_class="AVAssetVariantVideoLayoutAttributes", objc_superclass=NS.Object)
 AssetVariantVideoLayoutAttributes :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetVariantVideoLayoutAttributes, objc_selector="init", objc_name="init")
 	AssetVariantVideoLayoutAttributes_init :: proc(self: ^AssetVariantVideoLayoutAttributes) -> instancetype ---
 
@@ -1779,7 +1779,7 @@ foreign lib {
 @(objc_class="AVAssetWriter", objc_superclass=NS.Object)
 AssetWriter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriter, objc_selector="init", objc_name="init")
 	AssetWriter_init :: proc(self: ^AssetWriter) -> instancetype ---
 
@@ -1953,7 +1953,7 @@ AssetWriterDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterDelegate, objc_selector="assetWriter:didOutputSegmentData:segmentType:segmentReport:", objc_name="assetWriter_didOutputSegmentData_segmentType_segmentReport")
 	AssetWriterDelegate_assetWriter_didOutputSegmentData_segmentType_segmentReport :: proc(self: ^AssetWriterDelegate, writer: ^AssetWriter, segmentData: ^NS.Data, segmentType: AssetSegmentType, segmentReport: ^AssetSegmentReport) ---
 
@@ -1977,7 +1977,7 @@ AssetWriterInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetWriterInput", objc_superclass=NS.Object)
 AssetWriterInput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInput, objc_selector="init", objc_name="init")
 	AssetWriterInput_init :: proc(self: ^AssetWriterInput) -> instancetype ---
 
@@ -2142,7 +2142,7 @@ AssetWriterInputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetWriterInputCaptionAdaptor", objc_superclass=NS.Object)
 AssetWriterInputCaptionAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputCaptionAdaptor, objc_selector="init", objc_name="init")
 	AssetWriterInputCaptionAdaptor_init :: proc(self: ^AssetWriterInputCaptionAdaptor) -> instancetype ---
 
@@ -2173,7 +2173,7 @@ AssetWriterInputCaptionAdaptorInternal :: struct { using _: intrinsics.objc_obje
 @(objc_class="AVAssetWriterInputGroup", objc_superclass=MediaSelectionGroup)
 AssetWriterInputGroup :: struct { using _: MediaSelectionGroup}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputGroup, objc_selector="init", objc_name="init")
 	AssetWriterInputGroup_init :: proc(self: ^AssetWriterInputGroup) -> instancetype ---
 
@@ -2201,7 +2201,7 @@ AssetWriterInputGroupInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVAssetWriterInputMetadataAdaptor", objc_superclass=NS.Object)
 AssetWriterInputMetadataAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputMetadataAdaptor, objc_selector="init", objc_name="init")
 	AssetWriterInputMetadataAdaptor_init :: proc(self: ^AssetWriterInputMetadataAdaptor) -> instancetype ---
 
@@ -2229,7 +2229,7 @@ AssetWriterInputMetadataAdaptorInternal :: struct { using _: intrinsics.objc_obj
 @(objc_class="AVAssetWriterInputPassDescription", objc_superclass=NS.Object)
 AssetWriterInputPassDescription :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputPassDescription, objc_selector="init", objc_name="init")
 	AssetWriterInputPassDescription_init :: proc(self: ^AssetWriterInputPassDescription) -> instancetype ---
 
@@ -2248,7 +2248,7 @@ AssetWriterInputPassDescriptionInternal :: struct { using _: intrinsics.objc_obj
 @(objc_class="AVAssetWriterInputPixelBufferAdaptor", objc_superclass=NS.Object)
 AssetWriterInputPixelBufferAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputPixelBufferAdaptor, objc_selector="init", objc_name="init")
 	AssetWriterInputPixelBufferAdaptor_init :: proc(self: ^AssetWriterInputPixelBufferAdaptor) -> instancetype ---
 
@@ -2282,7 +2282,7 @@ AssetWriterInputPixelBufferAdaptorInternal :: struct { using _: intrinsics.objc_
 @(objc_class="AVAssetWriterInputTaggedPixelBufferGroupAdaptor", objc_superclass=NS.Object)
 AssetWriterInputTaggedPixelBufferGroupAdaptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetWriterInputTaggedPixelBufferGroupAdaptor, objc_selector="init", objc_name="init")
 	AssetWriterInputTaggedPixelBufferGroupAdaptor_init :: proc(self: ^AssetWriterInputTaggedPixelBufferGroupAdaptor) -> instancetype ---
 
@@ -2312,7 +2312,7 @@ foreign lib {
 @(objc_class="AVURLAsset", objc_superclass=Asset)
 URLAsset :: struct { using _: Asset}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLAsset, objc_selector="init", objc_name="init")
 	URLAsset_init :: proc(self: ^URLAsset) -> instancetype ---
 

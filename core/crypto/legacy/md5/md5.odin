@@ -18,10 +18,10 @@ package md5
         zhibog, dotbmp:  Initial implementation.
 */
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // DIGEST_SIZE is the MD5 digest size in bytes.
 DIGEST_SIZE :: 16

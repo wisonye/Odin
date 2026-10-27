@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="UIStepper", objc_superclass=Control)
 Stepper :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Stepper, objc_selector="setBackgroundImage:forState:", objc_name="setBackgroundImage")
 	Stepper_setBackgroundImage :: proc(self: ^Stepper, image: ^Image, state: ControlState) ---
 

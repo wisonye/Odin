@@ -1,9 +1,9 @@
 #+private
 package odin_libc
 
-import "core:c"
+#import "core:c"
 
-foreign import "odin_env"
+#foreign #import "odin_env"
 
 _fopen :: proc(path, mode: cstring) -> FILE {
 	unimplemented("vendor/libc: fopen in JS")
@@ -45,7 +45,7 @@ _getchar :: proc() -> c.int {
 }
 
 @(private="file")
-foreign odin_env {
+#foreign odin_env {
 	@(link_name="write")
 	__write :: proc "contextless" (fd: u32, p: []byte) ---
 }

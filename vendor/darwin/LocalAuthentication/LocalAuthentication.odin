@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -14,7 +14,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:LocalAuthentication.framework",
 }
 
@@ -23,7 +23,7 @@ foreign import lib {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="LATouchIDAuthenticationMaximumAllowableReuseDuration")
 	TouchIDAuthenticationMaximumAllowableReuseDuration: NS.TimeInterval
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSLock", objc_superclass=Object)
 Lock :: struct {
@@ -10,7 +10,7 @@ Lock :: struct {
 	using _: Locking,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Lock, objc_selector="tryLock", objc_name="tryLock")
 	Lock_tryLock :: proc(self: ^Lock) -> bool ---
 
@@ -31,7 +31,7 @@ RecursiveLock :: struct {
 	using _: Locking,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecursiveLock, objc_selector="tryLock", objc_name="tryLock")
 	RecursiveLock_tryLock :: proc(self: ^RecursiveLock) -> bool ---
 
@@ -49,7 +49,7 @@ foreign lib {
 @(objc_class="NSLocking")
 Locking :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Locking, objc_selector="lock", objc_name="lock")
 	Locking_lock :: proc(self: ^Locking) ---
 

@@ -1,8 +1,8 @@
 package dynlib
 
-import "base:intrinsics"
-import "core:reflect"
-import "base:runtime"
+#import "base:intrinsics"
+#import "core:reflect"
+#import "base:runtime"
 _ :: intrinsics
 _ :: reflect
 _ :: runtime
@@ -29,8 +29,8 @@ On `linux`, `darwin`, `freebsd` and `openbsd` refer to `dlopen`.
 On `windows` refer to `LoadLibraryW`. Also temporarily needs an allocator to convert a string.
 
 Example:
-	import "core:dynlib"
-	import "core:fmt"
+	#import "core:dynlib"
+	#import "core:fmt"
 
 	load_my_library :: proc() {
 		LIBRARY_PATH :: "my_library.dll"
@@ -54,8 +54,8 @@ On `linux`, `darwin`, `freebsd` and `openbsd` refer to `dlclose`.
 On `windows` refer to `FreeLibrary`.
 
 Example:
-	import "core:dynlib"
-	import "core:fmt"
+	#import "core:dynlib"
+	#import "core:fmt"
 
 	load_then_unload_my_library :: proc() {
 		LIBRARY_PATH :: "my_library.dll"
@@ -84,8 +84,8 @@ On `linux`, `darwin`, `freebsd` and `openbsd` refer to `dlsym`.
 On `windows` refer to `GetProcAddress`. Also temporarily needs an allocator to convert a string.
 
 Example:
-	import "core:dynlib"
-	import "core:fmt"
+	#import "core:dynlib"
+	#import "core:fmt"
 
 	find_a_in_my_library :: proc() {
 		LIBRARY_PATH :: "my_library.dll"

@@ -1,8 +1,8 @@
 #+build windows
 package sys_windows
 
-foreign import kernel32 "system:Kernel32.lib"
-foreign import one_core "system:OneCore.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
+#foreign #import one_core "system:OneCore.lib"
 
 FOREGROUND_BLUE            :: WORD(0x0001)
 FOREGROUND_GREEN           :: WORD(0x0002)
@@ -43,7 +43,7 @@ WT_EXECUTEONLYONCE           :: 0x00000008
 WT_TRANSFER_IMPERSONATION    :: 0x00000100
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	OutputDebugStringA :: proc(lpOutputString: LPCSTR) --- // The only A thing that is allowed
 	OutputDebugStringW :: proc(lpOutputString: LPCWSTR) ---
 
@@ -811,7 +811,7 @@ MEM_LARGE_PAGES :: 0x20000000
 MEM_4MB_PAGES   :: 0x80000000
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	VirtualAlloc :: proc(
 		lpAddress:        LPVOID,
 		dwSize:           SIZE_T,
@@ -953,7 +953,7 @@ LowMemoryResourceNotification  :: MEMORY_RESOURCE_NOTIFICATION_TYPE.LowMemoryRes
 HighMemoryResourceNotification :: MEMORY_RESOURCE_NOTIFICATION_TYPE.HighMemoryResourceNotification
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	CreateMemoryResourceNotification :: proc(
 		NotificationType: MEMORY_RESOURCE_NOTIFICATION_TYPE,
 	) -> HANDLE ---
@@ -969,7 +969,7 @@ FILE_CACHE_MIN_HARD_ENABLE  :: DWORD(0x00000004)
 FILE_CACHE_MIN_HARD_DISABLE :: DWORD(0x00000008)
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetSystemFileCacheSize :: proc(
 		lpMinimumFileCacheSize: PSIZE_T,
 		lpMaximumFileCacheSize: PSIZE_T,
@@ -999,7 +999,7 @@ WIN32_MEMORY_RANGE_ENTRY :: struct {
 PWIN32_MEMORY_RANGE_ENTRY :: ^WIN32_MEMORY_RANGE_ENTRY
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	PrefetchVirtualMemory :: proc(
 		hProcess:         HANDLE,
 		NumberOfEntries:  ULONG_PTR,
@@ -1057,19 +1057,19 @@ foreign kernel32 {
 MEHC_PATROL_SCRUBBER_PRESENT :: ULONG(0x1)
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetMemoryErrorHandlingCapabilities :: proc(Capabilities: PULONG) -> BOOL ---
 }
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GlobalMemoryStatusEx :: proc(lpBuffer: ^MEMORYSTATUSEX) -> BOOL ---
 }
 
 PBAD_MEMORY_CALLBACK_ROUTINE :: #type proc "system" ()
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	RegisterBadMemoryNotification   :: proc(Callback: PBAD_MEMORY_CALLBACK_ROUTINE) -> PVOID ---
 	UnregisterBadMemoryNotification :: proc(RegistrationHandle: PVOID) -> BOOL ---
 }
@@ -1086,7 +1086,7 @@ VmOfferPriorityBelowNormal :: OFFER_PRIORITY.VmOfferPriorityBelowNormal
 VmOfferPriorityNormal      :: OFFER_PRIORITY.VmOfferPriorityNormal
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	OfferVirtualMemory :: proc(
 		VirtualAddress: PVOID,
 		Size:           SIZE_T,
@@ -1145,7 +1145,7 @@ WIN32_MEMORY_REGION_INFORMATION :: struct {
 }
 
 @(default_calling_convention="system")
-foreign one_core {
+#foreign one_core {
 	QueryVirtualMemoryInformation :: proc(
 		Process:                HANDLE,
 		VirtualAddress:         PVOID,
@@ -1196,7 +1196,7 @@ MapViewOfFile2 :: #force_inline proc "system" (
 }
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	UnmapViewOfFile2 :: proc(
 		ProcessHandle: HANDLE,
 		BaseAddress:   PVOID,
@@ -1205,7 +1205,7 @@ foreign kernel32 {
 }
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetProductInfo :: proc(
 		OSMajorVersion: DWORD,
 		OSMinorVersion: DWORD,
@@ -1263,7 +1263,7 @@ MEM_EXTENDED_PARAMETER :: struct {
 
 
 @(default_calling_convention="system")
-foreign one_core {
+#foreign one_core {
 	VirtualAlloc2 :: proc(
 		Process:            HANDLE,
 		BaseAddress:        LPVOID,
@@ -1297,7 +1297,7 @@ PHANDLER_ROUTINE :: HandlerRoutine
 LPFIBER_START_ROUTINE :: #type proc "system" (lpFiberParameter: LPVOID)
 
 @(default_calling_convention = "system")
-foreign kernel32 {
+#foreign kernel32 {
 	CreateFiber          :: proc(dwStackSize: SIZE_T, lpStartAddress: LPFIBER_START_ROUTINE, lpParameter: LPVOID) -> LPVOID ---
 	DeleteFiber          :: proc(lpFiber: LPVOID) ---
 	ConvertThreadToFiber :: proc(lpParameter: LPVOID) -> LPVOID ---
@@ -1417,7 +1417,7 @@ ACTCTX_FLAG_APPLICATION_NAME_VALID       :: 0x020
 ACTCTX_FLAG_HMODULE_VALID                :: 0x080
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	CreateActCtxW  :: proc(pActCtx: ^ACTCTXW) -> HANDLE ---
 	ActivateActCtx :: proc(hActCtx: HANDLE, lpCookie: ^ULONG_PTR) -> BOOL ---
 }
@@ -1465,7 +1465,7 @@ SYSTEM_CPU_SET_INFORMATION :: struct {
 }
 
 @(default_calling_convention = "system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetSystemCpuSetInformation :: proc(
 		Information: ^SYSTEM_CPU_SET_INFORMATION,
 		BufferLength: ULONG,

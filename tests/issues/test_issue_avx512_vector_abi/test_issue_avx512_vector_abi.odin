@@ -6,16 +6,16 @@
 // Built with -target-features:avx512f, see run.sh.
 package test_issues
 
-import "core:testing"
+#import "core:testing"
 
 V16u32 :: #simd[16]u32
 V8f64  :: #simd[8]f64
 V32u32 :: #simd[32]u32
 
-foreign import lib "../build/test_issue_avx512_vector_abi_c.o"
+#foreign #import lib "../build/test_issue_avx512_vector_abi_c.o"
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	c_make_v16u32      :: proc(k: u32) -> V16u32 ---
 	c_make_v8f64       :: proc(k: f64) -> V8f64 ---
 	c_make_v32u32      :: proc(k: u32) -> V32u32 ---

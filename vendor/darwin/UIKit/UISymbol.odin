@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UISymbolContentTransition", objc_superclass=NS.Object)
 SymbolContentTransition :: struct {
@@ -12,7 +12,7 @@ SymbolContentTransition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolContentTransition, objc_selector="transitionWithContentTransition:", objc_name="transitionWithContentTransition_", objc_is_class_method=true)
 	SymbolContentTransition_transitionWithContentTransition_ :: proc(contentTransition: ^NSSymbolContentTransition) -> instancetype ---
 
@@ -43,7 +43,7 @@ SymbolContentTransition_transitionWithContentTransition :: proc {
 SymbolEffectCompletionContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolEffectCompletionContext, objc_selector="init", objc_name="init")
 	SymbolEffectCompletionContext_init :: proc(self: ^SymbolEffectCompletionContext) -> instancetype ---
 

@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSChangeSpelling")
 ChangeSpelling :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ChangeSpelling, objc_selector="changeSpelling:", objc_name="changeSpelling")
 	ChangeSpelling_changeSpelling :: proc(self: ^ChangeSpelling, sender: id) ---
 }

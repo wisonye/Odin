@@ -1,8 +1,8 @@
 package odin_libc
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:mem"
+#import "core:mem"
 
 @(private)
 g_ctx: runtime.Context

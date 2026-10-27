@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKRecurrenceDayOfWeek", objc_superclass=NS.Object)
 RecurrenceDayOfWeek :: struct {
@@ -11,7 +11,7 @@ RecurrenceDayOfWeek :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecurrenceDayOfWeek, objc_selector="dayOfWeek:", objc_name="dayOfWeek_", objc_is_class_method=true)
 	RecurrenceDayOfWeek_dayOfWeek_ :: proc(dayOfTheWeek: Weekday) -> instancetype ---
 
@@ -44,7 +44,7 @@ RecurrenceEnd :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecurrenceEnd, objc_selector="recurrenceEndWithEndDate:", objc_name="recurrenceEndWithEndDate", objc_is_class_method=true)
 	RecurrenceEnd_recurrenceEndWithEndDate :: proc(endDate: ^NS.Date) -> instancetype ---
 
@@ -65,7 +65,7 @@ RecurrenceRule :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecurrenceRule, objc_selector="initRecurrenceWithFrequency:interval:end:", objc_name="initRecurrenceWithFrequency_interval_end")
 	RecurrenceRule_initRecurrenceWithFrequency_interval_end :: proc(self: ^RecurrenceRule, type: RecurrenceFrequency, interval: NS.Integer, end: ^RecurrenceEnd) -> instancetype ---
 

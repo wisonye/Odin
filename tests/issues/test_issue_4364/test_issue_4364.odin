@@ -1,7 +1,7 @@
 // Tests issue #4364 https://github.com/odin-lang/Odin/issues/4364
 package test_issue_4364
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_const_array_fill_assignment :: proc(t: ^testing.T) {

@@ -1,8 +1,8 @@
 package ucd
 
-import "core:strings"
-import "core:os"
-import "core:strconv"
+#import "core:strings"
+#import "core:os"
+#import "core:strconv"
 
 decode_rune :: proc(str: string) -> (cp1, cp2: rune, err: Error) {
 	head, _, tail := strings.partition(str, "..")

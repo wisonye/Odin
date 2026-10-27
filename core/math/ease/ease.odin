@@ -1,8 +1,8 @@
 // Easing procedures used for animations.
 package ease
 
-@require import "core:math"
-import "base:intrinsics"
+@require #import "core:math"
+#import "base:intrinsics"
 
 @(private) PI_2 :: math.PI / 2
 

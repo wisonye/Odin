@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 MAX_LOG_MESSAGE :: 4096
@@ -61,7 +61,7 @@ LogOutputFunction :: proc "c" (userdata: rawptr, category: LogCategory, priority
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	LogSetAllPriority    :: proc(priority: LogPriority) ---
 	LogSetPriority       :: proc(category: c.int, priority: LogPriority) ---
 	LogGetPriority       :: proc(category: c.int) -> LogPriority ---

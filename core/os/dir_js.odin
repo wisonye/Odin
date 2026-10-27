@@ -6,7 +6,7 @@ package os
 // It's only here so importing `core:os` on wasm panics cleanly,
 // without spamming about all sorts of missing procs and types.
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 Read_Directory_Iterator_Impl :: struct {
 	fullpath: [dynamic]byte,

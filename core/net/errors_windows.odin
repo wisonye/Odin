@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import     "core:reflect"
-import win "core:sys/windows"
+#import     "core:reflect"
+#import win "core:sys/windows"
 
 _last_platform_error :: proc() -> i32 {
 	return i32(win.WSAGetLastError())

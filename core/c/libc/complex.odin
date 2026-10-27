@@ -2,16 +2,16 @@ package libc
 
 // 7.3 Complex arithmetic
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.3.5 Trigonometric functions
 	cacos   :: proc(z: complex_double) -> complex_double ---
 	cacosf  :: proc(z: complex_float) -> complex_float ---
@@ -67,7 +67,7 @@ foreign libc {
 	crealf  :: proc(z: complex_float) -> float ---
 }
 
-import builtin "base:builtin"
+#import builtin "base:builtin"
 
 complex_float  :: distinct builtin.complex64
 complex_double :: distinct builtin.complex128

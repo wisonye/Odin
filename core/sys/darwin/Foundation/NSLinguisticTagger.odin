@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSLinguisticTagger", objc_superclass=Object)
 LinguisticTagger :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LinguisticTagger, objc_selector="initWithTagSchemes:options:", objc_name="initWithTagSchemes")
 	LinguisticTagger_initWithTagSchemes :: proc(self: ^LinguisticTagger, tagSchemes: ^Array, opts: UInteger) -> instancetype ---
 

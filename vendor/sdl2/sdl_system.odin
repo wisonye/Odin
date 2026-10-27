@@ -1,18 +1,18 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 // General
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	IsTablet :: proc() -> bool ---
 
 	/* Functions used by iOS application delegates to notify SDL about state changes */
@@ -35,7 +35,7 @@ IDirect3DDevice9 :: struct {}
 ID3D11Device     :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetWindowsMessageHook    :: proc(callback: WindowsMessageHook, userdata: rawptr) ---
 	Direct3D9GetAdapterIndex :: proc(displayIndex: c.int) -> c.int ---
 	RenderGetD3D9Device      :: proc(renderer: ^Renderer) -> ^IDirect3DDevice9 ---
@@ -79,7 +79,7 @@ WinRT_DeviceFamily :: enum {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	WinRTGetFSPathUNICODE :: proc(pathType: WinRT_Path) -> ^u16 ---
 	WinRTGetFSPathUTF8    :: proc(pathType: WinRT_Path) -> cstring ---
 	WinRTGetDeviceFamily  :: proc() -> WinRT_DeviceFamily ---
@@ -88,7 +88,7 @@ foreign lib {
 
 // Linux
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	LinuxSetThreadPriority          :: proc(threadID: i64, priority: c.int) -> c.int ---
 	LinuxSetThreadPriorityAndPolicy :: proc(threadID: i64, sdlPriority, schedPolicy: c.int) -> c.int ---
 }
@@ -99,7 +99,7 @@ iOSSetAnimationCallback :: iPhoneSetAnimationCallback
 iOSSetEventPump         :: iPhoneSetEventPump
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	iPhoneSetAnimationCallback :: proc(window: ^Window, interval: c.int, callback: proc "c" (rawptr), callbackParam: rawptr) -> c.int ---
 	iPhoneSetEventPump :: proc(enabled: bool) ---
 }
@@ -113,7 +113,7 @@ ANDROID_EXTERNAL_STORAGE_WRITE :: 0x02
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	AndroidGetJNIEnv               :: proc() -> rawptr ---
 	AndroidGetActivity             :: proc() -> rawptr ---
 	GetAndroidSDKVersion           :: proc() -> c.int ---

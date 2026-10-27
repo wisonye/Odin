@@ -1,23 +1,23 @@
 #+build linux, windows, linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
-import "core:c/libc"
+#import "core:c"
+#import "core:c/libc"
 
-when ODIN_OS == .Windows {
-	foreign import lib {
+#if ODIN_OS == .Windows {
+	#foreign #import lib {
 		"system:libucrt.lib",
 		"system:legacy_stdio_definitions.lib",
 	}
-} else when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // stdio.h - standard buffered input/output
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(private) LGETC_UNLOCKED    :: "_getc_nolock"
 	@(private) LGETCHAR_UNLOCKED :: "_getchar_nolock"
 	@(private) LPUTC_UNLOCKED    :: "_putc_nolock"
@@ -35,7 +35,7 @@ when ODIN_OS == .Windows {
 	@(private) LPCLOSE           :: "pclose"
 }
 
-foreign lib {
+#foreign lib {
 	/*
 	Equivalent to fprintf but output is written to s, it is the user's responsibility to
 	ensure there is enough space.

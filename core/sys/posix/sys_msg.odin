@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/msg.h = XSI message queue structures
 
-foreign lib {
+#foreign lib {
 	/*
 	Provides various operation as specified by the given cmd.
 
@@ -52,13 +52,13 @@ foreign lib {
 	msgsnd :: proc(msgid: FD, msgp: rawptr, msgsz: c.size_t, msgflg: IPC_Flags) -> result ---
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LMSGCTL :: "__msgctl50"
 } else {
 	@(private) LMSGCTL :: "msgctl"
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	msgqnum_t :: distinct c.ulong
 	msglen_t  :: distinct c.ulong
@@ -83,7 +83,7 @@ when ODIN_OS == .Darwin {
 		msg_pad4:   [4]c.int32_t,
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	msgqnum_t :: distinct c.ulong
 	msglen_t  :: distinct c.ulong
@@ -104,7 +104,7 @@ when ODIN_OS == .Darwin {
 		msg_ctime:   time_t,    /* [PSX] time of last change */
 	}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	msgqnum_t :: distinct c.ulong
 	msglen_t  :: distinct c.size_t
@@ -126,7 +126,7 @@ when ODIN_OS == .Darwin {
 		_msg_cbytes: msglen_t,
 	}
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	msgqnum_t :: distinct c.ulong
 	msglen_t  :: distinct c.ulong
@@ -151,7 +151,7 @@ when ODIN_OS == .Darwin {
 		msg_pad4:    [4]c.long,
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	msgqnum_t :: distinct c.ulong
 	msglen_t  :: distinct c.ulong

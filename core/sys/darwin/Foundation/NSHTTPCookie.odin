@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSHTTPCookie", objc_superclass=Object)
 HTTPCookie :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HTTPCookie, objc_selector="initWithProperties:", objc_name="initWithProperties")
 	HTTPCookie_initWithProperties :: proc(self: ^HTTPCookie, properties: ^Dictionary) -> instancetype ---
 
@@ -71,7 +71,7 @@ HTTPCookieInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="NSHTTPCookieStorage", objc_superclass=Object)
 HTTPCookieStorage :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HTTPCookieStorage, objc_selector="sharedCookieStorageForGroupContainerIdentifier:", objc_name="sharedCookieStorageForGroupContainerIdentifier", objc_is_class_method=true)
 	HTTPCookieStorage_sharedCookieStorageForGroupContainerIdentifier :: proc(identifier: ^String) -> ^HTTPCookieStorage ---
 

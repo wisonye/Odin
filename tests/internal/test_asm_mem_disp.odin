@@ -1,7 +1,7 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // `$` displacements were dropped, and labels were absolute addresses (no PIE link)
 @(test)

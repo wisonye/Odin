@@ -1,10 +1,10 @@
 #+private
 package _mlkem
 
-import "core:crypto"
-import "core:crypto/_sha3"
-import "core:crypto/sha3"
-import "core:crypto/shake"
+#import "core:crypto"
+#import "core:crypto/_sha3"
+#import "core:crypto/sha3"
+#import "core:crypto/shake"
 
 XOF_BLOCKBYTES :: _sha3.RATE_128
 #assert(XOF_BLOCKBYTES % 3 == 0)

@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSManagedObject")
 ManagedObject :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSManagedObjectContext", objc_superclass=NS.Object)
@@ -20,7 +20,7 @@ ManagedObjectContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ManagedObjectContext, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	ManagedObjectContext_new :: proc() -> ^ManagedObjectContext ---
 
@@ -258,11 +258,11 @@ ManagedObjectContext_setQueryGenerationFromToken :: #force_inline proc "c" (self
 ManagedObjectID :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSManagedObjectModel")
 ManagedObjectModel :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

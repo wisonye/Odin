@@ -26,10 +26,10 @@
 #+build arm64
 package sha2
 
-import "base:intrinsics"
-import "core:simd"
-import "core:simd/arm"
-import "core:sys/info"
+#import "base:intrinsics"
+#import "core:simd"
+#import "core:simd/arm"
+#import "core:sys/info"
 
 // is_hardware_accelerated_512 returns true if and only if (⟺) hardware
 // accelerated SHA-384, SHA-512, and SHA-512/256 are supported.
@@ -145,7 +145,7 @@ sha512_transf_hw :: proc "contextless" (ctx: ^Context_512, data: []byte) #no_bou
 		msg_7 := intrinsics.unaligned_load((^simd.u64x2)(raw_data(data[112:])))
 
 		// Reverse for little endian
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			msg_0 = byteswap_u64x2(msg_0)
 			msg_1 = byteswap_u64x2(msg_1)
 			msg_2 = byteswap_u64x2(msg_2)
@@ -483,7 +483,7 @@ sha512_transf_hw :: proc "contextless" (ctx: ^Context_512, data: []byte) #no_bou
 	intrinsics.unaligned_store((^simd.u64x2)(&ctx.h[6]), state_3)
 }
 
-when ODIN_ENDIAN == .Little {
+#if ODIN_ENDIAN == .Little {
 	@(private = "file", enable_target_feature = "neon")
 	byteswap_u64x2 :: #force_inline proc "contextless" (a: simd.u64x2) -> simd.u64x2 {
 		return transmute(simd.u64x2)(

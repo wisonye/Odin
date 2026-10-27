@@ -30,11 +30,11 @@ package main
 // Run with: odin run tools/gen_mnemonic_builders.odin -file
 // (writes mnemonic_builders.odin into the package root, ../).
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import mips "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import mips "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 
@@ -259,7 +259,7 @@ build_signature :: proc(form: mips.Encoding) -> (sig: Operand_Signature, ok: boo
 	return sig, true
 }
 
-// An operand is implicit when it appears in the asm syntax but is not encoded.
+// An operand is implicit #if it appears in the asm syntax but is not encoded.
 is_implicit_operand :: proc(enc: mips.Operand_Encoding) -> bool {
 	return enc == .IMPL
 }

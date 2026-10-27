@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import CF "core:sys/darwin/CoreFoundation"
-import CM "vendor:darwin/CoreMedia"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CM "vendor:darwin/CoreMedia"
+#import "base:intrinsics"
 
 @(objc_class="AVExternalStorageDevice", objc_superclass=NS.Object)
 ExternalStorageDevice :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExternalStorageDevice, objc_selector="init", objc_name="init")
 	ExternalStorageDevice_init :: proc(self: ^ExternalStorageDevice) -> instancetype ---
 
@@ -58,7 +58,7 @@ ExternalStorageDevice_nextAvailableURLsWithPathExtensions :: #force_inline proc 
 @(objc_class="AVExternalStorageDeviceDiscoverySession", objc_superclass=NS.Object)
 ExternalStorageDeviceDiscoverySession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExternalStorageDeviceDiscoverySession, objc_selector="init", objc_name="init")
 	ExternalStorageDeviceDiscoverySession_init :: proc(self: ^ExternalStorageDeviceDiscoverySession) -> instancetype ---
 
@@ -79,7 +79,7 @@ foreign lib {
 @(objc_class="AVExternalSyncDevice", objc_superclass=NS.Object)
 ExternalSyncDevice :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExternalSyncDevice, objc_selector="init", objc_name="init")
 	ExternalSyncDevice_init :: proc(self: ^ExternalSyncDevice) -> instancetype ---
 
@@ -115,7 +115,7 @@ ExternalSyncDeviceDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExternalSyncDeviceDelegate, objc_selector="externalSyncDeviceStatusDidChange:", objc_name="externalSyncDeviceStatusDidChange")
 	ExternalSyncDeviceDelegate_externalSyncDeviceStatusDidChange :: proc(self: ^ExternalSyncDeviceDelegate, device: ^ExternalSyncDevice) ---
 
@@ -127,7 +127,7 @@ foreign lib {
 @(objc_class="AVExternalSyncDeviceDiscoverySession", objc_superclass=NS.Object)
 ExternalSyncDeviceDiscoverySession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExternalSyncDeviceDiscoverySession, objc_selector="init", objc_name="init")
 	ExternalSyncDeviceDiscoverySession_init :: proc(self: ^ExternalSyncDeviceDiscoverySession) -> instancetype ---
 

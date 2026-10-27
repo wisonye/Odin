@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4CounterHeap")
 MTL4CounterHeap :: struct {
@@ -11,7 +11,7 @@ MTL4CounterHeap :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CounterHeap, objc_selector="resolveCounterRange:", objc_name="resolveCounterRange")
 	MTL4CounterHeap_resolveCounterRange :: proc(self: ^MTL4CounterHeap, range: NS._NSRange) -> ^NS.Data ---
 
@@ -38,7 +38,7 @@ MTL4CounterHeapDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CounterHeapDescriptor, objc_selector="type", objc_name="type")
 	MTL4CounterHeapDescriptor_type :: proc(self: ^MTL4CounterHeapDescriptor) -> MTL4CounterHeapType ---
 

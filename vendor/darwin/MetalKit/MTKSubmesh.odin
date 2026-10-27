@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MetalKit
 
-import MTL "vendor:darwin/Metal"
-import NS "core:sys/darwin/Foundation"
+#import MTL "vendor:darwin/Metal"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTKSubmesh", objc_superclass=NS.Object)
 Submesh :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Submesh, objc_selector="init", objc_name="init")
 	Submesh_init :: proc(self: ^Submesh) -> instancetype ---
 

@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
 _temp_dir :: proc(allocator: runtime.Allocator) -> (string, runtime.Allocator_Error) {
 	temp_allocator := TEMP_ALLOCATOR_GUARD({ allocator })

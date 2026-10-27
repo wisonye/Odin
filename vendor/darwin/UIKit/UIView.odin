@@ -2,11 +2,11 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
 
 @(objc_class="UIView", objc_superclass=Responder)
 View :: struct {
@@ -23,7 +23,7 @@ View :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=View, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	View_initWithFrame :: proc(self: ^View, frame: CG.Rect) -> instancetype ---
 
@@ -785,7 +785,7 @@ ViewConfigurationState :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewConfigurationState, objc_selector="initWithTraitCollection:", objc_name="initWithTraitCollection")
 	ViewConfigurationState_initWithTraitCollection :: proc(self: ^ViewConfigurationState, traitCollection: ^TraitCollection) -> instancetype ---
 
@@ -843,7 +843,7 @@ ViewAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewAnimating, objc_selector="startAnimation", objc_name="startAnimation")
 	ViewAnimating_startAnimation :: proc(self: ^ViewAnimating) ---
 
@@ -890,7 +890,7 @@ ViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewController, objc_selector="initWithNibName:bundle:", objc_name="initWithNibName")
 	ViewController_initWithNibName :: proc(self: ^ViewController, nibNameOrNil: ^NS.String, nibBundleOrNil: ^NS.Bundle) -> instancetype ---
 
@@ -1518,7 +1518,7 @@ ViewControllerAnimatedTransitioning :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerAnimatedTransitioning, objc_selector="transitionDuration:", objc_name="transitionDuration")
 	ViewControllerAnimatedTransitioning_transitionDuration :: proc(self: ^ViewControllerAnimatedTransitioning, transitionContext: ^ViewControllerContextTransitioning) -> NS.TimeInterval ---
 
@@ -1540,7 +1540,7 @@ ViewControllerContextTransitioning :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerContextTransitioning, objc_selector="updateInteractiveTransition:", objc_name="updateInteractiveTransition")
 	ViewControllerContextTransitioning_updateInteractiveTransition :: proc(self: ^ViewControllerContextTransitioning, percentComplete: CG.Float) ---
 
@@ -1595,7 +1595,7 @@ ViewControllerInteractiveTransitioning :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerInteractiveTransitioning, objc_selector="startInteractiveTransition:", objc_name="startInteractiveTransition")
 	ViewControllerInteractiveTransitioning_startInteractiveTransition :: proc(self: ^ViewControllerInteractiveTransitioning, transitionContext: ^ViewControllerContextTransitioning) ---
 
@@ -1617,7 +1617,7 @@ ViewControllerPreviewing :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerPreviewing, objc_selector="previewingGestureRecognizerForFailureRelationship", objc_name="previewingGestureRecognizerForFailureRelationship")
 	ViewControllerPreviewing_previewingGestureRecognizerForFailureRelationship :: proc(self: ^ViewControllerPreviewing) -> ^GestureRecognizer ---
 
@@ -1642,7 +1642,7 @@ ViewControllerPreviewingDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerPreviewingDelegate, objc_selector="previewingContext:viewControllerForLocation:", objc_name="previewingContext_viewControllerForLocation")
 	ViewControllerPreviewingDelegate_previewingContext_viewControllerForLocation :: proc(self: ^ViewControllerPreviewingDelegate, previewingContext: ^ViewControllerPreviewing, location: CG.Point) -> ^ViewController ---
 
@@ -1661,7 +1661,7 @@ ViewControllerPreviewingDelegate_previewingContext :: proc {
 ViewControllerRestoration :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerRestoration, objc_selector="viewControllerWithRestorationIdentifierPath:coder:", objc_name="viewControllerWithRestorationIdentifierPath", objc_is_class_method=true)
 	ViewControllerRestoration_viewControllerWithRestorationIdentifierPath :: proc(identifierComponents: ^NS.Array, coder: ^NS.Coder) -> ^ViewController ---
 }
@@ -1671,7 +1671,7 @@ foreign lib {
 ViewControllerTransition :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerTransition, objc_selector="zoomWithOptions:sourceViewProvider:", objc_name="zoomWithOptions_sourceViewProvider", objc_is_class_method=true)
 	ViewControllerTransition_zoomWithOptions_sourceViewProvider :: proc(options: ^ZoomTransitionOptions, sourceViewProvider: ^Objc_Block(proc "c" ( _0: ^ZoomTransitionSourceViewProviderContext ) -> ^View)) -> instancetype ---
 
@@ -1711,7 +1711,7 @@ ViewControllerTransitionCoordinator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerTransitionCoordinator, objc_selector="animateAlongsideTransition:completion:", objc_name="animateAlongsideTransition")
 	ViewControllerTransitionCoordinator_animateAlongsideTransition :: proc(self: ^ViewControllerTransitionCoordinator, animation: ^Objc_Block(proc "c" ( _context: ^ViewControllerTransitionCoordinatorContext )), completion: ^Objc_Block(proc "c" ( _context: ^ViewControllerTransitionCoordinatorContext ))) -> bool ---
 
@@ -1733,7 +1733,7 @@ ViewControllerTransitionCoordinatorContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerTransitionCoordinatorContext, objc_selector="viewControllerForKey:", objc_name="viewControllerForKey")
 	ViewControllerTransitionCoordinatorContext_viewControllerForKey :: proc(self: ^ViewControllerTransitionCoordinatorContext, key: ^NS.String) -> ^ViewController ---
 
@@ -1785,7 +1785,7 @@ ViewControllerTransitioningDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerTransitioningDelegate, objc_selector="animationControllerForPresentedController:presentingController:sourceController:", objc_name="animationControllerForPresentedController")
 	ViewControllerTransitioningDelegate_animationControllerForPresentedController :: proc(self: ^ViewControllerTransitioningDelegate, presented: ^ViewController, presenting: ^ViewController, source: ^ViewController) -> ^ViewControllerAnimatedTransitioning ---
 
@@ -1810,7 +1810,7 @@ ViewImplicitlyAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewImplicitlyAnimating, objc_selector="addAnimations:delayFactor:", objc_name="addAnimations_delayFactor")
 	ViewImplicitlyAnimating_addAnimations_delayFactor :: proc(self: ^ViewImplicitlyAnimating, animation: ^Objc_Block(proc "c" ()), delayFactor: CG.Float) ---
 
@@ -1835,7 +1835,7 @@ ViewImplicitlyAnimating_addAnimations :: proc {
 ViewLayoutRegion :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewLayoutRegion, objc_selector="safeAreaLayoutRegionWithCornerAdaptation:", objc_name="safeAreaLayoutRegionWithCornerAdaptation", objc_is_class_method=true)
 	ViewLayoutRegion_safeAreaLayoutRegionWithCornerAdaptation :: proc(adaptivityAxis: ViewLayoutRegionAdaptivityAxis) -> ^ViewLayoutRegion ---
 
@@ -1857,7 +1857,7 @@ foreign lib {
 ViewPrintFormatter :: struct { using _: PrintFormatter}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewPrintFormatter, objc_selector="view", objc_name="view")
 	ViewPrintFormatter_view :: proc(self: ^ViewPrintFormatter) -> ^View ---
 }
@@ -1871,7 +1871,7 @@ ViewPropertyAnimator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewPropertyAnimator, objc_selector="initWithDuration:timingParameters:", objc_name="initWithDuration_timingParameters")
 	ViewPropertyAnimator_initWithDuration_timingParameters :: proc(self: ^ViewPropertyAnimator, duration: NS.TimeInterval, parameters: ^TimingCurveProvider) -> instancetype ---
 

@@ -1,11 +1,11 @@
 package sdl3
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 LIL_ENDIAN :: 1234
 BIG_ENDIAN :: 4321
 
-BYTEORDER :: LIL_ENDIAN when ODIN_ENDIAN == .Little else BIG_ENDIAN
+BYTEORDER :: LIL_ENDIAN #if ODIN_ENDIAN == .Little else BIG_ENDIAN
 
 @(require_results) Swap16    :: #force_inline proc "c" (x: Uint16) -> Uint16 { return intrinsics.byte_swap(x) }
 @(require_results) Swap32    :: #force_inline proc "c" (x: Uint32) -> Uint32 { return intrinsics.byte_swap(x) }

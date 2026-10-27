@@ -2,9 +2,9 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _Path_Separator        :: '/'
 _Path_Separator_String :: "/"

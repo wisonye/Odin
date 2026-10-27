@@ -1,6 +1,6 @@
 package test_core_math_big
 
-import "core:math/big"
+#import "core:math/big"
 
 // GENERATED -=- GENERATED -=- GENERATED -=- GENERATED -=- GENERATED -=- GENERATED -=- GENERATED -=- GENERATED -=- GENERATED
 //

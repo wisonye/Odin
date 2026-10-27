@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSWritingToolsCoordinator", objc_superclass=NS.Object)
 WritingToolsCoordinator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WritingToolsCoordinator, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	WritingToolsCoordinator_initWithDelegate :: proc(self: ^WritingToolsCoordinator, delegate: ^WritingToolsCoordinatorDelegate) -> instancetype ---
 
@@ -80,7 +80,7 @@ WritingToolsCoordinatorDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WritingToolsCoordinatorDelegate, objc_selector="writingToolsCoordinator:requestsContextsForScope:completion:", objc_name="writingToolsCoordinator_requestsContextsForScope_completion")
 	WritingToolsCoordinatorDelegate_writingToolsCoordinator_requestsContextsForScope_completion :: proc(self: ^WritingToolsCoordinatorDelegate, writingToolsCoordinator: ^WritingToolsCoordinator, scope: WritingToolsCoordinatorContextScope, completion: ^Objc_Block(proc "c" ( _0: ^NS.Array ))) ---
 
@@ -126,7 +126,7 @@ foreign lib {
 WritingToolsCoordinatorAnimationParameters :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WritingToolsCoordinatorAnimationParameters, objc_selector="init", objc_name="init")
 	WritingToolsCoordinatorAnimationParameters_init :: proc(self: ^WritingToolsCoordinatorAnimationParameters) -> instancetype ---
 
@@ -154,7 +154,7 @@ foreign lib {
 WritingToolsCoordinatorContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WritingToolsCoordinatorContext, objc_selector="initWithAttributedString:range:", objc_name="initWithAttributedString")
 	WritingToolsCoordinatorContext_initWithAttributedString :: proc(self: ^WritingToolsCoordinatorContext, attributedString: ^NS.AttributedString, range: NS._NSRange) -> instancetype ---
 

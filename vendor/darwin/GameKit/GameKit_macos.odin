@@ -3,7 +3,7 @@
 #+private package
 package darwin_GameKit
 
-import NS "vendor:darwin/AppKit"
+#import NS "vendor:darwin/AppKit"
 
 UI_ViewController :: NS.ViewController
 UI_Image :: NS.Image

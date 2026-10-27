@@ -1,7 +1,7 @@
 package test_core_container
 
-import "core:testing"
-import "core:container/small_array"
+#import "core:testing"
+#import "core:container/small_array"
 
 @(test)
 test_small_array_removes :: proc(t: ^testing.T) {

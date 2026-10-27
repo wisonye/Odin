@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_AudioToolbox
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAAnchoringStrategy", objc_superclass=NS.Object)
 AnchoringStrategy :: struct {
@@ -12,7 +12,7 @@ AnchoringStrategy :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AnchoringStrategy, objc_selector="init", objc_name="init")
 	AnchoringStrategy_init :: proc(self: ^AnchoringStrategy) -> instancetype ---
 
@@ -25,7 +25,7 @@ foreign lib {
 AutomaticAnchoringStrategy :: struct { using _: AnchoringStrategy}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AutomaticAnchoringStrategy, objc_selector="init", objc_name="init")
 	AutomaticAnchoringStrategy_init :: proc(self: ^AutomaticAnchoringStrategy) -> instancetype ---
 
@@ -38,7 +38,7 @@ foreign lib {
 FrontAnchoringStrategy :: struct { using _: AnchoringStrategy}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FrontAnchoringStrategy, objc_selector="init", objc_name="init")
 	FrontAnchoringStrategy_init :: proc(self: ^FrontAnchoringStrategy) -> instancetype ---
 
@@ -51,7 +51,7 @@ foreign lib {
 SceneAnchoringStrategy :: struct { using _: AnchoringStrategy}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneAnchoringStrategy, objc_selector="initWithSceneIdentifier:", objc_name="initWithSceneIdentifier")
 	SceneAnchoringStrategy_initWithSceneIdentifier :: proc(self: ^SceneAnchoringStrategy, sceneIdentifier: ^NS.String) -> instancetype ---
 

@@ -1,7 +1,7 @@
 package netpbm
 
-import "core:bytes"
-import "core:image"
+#import "core:bytes"
+#import "core:image"
 
 destroy :: proc(img: ^image.Image) -> bool {
 	if img == nil {

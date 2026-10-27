@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:math"
-import "core:testing"
+#import "core:math"
+#import "core:testing"
 
 // %% operator (remainder/floored modulo)
 // remainder = x - y * floor(x / y)

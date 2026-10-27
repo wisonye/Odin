@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSSeguePerforming")
 SeguePerforming :: struct {
@@ -12,7 +12,7 @@ SeguePerforming :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SeguePerforming, objc_selector="prepareForSegue:sender:", objc_name="prepareForSegue")
 	SeguePerforming_prepareForSegue :: proc(self: ^SeguePerforming, segue: ^StoryboardSegue, sender: id) ---
 

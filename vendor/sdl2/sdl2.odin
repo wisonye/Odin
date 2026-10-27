@@ -23,15 +23,15 @@ package sdl2
 */
 
 
-import "core:c"
-import "base:intrinsics"
+#import "core:c"
+#import "base:intrinsics"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 version :: struct {
@@ -51,7 +51,7 @@ VERSION :: proc "contextless" (ver: ^version) {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetVersion  :: proc(ver: ^version) ---
 	GetRevision :: proc() -> cstring ---
 
@@ -83,7 +83,7 @@ INIT_NOPARACHUTE    :: InitFlags{.NOPARACHUTE}     /**< compatibility; this flag
 INIT_EVERYTHING :: InitFlags{.TIMER, .AUDIO, .VIDEO, .EVENTS, .JOYSTICK, .HAPTIC, .GAMECONTROLLER, .SENSOR}
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	Init          :: proc(flags: InitFlags) -> c.int     ---
 	InitSubSystem :: proc(flags: InitFlags) -> c.int     ---
 	QuitSubSystem :: proc(flags: InitFlags)              ---
@@ -99,7 +99,7 @@ SpinLock :: distinct c.int
 atomic_t :: struct { value: c.int }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Acquire)
 	AtomicTryLock                :: proc(lock: ^SpinLock) -> bool ---
 	@(synchronizes=.Acquire)
@@ -130,7 +130,7 @@ HasExactlyOneBitSet32 :: #force_inline proc "c" (x: u32) -> bool {
 // Clipboard
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetClipboardText :: proc(text: cstring) -> c.int ---
 	GetClipboardText :: proc() -> cstring ---
 	HasClipboardText :: proc() -> bool ---
@@ -144,7 +144,7 @@ foreign lib {
 // Error
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetError    :: proc(fmt: cstring, #c_vararg args: ..any) -> c.int ---
 	GetError    :: proc() -> cstring ---
 	GetErrorMsg :: proc(errstr: [^]u8, maxlen: c.int) -> cstring ---
@@ -181,7 +181,7 @@ errorcode :: enum c.int {
 
 /* SDL_Error() unconditionally returns -1. */
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	Error :: proc(code: errorcode) -> c.int ---
 }
 
@@ -189,7 +189,7 @@ foreign lib {
 // Filesystem
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetBasePath :: proc() -> cstring ---
 	GetPrefPath :: proc(org, app: cstring) -> cstring ---
 }
@@ -198,7 +198,7 @@ foreign lib {
 // loadso
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	LoadObject   :: proc(sofile: cstring) -> rawptr ---
 	LoadFunction :: proc(handle: rawptr, name: cstring) -> rawptr ---
 	UnloadObject :: proc(handle: rawptr) ---
@@ -215,21 +215,21 @@ Locale :: struct {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPreferredLocales :: proc() -> [^]Locale ---
 }
 
 // misc
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	OpenURL :: proc(url: cstring) -> c.int ---
 }
 
 // platform
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPlatform :: proc() -> cstring ---
 }
 
@@ -244,7 +244,7 @@ PowerState :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPowerInfo :: proc(secs: ^c.int, pct: ^c.int) -> PowerState ---
 }
 
@@ -277,7 +277,7 @@ STANDARD_GRAVITY :: 9.80665
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Acquire)
 	LockSensors                    :: proc() ---
 	@(synchronizes=.Release)
@@ -333,7 +333,7 @@ WindowShapeMode :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	CreateShapedWindow  :: proc(title: cstring, x, y, w, h: c.uint, flags: WindowFlags) -> ^Window ---
 	IsShapedWindow      :: proc(window: ^Window) -> bool ---
 	SetWindowShape      :: proc(window: ^Window, shape: ^Surface, shape_mode: ^WindowShapeMode) -> c.int ---

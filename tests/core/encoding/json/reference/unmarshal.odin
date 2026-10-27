@@ -1,12 +1,12 @@
 package encoding_json_reference
 
-import "core:mem"
-import "core:math"
-import "core:reflect"
-import "core:strconv"
-import "core:strings"
-import "base:runtime"
-import "base:intrinsics"
+#import "core:mem"
+#import "core:math"
+#import "core:reflect"
+#import "core:strconv"
+#import "core:strings"
+#import "base:runtime"
+#import "base:intrinsics"
 
 Unmarshal_Data_Error :: enum {
 	Invalid_Data,
@@ -60,9 +60,9 @@ Inputs:
 - unmarshaler: The `User_Unmarshaler` function for the custom type.
 
 Example:
-	import "core:fmt"
-	import "core:encoding/json"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:encoding/json"
+	#import "core:strconv"
 
 	// Custom Unmarshaler for `int`
 	some_unmarshaler :: proc(p: ^json.Parser, v: any) -> json.Unmarshal_Error {

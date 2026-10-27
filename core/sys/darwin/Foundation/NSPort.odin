@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import cffi "core:c"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="NSPort", objc_superclass=Object)
 Port :: struct {
@@ -12,7 +12,7 @@ Port :: struct {
 	using _: Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Port, objc_selector="port", objc_name="port", objc_is_class_method=true)
 	Port_port :: proc() -> ^Port ---
 
@@ -37,7 +37,7 @@ foreign lib {
 	@(objc_type=Port, objc_selector="sendBeforeDate:msgid:components:from:reserved:", objc_name="sendBeforeDate_msgid_components_from_reserved")
 	Port_sendBeforeDate_msgid_components_from_reserved :: proc(self: ^Port, limitDate: ^Date, msgID: UInteger, components: ^MutableArray, receivePort: ^Port, headerSpaceReserved: UInteger) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Port, objc_selector="addConnection:toRunLoop:forMode:", objc_name="addConnection")
 		Port_addConnection :: proc(self: ^Port, conn: ^Connection, runLoop: ^RunLoop, mode: ^String) ---
 
@@ -67,7 +67,7 @@ PortDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PortDelegate, objc_selector="handlePortMessage:", objc_name="handlePortMessage")
 	PortDelegate_handlePortMessage :: proc(self: ^PortDelegate, message: ^PortMessage) ---
 }
@@ -76,7 +76,7 @@ foreign lib {
 @(objc_class="NSMachPort", objc_superclass=Port)
 MachPort :: struct { using _: Port}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MachPort, objc_selector="portWithMachPort:", objc_name="portWithMachPort_", objc_is_class_method=true)
 	MachPort_portWithMachPort_ :: proc(machPort: cffi.uint32_t) -> ^Port ---
 
@@ -126,7 +126,7 @@ MachPortDelegate :: struct {
 	using _: PortDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MachPortDelegate, objc_selector="handleMachMessage:", objc_name="handleMachMessage")
 	MachPortDelegate_handleMachMessage :: proc(self: ^MachPortDelegate, msg: rawptr) ---
 }
@@ -136,16 +136,16 @@ foreign lib {
 MessagePort :: struct { using _: Port}
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="NSPortMessage", objc_superclass=Object)
 	PortMessage :: struct { using _: Object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="NSPortMessage")
 	PortMessage :: struct { using _: intrinsics.objc_object}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=PortMessage, objc_selector="initWithSendPort:receivePort:components:", objc_name="initWithSendPort")
 		PortMessage_initWithSendPort :: proc(self: ^PortMessage, sendPort: ^Port, replyPort: ^Port, components: ^Array) -> instancetype ---
 

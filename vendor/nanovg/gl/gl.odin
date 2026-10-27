@@ -2,13 +2,13 @@
 #+build windows, linux, darwin
 package nanovg_gl
 
-import "core:log"
-import "core:strings"
-import "core:mem"
-import "core:math"
-import "core:fmt"
-import gl "vendor:OpenGL"
-import nvg "../../nanovg"
+#import "core:log"
+#import "core:strings"
+#import "core:mem"
+#import "core:math"
+#import "core:fmt"
+#import gl "vendor:OpenGL"
+#import nvg "../../nanovg"
 
 Color :: nvg.Color
 Vertex :: nvg.Vertex
@@ -18,7 +18,7 @@ Paint :: nvg.Paint
 ScissorT :: nvg.ScissorT
 
 CreateFlag :: enum {
-	// Flag indicating if geometry based anti-aliasing is used (may not be needed when using MSAA).
+	// Flag indicating if geometry based anti-aliasing is used (may not be needed #if using MSAA).
 	ANTI_ALIAS,
 	// Flag indicating if strokes should be drawn using stencil buffer. The rendering will be a little
 	// slower, but path overlaps (i.e. self-intersecting or sharp turns) will be drawn just once.
@@ -93,7 +93,7 @@ Path :: struct {
 
 GL_UNIFORMARRAY_SIZE :: 11
 
-when GL2_IMPLEMENTATION {
+#if GL2_IMPLEMENTATION {
 	FragUniforms :: struct #raw_union {
 		using _: struct {
 			scissorMat: [12]f32, // matrices are actually 3 vec4s
@@ -136,28 +136,28 @@ GL3_IMPLEMENTATION   :: DEFAULT_IMPLEMENTATION_STRING  == "GL3"
 GLES2_IMPLEMENTATION :: DEFAULT_IMPLEMENTATION_STRING  == "GLES2"
 GLES3_IMPLEMENTATION :: DEFAULT_IMPLEMENTATION_STRING  == "GLES3"
 
-when GL2_IMPLEMENTATION {
+#if GL2_IMPLEMENTATION {
 	GL2 :: true
 	GL3 :: false
 	GLES2 :: false
 	GLES3 :: false
 	GL_IMPLEMENTATION :: true
 	GL_USE_UNIFORMBUFFER :: false
-} else when GL3_IMPLEMENTATION {
+} else #if GL3_IMPLEMENTATION {
 	GL2 :: false
 	GL3 :: true
 	GLES2 :: false
 	GLES3 :: false
 	GL_IMPLEMENTATION :: true
 	GL_USE_UNIFORMBUFFER :: true
-} else when GLES2_IMPLEMENTATION {
+} else #if GLES2_IMPLEMENTATION {
 	GL2 :: false
 	GL3 :: false
 	GLES2 :: true
 	GLES3 :: false
 	GL_IMPLEMENTATION :: true
 	GL_USE_UNIFORMBUFFER :: false
-} else when GLES3_IMPLEMENTATION {
+} else #if GLES3_IMPLEMENTATION {
 	GL2 :: false
 	GL3 :: false
 	GLES2 :: false
@@ -208,7 +208,7 @@ __nearestPow2 :: proc(num: uint) -> uint {
 }
 
 __bindTexture :: proc(ctx: ^Context, tex: u32) {
-	when USE_STATE_FILTER {
+	#if USE_STATE_FILTER {
 		if ctx.boundTexture != tex {
 			ctx.boundTexture = tex
 			gl.BindTexture(gl.TEXTURE_2D, tex)
@@ -219,7 +219,7 @@ __bindTexture :: proc(ctx: ^Context, tex: u32) {
 }
 
 __stencilMask :: proc(ctx: ^Context, mask: u32) {
-	when USE_STATE_FILTER {
+	#if USE_STATE_FILTER {
 		if ctx.stencilMask != mask {
 			ctx.stencilMask = mask
 			gl.StencilMask(mask)
@@ -230,7 +230,7 @@ __stencilMask :: proc(ctx: ^Context, mask: u32) {
 }
 
 __stencilFunc :: proc(ctx: ^Context, func: u32, ref: i32, mask: u32) {
-	when USE_STATE_FILTER {
+	#if USE_STATE_FILTER {
 		if ctx.stencilFunc != func ||
 			ctx.stencilFuncRef != ref ||
 			ctx.stencilFuncMask != mask {
@@ -245,7 +245,7 @@ __stencilFunc :: proc(ctx: ^Context, func: u32, ref: i32, mask: u32) {
 }
 
 __blendFuncSeparate :: proc(ctx: ^Context, blend: ^Blend) {
-	when USE_STATE_FILTER {
+	#if USE_STATE_FILTER {
 		if ctx.blendFunc != blend^ {
 			ctx.blendFunc = blend^
 			gl.BlendFuncSeparate(blend.src_RGB, blend.dst_RGB, blend.src_alpha, blend.dst_alpha)
@@ -318,7 +318,7 @@ __getUniforms :: proc(shader: ^Shader) {
 	shader.loc[.VIEW_SIZE] = gl.GetUniformLocation(shader.prog, "viewSize")
 	shader.loc[.TEX] = gl.GetUniformLocation(shader.prog, "tex")
 	
-	when GL_USE_UNIFORMBUFFER {
+	#if GL_USE_UNIFORMBUFFER {
 		shader.loc[.FRAG] = i32(gl.GetUniformBlockIndex(shader.prog, "frag"))
 	} else {
 		shader.loc[.FRAG] = gl.GetUniformLocation(shader.prog, "frag")
@@ -334,17 +334,17 @@ __renderCreate :: proc(uptr: rawptr) -> bool {
 	// just build the string at runtime
 	builder := strings.builder_make(0, 512, context.temp_allocator)
 
-	when GL2 {
+	#if GL2 {
 		strings.write_string(&builder, "#define NANOVG_GL2 1\n")
-	} else when GL3 {
+	} else #if GL3 {
 		strings.write_string(&builder, "#version 150 core\n#define NANOVG_GL3 1\n")
-	} else when GLES2 {
+	} else #if GLES2 {
 		strings.write_string(&builder, "#version 100\n#define NANOVG_GL2 1\n")
-	} else when GLES3 {
+	} else #if GLES3 {
 		strings.write_string(&builder, "#version 300 es\n#define NANOVG_GL3 1\n")
 	}
 
-	when GL_USE_UNIFORMBUFFER {
+	#if GL_USE_UNIFORMBUFFER {
 		strings.write_string(&builder, "#define USE_UNIFORMBUFFER 1\n")
 	} else {
 		strings.write_string(&builder, "#define UNIFORMARRAY_SIZE 11\n")
@@ -367,14 +367,14 @@ __renderCreate :: proc(uptr: rawptr) -> bool {
 	__checkError(ctx, "uniform locations")
 	__getUniforms(&ctx.shader)
 
-	when GL3 {
+	#if GL3 {
 		gl.GenVertexArrays(1, &ctx.vertArr)
 	} 
 
 	gl.GenBuffers(1, &ctx.vertBuf)
 	align := i32(4)
 
-	when GL_USE_UNIFORMBUFFER {
+	#if GL_USE_UNIFORMBUFFER {
 		// Create UBOs
 		gl.UniformBlockBinding(ctx.shader.prog, u32(ctx.shader.loc[.FRAG]), ctx.frag_binding)
 		gl.GenBuffers(1, &ctx.fragBuf)
@@ -407,7 +407,7 @@ __renderCreateTexture :: proc(
 		return 0
 	}
 
-	when GLES2 {
+	#if GLES2 {
 		if __nearestPow2(uint(w)) != uint(w) || __nearestPow2(uint(h)) != uint(h) {
 			// No repeat
 			if (.REPEAT_X in imageFlags) || (.REPEAT_Y in imageFlags) {
@@ -432,13 +432,13 @@ __renderCreateTexture :: proc(
 
 	gl.PixelStorei(gl.UNPACK_ALIGNMENT,1)
 	
-	when GLES2 {
+	#if GLES2 {
 		gl.PixelStorei(gl.UNPACK_ROW_LENGTH, i32(tex.width))
 		gl.PixelStorei(gl.UNPACK_SKIP_PIXELS, 0)
 		gl.PixelStorei(gl.UNPACK_SKIP_ROWS, 0)
 	}
 
-	when GL2 {
+	#if GL2 {
 		if .GENERATE_MIPMAPS in imageFlags {
 			gl.TexParameteri(gl.TEXTURE_2D, gl.GENERATE_MIPMAP, 1)
 		}
@@ -447,9 +447,9 @@ __renderCreateTexture :: proc(
 	if type == .RGBA {
 		gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, i32(w), i32(h), 0, gl.RGBA, gl.UNSIGNED_BYTE, raw_data(data))
 	} else {
-		when GLES2 || GL2 {
+		#if GLES2 || GL2 {
 			gl.TexImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE, i32(w), i32(h), 0, gl.LUMINANCE, gl.UNSIGNED_BYTE, raw_data(data))
-		} else when GLES3 {
+		} else #if GLES3 {
 			gl.TexImage2D(gl.TEXTURE_2D, 0, gl.R8, i32(w), i32(h), 0, gl.RED, gl.UNSIGNED_BYTE, raw_data(data))
 		} else {
 			gl.TexImage2D(gl.TEXTURE_2D, 0, gl.RED, i32(w), i32(h), 0, gl.RED, gl.UNSIGNED_BYTE, raw_data(data))
@@ -490,14 +490,14 @@ __renderCreateTexture :: proc(
 
 	gl.PixelStorei(gl.UNPACK_ALIGNMENT, 4)
 
-	when GLES2 {
+	#if GLES2 {
 		gl.PixelStorei(gl.UNPACK_ROW_LENGTH, 0)
 		gl.PixelStorei(gl.UNPACK_SKIP_PIXELS, 0)
 		gl.PixelStorei(gl.UNPACK_SKIP_ROWS, 0)
 	}
 
 	// The new way to build mipmaps on GLES and GL3
-	when !GL2 {
+	#if !GL2 {
 		if .GENERATE_MIPMAPS in imageFlags {
 			gl.GenerateMipmap(gl.TEXTURE_2D)
 		}
@@ -626,7 +626,7 @@ __renderUpdateTexture :: proc(
 	w := w
 	data := data
 
-	when GLES2 {
+	#if GLES2 {
 		gl.PixelStorei(gl.UNPACK_ROW_LENGTH, i32(tex.width))
 		gl.PixelStorei(gl.UNPACK_SKIP_PIXELS, i32(x))
 		gl.PixelStorei(gl.UNPACK_SKIP_ROWS, i32(y))
@@ -645,7 +645,7 @@ __renderUpdateTexture :: proc(
 	if tex.type == .RGBA {
 		gl.TexSubImage2D(gl.TEXTURE_2D, 0, i32(x), i32(y), i32(w), i32(h), gl.RGBA, gl.UNSIGNED_BYTE, raw_data(data))
 	} else {
-		when GLES2 || GL2 {
+		#if GLES2 || GL2 {
 			gl.TexSubImage2D(gl.TEXTURE_2D, 0, i32(x), i32(y), i32(w), i32(h), gl.LUMINANCE, gl.UNSIGNED_BYTE, raw_data(data))
 		} else {
 			gl.TexSubImage2D(gl.TEXTURE_2D, 0, i32(x), i32(y), i32(w), i32(h), gl.RED, gl.UNSIGNED_BYTE, raw_data(data))
@@ -654,7 +654,7 @@ __renderUpdateTexture :: proc(
 
 	gl.PixelStorei(gl.UNPACK_ALIGNMENT, 4)
 
-	when GLES2 {
+	#if GLES2 {
 		gl.PixelStorei(gl.UNPACK_ROW_LENGTH, 0)
 		gl.PixelStorei(gl.UNPACK_SKIP_PIXELS, 0)
 		gl.PixelStorei(gl.UNPACK_SKIP_ROWS, 0)
@@ -758,7 +758,7 @@ __convertPaint :: proc(
 
 		frag.type = .FILL_IMG
 
-		when GL_USE_UNIFORMBUFFER {
+		#if GL_USE_UNIFORMBUFFER {
 			if tex.type == .RGBA {
 				frag.texType = (.PREMULTIPLIED in tex.flags) ? 0 : 1
 			}	else {
@@ -784,7 +784,7 @@ __convertPaint :: proc(
 }
 
 __setUniforms :: proc(ctx: ^Context, uniformOffset: int, image: int) {
-	when GL_USE_UNIFORMBUFFER {
+	#if GL_USE_UNIFORMBUFFER {
 		gl.BindBufferRange(gl.UNIFORM_BUFFER, ctx.frag_binding, ctx.fragBuf, uniformOffset, size_of(FragUniforms))
 	} else {
 		frag := __fragUniformPtr(ctx, uniformOffset)
@@ -979,7 +979,7 @@ __renderFlush :: proc(uptr: rawptr) {
 		gl.ActiveTexture(gl.TEXTURE0)
 		gl.BindTexture(gl.TEXTURE_2D, 0)
 		
-		when USE_STATE_FILTER {
+		#if USE_STATE_FILTER {
 			ctx.boundTexture = 0
 			ctx.stencilMask = 0xffffffff
 			ctx.stencilFunc = gl.ALWAYS
@@ -991,14 +991,14 @@ __renderFlush :: proc(uptr: rawptr) {
 			ctx.blendFunc.dst_alpha = gl.INVALID_ENUM
 		}
 
-		when GL_USE_UNIFORMBUFFER {
+		#if GL_USE_UNIFORMBUFFER {
 			// Upload ubo for frag shaders
 			gl.BindBuffer(gl.UNIFORM_BUFFER, ctx.fragBuf)
 			gl.BufferData(gl.UNIFORM_BUFFER, len(ctx.uniforms), raw_data(ctx.uniforms), gl.STREAM_DRAW)
 		}
 
 		// Upload vertex data
-		when GL3 {
+		#if GL3 {
 			gl.BindVertexArray(ctx.vertArr)
 		}
 
@@ -1013,7 +1013,7 @@ __renderFlush :: proc(uptr: rawptr) {
 		gl.Uniform1i(ctx.shader.loc[.TEX], 0)
 		gl.Uniform2fv(ctx.shader.loc[.VIEW_SIZE], 1, &ctx.view[0])
 
-		when GL_USE_UNIFORMBUFFER {
+		#if GL_USE_UNIFORMBUFFER {
 			gl.BindBuffer(gl.UNIFORM_BUFFER, ctx.fragBuf)
 		}
 
@@ -1033,7 +1033,7 @@ __renderFlush :: proc(uptr: rawptr) {
 		gl.DisableVertexAttribArray(0)
 		gl.DisableVertexAttribArray(1)
 
-		when GL3 {
+		#if GL3 {
 			gl.BindVertexArray(0)
 		}
 
@@ -1287,8 +1287,8 @@ __renderDelete :: proc(uptr: rawptr) {
 	ctx := cast(^Context) uptr
 	__deleteShader(&ctx.shader)
 
-	when GL3 {
-		when GL_USE_UNIFORMBUFFER {
+	#if GL3 {
+		#if GL_USE_UNIFORMBUFFER {
 			if ctx.fragBuf != 0 {
 				gl.DeleteBuffers(1, &ctx.fragBuf)
 			}

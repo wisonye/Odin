@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLSubmesh", objc_superclass=NS.Object)
 Submesh :: struct {
@@ -10,7 +10,7 @@ Submesh :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Submesh, objc_selector="initWithName:indexBuffer:indexCount:indexType:geometryType:material:", objc_name="initWithName_indexBuffer_indexCount_indexType_geometryType_material")
 	Submesh_initWithName_indexBuffer_indexCount_indexType_geometryType_material :: proc(self: ^Submesh, name: ^NS.String, indexBuffer: ^MeshBuffer, indexCount: NS.UInteger, indexType: IndexBitDepth, geometryType: GeometryType, material: ^Material) -> instancetype ---
 
@@ -69,7 +69,7 @@ Submesh_initWithName :: proc {
 @(objc_class="MDLSubmeshTopology", objc_superclass=NS.Object)
 SubmeshTopology :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SubmeshTopology, objc_selector="initWithSubmesh:", objc_name="initWithSubmesh")
 	SubmeshTopology_initWithSubmesh :: proc(self: ^SubmeshTopology, submesh: ^Submesh) -> instancetype ---
 

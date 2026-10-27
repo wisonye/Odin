@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKQuadtree", objc_superclass=NS.Object)
 Quadtree :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Quadtree, objc_selector="quadtreeWithBoundingQuad:minimumCellSize:", objc_name="quadtreeWithBoundingQuad", objc_is_class_method=true)
 	Quadtree_quadtreeWithBoundingQuad :: proc(quad: Quad, minCellSize: cffi.float) -> instancetype ---
 
@@ -52,7 +52,7 @@ Quadtree_removeElement :: proc {
 @(objc_class="GKQuadtreeNode", objc_superclass=NS.Object)
 QuadtreeNode :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QuadtreeNode, objc_selector="quad", objc_name="quad")
 	QuadtreeNode_quad :: proc(self: ^QuadtreeNode) -> Quad ---
 }

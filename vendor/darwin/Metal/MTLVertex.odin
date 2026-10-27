@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLVertexDescriptor", objc_superclass=NS.Object)
 VertexDescriptor :: struct {
@@ -10,7 +10,7 @@ VertexDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexDescriptor, objc_selector="vertexDescriptor", objc_name="vertexDescriptor", objc_is_class_method=true)
 	VertexDescriptor_vertexDescriptor :: proc() -> ^VertexDescriptor ---
 
@@ -28,7 +28,7 @@ foreign lib {
 @(objc_class="MTLVertexAttribute", objc_superclass=NS.Object)
 VertexAttribute :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexAttribute, objc_selector="name", objc_name="name")
 	VertexAttribute_name :: proc(self: ^VertexAttribute) -> ^NS.String ---
 
@@ -55,7 +55,7 @@ VertexAttributeDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexAttributeDescriptor, objc_selector="format", objc_name="format")
 	VertexAttributeDescriptor_format :: proc(self: ^VertexAttributeDescriptor) -> VertexFormat ---
 
@@ -79,7 +79,7 @@ foreign lib {
 @(objc_class="MTLVertexAttributeDescriptorArray", objc_superclass=NS.Object)
 VertexAttributeDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexAttributeDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	VertexAttributeDescriptorArray_objectAtIndexedSubscript :: proc(self: ^VertexAttributeDescriptorArray, index: NS.UInteger) -> ^VertexAttributeDescriptor ---
 
@@ -94,7 +94,7 @@ VertexBufferLayoutDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexBufferLayoutDescriptor, objc_selector="stride", objc_name="stride")
 	VertexBufferLayoutDescriptor_stride :: proc(self: ^VertexBufferLayoutDescriptor) -> NS.UInteger ---
 
@@ -118,7 +118,7 @@ foreign lib {
 @(objc_class="MTLVertexBufferLayoutDescriptorArray", objc_superclass=NS.Object)
 VertexBufferLayoutDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VertexBufferLayoutDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	VertexBufferLayoutDescriptorArray_objectAtIndexedSubscript :: proc(self: ^VertexBufferLayoutDescriptorArray, index: NS.UInteger) -> ^VertexBufferLayoutDescriptor ---
 

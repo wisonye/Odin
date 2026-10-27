@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSBindingSelectionMarker", objc_superclass=NS.Object)
 BindingSelectionMarker :: struct {
@@ -11,7 +11,7 @@ BindingSelectionMarker :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BindingSelectionMarker, objc_selector="init", objc_name="init")
 	BindingSelectionMarker_init :: proc(self: ^BindingSelectionMarker) -> instancetype ---
 

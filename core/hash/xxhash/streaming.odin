@@ -10,8 +10,8 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
 /*
 	===   XXH3 128-bit streaming   ===
@@ -94,7 +94,7 @@ XXH3_128_canonical_from_hash :: proc(hash: XXH128_hash_t) -> (canonical: XXH128_
 	#assert(size_of(XXH128_canonical) == size_of(XXH128_hash_t))
 
 	t := hash
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		t.high = byte_swap(t.high)
 		t.low  = byte_swap(t.low)
 	}
@@ -171,7 +171,7 @@ XXH3_reset_internal :: proc(state: ^XXH3_state, seed: XXH64_hash, secret: []u8, 
 }
 
 /*
-	Note: when XXH3_consumeStripes() is invoked, there must be a guarantee that at least
+	Note: #if XXH3_consumeStripes() is invoked, there must be a guarantee that at least
 	one more byte must be consumed from input so that the function can blindly consume
 	all stripes using the "normal" secret segment.
 */

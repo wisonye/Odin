@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSPipe", objc_superclass=Object)
 Pipe :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Pipe, objc_selector="pipe", objc_name="pipe", objc_is_class_method=true)
 	Pipe_pipe :: proc() -> ^Pipe ---
 

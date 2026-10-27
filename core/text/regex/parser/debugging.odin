@@ -8,7 +8,7 @@ package regex_parser
 		Feoramund: Initial implementation.
 */
 
-import "core:io"
+#import "core:io"
 
 write_node :: proc(w: io.Writer, node: Node) {
 	switch specific in node {

@@ -2,7 +2,7 @@
 
 package rexcode_mips
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MIPS ENCODING FUNDAMENTALS

@@ -1,6 +1,6 @@
 #+build linux, darwin, freebsd, openbsd, netbsd
 package directx_dxc
-import "core:c"
+#import "core:c"
 
 FILETIME :: struct {
 	dwLowDateTime: DWORD,

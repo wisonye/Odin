@@ -2,7 +2,7 @@
 #+build darwin, freebsd, openbsd, netbsd
 package spall
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 MAX_RW :: 0x7fffffff
 
@@ -22,7 +22,7 @@ _write :: proc "contextless" (fd: uintptr, data: []byte) #no_bounds_check /* bou
 }
 
 // NOTE(tetra): "RAW" means: Not adjusted by NTP.
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	CLOCK :: posix.Clock(4) // CLOCK_MONOTONIC_RAW
 } else {
 	// It looks like the BSDs don't have a CLOCK_MONOTONIC_RAW equivalent.

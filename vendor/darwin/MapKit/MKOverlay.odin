@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MapKit
 
-import "base:intrinsics"
-import CL "vendor:darwin/CoreLocation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CL "vendor:darwin/CoreLocation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKOverlay")
 Overlay :: struct {
@@ -13,7 +13,7 @@ Overlay :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Overlay, objc_selector="intersectsMapRect:", objc_name="intersectsMapRect")
 	Overlay_intersectsMapRect :: proc(self: ^Overlay, mapRect: MapRect) -> bool ---
 
@@ -31,7 +31,7 @@ foreign lib {
 @(objc_class="MKOverlayPathRenderer", objc_superclass=OverlayRenderer)
 OverlayPathRenderer :: struct { using _: OverlayRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OverlayPathRenderer, objc_selector="createPath", objc_name="createPath")
 	OverlayPathRenderer_createPath :: proc(self: ^OverlayPathRenderer) ---
 
@@ -115,7 +115,7 @@ foreign lib {
 @(objc_class="MKOverlayRenderer", objc_superclass=NS.Object)
 OverlayRenderer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OverlayRenderer, objc_selector="initWithOverlay:", objc_name="initWithOverlay")
 	OverlayRenderer_initWithOverlay :: proc(self: ^OverlayRenderer, overlay: ^Overlay) -> instancetype ---
 
@@ -180,7 +180,7 @@ TileOverlay :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TileOverlay, objc_selector="initWithURLTemplate:", objc_name="initWithURLTemplate")
 	TileOverlay_initWithURLTemplate :: proc(self: ^TileOverlay, URLTemplate: ^NS.String) -> instancetype ---
 
@@ -228,7 +228,7 @@ foreign lib {
 @(objc_class="MKTileOverlayRenderer", objc_superclass=OverlayRenderer)
 TileOverlayRenderer :: struct { using _: OverlayRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TileOverlayRenderer, objc_selector="initWithTileOverlay:", objc_name="initWithTileOverlay")
 	TileOverlayRenderer_initWithTileOverlay :: proc(self: ^TileOverlayRenderer, overlay: ^TileOverlay) -> instancetype ---
 

@@ -12,8 +12,8 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 mem_copy  :: runtime.mem_copy
 byte_swap :: intrinsics.byte_swap
@@ -53,7 +53,7 @@ XXH_DISABLE_PREFETCH :: #config(XXH_DISABLE_PREFETCH, true)
 /*
 	llvm.prefetch fails code generation on Linux.
 */
-when !XXH_DISABLE_PREFETCH {
+#if !XXH_DISABLE_PREFETCH {
 	prefetch_address :: #force_inline proc(address: rawptr) {
 		intrinsics.prefetch_read_data(address, /*high*/3)
 	}
@@ -111,7 +111,7 @@ XXH64_read64_simd :: #force_inline proc(buf: []$E, $W: uint, alignment := Alignm
 		res = intrinsics.unaligned_load((^#simd[W]u64)(raw_data(buf)))
 	}
 
-	when ODIN_ENDIAN == .Big {
+	#if ODIN_ENDIAN == .Big {
 		bytes := transmute(#simd[W*8]u8)res
 		bytes = intrinsics.simd_lanes_reverse(bytes)
 		res = transmute(#simd[W]u64)bytes
@@ -122,7 +122,7 @@ XXH64_read64_simd :: #force_inline proc(buf: []$E, $W: uint, alignment := Alignm
 
 XXH64_write64_simd :: #force_inline proc(buf: []$E, value: $V/#simd[$W]u64, alignment := Alignment.Unaligned) {
 	value := value
-	when ODIN_ENDIAN == .Big {
+	#if ODIN_ENDIAN == .Big {
 		bytes := transmute(#simd[W*8]u8)value
 		bytes = intrinsics.simd_lanes_reverse(bytes)
 		value = transmute(#simd[W]u64)bytes

@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import MTL "vendor:darwin/Metal"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import MTL "vendor:darwin/Metal"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLFXTemporalDenoisedScaler")
 TemporalDenoisedScaler :: struct {
@@ -13,7 +13,7 @@ TemporalDenoisedScaler :: struct {
 	using _: TemporalDenoisedScalerBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalDenoisedScaler, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	TemporalDenoisedScaler_encodeToCommandBuffer :: proc(self: ^TemporalDenoisedScaler, commandBuffer: ^MTL.CommandBuffer) ---
 }
@@ -25,7 +25,7 @@ TemporalDenoisedScalerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalDenoisedScalerDescriptor, objc_selector="newTemporalDenoisedScalerWithDevice:", objc_name="newTemporalDenoisedScalerWithDevice_")
 	TemporalDenoisedScalerDescriptor_newTemporalDenoisedScalerWithDevice_ :: proc(self: ^TemporalDenoisedScalerDescriptor, device: ^MTL.Device) -> ^TemporalDenoisedScaler ---
 
@@ -192,7 +192,7 @@ TemporalDenoisedScalerBase :: struct {
 	using _: FrameInterpolatableScaler,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalDenoisedScalerBase, objc_selector="colorTextureUsage", objc_name="colorTextureUsage")
 	TemporalDenoisedScalerBase_colorTextureUsage :: proc(self: ^TemporalDenoisedScalerBase) -> MTL.TextureUsage ---
 
@@ -429,7 +429,7 @@ TemporalScaler :: struct {
 	using _: TemporalScalerBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalScaler, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	TemporalScaler_encodeToCommandBuffer :: proc(self: ^TemporalScaler, commandBuffer: ^MTL.CommandBuffer) ---
 }
@@ -441,7 +441,7 @@ TemporalScalerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalScalerDescriptor, objc_selector="newTemporalScalerWithDevice:", objc_name="newTemporalScalerWithDevice_")
 	TemporalScalerDescriptor_newTemporalScalerWithDevice_ :: proc(self: ^TemporalScalerDescriptor, device: ^MTL.Device) -> ^TemporalScaler ---
 
@@ -566,7 +566,7 @@ TemporalScalerBase :: struct {
 	using _: FrameInterpolatableScaler,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TemporalScalerBase, objc_selector="colorTextureUsage", objc_name="colorTextureUsage")
 	TemporalScalerBase_colorTextureUsage :: proc(self: ^TemporalScalerBase) -> MTL.TextureUsage ---
 

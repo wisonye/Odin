@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSSound", objc_superclass=NS.Object)
 Sound :: struct {
@@ -16,7 +16,7 @@ Sound :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Sound, objc_selector="soundNamed:", objc_name="soundNamed", objc_is_class_method=true)
 	Sound_soundNamed :: proc(name: ^NS.String) -> ^Sound ---
 
@@ -116,7 +116,7 @@ SoundDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SoundDelegate, objc_selector="sound:didFinishPlaying:", objc_name="sound")
 	SoundDelegate_sound :: proc(self: ^SoundDelegate, sound: ^Sound, flag: bool) ---
 }

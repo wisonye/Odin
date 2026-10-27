@@ -1,6 +1,6 @@
 package vendor_box2d
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // Use these to make your identifiers null. You may also use zero initialization to get null.
 nullWorldId   :: WorldId{}

@@ -13,8 +13,8 @@ package encoding_xml
 */
 
 
-import "core:io"
-import "core:fmt"
+#import "core:io"
+#import "core:fmt"
 
 /*
 	Just for debug purposes.

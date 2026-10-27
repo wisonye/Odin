@@ -2,7 +2,7 @@
 
 package rexcode_mos65816
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // W65C816S DECODER
@@ -14,7 +14,7 @@ import "core:rexcode/isa"
 //     `Assumed_State{m, x, e}` parameter telling it the current state of
 //     the M and X processor flags (E forces M=X=1 in emulation mode).
 //     For an opcode like $A9 (LDA #imm), the bucket holds two entries;
-//     the decoder picks IMM_M8 when m=1 and IMM_M16 when m=0.
+//     the decoder picks IMM_M8 #if m=1 and IMM_M16 #if m=0.
 //
 //   * Variable length 1..4 bytes; the matched entry's `length` drives it.
 
@@ -127,7 +127,7 @@ decode_one_inline :: #force_inline proc "contextless" (
 	return matched_idx, length
 }
 
-// Reject an entry when the first operand's type would conflict with the
+// Reject an entry #if the first operand's type would conflict with the
 // assumed M/X flag state.  Non-IMM_M*/IMM_X* entries always pass.
 @(private="file")
 mode_accepts :: #force_inline proc "contextless" (state: Assumed_State, ot: Operand_Type) -> bool {

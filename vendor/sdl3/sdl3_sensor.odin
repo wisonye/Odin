@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Sensor :: struct {}
 
@@ -20,7 +20,7 @@ SensorType :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetSensors                    :: proc(count: ^c.int) -> [^]SensorID ---
 	GetSensorNameForID            :: proc(instance_id: SensorID) -> cstring ---
 	GetSensorTypeForID            :: proc(instance_id: SensorID) -> SensorType ---

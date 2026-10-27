@@ -1,7 +1,7 @@
 package os
 
-import "base:runtime"
-@(require) import win32 "core:sys/windows"
+#import "base:runtime"
+@(require) #import win32 "core:sys/windows"
 
 _local_appdata :: proc(allocator: runtime.Allocator) -> (dir: string, err: Error) {
 	guid := win32.FOLDERID_LocalAppData

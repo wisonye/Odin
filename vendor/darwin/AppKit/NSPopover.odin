@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSPopover", objc_superclass=Responder)
 Popover :: struct {
@@ -14,7 +14,7 @@ Popover :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Popover, objc_selector="init", objc_name="init")
 	Popover_init :: proc(self: ^Popover) -> instancetype ---
 
@@ -99,7 +99,7 @@ PopoverDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverDelegate, objc_selector="popoverShouldClose:", objc_name="popoverShouldClose")
 	PopoverDelegate_popoverShouldClose :: proc(self: ^PopoverDelegate, popover: ^Popover) -> bool ---
 
@@ -130,7 +130,7 @@ foreign lib {
 PopoverTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverTouchBarItem, objc_selector="showPopover:", objc_name="showPopover")
 	PopoverTouchBarItem_showPopover :: proc(self: ^PopoverTouchBarItem, sender: id) ---
 

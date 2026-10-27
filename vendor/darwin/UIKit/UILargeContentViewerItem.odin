@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILargeContentViewerItem")
 LargeContentViewerItem :: struct {
@@ -12,7 +12,7 @@ LargeContentViewerItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LargeContentViewerItem, objc_selector="showsLargeContentViewer", objc_name="showsLargeContentViewer")
 	LargeContentViewerItem_showsLargeContentViewer :: proc(self: ^LargeContentViewerItem) -> bool ---
 

@@ -2,7 +2,7 @@
 package xlib
 
 // Since this is a unix-only library we make a few simplifying assumptions
-import "core:c"
+#import "core:c"
 #assert(size_of(int)  == size_of(c.long))
 #assert(size_of(uint) == size_of(c.ulong))
 #assert(size_of(i32)  == size_of(c.int))

@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSResponder", objc_superclass=NS.Object)
 Responder :: struct {
@@ -11,7 +11,7 @@ Responder :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Responder, objc_selector="init", objc_name="init")
 	Responder_init :: proc(self: ^Responder) -> instancetype ---
 

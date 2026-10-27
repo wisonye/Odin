@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLSharedTextureHandle", objc_superclass=NS.Object)
 SharedTextureHandle :: struct {
@@ -10,7 +10,7 @@ SharedTextureHandle :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SharedTextureHandle, objc_selector="device", objc_name="device")
 	SharedTextureHandle_device :: proc(self: ^SharedTextureHandle) -> ^Device ---
 

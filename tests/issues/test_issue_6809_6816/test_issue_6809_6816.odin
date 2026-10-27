@@ -3,11 +3,11 @@
 
 package test_issue_6809_6816
 
-import "core:testing"
+#import "core:testing"
 
-foreign import test_lib "../build/test_issue_6809_6816_c.o"
+#foreign #import test_lib "../build/test_issue_6809_6816_c.o"
 
-foreign test_lib {
+#foreign test_lib {
     test_i8   :: proc "c" (val: i8) -> bool ---
     test_u8   :: proc "c" (val: u8) -> bool ---
     test_bool :: proc "c" (val: bool) -> bool ---

@@ -1,10 +1,10 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(export, extra_linker_flags="/NODEFAULTLIB:msvcrt")
-	foreign import lib {
+	#foreign #import lib {
 		"lib/libcurl.lib",
 		"lib/zs.lib",
 		"lib/brotlidec.lib",
@@ -19,16 +19,16 @@ when ODIN_OS == .Windows {
 		"system:Ws2_32.lib",
 		"system:iphlpapi.lib",
 	}
-} else when ODIN_OS == .Darwin {
+} else #if ODIN_OS == .Darwin {
 	@(export)
-	foreign import lib {
+	#foreign #import lib {
 		"system:curl",
 		"system:z",
 		"system:SystemConfiguration.framework",
 	}
 } else {
 	@(export)
-	foreign import lib {
+	#foreign #import lib {
 		"system:curl",
 		"system:z",
 	}
@@ -71,7 +71,7 @@ VERSION_PATCH :: 0
 VERSION_NUM :: 0x081700
 
 /*
- * This is the date and time when the full source package was created. The
+ * This is the date and time #if the full source package was created. The
  * timestamp is not stored in git, as the timestamp is properly set in the
  * tarballs by the maketgz script.
  *
@@ -189,7 +189,7 @@ httppost :: struct {
 }
 
 /*
-	This is a return code for the progress callback that, when returned, will
+	This is a return code for the progress callback that, #if returned, will
 	signal libcurl to continue executing the default progress function
 */
 PROGRESSFUNC_CONTINUE :: 0x10000001
@@ -237,13 +237,13 @@ MAX_WRITE_SIZE :: 16384
 MAX_HTTP_HEADER :: 100*1024
 
 /*
-	This is a magic return code for the write callback that, when returned,
+	This is a magic return code for the write callback that, #if returned,
 	will signal libcurl to pause receiving on the current transfer.
 */
 WRITEFUNC_PAUSE :: 0x10000001
 
 /*
-	This is a magic return code for the write callback that, when returned,
+	This is a magic return code for the write callback that, #if returned,
 	will signal an error from the callback.
 */
 WRITEFUNC_ERROR :: 0xFFFFFFFF
@@ -253,7 +253,7 @@ write_callback :: #type proc "c" (buffer: [^]byte,
                                   nitems: c.size_t,
                                   outstream: rawptr) -> c.size_t
 
-/* This callback will be called when a new resolver request is made */
+/* This callback will be called #if a new resolver request is made */
 resolver_start_callback :: #type proc "c" (resolver_state: rawptr,
                                            reserved: rawptr, userdata: rawptr) -> c.int
 
@@ -293,7 +293,7 @@ FINFOFLAG_KNOWN_GID        :: finfoflags{.KNOWN_GID}
 FINFOFLAG_KNOWN_SIZE       :: finfoflags{.KNOWN_SIZE}
 FINFOFLAG_KNOWN_HLINKCOUNT :: finfoflags{.KNOWN_HLINKCOUNT}
 
-/* Information about a single file, used when doing FTP wildcard matching */
+/* Information about a single file, used #if doing FTP wildcard matching */
 fileinfo :: struct {
 	filename:  cstring,
 	filetype:  filetype,
@@ -377,20 +377,20 @@ seek_callback :: #type proc "c" (instream: rawptr,
                                  origin:   c.int) -> c.int /* 'whence' */
 
 /*
-	This is a return code for the read callback that, when returned, will
+	This is a return code for the read callback that, #if returned, will
 	signal libcurl to immediately abort the current transfer.
 */
 READFUNC_ABORT :: 0x10000000
 /*
-	This is a return code for the read callback that, when returned, will
+	This is a return code for the read callback that, #if returned, will
 	signal libcurl to pause sending data on the current transfer.
 */
 READFUNC_PAUSE :: 0x10000001
 
-/*  Return code for when the trailing headers' callback has terminated without any errors */
+/*  Return code for #if the trailing headers' callback has terminated without any errors */
 TRAILERFUNC_OK :: 0
 /*
-	Return code for when was an error in the trailing header's list and we
+	Return code for #if was an error in the trailing header's list and we
 	want to abort the request
 */
 TRAILERFUNC_ABORT :: 1
@@ -493,9 +493,9 @@ prereq_callback :: #type proc "c" (clientp: rawptr,
                                    conn_primary_port: c.int,
                                    conn_local_port:   c.int) -> c.int
 
-/*  Return code for when the pre-request callback has terminated without any errors */
+/*  Return code for #if the pre-request callback has terminated without any errors */
 PREREQFUNC_OK :: 0
-/* Return code for when the pre-request callback wants to abort the request */
+/* Return code for #if the pre-request callback wants to abort the request */
 PREREQFUNC_ABORT :: 1
 
 /*
@@ -517,7 +517,7 @@ code :: enum c.int {
 	E_COULDNT_CONNECT,         /* 7 */
 	E_WEIRD_SERVER_REPLY,      /* 8 */
 	E_REMOTE_ACCESS_DENIED,    /* 9 a service was denied by the server
-                                    due to lack of access - when login fails
+                                    due to lack of access - #if login fails
                                     this is not returned. */
 	E_FTP_ACCEPT_FAILED,       /* 10 - [was obsoleted in April 2006 for
                                     7.15.4, reused in Dec 2011 for 7.24.0]*/
@@ -549,7 +549,7 @@ code :: enum c.int {
 	E_OBSOLETE32,              /* 32 - NOT USED */
 	E_RANGE_ERROR,             /* 33 - RANGE "command" did not work */
 	E_OBSOLETE34,              /* 34 */
-	E_SSL_CONNECT_ERROR,       /* 35 - wrong when connecting with SSL */
+	E_SSL_CONNECT_ERROR,       /* 35 - wrong #if connecting with SSL */
 	E_BAD_DOWNLOAD_RESUME,     /* 36 - could not resume download */
 	E_FILE_COULDNT_READ_FILE,  /* 37 */
 	E_LDAP_CANNOT_BIND,        /* 38 */
@@ -566,7 +566,7 @@ code :: enum c.int {
 	E_SETOPT_OPTION_SYNTAX,    /* 49 - Malformed setopt option */
 	E_OBSOLETE50,              /* 50 - NOT USED */
 	E_OBSOLETE51,              /* 51 - NOT USED */
-	E_GOT_NOTHING,             /* 52 - when this is a specific error */
+	E_GOT_NOTHING,             /* 52 - #if this is a specific error */
 	E_SSL_ENGINE_NOTFOUND,     /* 53 - SSL crypto engine not found */
 	E_SSL_ENGINE_SETFAILED,    /* 54 - can not set SSL crypto engine as
                                     default */
@@ -600,7 +600,7 @@ code :: enum c.int {
 	E_REMOTE_FILE_NOT_FOUND,   /* 78 - remote file not found */
 	E_SSH,                     /* 79 - error from the SSH layer, somewhat
                                     generic so the error message will be of
-                                    interest when this has happened */
+                                    interest #if this has happened */
 
 	E_SSL_SHUTDOWN_FAILED,     /* 80 - Failed to shut down the SSL
                                     connection */
@@ -1029,7 +1029,7 @@ option :: enum c.int {
 	/* Name of proxy to use. */
 	PROXY = OPTTYPE_STRINGPOINT + 4,
 
-	/* "user:password;options" to use when fetching. */
+	/* "user:password;options" to use #if fetching. */
 	USERPWD = OPTTYPE_STRINGPOINT + 5,
 
 	/* "user:password" to use with proxy. */
@@ -1179,7 +1179,7 @@ option :: enum c.int {
 	/* HTTP POST method */
 	POST = OPTTYPE_LONG + 47,
 
-	/* bare names when listing directories */
+	/* bare names #if listing directories */
 	DIRLISTONLY = OPTTYPE_LONG + 48,
 
 	/* Append instead of overwrite on upload! */
@@ -1202,7 +1202,7 @@ option :: enum c.int {
 	XFERINFODATA = OPTTYPE_CBPOINT + 57,
 	PROGRESSDATA = XFERINFODATA,
 
-	/* We want the referrer field set automatically when following locations */
+	/* We want the referrer field set automatically #if following locations */
 	AUTOREFERER = OPTTYPE_LONG + 58,
 
 	/* Port of the proxy, can be set in the proxy string as well with:
@@ -1255,7 +1255,7 @@ option :: enum c.int {
 	FRESH_CONNECT = OPTTYPE_LONG + 74,
 
 	/* Set to explicitly forbid the upcoming transfer's connection to be reused
-	when done. Do not use this unless you are absolutely sure of this, as it
+	#if done. Do not use this unless you are absolutely sure of this, as it
 	makes the operation slower and is less friendly for the network. */
 	FORBID_REUSE = OPTTYPE_LONG + 75,
 
@@ -1332,7 +1332,7 @@ option :: enum c.int {
 	/* Instruct libcurl to use a smaller receive buffer */
 	BUFFERSIZE = OPTTYPE_LONG + 98,
 
-	/* Instruct libcurl to not use any signal/alarm handlers, even when using
+	/* Instruct libcurl to not use any signal/alarm handlers, even #if using
 	timeouts. This option is useful for multi-threaded applications.
 	See libcurl-the-guide for more background information. */
 	NOSIGNAL = OPTTYPE_LONG + 99,
@@ -1356,8 +1356,8 @@ option :: enum c.int {
 	/* Set aliases for HTTP 200 in the HTTP Response header */
 	HTTP200ALIASES = OPTTYPE_SLISTPOINT + 104,
 
-	/* Continue to send authentication (user+password) when following locations,
-	even when hostname changed. This can potentially send off the name
+	/* Continue to send authentication (user+password) #if following locations,
+	even #if hostname changed. This can potentially send off the name
 	and password to whatever host the server decides. */
 	UNRESTRICTED_AUTH = OPTTYPE_LONG + 105,
 
@@ -1453,7 +1453,7 @@ option :: enum c.int {
 
 	/* When FTP over SSL/TLS is selected (with CURLOPT_USE_SSL), this option
 	can be used to change libcurl's default action which is to first try
-	"AUTH SSL" and then "AUTH TLS" in this order, and proceed when a OK
+	"AUTH SSL" and then "AUTH TLS" in this order, and proceed #if a OK
 	response has been received.
 
 	Available parameters are:
@@ -1466,7 +1466,7 @@ option :: enum c.int {
 	/* 132 OBSOLETE. Gone in 7.16.0 */
 	/* 133 OBSOLETE. Gone in 7.16.0 */
 
-	/* null-terminated string for pass on to the FTP server when asked for
+	/* null-terminated string for pass on to the FTP server #if asked for
 	"account" info */
 	FTP_ACCOUNT = OPTTYPE_STRINGPOINT + 134,
 
@@ -1482,7 +1482,7 @@ option :: enum c.int {
 	control connection. */
 	FTP_SKIP_PASV_IP = OPTTYPE_LONG + 137,
 
-	/* Select "file method" to use when doing FTP, see the curl_ftpmethod
+	/* Select "file method" to use #if doing FTP, see the curl_ftpmethod
 	above. */
 	FTP_FILEMETHOD = OPTTYPE_VALUES + 138,
 
@@ -1529,16 +1529,16 @@ option :: enum c.int {
 	CONNECTTIMEOUT_MS = OPTTYPE_LONG + 156,
 
 	/* set to zero to disable the libcurl's decoding and thus pass the raw body
-	data to the application even when it is encoded/compressed */
+	data to the application even #if it is encoded/compressed */
 	HTTP_TRANSFER_DECODING = OPTTYPE_LONG + 157,
 	HTTP_CONTENT_DECODING = OPTTYPE_LONG + 158,
 
-	/* Permission used when creating new files and directories on the remote
+	/* Permission used #if creating new files and directories on the remote
 	server for protocols that support it, SFTP/SCP/FILE */
 	NEW_FILE_PERMS = OPTTYPE_LONG + 159,
 	NEW_DIRECTORY_PERMS = OPTTYPE_LONG + 160,
 
-	/* Set the behavior of POST when redirecting. Values must be set to one
+	/* Set the behavior of POST #if redirecting. Values must be set to one
 	of CURL_REDIR* defines below. This used to be called CURLOPT_POST301 */
 	POSTREDIR = OPTTYPE_VALUES + 161,
 
@@ -1555,7 +1555,7 @@ option :: enum c.int {
 	/* POST volatile input fields. */
 	COPYPOSTFIELDS = OPTTYPE_OBJECTPOINT + 165,
 
-	/* set transfer mode (;type=<a|i>) when doing FTP via an HTTP proxy */
+	/* set transfer mode (;type=<a|i>) #if doing FTP via an HTTP proxy */
 	PROXY_TRANSFER_MODE = OPTTYPE_LONG + 166,
 
 	/* Callback function for seeking in the input stream */
@@ -1575,11 +1575,11 @@ option :: enum c.int {
 	CURLINFO_CERTINFO after the transfer is complete. */
 	CERTINFO = OPTTYPE_LONG + 172,
 
-	/* "name" and "pwd" to use when fetching. */
+	/* "name" and "pwd" to use #if fetching. */
 	USERNAME = OPTTYPE_STRINGPOINT + 173,
 	PASSWORD = OPTTYPE_STRINGPOINT + 174,
 
-	/* "name" and "pwd" to use with Proxy when fetching. */
+	/* "name" and "pwd" to use with Proxy #if fetching. */
 	PROXYUSERNAME = OPTTYPE_STRINGPOINT + 175,
 	PROXYPASSWORD = OPTTYPE_STRINGPOINT + 176,
 
@@ -1777,7 +1777,7 @@ option :: enum c.int {
 	/* Wait/do not wait for pipe/mutex to clarify */
 	PIPEWAIT = OPTTYPE_LONG + 237,
 
-	/* Set the protocol used when curl is given a URL without a protocol */
+	/* Set the protocol used #if curl is given a URL without a protocol */
 	DEFAULT_PROTOCOL = OPTTYPE_STRINGPOINT + 238,
 
 	/* Set stream weight, 1 - 256 (default is 16) */
@@ -1901,7 +1901,7 @@ option :: enum c.int {
 	/* send HAProxy PROXY protocol header? */
 	HAPROXYPROTOCOL = OPTTYPE_LONG + 274,
 
-	/* shuffle addresses before use when DNS returns multiple */
+	/* shuffle addresses before use #if DNS returns multiple */
 	DNS_SHUFFLE_ADDRESSES = OPTTYPE_LONG + 275,
 
 	/* Specify which TLS 1.3 ciphers suites to use */
@@ -2211,7 +2211,7 @@ MIMEOPT_FORMESCAPE :: 1<<0 /* Use backslash-escaping for forms. */
 
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/* curl_strequal() and curl_strnequal() are subject for removal in a future release */
 	strequal  :: proc(s1, s2: cstring) -> c.int ---
 	strnequal :: proc(s1, s2: cstring, n: c.size_t) -> c.int ---
@@ -2343,7 +2343,7 @@ foreign lib {
 formget_callback :: #type proc "c" (arg: rawptr, buf: [^]byte, len: c.size_t) -> c.size_t
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * NAME curl_getenv()
 	 *
@@ -2504,7 +2504,7 @@ sslset :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	global_sslset :: proc(id: sslbackend, name: cstring, avail: ^^^ssl_backend) -> sslset ---
 
 	/*
@@ -2723,7 +2723,7 @@ SHoption :: enum c.int {
 
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	share_init :: proc() -> ^CURLSH ---
 	share_setopt  :: proc(share:  ^CURLSH, option: SHoption, #c_vararg args: ..any) -> SHcode ---
 	share_cleanup :: proc(share:  ^CURLSH) -> SHcode ---
@@ -2758,7 +2758,7 @@ version_info_data :: struct {
 	age:             version_enum, /* age of the returned struct */
 	version:         cstring, /* LIBCURL_VERSION */
 	version_num:     c.uint,  /* LIBCURL_VERSION_NUM */
-	host:            cstring, /* OS/host/cpu/machine when configured */
+	host:            cstring, /* OS/host/cpu/machine #if configured */
 	features:        c.int,   /* bitmask, see defines below */
 	ssl_version:     cstring, /* human readable string */
 	ssl_version_num: c.long,  /* not used anymore, always 0 */
@@ -2873,7 +2873,7 @@ ssls_export_cb :: #type proc "c" (handle: ^CURL,
                                   earlydata_max: c.size_t) -> code
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * NAME curl_version_info()
 	 *

@@ -22,11 +22,11 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "base:intrinsics"
-import "core:crypto"
-import bigint "core:crypto/_bigint"
-import subtle "core:crypto/_subtle"
-import "core:crypto/hash"
+#import "base:intrinsics"
+#import "core:crypto"
+#import bigint "core:crypto/_bigint"
+#import subtle "core:crypto/_subtle"
+#import "core:crypto/hash"
 
 // verify_pss returns true if and only if (⟺) sig is a valid PSS
 // signature by pub_key over msg, hashed using hash_algo, and MGF1

@@ -1,8 +1,8 @@
 package x509
 
-import "core:bytes"
-import "core:crypto/hash"
-import "core:encoding/asn1"
+#import "core:bytes"
+#import "core:crypto/hash"
+#import "core:encoding/asn1"
 
 /*
 Ref: RFC 5280, Section 4.1, wire format:
@@ -256,7 +256,7 @@ parse :: proc(der: []byte, allocator := context.allocator) -> (cert: Certificate
 // Internals.
 
 // _read_algorithm_identifier reads SEQUENCE { OID, params ANY OPTIONAL }, returning the OID content and the raw parameter element
-// (nil when absent).
+// (nil #if absent).
 @(private)
 _read_algorithm_identifier :: proc(
 	r: ^asn1.Cursor,
@@ -339,7 +339,7 @@ _hash_from_oid :: proc(oid: []byte) -> (hash.Algorithm, bool) {
 // NOT an error here, the hash is left .Invalid for verify_signature to reject.
 @(private)
 _parse_pss_params :: proc(cert: ^Certificate, params: []byte) -> Error {
-	// RFC 4055 defaults (applied when a field is absent).
+	// RFC 4055 defaults (applied #if a field is absent).
 	cert.pss_hash = .Insecure_SHA1
 	cert.pss_mgf_hash = .Insecure_SHA1
 	cert.pss_salt_len = 20
@@ -362,7 +362,7 @@ _parse_pss_params :: proc(cert: ^Certificate, params: []byte) -> Error {
 		if oe != .None || asn1.done(&inner) != .None {
 			return .Malformed
 		}
-		cert.pss_hash, _ = _hash_from_oid(oid) // .Invalid when unrecognized
+		cert.pss_hash, _ = _hash_from_oid(oid) // .Invalid #if unrecognized
 	}
 
 	// maskGenAlgorithm [1] EXPLICIT AlgorithmIdentifier { id-mgf1, hashAlgorithm }

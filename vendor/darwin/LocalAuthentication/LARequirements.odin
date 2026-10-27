@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="LAAuthenticationRequirement", objc_superclass=NS.Object)
 AuthenticationRequirement :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AuthenticationRequirement, objc_selector="biometryRequirementWithFallback:", objc_name="biometryRequirementWithFallback", objc_is_class_method=true)
 	AuthenticationRequirement_biometryRequirementWithFallback :: proc(fallback: ^BiometryFallbackRequirement) -> instancetype ---
 
@@ -26,7 +26,7 @@ foreign lib {
 @(objc_class="LABiometryFallbackRequirement", objc_superclass=NS.Object)
 BiometryFallbackRequirement :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BiometryFallbackRequirement, objc_selector="defaultRequirement", objc_name="defaultRequirement", objc_is_class_method=true)
 	BiometryFallbackRequirement_defaultRequirement :: proc() -> ^BiometryFallbackRequirement ---
 

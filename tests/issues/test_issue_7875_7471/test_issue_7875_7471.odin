@@ -1,9 +1,9 @@
 package test_issue_7875_7471
 
-import "core:testing"
+#import "core:testing"
 
 // Matrices and #simd vectors are comparable, so they are accepted as map keys, but the backend only
-// knew how to hash them through the byte-wise path, which is skipped when the element type is a float.
+// knew how to hash them through the byte-wise path, which is skipped #if the element type is a float.
 // Building a map keyed by `matrix[2, 2]f32` (#7875) or `#simd[4]f32` (#7471) panicked in the compiler
 // with "Unhandled type for hasher".
 

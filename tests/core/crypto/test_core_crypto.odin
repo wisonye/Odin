@@ -12,17 +12,17 @@ package test_core_crypto
 	Where possible, the official test vectors are used to validate the implementation.
 */
 
-import "core:encoding/hex"
-import "core:mem"
-import "core:testing"
-import "base:runtime"
-import "core:log"
+#import "core:encoding/hex"
+#import "core:mem"
+#import "core:testing"
+#import "base:runtime"
+#import "core:log"
 
-import "core:crypto"
-import chacha_simd128 "core:crypto/_chacha20/simd128"
-import chacha_simd256 "core:crypto/_chacha20/simd256"
-import "core:crypto/chacha20"
-import "core:crypto/sha2"
+#import "core:crypto"
+#import chacha_simd128 "core:crypto/_chacha20/simd128"
+#import chacha_simd256 "core:crypto/_chacha20/simd256"
+#import "core:crypto/chacha20"
+#import "core:crypto/sha2"
 
 @(private)
 _PLAINTEXT_SUNSCREEN_STR := "Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it."

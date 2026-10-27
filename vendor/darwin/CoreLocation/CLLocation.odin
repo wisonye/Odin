@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="CLLocation", objc_superclass=NS.Object)
 Location :: struct {
@@ -13,7 +13,7 @@ Location :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Location, objc_selector="initWithLatitude:longitude:", objc_name="initWithLatitude")
 	Location_initWithLatitude :: proc(self: ^Location, latitude: LocationDegrees, longitude: LocationDegrees) -> instancetype ---
 
@@ -86,7 +86,7 @@ Location_initWithCoordinate :: proc {
 @(objc_class="CLLocationManager", objc_superclass=NS.Object)
 LocationManager :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationManager, objc_selector="locationServicesEnabled", objc_name="locationServicesEnabledStatic", objc_is_class_method=true)
 	LocationManager_locationServicesEnabledStatic :: proc() -> bool ---
 
@@ -310,7 +310,7 @@ LocationManagerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationManagerDelegate, objc_selector="locationManager:didUpdateToLocation:fromLocation:", objc_name="locationManager_didUpdateToLocation_fromLocation")
 	LocationManagerDelegate_locationManager_didUpdateToLocation_fromLocation :: proc(self: ^LocationManagerDelegate, manager: ^LocationManager, newLocation: ^Location, oldLocation: ^Location) ---
 
@@ -379,7 +379,7 @@ LocationPushServiceExtension :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationPushServiceExtension, objc_selector="didReceiveLocationPushPayload:completion:", objc_name="didReceiveLocationPushPayload")
 	LocationPushServiceExtension_didReceiveLocationPushPayload :: proc(self: ^LocationPushServiceExtension, payload: ^NS.Dictionary, completion: ^Objc_Block(proc "c" ())) ---
 
@@ -395,7 +395,7 @@ LocationSourceInformation :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationSourceInformation, objc_selector="initWithSoftwareSimulationState:andExternalAccessoryState:", objc_name="initWithSoftwareSimulationState")
 	LocationSourceInformation_initWithSoftwareSimulationState :: proc(self: ^LocationSourceInformation, isSoftware: bool, isAccessory: bool) -> instancetype ---
 
@@ -410,7 +410,7 @@ foreign lib {
 @(objc_class="CLLocationUpdater", objc_superclass=NS.Object)
 LocationUpdater :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationUpdater, objc_selector="init", objc_name="init")
 	LocationUpdater_init :: proc(self: ^LocationUpdater) -> instancetype ---
 

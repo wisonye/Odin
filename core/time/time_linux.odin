@@ -1,6 +1,6 @@
 package time
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 _IS_SUPPORTED :: true
 

@@ -14,12 +14,12 @@ package compress_gzip
 	to be the input to a complementary TAR implementation.
 */
 
-import "core:compress/zlib"
-import "core:compress"
-import "core:os"
-import "core:io"
-import "core:bytes"
-import "core:hash"
+#import "core:compress/zlib"
+#import "core:compress"
+#import "core:os"
+#import "core:io"
+#import "core:bytes"
+#import "core:hash"
 
 Magic :: enum u16le {
 	GZIP = 0x8b << 8 | 0x1f,
@@ -310,7 +310,7 @@ load_from_context :: proc(z: ^$C, buf: ^bytes.Buffer, known_gzip_size := -1, exp
 			If we know the size of the GZIP file *and* it is fully in memory,
 			then we can peek at the unpacked size at the end.
 
-			We'll still want to ensure there's capacity left in the output buffer when we write, of course.
+			We'll still want to ensure there's capacity left in the output buffer #if we write, of course.
 
 		*/
 		if known_gzip_size > -1 {

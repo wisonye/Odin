@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import CF "core:sys/darwin/CoreFoundation"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSClassDescription", objc_superclass=Object)
 ClassDescription :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ClassDescription, objc_selector="registerClassDescription:forClass:", objc_name="registerClassDescription", objc_is_class_method=true)
 	ClassDescription_registerClassDescription :: proc(description: ^ClassDescription, aClass: Class) ---
 
@@ -36,7 +36,7 @@ foreign lib {
 ScriptClassDescription :: struct { using _: ClassDescription}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptClassDescription, objc_selector="classDescriptionForClass:", objc_name="classDescriptionForClass", objc_is_class_method=true)
 	ScriptClassDescription_classDescriptionForClass :: proc(aClass: Class) -> ^ScriptClassDescription ---
 

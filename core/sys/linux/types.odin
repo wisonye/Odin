@@ -105,7 +105,7 @@ FD_Flags :: bit_set[FD_Flags_Bits; i32]
 */
 Mode :: bit_set[Mode_Bits; u32]
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	// x86-64 has mode and nlink swapped for some reason
 	_Arch_Stat :: struct {
 		dev:       Dev,
@@ -124,7 +124,7 @@ when ODIN_ARCH == .amd64 {
 		ctime:     Time_Spec,
 		_:         [3]uint,
 	}
-} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .riscv64 {
+} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .riscv64 {
 	_Arch_Stat :: struct {
 		dev:        Dev,
 		ino:        Inode,
@@ -232,7 +232,7 @@ Statx :: struct {
 */
 FS_Flags :: bit_set[FS_Flags_Bits; u32]
 
-when size_of(int) == 8 {
+#if size_of(int) == 8 {
 	_Arch_Stat_FS :: struct {
 		// Note(flysand): The FS_Magic bits are never above
 		// 32-bits, so it should be fine for now...
@@ -463,7 +463,7 @@ Perf_Event_Attr :: struct #packed {
 }
 
 /*
-	The ring buffer structure when mmaping Perf_Event_Attr.
+	The ring buffer structure #if mmaping Perf_Event_Attr.
 */
 Perf_Event_Mmap_Page :: struct #packed {
 	version:        u32,
@@ -519,13 +519,13 @@ Pid_FD_Flags :: bit_set[Pid_FD_Flags_Bits; i32]
 Sig_Set :: [_SIGSET_NWORDS]uint
 
 @private SI_MAX_SIZE       :: 128
-@private SI_ARCH_PREAMBLE  :: 4 * size_of(i32) when size_of(rawptr) == 8 else 3 * size_of(i32)
+@private SI_ARCH_PREAMBLE  :: 4 * size_of(i32) #if size_of(rawptr) == 8 else 3 * size_of(i32)
 @private SI_PAD_SIZE       :: SI_MAX_SIZE - SI_ARCH_PREAMBLE
 
 Sig_Handler_Fn :: #type proc "c" (sig: Signal)
 Sig_Restore_Fn :: #type proc "c" () -> !
 
-when size_of(rawptr) == 8 {
+#if size_of(rawptr) == 8 {
 	Sig_Info :: struct #packed {
 		signo: Signal,
 		errno: Errno,
@@ -955,7 +955,7 @@ IPC_Perm :: struct {
 	_:    [2 + 2*size_of(int)]u8,
 }
 
-when size_of(int) == 8 || ODIN_ARCH == .i386 {
+#if size_of(int) == 8 || ODIN_ARCH == .i386 {
 	// 32-bit and 64-bit x86, 64-bit arm
 	_Arch_Shmid_DS :: struct {
 		perm:   IPC_Perm,
@@ -1013,7 +1013,7 @@ Sem_Buf :: struct {
 	flg: IPC_Flags,
 }
 
-when ODIN_ARCH == .i386 {
+#if ODIN_ARCH == .i386 {
 	_Arch_Semid_DS :: struct {
 		perm:       IPC_Perm,
 		otime:      uint,
@@ -1023,7 +1023,7 @@ when ODIN_ARCH == .i386 {
 		nsems:      uint,
 		_:          [2]uint,
 	}
-} else when ODIN_ARCH == .amd64 {
+} else #if ODIN_ARCH == .amd64 {
 	_Arch_Semid_DS :: struct {
 		perm:       IPC_Perm,
 		otime:      int,
@@ -1031,7 +1031,7 @@ when ODIN_ARCH == .i386 {
 		nsems:      uint,
 		_:          [2]uint,
 	}
-} else when ODIN_ARCH == .arm32 {
+} else #if ODIN_ARCH == .arm32 {
 	_Arch_Semid_DS :: struct {
 		perm:       IPC_Perm,
 		otime:      uint,
@@ -1041,7 +1041,7 @@ when ODIN_ARCH == .i386 {
 		nsems:      uint,
 		_:          [2]uint,
 	}
-} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .riscv64 {
+} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .riscv64 {
 	_Arch_Semid_DS :: struct {
 		perm:       IPC_Perm,
 		otime:      int,
@@ -1135,7 +1135,7 @@ ITimer_Spec :: struct {
 */
 ITimer_Flags :: bit_set[ITimer_Flags_Bits; u32]
 
-when ODIN_ARCH == .arm32 {
+#if ODIN_ARCH == .arm32 {
 	_Arch_User_Regs :: struct {
 		cpsr:             uint,
 		pc:               uint,
@@ -1160,7 +1160,7 @@ when ODIN_ARCH == .arm32 {
 	// definitions
 	_Arch_User_FP_Regs :: struct {}
 	_Arch_User_FPX_Regs :: struct {}
-} else when ODIN_ARCH == .arm64 {
+} else #if ODIN_ARCH == .arm64 {
 	_Arch_User_Regs :: struct {
 		regs:             [31]uint,
 		sp:               uint,
@@ -1174,7 +1174,7 @@ when ODIN_ARCH == .arm32 {
 		_:                [2]u32,
 	}
 	_Arch_User_FPX_Regs :: struct {}
-} else when ODIN_ARCH == .i386 {
+} else #if ODIN_ARCH == .i386 {
 	_Arch_User_Regs :: struct {
 		ebx:              uint,
 		ecx:              uint,
@@ -1221,7 +1221,7 @@ when ODIN_ARCH == .arm32 {
 		xmm_space:        [32]uint,
 		padding:          [56]uint,
 	}
-} else when ODIN_ARCH == .amd64 {
+} else #if ODIN_ARCH == .amd64 {
 	_Arch_User_Regs :: struct {
 		// Callee-preserved, may not be correct if the syscall doesn't need
 		// these registers
@@ -1287,7 +1287,7 @@ when ODIN_ARCH == .arm32 {
 		xmm_space:        [32]uint,
 		padding:          [56]uint,
 	}
-} else when ODIN_ARCH == .riscv64 {
+} else #if ODIN_ARCH == .riscv64 {
 	_Arch_User_Regs :: struct {
 		pc, ra, sp, gp, tp,
 		t0, t1, t2,
@@ -1455,7 +1455,7 @@ EPoll_Data :: struct #raw_union {
 		#define EPOLL_PACKED
 		#endif
 */
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	EPoll_Event :: struct #packed {
 		events: EPoll_Event_Set,
 		data:   EPoll_Data,
@@ -1561,7 +1561,7 @@ IO_Uring_Rsrc_Update2 :: struct($T: typeid) {
 	resv2: u32,
 }
 
-// The completion queue entry when the .CQE32 flag is not set on setup.
+// The completion queue entry #if the .CQE32 flag is not set on setup.
 IO_Uring_CQE :: struct {
 	// sq.data submission passed back.
 	user_data: u64,
@@ -1571,7 +1571,7 @@ IO_Uring_CQE :: struct {
 }
 #assert(size_of(IO_Uring_CQE) == 16)
 
-// The completion queue entry when the .CQE32 flag is set on setup.
+// The completion queue entry #if the .CQE32 flag is set on setup.
 IO_Uring_CQE32 :: struct {
 	using _: IO_Uring_CQE,
 	pad:     u64,
@@ -1582,7 +1582,7 @@ IO_Uring_CQE32 :: struct {
 IO_Uring_CQE_Flags :: bit_set[IO_Uring_CQE_Flags_Bits; u32]
 IO_Uring_SQE_Flags :: bit_set[IO_Uring_SQE_Flags_Bits; u8]
 
-// The submission queue entry when the .SQE128 flag is not set on setup.
+// The submission queue entry #if the .SQE128 flag is not set on setup.
 IO_Uring_SQE :: struct {
 	opcode:           IO_Uring_OP,
 	flags:            IO_Uring_SQE_Flags,
@@ -1669,7 +1669,7 @@ IO_Uring_SQE :: struct {
 }
 #assert(size_of(IO_Uring_SQE) == 64)
 
-// The submission queue entry when the .SQE128 flag is set on setup.
+// The submission queue entry #if the .SQE128 flag is set on setup.
 IO_Uring_SQE128 :: struct {
 	using _: IO_Uring_SQE,
 	cmd:     [64]byte,

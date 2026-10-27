@@ -2,9 +2,9 @@
 
 package rexcode_ppc_vle_tests
 
-import "core:fmt"
-import "core:os"
-import v "../"
+#import "core:fmt"
+#import "core:os"
+#import v "../"
 
 ok_count, fail_count: int
 

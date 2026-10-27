@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_ModelIO
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLNamed")
 Named :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Named, objc_selector="name", objc_name="name")
 	Named_name :: proc(self: ^Named) -> ^NS.String ---
 

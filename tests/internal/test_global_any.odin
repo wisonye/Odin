@@ -10,7 +10,7 @@ from_proc :: proc "contextless" () -> f32 {
 @(private="file")
 global_any: any = 1
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_global_any :: proc(t: ^testing.T) {

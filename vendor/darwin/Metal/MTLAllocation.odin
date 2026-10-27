@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLAllocation")
 Allocation :: struct {
@@ -11,7 +11,7 @@ Allocation :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Allocation, objc_selector="allocatedSize", objc_name="allocatedSize")
 	Allocation_allocatedSize :: proc(self: ^Allocation) -> NS.UInteger ---
 }

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // net/if.h - sockets local interfaces
 
-foreign lib {
+#foreign lib {
 	/*
 	Retrieve an array of name indexes. Where the last one has an index of 0 and name of nil.
 
@@ -45,7 +45,7 @@ foreign lib {
 	if_freenameindex :: proc(ptr: ^if_nameindex_t) ---
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	// NOTE: `_t` suffix added due to name conflict.
 

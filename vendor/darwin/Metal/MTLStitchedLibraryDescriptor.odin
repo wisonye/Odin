@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLStitchedLibraryDescriptor", objc_superclass=NS.Object)
 StitchedLibraryDescriptor :: struct {
@@ -10,7 +10,7 @@ StitchedLibraryDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StitchedLibraryDescriptor, objc_selector="functionGraphs", objc_name="functionGraphs")
 	StitchedLibraryDescriptor_functionGraphs :: proc(self: ^StitchedLibraryDescriptor) -> ^NS.Array ---
 

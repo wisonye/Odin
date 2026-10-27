@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	CreateToolhelp32Snapshot    :: proc(dwFlags: DWORD, th32ProcessID: DWORD) -> HANDLE ---
 	Process32FirstW             :: proc(hSnapshot: HANDLE, lppe: LPPROCESSENTRY32W) -> BOOL ---
 	Process32NextW              :: proc(hSnapshot: HANDLE, lppe: LPPROCESSENTRY32W) -> BOOL ---

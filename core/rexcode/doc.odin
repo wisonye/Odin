@@ -56,7 +56,7 @@ Regenerate after editing `ENCODING_TABLE`. See `docs/table_migration.md`.
 ## Usage
 
 ```odin
-import x86 "core:rexcode/isa/x86"
+#import x86 "core:rexcode/isa/x86"
 
 instructions := []x86.Instruction{
 	x86.inst_r_r(.MOV, x86.RAX, x86.RDI),
@@ -79,7 +79,7 @@ x86.print(decoded_insts[:], decoded_info[:], decoded_labels[:])
 disasm := x86.tprint(decoded_insts[:], decoded_info[:], decoded_labels[:])
 ```
 
-The same shape works for every other arch — change the import.
+The same shape works for every other arch — change the #import.
 
 ## Instruction Builders
 

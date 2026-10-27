@@ -1,10 +1,10 @@
 #+build windows
 package test_core_sys_windows
 
-import "base:intrinsics"
-import "base:runtime"
-import win32 "core:sys/windows"
-import "core:testing"
+#import "base:intrinsics"
+#import "base:runtime"
+#import win32 "core:sys/windows"
+#import "core:testing"
 
 L :: intrinsics.constant_utf16_cstring
 expectf :: testing.expectf

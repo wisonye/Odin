@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="NSSpeechRecognizer", objc_superclass=NS.Object)
 SpeechRecognizer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechRecognizer, objc_selector="init", objc_name="init")
 	SpeechRecognizer_init :: proc(self: ^SpeechRecognizer) -> instancetype ---
 
@@ -59,7 +59,7 @@ SpeechRecognizerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechRecognizerDelegate, objc_selector="speechRecognizer:didRecognizeCommand:", objc_name="speechRecognizer")
 	SpeechRecognizerDelegate_speechRecognizer :: proc(self: ^SpeechRecognizerDelegate, sender: ^SpeechRecognizer, command: ^NS.String) ---
 }
@@ -69,7 +69,7 @@ foreign lib {
 SpeechSynthesizer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesizer, objc_selector="initWithVoice:", objc_name="initWithVoice")
 	SpeechSynthesizer_initWithVoice :: proc(self: ^SpeechSynthesizer, voice: ^NS.String) -> instancetype ---
 
@@ -178,7 +178,7 @@ SpeechSynthesizerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesizerDelegate, objc_selector="speechSynthesizer:didFinishSpeaking:", objc_name="speechSynthesizer_didFinishSpeaking")
 	SpeechSynthesizerDelegate_speechSynthesizer_didFinishSpeaking :: proc(self: ^SpeechSynthesizerDelegate, sender: ^SpeechSynthesizer, finishedSpeaking: bool) ---
 

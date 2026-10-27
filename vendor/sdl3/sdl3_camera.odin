@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 CameraID :: distinct Uint32
 
@@ -28,7 +28,7 @@ CameraPermissionState :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumCameraDrivers       :: proc() -> c.int ---
 	GetCameraDriver           :: proc(index: c.int) -> cstring ---
 	GetCurrentCameraDriver    :: proc() -> cstring ---

@@ -1,7 +1,7 @@
 #+build windows
 package directx_dxc
-import win32 "core:sys/windows"
-import dxgi "vendor:directx/dxgi"
+#import win32 "core:sys/windows"
+#import dxgi "vendor:directx/dxgi"
 
 BOOL            :: dxgi.BOOL
 SIZE_T          :: dxgi.SIZE_T

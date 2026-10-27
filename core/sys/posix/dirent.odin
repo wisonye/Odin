@@ -1,17 +1,17 @@
 #+build darwin, linux, freebsd, openbsd, netbsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // dirent.h - format of directory entries
 
-foreign lib {
+#foreign lib {
 	/*
 	can be used as the comparison function for the scandir() function to sort the directory entries, d1 and d2, into alphabetical order.
 
@@ -78,7 +78,7 @@ foreign lib {
 	in the directory stream specified by the argument dirp, and position the directory stream at
 	the next entry.
 
-	Returns nil when the end is reached or an error occurred (which sets errno).
+	Returns nil #if the end is reached or an error occurred (which sets errno).
 
 	Example:
 		posix.set_errno(.NONE)
@@ -147,7 +147,7 @@ D_Type :: enum c.uint8_t {
 	WHT     = 14,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LALPHASORT :: "__alphasort30"
 	@(private) LSCANDIR   :: "__scandir30"
 	@(private) LOPENDIR   :: "__opendir30"
@@ -174,7 +174,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LOPENDIR   :: "opendir"   + INODE_SUFFIX
 	@(private) LREADDIR   :: "readdir"   + INODE_SUFFIX
 
-	foreign lib {
+	#foreign lib {
 		/*
 		Return a file descriptor referring to the same directory as the dirp argument.
 
@@ -184,7 +184,7 @@ when ODIN_OS == .NetBSD {
 	}
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	dirent :: struct {
 		d_ino:     ino_t,                    /* [PSX] file number of entry */
@@ -195,7 +195,7 @@ when ODIN_OS == .Darwin {
 		d_name:    [1024]c.char `fmt:"s,0"`, /* [PSX] entry name */
 	}
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
 
 	dirent :: struct {
 		d_ino:     ino_t,                   /* [PSX] file number of entry */
@@ -207,7 +207,7 @@ when ODIN_OS == .Darwin {
 		d_name:    [256]c.char `fmt:"s,0"`, /* [PSX] entry name */
 	}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	dirent :: struct {
 		d_ino:     ino_t,                   /* [PSX] file number of entry */
@@ -217,7 +217,7 @@ when ODIN_OS == .Darwin {
 		d_name:    [512]c.char `fmt:"s,0"`, /* [PSX] entry name */
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	dirent :: struct {
 		d_ino:    u64,                     /* [PSX] file number of entry */

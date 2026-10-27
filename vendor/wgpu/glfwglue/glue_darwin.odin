@@ -1,9 +1,9 @@
 #+build darwin:default
 package wgpu_glfw_glue
 
-import    "vendor:glfw"
-import    "vendor:wgpu"
-import CA "vendor:darwin/QuartzCore"
+#import    "vendor:glfw"
+#import    "vendor:wgpu"
+#import CA "vendor:darwin/QuartzCore"
 
 GetSurface :: proc(instance: wgpu.Instance, window: glfw.WindowHandle) -> wgpu.Surface {
 	ns_window := glfw.GetCocoaWindow(window)

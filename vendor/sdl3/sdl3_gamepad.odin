@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Gamepad :: struct {}
 
@@ -119,7 +119,7 @@ PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN :: PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOL
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	AddGamepadMapping                     :: proc(mapping: cstring) -> c.int ---
 	AddGamepadMappingsFromIO              :: proc(src: ^IOStream, closeio: bool) -> c.int ---
 	AddGamepadMappingsFromFile            :: proc(file: cstring) -> c.int ---

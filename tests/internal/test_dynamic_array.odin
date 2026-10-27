@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:testing"
-import "base:runtime"
+#import "core:testing"
+#import "base:runtime"
 
 @test
 dynamic_array_reserve :: proc(t: ^testing.T) {

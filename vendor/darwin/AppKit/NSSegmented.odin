@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="NSSegmentedCell", objc_superclass=ActionCell)
 SegmentedCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SegmentedCell, objc_selector="selectSegmentWithTag:", objc_name="selectSegmentWithTag")
 	SegmentedCell_selectSegmentWithTag :: proc(self: ^SegmentedCell, tag: NS.Integer) -> bool ---
 
@@ -113,7 +113,7 @@ SegmentedControl :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SegmentedControl, objc_selector="selectSegmentWithTag:", objc_name="selectSegmentWithTag")
 	SegmentedControl_selectSegmentWithTag :: proc(self: ^SegmentedControl, tag: NS.Integer) -> bool ---
 

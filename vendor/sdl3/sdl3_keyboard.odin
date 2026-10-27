@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 KeyboardID :: distinct Uint32
 
@@ -31,7 +31,7 @@ PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER :: "SDL.textinput.android.inputtype"
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	HasKeyboard                  :: proc() -> bool ---
 	GetKeyboards                 :: proc(count: ^c.int) -> [^]KeyboardID ---
 	GetKeyboardNameForID         :: proc(instance_id: KeyboardID) -> cstring ---

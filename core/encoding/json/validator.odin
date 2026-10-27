@@ -1,6 +1,6 @@
 package encoding_json
 
-import "core:mem"
+#import "core:mem"
 
 // NOTE(bill): is_valid will not check for duplicate keys
 @(require_results)

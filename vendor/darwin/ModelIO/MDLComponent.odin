@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_ModelIO
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLComponent")
 Component :: struct {
@@ -19,7 +19,7 @@ AnimationBindComponent :: struct {
 	using _: Component,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimationBindComponent, objc_selector="skeleton", objc_name="skeleton")
 	AnimationBindComponent_skeleton :: proc(self: ^AnimationBindComponent) -> ^Skeleton ---
 

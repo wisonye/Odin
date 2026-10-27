@@ -2,7 +2,7 @@
 // and #7506 https://github.com/odin-lang/Odin/issues/7506
 package test_issue_7477_7506
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_issue_7477_7506 :: proc(t: ^testing.T) {

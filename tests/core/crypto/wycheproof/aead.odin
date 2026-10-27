@@ -1,20 +1,20 @@
 package test_wycheproof
 
-import "core:encoding/hex"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:slice"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:slice"
+#import "core:testing"
 
-import chacha_simd128 "core:crypto/_chacha20/simd128"
-import chacha_simd256 "core:crypto/_chacha20/simd256"
-import "core:crypto/aegis"
-import "core:crypto/aes"
-import "core:crypto/chacha20"
-import "core:crypto/chacha20poly1305"
+#import chacha_simd128 "core:crypto/_chacha20/simd128"
+#import chacha_simd256 "core:crypto/_chacha20/simd256"
+#import "core:crypto/aegis"
+#import "core:crypto/aes"
+#import "core:crypto/chacha20"
+#import "core:crypto/chacha20poly1305"
 
-import "../common"
+#import "../common"
 
 supported_aegis_impls :: proc() -> [dynamic]aes.Implementation {
 	impls := make([dynamic]aes.Implementation, 0, 2, context.temp_allocator)

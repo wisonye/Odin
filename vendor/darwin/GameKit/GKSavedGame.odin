@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKSavedGame", objc_superclass=NS.Object)
 SavedGame :: struct {
@@ -11,7 +11,7 @@ SavedGame :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SavedGame, objc_selector="loadDataWithCompletionHandler:", objc_name="loadDataWithCompletionHandler")
 	SavedGame_loadDataWithCompletionHandler :: proc(self: ^SavedGame, handler: ^Objc_Block(proc "c" ( data: ^NS.Data, error: ^NS.Error ))) ---
 
@@ -32,7 +32,7 @@ SavedGameListener :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SavedGameListener, objc_selector="player:didModifySavedGame:", objc_name="player_didModifySavedGame")
 	SavedGameListener_player_didModifySavedGame :: proc(self: ^SavedGameListener, player: ^Player, savedGame: ^SavedGame) ---
 

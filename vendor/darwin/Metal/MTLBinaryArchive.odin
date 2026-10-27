@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLBinaryArchive")
 BinaryArchive :: struct {
@@ -11,7 +11,7 @@ BinaryArchive :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BinaryArchive, objc_selector="addComputePipelineFunctionsWithDescriptor:error:", objc_name="addComputePipelineFunctionsWithDescriptor_error")
 	BinaryArchive_addComputePipelineFunctionsWithDescriptor_error :: proc(self: ^BinaryArchive, descriptor: ^ComputePipelineDescriptor, error: ^^NS.Error) -> bool ---
 
@@ -95,7 +95,7 @@ BinaryArchiveDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BinaryArchiveDescriptor, objc_selector="url", objc_name="url")
 	BinaryArchiveDescriptor_url :: proc(self: ^BinaryArchiveDescriptor) -> ^NS.URL ---
 

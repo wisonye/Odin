@@ -2,11 +2,11 @@
 #+build darwin:default
 package darwin_FSEvents
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import darwin "core:sys/darwin"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import darwin "core:sys/darwin"
+#import posix "core:sys/posix"
 
 
 
@@ -18,7 +18,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreServices.framework",
 }
 
@@ -426,7 +426,7 @@ EventStreamEventFlagItemIsLastHardlink   :: 2097152
 EventStreamEventFlagItemCloned           :: 4194304
 EventStreamEventIdSinceNow               :: 18446744073709551615
 
-foreign lib {
+#foreign lib {
 	@(link_name="kFSOperationTotalBytesKey") OperationTotalBytesKey: CF.StringRef
 	@(link_name="kFSOperationBytesCompleteKey") OperationBytesCompleteKey: CF.StringRef
 	@(link_name="kFSOperationBytesRemainingKey") OperationBytesRemainingKey: CF.StringRef
@@ -440,7 +440,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="FSMakeFSRefUnicode")
 	MakeFSRefUnicode :: proc(parentRef: ^Ref, nameLength: CF.UniCharCount, name: ^CF.UniChar, textEncodingHint: TextEncoding, newRef: ^Ref) -> CF.OSErr ---
 

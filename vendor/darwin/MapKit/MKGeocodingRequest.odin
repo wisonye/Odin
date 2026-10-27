@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKGeocodingRequest", objc_superclass=NS.Object)
 GeocodingRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GeocodingRequest, objc_selector="init", objc_name="init")
 	GeocodingRequest_init :: proc(self: ^GeocodingRequest) -> instancetype ---
 

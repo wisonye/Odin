@@ -1,12 +1,12 @@
 // Reader and writer for Microsoft `BMP` images.
 package core_image_bmp
 
-import "core:image"
-import "core:bytes"
-import "core:compress"
-import "core:mem"
-import "base:intrinsics"
-import "base:runtime"
+#import "core:image"
+#import "core:bytes"
+#import "core:compress"
+#import "core:mem"
+#import "base:intrinsics"
+#import "base:runtime"
 
 Error   :: image.Error
 Image   :: image.Image

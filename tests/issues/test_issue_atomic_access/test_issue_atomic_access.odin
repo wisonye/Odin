@@ -1,9 +1,9 @@
 // -vet-atomic-access: plain reads and writes of what is accessed atomically, and what synchronizes them
 package test_issues
 
-import "base:intrinsics"
-import "core:sync"
-import "core:thread"
+#import "base:intrinsics"
+#import "core:sync"
+#import "core:thread"
 
 Shared :: struct {
 	m:     sync.Mutex,

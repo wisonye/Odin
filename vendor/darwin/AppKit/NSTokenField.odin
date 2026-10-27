@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSTokenField", objc_superclass=TextField)
 TokenField :: struct { using _: TextField}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TokenField, objc_selector="delegate", objc_name="delegate")
 	TokenField_delegate :: proc(self: ^TokenField) -> ^TokenFieldDelegate ---
 
@@ -49,7 +49,7 @@ TokenFieldDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TokenFieldDelegate, objc_selector="tokenField:completionsForSubstring:indexOfToken:indexOfSelectedItem:", objc_name="tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem")
 	TokenFieldDelegate_tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem :: proc(self: ^TokenFieldDelegate, tokenField: ^TokenField, substring: ^NS.String, tokenIndex: NS.Integer, selectedIndex: ^NS.Integer) -> ^NS.Array ---
 
@@ -86,7 +86,7 @@ foreign lib {
 TokenFieldCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TokenFieldCell, objc_selector="tokenStyle", objc_name="tokenStyle")
 	TokenFieldCell_tokenStyle :: proc(self: ^TokenFieldCell) -> TokenStyle ---
 
@@ -126,7 +126,7 @@ TokenFieldCellDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TokenFieldCellDelegate, objc_selector="tokenFieldCell:completionsForSubstring:indexOfToken:indexOfSelectedItem:", objc_name="tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem")
 	TokenFieldCellDelegate_tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem :: proc(self: ^TokenFieldCellDelegate, tokenFieldCell: ^TokenFieldCell, substring: ^NS.String, tokenIndex: NS.Integer, selectedIndex: ^NS.Integer) -> ^NS.Array ---
 

@@ -19,7 +19,7 @@ package vendor_box2d
 // @see b2World_CastRay
 CastResultCallbackFcn :: #type proc "c" (shapeId: ShapeId, point: Pos, normal: Vec2, fraction: f32, userContext: rawptr) -> f32
 
-// Prototype for a contact filter callback. This is called when a contact pair is considered for
+// Prototype for a contact filter callback. This is called #if a contact pair is considered for
 // collision. This allows you to perform custom logic to prevent collision between shapes. This is
 // only called if one of the two shapes has custom filtering enabled. Notes:
 // - this function must be thread-safe
@@ -51,7 +51,7 @@ OverlapResultCallbackFcn :: #type proc "c" (shapeId: ShapeId, userContext: rawpt
 // Used to collect collision planes for character movers. Return true to continue gathering planes.
 PlaneResultCallbackFcn :: #type proc "c" (shapeId: ShapeId, plane: ^PlaneResult, userContext: rawptr) -> bool
 
-// Prototype for a pre-continuous callback. This is called when a time of impact event is computed
+// Prototype for a pre-continuous callback. This is called #if a time of impact event is computed
 // in continuous collision. This function can be used to skip the event. Unlike the pre-solve
 // callback, this only supplies the point and normal. At this stage of the solver the manifold may
 // not exist or may be stale. Notes:
@@ -342,13 +342,13 @@ BodyDef :: struct {
 	angularVelocity: f32,
 
 	// Linear damping is used to reduce the linear velocity. The damping parameter can be larger
-	// than 1 but the damping effect becomes sensitive to the time step when the damping parameter
+	// than 1 but the damping effect becomes sensitive to the time step #if the damping parameter
 	// is large. Generally linear damping is undesirable because it makes objects move slowly as if
 	// they are floating.
 	linearDamping: f32,
 
 	// Angular damping is used to reduce the angular velocity. The damping parameter can be larger
-	// than 1.0f but the damping effect becomes sensitive to the time step when the damping
+	// than 1.0f but the damping effect becomes sensitive to the time step #if the damping
 	// parameter is large. Angular damping can be used to slow down rotating bodies.
 	angularDamping: f32,
 
@@ -424,7 +424,7 @@ BodyEvents :: struct {
 	moveCount: i32,
 }
 
-// Body move events triggered when a body moves. Triggered when a body moves due to simulation. Not
+// Body move events triggered #if a body moves. Triggered #if a body moves due to simulation. Not
 // reported for bodies moved by the user. This also has a flag to indicate that the body went to
 // sleep so the application can also sleep that actor/entity/object associated with the body. On
 // the other hand if the flag does not indicate the body went to sleep then the application can
@@ -523,7 +523,7 @@ ChainDef :: struct {
 	internalValue: i32,
 }
 
-// A begin touch event is generated when two shapes begin touching.
+// A begin touch event is generated #if two shapes begin touching.
 ContactBeginTouchEvent :: struct {
 	// Id of the first shape
 	shapeIdA: ShapeId,
@@ -531,7 +531,7 @@ ContactBeginTouchEvent :: struct {
 	// Id of the second shape
 	shapeIdB: ShapeId,
 
-	// The transient contact id. This contact may be destroyed automatically when the world is
+	// The transient contact id. This contact may be destroyed automatically #if the world is
 	// modified or simulated. Use b2Contact_IsValid before using this id.
 	contactId: ContactId,
 }
@@ -554,7 +554,7 @@ ContactData :: struct {
 	manifold: Manifold,
 }
 
-// An end touch event is generated when two shapes stop touching. You will get an end event if you
+// An end touch event is generated #if two shapes stop touching. You will get an end event if you
 // do anything that destroys contacts previous to the last world step. These include things like
 // setting the transform, destroying a body or shape, or changing a filter or body type.
 ContactEndTouchEvent :: struct {
@@ -596,7 +596,7 @@ ContactEvents :: struct {
 	hitCount: i32,
 }
 
-// A hit event is generated when two shapes collide with a speed faster than the hit event
+// A hit event is generated #if two shapes collide with a speed faster than the hit event
 // threshold. This may be reported for speculative contacts that have a confirmed impulse.
 ContactHitEvent :: struct {
 	// Id of the first shape
@@ -612,7 +612,7 @@ ContactHitEvent :: struct {
 
 	// Point where the shapes hit. This is a mid-point between the two surfaces. It could be a
 	// speculative point where the shapes were not touching at the beginning of the time step. The
-	// point is reconstructed after the step, so when both bodies are moving it may trail the
+	// point is reconstructed after the step, so #if both bodies are moving it may trail the
 	// impact by up to one step of motion.
 	point: Pos,
 
@@ -682,7 +682,7 @@ DebugDraw :: struct {
 	// World bounds used for debug draw. An empty box draws nothing.
 	drawingBounds: AABB,
 
-	// Scale to use when drawing forces
+	// Scale to use #if drawing forces
 	forceScale: f32,
 
 	// Global scaling for joint drawing
@@ -785,7 +785,7 @@ DistanceJointDef :: struct {
 }
 
 // The explosion definition is used to configure options for explosions. Explosions consider shape
-// geometry when computing the impulse.
+// geometry #if computing the impulse.
 ExplosionDef :: struct {
 	// Mask bits to filter shapes
 	maskBits: u64,
@@ -1011,7 +1011,7 @@ PogoJointDef :: struct {
 }
 
 // Prismatic joint definition Body B may slide along the x-axis in local frame A. Body B cannot
-// rotate relative to body A. The joint translation is zero when the local frame origins coincide
+// rotate relative to body A. The joint translation is zero #if the local frame origins coincide
 // in world space.
 PrismaticJointDef :: struct {
 	// Base joint definition
@@ -1116,7 +1116,7 @@ RayResult :: struct {
 	hit: bool,
 }
 
-// Static metadata describing a recording, resolved once when the player opens the file.
+// Static metadata describing a recording, resolved once #if the player opens the file.
 ReplayInfo :: struct {
 	// total recorded steps
 	frameCount: i32,
@@ -1130,7 +1130,7 @@ ReplayInfo :: struct {
 	// recorded sub-steps
 	subStepCount: i32,
 
-	// length units per meter in effect when recorded
+	// length units per meter in effect #if recorded
 	lengthScale: f32,
 
 	// accumulated world bounds over the recording, zero-extent if unavailable
@@ -1213,7 +1213,7 @@ RevoluteJointDef :: struct {
 	internalValue: i32,
 }
 
-// A begin touch event is generated when a shape starts to overlap a sensor shape.
+// A begin touch event is generated #if a shape starts to overlap a sensor shape.
 SensorBeginTouchEvent :: struct {
 	// The id of the sensor shape
 	sensorShapeId: ShapeId,
@@ -1222,7 +1222,7 @@ SensorBeginTouchEvent :: struct {
 	visitorShapeId: ShapeId,
 }
 
-// An end touch event is generated when a shape stops overlapping a sensor shape. Normally this
+// An end touch event is generated #if a shape stops overlapping a sensor shape. Normally this
 // event is generated from simulation movement. However, this event can also be generated from API
 // interactions: setting the body transform, destroying a body or shape, or changing a filter. You
 // will also get an end event if the sensor is destroyed. Therefore you should always confirm the
@@ -1302,11 +1302,11 @@ ShapeDef :: struct {
 	enablePreSolveEvents: bool,
 
 	// When shapes are created they will scan the environment for collision the next time step.
-	// This can significantly slow down static body creation when there are many static shapes.
+	// This can significantly slow down static body creation #if there are many static shapes.
 	// This flag is ignored for dynamic and kinematic shapes which always invoke contact creation.
 	invokeContactCreation: bool,
 
-	// Should the body update the mass properties when this shape is created. Default is true.
+	// Should the body update the mass properties #if this shape is created. Default is true.
 	// Warning: if this is false, you MUST call b2Body_UpdateMassFromShapes or b2Body_SetMassData
 	// before simulating the world.
 	updateBodyMass: bool,
@@ -1363,7 +1363,7 @@ WeldJointDef :: struct {
 }
 
 // Wheel joint definition Body B is a wheel that may rotate freely and slide along the local x-axis
-// in frame A. The joint translation is zero when the local frame origins coincide in world space.
+// in frame A. The joint translation is zero #if the local frame origins coincide in world space.
 WheelJointDef :: struct {
 	// Base joint definition
 	using base: JointDef,
@@ -1448,7 +1448,7 @@ WorldDef :: struct {
 	// Enable continuous collision
 	enableContinuous: bool,
 
-	// Number of workers for multithreading. Box2D performs best when using performance cores and
+	// Number of workers for multithreading. Box2D performs best #if using performance cores and
 	// accessing a single L3 cache (uniform memory). Efficiency cores and SMT provide little
 	// benefit and may even harm performance. This is clamped to the range [1, B2_MAX_WORKERS]. If
 	// task callbacks are provided then Box2D will use the user provided task system. If no task

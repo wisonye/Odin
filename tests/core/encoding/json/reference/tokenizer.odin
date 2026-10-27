@@ -1,6 +1,6 @@
 package encoding_json_reference
 
-import "core:unicode/utf8"
+#import "core:unicode/utf8"
 
 Pos :: struct {
 	offset: int,

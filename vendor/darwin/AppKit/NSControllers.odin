@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSArrayController", objc_superclass=ObjectController)
 ArrayController :: struct { using _: ObjectController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ArrayController, objc_selector="rearrangeObjects", objc_name="rearrangeObjects")
 	ArrayController_rearrangeObjects :: proc(self: ^ArrayController) ---
 
@@ -162,7 +162,7 @@ Controller :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Controller, objc_selector="init", objc_name="init")
 	Controller_init :: proc(self: ^Controller) -> instancetype ---
 
@@ -193,7 +193,7 @@ foreign lib {
 MediaLibraryBrowserController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MediaLibraryBrowserController, objc_selector="togglePanel:", objc_name="togglePanel")
 	MediaLibraryBrowserController_togglePanel :: proc(self: ^MediaLibraryBrowserController, sender: id) ---
 
@@ -224,7 +224,7 @@ foreign lib {
 ObjectController :: struct { using _: Controller}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ObjectController, objc_selector="initWithContent:", objc_name="initWithContent")
 	ObjectController_initWithContent :: proc(self: ^ObjectController, content: id) -> instancetype ---
 
@@ -340,7 +340,7 @@ TitlebarAccessoryViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TitlebarAccessoryViewController, objc_selector="viewWillAppear", objc_name="viewWillAppear")
 	TitlebarAccessoryViewController_viewWillAppear :: proc(self: ^TitlebarAccessoryViewController) ---
 

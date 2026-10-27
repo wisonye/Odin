@@ -2,11 +2,11 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 
 
@@ -18,7 +18,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:UIKit.framework",
 }
 
@@ -70,7 +70,7 @@ TextWritingDirectionRightToLeft         :: 1
 StackViewSpacingUseDefault              :: 340282346638528859811704183484516925440.000000
 StackViewSpacingUseSystem               :: 0.000000
 
-foreign lib {
+#foreign lib {
 	@(link_name="UIAccessibilityTraitNone") AccessibilityTraitNone: AccessibilityTraits
 	@(link_name="UIAccessibilityTraitButton") AccessibilityTraitButton: AccessibilityTraits
 	@(link_name="UIAccessibilityTraitLink") AccessibilityTraitLink: AccessibilityTraits
@@ -731,7 +731,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	NSStringFromCGPoint :: proc(point: CG.Point) -> ^NS.String ---
 
 	NSStringFromCGVector :: proc(vector: CG.Vector) -> ^NS.String ---

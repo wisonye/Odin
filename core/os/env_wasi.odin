@@ -1,11 +1,11 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:strings"
-import "core:sync"
-import "core:sys/wasm/wasi"
+#import "core:strings"
+#import "core:sync"
+#import "core:sys/wasm/wasi"
 
 g_env: map[string]string
 g_env_buf: []byte

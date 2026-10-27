@@ -1,10 +1,10 @@
 package test_core_mem
 
-import "core:mem"
-import "core:mem/tlsf"
-import "core:mem/virtual"
-import "core:testing"
-import "core:slice"
+#import "core:mem"
+#import "core:mem/tlsf"
+#import "core:mem/virtual"
+#import "core:testing"
+#import "core:slice"
 
 @test
 test_tlsf_bitscan :: proc(t: ^testing.T) {

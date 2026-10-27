@@ -1,8 +1,8 @@
 package test_core_asn1
 
-import "core:encoding/asn1"
-import "core:testing"
-import "core:time"
+#import "core:encoding/asn1"
+#import "core:testing"
+#import "core:time"
 
 // ============================================================
 // Tag and length forms

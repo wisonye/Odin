@@ -2,16 +2,16 @@
 #+no-instrumentation
 package runtime
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 @(private)
-foreign kernel32 {
+#foreign kernel32 {
 	RaiseException :: proc "system" (dwExceptionCode, dwExceptionFlags, nNumberOfArguments: u32, lpArguments: ^uint) -> ! ---
 }
 
 windows_trap_array_bounds :: proc "contextless" () -> ! {
 	EXCEPTION_ARRAY_BOUNDS_EXCEEDED :: 0xC000008C
-	when ODIN_CODEPAGE_MAGIC {
+	#if ODIN_CODEPAGE_MAGIC {
 		SetConsoleOutputCP(old_console_codepage)
 	}
 	RaiseException(EXCEPTION_ARRAY_BOUNDS_EXCEEDED, 0, 0, nil)
@@ -21,8 +21,8 @@ windows_trap_type_assertion :: proc "contextless" () -> ! {
 	windows_trap_array_bounds()
 }
 
-when ODIN_NO_CRT {
+#if ODIN_NO_CRT {
 	// __chkstk uses a special calling convention with implicit register inputs.
 	@(require)
-	foreign import crt_lib "procs_windows_amd64.asm"
+	#foreign #import crt_lib "procs_windows_amd64.asm"
 }

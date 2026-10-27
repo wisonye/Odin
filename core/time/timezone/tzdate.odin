@@ -1,10 +1,10 @@
 // Timezone lookup.
 package timezone
 
-import "core:fmt"
-import "core:slice"
-import "core:time"
-import "core:time/datetime"
+#import "core:fmt"
+#import "core:slice"
+#import "core:time"
+#import "core:time/datetime"
 
 region_load :: proc(reg: string, allocator := context.allocator) ->  (out_reg: ^datetime.TZ_Region, ok: bool) {
 	return _region_load(reg, allocator)

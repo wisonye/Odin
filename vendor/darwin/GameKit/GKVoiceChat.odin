@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKVoiceChat", objc_superclass=NS.Object)
 VoiceChat :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VoiceChat, objc_selector="start", objc_name="start")
 	VoiceChat_start :: proc(self: ^VoiceChat) ---
 
@@ -66,7 +66,7 @@ VoiceChatClient :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VoiceChatClient, objc_selector="voiceChatService:sendData:toParticipantID:", objc_name="voiceChatService_sendData_toParticipantID")
 	VoiceChatClient_voiceChatService_sendData_toParticipantID :: proc(self: ^VoiceChatClient, voiceChatService: ^VoiceChatService, data: ^NS.Data, participantID: ^NS.String) ---
 
@@ -93,7 +93,7 @@ foreign lib {
 @(objc_class="GKVoiceChatService", objc_superclass=NS.Object)
 VoiceChatService :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VoiceChatService, objc_selector="defaultVoiceChatService", objc_name="defaultVoiceChatService", objc_is_class_method=true)
 	VoiceChatService_defaultVoiceChatService :: proc() -> ^VoiceChatService ---
 

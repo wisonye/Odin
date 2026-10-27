@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MapKit
 
-import "base:intrinsics"
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="MKAnnotation")
 Annotation :: struct {
@@ -13,7 +13,7 @@ Annotation :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Annotation, objc_selector="setCoordinate:", objc_name="setCoordinate")
 	Annotation_setCoordinate :: proc(self: ^Annotation, newCoordinate: CL.LocationCoordinate2D) ---
 
@@ -31,7 +31,7 @@ foreign lib {
 @(objc_class="MKAnnotationView", objc_superclass=UI_View)
 AnnotationView :: struct { using _: UI_View}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnnotationView, objc_selector="initWithAnnotation:reuseIdentifier:", objc_name="initWithAnnotation")
 	AnnotationView_initWithAnnotation :: proc(self: ^AnnotationView, annotation: ^Annotation, reuseIdentifier: ^NS.String) -> instancetype ---
 
@@ -201,7 +201,7 @@ AnnotationView_setDragState :: proc {
 @(objc_class="MKMarkerAnnotationView", objc_superclass=AnnotationView)
 MarkerAnnotationView :: struct { using _: AnnotationView}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MarkerAnnotationView, objc_selector="titleVisibility", objc_name="titleVisibility")
 	MarkerAnnotationView_titleVisibility :: proc(self: ^MarkerAnnotationView) -> FeatureVisibility ---
 
@@ -255,7 +255,7 @@ foreign lib {
 @(objc_class="MKPinAnnotationView", objc_superclass=AnnotationView)
 PinAnnotationView :: struct { using _: AnnotationView}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PinAnnotationView, objc_selector="redPinColor", objc_name="redPinColor", objc_is_class_method=true)
 	PinAnnotationView_redPinColor :: proc() -> ^UI_Color ---
 
@@ -291,7 +291,7 @@ ClusterAnnotation :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ClusterAnnotation, objc_selector="init", objc_name="init")
 	ClusterAnnotation_init :: proc(self: ^ClusterAnnotation) -> instancetype ---
 

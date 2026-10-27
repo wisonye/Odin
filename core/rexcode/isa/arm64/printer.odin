@@ -2,11 +2,11 @@
 
 package rexcode_arm64
 
-import "core:strings"
-import "core:reflect"
-import "core:os"
-import "core:io"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:os"
+#import "core:io"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch64 PRINTER
@@ -117,7 +117,7 @@ sbprint :: proc(
 
 
 		// MOVZ/MOVN/MOVK store the shift as an hw index (0..3 = LSL #0/16/32/48),
-		// which assemblers write as `lsl #16` and omit entirely when it is zero.
+		// which assemblers write as `lsl #16` and omit entirely #if it is zero.
 		mov_wide := inst.mnemonic == .MOVZ || inst.mnemonic == .MOVN || inst.mnemonic == .MOVK
 		end_slot := int(inst.operand_count)
 		if mov_wide && end_slot == 3 && inst.ops[2].kind == .IMMEDIATE && inst.ops[2].immediate == 0 {
@@ -376,7 +376,7 @@ write_mnemonic :: proc(sb: ^strings.Builder, m: Mnemonic, uppercase: bool) {
 // marker; the operand loop glues it to the register it indexes (`v0.s[2]`)
 // instead of writing it as a separate `#2`.
 // A system register by name (`cntvct_el0`), falling back to the raw field
-// when it is not one we know.
+// #if it is not one we know.
 @(private="file")
 write_sysreg :: proc(sb: ^strings.Builder, sr: Register, uppercase: bool) {
 	name, ok := sysreg_name(sr)

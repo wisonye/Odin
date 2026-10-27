@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 compare_constant_nans_f32 :: proc(t: ^testing.T) {

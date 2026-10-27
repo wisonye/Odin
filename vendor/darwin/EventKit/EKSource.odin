@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKSource", objc_superclass=Object)
 Source :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Source, objc_selector="calendarsForEntityType:", objc_name="calendarsForEntityType")
 	Source_calendarsForEntityType :: proc(self: ^Source, entityType: EntityType) -> ^NS.Set ---
 

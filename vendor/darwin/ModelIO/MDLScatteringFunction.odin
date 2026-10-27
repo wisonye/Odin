@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLScatteringFunction", objc_superclass=NS.Object)
 ScatteringFunction :: struct {
@@ -10,7 +10,7 @@ ScatteringFunction :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ScatteringFunction, objc_selector="name", objc_name="name")
 	ScatteringFunction_name :: proc(self: ^ScatteringFunction) -> ^NS.String ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="MDLPhysicallyPlausibleScatteringFunction", objc_superclass=ScatteringFunction)
 PhysicallyPlausibleScatteringFunction :: struct { using _: ScatteringFunction}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicallyPlausibleScatteringFunction, objc_selector="version", objc_name="version")
 	PhysicallyPlausibleScatteringFunction_version :: proc(self: ^PhysicallyPlausibleScatteringFunction) -> NS.Integer ---
 

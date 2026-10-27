@@ -1,14 +1,14 @@
 // A (very small) subset of a libc implementation over Odin libraries for use with `vendor:*` packages.
 package odin_libc
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:c"
-import "core:slice"
-import "core:sort"
-import "core:strconv"
-import "core:strings"
+#import "core:c"
+#import "core:slice"
+#import "core:sort"
+#import "core:strconv"
+#import "core:strings"
 
 @(require, linkage="strong", link_name="malloc")
 malloc :: proc "c" (size: uint) -> rawptr {

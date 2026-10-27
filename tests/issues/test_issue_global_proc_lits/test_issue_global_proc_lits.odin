@@ -1,7 +1,7 @@
 // Procedure literals within the initializations of globals, constant and not, nested, and called through them
 package test_issue_global_proc_lits
 
-import "core:testing"
+#import "core:testing"
 
 Op :: struct {
 	name: string,

@@ -1,10 +1,10 @@
 package test_core_strings
 
-import "base:runtime"
-import "core:mem"
-import "core:strings"
-import "core:testing"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "core:mem"
+#import "core:strings"
+#import "core:testing"
+#import "core:unicode/utf8"
 
 @test
 test_index_any_small_string_not_found :: proc(t: ^testing.T) {

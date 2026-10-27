@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_EventKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:EventKit.framework",
 }
 
@@ -26,7 +26,7 @@ ABAddressBook:: NS.Object
 ABPerson::      NS.Object
 
 ABAddressBookRef :: CF.TypeRef
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	ABRecordRef      :: CF.TypeRef
 } else {
 	ABRecordRef      :: rawptr
@@ -34,7 +34,7 @@ when ODIN_PLATFORM_SUBTARGET_IOS {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="EKEventStoreChangedNotification")
 	EventStoreChangedNotification: ^NS.String
 

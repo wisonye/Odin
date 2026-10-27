@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CLBeacon", objc_superclass=NS.Object)
 Beacon :: struct {
@@ -12,7 +12,7 @@ Beacon :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Beacon, objc_selector="timestamp", objc_name="timestamp")
 	Beacon_timestamp :: proc(self: ^Beacon) -> ^NS.Date ---
 
@@ -50,7 +50,7 @@ BeaconIdentityCondition :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BeaconIdentityCondition, objc_selector="initWithUUID:", objc_name="initWithUUID_")
 	BeaconIdentityCondition_initWithUUID_ :: proc(self: ^BeaconIdentityCondition, uuid: ^NS.UUID) -> instancetype ---
 
@@ -91,7 +91,7 @@ BeaconIdentityConstraint :: struct {
 @(objc_class="CLBeaconRegion", objc_superclass=Region)
 BeaconRegion :: struct { using _: Region}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BeaconRegion, objc_selector="initWithUUID:identifier:", objc_name="initWithUUID_identifier")
 	BeaconRegion_initWithUUID_identifier :: proc(self: ^BeaconRegion, uuid: ^NS.UUID, identifier: ^NS.String) -> instancetype ---
 

@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_QuartzCore
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAEmitterCell", objc_superclass=NS.Object)
 EmitterCell :: struct {
@@ -13,7 +13,7 @@ EmitterCell :: struct {
 	using _: MediaTiming,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EmitterCell, objc_selector="emitterCell", objc_name="emitterCell", objc_is_class_method=true)
 	EmitterCell_emitterCell :: proc() -> instancetype ---
 
@@ -238,7 +238,7 @@ foreign lib {
 @(objc_class="CAEmitterLayer", objc_superclass=Layer)
 EmitterLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EmitterLayer, objc_selector="emitterCells", objc_name="emitterCells")
 	EmitterLayer_emitterCells :: proc(self: ^EmitterLayer) -> ^NS.Array ---
 

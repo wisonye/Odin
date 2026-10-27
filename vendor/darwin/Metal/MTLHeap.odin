@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLHeap")
 Heap :: struct {
@@ -11,7 +11,7 @@ Heap :: struct {
 	using _: Allocation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Heap, objc_selector="maxAvailableSizeWithAlignment:", objc_name="maxAvailableSizeWithAlignment")
 	Heap_maxAvailableSizeWithAlignment :: proc(self: ^Heap, alignment: NS.UInteger) -> NS.UInteger ---
 
@@ -109,7 +109,7 @@ HeapDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HeapDescriptor, objc_selector="size", objc_name="size")
 	HeapDescriptor_size :: proc(self: ^HeapDescriptor) -> NS.UInteger ---
 

@@ -17,9 +17,9 @@ package diff
 	block grows back through any equal tokens just before it. A region with only frequent tokens in common
 	goes to Myers.
 
-	The search can still be quadratic when tokens repeat a lot. The whole diff has a budget of
-	`RO_STEPS_PER_TOKEN * (n+m)` steps, or `max_cost * (n+m)` when that is set. Myers diffs the regions left
-	when it runs out, and any region whose search would overrun it.
+	The search can still be quadratic #if tokens repeat a lot. The whole diff has a budget of
+	`RO_STEPS_PER_TOKEN * (n+m)` steps, or `max_cost * (n+m)` #if that is set. Myers diffs the regions left
+	#if it runs out, and any region whose search would overrun it.
 */
 
 // The default budget for the whole diff, in search steps per token.
@@ -137,7 +137,7 @@ ratcliff_obershelp :: proc(a, b: []i32, id_count: int, changes: Changes, s: ^Scr
 /*
 	Returns the longest block `a[i:i+k] == b[j:j+k]` within `box` that starts with a token that is not
 	frequent. The block is grown back through any equal tokens before it. `k == 0` means there is none.
-	`searched` is false when the region needs diffing another way: the work budget ran out first, or only
+	`searched` is false #if the region needs diffing another way: the work budget ran out first, or only
 	frequent tokens match.
 */
 @(require_results)

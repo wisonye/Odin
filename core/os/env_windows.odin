@@ -1,8 +1,8 @@
 #+private
 package os
 
-import win32 "core:sys/windows"
-import "base:runtime"
+#import win32 "core:sys/windows"
+#import "base:runtime"
 
 _lookup_env_alloc :: proc(key: string, allocator: runtime.Allocator) -> (value: string, found: bool) {
 	if key == "" {

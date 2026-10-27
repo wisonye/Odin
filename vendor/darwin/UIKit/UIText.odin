@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UITextChecker", objc_superclass=NS.Object)
 TextChecker :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextChecker, objc_selector="rangeOfMisspelledWordInString:range:startingAt:wrap:language:", objc_name="rangeOfMisspelledWordInString")
 	TextChecker_rangeOfMisspelledWordInString :: proc(self: ^TextChecker, stringToCheck: ^NS.String, range: NS._NSRange, startingOffset: NS.Integer, wrapFlag: bool, language: ^NS.String) -> NS._NSRange ---
 
@@ -47,7 +47,7 @@ foreign lib {
 TextCursorDropPositionAnimator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextCursorDropPositionAnimator, objc_selector="initWithTextCursorView:textInput:", objc_name="initWithTextCursorView")
 	TextCursorDropPositionAnimator_initWithTextCursorView :: proc(self: ^TextCursorDropPositionAnimator, cursorView: ^View, textInput: ^View) -> instancetype ---
 
@@ -78,7 +78,7 @@ TextCursorView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextCursorView, objc_selector="resetBlinkAnimation", objc_name="resetBlinkAnimation")
 	TextCursorView_resetBlinkAnimation :: proc(self: ^TextCursorView) ---
 
@@ -97,7 +97,7 @@ StandardTextCursorView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextDocumentProxy")
@@ -107,7 +107,7 @@ TextDocumentProxy :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDocumentProxy, objc_selector="adjustTextPositionByCharacterOffset:", objc_name="adjustTextPositionByCharacterOffset")
 	TextDocumentProxy_adjustTextPositionByCharacterOffset :: proc(self: ^TextDocumentProxy, offset: NS.Integer) ---
 
@@ -141,7 +141,7 @@ TextDragDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDragDelegate, objc_selector="textDraggableView:itemsForDrag:", objc_name="textDraggableView_itemsForDrag")
 	TextDragDelegate_textDraggableView_itemsForDrag :: proc(self: ^TextDragDelegate, textDraggableView: ^View, dragRequest: ^TextDragRequest) -> ^NS.Array ---
 
@@ -172,7 +172,7 @@ TextDragDelegate_textDraggableView :: proc {
 TextDragPreviewRenderer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDragPreviewRenderer, objc_selector="initWithLayoutManager:range:", objc_name="initWithLayoutManager_range")
 	TextDragPreviewRenderer_initWithLayoutManager_range :: proc(self: ^TextDragPreviewRenderer, layoutManager: ^NSLayoutManager, range: NS._NSRange) -> instancetype ---
 
@@ -218,7 +218,7 @@ TextDragRequest :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDragRequest, objc_selector="dragRange", objc_name="dragRange")
 	TextDragRequest_dragRange :: proc(self: ^TextDragRequest) -> ^TextRange ---
 
@@ -243,7 +243,7 @@ TextDraggable :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDraggable, objc_selector="textDragDelegate", objc_name="textDragDelegate")
 	TextDraggable_textDragDelegate :: proc(self: ^TextDraggable) -> ^TextDragDelegate ---
 
@@ -271,7 +271,7 @@ TextDropDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDropDelegate, objc_selector="textDroppableView:willBecomeEditableForDrop:", objc_name="textDroppableView_willBecomeEditableForDrop")
 	TextDropDelegate_textDroppableView_willBecomeEditableForDrop :: proc(self: ^TextDropDelegate, textDroppableView: ^View, drop: ^TextDropRequest) -> TextDropEditability ---
 
@@ -305,7 +305,7 @@ TextDropProposal :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDropProposal, objc_selector="dropAction", objc_name="dropAction")
 	TextDropProposal_dropAction :: proc(self: ^TextDropProposal) -> TextDropAction ---
 
@@ -339,7 +339,7 @@ TextDropRequest :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDropRequest, objc_selector="dropPosition", objc_name="dropPosition")
 	TextDropRequest_dropPosition :: proc(self: ^TextDropRequest) -> ^TextPosition ---
 
@@ -362,7 +362,7 @@ TextDroppable :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDroppable, objc_selector="textDropDelegate", objc_name="textDropDelegate")
 	TextDroppable_textDropDelegate :: proc(self: ^TextDroppable) -> ^TextDropDelegate ---
 
@@ -387,7 +387,7 @@ TextField :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextField, objc_selector="borderRectForBounds:", objc_name="borderRectForBounds")
 	TextField_borderRectForBounds :: proc(self: ^TextField, bounds: CG.Rect) -> CG.Rect ---
 
@@ -583,7 +583,7 @@ TextFieldDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFieldDelegate, objc_selector="textFieldShouldBeginEditing:", objc_name="textFieldShouldBeginEditing")
 	TextFieldDelegate_textFieldShouldBeginEditing :: proc(self: ^TextFieldDelegate, textField: ^TextField) -> bool ---
 
@@ -641,7 +641,7 @@ TextFieldDelegate_textFieldDidEndEditing :: proc {
 SearchTextField :: struct { using _: TextField}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchTextField, objc_selector="insertToken:atIndex:", objc_name="insertToken")
 	SearchTextField_insertToken :: proc(self: ^SearchTextField, token: ^SearchToken, tokenIndex: NS.Integer) ---
 
@@ -699,7 +699,7 @@ SearchTextFieldDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchTextFieldDelegate, objc_selector="searchTextField:itemProviderForCopyingToken:", objc_name="searchTextField_itemProviderForCopyingToken")
 	SearchTextFieldDelegate_searchTextField_itemProviderForCopyingToken :: proc(self: ^SearchTextFieldDelegate, searchTextField: ^SearchTextField, token: ^SearchToken) -> ^NS.ItemProvider ---
 
@@ -721,7 +721,7 @@ SearchTextFieldPasteItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchTextFieldPasteItem, objc_selector="setSearchTokenResult:", objc_name="setSearchTokenResult")
 	SearchTextFieldPasteItem_setSearchTokenResult :: proc(self: ^SearchTextFieldPasteItem, token: ^SearchToken) ---
 }
@@ -734,7 +734,7 @@ TextFormattingCoordinator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingCoordinator, objc_selector="textFormattingCoordinatorForWindowScene:", objc_name="textFormattingCoordinatorForWindowScene", objc_is_class_method=true)
 	TextFormattingCoordinator_textFormattingCoordinatorForWindowScene :: proc(windowScene: ^WindowScene) -> instancetype ---
 
@@ -768,7 +768,7 @@ TextFormattingCoordinatorDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingCoordinatorDelegate, objc_selector="updateTextAttributesWithConversionHandler:", objc_name="updateTextAttributesWithConversionHandler")
 	TextFormattingCoordinatorDelegate_updateTextAttributesWithConversionHandler :: proc(self: ^TextFormattingCoordinatorDelegate, conversionHandler: TextAttributesConversionHandler) ---
 }
@@ -778,7 +778,7 @@ foreign lib {
 TextFormattingViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewController, objc_selector="init", objc_name="init")
 	TextFormattingViewController_init :: proc(self: ^TextFormattingViewController) -> instancetype ---
 
@@ -812,7 +812,7 @@ TextFormattingViewControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerDelegate, objc_selector="textFormattingViewController:didChangeValue:", objc_name="textFormattingViewController_didChangeValue")
 	TextFormattingViewControllerDelegate_textFormattingViewController_didChangeValue :: proc(self: ^TextFormattingViewControllerDelegate, viewController: ^TextFormattingViewController, changeValue: ^TextFormattingViewControllerChangeValue) ---
 
@@ -842,7 +842,7 @@ TextFormattingViewControllerConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerConfiguration, objc_selector="init", objc_name="init")
 	TextFormattingViewControllerConfiguration_init :: proc(self: ^TextFormattingViewControllerConfiguration) -> instancetype ---
 
@@ -874,7 +874,7 @@ TextFormattingViewControllerChangeValue :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerChangeValue, objc_selector="init", objc_name="init")
 	TextFormattingViewControllerChangeValue_init :: proc(self: ^TextFormattingViewControllerChangeValue) -> instancetype ---
 
@@ -915,7 +915,7 @@ TextFormattingViewControllerComponent :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerComponent, objc_selector="initWithComponentKey:preferredSize:", objc_name="initWithComponentKey")
 	TextFormattingViewControllerComponent_initWithComponentKey :: proc(self: ^TextFormattingViewControllerComponent, componentKey: ^NS.String, preferredSize: TextFormattingViewControllerComponentSize) -> instancetype ---
 
@@ -941,7 +941,7 @@ TextFormattingViewControllerComponentGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerComponentGroup, objc_selector="initWithComponents:", objc_name="initWithComponents")
 	TextFormattingViewControllerComponentGroup_initWithComponents :: proc(self: ^TextFormattingViewControllerComponentGroup, components: ^NS.Array) -> instancetype ---
 
@@ -964,7 +964,7 @@ TextFormattingViewControllerFormattingDescriptor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerFormattingDescriptor, objc_selector="init", objc_name="init")
 	TextFormattingViewControllerFormattingDescriptor_init :: proc(self: ^TextFormattingViewControllerFormattingDescriptor) -> instancetype ---
 
@@ -1038,7 +1038,7 @@ TextFormattingViewControllerFormattingStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFormattingViewControllerFormattingStyle, objc_selector="initWithStyleKey:title:attributes:", objc_name="initWithStyleKey")
 	TextFormattingViewControllerFormattingStyle_initWithStyleKey :: proc(self: ^TextFormattingViewControllerFormattingStyle, styleKey: ^NS.String, string: ^NS.String, attributes: ^NS.Dictionary) -> instancetype ---
 
@@ -1060,7 +1060,7 @@ TextInput :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInput, objc_selector="textInRange:", objc_name="textInRange")
 	TextInput_textInRange :: proc(self: ^TextInput, range: ^TextRange) -> ^NS.String ---
 
@@ -1286,7 +1286,7 @@ TextInputDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputDelegate, objc_selector="selectionWillChange:", objc_name="selectionWillChange")
 	TextInputDelegate_selectionWillChange :: proc(self: ^TextInputDelegate, textInput: ^TextInput) ---
 
@@ -1308,7 +1308,7 @@ foreign lib {
 TextInputAssistantItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputAssistantItem, objc_selector="allowsHidingShortcuts", objc_name="allowsHidingShortcuts")
 	TextInputAssistantItem_allowsHidingShortcuts :: proc(self: ^TextInputAssistantItem) -> bool ---
 
@@ -1339,7 +1339,7 @@ foreign lib {
 TextInputContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputContext, objc_selector="init", objc_name="init")
 	TextInputContext_init :: proc(self: ^TextInputContext) -> instancetype ---
 
@@ -1376,7 +1376,7 @@ TextInputMode :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputMode, objc_selector="currentInputMode", objc_name="currentInputMode", objc_is_class_method=true)
 	TextInputMode_currentInputMode :: proc() -> ^TextInputMode ---
 
@@ -1396,7 +1396,7 @@ TextInputPasswordRules :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputPasswordRules, objc_selector="init", objc_name="init")
 	TextInputPasswordRules_init :: proc(self: ^TextInputPasswordRules) -> instancetype ---
 
@@ -1418,7 +1418,7 @@ TextInputStringTokenizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputStringTokenizer, objc_selector="initWithTextInput:", objc_name="initWithTextInput")
 	TextInputStringTokenizer_initWithTextInput :: proc(self: ^TextInputStringTokenizer, textInput: ^Responder) -> instancetype ---
 }
@@ -1431,7 +1431,7 @@ TextInputTokenizer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputTokenizer, objc_selector="rangeEnclosingPosition:withGranularity:inDirection:", objc_name="rangeEnclosingPosition")
 	TextInputTokenizer_rangeEnclosingPosition :: proc(self: ^TextInputTokenizer, position: ^TextPosition, granularity: TextGranularity, direction: TextDirection) -> ^TextRange ---
 
@@ -1450,7 +1450,7 @@ foreign lib {
 TextInputTraits :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextInputTraits")
@@ -1460,7 +1460,7 @@ TextInputTraitsProtocol :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputTraitsProtocol, objc_selector="autocapitalizationType", objc_name="autocapitalizationType")
 	TextInputTraitsProtocol_autocapitalizationType :: proc(self: ^TextInputTraitsProtocol) -> TextAutocapitalizationType ---
 
@@ -1581,7 +1581,7 @@ foreign lib {
 TextItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextItem, objc_selector="init", objc_name="init")
 	TextItem_init :: proc(self: ^TextItem) -> instancetype ---
 
@@ -1609,7 +1609,7 @@ foreign lib {
 TextItemMenuConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextItemMenuConfiguration, objc_selector="configurationWithMenu:", objc_name="configurationWithMenu", objc_is_class_method=true)
 	TextItemMenuConfiguration_configurationWithMenu :: proc(menu: ^Menu) -> instancetype ---
 
@@ -1628,7 +1628,7 @@ foreign lib {
 TextItemMenuPreview :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextItemMenuPreview, objc_selector="defaultPreview", objc_name="defaultPreview", objc_is_class_method=true)
 	TextItemMenuPreview_defaultPreview :: proc() -> instancetype ---
 
@@ -1647,7 +1647,7 @@ foreign lib {
 TextLoupeSession :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLoupeSession, objc_selector="beginLoupeSessionAtPoint:fromSelectionWidgetView:inView:", objc_name="beginLoupeSessionAtPoint", objc_is_class_method=true)
 	TextLoupeSession_beginLoupeSessionAtPoint :: proc(point: CG.Point, selectionWidget: ^View, interactionView: ^View) -> instancetype ---
 
@@ -1666,7 +1666,7 @@ TextPasteDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextPasteDelegate, objc_selector="textPasteConfigurationSupporting:transformPasteItem:", objc_name="textPasteConfigurationSupporting_transformPasteItem")
 	TextPasteDelegate_textPasteConfigurationSupporting_transformPasteItem :: proc(self: ^TextPasteDelegate, textPasteConfigurationSupporting: ^TextPasteConfigurationSupporting, item: ^TextPasteItem) ---
 
@@ -1688,7 +1688,7 @@ TextPasteConfigurationSupporting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextPasteConfigurationSupporting, objc_selector="pasteDelegate", objc_name="pasteDelegate")
 	TextPasteConfigurationSupporting_pasteDelegate :: proc(self: ^TextPasteConfigurationSupporting) -> ^TextPasteDelegate ---
 
@@ -1704,7 +1704,7 @@ TextPasteItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextPasteItem, objc_selector="setStringResult:", objc_name="setStringResult")
 	TextPasteItem_setStringResult :: proc(self: ^TextPasteItem, string: ^NS.String) ---
 
@@ -1735,7 +1735,7 @@ foreign lib {
 TextPlaceholder :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextPlaceholder, objc_selector="rects", objc_name="rects")
 	TextPlaceholder_rects :: proc(self: ^TextPlaceholder) -> ^NS.Array ---
 }
@@ -1745,14 +1745,14 @@ foreign lib {
 TextPosition :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextRange", objc_superclass=NS.Object)
 TextRange :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextRange, objc_selector="isEmpty", objc_name="isEmpty")
 	TextRange_isEmpty :: proc(self: ^TextRange) -> bool ---
 
@@ -1768,7 +1768,7 @@ foreign lib {
 TextSearchOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSearchOptions, objc_selector="wordMatchMethod", objc_name="wordMatchMethod")
 	TextSearchOptions_wordMatchMethod :: proc(self: ^TextSearchOptions) -> TextSearchMatchMethod ---
 
@@ -1784,7 +1784,7 @@ TextSearchAggregator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSearchAggregator, objc_selector="foundRange:forSearchString:inDocument:", objc_name="foundRange")
 	TextSearchAggregator_foundRange :: proc(self: ^TextSearchAggregator, range: ^TextRange, string: ^NS.String, document: ^id) ---
 
@@ -1809,7 +1809,7 @@ TextSearching :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSearching, objc_selector="compareFoundRange:toRange:inDocument:", objc_name="compareFoundRange")
 	TextSearching_compareFoundRange :: proc(self: ^TextSearching, foundRange: ^TextRange, toRange: ^TextRange, document: ^id) -> NS.ComparisonResult ---
 
@@ -1855,7 +1855,7 @@ foreign lib {
 TextSearchingFindSession :: struct { using _: FindSession}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSearchingFindSession, objc_selector="initWithSearchableObject:", objc_name="initWithSearchableObject")
 	TextSearchingFindSession_initWithSearchableObject :: proc(self: ^TextSearchingFindSession, searchableObject: ^TextSearching) -> instancetype ---
 
@@ -1874,7 +1874,7 @@ foreign lib {
 TextSelecting :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextSelectionHandleView")
@@ -1884,7 +1884,7 @@ TextSelectionHandleView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionHandleView, objc_selector="preferredFrameForRect:", objc_name="preferredFrameForRect")
 	TextSelectionHandleView_preferredFrameForRect :: proc(self: ^TextSelectionHandleView, rect: CG.Rect) -> CG.Rect ---
 
@@ -1912,7 +1912,7 @@ TextSelectionHighlightView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionHighlightView, objc_selector="selectionRects", objc_name="selectionRects")
 	TextSelectionHighlightView_selectionRects :: proc(self: ^TextSelectionHighlightView) -> ^NS.Array ---
 
@@ -1925,7 +1925,7 @@ foreign lib {
 TextSelectionRect :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionRect, objc_selector="rect", objc_name="rect")
 	TextSelectionRect_rect :: proc(self: ^TextSelectionRect) -> CG.Rect ---
 
@@ -1950,7 +1950,7 @@ foreign lib {
 TextSelectionView :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextView", objc_superclass=ScrollView)
@@ -1962,7 +1962,7 @@ TextView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextView, objc_selector="scrollRangeToVisible:", objc_name="scrollRangeToVisible")
 	TextView_scrollRangeToVisible :: proc(self: ^TextView, range: NS._NSRange) ---
 
@@ -2168,7 +2168,7 @@ TextViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextViewDelegate, objc_selector="textViewShouldBeginEditing:", objc_name="textViewShouldBeginEditing")
 	TextViewDelegate_textViewShouldBeginEditing :: proc(self: ^TextViewDelegate, textView: ^TextView) -> bool ---
 

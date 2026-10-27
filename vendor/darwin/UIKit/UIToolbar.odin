@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIToolbar", objc_superclass=View)
 Toolbar :: struct {
@@ -12,7 +12,7 @@ Toolbar :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Toolbar, objc_selector="setItems:animated:", objc_name="setItems_animated")
 	Toolbar_setItems_animated :: proc(self: ^Toolbar, items: ^NS.Array, animated: bool) ---
 
@@ -103,14 +103,14 @@ ToolbarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIToolbarAppearance", objc_superclass=BarAppearance)
 ToolbarAppearance :: struct { using _: BarAppearance}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolbarAppearance, objc_selector="buttonAppearance", objc_name="buttonAppearance")
 	ToolbarAppearance_buttonAppearance :: proc(self: ^ToolbarAppearance) -> ^BarButtonItemAppearance ---
 

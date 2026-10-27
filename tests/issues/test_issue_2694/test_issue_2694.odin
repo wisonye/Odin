@@ -1,10 +1,10 @@
 package test_issue_2694
 
-import "core:fmt"
-import "core:encoding/json"
-import "core:log"
-import "core:mem"
-import "core:testing"
+#import "core:fmt"
+#import "core:encoding/json"
+#import "core:log"
+#import "core:mem"
+#import "core:testing"
 
 // This is a minimal reproduction of the code in #2694.
 // It exemplifies the original problem as briefly as possible.

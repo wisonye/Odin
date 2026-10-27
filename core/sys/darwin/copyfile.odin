@@ -1,6 +1,6 @@
 package darwin
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 copyfile_state_t :: distinct rawptr
 
@@ -56,7 +56,7 @@ copyfile_state_flag :: enum u32 {
 	FORBID_DST_EXISTING_SYMLINKS,
 }
 
-foreign system {
+#foreign system {
 	copyfile  :: proc(from, to: cstring,  state: copyfile_state_t, flags: copyfile_flags) -> i32 ---
 	fcopyfile :: proc(from, to: posix.FD, state: copyfile_state_t, flags: copyfile_flags) -> i32 ---
 

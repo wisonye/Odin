@@ -1,9 +1,9 @@
 package linalg
 
-import "core:math"
-import "base:builtin"
-import "base:intrinsics"
-@require import "base:runtime"
+#import "core:math"
+#import "base:builtin"
+#import "base:intrinsics"
+@require #import "base:runtime"
 
 // Generic
 
@@ -46,13 +46,13 @@ scalar_dot :: proc "contextless" (a, b: $T) -> T where IS_FLOAT(T), !IS_ARRAY(T)
 
 @(require_results)
 vector_dot :: proc "contextless" (a, b: $T/[$N]$E) -> (c: E) where IS_NUMERIC(E) #no_bounds_check {
-	when N == 1 {
+	#if N == 1 {
 		return a.x*b.x
-	} else when N == 2 {
+	} else #if N == 2 {
 		return a.x*b.x + a.y*b.y
-	} else when N == 3 {
+	} else #if N == 3 {
 		return a.x*b.x + a.y*b.y + a.z*b.z
-	} else when N == 4 {
+	} else #if N == 4 {
 		return a.x*b.x + a.y*b.y + a.z*b.z + a.w*b.w
 	} else {
 		#unroll for _, i in a {
@@ -183,7 +183,7 @@ clamp_length :: proc "contextless" (v: $T/[$N]$E, a: E) -> T where IS_FLOAT(E) {
 	}
 	
 	m2 := length2(v)
-	return v if (m2 <= a*a) else (v / sqrt(m2) * a) // returns original when m2 is 0
+	return v if (m2 <= a*a) else (v / sqrt(m2) * a) // returns original #if m2 is 0
 }
 
 
@@ -542,13 +542,13 @@ matrix8x8_determinant :: proc "contextless" (m: $M/matrix[8, 8]$T) -> (det: T) #
 
 @(require_results)
 matrix_determinant_generic :: proc "contextless" (a: $M/matrix[$N, N]$T) -> T #no_bounds_check {
-	when N == 1 {
+	#if N == 1 {
 		return matrix1x1_determinant(a)
-	} else when N == 2 {
+	} else #if N == 2 {
 		return matrix2x2_determinant(a)
-	} else when N == 3 {
+	} else #if N == 3 {
 		return matrix3x3_determinant(a)
-	} else when N == 4 {
+	} else #if N == 4 {
 		return matrix4x4_determinant(a)
 	} else {
 		a := a
@@ -845,7 +845,7 @@ matrix1x1_inverse_transpose :: proc "contextless" (x: $M/matrix[1, 1]$T) -> (y: 
 @(require_results)
 matrix2x2_inverse_transpose :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) #no_bounds_check {
 	d := x[0, 0]*x[1, 1] - x[0, 1]*x[1, 0]
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		y[0, 0] = +x[1, 1] / d
 		y[1, 0] = -x[0, 1] / d
 		y[0, 1] = -x[1, 0] / d
@@ -864,7 +864,7 @@ matrix2x2_inverse_transpose :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: 
 matrix3x3_inverse_transpose :: proc "contextless" (x: $M/matrix[3, 3]$T) -> (y: M) #no_bounds_check {
 	c := cofactor(x)
 	d := determinant(x)
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<3 {
 			for j in 0..<3 {
 				y[i, j] = c[i, j] / d
@@ -888,7 +888,7 @@ matrix4x4_inverse_transpose :: proc "contextless" (x: $M/matrix[4, 4]$T) -> (y: 
 	for i in 0..<4 {
 		d += x[0, i] * c[0, i]
 	}
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<4 {
 			for j in 0..<4 {
 				y[i, j] = c[i, j] / d
@@ -938,7 +938,7 @@ matrix1x1_inverse :: proc "contextless" (x: $M/matrix[1, 1]$T) -> (y: M) #no_bou
 @(require_results)
 matrix2x2_inverse :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) #no_bounds_check {
 	d := x[0, 0]*x[1, 1] - x[0, 1]*x[1, 0]
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		y[0, 0] = +x[1, 1] / d
 		y[0, 1] = -x[0, 1] / d
 		y[1, 0] = -x[1, 0] / d
@@ -957,7 +957,7 @@ matrix2x2_inverse :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) #no_bou
 matrix3x3_inverse :: proc "contextless" (x: $M/matrix[3, 3]$T) -> (y: M) #no_bounds_check {
 	c := cofactor(x)
 	d := determinant(x)
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<3 {
 			for j in 0..<3 {
 				y[i, j] = c[j, i] / d
@@ -981,7 +981,7 @@ matrix4x4_inverse :: proc "contextless" (x: $M/matrix[4, 4]$T) -> (y: M) #no_bou
 	for i in 0..<4 {
 		d += x[0, i] * c[0, i]
 	}
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<4 {
 			for j in 0..<4 {
 				y[i, j] = c[j, i] / d
@@ -1056,7 +1056,7 @@ matrix_inverse_gauss_jordan :: proc "contextless" (A: $M/matrix[$N, N]$T) -> (b:
 			}
 		}
 
-		when intrinsics.type_is_integer(T) {
+		#if intrinsics.type_is_integer(T) {
 			for k in 0..<N {
 				a[col, k] /= a[col, col]
 				b[col, k] /= a[col, col]
@@ -1121,7 +1121,7 @@ matrix_inverse_lu_decomposition :: proc "contextless" (A: $M/matrix[$N, N]$T) ->
 		}
 
 		// Compute L and U in place
-		when intrinsics.type_is_integer(T) {
+		#if intrinsics.type_is_integer(T) {
 			for row in (col + 1)..<N {
 				a[row, col] /= a[col, col]
 				for k in (col + 1)..<N {
@@ -1186,7 +1186,7 @@ pseudo_inverse :: proc{
 matrix_pseudo_inverse :: proc "contextless" (A: $M/matrix[$R, $C]$T) -> (B: matrix[C, R]T, not_singular: bool) #no_bounds_check {
 	At := transpose(A)
 
-	when R >= C {
+	#if R >= C {
 		// Overdetermined (tall):
 		// pseudo_inverse(A) = inverse(transpose(A)*A)*transpose(A)
 		AtA := At * A // [C, C]

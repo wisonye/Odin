@@ -13,9 +13,9 @@
 #+build freebsd
 package test_core_net
 
-import "core:net"
-import "core:time"
-import "core:testing"
+#import "core:net"
+#import "core:time"
+#import "core:testing"
 
 @test
 test_duplicate_binding :: proc(t: ^testing.T) {

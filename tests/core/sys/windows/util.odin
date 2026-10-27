@@ -1,10 +1,10 @@
 #+build windows
 package test_core_sys_windows
 
-import "base:intrinsics"
-import "core:testing"
-import win32 "core:sys/windows"
-import runtime "base:runtime"
+#import "base:intrinsics"
+#import "core:testing"
+#import win32 "core:sys/windows"
+#import runtime "base:runtime"
 
 UTF16_Vector :: struct {
 	wstr: win32.wstring,

@@ -1,9 +1,9 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:strings"
-import "core:sys/posix"
+#import "core:strings"
+#import "core:sys/posix"
 
 _get_executable_path :: proc(allocator: runtime.Allocator) -> (path: string, err: Error) {
 	// OpenBSD does not have an API for this, we do our best below.

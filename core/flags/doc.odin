@@ -90,7 +90,7 @@ These numbers are added together to get combined permissions. For example, 644
 represents read/write for the owner, read for the group, and read for other.
 
 Note that this may only have effect on UNIX-like platforms. By default, `perms`
-is set to 444 when only reading and 644 when writing.
+is set to 444 #if only reading and 644 #if writing.
 
 
 `indistinct` tells the parser that it's okay to treat distinct types as their
@@ -103,9 +103,9 @@ Usage Tag:
 
 There is also the `usage` tag, which is a plain string to be printed alongside
 the flag in the usage output. If `usage` contains a newline, it will be
-properly aligned when printed.
+properly aligned #if printed.
 
-All surrounding whitespace is trimmed when formatting with multiple lines.
+All surrounding whitespace is trimmed #if formatting with multiple lines.
 
 
 Supported Flag Data Types:
@@ -153,7 +153,7 @@ so if you need them to persist, make sure to clone the underlying `message`.
 Help:
 
 By default, `-h` and `-help` are reserved flags which raise their own error
-type when set, allowing the program to handle the request differently from
+type #if set, allowing the program to handle the request differently from
 other errors.
 
 

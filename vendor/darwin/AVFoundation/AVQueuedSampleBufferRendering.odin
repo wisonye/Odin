@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_AVFoundation
 
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVQueuedSampleBufferRendering")
 QueuedSampleBufferRendering :: struct {
@@ -13,7 +13,7 @@ QueuedSampleBufferRendering :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QueuedSampleBufferRendering, objc_selector="enqueueSampleBuffer:", objc_name="enqueueSampleBuffer")
 	QueuedSampleBufferRendering_enqueueSampleBuffer :: proc(self: ^QueuedSampleBufferRendering, sampleBuffer: CM.SampleBufferRef) ---
 

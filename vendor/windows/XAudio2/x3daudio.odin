@@ -36,10 +36,10 @@
 
 package windows_xaudio2
 
-import "core:math"
-import win "core:sys/windows"
+#import "core:math"
+#import win "core:sys/windows"
 
-foreign import xa2 "system:xaudio2.lib"
+#foreign #import xa2 "system:xaudio2.lib"
 
 SPEAKER_FLAGS :: win.SPEAKER_FLAGS
 
@@ -117,12 +117,12 @@ CONE :: struct #packed {
 	InnerAngle:  f32,   // inner cone angle in radians, must be within [0.0, TAU]
 	OuterAngle:  f32,   // outer cone angle in radians, must be within [InnerAngle, TAU]
 
-	InnerVolume: f32,   // volume level scaler on/within inner cone, used only for matrix calculations, must be within [0.0, 2.0] when used
-	OuterVolume: f32,   // volume level scaler on/beyond outer cone, used only for matrix calculations, must be within [0.0, 2.0] when used
-	InnerLPF:    f32,   // LPF (both direct and reverb paths) coefficient subtrahend on/within inner cone, used only for LPF (both direct and reverb paths) calculations, must be within [0.0, 1.0] when used
-	OuterLPF:    f32,   // LPF (both direct and reverb paths) coefficient subtrahend on/beyond outer cone, used only for LPF (both direct and reverb paths) calculations, must be within [0.0, 1.0] when used
-	InnerReverb: f32,   // reverb send level scaler on/within inner cone, used only for reverb calculations, must be within [0.0, 2.0] when used
-	OuterReverb: f32,   // reverb send level scaler on/beyond outer cone, used only for reverb calculations, must be within [0.0, 2.0] when used
+	InnerVolume: f32,   // volume level scaler on/within inner cone, used only for matrix calculations, must be within [0.0, 2.0] #if used
+	OuterVolume: f32,   // volume level scaler on/beyond outer cone, used only for matrix calculations, must be within [0.0, 2.0] #if used
+	InnerLPF:    f32,   // LPF (both direct and reverb paths) coefficient subtrahend on/within inner cone, used only for LPF (both direct and reverb paths) calculations, must be within [0.0, 1.0] #if used
+	OuterLPF:    f32,   // LPF (both direct and reverb paths) coefficient subtrahend on/beyond outer cone, used only for LPF (both direct and reverb paths) calculations, must be within [0.0, 1.0] #if used
+	InnerReverb: f32,   // reverb send level scaler on/within inner cone, used only for reverb calculations, must be within [0.0, 2.0] #if used
+	OuterReverb: f32,   // reverb send level scaler on/beyond outer cone, used only for reverb calculations, must be within [0.0, 2.0] #if used
 }
 Default_DirectionalCone := CONE{math.PI / 2, math.PI, 1.0, 0.708, 0.0, 0.25, 0.708, 1.0}
 
@@ -130,8 +130,8 @@ Default_DirectionalCone := CONE{math.PI / 2, math.PI, 1.0, 0.708, 0.0, 0.25, 0.7
 // Defines a point of 3D audio reception.
 // The cone is directed by the listener's front orientation.
 LISTENER :: struct #packed {
-	OrientFront: VECTOR,   // orientation of front direction, used only for matrix and delay calculations or listeners with cones for matrix, LPF (both direct and reverb paths), and reverb calculations, must be normalized when used
-	OrientTop:   VECTOR,   // orientation of top direction, used only for matrix and delay calculations, must be orthonormal with OrientFront when used
+	OrientFront: VECTOR,   // orientation of front direction, used only for matrix and delay calculations or listeners with cones for matrix, LPF (both direct and reverb paths), and reverb calculations, must be normalized #if used
+	OrientTop:   VECTOR,   // orientation of top direction, used only for matrix and delay calculations, must be orthonormal with OrientFront #if used
 
 	Position: VECTOR,      // position in user-defined world units, does not affect Velocity
 	Velocity: VECTOR,      // velocity vector in user-defined world units/second, used only for doppler calculations, does not affect Position
@@ -156,8 +156,8 @@ LISTENER :: struct #packed {
 EMITTER :: struct #packed {
 	pCone: ^CONE,   // sound cone, used only with single-channel emitters for matrix, LPF (both direct and reverb paths), and reverb calculations, nil specifies omnidirectionality
 
-	OrientFront: VECTOR,   // orientation of front direction, used only for emitter angle calculations or with multi-channel emitters for matrix calculations or single-channel emitters with cones for matrix, LPF (both direct and reverb paths), and reverb calculations, must be normalized when used
-	OrientTop:   VECTOR,   // orientation of top direction, used only with multi-channel emitters for matrix calculations, must be orthonormal with OrientFront when used
+	OrientFront: VECTOR,   // orientation of front direction, used only for emitter angle calculations or with multi-channel emitters for matrix calculations or single-channel emitters with cones for matrix, LPF (both direct and reverb paths), and reverb calculations, must be normalized #if used
+	OrientTop:   VECTOR,   // orientation of top direction, used only with multi-channel emitters for matrix calculations, must be orthonormal with OrientFront #if used
 
 	Position: VECTOR,   // position in user-defined world units, does not affect Velocity
 	Velocity: VECTOR,   // velocity vector in user-defined world units/second, used only for doppler calculations, does not affect Position
@@ -166,8 +166,8 @@ EMITTER :: struct #packed {
 	InnerRadiusAngle: f32,    // inner radius angle, must be within [0.0, PI/4.0)
 
 	ChannelCount:     u32,                              // number of sound channels, must be > 0
-	ChannelRadius:    f32,                              // channel radius, used only with multi-channel emitters for matrix calculations, must be >= 0.0 when used
-	pChannelAzimuths: [^]f32 `fmt:"v,ChannelCount"`,    // channel azimuth array, used only with multi-channel emitters for matrix calculations, contains positions of each channel expressed in radians along the channel radius with respect to the front orientation vector in the plane orthogonal to the top orientation vector, or TAU to specify an LFE channel, must have at least ChannelCount elements, all within [0.0, TAU] when used
+	ChannelRadius:    f32,                              // channel radius, used only with multi-channel emitters for matrix calculations, must be >= 0.0 #if used
+	pChannelAzimuths: [^]f32 `fmt:"v,ChannelCount"`,    // channel azimuth array, used only with multi-channel emitters for matrix calculations, contains positions of each channel expressed in radians along the channel radius with respect to the front orientation vector in the plane orthogonal to the top orientation vector, or TAU to specify an LFE channel, must have at least ChannelCount elements, all within [0.0, TAU] #if used
 
 	pVolumeCurve:    ^DISTANCE_CURVE,    // volume level distance curve, used only for matrix calculations, nil specifies a default curve that conforms to the inverse square law, calculated in user-defined world units with distances <= CurveDistanceScaler clamped to no attenuation
 	pLFECurve:       ^DISTANCE_CURVE,    // LFE level distance curve, used only for matrix calculations, nil specifies a default curve that conforms to the inverse square law, calculated in user-defined world units with distances <= CurveDistanceScaler clamped to no attenuation
@@ -175,13 +175,13 @@ EMITTER :: struct #packed {
 	pLPFReverbCurve: ^DISTANCE_CURVE,    // LPF reverb-path coefficient distance curve, used only for LPF reverb-path calculations, nil specifies the default curve: [0.0,0.75], [1.0,0.75]
 	pReverbCurve:    ^DISTANCE_CURVE,    // reverb send level distance curve, used only for reverb calculations, nil specifies the default curve: [0.0,1.0], [1.0,0.0]
 
-	CurveDistanceScaler: f32,   // curve distance scaler, used to scale normalized distance curves to user-defined world units and/or exaggerate their effect, used only for matrix, LPF (both direct and reverb paths), and reverb calculations, must be within [min(f32), max(f32)] when used
-	DopplerScaler:       f32,   // doppler shift scaler, used to exaggerate doppler shift effect, used only for doppler calculations, must be within [0.0, max(f32)] when used
+	CurveDistanceScaler: f32,   // curve distance scaler, used to scale normalized distance curves to user-defined world units and/or exaggerate their effect, used only for matrix, LPF (both direct and reverb paths), and reverb calculations, must be within [min(f32), max(f32)] #if used
+	DopplerScaler:       f32,   // doppler shift scaler, used to exaggerate doppler shift effect, used only for doppler calculations, must be within [0.0, max(f32)] #if used
 }
 
 // DSP settings:
 // Receives results from a call to Calculate to be sent to the low-level audio rendering API for 3D signal processing.
-// The user is responsible for allocating the matrix coefficient table, delay time array, and initializing the channel counts when used.
+// The user is responsible for allocating the matrix coefficient table, delay time array, and initializing the channel counts #if used.
 DSP_SETTINGS :: struct #packed {
 	pMatrixCoefficients: [^]f32,  // [inout] matrix coefficient table, receives an array representing the volume level used to send from source channel S to destination channel D, stored as pMatrixCoefficients[SrcChannelCount * D + S], must have at least SrcChannelCount*DstChannelCount elements
 	pDelayTimes:         [^]f32,  // [inout] delay time array, receives delays for each destination channel in milliseconds, must have at least DstChannelCount elements (stereo final mix only)
@@ -201,7 +201,7 @@ DSP_SETTINGS :: struct #packed {
 
 //--------------<F-U-N-C-T-I-O-N-S>-----------------------------------------//
 @(default_calling_convention="cdecl", link_prefix="X3DAudio")
-foreign xa2 {
+#foreign xa2 {
 	// initializes instance handle
 	Initialize :: proc(SpeakerChannelMask: SPEAKER_FLAGS, SpeedOfSound: f32, Instance: HANDLE) -> HRESULT ---
 

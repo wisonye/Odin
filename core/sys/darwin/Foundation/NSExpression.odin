@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSExpression", objc_superclass=Object)
 Expression :: struct {
@@ -11,7 +11,7 @@ Expression :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Expression, objc_selector="expressionWithFormat:argumentArray:", objc_name="expressionWithFormat_argumentArray", objc_is_class_method=true)
 	Expression_expressionWithFormat_argumentArray :: proc(expressionFormat: ^String, arguments: ^Array) -> ^Expression ---
 

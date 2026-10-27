@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import darwin "core:sys/darwin"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import darwin "core:sys/darwin"
 
 @(objc_class="NSWorkspace", objc_superclass=NS.Object)
 Workspace :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Workspace, objc_selector="openURL:", objc_name="openURL_")
 	Workspace_openURL_ :: proc(self: ^Workspace, url: ^NS.URL) -> bool ---
 
@@ -336,7 +336,7 @@ Workspace_typeOfFile :: #force_inline proc "c" (self: ^Workspace, absoluteFilePa
 WorkspaceAuthorization :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSWorkspaceOpenConfiguration", objc_superclass=NS.Object)
@@ -346,7 +346,7 @@ WorkspaceOpenConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WorkspaceOpenConfiguration, objc_selector="configuration", objc_name="configuration", objc_is_class_method=true)
 	WorkspaceOpenConfiguration_configuration :: proc() -> instancetype ---
 

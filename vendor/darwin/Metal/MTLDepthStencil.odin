@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MTLDepthStencilState")
 DepthStencilState :: struct {
@@ -12,7 +12,7 @@ DepthStencilState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DepthStencilState, objc_selector="label", objc_name="label")
 	DepthStencilState_label :: proc(self: ^DepthStencilState) -> ^NS.String ---
 
@@ -30,7 +30,7 @@ DepthStencilDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DepthStencilDescriptor, objc_selector="depthCompareFunction", objc_name="depthCompareFunction")
 	DepthStencilDescriptor_depthCompareFunction :: proc(self: ^DepthStencilDescriptor) -> CompareFunction ---
 
@@ -69,7 +69,7 @@ StencilDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StencilDescriptor, objc_selector="stencilCompareFunction", objc_name="stencilCompareFunction")
 	StencilDescriptor_stencilCompareFunction :: proc(self: ^StencilDescriptor) -> CompareFunction ---
 

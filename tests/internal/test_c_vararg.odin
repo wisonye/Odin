@@ -1,8 +1,8 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:c"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:c"
+#import "core:testing"
 
 C_Vararg_Flags :: bit_set[0..<8; u8]
 

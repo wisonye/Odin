@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CoreLocation
 
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLServiceSession", objc_superclass=NS.Object)
 ServiceSession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ServiceSession, objc_selector="init", objc_name="init")
 	ServiceSession_init :: proc(self: ^ServiceSession) -> instancetype ---
 
@@ -45,7 +45,7 @@ ServiceSession_sessionRequiringAuthorization :: proc {
 @(objc_class="CLServiceSessionDiagnostic", objc_superclass=NS.Object)
 ServiceSessionDiagnostic :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ServiceSessionDiagnostic, objc_selector="authorizationDenied", objc_name="authorizationDenied")
 	ServiceSessionDiagnostic_authorizationDenied :: proc(self: ^ServiceSessionDiagnostic) -> bool ---
 

@@ -1,9 +1,9 @@
 package _chacha20
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // KEY_SIZE is the (X)ChaCha20 key size in bytes.
 KEY_SIZE :: 32

@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIContextualAction", objc_superclass=NS.Object)
 ContextualAction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextualAction, objc_selector="contextualActionWithStyle:title:handler:", objc_name="contextualActionWithStyle", objc_is_class_method=true)
 	ContextualAction_contextualActionWithStyle :: proc(style: ContextualActionStyle, title: ^NS.String, handler: ContextualActionHandler) -> instancetype ---
 

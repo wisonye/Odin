@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GCAxis2DInput")
 Axis2DInput :: struct {
@@ -12,7 +12,7 @@ Axis2DInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Axis2DInput, objc_selector="valueDidChangeHandler", objc_name="valueDidChangeHandler")
 	Axis2DInput_valueDidChangeHandler :: proc(self: ^Axis2DInput) -> ^Objc_Block(proc "c" ()) ---
 
@@ -45,7 +45,7 @@ LinearInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LinearInput, objc_selector="valueDidChangeHandler", objc_name="valueDidChangeHandler")
 	LinearInput_valueDidChangeHandler :: proc(self: ^LinearInput) -> ^Objc_Block(proc "c" ()) ---
 
@@ -81,7 +81,7 @@ PressedStateInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PressedStateInput, objc_selector="pressedDidChangeHandler", objc_name="pressedDidChangeHandler")
 	PressedStateInput_pressedDidChangeHandler :: proc(self: ^PressedStateInput) -> ^Objc_Block(proc "c" ()) ---
 
@@ -108,7 +108,7 @@ RelativeInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RelativeInput, objc_selector="deltaDidChangeHandler", objc_name="deltaDidChangeHandler")
 	RelativeInput_deltaDidChangeHandler :: proc(self: ^RelativeInput) -> ^Objc_Block(proc "c" ()) ---
 
@@ -138,7 +138,7 @@ TouchedStateInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TouchedStateInput, objc_selector="touchedDidChangeHandler", objc_name="touchedDidChangeHandler")
 	TouchedStateInput_touchedDidChangeHandler :: proc(self: ^TouchedStateInput) -> ^Objc_Block(proc "c" ()) ---
 

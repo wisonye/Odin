@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_GameKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKRandom")
 Random :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Random, objc_selector="nextInt", objc_name="nextInt")
 	Random_nextInt :: proc(self: ^Random) -> NS.Integer ---
 
@@ -30,7 +30,7 @@ RandomDistribution :: struct {
 	using _: Random,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RandomDistribution, objc_selector="initWithRandomSource:lowestValue:highestValue:", objc_name="initWithRandomSource")
 	RandomDistribution_initWithRandomSource :: proc(self: ^RandomDistribution, source: ^Random, lowestInclusive: NS.Integer, highestInclusive: NS.Integer) -> instancetype ---
 
@@ -77,7 +77,7 @@ RandomSource :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RandomSource, objc_selector="init", objc_name="init")
 	RandomSource_init :: proc(self: ^RandomSource) -> instancetype ---
 
@@ -95,7 +95,7 @@ foreign lib {
 @(objc_class="GKARC4RandomSource", objc_superclass=RandomSource)
 ARC4RandomSource :: struct { using _: RandomSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ARC4RandomSource, objc_selector="init", objc_name="init")
 	ARC4RandomSource_init :: proc(self: ^ARC4RandomSource) -> instancetype ---
 
@@ -116,7 +116,7 @@ foreign lib {
 @(objc_class="GKLinearCongruentialRandomSource", objc_superclass=RandomSource)
 LinearCongruentialRandomSource :: struct { using _: RandomSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LinearCongruentialRandomSource, objc_selector="init", objc_name="init")
 	LinearCongruentialRandomSource_init :: proc(self: ^LinearCongruentialRandomSource) -> instancetype ---
 
@@ -134,7 +134,7 @@ foreign lib {
 @(objc_class="GKMersenneTwisterRandomSource", objc_superclass=RandomSource)
 MersenneTwisterRandomSource :: struct { using _: RandomSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MersenneTwisterRandomSource, objc_selector="init", objc_name="init")
 	MersenneTwisterRandomSource_init :: proc(self: ^MersenneTwisterRandomSource) -> instancetype ---
 
@@ -152,7 +152,7 @@ foreign lib {
 @(objc_class="GKGaussianDistribution", objc_superclass=RandomDistribution)
 GaussianDistribution :: struct { using _: RandomDistribution}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GaussianDistribution, objc_selector="initWithRandomSource:lowestValue:highestValue:", objc_name="initWithRandomSource_lowestValue_highestValue")
 	GaussianDistribution_initWithRandomSource_lowestValue_highestValue :: proc(self: ^GaussianDistribution, source: ^Random, lowestInclusive: NS.Integer, highestInclusive: NS.Integer) -> instancetype ---
 

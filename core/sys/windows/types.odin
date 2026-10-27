@@ -2,7 +2,7 @@ package sys_windows
 
 // Don't add a `#+build windows` guard to this file. It's used for `dxgi` on non-Windows platforms, for example.
 
-import "core:c"
+#import "core:c"
 
 c_char      :: c.char
 c_uchar     :: c.uchar
@@ -1719,7 +1719,7 @@ NM_KEYDOWN              :: NM_OUTOFMEMORY-14 // uses NMKEY struct
 NM_RELEASEDCAPTURE      :: NM_OUTOFMEMORY-15
 NM_SETCURSOR            :: NM_OUTOFMEMORY-16 // uses NMMOUSE struct
 NM_CHAR                 :: NM_OUTOFMEMORY-17 // uses NMCHAR struct
-NM_TOOLTIPSCREATED      :: NM_OUTOFMEMORY-18 // notify of when the tooltips window is create
+NM_TOOLTIPSCREATED      :: NM_OUTOFMEMORY-18 // notify of #if the tooltips window is create
 NM_LDOWN                :: NM_OUTOFMEMORY-19
 NM_RDOWN                :: NM_OUTOFMEMORY-20
 NM_THEMECHANGED         :: NM_OUTOFMEMORY-21
@@ -1728,7 +1728,7 @@ NM_CUSTOMTEXT           :: NM_OUTOFMEMORY-23 // uses NMCUSTOMTEXT struct
 NM_TVSTATEIMAGECHANGING :: NM_OUTOFMEMORY-23 // uses NMTVSTATEIMAGECHANGING struct, defined after HTREEITEM
 
 // Pointer to a double-null-terminated string.
-// Special care must be taken when converting to this type.
+// Special care must be taken #if converting to this type.
 PCZZWSTR :: cstring16
 
 SHFILEOPSTRUCTW :: struct {
@@ -2039,7 +2039,7 @@ GWL_STYLE   :: -16
 GWL_EXSTYLE :: -20
 GWL_ID      :: -12
 
-when ODIN_ARCH == .i386 {
+#if ODIN_ARCH == .i386 {
 	GWL_WNDPROC    :: -4
 	GWL_HINSTANCE  :: -6
 	GWL_HWNDPARENT :: -8
@@ -2058,7 +2058,7 @@ GCL_CBCLSEXTRA :: -20
 GCL_STYLE      :: -26
 GCW_ATOM       :: -32
 
-when ODIN_ARCH == .i386 {
+#if ODIN_ARCH == .i386 {
 	GCL_MENUNAME      :: -8
 	GCL_HBRBACKGROUND :: -10
 	GCL_HCURSOR       :: -12
@@ -2261,21 +2261,21 @@ SHELLEXECUTEINFOW :: struct {
 	cbSize:       DWORD,     // in, required, sizeof of this structure
 	fMask:        ULONG,     // in, SEE_MASK_XXX values
 	hwnd:         HWND,      // in, optional
-	lpVerb:       LPCWSTR,   // in, optional when unspecified the default verb is choosen
+	lpVerb:       LPCWSTR,   // in, optional #if unspecified the default verb is choosen
 	lpFile:       LPCWSTR,   // in, either this value or lpIDList must be specified
 	lpParameters: LPCWSTR,   // in, optional
 	lpDirectory:  LPCWSTR,   // in, optional
 	nShow:        c_int,     // in, required
-	hInstApp:     HINSTANCE, // out when SEE_MASK_NOCLOSEPROCESS is specified
-	lpIDList:     rawptr,    // in, valid when SEE_MASK_IDLIST is specified, PCIDLIST_ABSOLUTE, for use with SEE_MASK_IDLIST & SEE_MASK_INVOKEIDLIST
-	lpClass:      LPCWSTR,   // in, valid when SEE_MASK_CLASSNAME is specified
-	hkeyClass:    HKEY,      // in, valid when SEE_MASK_CLASSKEY is specified
-	dwHotKey:     DWORD,     // in, valid when SEE_MASK_HOTKEY is specified
+	hInstApp:     HINSTANCE, // out #if SEE_MASK_NOCLOSEPROCESS is specified
+	lpIDList:     rawptr,    // in, valid #if SEE_MASK_IDLIST is specified, PCIDLIST_ABSOLUTE, for use with SEE_MASK_IDLIST & SEE_MASK_INVOKEIDLIST
+	lpClass:      LPCWSTR,   // in, valid #if SEE_MASK_CLASSNAME is specified
+	hkeyClass:    HKEY,      // in, valid #if SEE_MASK_CLASSKEY is specified
+	dwHotKey:     DWORD,     // in, valid #if SEE_MASK_HOTKEY is specified
 	using DUMMYUNIONNAME: struct #raw_union {
 		hIcon:    HANDLE, // not used
-		hMonitor: HANDLE, // in, valid when SEE_MASK_HMONITOR specified
+		hMonitor: HANDLE, // in, valid #if SEE_MASK_HMONITOR specified
 	},
-	hProcess: HANDLE, // out, valid when SEE_MASK_NOCLOSEPROCESS specified
+	hProcess: HANDLE, // out, valid #if SEE_MASK_NOCLOSEPROCESS specified
 }
 LPSHELLEXECUTEINFOW :: ^SHELLEXECUTEINFOW
 
@@ -2869,7 +2869,7 @@ WINDOWPOS :: struct {
 	flags: UINT,
 }
 
-when size_of(uintptr) == 4 {
+#if size_of(uintptr) == 4 {
 	WSADATA :: struct {
 		wVersion:       WORD,
 		wHighVersion:   WORD,
@@ -2879,7 +2879,7 @@ when size_of(uintptr) == 4 {
 		iMaxUdpDg:      u16,
 		lpVendorInfo:   [^]u8,
 	}
-} else when size_of(uintptr) == 8 {
+} else #if size_of(uintptr) == 8 {
 	WSADATA :: struct {
 		wVersion:       WORD,
 		wHighVersion:   WORD,
@@ -3347,7 +3347,7 @@ CONTEXT :: struct {
 PCONTEXT  :: ^CONTEXT
 LPCONTEXT :: ^CONTEXT
 
-when size_of(uintptr) == 32 {
+#if size_of(uintptr) == 32 {
 	XSAVE_FORMAT :: struct #align(16) {
 		ControlWord:    WORD,
 		StatusWord:     WORD,
@@ -5073,7 +5073,7 @@ WSAEADDRINUSE          :: 10048 // Endpoint being bound is in use by another soc
 WSAEADDRNOTAVAIL       :: 10049 // Not a valid local IP address on this computer.
 WSAENETDOWN            :: 10050 // Network subsystem failure on the local machine.
 WSAENETUNREACH         :: 10051 // The local machine is not connected to the network.
-WSAENETRESET           :: 10052 // Keepalive failure detected, or TTL exceeded when receiving UDP packets.
+WSAENETRESET           :: 10052 // Keepalive failure detected, or TTL exceeded #if receiving UDP packets.
 WSAECONNABORTED        :: 10053 // Connection has been aborted by software in the host machine.
 WSAECONNRESET          :: 10054 // The connection was reset while trying to accept, read or write.
 WSAENOBUFS             :: 10055 // No buffer space is available. The outgoing queue may be full in which case you should probably try again after a pause.

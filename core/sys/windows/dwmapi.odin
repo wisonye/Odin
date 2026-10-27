@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import dwmapi "system:Dwmapi.lib"
+#foreign #import dwmapi "system:Dwmapi.lib"
 
 DWMWINDOWATTRIBUTE :: enum {
 	DWMWA_NCRENDERING_ENABLED = 1,
@@ -46,7 +46,7 @@ DWM_WINDOW_CORNER_PREFERENCE :: enum c_int {
 }
 
 @(default_calling_convention="system")
-foreign dwmapi {
+#foreign dwmapi {
 	DwmFlush                     :: proc() -> HRESULT ---
 	DwmIsCompositionEnabled      :: proc(pfEnabled: ^BOOL) -> HRESULT ---
 	DwmExtendFrameIntoClientArea :: proc(hWnd: HWND, pMarInset: PMARGINS) -> HRESULT ---

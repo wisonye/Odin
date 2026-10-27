@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MDLAnimatedQuaternion", objc_superclass=AnimatedValue)
 AnimatedQuaternion :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedQuaternion, objc_selector="setFloatQuaternion:atTime:", objc_name="setFloatQuaternion")
 	AnimatedQuaternion_setFloatQuaternion :: proc(self: ^AnimatedQuaternion, value: quaternion128, time: NS.TimeInterval) ---
 
@@ -38,7 +38,7 @@ foreign lib {
 @(objc_class="MDLAnimatedQuaternionArray", objc_superclass=AnimatedValue)
 AnimatedQuaternionArray :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedQuaternionArray, objc_selector="initWithElementCount:", objc_name="initWithElementCount")
 	AnimatedQuaternionArray_initWithElementCount :: proc(self: ^AnimatedQuaternionArray, arrayElementCount: NS.UInteger) -> id ---
 
@@ -88,7 +88,7 @@ AnimatedQuaternionArray_getDoubleQuaternionArray :: proc {
 @(objc_class="MDLAnimatedScalar", objc_superclass=AnimatedValue)
 AnimatedScalar :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedScalar, objc_selector="setFloat:atTime:", objc_name="setFloat")
 	AnimatedScalar_setFloat :: proc(self: ^AnimatedScalar, value: cffi.float, time: NS.TimeInterval) ---
 
@@ -118,7 +118,7 @@ foreign lib {
 @(objc_class="MDLAnimatedScalarArray", objc_superclass=AnimatedValue)
 AnimatedScalarArray :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedScalarArray, objc_selector="initWithElementCount:", objc_name="initWithElementCount")
 	AnimatedScalarArray_initWithElementCount :: proc(self: ^AnimatedScalarArray, arrayElementCount: NS.UInteger) -> id ---
 
@@ -171,7 +171,7 @@ AnimatedValue :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedValue, objc_selector="isAnimated", objc_name="isAnimated")
 	AnimatedValue_isAnimated :: proc(self: ^AnimatedValue) -> bool ---
 
@@ -207,7 +207,7 @@ foreign lib {
 @(objc_class="MDLAnimatedMatrix4x4", objc_superclass=AnimatedValue)
 AnimatedMatrix4x4 :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedMatrix4x4, objc_selector="setFloat4x4:atTime:", objc_name="setFloat4x4")
 	AnimatedMatrix4x4_setFloat4x4 :: proc(self: ^AnimatedMatrix4x4, value: matrix[4,4]f32, time: NS.TimeInterval) ---
 
@@ -237,7 +237,7 @@ foreign lib {
 @(objc_class="MDLAnimatedVector2", objc_superclass=AnimatedValue)
 AnimatedVector2 :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedVector2, objc_selector="setFloat2:atTime:", objc_name="setFloat2")
 	AnimatedVector2_setFloat2 :: proc(self: ^AnimatedVector2, value: ^vector_float2, time: NS.TimeInterval) ---
 
@@ -267,7 +267,7 @@ foreign lib {
 @(objc_class="MDLAnimatedVector4", objc_superclass=AnimatedValue)
 AnimatedVector4 :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedVector4, objc_selector="setFloat4:atTime:", objc_name="setFloat4")
 	AnimatedVector4_setFloat4 :: proc(self: ^AnimatedVector4, value: ^vector_float4, time: NS.TimeInterval) ---
 
@@ -297,7 +297,7 @@ foreign lib {
 @(objc_class="MDLAnimatedVector3", objc_superclass=AnimatedValue)
 AnimatedVector3 :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedVector3, objc_selector="setFloat3:atTime:", objc_name="setFloat3")
 	AnimatedVector3_setFloat3 :: proc(self: ^AnimatedVector3, value: ^vector_float3, time: NS.TimeInterval) ---
 
@@ -327,7 +327,7 @@ foreign lib {
 @(objc_class="MDLAnimatedVector3Array", objc_superclass=AnimatedValue)
 AnimatedVector3Array :: struct { using _: AnimatedValue}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimatedVector3Array, objc_selector="initWithElementCount:", objc_name="initWithElementCount")
 	AnimatedVector3Array_initWithElementCount :: proc(self: ^AnimatedVector3Array, arrayElementCount: NS.UInteger) -> id ---
 

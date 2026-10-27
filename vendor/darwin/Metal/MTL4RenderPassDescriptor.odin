@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4RenderPassDescriptor", objc_superclass=NS.Object)
 MTL4RenderPassDescriptor :: struct {
@@ -10,7 +10,7 @@ MTL4RenderPassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4RenderPassDescriptor, objc_selector="setSamplePositions:count:", objc_name="setSamplePositions")
 	MTL4RenderPassDescriptor_setSamplePositions :: proc(self: ^MTL4RenderPassDescriptor, positions: ^SamplePosition, count: NS.UInteger) ---
 

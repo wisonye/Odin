@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UICalendarSelection", objc_superclass=NS.Object)
 CalendarSelection :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelection, objc_selector="updateSelectableDates", objc_name="updateSelectableDates")
 	CalendarSelection_updateSelectableDates :: proc(self: ^CalendarSelection) ---
 
@@ -25,7 +25,7 @@ foreign lib {
 CalendarSelectionMultiDate :: struct { using _: CalendarSelection}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionMultiDate, objc_selector="setSelectedDates:animated:", objc_name="setSelectedDates_animated")
 	CalendarSelectionMultiDate_setSelectedDates_animated :: proc(self: ^CalendarSelectionMultiDate, selectedDates: ^NS.Array, animated: bool) ---
 
@@ -56,7 +56,7 @@ CalendarSelectionMultiDateDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionMultiDateDelegate, objc_selector="multiDateSelection:didSelectDate:", objc_name="multiDateSelection_didSelectDate")
 	CalendarSelectionMultiDateDelegate_multiDateSelection_didSelectDate :: proc(self: ^CalendarSelectionMultiDateDelegate, selection: ^CalendarSelectionMultiDate, dateComponents: ^NS.DateComponents) ---
 
@@ -75,7 +75,7 @@ foreign lib {
 CalendarSelectionSingleDate :: struct { using _: CalendarSelection}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionSingleDate, objc_selector="setSelectedDate:animated:", objc_name="setSelectedDate_animated")
 	CalendarSelectionSingleDate_setSelectedDate_animated :: proc(self: ^CalendarSelectionSingleDate, selectedDate: ^NS.DateComponents, animated: bool) ---
 
@@ -106,7 +106,7 @@ CalendarSelectionSingleDateDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionSingleDateDelegate, objc_selector="dateSelection:didSelectDate:", objc_name="dateSelection_didSelectDate")
 	CalendarSelectionSingleDateDelegate_dateSelection_didSelectDate :: proc(self: ^CalendarSelectionSingleDateDelegate, selection: ^CalendarSelectionSingleDate, dateComponents: ^NS.DateComponents) ---
 
@@ -119,7 +119,7 @@ foreign lib {
 CalendarSelectionWeekOfYear :: struct { using _: CalendarSelection}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionWeekOfYear, objc_selector="setSelectedWeekOfYear:animated:", objc_name="setSelectedWeekOfYear_animated")
 	CalendarSelectionWeekOfYear_setSelectedWeekOfYear_animated :: proc(self: ^CalendarSelectionWeekOfYear, selectedWeekOfYear: ^NS.DateComponents, animated: bool) ---
 
@@ -150,7 +150,7 @@ CalendarSelectionWeekOfYearDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarSelectionWeekOfYearDelegate, objc_selector="weekOfYearSelection:didSelectWeekOfYear:", objc_name="weekOfYearSelection_didSelectWeekOfYear")
 	CalendarSelectionWeekOfYearDelegate_weekOfYearSelection_didSelectWeekOfYear :: proc(self: ^CalendarSelectionWeekOfYearDelegate, selection: ^CalendarSelectionWeekOfYear, weekOfYearComponents: ^NS.DateComponents) ---
 
@@ -163,7 +163,7 @@ foreign lib {
 CalendarView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarView, objc_selector="setVisibleDateComponents:animated:", objc_name="setVisibleDateComponents_animated")
 	CalendarView_setVisibleDateComponents_animated :: proc(self: ^CalendarView, dateComponents: ^NS.DateComponents, animated: bool) ---
 
@@ -239,7 +239,7 @@ CalendarViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarViewDelegate, objc_selector="calendarView:decorationForDateComponents:", objc_name="calendarView_decorationForDateComponents")
 	CalendarViewDelegate_calendarView_decorationForDateComponents :: proc(self: ^CalendarViewDelegate, calendarView: ^CalendarView, dateComponents: ^NS.DateComponents) -> ^CalendarViewDecoration ---
 
@@ -252,7 +252,7 @@ foreign lib {
 CalendarViewDecoration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarViewDecoration, objc_selector="init", objc_name="init")
 	CalendarViewDecoration_init :: proc(self: ^CalendarViewDecoration) -> instancetype ---
 

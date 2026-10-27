@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import "base:intrinsics"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSPredicate", objc_superclass=Object)
 Predicate :: struct {
@@ -12,7 +12,7 @@ Predicate :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Predicate, objc_selector="predicateWithFormat:argumentArray:", objc_name="predicateWithFormat_argumentArray", objc_is_class_method=true)
 	Predicate_predicateWithFormat_argumentArray :: proc(predicateFormat: ^String, arguments: ^Array) -> ^Predicate ---
 
@@ -78,7 +78,7 @@ Predicate_allowEvaluationWithValidator :: #force_inline proc "c" (self: ^Predica
 @(objc_class="NSComparisonPredicate", objc_superclass=Predicate)
 ComparisonPredicate :: struct { using _: Predicate}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComparisonPredicate, objc_selector="predicateWithLeftExpression:rightExpression:modifier:type:options:", objc_name="predicateWithLeftExpression_rightExpression_modifier_type_options", objc_is_class_method=true)
 	ComparisonPredicate_predicateWithLeftExpression_rightExpression_modifier_type_options :: proc(lhs: ^Expression, rhs: ^Expression, modifier: ComparisonPredicateModifier, type: PredicateOperatorType, options: ComparisonPredicateOptions) -> ^ComparisonPredicate ---
 
@@ -131,7 +131,7 @@ ComparisonPredicate_initWithLeftExpression :: proc {
 @(objc_class="NSCompoundPredicate", objc_superclass=Predicate)
 CompoundPredicate :: struct { using _: Predicate}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompoundPredicate, objc_selector="initWithType:subpredicates:", objc_name="initWithType")
 	CompoundPredicate_initWithType :: proc(self: ^CompoundPredicate, type: CompoundPredicateType, subpredicates: ^Array) -> instancetype ---
 
@@ -165,7 +165,7 @@ PredicateValidating :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PredicateValidating, objc_selector="visitPredicate:error:", objc_name="visitPredicate_error")
 	PredicateValidating_visitPredicate_error :: proc(self: ^PredicateValidating, predicate: ^Predicate, error: ^^Error) -> bool ---
 

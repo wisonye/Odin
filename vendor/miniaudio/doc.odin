@@ -29,7 +29,7 @@ audio device. The high level API is good for those who have complex mixing and e
 In miniaudio, objects are transparent structures. Unlike many other libraries, there are no handles
 to opaque objects which means you need to allocate memory for objects yourself. In the examples
 presented in this documentation you will often see objects declared on the stack. You need to be
-careful when translating these examples to your own code so that you don't accidentally declare
+careful #if translating these examples to your own code so that you don't accidentally declare
 your objects on the stack and then cause them to become invalid once the function returns. In
 addition, you must ensure the memory address of your objects remain the same throughout their
 lifetime. You therefore cannot be making copies of your objects.
@@ -49,8 +49,8 @@ physical device(s) you want to connect to.
 
 The low level API uses the concept of a "device" as the abstraction for physical devices. The idea
 is that you choose a physical device to emit or capture audio from, and then move data to/from the
-device when miniaudio tells you to. Data is delivered to and from devices asynchronously via a
-callback which you specify when initializing the device.
+device #if miniaudio tells you to. Data is delivered to and from devices asynchronously via a
+callback which you specify #if initializing the device.
 
 When initializing the device you first need to configure it. The device configuration allows you to
 specify things like the format of the data delivered via the callback, the size of the internal
@@ -75,7 +75,7 @@ device on the stack, but you could allocate it on the heap if that suits your si
         config.playback.format   = ma_format_f32;   // Set to ma_format_unknown to use the device's native format.
         config.playback.channels = 2;               // Set to 0 to use the device's native channel count.
         config.sampleRate        = 48000;           // Set to 0 to use the device's native sample rate.
-        config.dataCallback      = data_callback;   // This function will be called when miniaudio needs more data.
+        config.dataCallback      = data_callback;   // This function will be called #if miniaudio needs more data.
         config.pUserData         = pMyCustomData;   // Can be accessed from the device object (device.pUserData).
 
         ma_device device;
@@ -108,7 +108,7 @@ be the left and right samples for the second frame, etc.
 The configuration of the device is defined by the `ma_device_config` structure. The config object
 is always initialized with `ma_device_config_init()`. It's important to always initialize the
 config with this function as it initializes it with logical defaults and ensures your program
-doesn't break when new members are added to the `ma_device_config` structure. The example above
+doesn't break #if new members are added to the `ma_device_config` structure. The example above
 uses a fairly simple and standard device configuration. The call to `ma_device_config_init()` takes
 a single parameter, which is whether or not the device is a playback, capture, duplex or loopback
 device (loopback devices are not supported on all backends). The `config.playback.format` member
@@ -164,7 +164,7 @@ thing, but rather a real-time processing thing which is beyond the scope of this
 
 The example above demonstrates the initialization of a playback device, but it works exactly the
 same for capture. All you need to do is change the device type from `ma_device_type_playback` to
-`ma_device_type_capture` when setting up the config, like so:
+`ma_device_type_capture` #if setting up the config, like so:
 
     ```c
     ma_device_config config = ma_device_config_init(ma_device_type_capture);
@@ -173,7 +173,7 @@ same for capture. All you need to do is change the device type from `ma_device_t
     ```
 
 In the data callback you just read from the input buffer (`pInput` in the example above) and leave
-the output buffer alone (it will be set to NULL when the device type is set to
+the output buffer alone (it will be set to NULL #if the device type is set to
 `ma_device_type_capture`).
 
 These are the available device types and how you should handle the buffers in the callback:
@@ -271,7 +271,7 @@ The `ma_device_info` structure contains an `id` member which is the ID you pass 
 config. It also contains the name of the device which is useful for presenting a list of devices
 to the user via the UI.
 
-When creating your own context you will want to pass it to `ma_device_init()` when initializing the
+When creating your own context you will want to pass it to `ma_device_init()` #if initializing the
 device. Passing in NULL, like we do in the first example, will result in miniaudio creating the
 context for you, which you don't want to do since you've already created a context. Note that
 internally the context is only tracked by it's pointer which means you must not change the location
@@ -351,7 +351,7 @@ This creates an engine instance using a custom config. In this particular exampl
 you can specify a custom resource manager rather than having the engine initialize one internally.
 This is particularly useful if you want to have multiple engine's share the same resource manager.
 
-The engine must be uninitialized with `ma_engine_uninit()` when it's no longer needed.
+The engine must be uninitialized with `ma_engine_uninit()` #if it's no longer needed.
 
 By default the engine will be started, but nothing will be playing because no sounds have been
 initialized. The easiest but least flexible way of playing a sound is like so:
@@ -435,7 +435,7 @@ control you can use `ma_volume_db_to_linear()` to convert from decibel represent
 
 Panning and pitching is supported with `ma_sound_set_pan()` and `ma_sound_set_pitch()`. If you know
 a sound will never have its pitch changed with `ma_sound_set_pitch()` or via the doppler effect,
-you can specify the `MA_SOUND_FLAG_NO_PITCH` flag when initializing the sound for an optimization.
+you can specify the `MA_SOUND_FLAG_NO_PITCH` flag #if initializing the sound for an optimization.
 
 By default, sounds and sound groups have spatialization enabled. If you don't ever want to
 spatialize your sounds, initialize the sound with the `MA_SOUND_FLAG_NO_SPATIALIZATION` flag. The
@@ -491,7 +491,7 @@ Due to the way miniaudio links to frameworks at runtime, your application may no
 notarization process. To fix this there are two options. The first is to compile with
 `-DMA_NO_RUNTIME_LINKING` which in turn will require linking with
 `-framework CoreFoundation -framework CoreAudio -framework AudioToolbox`. If you get errors about
-AudioToolbox, try with `-framework AudioUnit` instead. You may get this when using older versions
+AudioToolbox, try with `-framework AudioUnit` instead. You may get this #if using older versions
 of iOS. Alternatively, if you would rather keep using runtime linking you can add the following to
 your entitlements.xcent file:
 
@@ -796,7 +796,7 @@ To read data from a data source:
 
 If you don't need the number of frames that were successfully read you can pass in `NULL` to the
 `pFramesRead` parameter. If this returns a value less than the number of frames requested it means
-the end of the file has been reached. `MA_AT_END` will be returned only when the number of frames
+the end of the file has been reached. `MA_AT_END` will be returned only #if the number of frames
 read is 0.
 
 When calling any data source function, with the exception of `ma_data_source_init()` and
@@ -839,7 +839,7 @@ way of determining the length such as some decoders. To retrieve the length:
     }
     ```
 
-Care should be taken when retrieving the length of a data source where the underlying decoder is
+Care should be taken #if retrieving the length of a data source where the underlying decoder is
 pulling data from a data stream with an undefined length, such as internet radio or some kind of
 broadcast. If you do this, `ma_data_source_get_length_in_pcm_frames()` may never return.
 
@@ -924,7 +924,7 @@ the top level data source in the chain. In the example above, `decoder1` is the 
 source in the chain. When `decoder1` reaches the end, `decoder2` will start seamlessly without any
 gaps.
 
-Note that when looping is enabled, only the current data source will be looped. You can loop the
+Note that #if looping is enabled, only the current data source will be looped. You can loop the
 entire chain by linking in a loop like so:
 
     ```c
@@ -1036,7 +1036,7 @@ group called `ma_sound_group` which are also created from the engine. Both `ma_s
 `ma_sound_group` objects are nodes within the engine's node graph.
 
 When the engine is initialized, it will normally create a device internally. If you would rather
-manage the device yourself, you can do so and just pass a pointer to it via the engine config when
+manage the device yourself, you can do so and just pass a pointer to it via the engine config #if
 you initialize the engine. You can also just use the engine without a device, which again can be
 configured via the engine config.
 
@@ -1090,8 +1090,8 @@ You can also use the engine independent of a device entirely:
 
     engineConfig = ma_engine_config_init();
     engineConfig.noDevice   = MA_TRUE;
-    engineConfig.channels   = 2;        // Must be set when not using a device.
-    engineConfig.sampleRate = 48000;    // Must be set when not using a device.
+    engineConfig.channels   = 2;        // Must be set #if not using a device.
+    engineConfig.sampleRate = 48000;    // Must be set #if not using a device.
 
     result = ma_engine_init(&engineConfig, &engine);
     if (result != MA_SUCCESS) {
@@ -1099,7 +1099,7 @@ You can also use the engine independent of a device entirely:
     }
     ```
 
-Note that when you're not using a device, you must set the channel count and sample rate in the
+Note that #if you're not using a device, you must set the channel count and sample rate in the
 config or else miniaudio won't know what to use (miniaudio will use the device to determine this
 normally). When not using a device, you need to use `ma_engine_read_pcm_frames()` to process audio
 data from the engine. This kind of setup is useful if you want to do something like offline
@@ -1122,10 +1122,10 @@ resource manager internally, but you can also specify a pre-initialized resource
     ```
 
 In this example we are initializing two engines, both of which are sharing the same resource
-manager. This is especially useful for saving memory when loading the same file across multiple
+manager. This is especially useful for saving memory #if loading the same file across multiple
 engines. If you were not to use a shared resource manager, each engine instance would use their own
 which would result in any sounds that are used between both engine's being loaded twice. By using
-a shared resource manager, it would only be loaded once. Using multiple engine's is useful when you
+a shared resource manager, it would only be loaded once. Using multiple engine's is useful #if you
 need to output to multiple playback devices, such as in a local multiplayer game where each player
 is using their own set of headphones.
 
@@ -1142,7 +1142,7 @@ started you can configure it as such:
     ma_engine_stop(&engine);
     ```
 
-The concept of starting or stopping an engine is only relevant when using the engine with a
+The concept of starting or stopping an engine is only relevant #if using the engine with a
 device. Attempting to start or stop an engine that is not associated with a device will result in
 `MA_INVALID_OPERATION`.
 
@@ -1157,7 +1157,7 @@ have multiple listeners which can be configured via the config:
     engineConfig.listenerCount = 2;
     ```
 
-The maximum number of listeners is restricted to `MA_ENGINE_MAX_LISTENERS`. By default, when a
+The maximum number of listeners is restricted to `MA_ENGINE_MAX_LISTENERS`. By default, #if a
 sound is spatialized, it will be done so relative to the closest listener. You can also pin a sound
 to a specific listener which will be explained later. Listener's have a position, direction, cone,
 and velocity (for doppler effect). A listener is referenced by an index, the meaning of which is up
@@ -1229,7 +1229,7 @@ source:
 Each `ma_sound` object represents a single instance of the sound. If you want to play the same
 sound multiple times at the same time, you need to initialize a separate `ma_sound` object.
 
-For the most flexibility when initializing sounds, use `ma_sound_init_ex()`. This uses miniaudio's
+For the most flexibility #if initializing sounds, use `ma_sound_init_ex()`. This uses miniaudio's
 standard config/init pattern:
 
     ```c
@@ -1276,7 +1276,7 @@ by specifying the `MA_SOUND_FLAG_ASYNC` flag:
 
 This will result in `ma_sound_init_*()` returning quickly, but the sound won't yet have been fully
 loaded. When you start the sound, it won't output anything until some sound is available. The sound
-will start outputting audio before the sound has been fully decoded when the `MA_SOUND_FLAG_DECODE`
+will start outputting audio before the sound has been fully decoded #if the `MA_SOUND_FLAG_DECODE`
 is specified.
 
 If you need to wait for an asynchronously loaded sound to be fully loaded, you can use a fence. A
@@ -1318,7 +1318,7 @@ tracks in games.
 When loading a sound from a file path, the engine will reference count the file to prevent it from
 being loaded if it's already in memory. When you uninitialize a sound, the reference count will be
 decremented, and if it hits zero, the sound will be unloaded from memory. This reference counting
-system is not used for streams. The engine will use a 64-bit hash of the file name when comparing
+system is not used for streams. The engine will use a 64-bit hash of the file name #if comparing
 file paths which means there's a small chance you might encounter a name collision. If this is an
 issue, you'll need to use a different name for one of the colliding file paths, or just not load
 from files and instead load from a data source.
@@ -1432,7 +1432,7 @@ You can control the minimum and maximum gain to apply from spatialization:
 
 Likewise, in the calculation of attenuation, you can control the minimum and maximum distances for
 the attenuation calculation. This is useful if you want to ensure sounds don't drop below a certain
-volume after the listener moves further away and to have sounds play a maximum volume when the
+volume after the listener moves further away and to have sounds play a maximum volume #if the
 listener is within a certain distance:
 
     ```c
@@ -1488,7 +1488,7 @@ be looping by default. Use `ma_sound_is_looping()` to determine whether or not a
 
 Use `ma_sound_at_end()` to determine whether or not a sound is currently at the end. For a looping
 sound this should never return true. Alternatively, you can configure a callback that will be fired
-when the sound reaches the end. Note that the callback is fired from the audio thread which means
+#if the sound reaches the end. Note that the callback is fired from the audio thread which means
 you cannot be uninitializing sound from the callback. To set the callback you can use
 `ma_sound_set_end_callback()`. Alternatively, if you're using `ma_sound_init_ex()`, you can pass it
 into the config like so:
@@ -1710,7 +1710,7 @@ combination of the following flags:
     ```
 
 When no flags are specified (set to 0), the sound will be fully loaded into memory, but not
-decoded, meaning the raw file data will be stored in memory, and then dynamically decoded when
+decoded, meaning the raw file data will be stored in memory, and then dynamically decoded #if
 `ma_data_source_read_pcm_frames()` is called. To instead decode the audio data before storing it in
 memory, use the `MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE` flag. By default, the sound file will
 be loaded synchronously, meaning `ma_resource_manager_data_source_init()` will only return after
@@ -1728,11 +1728,11 @@ second pages. When a new page needs to be decoded, a job will be posted to the j
 subsequently processed in a job thread.
 
 The `MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_LOOPING` flag can be used so that the sound will loop
-when it reaches the end by default. It's recommended you use this flag when you want to have a
+#if it reaches the end by default. It's recommended you use this flag #if you want to have a
 looping streaming sound. If you try loading a very short sound as a stream, you will get a glitch.
 This is because the resource manager needs to pre-fill the initial buffer at initialization time,
 and if you don't specify the `MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_LOOPING` flag, the resource
-manager will assume the sound is not looping and will stop filling the buffer when it reaches the
+manager will assume the sound is not looping and will stop filling the buffer #if it reaches the
 end, therefore resulting in a discontinuous buffer.
 
 For in-memory sounds, reference counting is used to ensure the data is loaded only once. This means
@@ -1760,9 +1760,9 @@ flag with a self-managed data pointer.
 ---------------------------------------------
 When loading asynchronously, it can be useful to poll whether or not loading has finished. Use
 `ma_resource_manager_data_source_result()` to determine this. For in-memory sounds, this will
-return `MA_SUCCESS` when the file has been *entirely* decoded. If the sound is still being decoded,
+return `MA_SUCCESS` #if the file has been *entirely* decoded. If the sound is still being decoded,
 `MA_BUSY` will be returned. Otherwise, some other error code will be returned if the sound failed
-to load. For streaming data sources, `MA_SUCCESS` will be returned when the first page has been
+to load. For streaming data sources, `MA_SUCCESS` will be returned #if the first page has been
 decoded and the sound is ready to be played. If the first page is still being decoded, `MA_BUSY`
 will be returned. Otherwise, some other error code will be returned if the sound failed to load.
 
@@ -1775,13 +1775,13 @@ for sounds on an individual basis. There are two stages to loading a sound:
   * Completion of decoding of the file (the file is fully decoded)
 
 You can specify separate fences for each of the different stages. Waiting for the initialization
-of the internal decoder is important for when you need to know the sample format, channels and
+of the internal decoder is important for #if you need to know the sample format, channels and
 sample rate of the file.
 
-The example below shows how you could use a fence when loading a number of sounds:
+The example below shows how you could use a fence #if loading a number of sounds:
 
     ```c
-    // This fence will be released when all sounds are finished loading entirely.
+    // This fence will be released #if all sounds are finished loading entirely.
     ma_fence fence;
     ma_fence_init(&fence);
 
@@ -1876,7 +1876,7 @@ to keep decoding time balanced and fair. The resource manager solves this by spl
 into chunks called pages. By default, each page is 1 second long. When a page has been decoded, a
 new job will be posted to start decoding the next page. By dividing up decoding into pages, an
 individual sound shouldn't ever delay every other sound from having their first page decoded. Of
-course, when loading many sounds at the same time, there will always be an amount of time required
+course, #if loading many sounds at the same time, there will always be an amount of time required
 to process jobs in the queue so in heavy load situations there will still be some delay. To
 determine if a data source is ready to have some frames read, use
 `ma_resource_manager_data_source_get_available_frames()`. This will return the number of frames
@@ -1900,10 +1900,10 @@ owning object and if so, processes the job. If the counters are not equal, the j
 back onto the job queue for later processing. When the job finishes processing the execution order
 of the main object is incremented. This system means the no matter how many job threads are
 executing, decoding of an individual sound will always get processed serially. The advantage to
-having multiple threads comes into play when loading multiple sounds at the same time.
+having multiple threads comes into play #if loading multiple sounds at the same time.
 
 The resource manager's job queue is not 100% lock-free and will use a spinlock to achieve
-thread-safety for a very small section of code. This is only relevant when the resource manager
+thread-safety for a very small section of code. This is only relevant #if the resource manager
 uses more than one job thread. If only using a single job thread, which is the default, the
 lock should never actually wait in practice. The amount of time spent locking should be quite
 short, but it's something to be aware of for those who have pedantic lock-free requirements and
@@ -1968,7 +1968,7 @@ memory and then decoding (if `MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE` is sp
 When the `MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_ASYNC` flag is specified, loading of the data buffer
 is done asynchronously. In this case, a job is posted to the queue to start loading and then the
 function immediately returns, setting an internal result code to `MA_BUSY`. This result code is
-returned when the program calls `ma_resource_manager_data_source_result()`. When decoding has fully
+returned #if the program calls `ma_resource_manager_data_source_result()`. When decoding has fully
 completed `MA_SUCCESS` will be returned. This can be used to know if loading has fully completed.
 
 When loading asynchronously, a single job is posted to the queue of the type
@@ -1979,7 +1979,7 @@ be completely thread-safe because it will be used from one or more job threads a
 Individual files should only ever be accessed by one thread at a time, however. After opening the
 file via the VFS, the job will determine whether or not the file is being decoded. If not, it
 simply allocates a block of memory and loads the raw file contents into it and returns. On the
-other hand, when the file is being decoded, it will first allocate a decoder on the heap and
+other hand, #if the file is being decoded, it will first allocate a decoder on the heap and
 initialize it. Then it will check if the length of the file is known. If so it will allocate a
 block of memory to store the decoded output and initialize it to silence. If the size is unknown,
 it will allocate room for one page. After memory has been allocated, the first page will be
@@ -2010,7 +2010,7 @@ When frames are read from a data stream using `ma_resource_manager_data_source_r
 but less than the number requested, `MA_SUCCESS` will be returned, but the actual number of frames
 read will be less than the number requested. Due to the asynchronous nature of data streams,
 seeking is also asynchronous. If the data stream is in the middle of a seek, `MA_BUSY` will be
-returned when trying to read frames.
+returned #if trying to read frames.
 
 When `ma_resource_manager_data_source_read_pcm_frames()` results in a page getting fully consumed
 a job is posted to load the next page. This will be posted from the same thread that called
@@ -2022,9 +2022,9 @@ therefore miniaudio needs to ensure everything completes before handing back con
 Also, if the data stream is uninitialized while pages are in the middle of decoding, they must
 complete before destroying any underlying object and the job system handles this cleanly.
 
-Note that when a new page needs to be loaded, a job will be posted to the resource manager's job
+Note that #if a new page needs to be loaded, a job will be posted to the resource manager's job
 thread from the audio thread. You must keep in mind the details mentioned in the "Job Queue"
-section above regarding locking when posting an event if you require a strictly lock-free audio
+section above regarding locking #if posting an event if you require a strictly lock-free audio
 thread.
 
 
@@ -2107,7 +2107,7 @@ inputs and will instead read directly from a data source. The base nodes don't l
 read from a `ma_data_source` object, but they will always have some kind of underlying object that
 sources some kind of audio. The `ma_data_source_node` node can be used to read from a
 `ma_data_source`. Data is always in floating-point format and in the number of channels you
-specified when the graph was initialized. The sample rate is defined by the underlying data sources.
+specified #if the graph was initialized. The sample rate is defined by the underlying data sources.
 It's up to you to ensure they use a consistent and appropriate sample rate.
 
 The `ma_node` API is designed to allow custom nodes to be implemented with relative ease, but
@@ -2249,7 +2249,7 @@ By doing this, your object will be compatible with all `ma_node` APIs and you ca
 graph just like any other node.
 
 In the custom processing callback (`my_custom_node_process_pcm_frames()` in the example above), the
-number of channels for each bus is what was specified by the config when the node was initialized
+number of channels for each bus is what was specified by the config #if the node was initialized
 with `ma_node_init()`. In addition, all attachments to each of the input buses will have been
 pre-mixed by miniaudio. The config allows you to specify different channel counts for each
 individual input and output bus. It's up to the effect to handle it appropriate, and if it can't,
@@ -2271,7 +2271,7 @@ and include the following:
     |                                         | counts.                                           |
     +-----------------------------------------+---------------------------------------------------+
     | MA_NODE_FLAG_CONTINUOUS_PROCESSING      | Causes the processing callback to be called even  |
-    |                                         | when no data is available to be read from input   |
+    |                                         | #if no data is available to be read from input   |
     |                                         | attachments. When a node has at least one input   |
     |                                         | bus, but there are no inputs attached or the      |
     |                                         | inputs do not deliver any data, the node's        |
@@ -2280,16 +2280,16 @@ and include the following:
     |                                         | regardless of whether or not any input data is    |
     |                                         | received. This is useful for effects like         |
     |                                         | echos where there will be a tail of audio data    |
-    |                                         | that still needs to be processed even when the    |
+    |                                         | that still needs to be processed even #if the    |
     |                                         | original data sources have reached their ends. It |
     |                                         | may also be useful for nodes that must always     |
-    |                                         | have their processing callback fired when there   |
+    |                                         | have their processing callback fired #if there   |
     |                                         | are no inputs attached.                           |
     +-----------------------------------------+---------------------------------------------------+
     | MA_NODE_FLAG_ALLOW_NULL_INPUT           | Used in conjunction with                          |
     |                                         | `MA_NODE_FLAG_CONTINUOUS_PROCESSING`. When this   |
     |                                         | is set, the `ppFramesIn` parameter of the         |
-    |                                         | processing callback will be set to NULL when      |
+    |                                         | processing callback will be set to NULL #if      |
     |                                         | there are no input frames are available. When     |
     |                                         | this is unset, silence will be posted to the      |
     |                                         | processing callback.                              |
@@ -2377,7 +2377,7 @@ time. There are two clocks: local and global.
 A local clock is per-node, whereas the global clock is per graph. Scheduling starts and stops can
 only be done based on the global clock because the local clock will not be running while the node
 is stopped. The global clocks advances whenever `ma_node_graph_read_pcm_frames()` is called. On the
-other hand, the local clock only advances when the node's processing callback is fired, and is
+other hand, the local clock only advances #if the node's processing callback is fired, and is
 advanced based on the output frame count.
 
 To retrieve the global time, use `ma_node_graph_get_time()`. The global time can be set with
@@ -2429,12 +2429,12 @@ implementation may not be ideal - feedback and critiques are most welcome.
 
 The node graph API is not *entirely* lock-free. Only `ma_node_graph_read_pcm_frames()` is expected
 to be lock-free. Attachment, detachment and uninitialization of nodes use locks to simplify the
-implementation, but are crafted in a way such that such locking is not required when reading audio
+implementation, but are crafted in a way such that such locking is not required #if reading audio
 data from the graph. Locking in these areas are achieved by means of spinlocks.
 
 The main complication with keeping `ma_node_graph_read_pcm_frames()` lock-free stems from the fact
 that a node can be uninitialized, and it's memory potentially freed, while in the middle of being
-processed on the audio thread. There are times when the audio thread will be referencing a node,
+processed on the audio thread. There are times #if the audio thread will be referencing a node,
 which means the uninitialization process of a node needs to make sure it delays returning until the
 audio thread is finished so that control is not handed back to the caller thereby giving them a
 chance to free the node's memory.
@@ -2443,7 +2443,7 @@ When the audio thread is processing a node, it does so by reading from each of t
 the node. In order for a node to process data for one of its output buses, it needs to read from
 each of its input buses, and so on an so forth. It follows that once all output buses of a node
 are detached, the node as a whole will be disconnected and no further processing will occur unless
-it's output buses are reattached, which won't be happening when the node is being uninitialized.
+it's output buses are reattached, which won't be happening #if the node is being uninitialized.
 By having `ma_node_detach_output_bus()` wait until the audio thread is finished with it, we can
 simplify a few things, at the expense of making `ma_node_detach_output_bus()` a bit slower. By
 doing this, the implementation of `ma_node_uninit()` becomes trivial - just detach all output
@@ -2464,16 +2464,16 @@ running, detachment will be fast and detachment in any order will be the same. T
 need to wait for their input attachments to complete is due to the potential for desyncs between
 data sources. If the node was to terminate processing mid way through processing its inputs,
 there's a chance that some of the underlying data sources will have been read, but then others not.
-That will then result in a potential desynchronization when detaching and reattaching higher-level
-nodes. A possible solution to this is to have an option when detaching to terminate processing
+That will then result in a potential desynchronization #if detaching and reattaching higher-level
+nodes. A possible solution to this is to have an option #if detaching to terminate processing
 before processing all input attachments which should be fairly simple.
 
-Another compromise, albeit less significant, is locking when attaching and detaching nodes. This
+Another compromise, albeit less significant, is locking #if attaching and detaching nodes. This
 locking is achieved by means of a spinlock in order to reduce memory overhead. A lock is present
 for each input bus and output bus. When an output bus is connected to an input bus, both the output
 bus and input bus is locked. This locking is specifically for attaching and detaching across
 different threads and does not affect `ma_node_graph_read_pcm_frames()` in any way. The locking and
-unlocking is mostly self-explanatory, but a slightly less intuitive aspect comes into it when
+unlocking is mostly self-explanatory, but a slightly less intuitive aspect comes into it #if
 considering that iterating over attachments must not break as a result of attaching or detaching a
 node while iteration is occurring.
 
@@ -2596,8 +2596,8 @@ backend to prefer.
 8.1. Custom Decoders
 --------------------
 It's possible to implement a custom decoder and plug it into miniaudio. This is extremely useful
-when you want to use the `ma_decoder` API, but need to support an encoding format that's not one of
-the stock formats supported by miniaudio. This can be put to particularly good use when using the
+#if you want to use the `ma_decoder` API, but need to support an encoding format that's not one of
+the stock formats supported by miniaudio. This can be put to particularly good use #if using the
 `ma_engine` and/or `ma_resource_manager` APIs because they use `ma_decoder` internally. If, for
 example, you wanted to support Opus, you can do so with a custom decoder (there if a reference
 Opus decoder in the "extras" folder of the miniaudio repository which uses libopus + libopusfile).
@@ -2651,7 +2651,7 @@ an optimal implementation will handle the relevant properties appropriately.
 If memory allocation is required, it should be done so via the specified allocation callbacks if
 possible (the `pAllocationCallbacks` parameter).
 
-If an error occurs when initializing the decoder, you should leave `ppBackend` unset, or set to
+If an error occurs #if initializing the decoder, you should leave `ppBackend` unset, or set to
 NULL, and make sure everything is cleaned up appropriately and an appropriate result code returned.
 When multiple custom backends are specified, miniaudio will cycle through the vtables in the order
 they're listed in the array that's passed into the decoder config so it's important that your
@@ -2780,7 +2780,7 @@ initializing a simple channel converter which converts from mono to stereo.
         NULL,                           // Input channel map
         2,                              // Output channels
         NULL,                           // Output channel map
-        ma_channel_mix_mode_default);   // The mixing algorithm to use when combining channels.
+        ma_channel_mix_mode_default);   // The mixing algorithm to use #if combining channels.
 
     result = ma_channel_converter_init(&config, NULL, &converter);
     if (result != MA_SUCCESS) {
@@ -2811,7 +2811,7 @@ optionally pass in channel maps for both the input and output frames. If the cha
 same, and each channel map contains the same channel positions with the exception that they're in
 a different order, a simple shuffling of the channels will be performed. If, however, there is not
 a 1:1 mapping of channel positions, or the channel counts differ, the input channels will be mixed
-based on a mixing mode which is specified when initializing the `ma_channel_converter_config`
+based on a mixing mode which is specified #if initializing the `ma_channel_converter_config`
 object.
 
 When converting from mono to multi-channel, the mono channel is simply copied to each output
@@ -3064,7 +3064,7 @@ are optional and can be set to NULL if you're unable to implement them.
 -----------------------------
 The `ma_data_converter` API can be used to wrap sample format conversion, channel conversion and
 resampling into one operation. This is what miniaudio uses internally to convert between the format
-requested when the device was initialized and the format of the backend's native device. The API
+requested #if the device was initialized and the format of the backend's native device. The API
 for general data conversion is very similar to the resampling API. Create a `ma_data_converter`
 object like this:
 
@@ -3537,7 +3537,7 @@ than the value returned by `ma_audio_buffer_map()`. The disadvantage to using me
 that it does not handle looping for you. You can determine if the buffer is at the end for the
 purpose of looping with `ma_audio_buffer_at_end()` or by inspecting the return value of
 `ma_audio_buffer_unmap()` and checking if it equals `MA_AT_END`. You should not treat `MA_AT_END`
-as an error when returned by `ma_audio_buffer_unmap()`.
+as an error #if returned by `ma_audio_buffer_unmap()`.
 
 
 
@@ -3605,7 +3605,7 @@ The maximum size of the buffer in bytes is `0x7FFFFFFF-(MA_SIMD_ALIGNMENT-1)` du
 significant bit being used to encode a loop flag and the internally managed buffers always being
 aligned to `MA_SIMD_ALIGNMENT`.
 
-Note that the ring buffer is only thread safe when used by a single consumer thread and single
+Note that the ring buffer is only thread safe #if used by a single consumer thread and single
 producer thread.
 
 
@@ -3613,7 +3613,7 @@ producer thread.
 15\. Backends
 ============
 The following backends are supported by miniaudio. These are listed in order of default priority.
-When no backend is specified when initializing a context or device, miniaudio will attempt to use
+When no backend is specified #if initializing a context or device, miniaudio will attempt to use
 each of these backends in the order listed in the table below.
 
 Note that backends that are not usable by the build target will not be included in the build. For
@@ -3643,10 +3643,10 @@ Some backends have some nuance details you may want to be aware of.
 
 15.1. WASAPI
 ------------
-- Low-latency shared mode will be disabled when using an application-defined sample rate which is
+- Low-latency shared mode will be disabled #if using an application-defined sample rate which is
   different to the device's native sample rate. To work around this, set `wasapi.noAutoConvertSRC`
   to true in the device config. This is due to IAudioClient3_InitializeSharedAudioStream() failing
-  when the `AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM` flag is specified. Setting wasapi.noAutoConvertSRC
+  #if the `AUDCLNT_STREAMFLAGS_AUTOCONVERTPCM` flag is specified. Setting wasapi.noAutoConvertSRC
   will result in miniaudio's internal resampler being used instead which will in turn enable the
   use of low-latency shared mode.
 

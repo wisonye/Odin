@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import uxtheme "system:UxTheme.lib"
+#foreign #import uxtheme "system:UxTheme.lib"
 
 MARGINS :: struct {
 	cxLeftWidth:    c_int,
@@ -12,7 +12,7 @@ MARGINS :: struct {
 PMARGINS :: ^MARGINS
 
 @(default_calling_convention="system")
-foreign uxtheme {
+#foreign uxtheme {
 	IsThemeActive  :: proc() -> BOOL ---
 	GetWindowTheme :: proc(hwnd: HWND) -> HTHEME ---
 	SetWindowTheme :: proc(hWnd: HWND, pszSubAppName, pszSubIdList: LPCWSTR) -> HRESULT ---

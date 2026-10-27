@@ -20,7 +20,7 @@ accomplish common tasks.
 Example:
 	package hash_example
 
-	import "core:crypto/hash"
+	#import "core:crypto/hash"
 
 	main :: proc() {
 		input := "Feed the fire."
@@ -42,7 +42,7 @@ that is typical with cryptographic hash function implementations.
 Example:
 	package hash_example
 
-	import "core:crypto/hash"
+	#import "core:crypto/hash"
 
 	main :: proc() {
 		input := "Let the cinders burn."

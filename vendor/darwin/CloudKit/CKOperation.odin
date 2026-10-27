@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKOperation", objc_superclass=NS.Operation)
 Operation :: struct { using _: NS.Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Operation, objc_selector="init", objc_name="init")
 	Operation_init :: proc(self: ^Operation) -> instancetype ---
 
@@ -67,7 +67,7 @@ foreign lib {
 @(objc_class="CKOperationConfiguration", objc_superclass=NS.Object)
 OperationConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OperationConfiguration, objc_selector="container", objc_name="container")
 	OperationConfiguration_container :: proc(self: ^OperationConfiguration) -> ^Container ---
 
@@ -109,7 +109,7 @@ foreign lib {
 @(objc_class="CKAcceptSharesOperation", objc_superclass=Operation)
 AcceptSharesOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AcceptSharesOperation, objc_selector="init", objc_name="init")
 	AcceptSharesOperation_init :: proc(self: ^AcceptSharesOperation) -> instancetype ---
 
@@ -139,7 +139,7 @@ foreign lib {
 @(objc_class="CKDiscoverAllUserIdentitiesOperation", objc_superclass=Operation)
 DiscoverAllUserIdentitiesOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DiscoverAllUserIdentitiesOperation, objc_selector="init", objc_name="init")
 	DiscoverAllUserIdentitiesOperation_init :: proc(self: ^DiscoverAllUserIdentitiesOperation) -> instancetype ---
 
@@ -160,7 +160,7 @@ foreign lib {
 @(objc_class="CKDiscoverUserIdentitiesOperation", objc_superclass=Operation)
 DiscoverUserIdentitiesOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DiscoverUserIdentitiesOperation, objc_selector="init", objc_name="init")
 	DiscoverUserIdentitiesOperation_init :: proc(self: ^DiscoverUserIdentitiesOperation) -> instancetype ---
 
@@ -194,7 +194,7 @@ FetchNotificationChangesOperation :: struct { using _: Operation}
 @(objc_class="CKFetchShareParticipantsOperation", objc_superclass=Operation)
 FetchShareParticipantsOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchShareParticipantsOperation, objc_selector="init", objc_name="init")
 	FetchShareParticipantsOperation_init :: proc(self: ^FetchShareParticipantsOperation) -> instancetype ---
 
@@ -242,7 +242,7 @@ OperationGroup :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OperationGroup, objc_selector="init", objc_name="init")
 	OperationGroup_init :: proc(self: ^OperationGroup) -> instancetype ---
 

@@ -1,8 +1,8 @@
 #+private
 package _mldsa
 
-import "core:crypto/_sha3"
-import "core:crypto/shake"
+#import "core:crypto/_sha3"
+#import "core:crypto/shake"
 
 STREAM128_BLOCKBYTES :: _sha3.RATE_128
 STREAM256_BLOCKBYTES :: _sha3.RATE_256

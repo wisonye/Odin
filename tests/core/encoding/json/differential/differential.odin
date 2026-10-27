@@ -11,18 +11,18 @@ package test_core_json_differential
 //
 // The runner logs its random seed; reproduce a failure with -define:ODIN_TEST_RANDOM_SEED=n.
 
-import "core:encoding/json"
-import "core:fmt"
-import "core:log"
-import "core:math/rand"
-import "core:mem"
-import "core:mem/virtual"
-import "core:reflect"
-import "core:slice"
-import "core:strconv"
-import "core:strings"
-import "core:testing"
-import ref "../reference"
+#import "core:encoding/json"
+#import "core:fmt"
+#import "core:log"
+#import "core:math/rand"
+#import "core:mem"
+#import "core:mem/virtual"
+#import "core:reflect"
+#import "core:slice"
+#import "core:strconv"
+#import "core:strings"
+#import "core:testing"
+#import ref "../reference"
 
 ITERATIONS   :: #config(JSON_DIFF_ITERATIONS, 1000)
 MAX_FAILURES :: #config(JSON_DIFF_MAX_FAILURES, 5)

@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKNoise", objc_superclass=NS.Object)
 Noise :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Noise, objc_selector="init", objc_name="init")
 	Noise_init :: proc(self: ^Noise) -> instancetype ---
 
@@ -112,7 +112,7 @@ Noise_noiseWithComponentNoises :: proc {
 @(objc_class="GKNoiseMap", objc_superclass=NS.Object)
 NoiseMap :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NoiseMap, objc_selector="init", objc_name="init")
 	NoiseMap_init :: proc(self: ^NoiseMap) -> instancetype ---
 
@@ -172,7 +172,7 @@ NoiseSource :: struct { using _: NS.Object}
 @(objc_class="GKCheckerboardNoiseSource", objc_superclass=NoiseSource)
 CheckerboardNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CheckerboardNoiseSource, objc_selector="checkerboardNoiseWithSquareSize:", objc_name="checkerboardNoiseWithSquareSize", objc_is_class_method=true)
 	CheckerboardNoiseSource_checkerboardNoiseWithSquareSize :: proc(squareSize: cffi.double) -> instancetype ---
 
@@ -190,7 +190,7 @@ foreign lib {
 @(objc_class="GKCoherentNoiseSource", objc_superclass=NoiseSource)
 CoherentNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CoherentNoiseSource, objc_selector="frequency", objc_name="frequency")
 	CoherentNoiseSource_frequency :: proc(self: ^CoherentNoiseSource) -> cffi.double ---
 
@@ -220,7 +220,7 @@ foreign lib {
 @(objc_class="GKConstantNoiseSource", objc_superclass=NoiseSource)
 ConstantNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ConstantNoiseSource, objc_selector="constantNoiseWithValue:", objc_name="constantNoiseWithValue", objc_is_class_method=true)
 	ConstantNoiseSource_constantNoiseWithValue :: proc(value: cffi.double) -> instancetype ---
 
@@ -238,7 +238,7 @@ foreign lib {
 @(objc_class="GKCylindersNoiseSource", objc_superclass=NoiseSource)
 CylindersNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CylindersNoiseSource, objc_selector="cylindersNoiseWithFrequency:", objc_name="cylindersNoiseWithFrequency", objc_is_class_method=true)
 	CylindersNoiseSource_cylindersNoiseWithFrequency :: proc(frequency: cffi.double) -> instancetype ---
 
@@ -256,7 +256,7 @@ foreign lib {
 @(objc_class="GKSpheresNoiseSource", objc_superclass=NoiseSource)
 SpheresNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpheresNoiseSource, objc_selector="spheresNoiseWithFrequency:", objc_name="spheresNoiseWithFrequency", objc_is_class_method=true)
 	SpheresNoiseSource_spheresNoiseWithFrequency :: proc(frequency: cffi.double) -> instancetype ---
 
@@ -274,7 +274,7 @@ foreign lib {
 @(objc_class="GKVoronoiNoiseSource", objc_superclass=NoiseSource)
 VoronoiNoiseSource :: struct { using _: NoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VoronoiNoiseSource, objc_selector="voronoiNoiseWithFrequency:displacement:distanceEnabled:seed:", objc_name="voronoiNoiseWithFrequency", objc_is_class_method=true)
 	VoronoiNoiseSource_voronoiNoiseWithFrequency :: proc(frequency: cffi.double, displacement: cffi.double, distanceEnabled: bool, seed: cffi.int32_t) -> instancetype ---
 
@@ -310,7 +310,7 @@ foreign lib {
 @(objc_class="GKBillowNoiseSource", objc_superclass=CoherentNoiseSource)
 BillowNoiseSource :: struct { using _: CoherentNoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BillowNoiseSource, objc_selector="billowNoiseSourceWithFrequency:octaveCount:persistence:lacunarity:seed:", objc_name="billowNoiseSourceWithFrequency", objc_is_class_method=true)
 	BillowNoiseSource_billowNoiseSourceWithFrequency :: proc(frequency: cffi.double, octaveCount: NS.Integer, persistence: cffi.double, lacunarity: cffi.double, seed: cffi.int32_t) -> instancetype ---
 
@@ -328,7 +328,7 @@ foreign lib {
 @(objc_class="GKPerlinNoiseSource", objc_superclass=CoherentNoiseSource)
 PerlinNoiseSource :: struct { using _: CoherentNoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PerlinNoiseSource, objc_selector="perlinNoiseSourceWithFrequency:octaveCount:persistence:lacunarity:seed:", objc_name="perlinNoiseSourceWithFrequency", objc_is_class_method=true)
 	PerlinNoiseSource_perlinNoiseSourceWithFrequency :: proc(frequency: cffi.double, octaveCount: NS.Integer, persistence: cffi.double, lacunarity: cffi.double, seed: cffi.int32_t) -> instancetype ---
 
@@ -346,7 +346,7 @@ foreign lib {
 @(objc_class="GKRidgedNoiseSource", objc_superclass=CoherentNoiseSource)
 RidgedNoiseSource :: struct { using _: CoherentNoiseSource}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RidgedNoiseSource, objc_selector="ridgedNoiseSourceWithFrequency:octaveCount:lacunarity:seed:", objc_name="ridgedNoiseSourceWithFrequency", objc_is_class_method=true)
 	RidgedNoiseSource_ridgedNoiseSourceWithFrequency :: proc(frequency: cffi.double, octaveCount: NS.Integer, lacunarity: cffi.double, seed: cffi.int32_t) -> instancetype ---
 

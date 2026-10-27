@@ -1,13 +1,13 @@
 package sync_chan
 
-import "base:builtin"
-import "base:intrinsics"
-import "base:runtime"
-import "core:sync"
-import "core:math/rand"
-import "core:time"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:sync"
+#import "core:math/rand"
+#import "core:time"
 
-when ODIN_TEST {
+#if ODIN_TEST {
 /*
 Hook for testing _try_select_raw allowing the test harness to manipulate the
 channels prior to the select actually operating on them.
@@ -36,7 +36,7 @@ Note: all procedures accepting `Raw_Chan` also accept `Chan`.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	chan_example :: proc() {
 		// Create an unbuffered channel with messages of type int,
@@ -62,7 +62,7 @@ the concept of Direction.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	raw_chan_example :: proc() {
 		// Create an unbuffered channel with messages of type int,
@@ -109,7 +109,7 @@ Creates a buffered or unbuffered `Chan` instance.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_example :: proc() {
 		unbuffered: chan.Chan(int)
@@ -145,7 +145,7 @@ Creates an unbuffered version of the specified `Chan` type.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_unbuffered_example :: proc() {
 		c, err := chan.create_unbuffered(chan.Chan(int), context.allocator)
@@ -176,7 +176,7 @@ Creates a buffered version of the specified `Chan` type.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_buffered_example :: proc() {
 		c, err := chan.create_buffered(chan.Chan(int), 10, context.allocator)
@@ -209,7 +209,7 @@ size and alignment.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_raw_example :: proc() {
 		unbuffered: ^chan.Raw_Chan
@@ -247,7 +247,7 @@ size and alignment.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_raw_unbuffered_example :: proc() {
 		unbuffered, err := chan.create_raw(size_of(int), align_of(int), context.allocator)
@@ -286,7 +286,7 @@ size and alignment.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	create_raw_unbuffered_example :: proc() {
 		c, err := chan.create_raw_buffered(size_of(int), align_of(int), 10, context.allocator)
@@ -364,7 +364,7 @@ not receiving.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	as_send_example :: proc() {
 		// this procedure takes a channel that can only
@@ -400,7 +400,7 @@ not sending.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	as_recv_example :: proc() {
 		consumer :: proc(c: chan.Chan(int, .Recv)) {
@@ -428,18 +428,18 @@ Sends the specified message, blocking the current thread if:
 - the channel is unbuffered
 - the channel's buffer is full
 until the channel is being read from or the channel is closed. `send` will
-return `false` when attempting to send on an already closed channel.
+return `false` #if attempting to send on an already closed channel.
 
 **Inputs**
 - `c`: The channel
 - `data`: The message to send
 
 **Returns**
-- `true` if the message was sent, `false` when the channel was already closed
+- `true` if the message was sent, `false` #if the channel was already closed
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	send_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -464,18 +464,18 @@ send :: proc "contextless" (c: $C/Chan($T, $D), data: T) -> (ok: bool) where C.D
 }
 
 /*
-Tries sending the specified message without blocking. On an unbuffered channel, this only succeeds when a receiver is already waiting.
+Tries sending the specified message without blocking. On an unbuffered channel, this only succeeds #if a receiver is already waiting.
 
 **Inputs**
 - `c`: The channel
 - `data`: The message to send
 
 **Returns**
-- `true` if the message was sent; `false` when the channel was already closed, the channel's buffer was full, or no receiver was waiting on an unbuffered channel
+- `true` if the message was sent; `false` #if the channel was already closed, the channel's buffer was full, or no receiver was waiting on an unbuffered channel
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	try_send_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -498,7 +498,7 @@ Reads a message from the channel, blocking the current thread if:
 - the channel is unbuffered
 - the channel's buffer is empty
 until the channel is being written to or the channel is closed. `recv` will
-return `false` when attempting to receive a message on an already closed
+return `false` #if attempting to receive a message on an already closed
 channel.
 
 **Inputs**
@@ -506,11 +506,11 @@ channel.
 
 **Returns**
 - The message
-- `true` if a message was received, `false` when the channel was already closed
+- `true` if a message was received, `false` #if the channel was already closed
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	recv_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -546,11 +546,11 @@ Tries reading a message from the channel in a non-blocking fashion.
 
 **Returns**
 - The message
-- `true` if a message was received, `false` when the channel was already closed or no message was available
+- `true` if a message was received, `false` #if the channel was already closed or no message was available
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	try_recv_example :: proc() {
 		c, err := chan.create(chan.Chan(int), context.allocator)
@@ -573,7 +573,7 @@ The result of a send or receive with a timeout.
 Timeout_Status :: enum {
 	Ok,        // the message was sent or received
 	Timed_Out, // the timeout passed first
-	Closed,    // the channel was closed; when receiving, also empty
+	Closed,    // the channel was closed; #if receiving, also empty
 }
 
 /*
@@ -589,8 +589,8 @@ Sends the specified message, blocking the current thread until it is sent, the c
 
 Example:
 
-	import "core:sync/chan"
-	import "core:time"
+	#import "core:sync/chan"
+	#import "core:time"
 
 	send_with_timeout_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -625,8 +625,8 @@ Reads a message from the channel, blocking the current thread until one is avail
 
 Example:
 
-	import "core:sync/chan"
-	import "core:time"
+	#import "core:sync/chan"
+	#import "core:time"
 
 	recv_with_timeout_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -659,21 +659,21 @@ Sends the specified message, blocking the current thread if:
 - the channel is unbuffered
 - the channel's buffer is full
 until the channel is being read from or the channel is closed. `send_raw` will
-return `false` when attempting to send on an already closed channel.
+return `false` #if attempting to send on an already closed channel.
 
 Note: The message referenced by `msg_out` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: The channel
 - `msg_out`: Pointer to the data to send
 
 **Returns**
-- `true` if the message was sent, `false` when the channel was already closed
+- `true` if the message was sent, `false` #if the channel was already closed
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	send_raw_example :: proc() {
 		c, err := chan.create_raw(size_of(int), align_of(int), 1, context.allocator)
@@ -701,22 +701,22 @@ Reads a message from the channel, blocking the current thread if:
 - the channel is unbuffered
 - the channel's buffer is empty
 until the channel is being written to or the channel is closed. `recv_raw`
-will return `false` when attempting to receive a message on an already closed
+will return `false` #if attempting to receive a message on an already closed
 channel.
 
 Note: The location pointed to by `msg_out` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: The channel
 - `msg_out`: Pointer to where the message should be stored
 
 **Returns**
-- `true` if a message was received, `false` when the channel was already closed
+- `true` if a message was received, `false` #if the channel was already closed
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	recv_raw_example :: proc() {
 		c, err := chan.create_raw(size_of(int), align_of(int), 1, context.allocator)
@@ -743,21 +743,21 @@ recv_raw :: proc "contextless" (c: ^Raw_Chan, msg_out: rawptr) -> (ok: bool) {
 
 
 /*
-Tries sending the specified message without blocking. On an unbuffered channel, this only succeeds when a receiver is already waiting.
+Tries sending the specified message without blocking. On an unbuffered channel, this only succeeds #if a receiver is already waiting.
 
 Note: The message referenced by `msg_out` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: the channel
 - `msg_out`: pointer to the data to send
 
 **Returns**
-- `true` if the message was sent; `false` when the channel was already closed, the channel's buffer was full, or no receiver was waiting on an unbuffered channel
+- `true` if the message was sent; `false` #if the channel was already closed, the channel's buffer was full, or no receiver was waiting on an unbuffered channel
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	try_send_raw_example :: proc() {
 		c, err := chan.create_raw(size_of(int), align_of(int), 1, context.allocator)
@@ -808,18 +808,18 @@ try_send_raw :: proc "contextless" (c: ^Raw_Chan, msg_in: rawptr) -> (ok: bool) 
 Reads a message from the channel if one is available.
 
 Note: The location pointed to by `msg_out` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: The channel
 - `msg_out`: Pointer to where the message should be stored
 
 **Returns**
-- `true` if a message was received, `false` when the channel was already closed or no message was available
+- `true` if a message was received, `false` #if the channel was already closed or no message was available
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	try_recv_raw_example :: proc() {
 		c, err := chan.create_raw(size_of(int), align_of(int), context.allocator)
@@ -868,7 +868,7 @@ try_recv_raw :: proc "contextless" (c: ^Raw_Chan, msg_out: rawptr) -> bool {
 Sends the specified message, blocking the current thread until it is sent, the channel is closed, or `duration` has passed.
 
 Note: The message referenced by `msg_in` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: The channel
@@ -887,7 +887,7 @@ send_raw_with_timeout :: proc "contextless" (c: ^Raw_Chan, msg_in: rawptr, durat
 Reads a message from the channel, blocking the current thread until one is available, the channel is closed and empty, or `duration` has passed.
 
 Note: The location pointed to by `msg_out` must match the size
-and alignment used when the `Raw_Chan` was created.
+and alignment used #if the `Raw_Chan` was created.
 
 **Inputs**
 - `c`: The channel
@@ -915,7 +915,7 @@ Checks if the given channel is buffered.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	is_buffered_example :: proc() {
 		c, _ := chan.create(chan.Chan(int), 1, context.allocator)
@@ -939,7 +939,7 @@ Checks if the given channel is unbuffered.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	is_buffered_example :: proc() {
 		c, _ := chan.create(chan.Chan(int), context.allocator)
@@ -966,8 +966,8 @@ because they cannot hold elements.
 
 Example:
 
-	import "core:sync/chan"
-	import "core:fmt"
+	#import "core:sync/chan"
+	#import "core:fmt"
 
 	len_example :: proc() {
 		c, _ := chan.create(chan.Chan(int), 2, context.allocator)
@@ -1024,8 +1024,8 @@ because they cannot hold elements.
 
 Example:
 
-	import "core:sync/chan"
-	import "core:fmt"
+	#import "core:sync/chan"
+	#import "core:fmt"
 
 	cap_example :: proc() {
 		c, _ := chan.create(chan.Chan(int), 2, context.allocator)
@@ -1057,7 +1057,7 @@ Closes the channel, preventing new messages from being added.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	close_example :: proc() {
 		c, _ := chan.create(chan.Chan(int), 2, context.allocator)
@@ -1144,7 +1144,7 @@ or if there is already a writer attempting to send a message.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	can_recv_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -1180,7 +1180,7 @@ or if there is already a reader waiting for a message.
 
 Example:
 
-	import "core:sync/chan"
+	#import "core:sync/chan"
 
 	can_send_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -1228,7 +1228,7 @@ If the message is nil, corresponding send channel will be skipped.
 - `recv`: A slice of channels to read from
 - `sends`: A slice of channels to send messages on
 - `send_msgs`: A slice of messages to send
-- `recv_out`: A pointer to the location where, when receiving, the message should be stored
+- `recv_out`: A pointer to the location where, #if receiving, the message should be stored
 
 **Returns**
 - Position of the available channel which was used for receiving or sending
@@ -1236,8 +1236,8 @@ If the message is nil, corresponding send channel will be skipped.
 
 Example:
 
-	import "core:sync/chan"
-	import "core:fmt"
+	#import "core:sync/chan"
+	#import "core:fmt"
 
 	try_select_raw_example :: proc() {
 		c, err := chan.create(chan.Chan(int), 1, context.allocator)
@@ -1318,7 +1318,7 @@ try_select_raw :: proc "odin" (recvs: []^Raw_Chan, sends: []^Raw_Chan, send_msgs
 			return -1, .None
 		}
 
-		when ODIN_TEST {
+		#if ODIN_TEST {
 			if __try_select_raw_pause != nil {
 				__try_select_raw_pause()
 			}

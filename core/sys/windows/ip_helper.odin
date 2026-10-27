@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import "system:iphlpapi.lib"
+#foreign #import "system:iphlpapi.lib"
 
 Address_Family :: enum u32 {
 	Unspecified = 0,   // Return both IPv4 and IPv6 addresses associated with adapters with them enabled.
@@ -218,7 +218,7 @@ NL_DAD_STATE :: enum c_int {
 }
 
 @(default_calling_convention = "system")
-foreign iphlpapi {
+#foreign iphlpapi {
 	/*
 		The GetAdaptersAddresses function retrieves the addresses associated with the adapters on the local computer.
 		See: https://docs.microsoft.com/en-us/windows/win32/api/iphlpapi/nf-iphlpapi-getadaptersaddresses

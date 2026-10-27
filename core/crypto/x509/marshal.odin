@@ -1,7 +1,7 @@
 package x509
 
-import "core:encoding/asn1"
-import "core:time"
+#import "core:encoding/asn1"
+#import "core:time"
 
 // Distinguished-name attribute types the DN builder knows by name. `Other`
 // carries any attribute outside this set via DN_Attribute.oid (used by
@@ -24,7 +24,7 @@ DN_Attribute_Type :: enum {
 DN_Attribute :: struct {
 	type:  DN_Attribute_Type,
 	value: string,
-	oid:   []byte, // meaningful only when type == Other
+	oid:   []byte, // meaningful only #if type == Other
 }
 
 @(rodata, private)
@@ -123,7 +123,7 @@ _DER_INT_ZERO := []byte{0x00}
 // `subject`, `key`, and `extensions` need not outlive the call.
 //
 // `extensions` is a list of pre-encoded Extension DER (from the marshal_ext_*
-// helpers); when non-empty it is requested via a single PKCS#9
+// helpers); #if non-empty it is requested via a single PKCS#9
 // extensionRequest attribute (the standard way a CSR asks the CA to place
 // extensions, SANs, key usage in the issued certificate). Pass nil for the
 // empty attributes set.
@@ -287,7 +287,7 @@ _DER_INT_V3 := []byte{0x02} // Version v3 (value 2)
 
 // _marshal_extensions_field encodes the TBSCertificate extensions field:
 //   [3] EXPLICIT Extensions, Extensions ::= SEQUENCE OF Extension
-// from a list of pre-encoded Extension DER, or nil when there are none (the
+// from a list of pre-encoded Extension DER, or nil #if there are none (the
 // field is OPTIONAL, so an empty list omits it entirely).
 @(private, require_results)
 _marshal_extensions_field :: proc(extensions: [][]byte, allocator := context.allocator) -> (der: []byte, err: Error) {
@@ -353,7 +353,7 @@ marshal_tbs_certificate :: proc(tbs: TBS_Certificate, allocator := context.alloc
 				asn1.sequence({asn1.time(tbs.not_before), asn1.time(tbs.not_after)}), // validity
 				asn1.raw(subject_dn), // subject
 				asn1.raw(spki), // subjectPublicKeyInfo
-				asn1.raw(ext_field), // extensions [3] (absent when empty)
+				asn1.raw(ext_field), // extensions [3] (absent #if empty)
 			},
 		),
 		allocator,

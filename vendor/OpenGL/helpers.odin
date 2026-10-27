@@ -3,11 +3,11 @@ package vendor_gl
 
 // Helper for loading shaders into a program
 
-import    "core:os"
-import    "core:fmt"
-import    "core:strings"
-@(require) import "core:time"
-import    "base:runtime"
+#import    "core:os"
+#import    "core:fmt"
+#import    "core:strings"
+@(require) #import "core:time"
+#import    "base:runtime"
 _ :: fmt
 _ :: runtime
 
@@ -50,7 +50,7 @@ get_last_error_message :: proc() -> (compile_message: string, compile_type: Shad
 // Shader checking and linking checking are identical
 // except for calling differently named GL functions
 // it's a bit ugly looking, but meh
-when GL_DEBUG {
+#if GL_DEBUG {
 	@private
 	check_error :: proc(
 		id: u32, type: Shader_Type, status: u32,
@@ -198,7 +198,7 @@ load_shaders_source :: proc(vs_source, fs_source: string, binary_retrievable := 
 load_shaders :: proc{load_shaders_file}
 
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	update_shader_if_changed :: proc(
 		vertex_name, fragment_name: string, 
 		program: u32, 

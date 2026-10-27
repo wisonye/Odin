@@ -3,12 +3,12 @@ package darwin_AppKit
 
 // Hand-written Odin-specific helpers which complement the generated bindings.
 
-import "base:builtin"
-import "base:intrinsics"
-import "core:c"
-import CG   "core:sys/darwin/CoreGraphics"
-import NS   "core:sys/darwin/Foundation"
-import ObjC "core:sys/darwin/ObjectiveC"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "core:c"
+#import CG   "core:sys/darwin/CoreGraphics"
+#import NS   "core:sys/darwin/Foundation"
+#import ObjC "core:sys/darwin/ObjectiveC"
 
 @(private="file")
 msgSend :: intrinsics.objc_send

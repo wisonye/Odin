@@ -2,13 +2,13 @@
 #+private file
 package debug_trace
 
-@require import     "base:runtime"
+@require #import     "base:runtime"
 
-@require import     "core:strings"
-@require import     "core:sync"
-@require import win "core:sys/windows"
+@require #import     "core:strings"
+@require #import     "core:sync"
+@require #import win "core:sys/windows"
 
-when !INSTRUMENTATION_MODE {
+#if !INSTRUMENTATION_MODE {
 
 @(private="package")
 _Capture_Entry :: uintptr
@@ -50,7 +50,7 @@ _resolve :: proc(bt: Capture, allocator, temp_allocator: runtime.Allocator) -> (
 	defer if err != nil { _locations_destroy(out, allocator) }
 
 	// Debug info is needed, if we call with out-of-date debug symbols it will return out-of-date info, so better to short-circuit right away.
-	when !ODIN_DEBUG {
+	#if !ODIN_DEBUG {
 		for &location, i in out {
 			location.file_path = "??"
 

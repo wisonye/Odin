@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UINavigationBar", objc_superclass=View)
 NavigationBar :: struct {
@@ -14,7 +14,7 @@ NavigationBar :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationBar, objc_selector="pushNavigationItem:animated:", objc_name="pushNavigationItem")
 	NavigationBar_pushNavigationItem :: proc(self: ^NavigationBar, item: ^NavigationItem, animated: bool) ---
 
@@ -177,7 +177,7 @@ NavigationBarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationBarDelegate, objc_selector="navigationBar:shouldPushItem:", objc_name="navigationBar_shouldPushItem")
 	NavigationBarDelegate_navigationBar_shouldPushItem :: proc(self: ^NavigationBarDelegate, navigationBar: ^NavigationBar, item: ^NavigationItem) -> bool ---
 
@@ -199,7 +199,7 @@ foreign lib {
 NavigationBarAppearance :: struct { using _: BarAppearance}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationBarAppearance, objc_selector="setBackIndicatorImage:transitionMaskImage:", objc_name="setBackIndicatorImage")
 	NavigationBarAppearance_setBackIndicatorImage :: proc(self: ^NavigationBarAppearance, backIndicatorImage: ^Image, backIndicatorTransitionMaskImage: ^Image) ---
 
@@ -269,7 +269,7 @@ foreign lib {
 NavigationController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationController, objc_selector="initWithNavigationBarClass:toolbarClass:", objc_name="initWithNavigationBarClass")
 	NavigationController_initWithNavigationBarClass :: proc(self: ^NavigationController, navigationBarClass: Class, toolbarClass: Class) -> instancetype ---
 
@@ -405,7 +405,7 @@ NavigationControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationControllerDelegate, objc_selector="navigationController:willShowViewController:animated:", objc_name="navigationController_willShowViewController_animated")
 	NavigationControllerDelegate_navigationController_willShowViewController_animated :: proc(self: ^NavigationControllerDelegate, navigationController: ^NavigationController, viewController: ^ViewController, animated: bool) ---
 
@@ -433,7 +433,7 @@ NavigationItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationItem, objc_selector="initWithTitle:", objc_name="initWithTitle")
 	NavigationItem_initWithTitle :: proc(self: ^NavigationItem, title: ^NS.String) -> instancetype ---
 
@@ -749,7 +749,7 @@ NavigationItemRenameDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NavigationItemRenameDelegate, objc_selector="navigationItem:didEndRenamingWithTitle:", objc_name="navigationItem_didEndRenamingWithTitle")
 	NavigationItemRenameDelegate_navigationItem_didEndRenamingWithTitle :: proc(self: ^NavigationItemRenameDelegate, navigationItem: ^NavigationItem, title: ^NS.String) ---
 

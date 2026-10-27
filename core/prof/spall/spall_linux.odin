@@ -2,7 +2,7 @@
 package spall
 
 // Package is `#+no-instrumentation`, safe to use.
-import "core:sys/linux"
+#import "core:sys/linux"
 
 MAX_RW :: 0x7fffffff
 

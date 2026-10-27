@@ -1,13 +1,13 @@
 #+private
 package nbio
 
-import "core:net"
-import "core:sys/posix"
+#import "core:net"
+#import "core:sys/posix"
 
-foreign import lib "system:System"
+#foreign #import lib "system:System"
 
 posix_sendfile :: proc(fd: Handle, s: TCP_Socket, offset, nbytes: int) -> (sent: int, ok := true) {
-	foreign lib {
+	#foreign lib {
 		@(link_name="sendfile")
 		_posix_sendfile :: proc (fd, s: posix.FD, offset: posix.off_t, len: ^posix.off_t, hdtr: rawptr, flags: i32) -> posix.result ---
 	}

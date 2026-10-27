@@ -12,9 +12,9 @@ results in catastrophic loss of security for most algorithms.
 Example:
 	package aead_example
 
-	import "core:bytes"
-	import "core:crypto"
-	import "core:crypto/aead"
+	#import "core:bytes"
+	#import "core:crypto"
+	#import "core:crypto/aead"
 
 	main :: proc() {
 		algo := aead.Algorithm.XCHACHA20POLY1305

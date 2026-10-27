@@ -1,9 +1,9 @@
 package flags
 
-import          "core:fmt"
-@require import "core:os"
-@require import "core:path/filepath"
-import          "core:strings"
+#import          "core:fmt"
+@require #import "core:os"
+@require #import "core:path/filepath"
+#import          "core:strings"
 
 /*
 Parse any arguments into an annotated struct or exit if there was an error.
@@ -61,7 +61,7 @@ All error messages print to STDERR, while usage goes to STDOUT, if requested.
 Inputs:
 - data_type: The typeid of the data structure to describe, if usage is requested.
 - error: The error returned from `parse`.
-- style: The argument parsing style, required to show flags in the proper style, when usage is shown.
+- style: The argument parsing style, required to show flags in the proper style, #if usage is shown.
 */
 @(optimization_mode="favor_size")
 print_errors :: proc(data_type: typeid, error: Error, program: string, style: Parsing_Style = .Odin) {
@@ -117,8 +117,8 @@ on a custom type setter or custom flag checker.
 
 Example:
 
-	import "core:flags"
-	import "core:fmt"
+	#import "core:flags"
+	#import "core:fmt"
 
 	get_subtag_example :: proc() {
 		args_tag := "precision=3,signed"

@@ -1,7 +1,7 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // The sign/zero-extend family is the only one whose two operands differ in width, so its AT&T
 // mnemonic names both -- `movsx` from i8 to i32 is `movsbl`. Emitting the name plus a single width

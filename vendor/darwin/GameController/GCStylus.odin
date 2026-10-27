@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCStylus", objc_superclass=NS.Object)
 Stylus :: struct {
@@ -10,7 +10,7 @@ Stylus :: struct {
 	using _: Device,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Stylus, objc_selector="input", objc_name="input")
 	Stylus_input :: proc(self: ^Stylus) -> ^DevicePhysicalInput ---
 

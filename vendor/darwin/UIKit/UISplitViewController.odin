@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UISplitViewController", objc_superclass=ViewController)
 SplitViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewController, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	SplitViewController_initWithCoder :: proc(self: ^SplitViewController, coder: ^NS.Coder) -> instancetype ---
 
@@ -212,7 +212,7 @@ foreign lib {
 SplitViewControllerDelegate :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewControllerDelegate, objc_selector="splitViewController:willChangeToDisplayMode:", objc_name="splitViewController_willChangeToDisplayMode")
 	SplitViewControllerDelegate_splitViewController_willChangeToDisplayMode :: proc(self: ^SplitViewControllerDelegate, svc: ^SplitViewController, displayMode: SplitViewControllerDisplayMode) ---
 

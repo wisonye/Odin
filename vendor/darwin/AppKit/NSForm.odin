@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSForm", objc_superclass=Matrix)
 Form :: struct { using _: Matrix}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Form, objc_selector="indexOfSelectedItem", objc_name="indexOfSelectedItem")
 	Form_indexOfSelectedItem :: proc(self: ^Form) -> NS.Integer ---
 
@@ -79,7 +79,7 @@ foreign lib {
 FormCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FormCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	FormCell_initTextCell :: proc(self: ^FormCell, string: ^NS.String) -> instancetype ---
 

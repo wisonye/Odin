@@ -1,9 +1,9 @@
 package test_core_crypto
 
-import "core:encoding/hex"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:testing"
 
-import "core:crypto/ecdh"
+#import "core:crypto/ecdh"
 
 @(test)
 test_ecdh :: proc(t: ^testing.T) {

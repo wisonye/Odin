@@ -9,7 +9,7 @@ PresentationIntent :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PresentationIntent, objc_selector="init", objc_name="init")
 	PresentationIntent_init :: proc(self: ^PresentationIntent) -> instancetype ---
 

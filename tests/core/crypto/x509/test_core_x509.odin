@@ -19,11 +19,11 @@ package test_core_x509
 // Field expectations below were cross-checked against
 // `openssl x509 -noout -text`.
 
-import "core:crypto/hash"
-import "core:crypto/x509"
-import "core:encoding/asn1"
-import "core:testing"
-import "core:time"
+#import "core:crypto/hash"
+#import "core:crypto/x509"
+#import "core:encoding/asn1"
+#import "core:testing"
+#import "core:time"
 
 RSA_DER := #load("testdata/rsa.der")
 EC_DER := #load("testdata/ec.der")
@@ -624,7 +624,7 @@ test_verify_chain_expired_anchor_rejected :: proc(t: ^testing.T) {
 }
 
 // EKU nesting (surfaced by x509-limbo): an intermediate constrained to
-// emailProtection must not be usable to issue a serverAuth leaf when the
+// emailProtection must not be usable to issue a serverAuth leaf #if the
 // caller requires serverAuth. Without an EKU requirement the chain still
 // builds (EKU is unconstrained).
 @(test)

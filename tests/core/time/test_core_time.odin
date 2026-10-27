@@ -1,10 +1,10 @@
 package test_core_time
 
-import "core:testing"
-import "core:time"
-@(require) import "core:log"
-import dt "core:time/datetime"
-import tz "core:time/timezone"
+#import "core:testing"
+#import "core:time"
+@(require) #import "core:log"
+#import dt "core:time/datetime"
+#import tz "core:time/timezone"
 
 is_leap_year :: time.is_leap_year
 

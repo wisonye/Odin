@@ -50,8 +50,8 @@ odin_add_matrix4x2 :: proc (a: Matrix4x2, b: Matrix4x2) -> Matrix4x2 {
 	return copy_mat
 }
 
-foreign import ctest "../build/test_issue_7010_c.o"
-foreign ctest {
+#foreign #import ctest "../build/test_issue_7010_c.o"
+#foreign ctest {
 	c_add_vec4f32 :: proc "c" (a: #simd[4]f32, b: #simd[4]f32) -> #simd[4]f32 ---
 	c_add_vec2u32 :: proc "c" (a: #simd[2]u32, b: #simd[2]u32) -> #simd[2]u32 ---
 	c_add_matrix4x4 :: proc "c" (a: Matrix4x4, b: Matrix4x4) -> Matrix4x4 ---
@@ -59,7 +59,7 @@ foreign ctest {
 	c_add_matrix4x2 :: proc "c" (a: Matrix4x2, b: Matrix4x2) -> Matrix4x2 ---
 }
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_simd :: proc(t: ^testing.T) {

@@ -1,7 +1,7 @@
 package vendor_box2d
 
-import "core:c"
-import "core:math"
+#import "core:c"
+#import "core:math"
 
 // The math types are Odin types with the layout of Box2D's own: `Vec2` is `[2]f32` so it has the vector operators and
 // swizzles, and `Mat22` is a column major matrix, which is how b2Mat22 stores its two column vectors.

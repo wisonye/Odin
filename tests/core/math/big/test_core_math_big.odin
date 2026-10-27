@@ -1,9 +1,9 @@
 package test_core_math_big
 
-import "core:math/big"
-import "core:mem"
-import "core:strconv"
-import "core:testing"
+#import "core:math/big"
+#import "core:mem"
+#import "core:strconv"
+#import "core:testing"
 
 @(test)
 test_int_destroy :: proc(t: ^testing.T) {
@@ -163,7 +163,7 @@ test_rational_to_float :: proc(t: ^testing.T) {
 	}
 }
 
-import "core:log"
+#import "core:log"
 
 @(test)
 test_big_math_vectors :: proc(t: ^testing.T) {

@@ -19,7 +19,7 @@ TimerCallback   :: #type proc "c" (userdata: rawptr, timerID: TimerID, interval:
 NSTimerCallback :: #type proc "c" (userdata: rawptr, timerID: TimerID, interval: Uint64) -> Uint64
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetTicks                :: proc() -> Uint64 ---
 	GetTicksNS              :: proc() -> Uint64 ---
 	GetPerformanceCounter   :: proc() -> Uint64 ---

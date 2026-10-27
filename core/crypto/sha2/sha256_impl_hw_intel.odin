@@ -7,10 +7,10 @@ package sha2
 //
 // See: https://github.com/noloader/SHA-Intrinsics
 
-import "base:intrinsics"
-import "core:simd"
-import "core:simd/x86"
-import "core:sys/info"
+#import "base:intrinsics"
+#import "core:simd"
+#import "core:simd/x86"
+#import "core:sys/info"
 
 @(private = "file")
 MASK :: x86.__m128i{0x0405060700010203, 0x0c0d0e0f08090a0b}

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import MTL "vendor:darwin/Metal"
+#import "base:intrinsics"
+#import MTL "vendor:darwin/Metal"
 
 @(objc_class="MTL4FXFrameInterpolator")
 MTL4FXFrameInterpolator :: struct {
@@ -11,7 +11,7 @@ MTL4FXFrameInterpolator :: struct {
 	using _: FrameInterpolatorBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4FXFrameInterpolator, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	MTL4FXFrameInterpolator_encodeToCommandBuffer :: proc(self: ^MTL4FXFrameInterpolator, commandBuffer: ^MTL.MTL4CommandBuffer) ---
 }

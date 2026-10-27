@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 
 TouchID  :: distinct Uint64
@@ -24,7 +24,7 @@ TOUCH_MOUSEID :: MouseID(1<<32 - 1)
 MOUSE_TOUCHID :: TouchID(1<<64 - 1)
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetTouchDevices    :: proc(count: ^c.int) -> [^]TouchID ---
 	GetTouchDeviceName :: proc(touchID: TouchID) -> cstring ---
 	GetTouchDeviceType :: proc(touchID: TouchID) -> TouchDeviceType ---

@@ -1,7 +1,7 @@
 package directx_dxgi
 
-import win32 "core:sys/windows"
-import "core:c"
+#import win32 "core:sys/windows"
+#import "core:c"
 
 DEBUG_RLO_FLAGS :: enum u32 { // TODO: convert to bit_set
 	SUMMARY	        = 0x1,

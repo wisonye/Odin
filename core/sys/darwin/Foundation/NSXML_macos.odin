@@ -6,7 +6,7 @@ package darwin_Foundation
 XMLDocument :: struct { using _: XMLNode}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLDocument, objc_selector="init", objc_name="init")
 	XMLDocument_init :: proc(self: ^XMLDocument) -> instancetype ---
 
@@ -154,7 +154,7 @@ XMLDocument_validateAndReturnError :: #force_inline proc "c" (self: ^XMLDocument
 XMLElement :: struct { using _: XMLNode}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLElement, objc_selector="initWithName:", objc_name="initWithName_")
 	XMLElement_initWithName_ :: proc(self: ^XMLElement, name: ^String) -> instancetype ---
 
@@ -260,7 +260,7 @@ XMLNode :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLNode, objc_selector="init", objc_name="init")
 	XMLNode_init :: proc(self: ^XMLNode) -> instancetype ---
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLLogicalToPhysicalColorAttachmentMap", objc_superclass=NS.Object)
 LogicalToPhysicalColorAttachmentMap :: struct {
@@ -10,7 +10,7 @@ LogicalToPhysicalColorAttachmentMap :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LogicalToPhysicalColorAttachmentMap, objc_selector="setPhysicalIndex:forLogicalIndex:", objc_name="setPhysicalIndex")
 	LogicalToPhysicalColorAttachmentMap_setPhysicalIndex :: proc(self: ^LogicalToPhysicalColorAttachmentMap, physicalIndex: NS.UInteger, logicalIndex: NS.UInteger) ---
 

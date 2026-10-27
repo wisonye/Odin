@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_QuartzCore
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAEDRMetadata", objc_superclass=NS.Object)
 EDRMetadata :: struct {
@@ -12,7 +12,7 @@ EDRMetadata :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EDRMetadata, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	EDRMetadata_new :: proc() -> ^EDRMetadata ---
 

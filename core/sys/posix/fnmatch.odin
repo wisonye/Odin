@@ -1,23 +1,23 @@
 #+build darwin, linux, openbsd, freebsd, netbsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // fnmatch.h - filename-matching types
 
-foreign lib {
+#foreign lib {
 	/*
 	Match patterns as described in XCU [[ Patterns Matching a Single Character; https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_13_01 ]] 
 	// and [[ Patterns Matching Multiple Characters; https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_13_02 ]].
 	It checks the string specified by the string argument to see if it matches the pattern specified by the pattern argument.
 
-	Returns: 0 when matched. if there is no match, fnmatch() shall return FNM_NOMATCH. Non-zero on other errors.
+	Returns: 0 #if matched. if there is no match, fnmatch() shall return FNM_NOMATCH. Non-zero on other errors.
 
 	Example:
 		assert(posix.fnmatch("*.odin", "foo.odin", {}) == 0)
@@ -46,7 +46,7 @@ FNM_Flag_Bits :: enum c.int {
 }
 FNM_Flags :: bit_set[FNM_Flag_Bits; c.int]
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	FNM_NOMATCH  :: 1
 
@@ -54,7 +54,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 	FNM_PERIOD   :: 0x04
 	FNM_NOESCAPE :: 0x01
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	FNM_NOMATCH  :: 1
 

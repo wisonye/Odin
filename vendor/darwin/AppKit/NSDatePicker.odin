@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSDatePicker", objc_superclass=Control)
 DatePicker :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DatePicker, objc_selector="datePickerStyle", objc_name="datePickerStyle")
 	DatePicker_datePickerStyle :: proc(self: ^DatePicker) -> DatePickerStyle ---
 
@@ -118,7 +118,7 @@ foreign lib {
 DatePickerCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DatePickerCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	DatePickerCell_initTextCell :: proc(self: ^DatePickerCell, string: ^NS.String) -> instancetype ---
 
@@ -221,7 +221,7 @@ DatePickerCellDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DatePickerCellDelegate, objc_selector="datePickerCell:validateProposedDateValue:timeInterval:", objc_name="datePickerCell")
 	DatePickerCellDelegate_datePickerCell :: proc(self: ^DatePickerCellDelegate, datePickerCell: ^DatePickerCell, proposedDateValue: ^^NS.Date, proposedTimeInterval: ^NS.TimeInterval) ---
 }

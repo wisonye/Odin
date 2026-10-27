@@ -1,11 +1,11 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // Like a procedure body, the specification block and body of an `asm` template are checked after its signature:
 // once all of the procedure body it is within has been checked, otherwise with the procedure bodies.
-// Some of these did not compile when the body was checked along with the signature, and the rest cover
+// Some of these did not compile #if the body was checked along with the signature, and the rest cover
 // each of the places a body is now checked from.
 
 // The body names a constant which needs the template's own signature, in either order

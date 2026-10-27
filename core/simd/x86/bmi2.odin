@@ -30,7 +30,7 @@ _pext_u64 :: #force_inline proc "c" (a, mask: u64) -> u64 {
 
 
 @(private, default_calling_convention = "none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.bmi.bzhi.32")
 	bzhi_u32 :: proc(a, index: u32) -> u32 ---
 	@(link_name = "llvm.x86.bmi.bzhi.64")

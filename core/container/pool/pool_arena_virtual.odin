@@ -1,8 +1,8 @@
 #+build darwin, freebsd, openbsd, netbsd, linux, windows
 package container_pool
 
-import "base:runtime"
-import "core:mem/virtual"
+#import "base:runtime"
+#import "core:mem/virtual"
 
 _Pool_Arena :: virtual.Arena
 

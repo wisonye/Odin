@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSItemBadge", objc_superclass=NS.Object)
 ItemBadge :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemBadge, objc_selector="badgeWithCount:", objc_name="badgeWithCount", objc_is_class_method=true)
 	ItemBadge_badgeWithCount :: proc(count: NS.Integer) -> ^ItemBadge ---
 

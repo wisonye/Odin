@@ -1,6 +1,6 @@
 package vulkan
 
-import "core:c"
+#import "core:c"
 
 // Loader Procedure Types
 ProcCreateInstance                       :: #type proc "system" (pCreateInfo: ^InstanceCreateInfo, pAllocator: ^AllocationCallbacks, pInstance: ^Instance) -> Result

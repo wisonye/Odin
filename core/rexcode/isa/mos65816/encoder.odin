@@ -2,7 +2,7 @@
 
 package rexcode_mos65816
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // W65C816S ENCODER

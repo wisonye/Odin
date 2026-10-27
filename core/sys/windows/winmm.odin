@@ -1,12 +1,12 @@
 #+build windows
 package sys_windows
 
-foreign import winmm "system:Winmm.lib"
+#foreign #import winmm "system:Winmm.lib"
 
 MMRESULT :: UINT
 
 @(default_calling_convention="system")
-foreign winmm {
+#foreign winmm {
 	timeGetDevCaps  :: proc(ptc: LPTIMECAPS, cbtc: UINT) -> MMRESULT ---
 	timeBeginPeriod :: proc(uPeriod: UINT) -> MMRESULT ---
 	timeEndPeriod   :: proc(uPeriod: UINT) -> MMRESULT ---

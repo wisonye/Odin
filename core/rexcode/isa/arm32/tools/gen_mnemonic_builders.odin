@@ -38,11 +38,11 @@ package main
 // the same ordered Odin parameter-type tuple would create an ambiguous overload
 // set, so we dedup by that tuple, keeping the first (table-order) form.
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import a "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import a "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 
@@ -285,10 +285,10 @@ Param :: struct {
 //   register/memory dst -> dst; subsequent -> src, src2, ...
 //   immediates          -> imm, imm2, ...
 //   branch targets      -> offset
-//   shift kind / amount -> shift / amount (suffixed when repeated)
-//   lane index          -> lane (suffixed when repeated)
-//   register list mask  -> regs (suffixed when repeated)
-//   RSR shift register  -> rs (suffixed when repeated)
+//   shift kind / amount -> shift / amount (suffixed #if repeated)
+//   lane index          -> lane (suffixed #if repeated)
+//   register list mask  -> regs (suffixed #if repeated)
+//   RSR shift register  -> rs (suffixed #if repeated)
 flatten_params :: proc(sig: Operand_Signature) -> [dynamic]Param {
 	out: [dynamic]Param
 	src_count   := 0

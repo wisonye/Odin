@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSSplitView", objc_superclass=View)
 SplitView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitView, objc_selector="drawDividerInRect:", objc_name="drawDividerInRect")
 	SplitView_drawDividerInRect :: proc(self: ^SplitView, rect: NS.Rect) ---
 
@@ -98,7 +98,7 @@ SplitViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewDelegate, objc_selector="splitView:canCollapseSubview:", objc_name="splitView_canCollapseSubview")
 	SplitViewDelegate_splitView_canCollapseSubview :: proc(self: ^SplitViewDelegate, splitView: ^SplitView, subview: ^View) -> bool ---
 
@@ -145,7 +145,7 @@ SplitViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewController, objc_selector="addSplitViewItem:", objc_name="addSplitViewItem")
 	SplitViewController_addSplitViewItem :: proc(self: ^SplitViewController, splitViewItem: ^SplitViewItem) ---
 
@@ -213,7 +213,7 @@ SplitViewItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewItem, objc_selector="splitViewItemWithViewController:", objc_name="splitViewItemWithViewController", objc_is_class_method=true)
 	SplitViewItem_splitViewItemWithViewController :: proc(viewController: ^ViewController) -> instancetype ---
 
@@ -352,7 +352,7 @@ SplitViewItemAccessoryViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SplitViewItemAccessoryViewController, objc_selector="viewWillAppear", objc_name="viewWillAppear")
 	SplitViewItemAccessoryViewController_viewWillAppear :: proc(self: ^SplitViewItemAccessoryViewController) ---
 

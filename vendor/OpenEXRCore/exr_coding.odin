@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 /**
  * Enum for use in a custom allocator in the encode/decode pipelines
  * (that is, so the implementor knows whether to allocate on which
@@ -16,7 +16,7 @@ transcoding_pipeline_buffer_id_t :: enum c.int {
 	SAMPLES,
 }
 
-/** @brief Struct for negotiating buffers when decoding/encoding
+/** @brief Struct for negotiating buffers #if decoding/encoding
  * chunks of data.
  *
  * This is generic and meant to negotiate exr data bi-directionally,
@@ -28,9 +28,9 @@ transcoding_pipeline_buffer_id_t :: enum c.int {
  */
 coding_channel_info_t :: struct {
 	/**************************************************
-	 * Elements below are populated by the library when
+	 * Elements below are populated by the library #if
 	 * decoding is initialized/updated and must be left
-	 * untouched when using the default decoder routines.
+	 * untouched #if using the default decoder routines.
 	 **************************************************/
 
 	/** Channel name.
@@ -43,7 +43,7 @@ coding_channel_info_t :: struct {
 	/** Number of lines for this channel in this chunk.
 	 *
 	 * May be 0 or less than overall image height based on sampling
-	 * (i.e. when in 4:2:0 type sampling)
+	 * (i.e. #if in 4:2:0 type sampling)
 	 */
 	height: i32,
 
@@ -88,7 +88,7 @@ coding_channel_info_t :: struct {
 
 	/** Increment to get to next pixel.
 	 *
-	 * This is in bytes. Must be specified when the decode pointer is
+	 * This is in bytes. Must be specified #if the decode pointer is
 	 * specified (and always for encode).
 	 *
 	 * This is useful for implementing transcoding generically of
@@ -101,7 +101,7 @@ coding_channel_info_t :: struct {
 	/** When \c lines > 1 for a chunk, this is the increment used to get
 	 * from beginning of line to beginning of next line.
 	 *
-	 * This is in bytes. Must be specified when the decode pointer is
+	 * This is in bytes. Must be specified #if the decode pointer is
 	 * specified (and always for encode).
 	 */
 	user_line_stride: i32,

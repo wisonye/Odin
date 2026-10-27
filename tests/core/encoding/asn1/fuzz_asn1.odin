@@ -9,10 +9,10 @@ package test_core_asn1
 // reproduce the input bytes exactly. Any acceptance of a non-minimal
 // encoding fails the oracle without needing a crash.
 
-import "core:bytes"
-import "core:encoding/asn1"
-import "core:math/rand"
-import "core:testing"
+#import "core:bytes"
+#import "core:encoding/asn1"
+#import "core:math/rand"
+#import "core:testing"
 
 FUZZ_RANDOM_ITERS :: 4096
 FUZZ_MUTATE_ITERS :: 2048

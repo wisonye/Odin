@@ -1,6 +1,6 @@
 package sysinfo
 
-import "core:sys/unix"
+#import "core:sys/unix"
 
 @(private)
 _cpu_features :: proc "contextless" () -> (features: CPU_Features) {

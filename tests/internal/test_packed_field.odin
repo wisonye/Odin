@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:simd"
-import "core:testing"
+#import "core:simd"
+#import "core:testing"
 
 U :: union { int, f64 }
 Packed :: struct #packed { _: u8, arr: [2]int, u: U, fc: [dynamic; 4]int }

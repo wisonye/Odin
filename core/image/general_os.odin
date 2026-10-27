@@ -1,7 +1,7 @@
 #+build !js
 package image
 
-import "core:os"
+#import "core:os"
 
 load :: proc{
 	load_from_bytes,

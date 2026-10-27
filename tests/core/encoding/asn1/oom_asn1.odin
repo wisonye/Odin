@@ -5,10 +5,10 @@ package test_core_asn1
 // every allocation (including the Builder's internal growth in
 // oid_to_string) must yield Allocation_Failed with nothing leaked.
 
-import "base:runtime"
-import "core:mem"
-import "core:encoding/asn1"
-import "core:testing"
+#import "base:runtime"
+#import "core:mem"
+#import "core:encoding/asn1"
+#import "core:testing"
 
 @(private="file")
 Failing_Allocator :: struct {

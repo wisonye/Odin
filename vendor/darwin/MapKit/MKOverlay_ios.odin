@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_MapKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import UI "vendor:darwin/UIKit"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="MKOverlayPathView", objc_superclass=OverlayView)
 OverlayPathView :: struct { using _: OverlayView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OverlayPathView, objc_selector="createPath", objc_name="createPath")
 	OverlayPathView_createPath :: proc(self: ^OverlayPathView) ---
 
@@ -89,7 +89,7 @@ foreign lib {
 OverlayView :: struct { using _: UI.View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OverlayView, objc_selector="initWithOverlay:", objc_name="initWithOverlay")
 	OverlayView_initWithOverlay :: proc(self: ^OverlayView, overlay: ^Overlay) -> instancetype ---
 

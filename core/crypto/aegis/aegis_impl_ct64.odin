@@ -1,8 +1,8 @@
 package aegis
 
-import "core:crypto"
-import aes "core:crypto/_aes/ct64"
-import "core:encoding/endian"
+#import "core:crypto"
+#import aes "core:crypto/_aes/ct64"
+#import "core:encoding/endian"
 
 // This uses the bitlsiced 64-bit general purpose register SWAR AES
 // round function.  The intermediate state is stored in interleaved

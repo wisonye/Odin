@@ -22,9 +22,9 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:crypto"
-import subtle "core:crypto/_subtle"
-import "core:crypto/hash"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
+#import "core:crypto/hash"
 
 // decrypt_oaep returns the plaintext and true if and only if (⟺) it
 // successfully decrypts the ciphertext with OAEP parameterized by
@@ -101,7 +101,7 @@ oaep_max_plaintext_size :: proc(
 	overhead := 2 + hash.DIGEST_SIZES[hash_algo] + hash.DIGEST_SIZES[mgf1_algo_]
 
 	pub_key: ^Public_Key
-	when T == Private_Key {
+	#if T == Private_Key {
 		pub_keyk = &k._pub_key
 	} else {
 		pub_key = k
@@ -147,7 +147,7 @@ oaep_dec_unpad :: proc(
 	// they are equal then these should yield only zeros.
 	xor_hash_data(hash_algo, db, label)
 
-	// At that point, if the padding was correct, when we should
+	// At that point, if the padding was correct, #if we should
 	// have: 0x00 || seed || 0x00 ... 0x00 0x01 || M
 	// Padding is valid as long as:
 	//  - There is at least hlen+1 leading bytes of value 0x00.

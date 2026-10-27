@@ -3,8 +3,8 @@ package runtime
 DEFAULT_TEMP_ALLOCATOR_BACKING_SIZE: int : #config(DEFAULT_TEMP_ALLOCATOR_BACKING_SIZE, 4 * Megabyte)
 NO_DEFAULT_TEMP_ALLOCATOR: bool : ODIN_OS == .Freestanding || ODIN_DEFAULT_TO_NIL_ALLOCATOR
 
-when NO_DEFAULT_TEMP_ALLOCATOR {
-	// `Default_Temp_Allocator` is a `nil_allocator` when `NO_DEFAULT_TEMP_ALLOCATOR` is `true`.
+#if NO_DEFAULT_TEMP_ALLOCATOR {
+	// `Default_Temp_Allocator` is a `nil_allocator` #if `NO_DEFAULT_TEMP_ALLOCATOR` is `true`.
 	Default_Temp_Allocator :: struct {}
 	
 	default_temp_allocator_init :: proc(s: ^Default_Temp_Allocator, size: int, backing_allocator: Allocator) {}
@@ -25,7 +25,7 @@ when NO_DEFAULT_TEMP_ALLOCATOR {
 	// The default `context.temp_allocator` is typically called with `free_all(context.temp_allocator)` once per "frame-loop"
 	// to prevent it from "leaking" memory.
 	//
-	// Note: `Default_Temp_Allocator` is a `nil_allocator` when `NO_DEFAULT_TEMP_ALLOCATOR` is `true`.
+	// Note: `Default_Temp_Allocator` is a `nil_allocator` #if `NO_DEFAULT_TEMP_ALLOCATOR` is `true`.
 	Default_Temp_Allocator :: struct {
 		arena: Arena,
 	}

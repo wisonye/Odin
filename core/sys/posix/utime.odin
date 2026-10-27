@@ -1,15 +1,15 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // utime.h - access and modification time structure
 
-foreign lib {
+#foreign lib {
 	/*
 	Set file access and modification times.
 
@@ -19,13 +19,13 @@ foreign lib {
 	utime :: proc(path: cstring, times: ^utimbuf) -> result ---
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LUTIME :: "__utime50"
 } else {
 	@(private) LUTIME :: "utime"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	utimbuf :: struct {
 		actime:  time_t, /* [PSX] access time (seconds since epoch) */

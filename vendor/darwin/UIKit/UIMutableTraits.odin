@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIMutableTraits")
 MutableTraits :: struct {
@@ -13,7 +13,7 @@ MutableTraits :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableTraits, objc_selector="setCGFloatValue:forTrait:", objc_name="setCGFloatValue")
 	MutableTraits_setCGFloatValue :: proc(self: ^MutableTraits, value: CG.Float, trait: ^Class) ---
 

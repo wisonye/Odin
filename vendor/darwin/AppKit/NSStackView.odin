@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSStackView", objc_superclass=View)
 StackView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StackView, objc_selector="stackViewWithViews:", objc_name="stackViewWithViews", objc_is_class_method=true)
 	StackView_stackViewWithViews :: proc(views: ^NS.Array) -> instancetype ---
 
@@ -128,7 +128,7 @@ StackViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StackViewDelegate, objc_selector="stackView:willDetachViews:", objc_name="stackView_willDetachViews")
 	StackViewDelegate_stackView_willDetachViews :: proc(self: ^StackViewDelegate, stackView: ^StackView, views: ^NS.Array) ---
 

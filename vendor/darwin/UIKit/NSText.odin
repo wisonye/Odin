@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSTextAlternatives")
 NSTextAlternatives :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSTextAttachment", objc_superclass=NS.Object)
@@ -21,7 +21,7 @@ NSTextAttachment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextAttachment, objc_selector="initWithData:ofType:", objc_name="initWithData")
 	NSTextAttachment_initWithData :: proc(self: ^NSTextAttachment, contentData: ^NS.Data, uti: ^NS.String) -> instancetype ---
 
@@ -88,7 +88,7 @@ NSTextAttachmentContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextAttachmentContainer, objc_selector="imageForBounds:textContainer:characterIndex:", objc_name="imageForBounds")
 	NSTextAttachmentContainer_imageForBounds :: proc(self: ^NSTextAttachmentContainer, imageBounds: CG.Rect, textContainer: ^NSTextContainer, charIndex: NS.UInteger) -> ^Image ---
 
@@ -104,7 +104,7 @@ NSTextAttachmentLayout :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextAttachmentLayout, objc_selector="imageForBounds:attributes:location:textContainer:", objc_name="imageForBounds")
 	NSTextAttachmentLayout_imageForBounds :: proc(self: ^NSTextAttachmentLayout, bounds: CG.Rect, attributes: ^NS.Dictionary, location: ^NSTextLocation, textContainer: ^NSTextContainer) -> ^Image ---
 
@@ -120,7 +120,7 @@ foreign lib {
 NSTextAttachmentViewProvider :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextAttachmentViewProvider, objc_selector="initWithTextAttachment:parentView:textLayoutManager:location:", objc_name="initWithTextAttachment")
 	NSTextAttachmentViewProvider_initWithTextAttachment :: proc(self: ^NSTextAttachmentViewProvider, textAttachment: ^NSTextAttachment, parentView: ^View, textLayoutManager: ^NSTextLayoutManager, location: ^NSTextLocation) -> instancetype ---
 
@@ -166,7 +166,7 @@ NSTextContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextContainer, objc_selector="initWithSize:", objc_name="initWithSize")
 	NSTextContainer_initWithSize :: proc(self: ^NSTextContainer, size: CG.Size) -> instancetype ---
 
@@ -243,7 +243,7 @@ NSTextContentManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextContentManager, objc_selector="init", objc_name="init")
 	NSTextContentManager_init :: proc(self: ^NSTextContentManager) -> instancetype ---
 
@@ -307,7 +307,7 @@ NSTextContentManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextContentManagerDelegate, objc_selector="textContentManager:textElementAtLocation:", objc_name="textContentManager_textElementAtLocation")
 	NSTextContentManagerDelegate_textContentManager_textElementAtLocation :: proc(self: ^NSTextContentManagerDelegate, textContentManager: ^NSTextContentManager, location: ^NSTextLocation) -> ^NSTextElement ---
 
@@ -329,7 +329,7 @@ NSTextContentStorage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextContentStorage, objc_selector="attributedStringForTextElement:", objc_name="attributedStringForTextElement")
 	NSTextContentStorage_attributedStringForTextElement :: proc(self: ^NSTextContentStorage, textElement: ^NSTextElement) -> ^NS.AttributedString ---
 
@@ -372,7 +372,7 @@ NSTextContentStorageDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextContentStorageDelegate, objc_selector="textContentStorage:textParagraphWithRange:", objc_name="textContentStorage")
 	NSTextContentStorageDelegate_textContentStorage :: proc(self: ^NSTextContentStorageDelegate, textContentStorage: ^NSTextContentStorage, range: NS._NSRange) -> ^NSTextParagraph ---
 }
@@ -382,7 +382,7 @@ foreign lib {
 NSTextElement :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextElement, objc_selector="initWithTextContentManager:", objc_name="initWithTextContentManager")
 	NSTextElement_initWithTextContentManager :: proc(self: ^NSTextElement, textContentManager: ^NSTextContentManager) -> instancetype ---
 
@@ -416,7 +416,7 @@ NSTextElementProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextElementProvider, objc_selector="enumerateTextElementsFromLocation:options:usingBlock:", objc_name="enumerateTextElementsFromLocation")
 	NSTextElementProvider_enumerateTextElementsFromLocation :: proc(self: ^NSTextElementProvider, textLocation: ^NSTextLocation, options: NSTextContentManagerEnumerationOptions, block: ^Objc_Block(proc "c" ( element: ^NSTextElement ) -> bool)) -> ^NSTextLocation ---
 
@@ -444,7 +444,7 @@ foreign lib {
 NSTextParagraph :: struct { using _: NSTextElement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextParagraph, objc_selector="initWithAttributedString:", objc_name="initWithAttributedString")
 	NSTextParagraph_initWithAttributedString :: proc(self: ^NSTextParagraph, attributedString: ^NS.AttributedString) -> instancetype ---
 
@@ -466,7 +466,7 @@ NSTextLayoutFragment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLayoutFragment, objc_selector="initWithTextElement:range:", objc_name="initWithTextElement")
 	NSTextLayoutFragment_initWithTextElement :: proc(self: ^NSTextLayoutFragment, textElement: ^NSTextElement, rangeInElement: ^NSTextRange) -> instancetype ---
 
@@ -543,7 +543,7 @@ NSTextLayoutManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLayoutManager, objc_selector="init", objc_name="init")
 	NSTextLayoutManager_init :: proc(self: ^NSTextLayoutManager) -> instancetype ---
 
@@ -685,7 +685,7 @@ NSTextLayoutManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLayoutManagerDelegate, objc_selector="textLayoutManager:textLayoutFragmentForLocation:inTextElement:", objc_name="textLayoutManager_textLayoutFragmentForLocation_inTextElement")
 	NSTextLayoutManagerDelegate_textLayoutManager_textLayoutFragmentForLocation_inTextElement :: proc(self: ^NSTextLayoutManagerDelegate, textLayoutManager: ^NSTextLayoutManager, location: ^NSTextLocation, textElement: ^NSTextElement) -> ^NSTextLayoutFragment ---
 
@@ -708,7 +708,7 @@ NSTextLayoutManagerDelegate_textLayoutManager :: proc {
 NSTextLayoutOrientationProvider :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLayoutOrientationProvider, objc_selector="layoutOrientation", objc_name="layoutOrientation")
 	NSTextLayoutOrientationProvider_layoutOrientation :: proc(self: ^NSTextLayoutOrientationProvider) -> NSTextLayoutOrientation ---
 }
@@ -721,7 +721,7 @@ NSTextLineFragment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLineFragment, objc_selector="initWithAttributedString:range:", objc_name="initWithAttributedString")
 	NSTextLineFragment_initWithAttributedString :: proc(self: ^NSTextLineFragment, attributedString: ^NS.AttributedString, range: NS._NSRange) -> instancetype ---
 
@@ -768,7 +768,7 @@ NSTextList :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextList, objc_selector="initWithMarkerFormat:options:startingItemNumber:", objc_name="initWithMarkerFormat_options_startingItemNumber")
 	NSTextList_initWithMarkerFormat_options_startingItemNumber :: proc(self: ^NSTextList, markerFormat: ^NS.String, options: NSTextListOptions, startingItemNumber: NS.Integer) -> instancetype ---
 
@@ -811,7 +811,7 @@ NSTextList_initWithMarkerFormat :: proc {
 NSTextListElement :: struct { using _: NSTextParagraph}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextListElement, objc_selector="initWithParentElement:textList:contents:markerAttributes:childElements:", objc_name="initWithParentElement")
 	NSTextListElement_initWithParentElement :: proc(self: ^NSTextListElement, parent: ^NSTextListElement, textList: ^NSTextList, contents: ^NS.AttributedString, markerAttributes: ^NS.Dictionary, children: ^NS.Array) -> instancetype ---
 
@@ -851,7 +851,7 @@ NSTextLocation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextLocation, objc_selector="compare:", objc_name="compare")
 	NSTextLocation_compare :: proc(self: ^NSTextLocation, location: ^NSTextLocation) -> NS.ComparisonResult ---
 }
@@ -861,7 +861,7 @@ foreign lib {
 NSTextRange :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextRange, objc_selector="initWithLocation:endLocation:", objc_name="initWithLocation_endLocation")
 	NSTextRange_initWithLocation_endLocation :: proc(self: ^NSTextRange, location: ^NSTextLocation, endLocation: ^NSTextLocation) -> instancetype ---
 
@@ -916,7 +916,7 @@ NSTextSelection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextSelection, objc_selector="initWithRanges:affinity:granularity:", objc_name="initWithRanges")
 	NSTextSelection_initWithRanges :: proc(self: ^NSTextSelection, textRanges: ^NS.Array, affinity: NSTextSelectionAffinity, granularity: NSTextSelectionGranularity) -> instancetype ---
 
@@ -980,7 +980,7 @@ NSTextSelectionDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextSelectionDataSource, objc_selector="enumerateSubstringsFromLocation:options:usingBlock:", objc_name="enumerateSubstringsFromLocation")
 	NSTextSelectionDataSource_enumerateSubstringsFromLocation :: proc(self: ^NSTextSelectionDataSource, location: ^NSTextLocation, options: NS.StringEnumerationOptions, block: ^Objc_Block(proc "c" ( substring: ^NS.String, substringRange: ^NSTextRange, enclosingRange: ^NSTextRange, stop: ^bool ))) ---
 
@@ -1017,7 +1017,7 @@ foreign lib {
 NSTextSelectionNavigation :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextSelectionNavigation, objc_selector="initWithDataSource:", objc_name="initWithDataSource")
 	NSTextSelectionNavigation_initWithDataSource :: proc(self: ^NSTextSelectionNavigation, dataSource: ^NSTextSelectionDataSource) -> instancetype ---
 
@@ -1078,7 +1078,7 @@ NSTextStorage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextStorage, objc_selector="addLayoutManager:", objc_name="addLayoutManager")
 	NSTextStorage_addLayoutManager :: proc(self: ^NSTextStorage, aLayoutManager: ^NSLayoutManager) ---
 
@@ -1133,7 +1133,7 @@ NSTextStorageDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextStorageDelegate, objc_selector="textStorage:willProcessEditing:range:changeInLength:", objc_name="textStorage_willProcessEditing_range_changeInLength")
 	NSTextStorageDelegate_textStorage_willProcessEditing_range_changeInLength :: proc(self: ^NSTextStorageDelegate, textStorage: ^NSTextStorage, editedMask: NSTextStorageEditActions, editedRange: NS._NSRange, delta: NS.Integer) ---
 
@@ -1149,7 +1149,7 @@ NSTextStorageObserving :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextStorageObserving, objc_selector="processEditingForTextStorage:edited:range:changeInLength:invalidatedRange:", objc_name="processEditingForTextStorage")
 	NSTextStorageObserving_processEditingForTextStorage :: proc(self: ^NSTextStorageObserving, textStorage: ^NSTextStorage, editMask: NSTextStorageEditActions, newCharRange: NS._NSRange, delta: NS.Integer, invalidatedCharRange: NS._NSRange) ---
 
@@ -1173,7 +1173,7 @@ NSTextTab :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextTab, objc_selector="columnTerminatorsForLocale:", objc_name="columnTerminatorsForLocale", objc_is_class_method=true)
 	NSTextTab_columnTerminatorsForLocale :: proc(aLocale: ^NS.Locale) -> ^NS.CharacterSet ---
 
@@ -1195,7 +1195,7 @@ foreign lib {
 NSTextViewportLayoutController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextViewportLayoutController, objc_selector="initWithTextLayoutManager:", objc_name="initWithTextLayoutManager")
 	NSTextViewportLayoutController_initWithTextLayoutManager :: proc(self: ^NSTextViewportLayoutController, textLayoutManager: ^NSTextLayoutManager) -> instancetype ---
 
@@ -1238,7 +1238,7 @@ NSTextViewportLayoutControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSTextViewportLayoutControllerDelegate, objc_selector="viewportBoundsForTextViewportLayoutController:", objc_name="viewportBoundsForTextViewportLayoutController")
 	NSTextViewportLayoutControllerDelegate_viewportBoundsForTextViewportLayoutController :: proc(self: ^NSTextViewportLayoutControllerDelegate, textViewportLayoutController: ^NSTextViewportLayoutController) -> CG.Rect ---
 

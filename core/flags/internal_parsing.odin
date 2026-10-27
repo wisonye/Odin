@@ -1,9 +1,9 @@
 #+private
 package flags
 
-import "core:container/bit_array"
-import "core:strconv"
-import "core:strings"
+#import "core:container/bit_array"
+#import "core:strconv"
+#import "core:strings"
 
 // Used to group state together.
 Parser :: struct {

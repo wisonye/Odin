@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import UI "vendor:darwin/UIKit"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="GCGameControllerActivationContext", objc_superclass=NS.Object)
 GameControllerActivationContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GameControllerActivationContext, objc_selector="init", objc_name="init")
 	GameControllerActivationContext_init :: proc(self: ^GameControllerActivationContext) -> instancetype ---
 
@@ -26,7 +26,7 @@ GameControllerSceneDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GameControllerSceneDelegate, objc_selector="scene:didActivateGameControllerWithContext:", objc_name="scene")
 	GameControllerSceneDelegate_scene :: proc(self: ^GameControllerSceneDelegate, scene: ^UI.Scene, _context: ^GameControllerActivationContext) ---
 }

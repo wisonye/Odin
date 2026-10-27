@@ -1,6 +1,6 @@
 package math
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(require_results) cbrt_f16le :: proc "contextless" (x: f16le) -> f16le { return #force_inline f16le(cbrt_f16(f16(x))) }
 @(require_results) cbrt_f16be :: proc "contextless" (x: f16be) -> f16be { return #force_inline f16be(cbrt_f16(f16(x))) }

@@ -9,7 +9,7 @@ PersonNameComponents :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PersonNameComponents, objc_selector="namePrefix", objc_name="namePrefix")
 	PersonNameComponents_namePrefix :: proc(self: ^PersonNameComponents) -> ^String ---
 
@@ -57,7 +57,7 @@ foreign lib {
 @(objc_class="NSPersonNameComponentsFormatter", objc_superclass=Formatter)
 PersonNameComponentsFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PersonNameComponentsFormatter, objc_selector="localizedStringFromPersonNameComponents:style:options:", objc_name="localizedStringFromPersonNameComponents", objc_is_class_method=true)
 	PersonNameComponentsFormatter_localizedStringFromPersonNameComponents :: proc(components: ^PersonNameComponents, nameFormatStyle: PersonNameComponentsFormatterStyle, nameOptions: PersonNameComponentsFormatterOptions) -> ^String ---
 

@@ -1,9 +1,9 @@
 package test_core_mem
 
-import "core:mem"
-import "core:mem/tlsf"
-import "core:mem/virtual"
-import "core:testing"
+#import "core:mem"
+#import "core:mem/tlsf"
+#import "core:mem/virtual"
+#import "core:testing"
 
 @(require_results)
 count_byte :: proc(data: []byte, value: byte) -> (n: int) {
@@ -469,7 +469,7 @@ test_dynamic_arena_resize_in_place :: proc(t: ^testing.T) {
 	testing.expect(t, raw_data(shrunk) == raw_data(last), "the last allocation did not shrink in place")
 	testing.expect_value(t, arena.bytes_left, bytes_left+32)
 
-	// An allocation followed by another is not the last one, even when a
+	// An allocation followed by another is not the last one, even #if a
 	// stricter alignment would round its size up to reach past the later one.
 	first: []byte
 	for {

@@ -1,11 +1,11 @@
 package aes_hw
 
-@(require) import "core:sys/info"
+@(require) #import "core:sys/info"
 
 // is_supported returns true if and only if (⟺) hardware accelerated AES
 // is supported.
 is_supported :: proc "contextless" () -> bool {
-	when ODIN_ARCH == .amd64 {
+	#if ODIN_ARCH == .amd64 {
 		// Note: Everything with AES-NI has support for
 		// the required SSE extxtensions.
 		req_features :: info.CPU_Features{
@@ -15,7 +15,7 @@ is_supported :: proc "contextless" () -> bool {
 			.aes,
 		}
 		return info.cpu_features() >= req_features
-	} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
+	} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32 {
 		req_features :: info.CPU_Features{
 			.asimd,
 			.aes,
@@ -34,11 +34,11 @@ is_ghash_supported :: proc "contextless" () -> bool {
 		return false
 	}
 
-	when ODIN_ARCH == .amd64 {
+	#if ODIN_ARCH == .amd64 {
 		return info.cpu_features() >= info.CPU_Features{
 			.pclmulqdq,
 		}
-	} else when ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32{
+	} else #if ODIN_ARCH == .arm64 || ODIN_ARCH == .arm32{
 		// Once we can actually use this, we can re-enable this.
 		//
 		// return info.cpu_features() >= info.CPU_Features{

@@ -14,8 +14,8 @@ package i18n
 	List of contributors:
 		Jeroen van Rijn: Initial implementation.
 */
-import "core:strings"
-import "core:bytes"
+#import "core:strings"
+#import "core:bytes"
 
 parse_mo_from_bytes :: proc(data: []byte, options := DEFAULT_PARSE_OPTIONS, pluralizer: proc(int) -> int = nil, allocator := context.allocator) -> (translation: ^Translation, err: Error) {
 	context.allocator = allocator
@@ -134,7 +134,7 @@ read_u32 :: proc(data: []u8, native_endian := true) -> (res: u32, err: Error) {
 	if native_endian {
 		return val, .None
 	} else {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return u32(transmute(u32be)val), .None
 		} else {
 			return u32(transmute(u32le)val), .None
@@ -151,7 +151,7 @@ read_u16 :: proc(data: []u8, native_endian := true) -> (res: u16, err: Error) {
 	if native_endian {
 		return val, .None
 	} else {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return u16(transmute(u16be)val), .None
 		} else {
 			return u16(transmute(u16le)val), .None

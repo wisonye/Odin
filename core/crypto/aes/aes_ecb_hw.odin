@@ -1,10 +1,10 @@
 #+build amd64,arm64,arm32
 package aes
 
-import "base:intrinsics"
-import "core:crypto/_aes"
-import aes_hw "core:crypto/_aes/hw"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto/_aes"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:simd"
 
 @(private, enable_target_feature = aes_hw.TARGET_FEATURES)
 encrypt_block_hw :: proc(ctx: ^Context_Impl_Hardware, dst, src: []byte) {

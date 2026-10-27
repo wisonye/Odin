@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -14,7 +14,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:GameKit.framework",
 }
 
@@ -96,7 +96,7 @@ SKNode  :: NS.Object
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="GKErrorDomain")
 	ErrorDomain: ^NS.String
 
@@ -435,7 +435,7 @@ SessionError :: enum cffi.int {
 	SystemError           = 30205,
 }
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	PeerPickerConnectionType :: enum cffi.ulong {
 		Online = 1,
 		Nearby = 2,

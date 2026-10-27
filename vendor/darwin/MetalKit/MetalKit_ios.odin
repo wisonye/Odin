@@ -3,6 +3,6 @@
 #+private package
 package darwin_MetalKit
 
-import UI "vendor:darwin/UIKit"
+#import UI "vendor:darwin/UIKit"
 
 UI_View :: UI.View

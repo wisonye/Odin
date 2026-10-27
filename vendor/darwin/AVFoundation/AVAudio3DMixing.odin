@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_AVFoundation
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVAudio3DMixing")
 Audio3DMixing :: struct {
@@ -12,7 +12,7 @@ Audio3DMixing :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Audio3DMixing, objc_selector="renderingAlgorithm", objc_name="renderingAlgorithm")
 	Audio3DMixing_renderingAlgorithm :: proc(self: ^Audio3DMixing) -> Audio3DMixingRenderingAlgorithm ---
 

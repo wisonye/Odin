@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_QuartzCore
 
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CATransaction", objc_superclass=NS.Object)
 Transaction :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Transaction, objc_selector="begin", objc_name="begin", objc_is_class_method=true)
 	Transaction_begin :: proc() ---
 

@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSOrderedCollectionChange", objc_superclass=Object)
 OrderedCollectionChange :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OrderedCollectionChange, objc_selector="changeWithObject:type:index:", objc_name="changeWithObject_type_index", objc_is_class_method=true)
 	OrderedCollectionChange_changeWithObject_type_index :: proc(anObject: id, type: CollectionChangeType, index: UInteger) -> ^OrderedCollectionChange ---
 
@@ -55,7 +55,7 @@ OrderedCollectionDifference :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OrderedCollectionDifference, objc_selector="initWithChanges:", objc_name="initWithChanges")
 	OrderedCollectionDifference_initWithChanges :: proc(self: ^OrderedCollectionDifference, changes: ^Array) -> instancetype ---
 
@@ -99,7 +99,7 @@ OrderedSet :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OrderedSet, objc_selector="objectAtIndex:", objc_name="objectAtIndex")
 	OrderedSet_objectAtIndex :: proc(self: ^OrderedSet, idx: UInteger) -> id ---
 
@@ -386,7 +386,7 @@ OrderedSet_removeObserver :: proc {
 @(objc_class="NSMutableOrderedSet", objc_superclass=OrderedSet)
 MutableOrderedSet :: struct { using _: OrderedSet}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableOrderedSet, objc_selector="insertObject:atIndex:", objc_name="insertObject")
 	MutableOrderedSet_insertObject :: proc(self: ^MutableOrderedSet, object: id, idx: UInteger) ---
 

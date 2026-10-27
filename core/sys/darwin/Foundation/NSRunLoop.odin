@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import CF "core:sys/darwin/CoreFoundation"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSRunLoop", objc_superclass=Object)
 RunLoop :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RunLoop, objc_selector="getCFRunLoop", objc_name="getCFRunLoop")
 	RunLoop_getCFRunLoop :: proc(self: ^RunLoop) -> CF.RunLoopRef ---
 
@@ -44,7 +44,7 @@ foreign lib {
 	@(objc_type=RunLoop, objc_selector="runMode:beforeDate:", objc_name="runMode")
 	RunLoop_runMode :: proc(self: ^RunLoop, mode: ^String, limitDate: ^Date) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=RunLoop, objc_selector="configureAsServer", objc_name="configureAsServer")
 		RunLoop_configureAsServer :: proc(self: ^RunLoop) ---
 	}

@@ -1,11 +1,11 @@
 package xml_example
 
-import "core:encoding/xml"
-import "core:mem"
-import "core:fmt"
-import "core:time"
-import "core:strings"
-import "core:hash"
+#import "core:encoding/xml"
+#import "core:mem"
+#import "core:fmt"
+#import "core:time"
+#import "core:strings"
+#import "core:hash"
 
 N :: 1
 

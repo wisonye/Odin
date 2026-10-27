@@ -1,12 +1,12 @@
 // A `string` builder, as well as procedures to manipulate `UTF-8` encoded strings.
 package strings
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:bytes"
-import "core:io"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:bytes"
+#import "core:io"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 /*
 Clones a string
@@ -275,7 +275,7 @@ contains_rune :: proc(s: string, r: rune) -> (result: bool) {
 }
 
 /*
-Returns true when the string `substr` is contained inside the string `s`
+Returns true #if the string `substr` is contained inside the string `s`
 
 Inputs:
 - s: The input string
@@ -286,8 +286,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	contains_example :: proc() {
 		fmt.println(strings.contains("testing", "test"))
@@ -308,7 +308,7 @@ contains :: proc(s, substr: string) -> (res: bool) {
 }
 
 /*
-Returns `true` when the string `s` contains any of the characters inside the string `chars`
+Returns `true` #if the string `s` contains any of the characters inside the string `chars`
 
 Inputs:
 - s: The input string
@@ -319,8 +319,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	contains_any_example :: proc() {
 		fmt.println(strings.contains_any("test", "test"))
@@ -364,8 +364,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	rune_count_example :: proc() {
 		fmt.println(strings.rune_count("test"))
@@ -396,8 +396,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	equal_fold_example :: proc() {
 		fmt.println(strings.equal_fold("test", "test"))
@@ -475,8 +475,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	prefix_length_example :: proc() {
 		fmt.println(strings.prefix_length("testing", "test"))
@@ -525,8 +525,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	common_prefix_example :: proc() {
 		fmt.println(strings.common_prefix("testing", "test"))
@@ -559,8 +559,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	has_prefix_example :: proc() {
 		fmt.println(strings.has_prefix("testing", "test"))
@@ -596,8 +596,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	has_suffix_example :: proc() {
 		fmt.println(strings.has_suffix("todo.txt", ".txt"))
@@ -635,8 +635,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	join_example :: proc() {
 		a := [?]string { "a", "b", "c" }
@@ -687,8 +687,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	concatenate_example :: proc() {
 		a := [?]string { "a", "b", "c" }
@@ -731,8 +731,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	cut_example :: proc() {
 		fmt.println(strings.cut("some example text", 0, 4)) // -> "some"
@@ -793,8 +793,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	cut_clone_example :: proc() {
 		fmt.println(strings.cut_clone("some example text", 0, 4)) // -> "some"
@@ -826,7 +826,7 @@ Inputs:
 - s: The input string to split
 - sep: The separator string
 - sep_save: A flag determining if the separator should be saved in the resulting substrings
-- n: The maximum number of substrings to return, returns `nil` without alloc when `n=0`
+- n: The maximum number of substrings to return, returns `nil` without alloc #if `n=0`
 - allocator: (default is context.allocator)
 - loc: The caller location for debugging purposes (default: `#caller_location`)
 
@@ -903,8 +903,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_example :: proc() {
 		s := "aaa.bbb.ccc.ddd.eee"    // 5 parts
@@ -942,8 +942,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_n_example :: proc() {
 		s := "aaa.bbb.ccc.ddd.eee"  // 5 parts present
@@ -980,8 +980,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_after_example :: proc() {
 		a := "aaa.bbb.ccc.ddd.eee"         // 5 parts
@@ -1019,8 +1019,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_after_n_example :: proc() {
 		a := "aaa.bbb.ccc.ddd.eee"
@@ -1092,8 +1092,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_by_byte_iterator_example :: proc() {
 		text := "a.b.c.d.e"
@@ -1140,8 +1140,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_iterator_example :: proc() {
 		text := "a.b.c.d.e"
@@ -1177,8 +1177,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_after_iterator_example :: proc() {
 		text := "a.b.c.d.e"
@@ -1239,8 +1239,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_example :: proc() {
 		a := "a\nb\nc\nd\ne"
@@ -1282,8 +1282,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_n_example :: proc() {
 		a := "a\nb\nc\nd\ne"
@@ -1324,8 +1324,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_after_example :: proc() {
 		a := "a\nb\nc\nd\ne"
@@ -1368,8 +1368,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_after_n_example :: proc() {
 		a := "a\nb\nc\nd\ne"
@@ -1405,8 +1405,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_iterator_example :: proc() {
 		text := "a\nb\nc\nd\ne"
@@ -1441,8 +1441,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_lines_after_iterator_example :: proc() {
 		text := "a\nb\nc\nd\ne\n"
@@ -1468,7 +1468,7 @@ split_lines_after_iterator :: proc(s: ^string) -> (line: string, ok: bool) {
 }
 
 /*
-Returns the byte offset of the first byte `c` in the string s it finds, -1 when not found.
+Returns the byte offset of the first byte `c` in the string s it finds, -1 #if not found.
 NOTE: Can't find UTF-8 based runes.
 
 Inputs:
@@ -1480,8 +1480,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	index_byte_example :: proc() {
 		fmt.println(strings.index_byte("test", 't'))
@@ -1504,7 +1504,7 @@ index_byte :: proc "contextless" (s: string, c: byte) -> (res: int) {
 }
 
 /*
-Returns the byte offset of the last byte `c` in the string `s`, -1 when not found.
+Returns the byte offset of the last byte `c` in the string `s`, -1 #if not found.
 
 Inputs:
 - s: The input string to search in.
@@ -1517,8 +1517,8 @@ NOTE: Can't find UTF-8 based runes.
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	last_index_byte_example :: proc() {
 		fmt.println(strings.last_index_byte("test", 't'))
@@ -1541,7 +1541,7 @@ last_index_byte :: proc "contextless" (s: string, c: byte) -> (res: int) {
 }
 
 /*
-Returns the byte offset of the first rune `r` in the string `s` it finds, -1 when not found.
+Returns the byte offset of the first rune `r` in the string `s` it finds, -1 #if not found.
 Invalid runes return -1
 
 Inputs:
@@ -1553,8 +1553,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	index_rune_example :: proc() {
 		fmt.println(strings.index_rune("abcädef", 'x'))
@@ -1603,7 +1603,7 @@ index_rune :: proc(s: string, r: rune) -> (res: int) {
 
 @private PRIME_RABIN_KARP :: 16777619
 /*
-Returns the byte offset of the string `substr` in the string `s`, -1 when not found.
+Returns the byte offset of the string `substr` in the string `s`, -1 #if not found.
 
 Inputs:
 - s: The input string to search in.
@@ -1614,8 +1614,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	index_example :: proc() {
 		fmt.println(strings.index("test", "t"))
@@ -1684,7 +1684,7 @@ index :: proc "contextless" (s, substr: string) -> (res: int) #no_bounds_check {
 }
 
 /*
-Returns the last byte offset of the string `substr` in the string `s`, -1 when not found.
+Returns the last byte offset of the string `substr` in the string `s`, -1 #if not found.
 
 Inputs:
 - s: The input string to search in.
@@ -1695,8 +1695,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	last_index_example :: proc() {
 		fmt.println(strings.last_index("test", "t"))
@@ -1774,8 +1774,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	index_any_example :: proc() {
 		fmt.println(strings.index_any("test", "s"))
@@ -1839,8 +1839,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	last_index_any_example :: proc() {
 		fmt.println(strings.last_index_any("test", "s"))
@@ -1965,8 +1965,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	count_example :: proc() {
 		fmt.println(strings.count("abbccc", "a"))
@@ -2040,8 +2040,8 @@ WARNING: Panics if count < 0
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	repeat_example :: proc() {
 		fmt.println(strings.repeat("abc", 2))
@@ -2087,8 +2087,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	replace_all_example :: proc() {
 		fmt.println(strings.replace_all("xyzxyz", "xyz", "abc"))
@@ -2128,8 +2128,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	replace_example :: proc() {
 		fmt.println(strings.replace("xyzxyz", "xyz", "abc", 2))
@@ -2208,8 +2208,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	remove_example :: proc() {
 		fmt.println(strings.remove("abcabc", "abc", 1))
@@ -2248,8 +2248,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	remove_all_example :: proc() {
 		fmt.println(strings.remove_all("abcabc", "abc"))
@@ -2273,7 +2273,7 @@ remove_all :: proc(s, key: string, allocator := context.allocator, loc := #calle
 @(private) _ascii_space := [256]bool{'\t' = true, '\n' = true, '\v' = true, '\f' = true, '\r' = true, ' ' = true}
 
 /*
-Returns true when the `r` rune is an ASCII whitespace character.
+Returns true #if the `r` rune is an ASCII whitespace character.
 
 Inputs:
 - r: the rune to test
@@ -2290,7 +2290,7 @@ is_ascii_space :: proc(r: rune) -> (res: bool) {
 }
 
 /*
-Returns true when the `r` rune is an ASCII or UTF-8 whitespace character.
+Returns true #if the `r` rune is an ASCII or UTF-8 whitespace character.
 
 Inputs:
 - r: the rune to test
@@ -2318,7 +2318,7 @@ is_space :: proc(r: rune) -> (res: bool) {
 }
 
 /*
-Returns true when the `r` rune is `0x0`
+Returns true #if the `r` rune is `0x0`
 
 Inputs:
 - r: the rune to test
@@ -2344,8 +2344,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	index_proc_example :: proc() {
 		call :: proc(r: rune) -> bool {
@@ -2428,8 +2428,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	trim_left_proc_example :: proc() {
 		find :: proc(r: rune) -> bool {
@@ -2484,8 +2484,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	trim_right_proc_example :: proc() {
 		find :: proc(r: rune) -> bool {
@@ -2520,7 +2520,7 @@ Inputs:
 - state: The raw pointer to be passed to the procedure `p`
 
 Returns:
-- res: The trimmed string as a slice of the original, empty when no match
+- res: The trimmed string as a slice of the original, empty #if no match
 */
 @(require_results)
 trim_right_proc_with_state :: proc(s: string, p: proc(rawptr, rune) -> bool, state: rawptr) -> (res: string) #no_bounds_check {
@@ -2694,8 +2694,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	trim_prefix_example :: proc() {
 		fmt.println(strings.trim_prefix("testing", "test"))
@@ -2728,8 +2728,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	trim_suffix_example :: proc() {
 		fmt.println(strings.trim_suffix("todo.txt", ".txt"))
@@ -2769,8 +2769,8 @@ NOTE: Allocation occurs for the array, the splits are all views of the original 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_multi_example :: proc() {
 		splits := [?]string { "---", "~~~", ".", "_", "," }
@@ -2838,8 +2838,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	split_multi_iterate_example :: proc() {
 		it := "testing,this.out_nice---done~~~last"
@@ -2903,8 +2903,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	scrub_example :: proc() {
 		text := "Hello\xC0\x80World"
@@ -2965,8 +2965,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	reverse_example :: proc() {
 		a := "abcxyz"
@@ -3014,8 +3014,8 @@ WARNING: Panics if tab_size <= 0
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	expand_tabs_example :: proc() {
 		text := "abc1\tabc2\tabc3"
@@ -3084,8 +3084,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	partition_example :: proc() {
 		text := "testing this out"

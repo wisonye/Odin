@@ -2,18 +2,18 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="NSConnection", objc_superclass=Object)
 	Connection :: struct { using _: Object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="NSConnection")
 	Connection :: struct { using _: intrinsics.objc_object}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Connection, objc_selector="allConnections", objc_name="allConnections", objc_is_class_method=true)
 		Connection_allConnections :: proc() -> ^Array ---
 
@@ -138,7 +138,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=Connection, objc_name="connectionWithRegisteredName", objc_is_class_method=true)
 	Connection_connectionWithRegisteredName :: proc {
 		Connection_connectionWithRegisteredName_host,

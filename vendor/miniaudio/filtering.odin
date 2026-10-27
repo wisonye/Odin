@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /**************************************************************************************************************************************************************
 
@@ -42,7 +42,7 @@ biquad :: struct {
 } 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	biquad_config_init :: proc(format: format, channels: u32, b0, b1, b2, a0, a1, a2: f64) -> biquad_config ---
 
 	biquad_get_heap_size      :: proc(pConfig: ^biquad_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -109,7 +109,7 @@ lpf :: struct {
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	lpf1_config_init :: proc(format: format, channels: u32, sampleRate: u32, cutoffFrequency: f64) -> lpf1_config ---
 	lpf2_config_init :: proc(format: format, channels: u32, sampleRate: u32, cutoffFrequency, q: f64) -> lpf2_config ---
 
@@ -197,7 +197,7 @@ hpf :: struct {
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	hpf1_config_init :: proc(format: format, channels: u32, sampleRate: u32, cutoffFrequency: f64) -> hpf1_config ---
 	hpf2_config_init :: proc(format: format, channels: u32, sampleRate: u32, cutoffFrequency, q: f64) -> hpf2_config ---
 
@@ -266,7 +266,7 @@ bpf :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	bpf2_config_init :: proc(format: format, channels: u32, sampleRate: u32, cutoffFrequency: f64, q: f64) -> bpf2_config ---
 
 	bpf2_get_heap_size      :: proc(pConfig: ^bpf2_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -308,7 +308,7 @@ notch2 :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	notch2_config_init :: proc(format: format, channels: u32, sampleRate: u32, q: f64, frequency: f64) -> notch2_config ---
 
 	notch2_get_heap_size      :: proc(pConfig: ^notch2_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -341,7 +341,7 @@ peak2 :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	peak2_config_init :: proc(format: format, channels: u32, sampleRate: u32, gainDB, q, frequency: f64) -> peak2_config ---
 
 	peak2_get_heap_size      :: proc(pConfig: ^peak2_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -374,7 +374,7 @@ loshelf2 :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	loshelf2_config_init :: proc(format: format, channels: u32, sampleRate: u32, gainDB, shelfSlope, frequency: f64) -> loshelf2_config ---
 
 	loshelf2_get_heap_size      :: proc(pConfig: ^loshelf2_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -407,7 +407,7 @@ hishelf2 :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	hishelf2_config_init :: proc(format: format, channels: u32, sampleRate: u32, gainDB, shelfSlope, frequency: f64) -> hishelf2_config ---
 
 	hishelf2_get_heap_size      :: proc(pConfig: ^hishelf2_config, pHeapSizeInBytes: ^c.size_t) -> result ---

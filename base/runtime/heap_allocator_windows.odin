@@ -1,12 +1,12 @@
 package runtime
 
-import "../sanitizer"
+#import "../sanitizer"
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 @(private="file")
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	// NOTE(bill): The types are not using the standard names (e.g. DWORD and LPVOID) to just minimizing the dependency
 
 	// default_allocator

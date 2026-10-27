@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKUserIdentity", objc_superclass=NS.Object)
 UserIdentity :: struct {
@@ -11,7 +11,7 @@ UserIdentity :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserIdentity, objc_selector="init", objc_name="init")
 	UserIdentity_init :: proc(self: ^UserIdentity) -> instancetype ---
 
@@ -42,7 +42,7 @@ UserIdentityLookupInfo :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserIdentityLookupInfo, objc_selector="init", objc_name="init")
 	UserIdentityLookupInfo_init :: proc(self: ^UserIdentityLookupInfo) -> instancetype ---
 

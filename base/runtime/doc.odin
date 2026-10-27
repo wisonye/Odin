@@ -20,7 +20,7 @@ kind of functionality is placed in different files:
 
 For embedded and kernel development it might be required to re-implement parts
 of the `base:runtime` package. This can include changing the default printing
-procedures that handle console output when the program panics, custom
+procedures that handle console output #if the program panics, custom
 entry-points, tailored for a specific platform or execution environment, or
 simply switching up implementations of some procedures.
 
@@ -147,7 +147,7 @@ kind of loop isn't used, these procedures aren't required.
 * `string_decode_rune`
 * `string_decode_last_rune` (for `#reverse for`)
 
-### Required when RTTI is enabled (the vast majority of targets)
+### Required #if RTTI is enabled (the vast majority of targets)
 
 These declarations are required unless the `-no-rtti` compiler option is
 specified. Note that in order to be useful, some other procedures need to be

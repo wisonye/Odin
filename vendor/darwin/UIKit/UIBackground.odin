@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIBackgroundConfiguration", objc_superclass=NS.Object)
 BackgroundConfiguration :: struct {
@@ -13,7 +13,7 @@ BackgroundConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundConfiguration, objc_selector="clearConfiguration", objc_name="clearConfiguration", objc_is_class_method=true)
 	BackgroundConfiguration_clearConfiguration :: proc() -> instancetype ---
 
@@ -149,7 +149,7 @@ foreign lib {
 BackgroundExtensionView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundExtensionView, objc_selector="contentView", objc_name="contentView")
 	BackgroundExtensionView_contentView :: proc(self: ^BackgroundExtensionView) -> ^View ---
 

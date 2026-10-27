@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CA "vendor:darwin/QuartzCore"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="NSAnimation", objc_superclass=NS.Object)
 Animation :: struct {
@@ -15,7 +15,7 @@ Animation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Animation, objc_selector="initWithDuration:animationCurve:", objc_name="initWithDuration")
 	Animation_initWithDuration :: proc(self: ^Animation, duration: NS.TimeInterval, animationCurve: AnimationCurve) -> instancetype ---
 
@@ -106,7 +106,7 @@ AnimationDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimationDelegate, objc_selector="animationShouldStart:", objc_name="animationShouldStart")
 	AnimationDelegate_animationShouldStart :: proc(self: ^AnimationDelegate, animation: ^Animation) -> bool ---
 
@@ -128,7 +128,7 @@ foreign lib {
 AnimationContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimationContext, objc_selector="runAnimationGroup:completionHandler:", objc_name="runAnimationGroup_completionHandler", objc_is_class_method=true)
 	AnimationContext_runAnimationGroup_completionHandler :: proc(changes: ^Objc_Block(proc "c" ( _context: ^AnimationContext )), completionHandler: ^Objc_Block(proc "c" ())) ---
 

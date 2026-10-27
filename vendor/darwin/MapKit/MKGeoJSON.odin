@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MKGeoJSONDecoder", objc_superclass=NS.Object)
 GeoJSONDecoder :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GeoJSONDecoder, objc_selector="geoJSONObjectsWithData:error:", objc_name="geoJSONObjectsWithData_error")
 	GeoJSONDecoder_geoJSONObjectsWithData_error :: proc(self: ^GeoJSONDecoder, data: ^NS.Data, errorPtr: ^^NS.Error) -> ^NS.Array ---
 }
@@ -29,7 +29,7 @@ GeoJSONFeature :: struct {
 	using _: GeoJSONObject,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GeoJSONFeature, objc_selector="identifier", objc_name="identifier")
 	GeoJSONFeature_identifier :: proc(self: ^GeoJSONFeature) -> ^NS.String ---
 

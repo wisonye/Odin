@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSMeasurement", objc_superclass=Object)
 Measurement :: struct {
@@ -11,7 +11,7 @@ Measurement :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Measurement, objc_selector="init", objc_name="init")
 	Measurement_init :: proc(self: ^Measurement) -> instancetype ---
 
@@ -44,7 +44,7 @@ MeasurementFormatter :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeasurementFormatter, objc_selector="stringFromMeasurement:", objc_name="stringFromMeasurement")
 	MeasurementFormatter_stringFromMeasurement :: proc(self: ^MeasurementFormatter, measurement: ^Measurement) -> ^String ---
 

@@ -1,6 +1,6 @@
 package wgpu
 
-import "base:runtime"
+#import "base:runtime"
 
 g_context: runtime.Context
 

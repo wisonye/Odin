@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MTLIndirectCommandBuffer")
 IndirectCommandBuffer :: struct {
@@ -12,7 +12,7 @@ IndirectCommandBuffer :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectCommandBuffer, objc_selector="resetWithRange:", objc_name="resetWithRange")
 	IndirectCommandBuffer_resetWithRange :: proc(self: ^IndirectCommandBuffer, range: NS._NSRange) ---
 
@@ -36,7 +36,7 @@ IndirectCommandBufferDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectCommandBufferDescriptor, objc_selector="commandTypes", objc_name="commandTypes")
 	IndirectCommandBufferDescriptor_commandTypes :: proc(self: ^IndirectCommandBufferDescriptor) -> IndirectCommandType ---
 
@@ -159,7 +159,7 @@ IndirectComputeCommand :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectComputeCommand, objc_selector="setComputePipelineState:", objc_name="setComputePipelineState")
 	IndirectComputeCommand_setComputePipelineState :: proc(self: ^IndirectComputeCommand, pipelineState: ^ComputePipelineState) ---
 
@@ -213,7 +213,7 @@ IndirectRenderCommand :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectRenderCommand, objc_selector="setRenderPipelineState:", objc_name="setRenderPipelineState")
 	IndirectRenderCommand_setRenderPipelineState :: proc(self: ^IndirectRenderCommand, pipelineState: ^RenderPipelineState) ---
 

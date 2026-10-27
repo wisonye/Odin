@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameController
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCColor", objc_superclass=NS.Object)
 Color :: struct {
@@ -12,7 +12,7 @@ Color :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Color, objc_selector="init", objc_name="init")
 	Color_init :: proc(self: ^Color) -> instancetype ---
 

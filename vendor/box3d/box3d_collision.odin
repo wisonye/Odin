@@ -1,13 +1,13 @@
 package vendor_box3d
 
-import "core:c"
+#import "core:c"
 
 // Query callback.
 MeshQueryFcn :: proc "c" (x, y, z: Vec3, triangleIndex: c.int, ctx: rawptr) -> bool
 
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	/**
 	 * @addtogroup tree
 	 * @{

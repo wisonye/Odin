@@ -1,7 +1,7 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // A 64-bit immediate was printed into the template through an `int`, so it lost its upper 32 bits
 @(test)

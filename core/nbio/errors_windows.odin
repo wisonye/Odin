@@ -1,7 +1,7 @@
 #+private
 package nbio
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
 PLATFORM_ERR_UNSUPPORTED       :: win.System_Error.NOT_SUPPORTED
 

@@ -2,8 +2,8 @@
 #+build !js
 package timezone
 
-import "core:os"
-import "core:time/datetime"
+#import "core:os"
+#import "core:time/datetime"
 
 load_tzif_file :: proc(filename: string, region_name: string, allocator := context.allocator) -> (out: ^datetime.TZ_Region, ok: bool) {
 	tzif_data, tzif_err := os.read_entire_file(filename, allocator)

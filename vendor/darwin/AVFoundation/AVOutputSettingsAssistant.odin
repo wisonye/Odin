@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVOutputSettingsAssistant", objc_superclass=NS.Object)
 OutputSettingsAssistant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OutputSettingsAssistant, objc_selector="init", objc_name="init")
 	OutputSettingsAssistant_init :: proc(self: ^OutputSettingsAssistant) -> instancetype ---
 

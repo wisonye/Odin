@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSKeyValueSharedObservers", objc_superclass=Object)
 KeyValueSharedObservers :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyValueSharedObservers, objc_selector="initWithObservableClass:", objc_name="initWithObservableClass")
 	KeyValueSharedObservers_initWithObservableClass :: proc(self: ^KeyValueSharedObservers, observableClass: Class) -> id ---
 
@@ -29,7 +29,7 @@ foreign lib {
 @(objc_class="NSKeyValueSharedObserversSnapshot", objc_superclass=Object)
 KeyValueSharedObserversSnapshot :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyValueSharedObserversSnapshot, objc_selector="init", objc_name="init")
 	KeyValueSharedObserversSnapshot_init :: proc(self: ^KeyValueSharedObserversSnapshot) -> id ---
 

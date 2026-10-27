@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_QuartzCore
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import MTL "vendor:darwin/Metal"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import MTL "vendor:darwin/Metal"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -17,7 +17,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:QuartzCore.framework",
 }
 
@@ -33,7 +33,7 @@ CVTimeStamp     :: struct {}
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="CATransform3DIdentity")
 	Transform3DIdentity: Transform3D
 
@@ -154,7 +154,7 @@ foreign lib {
 	@(link_name="kCAAnimationPaced")
 	AnimationPaced: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(link_name="kEAGLDrawablePropertyRetainedBacking")
 		kEAGLDrawablePropertyRetainedBacking: ^NS.String
 	}
@@ -165,7 +165,7 @@ foreign lib {
 	@(link_name="kCAAnimationCubicPaced")
 	AnimationCubicPaced: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(link_name="kEAGLDrawablePropertyColorFormat")
 		kEAGLDrawablePropertyColorFormat: ^NS.String
 	}
@@ -173,7 +173,7 @@ foreign lib {
 	@(link_name="kCAAnimationRotateAuto")
 	AnimationRotateAuto: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(link_name="kEAGLColorFormatRGBA8")
 		kEAGLColorFormatRGBA8: ^NS.String
 	}
@@ -181,7 +181,7 @@ foreign lib {
 	@(link_name="kCAAnimationRotateAutoReverse")
 	AnimationRotateAutoReverse: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(link_name="kEAGLColorFormatRGB565")
 		kEAGLColorFormatRGB565: ^NS.String
 	}
@@ -189,7 +189,7 @@ foreign lib {
 	@(link_name="kCATransitionFade")
 	TransitionFade: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(link_name="kEAGLColorFormatSRGBA8")
 		kEAGLColorFormatSRGBA8: ^NS.String
 	}
@@ -398,7 +398,7 @@ foreign lib {
 	@(link_name="kCAValueFunctionTranslateZ")
 	ValueFunctionTranslateZ: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		CGLSetCurrentContext :: proc(ctx: CGLContextObj) -> CGLError ---
 
 		CGLGetCurrentContext :: proc() -> CGLContextObj ---
@@ -555,7 +555,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	GLRendererGenericID        :: 131584
 	GLRendererGenericFloatID   :: 132096
 	GLRendererAppleSWID        :: 132608
@@ -640,7 +640,7 @@ TextLayerTruncationMode :: distinct ^NS.String
 TextLayerAlignmentMode :: distinct ^NS.String
 ValueFunctionName :: distinct ^NS.String
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	EAGLRenderingAPI :: enum cffi.ulong {
 		OpenGLES1 = 1,
 		OpenGLES2 = 2,
@@ -648,7 +648,7 @@ when ODIN_PLATFORM_SUBTARGET_IOS {
 	}
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	CGLPixelFormatAttribute :: enum cffi.uint {
 		AllRenderers                       = 1,
 		TripleBuffer                       = 3,
@@ -857,7 +857,7 @@ ConstraintAttribute :: enum cffi.int {
 	Height = 7,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	_CGLContextObject :: struct {}
 
 	_CGLPixelFormatObject :: struct {}

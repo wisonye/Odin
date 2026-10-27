@@ -1,13 +1,13 @@
 package test_core_xml
 
-import "core:encoding/entity"
-import "core:encoding/xml"
-import "core:testing"
-import "core:strings"
-import "core:fmt"
-import "core:log"
-import "core:hash"
-import "core:time"
+#import "core:encoding/entity"
+#import "core:encoding/xml"
+#import "core:testing"
+#import "core:strings"
+#import "core:fmt"
+#import "core:log"
+#import "core:hash"
+#import "core:time"
 
 Silent :: proc(pos: xml.Pos, format: string, args: ..any) {}
 

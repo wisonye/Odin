@@ -1,8 +1,8 @@
 package test_issue_7779
 
-import "base:runtime"
-import "core:testing"
-import "core:encoding/hex"
+#import "base:runtime"
+#import "core:testing"
+#import "core:encoding/hex"
 
 @(test)
 test_issue_7779__decode_ok :: proc(t: ^testing.T) {

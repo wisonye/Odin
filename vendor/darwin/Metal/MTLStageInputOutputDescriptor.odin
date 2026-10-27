@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLStageInputOutputDescriptor", objc_superclass=NS.Object)
 StageInputOutputDescriptor :: struct {
@@ -10,7 +10,7 @@ StageInputOutputDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StageInputOutputDescriptor, objc_selector="stageInputOutputDescriptor", objc_name="stageInputOutputDescriptor", objc_is_class_method=true)
 	StageInputOutputDescriptor_stageInputOutputDescriptor :: proc() -> ^StageInputOutputDescriptor ---
 

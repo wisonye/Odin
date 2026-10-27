@@ -1,11 +1,11 @@
 package strings
 
-import "core:io"
-import "core:unicode/utf8"
+#import "core:io"
+#import "core:unicode/utf8"
 
 /*
 io stream data for a string reader that can read based on bytes or runes
-implements the vtable when using the `io.Reader` variants
+implements the vtable #if using the `io.Reader` variants
 "read" calls advance the current reading offset `i`
 */
 Reader :: struct {

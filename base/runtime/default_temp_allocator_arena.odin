@@ -1,7 +1,7 @@
 package runtime
 
-import "base:intrinsics"
-// import "base:sanitizer"
+#import "base:intrinsics"
+// #import "base:sanitizer"
 
 DEFAULT_ARENA_GROWING_MINIMUM_BLOCK_SIZE :: uint(DEFAULT_TEMP_ALLOCATOR_BACKING_SIZE)
 

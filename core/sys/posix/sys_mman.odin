@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // mman.h - memory management declarations
 
-foreign lib {
+#foreign lib {
 	/*
 	Establish a mapping between an address space of a process and a memory object.
 
@@ -92,7 +92,7 @@ foreign lib {
 
 	[[ More; https://pubs.opengroup.org/onlinepubs/9699919799/functions/shm_open.html ]]
 	*/
-	when ODIN_OS == .Darwin {
+	#if ODIN_OS == .Darwin {
 		// https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/shm_open.2.html
 		shm_open :: proc(name: cstring, oflag: O_Flags, #c_vararg args: ..any) -> FD ---
 	} else {
@@ -136,7 +136,7 @@ Lock_Flag_Bits :: enum c.int {
 	// Lock all pages currently mapped into the address space of the process.
 	CURRENT = log2(MCL_CURRENT),
 	// Lock all pages that become mapped into the address space of the process in the future, 
-	// when those mappings are established.
+	// #if those mappings are established.
 	FUTURE  = log2(MCL_FUTURE),
 }
 Lock_Flags :: bit_set[Lock_Flag_Bits; c.int]
@@ -165,13 +165,13 @@ MAdvice :: enum c.int {
 	WILLNEED   = POSIX_MADV_WILLNEED,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LMSYNC :: "__msync13"
 } else {
 	@(private) LMSYNC :: "msync"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	PROT_EXEC   :: 0x04
 	_PROT_NONE  :: 0x00
@@ -181,15 +181,15 @@ when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS 
 	MAP_FIXED     :: 0x0010
 	MAP_PRIVATE   :: 0x0002
 	MAP_SHARED    :: 0x0001
-	MAP_ANONYMOUS :: 0x0020 when ODIN_OS == .Linux else 0x1000
+	MAP_ANONYMOUS :: 0x0020 #if ODIN_OS == .Linux else 0x1000
 
-	when ODIN_OS == .Darwin || ODIN_OS == .Linux {
+	#if ODIN_OS == .Darwin || ODIN_OS == .Linux {
 		MS_INVALIDATE :: 0x0002
 		_MS_SYNC      :: 0x0010
-	} else when ODIN_OS == .NetBSD {
+	} else #if ODIN_OS == .NetBSD {
 		MS_INVALIDATE :: 0x0002
 		_MS_SYNC      :: 0x0004
-	} else when ODIN_OS == .OpenBSD {
+	} else #if ODIN_OS == .OpenBSD {
 		MS_INVALIDATE :: 0x0004
 		_MS_SYNC      :: 0x0002
 	}
@@ -208,7 +208,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS 
 	POSIX_MADV_SEQUENTIAL :: 2
 	POSIX_MADV_WILLNEED   :: 3
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	PROT_EXEC   :: 0x04
 	_PROT_NONE  :: 0x00

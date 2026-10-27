@@ -6,9 +6,9 @@ See:
 */
 package ristretto255
 
-import "core:crypto"
-import grp "core:crypto/_edwards25519"
-import field "core:crypto/_fiat/field_curve25519"
+#import "core:crypto"
+#import grp "core:crypto/_edwards25519"
+#import field "core:crypto/_fiat/field_curve25519"
 
 // ELEMENT_SIZE is the size of a byte-encoded ristretto255 group element.
 ELEMENT_SIZE :: 32

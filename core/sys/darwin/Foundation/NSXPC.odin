@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import posix "core:sys/posix"
-import "base:intrinsics"
+#import posix "core:sys/posix"
+#import "base:intrinsics"
 
 @(objc_class="NSXPCConnection", objc_superclass=Object)
 XPCConnection :: struct {
@@ -11,7 +11,7 @@ XPCConnection :: struct {
 	using _: XPCProxyCreating,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCConnection, objc_selector="initWithServiceName:", objc_name="initWithServiceName")
 	XPCConnection_initWithServiceName :: proc(self: ^XPCConnection, serviceName: ^String) -> instancetype ---
 
@@ -104,7 +104,7 @@ foreign lib {
 @(objc_class="NSXPCInterface", objc_superclass=Object)
 XPCInterface :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCInterface, objc_selector="interfaceWithProtocol:", objc_name="interfaceWithProtocol", objc_is_class_method=true)
 	XPCInterface_interfaceWithProtocol :: proc(protocol: ^Protocol) -> ^XPCInterface ---
 
@@ -137,7 +137,7 @@ foreign lib {
 @(objc_class="NSXPCListener", objc_superclass=Object)
 XPCListener :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCListener, objc_selector="serviceListener", objc_name="serviceListener", objc_is_class_method=true)
 	XPCListener_serviceListener :: proc() -> ^XPCListener ---
 
@@ -179,7 +179,7 @@ XPCListenerDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCListenerDelegate, objc_selector="listener:shouldAcceptNewConnection:", objc_name="listener")
 	XPCListenerDelegate_listener :: proc(self: ^XPCListenerDelegate, listener: ^XPCListener, newConnection: ^XPCConnection) -> bool ---
 }
@@ -195,7 +195,7 @@ XPCListenerEndpoint :: struct {
 @(objc_class="NSXPCProxyCreating")
 XPCProxyCreating :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCProxyCreating, objc_selector="remoteObjectProxy", objc_name="remoteObjectProxy")
 	XPCProxyCreating_remoteObjectProxy :: proc(self: ^XPCProxyCreating) -> id ---
 

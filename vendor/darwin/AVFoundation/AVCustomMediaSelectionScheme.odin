@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVCustomMediaSelectionScheme", objc_superclass=NS.Object)
 CustomMediaSelectionScheme :: struct {
@@ -10,7 +10,7 @@ CustomMediaSelectionScheme :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CustomMediaSelectionScheme, objc_selector="mediaPresentationSettingsForSelector:complementaryToLanguage:settings:", objc_name="mediaPresentationSettingsForSelector")
 	CustomMediaSelectionScheme_mediaPresentationSettingsForSelector :: proc(self: ^CustomMediaSelectionScheme, selector: ^MediaPresentationSelector, language: ^NS.String, settings: ^NS.Array) -> ^NS.Array ---
 

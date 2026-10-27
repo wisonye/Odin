@@ -3,9 +3,9 @@
 
 package rexcode_wasm
 
-import "core:fmt"
-import "core:strings"
-import "core:strconv"
+#import "core:fmt"
+#import "core:strings"
+#import "core:strconv"
 
 // =============================================================================
 // SECTION: Printer  (Module -> WebAssembly text listing)
@@ -270,7 +270,7 @@ write_attribute :: proc(sb: ^strings.Builder, o: ^Operand, opts: ^Print_Options)
 
 	case .MEMARG:
 		// WAT prints non-trivial memargs as `offset=N align=N`, omitting either
-		// when it is the natural default. (`align` here is the byte alignment,
+		// #if it is the natural default. (`align` here is the byte alignment,
 		// already expanded from the on-wire log2 by the decoder.)
 		ma := operand_memarg(o^)
 		if ma.offset != 0 {

@@ -2,9 +2,9 @@
 // and the specialized procedure is a concrete value usable through `type_of`
 package test_issue_procedure_of_specialized
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:testing"
 
 without_return :: proc "contextless" ($i: int) {}
 without_return_1 :: intrinsics.procedure_of(without_return(1))

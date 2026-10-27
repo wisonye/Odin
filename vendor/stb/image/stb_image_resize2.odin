@@ -12,26 +12,26 @@ Any function that is given a `nil` output buffer allocates one with the C `mallo
 Strides are in bytes and 64 bits wide. A stride of 0 means the rows are packed with no padding.
 */
 
-import "core:c"
+#import "core:c"
 
 @(private)
 RESIZE_LIB :: (
-	     "../lib/stb_image_resize2.lib"      when ODIN_OS == .Windows
-	else "../lib/stb_image_resize2.a"        when ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
-	else "../lib/darwin/stb_image_resize2.a" when ODIN_OS == .Darwin
-	else "../lib/stb_image_resize2_wasm.o"   when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	     "../lib/stb_image_resize2.lib"      #if ODIN_OS == .Windows
+	else "../lib/stb_image_resize2.a"        #if ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
+	else "../lib/darwin/stb_image_resize2.a" #if ODIN_OS == .Darwin
+	else "../lib/stb_image_resize2_wasm.o"   #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 	else ""
 )
 
-when RESIZE_LIB != "" {
-	when !#exists(RESIZE_LIB) {
+#if RESIZE_LIB != "" {
+	#if !#exists(RESIZE_LIB) {
 		// The STB libraries are shipped with the compiler on Windows so a Windows specific message should not be needed.
 		#panic("Could not find the compiled STB libraries, they can be compiled by running `\"" + ODIN_ROOT + "vendor/stb/src/build_stb.sh\"`")
 	}
 }
 
-foreign import stbir {
-	RESIZE_LIB when RESIZE_LIB != "" else "system:stb_image_resize2",
+#foreign #import stbir {
+	RESIZE_LIB #if RESIZE_LIB != "" else "system:stb_image_resize2",
 }
 
 // Specifies the number of channels, their order, and whether color is premultiplied by alpha.
@@ -67,7 +67,7 @@ PIXEL_LAYOUT_ABGR_NO_AW :: pixel_layout.ABGR_PM
 PIXEL_LAYOUT_RA_NO_AW   :: pixel_layout.RA_PM
 PIXEL_LAYOUT_AR_NO_AW   :: pixel_layout.AR_PM
 
-// What to do when sampling off the edge of the image.
+// What to do #if sampling off the edge of the image.
 edge :: enum c.int {
 	CLAMP   = 0,
 	REFLECT = 1,
@@ -80,8 +80,8 @@ filter :: enum c.int {
 	BOX                = 1,  // A trapezoid w/1-pixel wide ramps, same result as box for integer scale ratios
 	TRIANGLE           = 2,  // On upsampling, produces same results as bilinear texture filtering
 	CUBICBSPLINE       = 3,  // The cubic b-spline (aka Mitchell-Netrevalli with B=1,C=0), gaussian-esque
-	CATMULLROM         = 4,  // An interpolating cubic spline (the default when upsampling)
-	MITCHELL           = 5,  // Mitchell-Netrevalli filter with B=1/3, C=1/3 (the default when downsampling)
+	CATMULLROM         = 4,  // An interpolating cubic spline (the default #if upsampling)
+	MITCHELL           = 5,  // Mitchell-Netrevalli filter with B=1/3, C=1/3 (the default #if downsampling)
 	POINT_SAMPLE       = 6,  // Simple point sampling
 	MITCHELL_QUARTER   = 7,  // Mitchell-Netrevalli with B=1/4, C=3/8 (Robidoux), a little sharper than Mitchell
 	MITCHELL_SIXTH     = 8,  // Mitchell-Netrevalli with B=1/6, C=5/12, sharper still
@@ -96,7 +96,7 @@ filter :: enum c.int {
 datatype :: enum c.int {
 	UINT8            = 0,
 	UINT8_SRGB       = 1,
-	UINT8_SRGB_ALPHA = 2, // alpha channel, when present, should also be SRGB (this is very unusual)
+	UINT8_SRGB_ALPHA = 2, // alpha channel, #if present, should also be SRGB (this is very unusual)
 	UINT16           = 3,
 	FLOAT            = 4,
 	HALF_FLOAT       = 5,
@@ -114,7 +114,7 @@ datatype :: enum c.int {
 // The medium API (`resize`) adds a datatype, an explicit edge mode and an explicit filter.
 
 @(default_calling_convention="c", link_prefix="stbir_")
-foreign stbir {
+#foreign stbir {
 	resize_uint8_srgb   :: proc(input_pixels:  [^]u8, input_w,  input_h,  input_stride_in_bytes:  i64,
 	                            output_pixels: [^]u8, output_w, output_h, output_stride_in_bytes: i64,
 	                            pixel_type: pixel_layout) -> [^]u8 ---
@@ -219,7 +219,7 @@ resizer :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stbir_")
-foreign stbir {
+#foreign stbir {
 	// You must ALWAYS call this on your `resizer` before any of the other calls. Strides may be 0.
 	resize_init :: proc(resize: ^resizer,
 	                    input_pixels:  rawptr, input_w,  input_h,  input_stride_in_bytes:  i64,

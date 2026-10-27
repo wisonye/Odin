@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GCController", objc_superclass=NS.Object)
 Controller :: struct {
@@ -11,11 +11,11 @@ Controller :: struct {
 	using _: Device,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Controller, objc_selector="controllers", objc_name="controllers", objc_is_class_method=true)
 	Controller_controllers :: proc() -> ^NS.Array ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Controller, objc_selector="supportsHIDDevice:", objc_name="supportsHIDDevice", objc_is_class_method=true)
 		Controller_supportsHIDDevice :: proc(device: IOHIDDeviceRef) -> bool ---
 	}
@@ -94,7 +94,7 @@ foreign lib {
 @(objc_class="GCControllerAxisInput", objc_superclass=ControllerElement)
 ControllerAxisInput :: struct { using _: ControllerElement}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerAxisInput, objc_selector="setValue:", objc_name="setValue")
 	ControllerAxisInput_setValue :: proc(self: ^ControllerAxisInput, value: cffi.float) ---
 
@@ -112,7 +112,7 @@ foreign lib {
 @(objc_class="GCControllerButtonInput", objc_superclass=ControllerElement)
 ControllerButtonInput :: struct { using _: ControllerElement}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerButtonInput, objc_selector="setValue:", objc_name="setValue")
 	ControllerButtonInput_setValue :: proc(self: ^ControllerButtonInput, value: cffi.float) ---
 
@@ -148,7 +148,7 @@ foreign lib {
 @(objc_class="GCControllerDirectionPad", objc_superclass=ControllerElement)
 ControllerDirectionPad :: struct { using _: ControllerElement}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerDirectionPad, objc_selector="setValueForXAxis:yAxis:", objc_name="setValueForXAxis")
 	ControllerDirectionPad_setValueForXAxis :: proc(self: ^ControllerDirectionPad, xAxis: cffi.float, yAxis: cffi.float) ---
 
@@ -181,7 +181,7 @@ foreign lib {
 @(objc_class="GCControllerElement", objc_superclass=NS.Object)
 ControllerElement :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerElement, objc_selector="collection", objc_name="collection")
 	ControllerElement_collection :: proc(self: ^ControllerElement) -> ^ControllerElement ---
 
@@ -239,7 +239,7 @@ ControllerLiveInput :: struct {
 	using _: DevicePhysicalInput,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerLiveInput, objc_selector="capture", objc_name="capture")
 	ControllerLiveInput_capture :: proc(self: ^ControllerLiveInput) -> ^ControllerInputState ---
 
@@ -254,7 +254,7 @@ foreign lib {
 @(objc_class="GCControllerTouchpad", objc_superclass=ControllerElement)
 ControllerTouchpad :: struct { using _: ControllerElement}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ControllerTouchpad, objc_selector="setValueForXAxis:yAxis:touchDown:buttonValue:", objc_name="setValueForXAxis")
 	ControllerTouchpad_setValueForXAxis :: proc(self: ^ControllerTouchpad, xAxis: cffi.float, yAxis: cffi.float, touchDown: bool, buttonValue: cffi.float) ---
 
@@ -296,7 +296,7 @@ foreign lib {
 @(objc_class="GCDualSenseAdaptiveTrigger", objc_superclass=ControllerButtonInput)
 DualSenseAdaptiveTrigger :: struct { using _: ControllerButtonInput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DualSenseAdaptiveTrigger, objc_selector="setModeSlopeFeedbackWithStartPosition:endPosition:startStrength:endStrength:", objc_name="setModeSlopeFeedbackWithStartPosition")
 	DualSenseAdaptiveTrigger_setModeSlopeFeedbackWithStartPosition :: proc(self: ^DualSenseAdaptiveTrigger, startPosition: cffi.float, endPosition: cffi.float, startStrength: cffi.float, endStrength: cffi.float) ---
 

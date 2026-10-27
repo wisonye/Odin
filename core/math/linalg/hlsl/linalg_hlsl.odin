@@ -1,8 +1,8 @@
 // `HLSL`-like mathematics library plus numerous other utility procedures.
 package math_linalg_hlsl
 
-import "base:builtin"
-import "base:intrinsics"
+#import "base:builtin"
+#import "base:intrinsics"
 
 TAU :: 6.28318530717958647692528676655900576
 PI  :: 3.14159265358979323846264338327950288
@@ -2150,7 +2150,7 @@ inverse_transpose_matrix1x1 :: proc "contextless" (x: $M/matrix[1, 1]$T) -> (y: 
 @(require_results)
 inverse_transpose_matrix2x2 :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) {
 	d := x[0, 0]*x[1, 1] - x[0, 1]*x[1, 0]
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		y[0, 0] = +x[1, 1] / d
 		y[1, 0] = -x[0, 1] / d
 		y[0, 1] = -x[1, 0] / d
@@ -2169,7 +2169,7 @@ inverse_transpose_matrix2x2 :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: 
 inverse_transpose_matrix3x3 :: proc "contextless" (x: $M/matrix[3, 3]$T) -> (y: M) #no_bounds_check {
 	c := cofactor(x)
 	d := determinant(x)
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<3 {
 			for j in 0..<3 {
 				y[i, j] = c[i, j] / d
@@ -2193,7 +2193,7 @@ inverse_transpose_matrix4x4 :: proc "contextless" (x: $M/matrix[4, 4]$T) -> (y: 
 	for i in 0..<4 {
 		d += x[0, i] * c[0, i]
 	}
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<4 {
 			for j in 0..<4 {
 				y[i, j] = c[i, j] / d
@@ -2219,7 +2219,7 @@ inverse_matrix1x1 :: proc "contextless" (x: $M/matrix[1, 1]$T) -> (y: M) {
 @(require_results)
 inverse_matrix2x2 :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) {
 	d := x[0, 0]*x[1, 1] - x[0, 1]*x[1, 0]
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		y[0, 0] = +x[1, 1] / d
 		y[0, 1] = -x[0, 1] / d
 		y[1, 0] = -x[1, 0] / d
@@ -2238,7 +2238,7 @@ inverse_matrix2x2 :: proc "contextless" (x: $M/matrix[2, 2]$T) -> (y: M) {
 inverse_matrix3x3 :: proc "contextless" (x: $M/matrix[3, 3]$T) -> (y: M) #no_bounds_check {
 	c := cofactor(x)
 	d := determinant(x)
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<3 {
 			for j in 0..<3 {
 				y[i, j] = c[j, i] / d
@@ -2262,7 +2262,7 @@ inverse_matrix4x4 :: proc "contextless" (x: $M/matrix[4, 4]$T) -> (y: M) #no_bou
 	for i in 0..<4 {
 		d += x[0, i] * c[0, i]
 	}
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		for i in 0..<4 {
 			for j in 0..<4 {
 				y[i, j] = c[j, i] / d

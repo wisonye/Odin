@@ -1,11 +1,11 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // `complex` and `quaternion` took their result type from any hint they were *castable* to, which is
 // the rule for a conversion the programmer writes. Used as an assignment rule it silently narrowed
 // f64 to f32, produced a quaternion from a two-component builtin with w and k uninitialised, and
-// left the value with no element type at all when the hint was `any` or a union -- a compiler panic
+// left the value with no element type at all #if the hint was `any` or a union -- a compiler panic
 @(test)
 complex_takes_its_type_from_its_arguments :: proc(t: ^testing.T) {
 	a, b: f64 = 3, 4

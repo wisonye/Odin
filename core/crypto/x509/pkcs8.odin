@@ -1,7 +1,7 @@
 package x509
 
-import "core:crypto"
-import "core:encoding/asn1"
+#import "core:crypto"
+#import "core:encoding/asn1"
 
 // Private_Key holds the RAW key material to serialize as a PKCS#8
 // PrivateKeyInfo (RFC 5208 / 5958). It is the bytes the crypto packages expose,
@@ -15,7 +15,7 @@ Private_Key :: struct {
 	algorithm: Public_Key_Algorithm,
 	private:   []byte,
 	public:    []byte,
-	// RSA CRT components (big-endian magnitudes), used when algorithm == RSA.
+	// RSA CRT components (big-endian magnitudes), used #if algorithm == RSA.
 	rsa_n:     []byte, // modulus
 	rsa_e:     []byte, // public exponent
 	rsa_d:     []byte, // private exponent

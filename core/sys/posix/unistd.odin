@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // unistd.h - standard symbolic constants and types
 
-foreign lib {
+#foreign lib {
 	/*
 	Equivalent to `access` but relative paths are resolved based on `fd`.
 
@@ -1053,7 +1053,7 @@ Lock_Function :: enum c.int {
 	ULOCK = F_ULOCK,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LCHOWN  :: "__posix_chown"
 	@(private) LFCHOWN :: "__posix_fchown"
 	@(private) LLCHOWN :: "__posix_lchown"
@@ -1063,7 +1063,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LLCHOWN :: "lchown"
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	_F_OK :: 0
 	X_OK :: (1<<0)
@@ -1244,7 +1244,7 @@ when ODIN_OS == .Darwin {
 
 	_POSIX_VDISABLE :: '\377'
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	_F_OK :: 0
 	X_OK :: 0x01
@@ -1425,7 +1425,7 @@ when ODIN_OS == .Darwin {
 
 	_POSIX_VDISABLE :: 0xff
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	_F_OK :: 0
 	X_OK :: 0x01
@@ -1610,7 +1610,7 @@ when ODIN_OS == .Darwin {
 	_SC_TRACE_SYS_MAX                :: 129
 	_SC_TRACE_USER_EVENT_MAX         :: 130
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	_F_OK :: 0
 	X_OK :: 0x01
@@ -1804,7 +1804,7 @@ when ODIN_OS == .Darwin {
 
 	_POSIX_VDISABLE :: '\377'
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	_F_OK :: 0
 	X_OK :: 1

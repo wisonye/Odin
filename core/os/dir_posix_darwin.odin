@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "core:sys/darwin"
+#import "core:sys/darwin"
 
 _copy_directory_all_native :: proc(dst, src: string, dst_perm := Permissions_Default) -> (err: Error) {
 	temp_allocator := TEMP_ALLOCATOR_GUARD({})

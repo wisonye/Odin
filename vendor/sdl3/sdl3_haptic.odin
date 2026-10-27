@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Haptic :: struct {}
 
@@ -110,11 +110,11 @@ HapticCondition :: struct {
 	interval: Uint16,            /**< How soon it can be triggered again after button. */
 
 	/* Condition */
-	right_sat:   [3]Uint16,      /**< Level when joystick is to the positive side; max 0xFFFF. */
-	left_sat:    [3]Uint16,      /**< Level when joystick is to the negative side; max 0xFFFF. */
+	right_sat:   [3]Uint16,      /**< Level #if joystick is to the positive side; max 0xFFFF. */
+	left_sat:    [3]Uint16,      /**< Level #if joystick is to the negative side; max 0xFFFF. */
 	right_coeff: [3]Sint16,      /**< How fast to increase the force towards the positive side. */
 	left_coeff:  [3]Sint16,      /**< How fast to increase the force towards the negative side. */
-	deadband:    [3]Uint16,      /**< Size of the dead zone; max 0xFFFF: whole axis-range when 0-centered. */
+	deadband:    [3]Uint16,      /**< Size of the dead zone; max 0xFFFF: whole axis-range #if 0-centered. */
 	center:      [3]Sint16,      /**< Position of the dead zone. */
 }
 
@@ -199,7 +199,7 @@ HapticID :: distinct Uint32
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetHaptics                 :: proc(count: ^c.int) -> ^HapticID ---
 	GetHapticNameForID         :: proc(instance_id: HapticID) -> cstring ---
 	OpenHaptic                 :: proc(instance_id: HapticID) -> ^Haptic ---

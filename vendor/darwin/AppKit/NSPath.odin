@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSPathCell", objc_superclass=ActionCell)
 PathCell :: struct {
@@ -14,7 +14,7 @@ PathCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathCell, objc_selector="setObjectValue:", objc_name="setObjectValue")
 	PathCell_setObjectValue :: proc(self: ^PathCell, obj: ^NS.Copying) ---
 
@@ -99,7 +99,7 @@ PathCellDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathCellDelegate, objc_selector="pathCell:willDisplayOpenPanel:", objc_name="pathCell_willDisplayOpenPanel")
 	PathCellDelegate_pathCell_willDisplayOpenPanel :: proc(self: ^PathCellDelegate, pathCell: ^PathCell, openPanel: ^OpenPanel) ---
 
@@ -118,7 +118,7 @@ PathCellDelegate_pathCell :: proc {
 PathControl :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathControl, objc_selector="setDraggingSourceOperationMask:forLocal:", objc_name="setDraggingSourceOperationMask")
 	PathControl_setDraggingSourceOperationMask :: proc(self: ^PathControl, mask: DragOperation, isLocal: bool) ---
 
@@ -209,7 +209,7 @@ PathControlDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathControlDelegate, objc_selector="pathControl:shouldDragItem:withPasteboard:", objc_name="pathControl_shouldDragItem_withPasteboard")
 	PathControlDelegate_pathControl_shouldDragItem_withPasteboard :: proc(self: ^PathControlDelegate, pathControl: ^PathControl, pathItem: ^PathControlItem, pasteboard: ^Pasteboard) -> bool ---
 
@@ -234,7 +234,7 @@ foreign lib {
 PathControlItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathControlItem, objc_selector="title", objc_name="title")
 	PathControlItem_title :: proc(self: ^PathControlItem) -> ^NS.String ---
 

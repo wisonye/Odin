@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="GCDirectionPadElement")
 DirectionPadElement :: struct {
@@ -10,7 +10,7 @@ DirectionPadElement :: struct {
 	using _: PhysicalInputElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DirectionPadElement, objc_selector="xyAxes", objc_name="xyAxes")
 	DirectionPadElement_xyAxes :: proc(self: ^DirectionPadElement) -> ^Axis2DInput ---
 

@@ -8,12 +8,12 @@ package regex_compiler
 		Feoramund: Initial implementation.
 */
 
-import "base:intrinsics"
-import "core:text/regex/common"
-import "core:text/regex/parser"
-import "core:text/regex/tokenizer"
-import "core:text/regex/virtual_machine"
-import "core:unicode"
+#import "base:intrinsics"
+#import "core:text/regex/common"
+#import "core:text/regex/parser"
+#import "core:text/regex/tokenizer"
+#import "core:text/regex/virtual_machine"
+#import "core:unicode"
 
 Token      :: tokenizer.Token
 Token_Kind :: tokenizer.Token_Kind
@@ -164,7 +164,7 @@ generate_code :: proc(c: ^Compiler, node: Node) -> (code: Program) {
 	}
 
 	// NOTE: For Jump/Split arguments, we write as i16 and will reinterpret
-	// this later when relative jumps are turned into absolute jumps.
+	// this later #if relative jumps are turned into absolute jumps.
 
 	switch specific in node {
 	// Atomic Nodes:

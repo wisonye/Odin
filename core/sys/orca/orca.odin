@@ -4,7 +4,7 @@
 
 package orca
 
-import "core:c"
+#import "core:c"
 
 char :: c.char
 
@@ -174,7 +174,7 @@ mat2x3 :: [6]f32
 rect :: struct { x, y, w, h: f32 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Check if two 2D vectors are equal.
 	vec2_equal :: proc(v0: vec2, v1: vec2) -> bool ---
 	// Multiply a 2D vector by a scalar.
@@ -209,7 +209,7 @@ clock_kind :: enum u32 {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	clock_time :: proc(clock: clock_kind) -> f64 ---
 }
 
@@ -229,7 +229,7 @@ log_level :: enum u32 {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	/*
 	Abort the application, showing an error message.
 	
@@ -273,7 +273,7 @@ list :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Check if a list is empty.
 	list_empty :: proc(list: list) -> bool ---
 	// Zero-initializes a linked list.
@@ -349,12 +349,12 @@ arena_scope :: struct {
 arena_options :: struct {
 	// The base allocator to use with this arena
 	base: ^base_allocator,
-	// The amount of memory to reserve up-front when creating the arena.
+	// The amount of memory to reserve up-front #if creating the arena.
 	reserve: u64,
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Initialize a memory arena.
 	arena_init :: proc(arena: ^arena) ---
 	// Initialize a memory arena with additional options.
@@ -373,7 +373,7 @@ foreign {
 	arena_clear :: proc(arena: ^arena) ---
 	// Begin a memory scope. This creates an `oc_arena_scope` object that stores the current offset of the arena. The arena can later be reset to that offset by calling `oc_arena_scope_end`, releasing all memory that was allocated within the scope to the arena.
 	arena_scope_begin :: proc(arena: ^arena) -> arena_scope ---
-	// End a memory scope. This resets an arena to the offset it had when the scope was created. All memory allocated within the scope is released back to the arena.
+	// End a memory scope. This resets an arena to the offset it had #if the scope was created. All memory allocated within the scope is released back to the arena.
 	arena_scope_end :: proc(scope: arena_scope) ---
 	/*
 	Begin a scratch scope. This creates a memory scope on a per-thread, global "scratch" arena. This allows easily creating temporary memory for scratch computations or intermediate results, in a stack-like fashion.
@@ -384,7 +384,7 @@ foreign {
 	- Use `oc_scratch_begin_next()` and pass it the result arena, to get a scratch arena that does not conflict with it.
 	*/
 	scratch_begin :: proc() -> arena_scope ---
-	// Begin a scratch scope that does not conflict with a given arena. See `oc_scratch_begin()` for more details about when to use this function.
+	// Begin a scratch scope that does not conflict with a given arena. See `oc_scratch_begin()` for more details about #if to use this function.
 	scratch_begin_next :: proc(used: ^arena) -> arena_scope ---
 }
 
@@ -454,7 +454,7 @@ str32_list :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Make a string from a bytes buffer and a length.
 	str8_from_buffer :: proc(len: u64, buffer: [^]char) -> str8 ---
 	// Make a string from a slice of another string. The resulting string designates some subsequence of the input string.
@@ -571,7 +571,7 @@ unicode_range :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Get the size of a utf8-encoded codepoint for the first byte of the encoded sequence.
 	utf8_size_from_leading_char :: proc(leadingChar: char) -> u32 ---
 	// Get the size of the utf8 encoding of a codepoint.
@@ -611,43 +611,43 @@ foreign {
 event_type :: enum u32 {
 	// No event. That could be used simply to wake up the application.
 	NONE = 0,
-	// A modifier key event. This event is sent when a key such as <kbd>Alt</kbd>, <kbd>Control</kbd>, <kbd>Command</kbd> or <kbd>Shift</kbd> are pressed, released, or repeated. The `key` field contains the event's details.
+	// A modifier key event. This event is sent #if a key such as <kbd>Alt</kbd>, <kbd>Control</kbd>, <kbd>Command</kbd> or <kbd>Shift</kbd> are pressed, released, or repeated. The `key` field contains the event's details.
 	KEYBOARD_MODS = 1,
-	// A key event. This event is sent when a normal key is pressed, released, or repeated. The `key` field contains the event's details.
+	// A key event. This event is sent #if a normal key is pressed, released, or repeated. The `key` field contains the event's details.
 	KEYBOARD_KEY = 2,
-	// A character input event. This event is sent when an input character is produced by the keyboard. The `character` field contains the event's details.
+	// A character input event. This event is sent #if an input character is produced by the keyboard. The `character` field contains the event's details.
 	KEYBOARD_CHAR = 3,
-	// A mouse button event. This is event sent when one of the mouse buttons is pressed, released, or clicked. The `key` field contains the event's details.
+	// A mouse button event. This is event sent #if one of the mouse buttons is pressed, released, or clicked. The `key` field contains the event's details.
 	MOUSE_BUTTON = 4,
-	// A mouse move event. This is event sent when the mouse is moved. The `mouse` field contains the event's details.
+	// A mouse move event. This is event sent #if the mouse is moved. The `mouse` field contains the event's details.
 	MOUSE_MOVE = 5,
-	// A mouse wheel event. This is event sent when the mouse wheel is moved (or when a trackpad is scrolled). The `mouse` field contains the event's details.
+	// A mouse wheel event. This is event sent #if the mouse wheel is moved (or #if a trackpad is scrolled). The `mouse` field contains the event's details.
 	MOUSE_WHEEL = 6,
-	// A mouse enter event. This event is sent when the mouse enters the application's window. The `mouse` field contains the event's details.
+	// A mouse enter event. This event is sent #if the mouse enters the application's window. The `mouse` field contains the event's details.
 	MOUSE_ENTER = 7,
-	// A mouse leave event. This event is sent when the mouse leaves the application's window.
+	// A mouse leave event. This event is sent #if the mouse leaves the application's window.
 	MOUSE_LEAVE = 8,
-	// A clipboard paste event. This event is sent when the user uses the paste shortcut while the application window has focus.
+	// A clipboard paste event. This event is sent #if the user uses the paste shortcut while the application window has focus.
 	CLIPBOARD_PASTE = 9,
-	// A resize event. This event is sent when the application's window is resized. The `move` field contains the event's details.
+	// A resize event. This event is sent #if the application's window is resized. The `move` field contains the event's details.
 	WINDOW_RESIZE = 10,
-	// A move event. This event is sent when the window is moved. The `move` field contains the event's details.
+	// A move event. This event is sent #if the window is moved. The `move` field contains the event's details.
 	WINDOW_MOVE = 11,
-	// A focus event. This event is sent when the application gains focus.
+	// A focus event. This event is sent #if the application gains focus.
 	WINDOW_FOCUS = 12,
-	// An unfocus event. This event is sent when the application looses focus.
+	// An unfocus event. This event is sent #if the application looses focus.
 	WINDOW_UNFOCUS = 13,
-	// A hide event. This event is sent when the application's window is hidden or minimized.
+	// A hide event. This event is sent #if the application's window is hidden or minimized.
 	WINDOW_HIDE = 14,
-	// A show event. This event is sent when the application's window is shown or de-minimized.
+	// A show event. This event is sent #if the application's window is shown or de-minimized.
 	WINDOW_SHOW = 15,
-	// A close event. This event is sent when the window is about to be closed.
+	// A close event. This event is sent #if the window is about to be closed.
 	WINDOW_CLOSE = 16,
-	// A path drop event. This event is sent when the user drops files onto the application's window. The `paths` field contains the event's details.
+	// A path drop event. This event is sent #if the user drops files onto the application's window. The `paths` field contains the event's details.
 	PATHDROP = 17,
-	// A frame event. This event is sent when the application should render a frame.
+	// A frame event. This event is sent #if the application should render a frame.
 	FRAME = 18,
-	// A quit event. This event is sent when the application has been requested to quit.
+	// A quit event. This event is sent #if the application has been requested to quit.
 	QUIT = 19,
 }
 
@@ -1037,7 +1037,7 @@ file_dialog_desc :: struct {
 	filters: str8_list,
 }
 
-// An enum identifying the button clicked by the user when a file dialog returns.
+// An enum identifying the button clicked by the user #if a file dialog returns.
 file_dialog_button :: enum u32 {
 	// The user clicked the "Cancel" button, or closed the dialog box.
 	CANCEL = 0,
@@ -1049,7 +1049,7 @@ file_dialog_button :: enum u32 {
 file_dialog_result :: struct {
 	// The button clicked by the user.
 	button: file_dialog_button,
-	// The path that was selected when the user clicked the OK button. If the dialog box had the `OC_FILE_DIALOG_MULTIPLE` flag set, this is the first file of the list of selected paths.
+	// The path that was selected #if the user clicked the OK button. If the dialog box had the `OC_FILE_DIALOG_MULTIPLE` flag set, this is the first file of the list of selected paths.
 	path: str8,
 	// If the dialog box had the `OC_FILE_DIALOG_MULTIPLE` flag set and the user clicked the OK button, this list contains the selected paths.
 	selection: str8_list,
@@ -1059,7 +1059,7 @@ file_dialog_result :: struct {
 window :: distinct u64
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Set the title of the application's window.
 	window_set_title :: proc(title: str8) ---
 	// Set the size of the application's window.
@@ -1129,7 +1129,7 @@ input_state :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	input_process_event :: proc(arena: ^arena, state: ^input_state, event: ^event) ---
 	input_next_frame :: proc(state: ^input_state) ---
 	key_down :: proc(state: ^input_state, key: key_code) -> bool ---
@@ -1173,7 +1173,7 @@ file :: distinct u64
 file_open_flag :: enum u16 {
 	// Open the file in 'append' mode. All writes append data at the end of the file.
 	APPEND = 0,
-	// Truncate the file to 0 bytes when opening.
+	// Truncate the file to 0 bytes #if opening.
 	TRUNCATE,
 	// Create the file if it does not exist.
 	CREATE,
@@ -1247,7 +1247,7 @@ io_req :: struct {
 		using open: struct {
 			// The access permissions requested on the file to open.
 			rights: file_access,
-			// The options to use when opening the file.
+			// The options to use #if opening the file.
 			flags: file_open_flags,
 		},
 		whence: file_whence,
@@ -1384,7 +1384,7 @@ file_listdir_elt :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Send a single I/O request and wait for its completion.
 	io_wait_single_req :: proc(req: ^io_req) -> io_cmp ---
 	// Returns a `nil` file handle
@@ -1434,7 +1434,7 @@ file_open_with_dialog_result :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Open files through a file dialog. This allows the user to select files outside the root directories currently accessible to the applications, giving them a way to provide new file capabilities to the application.
 	file_open_with_dialog :: proc(arena: ^arena, rights: file_access, flags: file_open_flags, desc: ^file_dialog_desc) -> file_open_with_dialog_result ---
 }
@@ -1444,7 +1444,7 @@ foreign {
 ////////////////////////////////////////////////////////////////////////////////
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Get a string slice of the directory part of a path.
 	path_slice_directory :: proc(path: str8) -> str8 ---
 	// Get a string slice of the file name part of a path.
@@ -1564,7 +1564,7 @@ image_region :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Returns a `nil` surface handle.
 	surface_nil :: proc() -> surface ---
 	// Check if a surface handle is `nil`.
@@ -1802,7 +1802,7 @@ foreign {
 ////////////////////////////////////////////////////////////////////////////////
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	// Create a graphics surface for GLES rendering.
 	gles_surface_create :: proc() -> surface ---
 	// Make the GL context of the surface current.
@@ -1929,7 +1929,7 @@ ui_box_size :: [2]ui_size
 
 ui_box_floating :: [2]bool
 
-// These bits *disable* the corresponding element when they're set.
+// These bits *disable* the corresponding element #if they're set.
 ui_draw_mask :: enum u32 {
 	BACKGROUND = 1,
 	BORDER = 2,
@@ -2020,7 +2020,7 @@ ui_box :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	ui_context_create :: proc(defaultFont: font) -> ^ui_context ---
 	ui_context_destroy :: proc(_context: ^ui_context) ---
 	ui_get_context :: proc() -> ^ui_context ---
@@ -2148,7 +2148,7 @@ ui_radio_group_info :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	ui_label :: proc(key: cstring, label: cstring) -> ui_sig ---
 	ui_label_str8 :: proc(key: str8, label: str8) -> ui_sig ---
 	ui_button :: proc(key: cstring, text: cstring) -> ui_sig ---

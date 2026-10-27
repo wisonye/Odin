@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKMultiPolygon", objc_superclass=Shape)
 MultiPolygon :: struct {
@@ -10,7 +10,7 @@ MultiPolygon :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MultiPolygon, objc_selector="initWithPolygons:", objc_name="initWithPolygons")
 	MultiPolygon_initWithPolygons :: proc(self: ^MultiPolygon, polygons: ^NS.Array) -> instancetype ---
 
@@ -22,7 +22,7 @@ foreign lib {
 @(objc_class="MKMultiPolygonRenderer", objc_superclass=OverlayPathRenderer)
 MultiPolygonRenderer :: struct { using _: OverlayPathRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MultiPolygonRenderer, objc_selector="initWithMultiPolygon:", objc_name="initWithMultiPolygon")
 	MultiPolygonRenderer_initWithMultiPolygon :: proc(self: ^MultiPolygonRenderer, multiPolygon: ^MultiPolygon) -> instancetype ---
 
@@ -37,7 +37,7 @@ MultiPolyline :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MultiPolyline, objc_selector="initWithPolylines:", objc_name="initWithPolylines")
 	MultiPolyline_initWithPolylines :: proc(self: ^MultiPolyline, polylines: ^NS.Array) -> instancetype ---
 
@@ -49,7 +49,7 @@ foreign lib {
 @(objc_class="MKMultiPolylineRenderer", objc_superclass=OverlayPathRenderer)
 MultiPolylineRenderer :: struct { using _: OverlayPathRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MultiPolylineRenderer, objc_selector="initWithMultiPolyline:", objc_name="initWithMultiPolyline")
 	MultiPolylineRenderer_initWithMultiPolyline :: proc(self: ^MultiPolylineRenderer, multiPolyline: ^MultiPolyline) -> instancetype ---
 

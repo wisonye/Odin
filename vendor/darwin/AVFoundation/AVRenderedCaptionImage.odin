@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVRenderedCaptionImage", objc_superclass=NS.Object)
 RenderedCaptionImage :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderedCaptionImage, objc_selector="init", objc_name="init")
 	RenderedCaptionImage_init :: proc(self: ^RenderedCaptionImage) -> instancetype ---
 

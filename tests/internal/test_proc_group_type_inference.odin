@@ -2,7 +2,7 @@
 
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_type_inference_on_literals_for_various_parameters_combinations :: proc(t: ^testing.T) {
@@ -67,7 +67,7 @@ test_proc_group_default_arg_precedence :: proc(t: ^testing.T) {
 @test
 test_proc_group_arity_precedence :: proc(t: ^testing.T) {
 	{
-		// a non-variadic overload is the closer match when the variadic part is empty
+		// a non-variadic overload is the closer match #if the variadic part is empty
 		proc_exact    :: proc(x: int)           -> int { return 1 }
 		proc_variadic :: proc(x: int, r: ..int) -> int { return 2 }
 		group :: proc{proc_exact, proc_variadic}

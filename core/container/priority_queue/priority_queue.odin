@@ -1,7 +1,7 @@
 package container_priority_queue
 
-import "base:builtin"
-import "base:runtime"
+#import "base:builtin"
+#import "base:runtime"
 
 // Priority Queue.
 //

@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSBrowser", objc_superclass=Control)
 Browser :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Browser, objc_selector="loadColumnZero", objc_name="loadColumnZero")
 	Browser_loadColumnZero :: proc(self: ^Browser) ---
 
@@ -380,7 +380,7 @@ BrowserDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BrowserDelegate, objc_selector="browser:numberOfRowsInColumn:", objc_name="browser_numberOfRowsInColumn")
 	BrowserDelegate_browser_numberOfRowsInColumn :: proc(self: ^BrowserDelegate, sender: ^Browser, column: NS.Integer) -> NS.Integer ---
 
@@ -489,7 +489,7 @@ foreign lib {
 BrowserCell :: struct { using _: Cell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BrowserCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	BrowserCell_initTextCell :: proc(self: ^BrowserCell, string: ^NS.String) -> instancetype ---
 

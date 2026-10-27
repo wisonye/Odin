@@ -1,11 +1,11 @@
 package benchmark_core_crypto
 
-import "core:crypto"
-import "core:fmt"
-import "core:log"
-import "core:strings"
-import "core:text/table"
-import "core:time"
+#import "core:crypto"
+#import "core:fmt"
+#import "core:log"
+#import "core:strings"
+#import "core:text/table"
+#import "core:time"
 
 @(private)
 log_table :: #force_inline proc(tbl: ^table.Table) {

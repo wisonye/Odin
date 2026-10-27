@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIDatePicker", objc_superclass=Control)
 DatePicker :: struct {
@@ -11,7 +11,7 @@ DatePicker :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DatePicker, objc_selector="setDate:animated:", objc_name="setDate_animated")
 	DatePicker_setDate_animated :: proc(self: ^DatePicker, date: ^NS.Date, animated: bool) ---
 

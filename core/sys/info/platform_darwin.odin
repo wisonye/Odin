@@ -1,14 +1,14 @@
 package sysinfo
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strings"
-import "core:sys/unix"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strings"
+#import "core:sys/unix"
 
 // NOTE: Only the few Foundation messages needed here are sent directly, rather than importing
 // `core:sys/darwin/Foundation`, as this package is imported by `core:crypto`.
 @(require)
-foreign import "system:Foundation.framework"
+#foreign #import "system:Foundation.framework"
 
 @(private="file", objc_class="NSAutoreleasePool")
 NSAutoreleasePool :: struct {using _: intrinsics.objc_object}
@@ -55,7 +55,7 @@ _os_version :: proc (allocator: runtime.Allocator, loc := #caller_location) -> (
 
 	res.os = {int(version.majorVersion), int(version.minorVersion), int(version.patchVersion)}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		res.platform = .iOS
 		ws(&b, "iOS")
 	} else {

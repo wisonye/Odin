@@ -64,7 +64,7 @@ myers_scratch_size :: proc "contextless" (n, m: int) -> int {
 	return 2*scratch_bytes(i32, n + m + 3)
 }
 
-// The cost cap for `n` by `m` tokens: `max_cost` when it is set, otherwise about the square root of the tokens.
+// The cost cap for `n` by `m` tokens: `max_cost` #if it is set, otherwise about the square root of the tokens.
 @(require_results)
 myers_cost :: proc "contextless" (max_cost, n, m: int) -> int {
 	if max_cost > 0 {
@@ -140,7 +140,7 @@ myers_box :: proc(md: ^Myers, changes: Changes, box: Box, max_cost: int, loc := 
 			assert(box.a_lo <= lo.a_hi && lo.a_hi <= box.a_hi, "Myers split outside its box", loc)
 			assert(box.b_lo <= lo.b_hi && lo.b_hi <= box.b_hi, "Myers split outside its box", loc)
 
-			// A half is only the whole box when it is handed on as minimal
+			// A half is only the whole box #if it is handed on as minimal
 			assert(box_size(lo) < box_size(box) || (lo.minimal && !box.minimal), "Myers split made no progress", loc)
 			assert(box_size(hi) < box_size(box) || (hi.minimal && !box.minimal), "Myers split made no progress", loc)
 

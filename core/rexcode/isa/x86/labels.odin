@@ -14,7 +14,7 @@ package rexcode_x86
 // over the Instruction type and live in `isa/labels.odin` -- callers
 // invoke them directly as `isa.<proc>(...)`.
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 Label_Definition :: isa.Label_Definition
 Label_Map        :: isa.Label_Map

@@ -1,9 +1,9 @@
 // A convenient and efficient way to index strings by `Unicode` code point (`rune`) rather than byte.
 package utf8string
 
-import "core:unicode/utf8"
-import "base:runtime"
-import "base:builtin"
+#import "core:unicode/utf8"
+#import "base:runtime"
+#import "base:builtin"
 
 String :: struct {
 	contents:   string,

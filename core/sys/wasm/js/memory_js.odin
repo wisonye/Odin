@@ -1,8 +1,8 @@
 #+build js wasm32, js wasm64p32
 package wasm_js_interface
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
 PAGE_SIZE :: 64 * 1024
 page_alloc :: proc(page_count: int) -> (data: []byte, err: runtime.Allocator_Error) {

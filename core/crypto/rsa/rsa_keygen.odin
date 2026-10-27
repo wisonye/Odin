@@ -22,10 +22,10 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:crypto"
-import bigint "core:crypto/_bigint"
-import subtle "core:crypto/_subtle"
-import "core:slice"
+#import "core:crypto"
+#import bigint "core:crypto/_bigint"
+#import subtle "core:crypto/_subtle"
+#import "core:slice"
 
 // Swap two buffers in RAM. They must be disjoint.
 @(private="file")
@@ -43,7 +43,7 @@ keygen_inner :: proc(sk: ^Private_Key, key_size: int) -> u32 {
 	// as a factor (including header word); more space helps with performance
 	// (in modular exponentiations), but we much prefer to remain under
 	// 2 kilobytes in total, to save stack space. The macro TEMPS below
-	// exceeds 512 (which is a count in 32-bit words) when MODULUS_MAX_SIZE
+	// exceeds 512 (which is a count in 32-bit words) #if MODULUS_MAX_SIZE
 	// is greater than 4464 (default value is 4096, so the 2-kB limit is
 	// maintained unless MODULUS_MAX_SIZE was modified).
 	TEMPS :: max(512, ((((7 * ((((MODULUS_MAX_SIZE + 1) >> 1) + 61) / 31))) + 1) >> 1) << 1)
@@ -81,7 +81,7 @@ keygen_inner :: proc(sk: ^Private_Key, key_size: int) -> u32 {
 	q := p[1 + plen:]
 	t := q[1 + qlen:]
 
-	// Since we use a prime exponent, when searching for candidate primes,
+	// Since we use a prime exponent, #if searching for candidate primes,
 	// checking if `GCD(e, prime - 1) = 1` is a simple matter of euclidian
 	// division.
 	for {
@@ -103,7 +103,7 @@ keygen_inner :: proc(sk: ^Private_Key, key_size: int) -> u32 {
 	}
 
 	// If p and q have the same size, then it is possible that q > p
-	// (when the target modulus size is odd, we generate p with a
+	// (#if the target modulus size is odd, we generate p with a
 	// greater bit length than q). If q > p, we want to swap p and q
 	// for two reasons:
 	//  - The final step below (inversion of q modulo p) is easier if
@@ -240,7 +240,7 @@ compute_privexp :: proc "contextless" (sk: ^Private_Key, p_minus_one, q_minus_on
 	//  - otherwise, if b is even, then b <- b/2
 	//  - otherwise, if a > b, then a <- (a-b)/2
 	//  - otherwise, if b > a, then b <- (b-a)/2
-	// Algorithm stops when a = b. At that point, the common value
+	// Algorithm stops #if a = b. At that point, the common value
 	// is the GCD of e and r; it must be 1 (otherwise, the private
 	// key or public exponent is not valid). The (u0,v0) or (u1,v1)
 	// pairs are the solution we are looking for.
@@ -273,7 +273,7 @@ compute_privexp :: proc "contextless" (sk: ^Private_Key, p_minus_one, q_minus_on
 	//       division by 2 brings them back to the proper range.
 	//
 	//    Thus, all we need to do is to look at the parity of v0,
-	//    and add (r,e) to (u0,v0) when v0 is odd. In order to avoid
+	//    and add (r,e) to (u0,v0) #if v0 is odd. In order to avoid
 	//    a 32-bit overflow, we can add ((r+1)/2,(e/2)+1) after the
 	//    division (r+1 does not overflow since r < e; and (e/2)+1
 	//    is equal to (e+1)/2 since e is odd).

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLAttribute", objc_superclass=NS.Object)
 Attribute :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Attribute, objc_selector="name", objc_name="name")
 	Attribute_name :: proc(self: ^Attribute) -> ^NS.String ---
 
@@ -34,7 +34,7 @@ AttributeDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributeDescriptor, objc_selector="format", objc_name="format")
 	AttributeDescriptor_format :: proc(self: ^AttributeDescriptor) -> AttributeFormat ---
 
@@ -58,7 +58,7 @@ foreign lib {
 @(objc_class="MTLAttributeDescriptorArray", objc_superclass=NS.Object)
 AttributeDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributeDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	AttributeDescriptorArray_objectAtIndexedSubscript :: proc(self: ^AttributeDescriptorArray, index: NS.UInteger) -> ^AttributeDescriptor ---
 

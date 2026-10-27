@@ -1,8 +1,8 @@
 package test_wycheproof
 
-import "core:crypto/hash"
-import "core:fmt"
-import "core:strings"
+#import "core:crypto/hash"
+#import "core:fmt"
+#import "core:strings"
 
 hash_name_to_algorithm :: proc(alg_str: string) -> (hash.Algorithm, bool) {
 	alg_enums := [][hash.Algorithm]string {

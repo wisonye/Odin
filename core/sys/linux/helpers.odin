@@ -2,7 +2,7 @@
 #+no-instrumentation
 package linux
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // Note(flysand): In the case of syscall let's get rid of extra
 // casting. First of all, let these syscalls return int, because
@@ -135,7 +135,7 @@ errno_unwrap :: proc {errno_unwrap2, errno_unwrap3}
 
 // Note(flysand): 32-bit architectures sometimes take in a 64-bit argument in a
 // register pair. This function should help me avoid typing the same code a few times..
-when size_of(int) == 4 {
+#if size_of(int) == 4 {
 	// xxx64 system calls take some parameters as pairs of ulongs rather than a single pointer
 	@(private)
 	compat64_arg_pair :: #force_inline proc "contextless" (a: i64) -> (lo: uint, hi: uint) {

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLRegion", objc_superclass=NS.Object)
 Region :: struct {
@@ -11,7 +11,7 @@ Region :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Region, objc_selector="initCircularRegionWithCenter:radius:identifier:", objc_name="initCircularRegionWithCenter")
 	Region_initCircularRegionWithCenter :: proc(self: ^Region, center: LocationCoordinate2D, radius: LocationDistance, identifier: ^NS.String) -> instancetype ---
 
@@ -44,7 +44,7 @@ foreign lib {
 @(objc_class="CLCircularRegion", objc_superclass=Region)
 CircularRegion :: struct { using _: Region}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CircularRegion, objc_selector="initWithCenter:radius:identifier:", objc_name="initWithCenter")
 	CircularRegion_initWithCenter :: proc(self: ^CircularRegion, center: LocationCoordinate2D, radius: LocationDistance, identifier: ^NS.String) -> instancetype ---
 

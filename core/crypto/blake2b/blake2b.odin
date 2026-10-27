@@ -15,7 +15,7 @@ package blake2b
         zhibog, dotbmp:  Initial implementation.
 */
 
-import "../_blake2"
+#import "../_blake2"
 
 // DIGEST_SIZE is the BLAKE2b digest size in bytes.
 DIGEST_SIZE :: _blake2.BLAKE2B_SIZE

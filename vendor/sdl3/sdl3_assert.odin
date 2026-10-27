@@ -1,7 +1,7 @@
 package sdl3
 
-import "base:intrinsics"
-import "core:c"
+#import "base:intrinsics"
+#import "core:c"
 
 TriggerBreakpoint :: intrinsics.debug_trap
 AssertBreakpoint  :: TriggerBreakpoint
@@ -37,7 +37,7 @@ AssertState :: enum c.int {
  * \since This struct is available since SDL 3.2.0.
  */
 AssertData :: struct {
-	always_ignore: bool,        /**< true if app should always continue when assertion is triggered. */
+	always_ignore: bool,        /**< true if app should always continue #if assertion is triggered. */
 	trigger_count: c.uint,      /**< Number of times this assertion has been triggered. */
 	condition:     cstring,     /**< A string of this assert's test code. */
 	filename:      cstring,     /**< The source file where this assert lives. */
@@ -49,7 +49,7 @@ AssertData :: struct {
 AssertionHandler :: #type proc "c" (data: ^AssertData, userdata: rawptr) -> AssertState
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	ReportAssertion :: proc(data: ^AssertData, func, file: cstring, line: c.int) -> AssertState ---
 
 	SetAssertionHandler        :: proc(handler: AssertionHandler, userdata: rawptr) ---

@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import sys     "core:sys/windows"
-import strings "core:strings"
+#import sys     "core:sys/windows"
+#import strings "core:strings"
 
 _enumerate_interfaces :: proc(allocator := context.allocator) -> (interfaces: []Network_Interface, err: Interfaces_Error) {
 	context.allocator = allocator

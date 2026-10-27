@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 
 
@@ -1064,8 +1064,8 @@ UndoCloseGroupingRunLoopOrdering                     :: NS.UndoCloseGroupingRunL
 NotificationDeliverImmediately                       :: NS.NotificationDeliverImmediately
 NotificationPostToAllSessions                        :: NS.NotificationPostToAllSessions
 
-@(require) foreign import Foundation_exports "system:Foundation.framework"
-foreign Foundation_exports {
+@(require) #foreign #import Foundation_exports "system:Foundation.framework"
+#foreign Foundation_exports {
 	@(link_name="NSFoundationVersionNumber") FoundationVersionNumber: cffi.double
 	@(link_name="NSItemProviderPreferredImageSizeKey") ItemProviderPreferredImageSizeKey: ^String
 	@(link_name="NSExtensionJavaScriptPreprocessingResultsKey") ExtensionJavaScriptPreprocessingResultsKey: ^String

@@ -1,10 +1,10 @@
 package test_internal
 
-import "base:runtime"
-import "core:bytes"
-import "core:encoding/endian"
-import "core:math/rand"
-import "core:testing"
+#import "base:runtime"
+#import "core:bytes"
+#import "core:encoding/endian"
+#import "core:math/rand"
+#import "core:testing"
 
 @(private = "file")
 ITERS :: 10000000

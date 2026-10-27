@@ -2,14 +2,14 @@
 #+private
 package runtime
 
-foreign import bcrypt "system:Bcrypt.lib"
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import bcrypt "system:Bcrypt.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 _HAS_RAND_BYTES :: true
 
 @(private="file")
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	// NOTE(bill): The types are not using the standard names (e.g. DWORD and LPVOID) to just minimizing the dependency
 
 	// stderr_write
@@ -23,7 +23,7 @@ foreign kernel32 {
 
 @(private="file")
 @(default_calling_convention="system")
-foreign bcrypt {
+#foreign bcrypt {
 	BCryptGenRandom :: proc(hAlgorithm: rawptr, pBuffer: [^]u8, cbBuffer: u32, dwFlags: u32) -> i32 ---
 }
 
@@ -37,7 +37,7 @@ _stderr_write :: proc "contextless" (data: []byte) -> (n: int, err: _OS_Errno) #
 	MAX_RW :: 1<<30
 
 	h := GetStdHandle(STD_ERROR_HANDLE)
-	when size_of(uintptr) == 8 {
+	#if size_of(uintptr) == 8 {
 		SetHandleInformation(h, HANDLE_FLAG_INHERIT, 0)
 	}
 

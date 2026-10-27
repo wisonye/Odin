@@ -1,10 +1,10 @@
 // Bindings for [[ Lua 5.2 ; https://www.lua.org/manual/5.2/ ]].
 package lua_5_2
 
-import "base:intrinsics"
-import "base:builtin"
+#import "base:intrinsics"
+#import "base:builtin"
 
-import c "core:c"
+#import c "core:c"
 
 #assert(size_of(c.int) == size_of(b32))
 
@@ -12,26 +12,26 @@ LUA_SHARED :: #config(LUA_SHARED, false)
 
 LUA_WASM_LIB :: #config(LUA_WASM_LIB, "env.o")
 
-when LUA_SHARED {
-	when ODIN_OS == .Windows {
+#if LUA_SHARED {
+	#if ODIN_OS == .Windows {
 		// Does nothing special on windows
-		foreign import lib "windows/lua52dll.lib"
-	} else when ODIN_OS == .Linux && ODIN_ARCH == .amd64 {
-		foreign import lib "linux/liblua52.so"
-	} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-		foreign import lib { LUA_WASM_LIB }
+		#foreign #import lib "windows/lua52dll.lib"
+	} else #if ODIN_OS == .Linux && ODIN_ARCH == .amd64 {
+		#foreign #import lib "linux/liblua52.so"
+	} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+		#foreign #import lib { LUA_WASM_LIB }
 	} else {
-		foreign import lib "system:lua5.2"
+		#foreign #import lib "system:lua5.2"
 	}
 } else {
-	when ODIN_OS == .Windows {
-		foreign import lib "windows/lua52dll.lib"
-	} else when ODIN_OS == .Linux && ODIN_ARCH == .amd64 {
-		foreign import lib "linux/liblua52.a"
-	} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-		foreign import lib { LUA_WASM_LIB }
+	#if ODIN_OS == .Windows {
+		#foreign #import lib "windows/lua52dll.lib"
+	} else #if ODIN_OS == .Linux && ODIN_ARCH == .amd64 {
+		#foreign #import lib "linux/liblua52.a"
+	} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+		#foreign #import lib { LUA_WASM_LIB }
 	} else {
-		foreign import lib "system:lua5.2"
+		#foreign #import lib "system:lua5.2"
 	}
 }
 
@@ -89,7 +89,7 @@ IDSIZE :: 60
 ** In Lua 5.2 it is the C library's BUFSIZ, and it has to match the value the Lua library was compiled with:
 ** 512 with MSVC, 8192 with glibc, 1024 with the BSDs, macOS and musl.
 */
-L_BUFFERSIZE :: c.int(512 when ODIN_OS == .Windows else 8192 when ODIN_OS == .Linux else 1024)
+L_BUFFERSIZE :: c.int(512 #if ODIN_OS == .Windows else 8192 #if ODIN_OS == .Linux else 1024)
 
 
 MAXALIGNVAL :: max(align_of(Number), align_of(f64), align_of(rawptr), align_of(Integer), align_of(c.long))
@@ -188,14 +188,14 @@ RIDX_LAST       :: RIDX_GLOBALS
 
 
 /* type of numbers in Lua */
-Number :: distinct (f32 when size_of(uintptr) == 4 else f64)
+Number :: distinct (f32 #if size_of(uintptr) == 4 else f64)
 
 
 /* type for integer functions */
-Integer :: distinct (i32 when size_of(uintptr) == 4 else i64)
+Integer :: distinct (i32 #if size_of(uintptr) == 4 else i64)
 
 /* unsigned integer type */
-Unsigned :: distinct (u32 when size_of(uintptr) == 4 else u64)
+Unsigned :: distinct (u32 #if size_of(uintptr) == 4 else u64)
 
 
 /*
@@ -206,7 +206,7 @@ CFunction :: #type proc "c" (L: ^State) -> c.int
 
 
 /*
-** Type for functions that read/write blocks when loading/dumping Lua chunks
+** Type for functions that read/write blocks #if loading/dumping Lua chunks
 */
 Reader :: #type proc "c" (L: ^State, ud: rawptr, sz: ^c.size_t) -> cstring
 Writer :: #type proc "c" (L: ^State, p: rawptr, sz: ^c.size_t, ud: rawptr) -> c.int
@@ -303,7 +303,7 @@ State :: struct {} // opaque data type
 
 @(link_prefix="lua_")
 @(default_calling_convention="c")
-foreign {
+#foreign {
 	/*
 	** RCS ident string
 	*/
@@ -516,7 +516,7 @@ LOADLIBNAME :: "package"
 
 @(link_prefix="lua")
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	open_base      :: proc(L: ^State) -> c.int ---
 	open_coroutine :: proc(L: ^State) -> c.int ---
 	open_table     :: proc(L: ^State) -> c.int ---
@@ -550,7 +550,7 @@ REFNIL :: -1
 
 @(link_prefix="lua")
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="luaL_checkversion_")
 	L_checkversion :: proc(L: ^State, ver: Number = VERSION_NUM) ---
 
@@ -651,7 +651,7 @@ L_prepbuffer :: #force_inline proc "c" (B: ^L_Buffer) -> [^]byte {
 
 @(link_prefix="lua")
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	L_buffinit       :: proc(L: ^State, B: ^L_Buffer) ---
 	L_prepbuffsize   :: proc(B: ^L_Buffer, sz: c.size_t) -> [^]byte ---
 	L_addlstring     :: proc(B: ^L_Buffer, s: cstring, l: c.size_t) ---

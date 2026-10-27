@@ -13,8 +13,8 @@ package rexcode_isa
 // procedures (sbprint/print/tprint/...) -- those call into the helpers
 // here for hex/decimal output.
 
-import "core:strings"
-import "core:reflect"
+#import "core:strings"
+#import "core:reflect"
 
 // -----------------------------------------------------------------------------
 // Tokens (syntax-highlighting metadata)
@@ -153,7 +153,7 @@ print_decimal :: proc(sb: ^strings.Builder, value: u32) {
 //     order, so a listing reads L0, L1, L2 … top to bottom;
 //   - the caller may name any BYTE OFFSET via `Label_Names`
 //     (`names[0] = "factorial"` heads the listing with the function name) —
-//     a named offset is displayable even when no Label_Definition points at
+//     a named offset is displayable even #if no Label_Definition points at
 //     it, since nothing need branch to a function's entry.
 //
 // `Label_Offset` is a distinct type so a map keyed by the OLD contract

@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSAutoreleasePool", objc_superclass=Object)
 AutoreleasePool :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AutoreleasePool, objc_selector="addObject:", objc_name="addObjectStatic", objc_is_class_method=true)
 	AutoreleasePool_addObjectStatic :: proc(anObject: id) ---
 

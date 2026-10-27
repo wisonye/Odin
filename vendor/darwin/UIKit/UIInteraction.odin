@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIInteraction")
 Interaction :: struct {
@@ -13,7 +13,7 @@ Interaction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Interaction, objc_selector="willMoveToView:", objc_name="willMoveToView")
 	Interaction_willMoveToView :: proc(self: ^Interaction, view: ^View) ---
 
@@ -32,7 +32,7 @@ BandSelectionInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BandSelectionInteraction, objc_selector="initWithSelectionHandler:", objc_name="initWithSelectionHandler")
 	BandSelectionInteraction_initWithSelectionHandler :: proc(self: ^BandSelectionInteraction, selectionHandler: ^Objc_Block(proc "c" ( interaction: ^BandSelectionInteraction ))) -> instancetype ---
 
@@ -72,7 +72,7 @@ DragInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	DragInteraction_initWithDelegate :: proc(self: ^DragInteraction, delegate: ^DragInteractionDelegate) -> instancetype ---
 
@@ -109,7 +109,7 @@ DragInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragInteractionDelegate, objc_selector="dragInteraction:itemsForBeginningSession:", objc_name="dragInteraction_itemsForBeginningSession")
 	DragInteractionDelegate_dragInteraction_itemsForBeginningSession :: proc(self: ^DragInteractionDelegate, interaction: ^DragInteraction, session: ^DragSession) -> ^NS.Array ---
 
@@ -167,7 +167,7 @@ DropInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DropInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	DropInteraction_initWithDelegate :: proc(self: ^DropInteraction, delegate: ^DropInteractionDelegate) -> instancetype ---
 
@@ -195,7 +195,7 @@ DropInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DropInteractionDelegate, objc_selector="dropInteraction:canHandleSession:", objc_name="dropInteraction_canHandleSession")
 	DropInteractionDelegate_dropInteraction_canHandleSession :: proc(self: ^DropInteractionDelegate, interaction: ^DropInteraction, session: ^DropSession) -> bool ---
 
@@ -232,7 +232,7 @@ FindInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FindInteraction, objc_selector="initWithSessionDelegate:", objc_name="initWithSessionDelegate")
 	FindInteraction_initWithSessionDelegate :: proc(self: ^FindInteraction, sessionDelegate: ^FindInteractionDelegate) -> instancetype ---
 
@@ -293,7 +293,7 @@ FindInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FindInteractionDelegate, objc_selector="findInteraction:sessionForView:", objc_name="findInteraction_sessionForView")
 	FindInteractionDelegate_findInteraction_sessionForView :: proc(self: ^FindInteractionDelegate, interaction: ^FindInteraction, view: ^View) -> ^FindSession ---
 
@@ -312,7 +312,7 @@ IndirectScribbleInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectScribbleInteraction, objc_selector="init", objc_name="init")
 	IndirectScribbleInteraction_init :: proc(self: ^IndirectScribbleInteraction) -> instancetype ---
 
@@ -337,7 +337,7 @@ IndirectScribbleInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectScribbleInteractionDelegate, objc_selector="indirectScribbleInteraction:requestElementsInRect:completion:", objc_name="indirectScribbleInteraction_requestElementsInRect_completion")
 	IndirectScribbleInteractionDelegate_indirectScribbleInteraction_requestElementsInRect_completion :: proc(self: ^IndirectScribbleInteractionDelegate, interaction: ^IndirectScribbleInteraction, rect: CG.Rect, completion: ^Objc_Block(proc "c" ( elements: ^NS.Array ))) ---
 
@@ -368,7 +368,7 @@ LargeContentViewerInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LargeContentViewerInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	LargeContentViewerInteraction_initWithDelegate :: proc(self: ^LargeContentViewerInteraction, delegate: ^LargeContentViewerInteractionDelegate) -> instancetype ---
 
@@ -390,7 +390,7 @@ LargeContentViewerInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LargeContentViewerInteractionDelegate, objc_selector="largeContentViewerInteraction:didEndOnItem:atPoint:", objc_name="largeContentViewerInteraction_didEndOnItem_atPoint")
 	LargeContentViewerInteractionDelegate_largeContentViewerInteraction_didEndOnItem_atPoint :: proc(self: ^LargeContentViewerInteractionDelegate, interaction: ^LargeContentViewerInteraction, item: ^LargeContentViewerItem, point: CG.Point) ---
 
@@ -415,7 +415,7 @@ PencilInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PencilInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	PencilInteraction_initWithDelegate :: proc(self: ^PencilInteraction, delegate: ^PencilInteractionDelegate) -> instancetype ---
 
@@ -452,7 +452,7 @@ PencilInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PencilInteractionDelegate, objc_selector="pencilInteractionDidTap:", objc_name="pencilInteractionDidTap")
 	PencilInteractionDelegate_pencilInteractionDidTap :: proc(self: ^PencilInteractionDelegate, interaction: ^PencilInteraction) ---
 
@@ -474,7 +474,7 @@ PencilInteractionDelegate_pencilInteraction :: proc {
 PencilInteractionSqueeze :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PencilInteractionSqueeze, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	PencilInteractionSqueeze_new :: proc() -> ^PencilInteractionSqueeze ---
 
@@ -496,7 +496,7 @@ foreign lib {
 PencilInteractionTap :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PencilInteractionTap, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	PencilInteractionTap_new :: proc() -> ^PencilInteractionTap ---
 
@@ -518,7 +518,7 @@ PointerInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	PointerInteraction_initWithDelegate :: proc(self: ^PointerInteraction, delegate: ^PointerInteractionDelegate) -> instancetype ---
 
@@ -543,7 +543,7 @@ PointerInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerInteractionDelegate, objc_selector="pointerInteraction:regionForRequest:defaultRegion:", objc_name="pointerInteraction_regionForRequest_defaultRegion")
 	PointerInteractionDelegate_pointerInteraction_regionForRequest_defaultRegion :: proc(self: ^PointerInteractionDelegate, interaction: ^PointerInteraction, request: ^PointerRegionRequest, defaultRegion: ^PointerRegion) -> ^PointerRegion ---
 
@@ -565,7 +565,7 @@ PointerInteractionAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerInteractionAnimating, objc_selector="addAnimations:", objc_name="addAnimations")
 	PointerInteractionAnimating_addAnimations :: proc(self: ^PointerInteractionAnimating, animations: ^Objc_Block(proc "c" ())) ---
 
@@ -581,7 +581,7 @@ ScribbleInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScribbleInteraction, objc_selector="init", objc_name="init")
 	ScribbleInteraction_init :: proc(self: ^ScribbleInteraction) -> instancetype ---
 
@@ -609,7 +609,7 @@ ScribbleInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScribbleInteractionDelegate, objc_selector="scribbleInteraction:shouldBeginAtLocation:", objc_name="scribbleInteraction")
 	ScribbleInteractionDelegate_scribbleInteraction :: proc(self: ^ScribbleInteractionDelegate, interaction: ^ScribbleInteraction, location: CG.Point) -> bool ---
 
@@ -631,7 +631,7 @@ ScrollEdgeElementContainerInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollEdgeElementContainerInteraction, objc_selector="scrollView", objc_name="scrollView")
 	ScrollEdgeElementContainerInteraction_scrollView :: proc(self: ^ScrollEdgeElementContainerInteraction) -> ^ScrollView ---
 
@@ -653,7 +653,7 @@ SpringLoadedInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadedInteraction, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SpringLoadedInteraction_new :: proc() -> ^SpringLoadedInteraction ---
 
@@ -681,7 +681,7 @@ SpringLoadedInteractionBehavior :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadedInteractionBehavior, objc_selector="shouldAllowInteraction:withContext:", objc_name="shouldAllowInteraction")
 	SpringLoadedInteractionBehavior_shouldAllowInteraction :: proc(self: ^SpringLoadedInteractionBehavior, interaction: ^SpringLoadedInteraction, _context: ^SpringLoadedInteractionContext) -> bool ---
 
@@ -697,7 +697,7 @@ SpringLoadedInteractionContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadedInteractionContext, objc_selector="locationInView:", objc_name="locationInView")
 	SpringLoadedInteractionContext_locationInView :: proc(self: ^SpringLoadedInteractionContext, view: ^View) -> CG.Point ---
 
@@ -725,7 +725,7 @@ SpringLoadedInteractionEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadedInteractionEffect, objc_selector="interaction:didChangeWithContext:", objc_name="interaction")
 	SpringLoadedInteractionEffect_interaction :: proc(self: ^SpringLoadedInteractionEffect, interaction: ^SpringLoadedInteraction, _context: ^SpringLoadedInteractionContext) ---
 }
@@ -738,7 +738,7 @@ SpringLoadedInteractionSupporting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadedInteractionSupporting, objc_selector="isSpringLoaded", objc_name="isSpringLoaded")
 	SpringLoadedInteractionSupporting_isSpringLoaded :: proc(self: ^SpringLoadedInteractionSupporting) -> bool ---
 
@@ -754,7 +754,7 @@ TextInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInteraction, objc_selector="textInteractionForMode:", objc_name="textInteractionForMode", objc_is_class_method=true)
 	TextInteraction_textInteractionForMode :: proc(mode: TextInteractionMode) -> instancetype ---
 
@@ -785,7 +785,7 @@ TextInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInteractionDelegate, objc_selector="interactionShouldBegin:atPoint:", objc_name="interactionShouldBegin")
 	TextInteractionDelegate_interactionShouldBegin :: proc(self: ^TextInteractionDelegate, interaction: ^TextInteraction, point: CG.Point) -> bool ---
 
@@ -801,7 +801,7 @@ foreign lib {
 TextInteractionAssistant :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UITextSelectionDisplayInteraction", objc_superclass=NS.Object)
@@ -811,7 +811,7 @@ TextSelectionDisplayInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionDisplayInteraction, objc_selector="initWithTextInput:delegate:", objc_name="initWithTextInput")
 	TextSelectionDisplayInteraction_initWithTextInput :: proc(self: ^TextSelectionDisplayInteraction, textInput: ^TextInput, delegate: ^TextSelectionDisplayInteractionDelegate) -> instancetype ---
 
@@ -866,7 +866,7 @@ TextSelectionDisplayInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionDisplayInteractionDelegate, objc_selector="selectionContainerViewBelowTextForSelectionDisplayInteraction:", objc_name="selectionContainerViewBelowTextForSelectionDisplayInteraction")
 	TextSelectionDisplayInteractionDelegate_selectionContainerViewBelowTextForSelectionDisplayInteraction :: proc(self: ^TextSelectionDisplayInteractionDelegate, interaction: ^TextSelectionDisplayInteraction) -> ^View ---
 }

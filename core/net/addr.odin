@@ -19,8 +19,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:strconv"
-import "core:strings"
+#import "core:strconv"
+#import "core:strings"
 
 /*
 	Expects an IPv4 address with no leading or trailing whitespace:
@@ -136,7 +136,7 @@ aton :: proc(address_and_maybe_port: string, family: Address_Family, allow_decim
 /*
 	The minimum length of a valid IPv6 address string is 2, e.g. `::`
 
-	The maximum length of a valid IPv6 address string is 45, when it embeds an IPv4,
+	The maximum length of a valid IPv6 address string is 45, #if it embeds an IPv4,
 	e.g. `0000:0000:0000:0000:0000:ffff:255.255.255.255`
 
 	An IPv6 address must contain at least 3 pieces, e.g. `::`,
@@ -426,7 +426,7 @@ parse_hostname_or_endpoint :: proc(endpoint_str: string) -> (target: Host_Or_End
 // Returns ok=false if port is not a number.
 split_port :: proc(endpoint_str: string) -> (addr_or_host: string, port: int, ok: bool) {
 	// IP6 [addr_or_host]:port — the bracketed form requires a leading
-	// '[', so only treat a closing "]:" as the port separator when it
+	// '[', so only treat a closing "]:" as the port separator #if it
 	// sits at index >= 1 (i.e. an opening '[' is actually present).
 	// Inputs that contain "]:" without an opening bracket fall through
 	// to the plain host/port handling below.

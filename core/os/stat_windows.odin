@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:runtime"
-import "core:time"
-import "core:strings"
-import win32 "core:sys/windows"
+#import "base:runtime"
+#import "core:time"
+#import "core:strings"
+#import win32 "core:sys/windows"
 
 _fstat :: proc(f: ^File, allocator: runtime.Allocator) -> (fi: File_Info, err: Error) {
 	if f == nil || (^File_Impl)(f.impl).fd == nil {

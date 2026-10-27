@@ -38,8 +38,8 @@ Credits:
 */
 package stb_easy_font
 
-import "core:math"
-import "core:mem"
+#import "core:math"
+#import "core:mem"
 
 Color  :: [4]u8
 

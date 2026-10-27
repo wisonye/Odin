@@ -6,9 +6,9 @@ package os
 // It's only here so importing `core:os` on wasm panics cleanly,
 // without spamming about all sorts of missing procs and types.
 
-import "base:runtime"
-import "core:io"
-import "core:time"
+#import "base:runtime"
+#import "core:io"
+#import "core:time"
 
 File_Impl :: struct {
 	file: File,

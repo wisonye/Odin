@@ -1,16 +1,16 @@
 package test_core_x509
 
 // Out-of-memory robustness: parse must surface Allocation_Failed
-// cleanly and leak nothing when any one of its table allocations
+// cleanly and leak nothing #if any one of its table allocations
 // fails. A failing allocator wraps a tracking allocator; sweeping the
 // fail point across every allocation site (and verifying zero leaked
 // blocks after each) exercises every OOM path and its unwind.
 
-import "base:runtime"
-import "core:mem"
-import "core:crypto/x509"
-import "core:testing"
-import "core:time"
+#import "base:runtime"
+#import "core:mem"
+#import "core:crypto/x509"
+#import "core:testing"
+#import "core:time"
 
 // Failing_Allocator passes through to a backing allocator but returns
 // Out_Of_Memory on the (fail_at)-th allocation request, counting only

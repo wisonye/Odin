@@ -1,12 +1,12 @@
 #+private
 package sync
 
-import "base:intrinsics"
-import "core:time"
-import "core:c"
-import "core:sys/unix"
+#import "base:intrinsics"
+#import "core:time"
+#import "core:c"
+#import "core:sys/unix"
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
 FUTEX_PRIVATE_FLAG :: 128
 
@@ -23,7 +23,7 @@ Time_Spec :: struct {
 }
 
 get_last_error :: proc "contextless" () -> int {
-	foreign libc {
+	#foreign libc {
 		__errno :: proc() -> ^c.int ---
 	}
 	return int(__errno()^)

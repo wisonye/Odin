@@ -1,9 +1,9 @@
 package strings
 
-import "base:runtime"
-import "core:io"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "core:io"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 /*
 Converts invalid UTF-8 sequences in the input string `s` to the `replacement` string.
@@ -15,7 +15,7 @@ Inputs:
 - replacement: String to replace invalid UTF-8 sequences with.
 - allocator: (default: context.allocator).
 
-WARNING: Allocation does not occur when len(s) == 0
+WARNING: Allocation does not occur #if len(s) == 0
 
 Returns:
 - res: A valid UTF-8 string with invalid sequences replaced by `replacement`.
@@ -89,8 +89,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_lower_example :: proc() {
 		fmt.println(strings.to_lower("TeST"))
@@ -124,8 +124,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_upper_example :: proc() {
 		fmt.println(strings.to_upper("Test"))
@@ -198,9 +198,9 @@ The callback can utilize the provided io.Writer to write output during the itera
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
-	import "core:io"
+	#import "core:fmt"
+	#import "core:strings"
+	#import "core:io"
 
 	string_case_iterator_example :: proc() {
 		my_callback :: proc(w: io.Writer, prev, curr, next: rune) {
@@ -334,8 +334,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_delimiter_case_example :: proc() {
 		fmt.println(strings.to_delimiter_case("Hello World", '_', false))
@@ -408,8 +408,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_snake_case_example :: proc() {
 		fmt.println(strings.to_snake_case("HelloWorld"))
@@ -442,8 +442,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_upper_snake_case_example :: proc() {
 		fmt.println(strings.to_upper_snake_case("HelloWorld"))
@@ -472,8 +472,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_kebab_case_example :: proc() {
 		fmt.println(strings.to_kebab_case("HelloWorld"))
@@ -502,8 +502,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_upper_kebab_case_example :: proc() {
 		fmt.println(strings.to_upper_kebab_case("HelloWorld"))
@@ -532,8 +532,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	to_ada_case_example :: proc() {
 		fmt.println(strings.to_ada_case("HelloWorld"))

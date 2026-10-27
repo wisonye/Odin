@@ -1,14 +1,14 @@
 #+private
 package noise
 
-import "base:runtime"
-import "core:crypto"
-import "core:crypto/aead"
-import "core:crypto/ecdh"
-import "core:crypto/hash"
-import "core:crypto/hkdf"
-import "core:encoding/endian"
-import "core:slice"
+#import "base:runtime"
+#import "core:crypto"
+#import "core:crypto/aead"
+#import "core:crypto/ecdh"
+#import "core:crypto/hash"
+#import "core:crypto/hkdf"
+#import "core:encoding/endian"
+#import "core:slice"
 
 AEAD_KEY_SIZE :: 32
 
@@ -660,7 +660,7 @@ handshakestate_write_message :: proc(self: ^Handshake_State, payload, dst: []byt
 				self.pre_set_e = false
 			case false:
 				if ecdh.curve(&self.e) != .Invalid {
-					panic("crypto/noise: e was not empty when processing token 'e' during WriteMessage")
+					panic("crypto/noise: e was not empty #if processing token 'e' during WriteMessage")
 				}
 				generate_keypair(protocol, &self.e)
 			}
@@ -836,7 +836,7 @@ handshakestate_read_message :: proc(self: ^Handshake_State, message, dst: []byte
 			re := msg[:d_len]
 
 			if ecdh.curve(&self.re) != .Invalid {
-				panic("crypto/noise: re was not empty when processing token 'e' during ReadMessage")
+				panic("crypto/noise: re was not empty #if processing token 'e' during ReadMessage")
 			}
 
 			if !ecdh.public_key_set_bytes(&self.re, protocol.dh, re) {
@@ -865,7 +865,7 @@ handshakestate_read_message :: proc(self: ^Handshake_State, message, dst: []byte
 			}
 
 			if ecdh.curve(&self.rs) != .Invalid {
-				panic("crypto/noise: rs was not empty when processing token 's' during ReadMessage")
+				panic("crypto/noise: rs was not empty #if processing token 's' during ReadMessage")
 			}
 
 			if !ecdh.public_key_set_bytes(&self.rs, protocol.dh, rs) {

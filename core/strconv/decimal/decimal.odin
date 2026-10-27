@@ -250,7 +250,7 @@ shift_right :: proc(a: ^Decimal, k: uint) {
 	trim(a)
 }
 
-import "base:runtime"
+#import "base:runtime"
 println :: proc(args: ..any) {
 	for arg, i in args {
 		if i != 0 {
@@ -500,8 +500,8 @@ Rounds down the decimal value to the specified number of decimal places
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv/decimal"
+	#import "core:fmt"
+	#import "core:strconv/decimal"
 	round_down_example :: proc() {
 		d: decimal.Decimal
 		str := [64]u8{}
@@ -532,8 +532,8 @@ WARNING: There are no guarantees about overflow.
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv/decimal"
+	#import "core:fmt"
+	#import "core:strconv/decimal"
 	rounded_integer_example :: proc() {
 		d: decimal.Decimal
 		ok := decimal.set(&d, "123.456")

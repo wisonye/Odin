@@ -1,15 +1,15 @@
 package test_core_odin_parser
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:fmt"
-import "core:log"
-import "core:odin/ast"
-import "core:odin/parser"
-import "core:odin/tokenizer"
-import "core:os"
-import "core:strings"
-import "core:testing"
+#import "core:fmt"
+#import "core:log"
+#import "core:odin/ast"
+#import "core:odin/parser"
+#import "core:odin/tokenizer"
+#import "core:os"
+#import "core:strings"
+#import "core:testing"
 
 @test
 test_parse_demo :: proc(t: ^testing.T) {
@@ -218,7 +218,7 @@ test_parse_error_recovery :: proc(t: ^testing.T) {
 		{"if, no body",                        "\tif pokemon.x > 0",                        1},
 		{"if, `{` deleted",                    "\tif pokemon.x > 0\n\t\tfoo()\n\t}",        1},
 		{"if, condition and `{` deleted",      "\tif\n\t\tfoo()\n\t}",                     1},
-		{"when, no condition",                 "\twhen",                                    2},
+		{"#if, no condition",                 "\twhen",                                    2},
 		{"for, no condition",                  "\tfor",                                     1},
 		{"for in, no expression",              "\tfor x in",                                2},
 		{"for, no body",                       "\tfor i := 0; i < 10; i += 1",              1},

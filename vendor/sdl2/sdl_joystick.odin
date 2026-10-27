@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 Joystick :: struct {}
@@ -31,8 +31,8 @@ VirtualJoystickDesc :: struct {
 	name:        cstring, /**< the name of the joystick */
 
 	userdata:       rawptr, /**< User data pointer passed to callbacks */
-	Update:         proc "c" (userdata: rawptr), /**< Called when the joystick state should be updated */
-	SetPlayerIndex: proc "c" (userdata: rawptr, player_index: c.int), /**< Called when the player index is set */
+	Update:         proc "c" (userdata: rawptr), /**< Called #if the joystick state should be updated */
+	SetPlayerIndex: proc "c" (userdata: rawptr, player_index: c.int), /**< Called #if the player index is set */
 	Rumble:         proc "c" (userdata: rawptr, low_frequency_rumble, high_frequency_rumble: u16) -> c.int, /**< Implements JoystickRumble() */
 	RumbleTriggers: proc "c" (userdata: rawptr, left_rumble, right_rumble: u16) -> c.int, /**< Implements JoystickRumbleTriggers() */
 	SetLED:         proc "c" (userdata: rawptr, red, green, blue: u8) -> c.int, /**< Implements JoystickSetLED() */
@@ -86,7 +86,7 @@ HAT_LEFTUP    :: HAT_LEFT|HAT_UP
 HAT_LEFTDOWN  :: HAT_LEFT|HAT_DOWN
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Acquire)
 	LockJoysticks                   :: proc() ---
 	@(synchronizes=.Release)

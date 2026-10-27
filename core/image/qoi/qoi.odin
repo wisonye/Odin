@@ -11,9 +11,9 @@ package qoi
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "core:image"
-import "core:compress"
-import "core:bytes"
+#import "core:image"
+#import "core:compress"
+#import "core:bytes"
 
 Error   :: image.Error
 Image   :: image.Image

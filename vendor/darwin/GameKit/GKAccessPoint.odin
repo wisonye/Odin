@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_GameKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 _ :: CG
 
 @(objc_class="GKAccessPoint", objc_superclass=NS.Object)
 AccessPoint :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessPoint, objc_selector="triggerAccessPointWithHandler:", objc_name="triggerAccessPointWithHandler")
 	AccessPoint_triggerAccessPointWithHandler :: proc(self: ^AccessPoint, handler: ^Objc_Block(proc "c" ())) ---
 
@@ -83,10 +83,10 @@ foreign lib {
 	@(objc_type=AccessPoint, objc_selector="setLocation:", objc_name="setLocation")
 	AccessPoint_setLocation :: proc(self: ^AccessPoint, location: AccessPointLocation) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=AccessPoint, objc_selector="frameInScreenCoordinates", objc_name="frameInScreenCoordinates")
 		AccessPoint_frameInScreenCoordinates :: proc(self: ^AccessPoint) -> NS.Rect ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=AccessPoint, objc_selector="frameInScreenCoordinates", objc_name="frameInScreenCoordinates")
 		AccessPoint_frameInScreenCoordinates :: proc(self: ^AccessPoint) -> CG.Rect ---
 	}

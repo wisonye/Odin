@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLPipelineBufferDescriptor", objc_superclass=NS.Object)
 PipelineBufferDescriptor :: struct {
@@ -10,7 +10,7 @@ PipelineBufferDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PipelineBufferDescriptor, objc_selector="mutability", objc_name="mutability")
 	PipelineBufferDescriptor_mutability :: proc(self: ^PipelineBufferDescriptor) -> Mutability ---
 
@@ -22,7 +22,7 @@ foreign lib {
 @(objc_class="MTLPipelineBufferDescriptorArray", objc_superclass=NS.Object)
 PipelineBufferDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PipelineBufferDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	PipelineBufferDescriptorArray_objectAtIndexedSubscript :: proc(self: ^PipelineBufferDescriptorArray, bufferIndex: NS.UInteger) -> ^PipelineBufferDescriptor ---
 

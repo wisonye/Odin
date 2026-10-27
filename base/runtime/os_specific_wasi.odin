@@ -2,12 +2,12 @@
 #+private
 package runtime
 
-foreign import wasi "wasi_snapshot_preview1"
+#foreign #import wasi "wasi_snapshot_preview1"
 
 _HAS_RAND_BYTES :: true
 
 @(default_calling_convention="contextless")
-foreign wasi {
+#foreign wasi {
 	fd_write :: proc(
 		fd: i32,
 		iovs: [][]byte,

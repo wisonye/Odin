@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILocalNotification", objc_superclass=NS.Object)
 LocalNotification :: struct {
@@ -12,7 +12,7 @@ LocalNotification :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalNotification, objc_selector="init", objc_name="init")
 	LocalNotification_init :: proc(self: ^LocalNotification) -> instancetype ---
 

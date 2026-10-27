@@ -1,7 +1,7 @@
 package slashpath
 
-import "core:strings"
-import "core:unicode/utf8"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 Match_Error :: enum {
 	None,

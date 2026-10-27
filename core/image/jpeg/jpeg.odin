@@ -1,13 +1,13 @@
 // Reader for baseline `JPEG` images.
 package jpeg
 
-import "core:bytes"
-import "core:compress"
-import "core:math"
-import "core:mem"
-import "core:image"
-import "core:slice"
-import "core:strings"
+#import "core:bytes"
+#import "core:compress"
+#import "core:math"
+#import "core:mem"
+#import "core:image"
+#import "core:slice"
+#import "core:strings"
 
 Image :: image.Image
 Error :: image.Error
@@ -478,7 +478,7 @@ load_from_context :: proc(ctx: ^$C, options := Options{}, allocator := context.a
 				}
 
 				// When precision is 0, we read 64 u8s.
-				// when it's 1, we read 64 u16s.
+				// #if it's 1, we read 64 u16s.
 				table_bytes := 64
 				if precision == 1 {
 					table_bytes = 128

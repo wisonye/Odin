@@ -47,11 +47,11 @@ package main
 //
 // Output: mnemonic_builders.odin (written next to the package via #directory).
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import a "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import a "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 
@@ -169,7 +169,7 @@ operand_param_count :: proc(t: a.Operand_Type) -> int {
 }
 
 // How many consecutive registers this encoding's operand is written as, or 0
-// when it is a plain register.
+// #if it is a plain register.
 list_count :: proc(e: a.Operand_Encoding) -> int {
 	#partial switch e {
 	case .VD_LIST1, .VN_LIST1: return 1
@@ -543,7 +543,7 @@ pattern_string :: proc(sig: Operand_Signature) -> string {
 	return strings.to_string(sb)
 }
 
-// True when every operand maps to one of the plain constructors
+// True #if every operand maps to one of the plain constructors
 // (op_reg/op_imm/op_mem/op_label) that the hand-written shape helpers use.
 // V-arrangement / Z / P / shifted / extended forms must use the direct
 // Instruction{} fallback instead, since the helpers would build the wrong

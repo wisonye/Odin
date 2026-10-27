@@ -1,19 +1,19 @@
 #+build linux, darwin, freebsd, openbsd, netbsd
 package tests_core_posix
 
-import "core:log"
-import "core:path/filepath"
-import "core:strings"
-import "core:sync"
-import "core:sys/posix"
-import "core:testing"
-import "core:time"
+#import "core:log"
+#import "core:path/filepath"
+#import "core:strings"
+#import "core:sync"
+#import "core:sys/posix"
+#import "core:testing"
+#import "core:time"
 
 @(test)
 test_arpa_inet :: proc(t: ^testing.T) {
 
 	check :: proc(t: ^testing.T, $af: posix.AF, src: cstring, expect: posix.pton_result, loc := #caller_location) {
-		when af == .INET {
+		#if af == .INET {
 			addr: posix.in_addr
 			dst: [posix.INET_ADDRSTRLEN]byte
 		} else {
@@ -28,7 +28,7 @@ test_arpa_inet :: proc(t: ^testing.T) {
 			back := posix.inet_ntop(af, &addr, raw_data(dst[:]), len(dst))
 			testing.expect_value(t, back, src, loc)
 
-			when af == .INET {
+			#if af == .INET {
 				back = posix.inet_ntoa(addr)
 				testing.expect_value(t, back, src, loc)
 			}
@@ -179,7 +179,7 @@ test_locale :: proc(t: ^testing.T) {
 
 @(test)
 test_monetary :: proc(t: ^testing.T) {
-	when ODIN_OS == .Darwin && .Address in ODIN_SANITIZER_FLAGS {
+	#if ODIN_OS == .Darwin && .Address in ODIN_SANITIZER_FLAGS {
 		log.warn("skipping on darwin with -sanitize:address, this fails inside macOS (also from C/clang)")
 		return
 	}

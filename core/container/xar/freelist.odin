@@ -1,6 +1,6 @@
 package container_xar
 
-@(require) import "base:runtime"
+@(require) #import "base:runtime"
 
 Freelist_Array :: struct($T: typeid, $SHIFT: uint) where
 	0 < SHIFT,

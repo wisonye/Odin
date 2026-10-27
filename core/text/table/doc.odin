@@ -5,8 +5,8 @@ Plain-text/markdown/HTML/custom rendering of tables.
 Example:
 	package main
 
-	import "core:io"
-	import "core:text/table"
+	#import "core:io"
+	#import "core:text/table"
 
 	main :: proc() {
 		stdout := table.stdio_writer()
@@ -32,9 +32,9 @@ Output:
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:io"
-	import "core:text/table"
+	#import "core:fmt"
+	#import "core:io"
+	#import "core:text/table"
 
 	main :: proc() {
 		stdout := table.stdio_writer()
@@ -113,9 +113,9 @@ it may be more efficient to cache the results of your write into a string.
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:strings"
-	import "core:text/table"
+	#import "core:fmt"
+	#import "core:strings"
+	#import "core:text/table"
 
 	main :: proc() {
 		string_buffer := strings.builder_make()
@@ -187,10 +187,10 @@ grapheme cluster in monospace cells.
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:io"
-	import "core:os"
-	import "core:text/table"
+	#import "core:fmt"
+	#import "core:io"
+	#import "core:os"
+	#import "core:text/table"
 
 	scripts :: proc(w: io.Writer) {
 		t: table.Table
@@ -265,10 +265,10 @@ corners and dividers.
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:io"
-	import "core:os"
-	import "core:text/table"
+	#import "core:fmt"
+	#import "core:io"
+	#import "core:os"
+	#import "core:text/table"
 
 	box_drawing :: proc(w: io.Writer) {
 		t: table.Table

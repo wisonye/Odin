@@ -22,8 +22,8 @@
 
 package aes_ct64
 
-import "core:crypto/_aes"
-import "core:encoding/endian"
+#import "core:crypto/_aes"
+#import "core:encoding/endian"
 
 @(private = "file")
 bmul64 :: proc "contextless" (x, y: u64) -> u64 {

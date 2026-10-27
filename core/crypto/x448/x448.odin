@@ -6,8 +6,8 @@ See:
 */
 package x448
 
-import "core:crypto"
-import field "core:crypto/_fiat/field_curve448"
+#import "core:crypto"
+#import field "core:crypto/_fiat/field_curve448"
 
 // SCALAR_SIZE is the size of a X448 scalar (private key) in bytes.
 SCALAR_SIZE :: 56

@@ -1,10 +1,10 @@
 package test_core_json_differential
 
-import "core:encoding/json"
-import "core:fmt"
-import "core:math/rand"
-import "core:reflect"
-import "core:strings"
+#import "core:encoding/json"
+#import "core:fmt"
+#import "core:math/rand"
+#import "core:reflect"
+#import "core:strings"
 
 // Input generation. Everything is drawn from `context.random_generator`, which the test runner
 // seeds and logs, so a failure reproduces with `-define:ODIN_TEST_RANDOM_SEED=n`.

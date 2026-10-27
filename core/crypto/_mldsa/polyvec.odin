@@ -1,7 +1,7 @@
 #+private
 package _mldsa
 
-import "core:crypto"
+#import "core:crypto"
 
 Polyvec_L :: struct {
 	vec: [L_MAX]Poly,
@@ -12,7 +12,7 @@ Polyvec_K :: struct {
 }
 
 polyvec_copy :: proc "contextless" (dst, src: ^$T, params: ^Params) where T == Polyvec_L || T == Polyvec_K {
-	when T == Polyvec_L {
+	#if T == Polyvec_L {
 		n := params.l
 	} else {
 		n := params.k

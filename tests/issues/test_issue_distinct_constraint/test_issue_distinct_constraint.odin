@@ -1,7 +1,7 @@
 // A `distinct` copy of a record satisfies a `$T/Record` constraint, as it shares its base record.
 package test_issue_distinct_constraint
 
-import "core:testing"
+#import "core:testing"
 
 @(private="file") Foo :: struct { a: int }
 @(private="file") Bar :: distinct Foo

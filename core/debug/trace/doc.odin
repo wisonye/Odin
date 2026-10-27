@@ -10,8 +10,8 @@ Opt in with `-define:ODIN_TRACE_INSTRUMENTATION_MODE=true`.
 Example:
 	package main
 
-	import "core:debug/trace"
-	import "core:fmt"
+	#import "core:debug/trace"
+	#import "core:fmt"
 
 	main :: proc() {
 		track: trace.Tracking_Allocator

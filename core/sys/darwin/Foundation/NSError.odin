@@ -9,7 +9,7 @@ Error :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Error, objc_selector="initWithDomain:code:userInfo:", objc_name="initWithDomain")
 	Error_initWithDomain :: proc(self: ^Error, domain: ^String, code: Integer, dict: ^Dictionary) -> instancetype ---
 

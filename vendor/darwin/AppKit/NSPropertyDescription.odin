@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPropertyDescription", objc_superclass=NS.Object)
 PropertyDescription :: struct {
@@ -12,7 +12,7 @@ PropertyDescription :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PropertyDescription, objc_selector="setValidationPredicates:withValidationWarnings:", objc_name="setValidationPredicates")
 	PropertyDescription_setValidationPredicates :: proc(self: ^PropertyDescription, validationPredicates: ^NS.Array, validationWarnings: ^NS.Array) ---
 
@@ -88,7 +88,7 @@ foreign lib {
 AttributeDescription :: struct { using _: PropertyDescription}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributeDescription, objc_selector="attributeType", objc_name="attributeType")
 	AttributeDescription_attributeType :: proc(self: ^AttributeDescription) -> AttributeType ---
 

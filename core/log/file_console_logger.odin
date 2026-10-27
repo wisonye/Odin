@@ -3,15 +3,15 @@
 #+build !js
 package log
 
-import "base:runtime"
-import "core:fmt"
-import "core:strings"
-import "core:os"
-import "core:terminal"
-import "core:terminal/ansi"
-import "core:time"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:strings"
+#import "core:os"
+#import "core:terminal"
+#import "core:terminal/ansi"
+#import "core:time"
 
-// Strings to output when `.Level` is included in the logger options.
+// Strings to output #if `.Level` is included in the logger options.
 Level_Headers := [?]string{
 	 0..<10 = "[DEBUG] --- ",
 	10..<20 = "[INFO ] --- ",
@@ -170,7 +170,7 @@ _file_console_logger_proc :: proc(h: ^os.File, ident: string, level: Level, text
 
 	do_level_header(options, &buf, level)
 
-	when time.IS_SUPPORTED {
+	#if time.IS_SUPPORTED {
 		do_time_header(options, &buf, time.now())
 	}
 
@@ -236,7 +236,7 @@ do_level_header :: proc(opts: Options, str: ^strings.Builder, level: Level) {
 
 // Helper used to build the part of the message including the data and time.
 do_time_header :: proc(opts: Options, buf: ^strings.Builder, t: time.Time) {
-	when time.IS_SUPPORTED {
+	#if time.IS_SUPPORTED {
 		if Full_Timestamp_Opts & opts != nil {
 			fmt.sbprint(buf, "[")
 			y, m, d := time.date(t)

@@ -1,6 +1,6 @@
 package odin_libc
 
-import "core:time"
+#import "core:time"
 
 clock_t :: i64
 

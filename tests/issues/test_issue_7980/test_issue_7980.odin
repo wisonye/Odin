@@ -2,14 +2,14 @@
 // Expected: missing self and the later type error, without a compiler assertion.
 package test_issue_7980
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-foreign import lib "system:Foundation.framework"
+#foreign #import lib "system:Foundation.framework"
 
 @(objc_class="NSObject")
 Object :: struct {using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Object, objc_selector="hash", objc_name="hash")
 	Object_hash :: proc(self: ^Object) -> uint ---
 }

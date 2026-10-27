@@ -2,7 +2,7 @@
 #+private
 package mem_virtual
 
-foreign import Kernel32 "system:Kernel32.lib"
+#foreign #import Kernel32 "system:Kernel32.lib"
 
 LPSYSTEM_INFO :: ^SYSTEM_INFO
 SYSTEM_INFO :: struct {
@@ -59,7 +59,7 @@ ERROR_INVALID_ADDRESS :: 487
 ERROR_COMMITMENT_LIMIT :: 1455
 
 @(default_calling_convention="system")
-foreign Kernel32 {
+#foreign Kernel32 {
 	GetSystemInfo  :: proc(lpSystemInfo: LPSYSTEM_INFO) ---
 	VirtualAlloc   :: proc(lpAddress: rawptr, dwSize: uint, flAllocationType: u32, flProtect: u32) -> rawptr ---
 	VirtualFree    :: proc(lpAddress: rawptr, dwSize: uint, dwFreeType: u32) -> b32 ---

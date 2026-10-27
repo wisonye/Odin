@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIControl", objc_superclass=View)
 Control :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Control, objc_selector="initWithFrame:", objc_name="initWithFrame_")
 	Control_initWithFrame_ :: proc(self: ^Control, frame: CG.Rect) -> instancetype ---
 
@@ -181,7 +181,7 @@ Control_sendAction :: proc {
 RefreshControl :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RefreshControl, objc_selector="init", objc_name="init")
 	RefreshControl_init :: proc(self: ^RefreshControl) -> instancetype ---
 
@@ -215,7 +215,7 @@ SegmentedControl :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SegmentedControl, objc_selector="initWithFrame:", objc_name="initWithFrame_")
 	SegmentedControl_initWithFrame_ :: proc(self: ^SegmentedControl, frame: CG.Rect) -> instancetype ---
 

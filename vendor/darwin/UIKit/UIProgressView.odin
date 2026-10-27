@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIProgressView", objc_superclass=View)
 ProgressView :: struct {
@@ -13,7 +13,7 @@ ProgressView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ProgressView, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	ProgressView_initWithFrame :: proc(self: ^ProgressView, frame: CG.Rect) -> instancetype ---
 

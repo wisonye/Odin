@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSAttributedString", objc_superclass=Object)
 AttributedString :: struct {
@@ -12,7 +12,7 @@ AttributedString :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributedString, objc_selector="attributesAtIndex:effectiveRange:", objc_name="attributesAtIndex_effectiveRange")
 	AttributedString_attributesAtIndex_effectiveRange :: proc(self: ^AttributedString, location: UInteger, range: ^_NSRange) -> ^Dictionary ---
 
@@ -150,7 +150,7 @@ AttributedString_initWithMarkdownString :: #force_inline proc "c" (self: ^Attrib
 @(objc_class="NSMutableAttributedString", objc_superclass=AttributedString)
 MutableAttributedString :: struct { using _: AttributedString}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableAttributedString, objc_selector="replaceCharactersInRange:withString:", objc_name="replaceCharactersInRange_withString")
 	MutableAttributedString_replaceCharactersInRange_withString :: proc(self: ^MutableAttributedString, range: _NSRange, str: ^String) ---
 
@@ -209,7 +209,7 @@ AttributedStringMarkdownParsingOptions :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributedStringMarkdownParsingOptions, objc_selector="init", objc_name="init")
 	AttributedStringMarkdownParsingOptions_init :: proc(self: ^AttributedStringMarkdownParsingOptions) -> instancetype ---
 
@@ -252,7 +252,7 @@ AttributedStringMarkdownSourcePosition :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AttributedStringMarkdownSourcePosition, objc_selector="initWithStartLine:startColumn:endLine:endColumn:", objc_name="initWithStartLine")
 	AttributedStringMarkdownSourcePosition_initWithStartLine :: proc(self: ^AttributedStringMarkdownSourcePosition, startLine: Integer, startColumn: Integer, endLine: Integer, endColumn: Integer) -> instancetype ---
 

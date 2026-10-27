@@ -2,17 +2,17 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSImage", objc_superclass=NS.Object)
 Image :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Image, objc_selector="imageNamed:", objc_name="imageNamed", objc_is_class_method=true)
 	Image_imageNamed :: proc(name: ^NS.String) -> ^Image ---
 
@@ -343,7 +343,7 @@ ImageDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageDelegate, objc_selector="imageDidNotDraw:inRect:", objc_name="imageDidNotDraw")
 	ImageDelegate_imageDidNotDraw :: proc(self: ^ImageDelegate, sender: ^Image, rect: NS.Rect) -> ^Image ---
 
@@ -369,7 +369,7 @@ ImageCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageCell, objc_selector="imageAlignment", objc_name="imageAlignment")
 	ImageCell_imageAlignment :: proc(self: ^ImageCell) -> ImageAlignment ---
 
@@ -398,7 +398,7 @@ ImageRep :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageRep, objc_selector="init", objc_name="init")
 	ImageRep_init :: proc(self: ^ImageRep) -> instancetype ---
 
@@ -546,7 +546,7 @@ BitmapImageRep :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BitmapImageRep, objc_selector="initWithFocusedViewRect:", objc_name="initWithFocusedViewRect")
 	BitmapImageRep_initWithFocusedViewRect :: proc(self: ^BitmapImageRep, rect: NS.Rect) -> instancetype ---
 
@@ -688,7 +688,7 @@ BitmapImageRep_TIFFRepresentationOfImageRepsInArray :: proc {
 CIImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CIImageRep, objc_selector="imageRepWithCIImage:", objc_name="imageRepWithCIImage", objc_is_class_method=true)
 	CIImageRep_imageRepWithCIImage :: proc(image: ^CIImage) -> instancetype ---
 
@@ -704,7 +704,7 @@ foreign lib {
 CachedImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CachedImageRep, objc_selector="initWithWindow:rect:", objc_name="initWithWindow")
 	CachedImageRep_initWithWindow :: proc(self: ^CachedImageRep, win: ^Window, rect: NS.Rect) -> id ---
 
@@ -723,7 +723,7 @@ foreign lib {
 CustomImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CustomImageRep, objc_selector="initWithSize:flipped:drawingHandler:", objc_name="initWithSize")
 	CustomImageRep_initWithSize :: proc(self: ^CustomImageRep, size: NS.Size, drawingHandlerShouldBeCalledWithFlippedContext: bool, drawingHandler: ^Objc_Block(proc "c" ( dstRect: NS.Rect ) -> bool)) -> instancetype ---
 
@@ -745,7 +745,7 @@ foreign lib {
 EPSImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EPSImageRep, objc_selector="imageRepWithData:", objc_name="imageRepWithData", objc_is_class_method=true)
 	EPSImageRep_imageRepWithData :: proc(epsData: ^NS.Data) -> instancetype ---
 
@@ -767,7 +767,7 @@ foreign lib {
 PDFImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PDFImageRep, objc_selector="imageRepWithData:", objc_name="imageRepWithData", objc_is_class_method=true)
 	PDFImageRep_imageRepWithData :: proc(pdfData: ^NS.Data) -> instancetype ---
 
@@ -795,7 +795,7 @@ foreign lib {
 PICTImageRep :: struct { using _: ImageRep}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PICTImageRep, objc_selector="imageRepWithData:", objc_name="imageRepWithData", objc_is_class_method=true)
 	PICTImageRep_imageRepWithData :: proc(pictData: ^NS.Data) -> instancetype ---
 
@@ -818,7 +818,7 @@ ImageSymbolConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageSymbolConfiguration, objc_selector="configurationWithPointSize:weight:scale:", objc_name="configurationWithPointSize_weight_scale", objc_is_class_method=true)
 	ImageSymbolConfiguration_configurationWithPointSize_weight_scale :: proc(pointSize: CG.Float, weight: FontWeight, scale: ImageSymbolScale) -> instancetype ---
 
@@ -880,7 +880,7 @@ ImageView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageView, objc_selector="imageViewWithImage:", objc_name="imageViewWithImage", objc_is_class_method=true)
 	ImageView_imageViewWithImage :: proc(image: ^Image) -> instancetype ---
 

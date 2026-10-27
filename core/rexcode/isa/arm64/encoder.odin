@@ -654,7 +654,7 @@ pack_operand_inline :: #force_inline proc(
 
 	case .NEON_INDEX_H:
 		// H lane index: H at bit 20, L at bit 21, M at bit 11 (3 bits total
-		// when ESize=H). v1 keeps the simpler layout: just bits 20-19.
+		// #if ESize=H). v1 keeps the simpler layout: just bits 20-19.
 		return (u32(op.immediate) & 0x3) << 19
 	case .NEON_INDEX_S:
 		// S lane index: bits 11 (H) + 21 (L). v1: bit 11 + bit 21.
@@ -969,7 +969,7 @@ resolve_relocation_inline :: #force_inline proc(
 		// ADRP: difference of page (4KB-aligned) targets.
 		target_page := u64(target) & ~u64(0xFFF) + base_address & ~u64(0xFFF)
 		// Effective: ((target + base) >> 12) - ((pc + base) >> 12)
-		// Simpler:   ((target + base) - (pc + base)) >> 12  when both are
+		// Simpler:   ((target + base) - (pc + base)) >> 12  #if both are
 		// 4KB-aligned; but base + offset alignment is the caller's concern.
 		pc_page  := (u64(relocation.offset) + base_address) & ~u64(0xFFF)
 		tg_page  := target_page

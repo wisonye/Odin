@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import CF "core:sys/darwin/CoreFoundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="AVMetricEvent", objc_superclass=NS.Object)
 MetricEvent :: struct {
@@ -14,7 +14,7 @@ MetricEvent :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricEvent, objc_selector="init", objc_name="init")
 	MetricEvent_init :: proc(self: ^MetricEvent) -> instancetype ---
 
@@ -35,7 +35,7 @@ foreign lib {
 @(objc_class="AVMetricEventStream", objc_superclass=NS.Object)
 MetricEventStream :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricEventStream, objc_selector="init", objc_name="init")
 	MetricEventStream_init :: proc(self: ^MetricEventStream) -> instancetype ---
 
@@ -69,7 +69,7 @@ MetricEventStreamPublisher :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVMetricEventStreamSubscriber")
 MetricEventStreamSubscriber :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricEventStreamSubscriber, objc_selector="publisher:didReceiveEvent:", objc_name="publisher")
 	MetricEventStreamSubscriber_publisher :: proc(self: ^MetricEventStreamSubscriber, publisher: ^MetricEventStreamPublisher, event: ^MetricEvent) ---
 }
@@ -78,7 +78,7 @@ foreign lib {
 @(objc_class="AVMetricContentKeyRequestEvent", objc_superclass=MetricEvent)
 MetricContentKeyRequestEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricContentKeyRequestEvent, objc_selector="init", objc_name="init")
 	MetricContentKeyRequestEvent_init :: proc(self: ^MetricContentKeyRequestEvent) -> instancetype ---
 
@@ -102,7 +102,7 @@ foreign lib {
 @(objc_class="AVMetricDownloadSummaryEvent", objc_superclass=MetricEvent)
 MetricDownloadSummaryEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricDownloadSummaryEvent, objc_selector="init", objc_name="init")
 	MetricDownloadSummaryEvent_init :: proc(self: ^MetricDownloadSummaryEvent) -> instancetype ---
 
@@ -132,7 +132,7 @@ foreign lib {
 @(objc_class="AVMetricErrorEvent", objc_superclass=MetricEvent)
 MetricErrorEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricErrorEvent, objc_selector="init", objc_name="init")
 	MetricErrorEvent_init :: proc(self: ^MetricErrorEvent) -> instancetype ---
 
@@ -150,7 +150,7 @@ foreign lib {
 @(objc_class="AVMetricHLSMediaSegmentRequestEvent", objc_superclass=MetricEvent)
 MetricHLSMediaSegmentRequestEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricHLSMediaSegmentRequestEvent, objc_selector="init", objc_name="init")
 	MetricHLSMediaSegmentRequestEvent_init :: proc(self: ^MetricHLSMediaSegmentRequestEvent) -> instancetype ---
 
@@ -183,7 +183,7 @@ foreign lib {
 @(objc_class="AVMetricHLSPlaylistRequestEvent", objc_superclass=MetricEvent)
 MetricHLSPlaylistRequestEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricHLSPlaylistRequestEvent, objc_selector="init", objc_name="init")
 	MetricHLSPlaylistRequestEvent_init :: proc(self: ^MetricHLSPlaylistRequestEvent) -> instancetype ---
 
@@ -207,7 +207,7 @@ foreign lib {
 @(objc_class="AVMetricMediaResourceRequestEvent", objc_superclass=MetricEvent)
 MetricMediaResourceRequestEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricMediaResourceRequestEvent, objc_selector="init", objc_name="init")
 	MetricMediaResourceRequestEvent_init :: proc(self: ^MetricMediaResourceRequestEvent) -> instancetype ---
 
@@ -249,7 +249,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemInitialLikelyToKeepUpEvent", objc_superclass=MetricPlayerItemLikelyToKeepUpEvent)
 MetricPlayerItemInitialLikelyToKeepUpEvent :: struct { using _: MetricPlayerItemLikelyToKeepUpEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemInitialLikelyToKeepUpEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemInitialLikelyToKeepUpEvent_init :: proc(self: ^MetricPlayerItemInitialLikelyToKeepUpEvent) -> instancetype ---
 
@@ -270,7 +270,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemLikelyToKeepUpEvent", objc_superclass=MetricEvent)
 MetricPlayerItemLikelyToKeepUpEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemLikelyToKeepUpEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemLikelyToKeepUpEvent_init :: proc(self: ^MetricPlayerItemLikelyToKeepUpEvent) -> instancetype ---
 
@@ -291,7 +291,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemPlaybackSummaryEvent", objc_superclass=MetricEvent)
 MetricPlayerItemPlaybackSummaryEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemPlaybackSummaryEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemPlaybackSummaryEvent_init :: proc(self: ^MetricPlayerItemPlaybackSummaryEvent) -> instancetype ---
 
@@ -333,7 +333,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemRateChangeEvent", objc_superclass=MetricEvent)
 MetricPlayerItemRateChangeEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemRateChangeEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemRateChangeEvent_init :: proc(self: ^MetricPlayerItemRateChangeEvent) -> instancetype ---
 
@@ -354,7 +354,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemSeekDidCompleteEvent", objc_superclass=MetricPlayerItemRateChangeEvent)
 MetricPlayerItemSeekDidCompleteEvent :: struct { using _: MetricPlayerItemRateChangeEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemSeekDidCompleteEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemSeekDidCompleteEvent_init :: proc(self: ^MetricPlayerItemSeekDidCompleteEvent) -> instancetype ---
 
@@ -369,7 +369,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemSeekEvent", objc_superclass=MetricPlayerItemRateChangeEvent)
 MetricPlayerItemSeekEvent :: struct { using _: MetricPlayerItemRateChangeEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemSeekEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemSeekEvent_init :: proc(self: ^MetricPlayerItemSeekEvent) -> instancetype ---
 
@@ -381,7 +381,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemStallEvent", objc_superclass=MetricPlayerItemRateChangeEvent)
 MetricPlayerItemStallEvent :: struct { using _: MetricPlayerItemRateChangeEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemStallEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemStallEvent_init :: proc(self: ^MetricPlayerItemStallEvent) -> instancetype ---
 
@@ -393,7 +393,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemVariantSwitchEvent", objc_superclass=MetricEvent)
 MetricPlayerItemVariantSwitchEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemVariantSwitchEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemVariantSwitchEvent_init :: proc(self: ^MetricPlayerItemVariantSwitchEvent) -> instancetype ---
 
@@ -426,7 +426,7 @@ foreign lib {
 @(objc_class="AVMetricPlayerItemVariantSwitchStartEvent", objc_superclass=MetricEvent)
 MetricPlayerItemVariantSwitchStartEvent :: struct { using _: MetricEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricPlayerItemVariantSwitchStartEvent, objc_selector="init", objc_name="init")
 	MetricPlayerItemVariantSwitchStartEvent_init :: proc(self: ^MetricPlayerItemVariantSwitchStartEvent) -> instancetype ---
 
@@ -459,7 +459,7 @@ MetricMediaRendition :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetricMediaRendition, objc_selector="init", objc_name="init")
 	MetricMediaRendition_init :: proc(self: ^MetricMediaRendition) -> instancetype ---
 

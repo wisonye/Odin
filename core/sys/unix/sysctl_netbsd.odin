@@ -1,10 +1,10 @@
 package unix
 
-import "core:c"
-foreign import libc "system:c"
+#import "core:c"
+#foreign #import libc "system:c"
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	@(link_name="sysctl") _unix_sysctl :: proc(name: [^]i32, namelen: u32, oldp: rawptr, oldlenp: ^c.size_t, newp: rawptr, newlen: c.size_t) -> i32 ---
 }
 

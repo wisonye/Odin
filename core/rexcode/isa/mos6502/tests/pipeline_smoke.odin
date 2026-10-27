@@ -6,9 +6,9 @@ package rexcode_mos6502_tests
 // across every addressing mode, CPU tier (NMOS, undocumented, 65C02,
 // HuC6280), branch label inference, ABS16 reloc, and HuC block xfer.
 
-import "core:fmt"
-import "core:os"
-import m "../"
+#import "core:fmt"
+#import "core:os"
+#import m "../"
 
 @(private="file") rpasses   := 0
 @(private="file") rfailures := 0

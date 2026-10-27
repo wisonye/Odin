@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSLayoutAnchor", objc_superclass=NS.Object)
 LayoutAnchor :: struct {
@@ -15,7 +15,7 @@ LayoutAnchor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutAnchor, objc_selector="constraintEqualToAnchor:", objc_name="constraintEqualToAnchor_")
 	LayoutAnchor_constraintEqualToAnchor_ :: proc(self: ^LayoutAnchor, anchor: ^LayoutAnchor) -> ^LayoutConstraint ---
 
@@ -70,7 +70,7 @@ LayoutAnchor_constraintLessThanOrEqualToAnchor :: proc {
 LayoutDimension :: struct { using _: LayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutDimension, objc_selector="constraintEqualToConstant:", objc_name="constraintEqualToConstant")
 	LayoutDimension_constraintEqualToConstant :: proc(self: ^LayoutDimension, c: CG.Float) -> ^LayoutConstraint ---
 
@@ -122,7 +122,7 @@ LayoutDimension_constraintLessThanOrEqualToAnchor :: proc {
 LayoutXAxisAnchor :: struct { using _: LayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutXAxisAnchor, objc_selector="anchorWithOffsetToAnchor:", objc_name="anchorWithOffsetToAnchor")
 	LayoutXAxisAnchor_anchorWithOffsetToAnchor :: proc(self: ^LayoutXAxisAnchor, otherAnchor: ^LayoutXAxisAnchor) -> ^LayoutDimension ---
 
@@ -141,7 +141,7 @@ foreign lib {
 LayoutYAxisAnchor :: struct { using _: LayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutYAxisAnchor, objc_selector="anchorWithOffsetToAnchor:", objc_name="anchorWithOffsetToAnchor")
 	LayoutYAxisAnchor_anchorWithOffsetToAnchor :: proc(self: ^LayoutYAxisAnchor, otherAnchor: ^LayoutYAxisAnchor) -> ^LayoutDimension ---
 
@@ -160,7 +160,7 @@ foreign lib {
 LayoutConstraint :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutConstraint, objc_selector="constraintsWithVisualFormat:options:metrics:views:", objc_name="constraintsWithVisualFormat", objc_is_class_method=true)
 	LayoutConstraint_constraintsWithVisualFormat :: proc(format: ^NS.String, opts: LayoutFormatOptions, metrics: ^NS.Dictionary, views: ^NS.Dictionary) -> ^NS.Array ---
 
@@ -237,7 +237,7 @@ LayoutGuide :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutGuide, objc_selector="constraintsAffectingLayoutForOrientation:", objc_name="constraintsAffectingLayoutForOrientation")
 	LayoutGuide_constraintsAffectingLayoutForOrientation :: proc(self: ^LayoutGuide, orientation: LayoutConstraintOrientation) -> ^NS.Array ---
 
@@ -298,7 +298,7 @@ LayoutManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutManager, objc_selector="init", objc_name="init")
 	LayoutManager_init :: proc(self: ^LayoutManager) -> instancetype ---
 
@@ -843,7 +843,7 @@ LayoutManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutManagerDelegate, objc_selector="layoutManager:shouldGenerateGlyphs:properties:characterIndexes:font:forGlyphRange:", objc_name="layoutManager_shouldGenerateGlyphs_properties_characterIndexes_font_forGlyphRange")
 	LayoutManagerDelegate_layoutManager_shouldGenerateGlyphs_properties_characterIndexes_font_forGlyphRange :: proc(self: ^LayoutManagerDelegate, layoutManager: ^LayoutManager, glyphs: ^CG.Glyph, props: ^GlyphProperty, charIndexes: ^NS.UInteger, aFont: ^Font, glyphRange: NS._NSRange) -> NS.UInteger ---
 

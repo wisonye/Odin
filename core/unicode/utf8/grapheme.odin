@@ -1,6 +1,6 @@
 package utf8
 
-import "core:unicode"
+#import "core:unicode"
 
 ZERO_WIDTH_JOINER                 :: unicode.ZERO_WIDTH_JOINER
 is_control                        :: unicode.is_control
@@ -409,7 +409,7 @@ decode_grapheme_iterate :: proc(it: ^Grapheme_Iterator) -> (text: string, graphe
 		it.grapheme_count += 1
 	}
 
-	// Flush the remaining grapheme - the loop only flushes when
+	// Flush the remaining grapheme - the loop only flushes #if
 	// a new grapheme is encountered.
 	if !ok && it.continue_grapheme {
 		if it.current_cluster_ri_count == 2 {

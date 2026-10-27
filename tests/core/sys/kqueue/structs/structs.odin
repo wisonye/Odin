@@ -1,7 +1,7 @@
 package main
 
-import "core:fmt"
-import "core:sys/kqueue"
+#import "core:fmt"
+#import "core:sys/kqueue"
 
 main :: proc() {
 	fmt.println("kevent",        size_of(kqueue.KEvent), align_of(kqueue.KEvent))

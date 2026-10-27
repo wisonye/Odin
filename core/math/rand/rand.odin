@@ -1,9 +1,9 @@
 // Random number generators.
 package rand
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:math"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:math"
 
 Generator :: runtime.Random_Generator
 
@@ -61,8 +61,8 @@ Inputs:
 - seed: The seed value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	reset_example :: proc() {
 		rand.reset(1)
@@ -98,8 +98,8 @@ Returns:
 - val: A random unsigned 32 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint32_example :: proc() {
 		fmt.println(rand.uint32())
@@ -121,8 +121,8 @@ Returns:
 - val: A random unsigned 64 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint64_example :: proc() {
 		fmt.println(rand.uint64())
@@ -148,8 +148,8 @@ Returns:
 - val: A random unsigned 128 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint128_example :: proc() {
 		fmt.println(rand.uint128())
@@ -176,8 +176,8 @@ Returns:
 - val: A random 31 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int31_example :: proc() {
 		fmt.println(rand.int31())
@@ -199,8 +199,8 @@ Returns:
 - val: A random 63 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int63_example :: proc() {
 		fmt.println(rand.int63())
@@ -222,8 +222,8 @@ Returns:
 - val: A random 127 bit value
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int127_example :: proc() {
 		fmt.println(rand.int127())
@@ -249,8 +249,8 @@ Returns:
 WARNING: Panics if n is less than or equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int31_max_example :: proc() {
 		fmt.println(rand.int31_max(16))
@@ -290,8 +290,8 @@ Returns:
 WARNING: Panics if n is less than or equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int63_max_example :: proc() {
 		fmt.println(rand.int63_max(16))
@@ -331,8 +331,8 @@ Returns:
 WARNING: Panics if n is less than or equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int127_max_example :: proc() {
 		fmt.println(rand.int127_max(16))
@@ -372,8 +372,8 @@ Returns:
 WARNING: Panics if n is less than or equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int_max_example :: proc() {
 		fmt.println(rand.int_max(16))
@@ -390,7 +390,7 @@ int_max :: proc(n: int, gen := context.random_generator) -> (val: int) {
 	if n <= 0 {
 		panic("Invalid argument to int_max")
 	}
-	when size_of(int) == 4 {
+	#if size_of(int) == 4 {
 		return int(int31_max(i32(n), gen))
 	} else {
 		return int(int63_max(i64(n), gen))
@@ -409,8 +409,8 @@ Returns:
 WARNING: Panics if n is equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint32_max_example :: proc() {
 		fmt.println(rand.uint32_max(16))
@@ -450,8 +450,8 @@ Returns:
 WARNING: Panics if n is equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint64_max_example :: proc() {
 		fmt.println(rand.uint64_max(16))
@@ -491,8 +491,8 @@ Returns:
 WARNING: Panics if n is equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint128_max_example :: proc() {
 		fmt.println(rand.uint128_max(16))
@@ -532,8 +532,8 @@ Returns:
 WARNING: Panics if n is equal to 0
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint_max_example :: proc() {
 		fmt.println(rand.uint_max(16))
@@ -550,7 +550,7 @@ uint_max :: proc(n: uint, gen := context.random_generator) -> (val: uint) {
 	if n <= 0 {
 		panic("Invalid argument to uint_max")
 	}
-	when size_of(int) == 4 {
+	#if size_of(int) == 4 {
 		return uint(uint32_max(u32(n), gen))
 	} else {
 		return uint(uint64_max(u64(n), gen))
@@ -570,8 +570,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint32_range_example :: proc() {
 		fmt.println(rand.uint32_range(5,15))
@@ -610,8 +610,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint64_range_example :: proc() {
 		fmt.println(rand.uint64_range(5,15))
@@ -650,8 +650,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint128_range_example :: proc() {
 		fmt.println(rand.uint128_range(5,15))
@@ -690,8 +690,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	uint_range_example :: proc() {
 		fmt.println(rand.uint_range(5,15))
@@ -706,7 +706,7 @@ Possible Output:
 @(require_results)
 uint_range :: proc(lo, hi: uint, gen := context.random_generator) -> (val: uint) {
 	assert(lo < hi, "Invalid arguments to uint_range: lo must be less than hi")
-	when size_of(int) == 4 {
+	#if size_of(int) == 4 {
 		return uint(uint32_range(u32(lo), u32(hi), gen))
 	} else {
 		return uint(uint64_range(u64(lo), u64(hi), gen))
@@ -726,8 +726,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int32_range_example :: proc() {
 		fmt.println(rand.int32_range(-10,10))
@@ -766,8 +766,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int64_range_example :: proc() {
 		fmt.println(rand.int64_range(-10,10))
@@ -806,8 +806,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int128_range_example :: proc() {
 		fmt.println(rand.int128_range(-10,10))
@@ -846,8 +846,8 @@ Returns:
 WARNING: Panics if `lo` is greater or equal to `hi`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	int_range_example :: proc() {
 		fmt.println(rand.int_range(-10,10))
@@ -862,7 +862,7 @@ Possible Output:
 @(require_results)
 int_range :: proc(lo, hi: int, gen := context.random_generator) -> (val: int) {
 	assert(lo < hi, "Invalid arguments to int_range: lo must be less than hi")
-	when size_of(int) == 4 {
+	#if size_of(int) == 4 {
 		return int(int32_range(i32(lo), i32(hi), gen))
 	} else {
 		return int(int64_range(i64(lo), i64(hi), gen))
@@ -876,8 +876,8 @@ Returns:
 - val: A random double floating point value in the range `[0, 1)`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	float64_example :: proc() {
 		fmt.println(rand.float64())
@@ -898,8 +898,8 @@ Returns:
 - val: A random single floating point value in the range `[0, 1)`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	float32_example :: proc() {
 		fmt.println(rand.float32())
@@ -926,8 +926,8 @@ Returns:
 - val: A random double floating point value in the range [low, high)
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	float64_range_example :: proc() {
 		fmt.println(rand.float64_range(-10, 300))
@@ -961,8 +961,8 @@ Returns:
 WARNING: Panics if `high < low`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	float32_range_example :: proc() {
 		fmt.println(rand.float32_range(-10, 300))
@@ -994,8 +994,8 @@ Returns:
 - n: The number of bytes generated
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	read_example :: proc() {
 		data: [8]byte
@@ -1030,9 +1030,9 @@ Returns:
 - err: An allocator error if one occured, `nil` otherwise
 
 Example:
-	import "base:runtime"
-	import "core:math/rand"
-	import "core:fmt"
+	#import "base:runtime"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	perm_example :: proc() -> (err: runtime.Allocator_Error) {
 		data := rand.perm(4) or_return
@@ -1066,8 +1066,8 @@ Inputs:
 - array: The slice to randomize
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	shuffle_example :: proc() {
 		data: [4]int = { 1, 2, 3, 4 }
@@ -1110,8 +1110,8 @@ Returns:
 - res: A random element from `array`
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	choice_example :: proc() {
 		data: [4]int = { 1, 2, 3, 4 }
@@ -1141,8 +1141,8 @@ choice :: proc(array: $T/[]$E, gen := context.random_generator) -> (res: E) {
 
 @(require_results)
 choice_enum :: proc($T: typeid, gen := context.random_generator) -> T where intrinsics.type_is_enum(T) {
-	when size_of(T) <= 8 && len(T) == cap(T) {
-		when intrinsics.type_is_unsigned(intrinsics.type_core_type(T)) &&
+	#if size_of(T) <= 8 && len(T) == cap(T) {
+		#if intrinsics.type_is_unsigned(intrinsics.type_core_type(T)) &&
 			 u64(max(T)) > u64(max(i64)) {
 			i := uint64(gen) % u64(len(T))
 			i += u64(min(T))
@@ -1169,8 +1169,8 @@ Returns:
 - ok:  Whether the bit_set was not empty and thus `res` is actually a random set bit
 
 Example:
-	import "core:math/rand"
-	import "core:fmt"
+	#import "core:math/rand"
+	#import "core:fmt"
 
 	choice_bit_set_example :: proc() {
 		Flags :: enum {

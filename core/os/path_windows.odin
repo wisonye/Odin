@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:strings"
-import win32 "core:sys/windows"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:strings"
+#import win32 "core:sys/windows"
 
 _Path_Separator        :: '\\'
 _Path_Separator_String :: "\\"

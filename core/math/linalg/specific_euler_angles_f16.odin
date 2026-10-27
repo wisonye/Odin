@@ -1,6 +1,6 @@
 package linalg
 
-import "core:math"
+#import "core:math"
 
 @(require_results)
 euler_angles_from_matrix3_f16 :: proc "contextless" (m: Matrix3f16, order: Euler_Angle_Order) -> (t1, t2, t3: f16) {

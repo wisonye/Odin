@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSUndoManager", objc_superclass=Object)
 UndoManager :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UndoManager, objc_selector="beginUndoGrouping", objc_name="beginUndoGrouping")
 	UndoManager_beginUndoGrouping :: proc(self: ^UndoManager) ---
 

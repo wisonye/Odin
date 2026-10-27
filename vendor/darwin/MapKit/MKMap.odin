@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import CL "vendor:darwin/CoreLocation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="MKMapConfiguration", objc_superclass=NS.Object)
 MapConfiguration :: struct {
@@ -15,7 +15,7 @@ MapConfiguration :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapConfiguration, objc_selector="init", objc_name="init")
 	MapConfiguration_init :: proc(self: ^MapConfiguration) -> instancetype ---
 
@@ -33,7 +33,7 @@ foreign lib {
 @(objc_class="MKHybridMapConfiguration", objc_superclass=MapConfiguration)
 HybridMapConfiguration :: struct { using _: MapConfiguration}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HybridMapConfiguration, objc_selector="init", objc_name="init")
 	HybridMapConfiguration_init :: proc(self: ^HybridMapConfiguration) -> instancetype ---
 
@@ -57,7 +57,7 @@ foreign lib {
 @(objc_class="MKImageryMapConfiguration", objc_superclass=MapConfiguration)
 ImageryMapConfiguration :: struct { using _: MapConfiguration}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageryMapConfiguration, objc_selector="init", objc_name="init")
 	ImageryMapConfiguration_init :: proc(self: ^ImageryMapConfiguration) -> instancetype ---
 
@@ -73,7 +73,7 @@ MapCamera :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapCamera, objc_selector="camera", objc_name="camera", objc_is_class_method=true)
 	MapCamera_camera :: proc() -> instancetype ---
 
@@ -133,7 +133,7 @@ MapCameraBoundary :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapCameraBoundary, objc_selector="initWithMapRect:", objc_name="initWithMapRect")
 	MapCameraBoundary_initWithMapRect :: proc(self: ^MapCameraBoundary, mapRect: MapRect) -> instancetype ---
 
@@ -158,7 +158,7 @@ MapCameraZoomRange :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapCameraZoomRange, objc_selector="initWithMinCenterCoordinateDistance:maxCenterCoordinateDistance:", objc_name="initWithMinCenterCoordinateDistance_maxCenterCoordinateDistance")
 	MapCameraZoomRange_initWithMinCenterCoordinateDistance_maxCenterCoordinateDistance :: proc(self: ^MapCameraZoomRange, minDistance: CL.LocationDistance, maxDistance: CL.LocationDistance) -> instancetype ---
 
@@ -184,10 +184,10 @@ MapCameraZoomRange_initWithMinCenterCoordinateDistance :: proc {
 }
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="MKMapFeatureAnnotation")
 	MapFeatureAnnotation :: struct { using _: intrinsics.objc_object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="MKMapFeatureAnnotation", objc_superclass=NS.Object)
 	MapFeatureAnnotation :: struct {
 		using _: NS.Object,
@@ -195,8 +195,8 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapFeatureAnnotation, objc_selector="init", objc_name="init")
 		MapFeatureAnnotation_init :: proc(self: ^MapFeatureAnnotation) -> instancetype ---
 
@@ -218,7 +218,7 @@ foreign lib {
 @(objc_class="MKMapItem", objc_superclass=NS.Object)
 MapItem :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItem, objc_selector="mapItemForCurrentLocation", objc_name="mapItemForCurrentLocation", objc_is_class_method=true)
 	MapItem_mapItemForCurrentLocation :: proc() -> ^MapItem ---
 
@@ -234,22 +234,22 @@ foreign lib {
 	@(objc_type=MapItem, objc_selector="openMapsWithItems:launchOptions:", objc_name="openMapsWithItems_launchOptions", objc_is_class_method=true)
 	MapItem_openMapsWithItems_launchOptions :: proc(mapItems: ^NS.Array, launchOptions: ^NS.Dictionary) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapItem, objc_selector="openInMapsWithLaunchOptions:completionHandler:", objc_name="openInMapsWithLaunchOptions_completionHandler")
 		MapItem_openInMapsWithLaunchOptions_completionHandler :: proc(self: ^MapItem, launchOptions: ^NS.Dictionary, completion: ^Objc_Block(proc "c" ( success: bool ))) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapItem, objc_selector="openInMapsWithLaunchOptions:fromScene:completionHandler:", objc_name="openInMapsWithLaunchOptions_fromScene_completionHandler")
 		MapItem_openInMapsWithLaunchOptions_fromScene_completionHandler :: proc(self: ^MapItem, launchOptions: ^NS.Dictionary, scene: ^UI_Scene, completion: ^Objc_Block(proc "c" ( success: bool ))) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapItem, objc_selector="openMapsWithItems:launchOptions:completionHandler:", objc_name="openMapsWithItems_launchOptions_completionHandler", objc_is_class_method=true)
 		MapItem_openMapsWithItems_launchOptions_completionHandler :: proc(mapItems: ^NS.Array, launchOptions: ^NS.Dictionary, completion: ^Objc_Block(proc "c" ( success: bool ))) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapItem, objc_selector="openMapsWithItems:launchOptions:fromScene:completionHandler:", objc_name="openMapsWithItems_launchOptions_fromScene_completionHandler", objc_is_class_method=true)
 		MapItem_openMapsWithItems_launchOptions_fromScene_completionHandler :: proc(mapItems: ^NS.Array, launchOptions: ^NS.Dictionary, scene: ^UI_Scene, completion: ^Objc_Block(proc "c" ( success: bool ))) ---
 	}
@@ -308,7 +308,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=MapItem, objc_name="openInMapsWithLaunchOptions")
 	MapItem_openInMapsWithLaunchOptions :: proc {
 		MapItem_openInMapsWithLaunchOptions_,
@@ -320,7 +320,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 		MapItem_openMapsWithItems_launchOptions,
 		MapItem_openMapsWithItems_launchOptions_completionHandler,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_type=MapItem, objc_name="openInMapsWithLaunchOptions")
 	MapItem_openInMapsWithLaunchOptions :: proc {
 		MapItem_openInMapsWithLaunchOptions_,
@@ -341,7 +341,7 @@ MapItemAnnotation :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemAnnotation, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	MapItemAnnotation_new :: proc() -> ^MapItemAnnotation ---
 
@@ -359,7 +359,7 @@ foreign lib {
 @(objc_class="MKMapItemDetailSelectionAccessoryPresentationStyle", objc_superclass=NS.Object)
 MapItemDetailSelectionAccessoryPresentationStyle :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemDetailSelectionAccessoryPresentationStyle, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	MapItemDetailSelectionAccessoryPresentationStyle_new :: proc() -> ^MapItemDetailSelectionAccessoryPresentationStyle ---
 
@@ -386,7 +386,7 @@ foreign lib {
 @(objc_class="MKMapItemDetailViewController", objc_superclass=UI_ViewController)
 MapItemDetailViewController :: struct { using _: UI_ViewController}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemDetailViewController, objc_selector="initWithMapItem:displaysMap:", objc_name="initWithMapItem_displaysMap")
 	MapItemDetailViewController_initWithMapItem_displaysMap :: proc(self: ^MapItemDetailViewController, mapItem: ^MapItem, displaysMap: bool) -> instancetype ---
 
@@ -421,7 +421,7 @@ MapItemDetailViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemDetailViewControllerDelegate, objc_selector="mapItemDetailViewControllerDidFinish:", objc_name="mapItemDetailViewControllerDidFinish")
 	MapItemDetailViewControllerDelegate_mapItemDetailViewControllerDidFinish :: proc(self: ^MapItemDetailViewControllerDelegate, detailViewController: ^MapItemDetailViewController) ---
 }
@@ -434,7 +434,7 @@ MapItemIdentifier :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemIdentifier, objc_selector="init", objc_name="init")
 	MapItemIdentifier_init :: proc(self: ^MapItemIdentifier) -> instancetype ---
 
@@ -452,7 +452,7 @@ foreign lib {
 @(objc_class="MKMapItemRequest", objc_superclass=NS.Object)
 MapItemRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapItemRequest, objc_selector="init", objc_name="init")
 	MapItemRequest_init :: proc(self: ^MapItemRequest) -> instancetype ---
 
@@ -491,19 +491,19 @@ foreign lib {
 @(objc_class="MKMapSnapshot", objc_superclass=NS.Object)
 MapSnapshot :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapSnapshot, objc_selector="pointForCoordinate:", objc_name="pointForCoordinate")
 	MapSnapshot_pointForCoordinate :: proc(self: ^MapSnapshot, coordinate: CL.LocationCoordinate2D) -> CG.Point ---
 
 	@(objc_type=MapSnapshot, objc_selector="image", objc_name="image")
 	MapSnapshot_image :: proc(self: ^MapSnapshot) -> ^UI_Image ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapSnapshot, objc_selector="appearance", objc_name="appearance")
 		MapSnapshot_appearance :: proc(self: ^MapSnapshot) -> ^UI_Appearance ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapSnapshot, objc_selector="traitCollection", objc_name="traitCollection")
 		MapSnapshot_traitCollection :: proc(self: ^MapSnapshot) -> ^UI_TraitCollection ---
 	}
@@ -516,7 +516,7 @@ MapSnapshotOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapSnapshotOptions, objc_selector="preferredConfiguration", objc_name="preferredConfiguration")
 	MapSnapshotOptions_preferredConfiguration :: proc(self: ^MapSnapshotOptions) -> ^MapConfiguration ---
 
@@ -565,13 +565,13 @@ foreign lib {
 	@(objc_type=MapSnapshotOptions, objc_selector="setShowsBuildings:", objc_name="setShowsBuildings")
 	MapSnapshotOptions_setShowsBuildings :: proc(self: ^MapSnapshotOptions, showsBuildings: bool) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapSnapshotOptions, objc_selector="size", objc_name="size")
 		MapSnapshotOptions_size :: proc(self: ^MapSnapshotOptions) -> NS.Size ---
 
 		@(objc_type=MapSnapshotOptions, objc_selector="setSize:", objc_name="setSize")
 		MapSnapshotOptions_setSize :: proc(self: ^MapSnapshotOptions, size: NS.Size) ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapSnapshotOptions, objc_selector="size", objc_name="size")
 		MapSnapshotOptions_size :: proc(self: ^MapSnapshotOptions) -> CG.Size ---
 
@@ -579,12 +579,12 @@ foreign lib {
 		MapSnapshotOptions_setSize :: proc(self: ^MapSnapshotOptions, size: CG.Size) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapSnapshotOptions, objc_selector="appearance", objc_name="appearance")
 		MapSnapshotOptions_appearance :: proc(self: ^MapSnapshotOptions) -> ^UI_Appearance ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapSnapshotOptions, objc_selector="scale", objc_name="scale")
 		MapSnapshotOptions_scale :: proc(self: ^MapSnapshotOptions) -> CG.Float ---
 
@@ -592,12 +592,12 @@ foreign lib {
 		MapSnapshotOptions_setScale :: proc(self: ^MapSnapshotOptions, scale: CG.Float) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapSnapshotOptions, objc_selector="setAppearance:", objc_name="setAppearance")
 		MapSnapshotOptions_setAppearance :: proc(self: ^MapSnapshotOptions, appearance: ^UI_Appearance) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapSnapshotOptions, objc_selector="traitCollection", objc_name="traitCollection")
 		MapSnapshotOptions_traitCollection :: proc(self: ^MapSnapshotOptions) -> ^UI_TraitCollection ---
 
@@ -610,7 +610,7 @@ foreign lib {
 @(objc_class="MKMapSnapshotter", objc_superclass=NS.Object)
 MapSnapshotter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapSnapshotter, objc_selector="initWithOptions:", objc_name="initWithOptions")
 	MapSnapshotter_initWithOptions :: proc(self: ^MapSnapshotter, options: ^MapSnapshotOptions) -> instancetype ---
 
@@ -634,7 +634,7 @@ MapView :: struct {
 	using _: NS.Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapView, objc_selector="setRegion:animated:", objc_name="setRegion_animated")
 	MapView_setRegion_animated :: proc(self: ^MapView, region: CoordinateRegion, animated: bool) ---
 
@@ -650,13 +650,13 @@ foreign lib {
 	@(objc_type=MapView, objc_selector="mapRectThatFits:", objc_name="mapRectThatFits_")
 	MapView_mapRectThatFits_ :: proc(self: ^MapView, mapRect: MapRect) -> MapRect ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=MapView, objc_selector="setVisibleMapRect:edgePadding:animated:", objc_name="setVisibleMapRect_edgePadding_animated")
 		MapView_setVisibleMapRect_edgePadding_animated :: proc(self: ^MapView, mapRect: MapRect, insets: NS.EdgeInsets, animate: bool) ---
 
 		@(objc_type=MapView, objc_selector="mapRectThatFits:edgePadding:", objc_name="mapRectThatFits_edgePadding")
 		MapView_mapRectThatFits_edgePadding :: proc(self: ^MapView, mapRect: MapRect, insets: NS.EdgeInsets) -> MapRect ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapView, objc_selector="setVisibleMapRect:edgePadding:animated:", objc_name="setVisibleMapRect_edgePadding_animated")
 		MapView_setVisibleMapRect_edgePadding_animated :: proc(self: ^MapView, mapRect: MapRect, insets: UI_EdgeInsets, animate: bool) ---
 
@@ -745,7 +745,7 @@ foreign lib {
 	@(objc_type=MapView, objc_selector="region", objc_name="region")
 	MapView_region :: proc(self: ^MapView) -> CoordinateRegion ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapView, objc_selector="selectableMapFeatures", objc_name="selectableMapFeatures")
 		MapView_selectableMapFeatures :: proc(self: ^MapView) -> MapFeatureOptions ---
 	}
@@ -753,7 +753,7 @@ foreign lib {
 	@(objc_type=MapView, objc_selector="setRegion:", objc_name="setRegion_")
 	MapView_setRegion_ :: proc(self: ^MapView, region: CoordinateRegion) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapView, objc_selector="setSelectableMapFeatures:", objc_name="setSelectableMapFeatures")
 		MapView_setSelectableMapFeatures :: proc(self: ^MapView, selectableMapFeatures: MapFeatureOptions) ---
 	}
@@ -941,7 +941,7 @@ foreign lib {
 	@(objc_type=MapView, objc_selector="insertOverlay:atIndex:", objc_name="insertOverlay_atIndex")
 	MapView_insertOverlay_atIndex :: proc(self: ^MapView, overlay: ^Overlay, index: NS.UInteger) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapView, objc_selector="viewForOverlay:", objc_name="viewForOverlay")
 		MapView_viewForOverlay :: proc(self: ^MapView, overlay: ^Overlay) -> ^OverlayView ---
 	}
@@ -1029,7 +1029,7 @@ MapViewDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapViewDelegate, objc_selector="mapView:regionWillChangeAnimated:", objc_name="mapView_regionWillChangeAnimated")
 	MapViewDelegate_mapView_regionWillChangeAnimated :: proc(self: ^MapViewDelegate, mapView: ^MapView, animated: bool) ---
 
@@ -1063,7 +1063,7 @@ foreign lib {
 	@(objc_type=MapViewDelegate, objc_selector="mapView:didSelectAnnotationView:", objc_name="mapView_didSelectAnnotationView")
 	MapViewDelegate_mapView_didSelectAnnotationView :: proc(self: ^MapViewDelegate, mapView: ^MapView, view: ^AnnotationView) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapViewDelegate, objc_selector="mapView:annotationView:calloutAccessoryControlTapped:", objc_name="mapView_annotationView_calloutAccessoryControlTapped")
 		MapViewDelegate_mapView_annotationView_calloutAccessoryControlTapped :: proc(self: ^MapViewDelegate, mapView: ^MapView, view: ^AnnotationView, control: ^UI_Control) ---
 	}
@@ -1107,7 +1107,7 @@ foreign lib {
 	@(objc_type=MapViewDelegate, objc_selector="mapView:clusterAnnotationForMemberAnnotations:", objc_name="mapView_clusterAnnotationForMemberAnnotations")
 	MapViewDelegate_mapView_clusterAnnotationForMemberAnnotations :: proc(self: ^MapViewDelegate, mapView: ^MapView, memberAnnotations: ^NS.Array) -> ^ClusterAnnotation ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=MapViewDelegate, objc_selector="mapView:viewForOverlay:", objc_name="mapView_viewForOverlay")
 		MapViewDelegate_mapView_viewForOverlay :: proc(self: ^MapViewDelegate, mapView: ^MapView, overlay: ^Overlay) -> ^OverlayView ---
 
@@ -1120,7 +1120,7 @@ foreign lib {
 @(objc_class="MKStandardMapConfiguration", objc_superclass=MapConfiguration)
 StandardMapConfiguration :: struct { using _: MapConfiguration}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StandardMapConfiguration, objc_selector="init", objc_name="init")
 	StandardMapConfiguration_init :: proc(self: ^StandardMapConfiguration) -> instancetype ---
 

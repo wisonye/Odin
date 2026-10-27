@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AudioToolbox
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AUAudioUnit", objc_superclass=NS.Object)
 AUAudioUnit :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnit, objc_selector="init", objc_name="init")
 	AUAudioUnit_init :: proc(self: ^AUAudioUnit) -> instancetype ---
 
@@ -248,7 +248,7 @@ foreign lib {
 	@(objc_type=AUAudioUnit, objc_selector="setProfileChangedBlock:", objc_name="setProfileChangedBlock")
 	AUAudioUnit_setProfileChangedBlock :: proc(self: ^AUAudioUnit, profileChangedBlock: AUMIDICIProfileChangedBlock) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=AUAudioUnit, objc_selector="setDeviceID:error:", objc_name="setDeviceID_error")
 		AUAudioUnit_setDeviceID_error :: proc(self: ^AUAudioUnit, deviceID: AUAudioObjectID, outError: ^^NS.Error) -> bool ---
 	}
@@ -289,7 +289,7 @@ foreign lib {
 	@(objc_type=AUAudioUnit, objc_selector="setInputHandler:", objc_name="setInputHandler")
 	AUAudioUnit_setInputHandler :: proc(self: ^AUAudioUnit, inputHandler: AUInputHandler) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=AUAudioUnit, objc_selector="deviceID", objc_name="deviceID")
 		AUAudioUnit_deviceID :: proc(self: ^AUAudioUnit) -> AUAudioObjectID ---
 
@@ -399,7 +399,7 @@ AUAudioUnit_startHardwareAndReturnError :: #force_inline proc "c" (self: ^AUAudi
 	return
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 
 	@(objc_type=AUAudioUnit, objc_name="setDeviceID")
 	AUAudioUnit_setDeviceID :: #force_inline proc "c" (self: ^AUAudioUnit, deviceID: AUAudioObjectID) -> (ok: bool, err: ^NS.Error) {
@@ -412,7 +412,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 @(objc_class="AUAudioUnitBus", objc_superclass=NS.Object)
 AUAudioUnitBus :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnitBus, objc_selector="setFormat:error:", objc_name="setFormat_error")
 	AUAudioUnitBus_setFormat_error :: proc(self: ^AUAudioUnitBus, format: ^AVAudioFormat, outError: ^^NS.Error) -> bool ---
 
@@ -493,7 +493,7 @@ AUAudioUnitBusArray :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnitBusArray, objc_selector="init", objc_name="init")
 	AUAudioUnitBusArray_init :: proc(self: ^AUAudioUnitBusArray) -> instancetype ---
 
@@ -555,7 +555,7 @@ AUAudioUnitFactory :: struct {
 	using _: NS.ExtensionRequestHandling,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnitFactory, objc_selector="createAudioUnitWithComponentDescription:error:", objc_name="createAudioUnitWithComponentDescription_error")
 	AUAudioUnitFactory_createAudioUnitWithComponentDescription_error :: proc(self: ^AUAudioUnitFactory, desc: ComponentDescription, error: ^^NS.Error) -> ^AUAudioUnit ---
 }
@@ -576,7 +576,7 @@ AUAudioUnitPreset :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnitPreset, objc_selector="number", objc_name="number")
 	AUAudioUnitPreset_number :: proc(self: ^AUAudioUnitPreset) -> NS.Integer ---
 
@@ -594,7 +594,7 @@ foreign lib {
 @(objc_class="AUAudioUnitV2Bridge", objc_superclass=AUAudioUnit)
 AUAudioUnitV2Bridge :: struct { using _: AUAudioUnit}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUAudioUnitV2Bridge, objc_selector="audioUnit", objc_name="audioUnit")
 	AUAudioUnitV2Bridge_audioUnit :: proc(self: ^AUAudioUnitV2Bridge) -> Unit ---
 }

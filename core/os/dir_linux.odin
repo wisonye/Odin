@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 Read_Directory_Iterator_Impl :: struct {
 	prev_fi:        File_Info,

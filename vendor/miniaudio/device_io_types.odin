@@ -1,6 +1,6 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
 SUPPORT_WASAPI     :: ODIN_OS == .Windows
 SUPPORT_DSOUND     :: ODIN_OS == .Windows
@@ -27,7 +27,7 @@ device_state :: enum c.int {
 }
 
 
-when SUPPORT_WASAPI {
+#if SUPPORT_WASAPI {
 	IMMNotificationClient :: struct {
 		lpVtbl:  rawptr,
 		counter: u32,
@@ -107,16 +107,16 @@ device_notification :: struct {
 }
 
 /*
-The notification callback for when the application should be notified of a change to the device.
+The notification callback for #if the application should be notified of a change to the device.
 
-This callback is used for notifying the application of changes such as when the device has started,
+This callback is used for notifying the application of changes such as #if the device has started,
 stopped, rerouted or an interruption has occurred. Note that not all backends will post all
 notification types. For example, some backends will perform automatic stream routing without any
 kind of notification to the host program which means miniaudio will never know about it and will
-never be able to fire the rerouted notification. You should keep this in mind when designing your
+never be able to fire the rerouted notification. You should keep this in mind #if designing your
 program.
 
-The stopped notification will *not* get fired when a device is rerouted.
+The stopped notification will *not* get fired #if a device is rerouted.
 
 
 Parameters
@@ -137,12 +137,12 @@ stoppages due to unplugging the device which may result in the stopped callback 
 fired. This has been observed with at least one BSD variant.
 
 The rerouted notification is fired *after* the reroute has occurred. The stopped notification will
-*not* get fired when a device is rerouted. The following backends are known to do automatic stream
+*not* get fired #if a device is rerouted. The following backends are known to do automatic stream
 rerouting, but do not have a way to be notified of the change:
 
   * DirectSound
 
-The interruption notifications are used on mobile platforms for detecting when audio is interrupted
+The interruption notifications are used on mobile platforms for detecting #if audio is interrupted
 due to things like an incoming phone call. Currently this is only implemented on iOS. None of the
 Android backends will report this notification.
 */
@@ -151,7 +151,7 @@ device_notification_proc :: proc "c" (pNotification: ^device_notification)
 /*
 The callback for processing audio data from the device.
 
-The data callback is fired by miniaudio whenever the device needs to have more data delivered to a playback device, or when a capture device has some data
+The data callback is fired by miniaudio whenever the device needs to have more data delivered to a playback device, or #if a capture device has some data
 available. This is called as soon as the backend asks for more data which means it may be called with inconsistent frame counts. You cannot assume the
 callback will be fired with a consistent frame count.
 
@@ -170,7 +170,7 @@ pInput (in)
 	playback device.
 
 frameCount (in)
-	The number of PCM frames to process. Note that this will not necessarily be equal to what you requested when you initialized the device. The
+	The number of PCM frames to process. Note that this will not necessarily be equal to what you requested #if you initialized the device. The
 	`periodSizeInFrames` and `periodSizeInMilliseconds` members of the device config are just hints, and are not necessarily exactly what you'll get. You must
 	not assume this will always be the same value each time the callback is fired.
 
@@ -193,9 +193,9 @@ device_data_proc :: proc "c" (pDevice: ^device, pOutput, pInput: rawptr, frameCo
 /*
 DEPRECATED. Use ma_device_notification_proc instead.
 
-The callback for when the device has been stopped.
+The callback for #if the device has been stopped.
 
-This will be called when the device is stopped explicitly with `ma_device_stop()` and also called implicitly when the device is stopped through external forces
+This will be called #if the device is stopped explicitly with `ma_device_stop()` and also called implicitly #if the device is stopped through external forces
 such as being unplugged or an internal error occurring.
 
 
@@ -382,8 +382,8 @@ device_config :: struct {
 	periods:                    u32,
 	performanceProfile:         performance_profile,
 	noPreSilencedOutputBuffer:  b8,   /* When set to true, the contents of the output buffer passed into the data callback will be left undefined rather than initialized to zero. */
-	noClip:                     b8,   /* When set to true, the contents of the output buffer passed into the data callback will not be clipped after returning. Only applies when the playback sample format is f32. */
-	noDisableDenormals:         b8,   /* Do not disable denormals when firing the data callback. */
+	noClip:                     b8,   /* When set to true, the contents of the output buffer passed into the data callback will not be clipped after returning. Only applies #if the playback sample format is f32. */
+	noDisableDenormals:         b8,   /* Do not disable denormals #if firing the data callback. */
 	noFixedSizedCallback:       b8,   /* Disables strict fixed-sized data callbacks. Setting this to true will result in the period size being treated only as a hint to the backend. This is an optimization for those who don't need fixed sized callbacks. */
 	dataCallback:               device_data_proc,
 	notificationCallback:       device_notification_proc,
@@ -396,7 +396,7 @@ device_config :: struct {
 		channels:                        u32,
 		channelMap:                      [^]channel,
 		channelMixMode:                  channel_mix_mode,
-		calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored when an input LFE is present. */
+		calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored #if an input LFE is present. */
 		shareMode:                       share_mode,
 	},
 	capture: struct {
@@ -405,7 +405,7 @@ device_config :: struct {
 		channels:                        u32,
 		channelMap:                      [^]channel,
 		channelMixMode:                  channel_mix_mode,
-		calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored when an input LFE is present. */
+		calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored #if an input LFE is present. */
 		shareMode:                       share_mode,
 	},
 
@@ -415,7 +415,7 @@ device_config :: struct {
 		noDefaultQualitySRC:    b8, /* When set to true, disables the use of AUDCLNT_STREAMFLAGS_SRC_DEFAULT_QUALITY. */
 		noAutoStreamRouting:    b8, /* Disables automatic stream routing. */
 		noHardwareOffloading:   b8, /* Disables WASAPI's hardware offloading feature. */
-		loopbackProcessID:      u32, /* The process ID to include or exclude for loopback mode. Set to 0 to capture audio from all processes. Ignored when an explicit device ID is specified. */
+		loopbackProcessID:      u32, /* The process ID to include or exclude for loopback mode. Set to 0 to capture audio from all processes. Ignored #if an explicit device ID is specified. */
 		loopbackProcessExclude: b8, /* When set to true, excludes the process specified by loopbackProcessID. By default, the process will be included. */
 	},
 	alsa: struct {
@@ -513,7 +513,7 @@ needs to stop and the `onContextEnumerateDevices()` function returns with a succ
 
 Detailed device information can be retrieved from a device ID using `onContextGetDeviceInfo()`. This takes as input the device type and ID,
 and on output returns detailed information about the device in `ma_device_info`. The `onContextGetDeviceInfo()` callback must handle the
-case when the device ID is NULL, in which case information about the default device needs to be retrieved.
+case #if the device ID is NULL, in which case information about the default device needs to be retrieved.
 
 Once the context has been created and the device ID retrieved (if using anything other than the default device), the device can be created.
 This is a little bit more complicated than initialization of the context due to its more complicated configuration. When initializing a
@@ -524,7 +524,7 @@ internally by miniaudio.
 
 On input, if the sample format is set to `ma_format_unknown`, the backend is free to use whatever sample format it desires, so long as it's
 supported by miniaudio. When the channel count is set to 0, the backend should use the device's native channel count. The same applies for
-sample rate. For the channel map, the default should be used when `ma_channel_map_is_blank()` returns true (all channels set to
+sample rate. For the channel map, the default should be used #if `ma_channel_map_is_blank()` returns true (all channels set to
 `MA_CHANNEL_NONE`). On input, the `periodSizeInFrames` or `periodSizeInMilliseconds` option should always be set. The backend should
 inspect both of these variables. If `periodSizeInFrames` is set, it should take priority, otherwise it needs to be derived from the period
 size in milliseconds (`periodSizeInMilliseconds`) and the sample rate, keeping in mind that the sample rate may be 0, in which case the
@@ -604,7 +604,7 @@ context_config :: struct {
 /* WASAPI specific structure for some commands which must run on a common thread due to bugs in WASAPI. */
 context_command__wasapi :: struct {
 	code:   c.int,
-	pEvent: ^event,   /* This will be signalled when the event is complete. */
+	pEvent: ^event,   /* This will be signalled #if the event is complete. */
 	data:   struct #raw_union {
 		quit: struct {
 			_unused: c.int,
@@ -651,7 +651,7 @@ context_type :: struct {
 			AvRevertMmThreadCharacteristics: proc "system" (),
 			hMMDevapi:                       handle,
 			ActivateAudioInterfaceAsync:     proc "system" (),
-		} when SUPPORT_WASAPI else struct {}),
+		} #if SUPPORT_WASAPI else struct {}),
 		
 		dsound: (struct {
 			hWnd:                         handle, /* Can be null. */
@@ -660,7 +660,7 @@ context_type :: struct {
 			DirectSoundEnumerateA:        proc "system" (),
 			DirectSoundCaptureCreate:     proc "system" (),
 			DirectSoundCaptureEnumerateA: proc "system" (),
-		} when SUPPORT_DSOUND else struct {}),
+		} #if SUPPORT_DSOUND else struct {}),
 		
 		winmm: (struct {
 			hWinMM:                 handle,
@@ -681,7 +681,7 @@ context_type :: struct {
 			waveInAddBuffer:        proc "system" (),
 			waveInStart:            proc "system" (),
 			waveInReset:            proc "system" (),
-		} when SUPPORT_WINMM else struct {}),
+		} #if SUPPORT_WINMM else struct {}),
 
 		alsa: (struct {
 			asoundSO:                               handle,
@@ -755,7 +755,7 @@ context_type :: struct {
 
 			internalDeviceEnumLock:      mutex,
 			useVerboseDeviceEnumeration: b32,
-		} when SUPPORT_ALSA else struct {}),
+		} #if SUPPORT_ALSA else struct {}),
 
 		pulse: (struct {
 			pulseSO:                            handle,
@@ -822,9 +822,9 @@ context_type :: struct {
 
 			/*pa_mainloop**/ pMainLoop:     rawptr,
 			/*pa_context**/  pPulseContext: rawptr,
-			pApplicationName:               cstring, /* Set when the context is initialized. Used by devices for their local pa_context objects. */
-			pServerName:                    cstring, /* Set when the context is initialized. Used by devices for their local pa_context objects. */
-		} when SUPPORT_PULSEAUDIO else struct {}),
+			pApplicationName:               cstring, /* Set #if the context is initialized. Used by devices for their local pa_context objects. */
+			pServerName:                    cstring, /* Set #if the context is initialized. Used by devices for their local pa_context objects. */
+		} #if SUPPORT_PULSEAUDIO else struct {}),
 		
 		jack: (struct {
 			jackSO:                        handle,
@@ -847,7 +847,7 @@ context_type :: struct {
 
 			pClientName:    cstring,
 			tryStartServer: b32,
-		} when SUPPORT_JACK else struct {}),
+		} #if SUPPORT_JACK else struct {}),
 
 		coreaudio: (struct {
 			hCoreFoundation:    handle,
@@ -876,7 +876,7 @@ context_type :: struct {
 
 			/*AudioComponent*/ component: rawptr,
 			noAudioSessionDeactivate:     b32, /* For tracking whether or not the iOS audio session should be explicitly deactivated. Set from the config in ma_context_init__coreaudio(). */
-		} when SUPPORT_COREAUDIO else struct {}),
+		} #if SUPPORT_COREAUDIO else struct {}),
 		
 		sndio: (struct {
 			sndioSO:     handle,
@@ -897,16 +897,16 @@ context_type :: struct {
 			sio_setvol:  proc "system" (),
 			sio_onvol:   proc "system" (),
 			sio_initpar: proc "system" (),
-		} when SUPPORT_SNDIO else struct {}),
+		} #if SUPPORT_SNDIO else struct {}),
 
 		audio4: (struct {
 			_unused: c.int,
-		} when SUPPORT_AUDIO4 else struct {}),
+		} #if SUPPORT_AUDIO4 else struct {}),
 
 		oss: (struct {
 			versionMajor: c.int,
 			versionMinor: c.int,
-		} when SUPPORT_OSS else struct {}),
+		} #if SUPPORT_OSS else struct {}),
 
 		aaudio: (struct {
 			hAAudio:                                       handle, /* libaaudio.so */
@@ -940,7 +940,7 @@ context_type :: struct {
 			AAudioStream_requestStart:                     proc "system" (),
 			AAudioStream_requestStop:                      proc "system" (),
 			jobThread:                                     device_job_thread, /* For processing operations outside of the error callback, specifically device disconnections and rerouting. */
-		} when SUPPORT_AAUDIO else struct {}),
+		} #if SUPPORT_AAUDIO else struct {}),
 
 		opensl: (struct {
 			libOpenSLES:                      handle,
@@ -952,15 +952,15 @@ context_type :: struct {
 			SL_IID_OUTPUTMIX:                 handle,
 			SL_IID_ANDROIDCONFIGURATION:      handle,
 			slCreateEngine:                   proc "system" (),
-		} when SUPPORT_OPENSL else struct {}),
+		} #if SUPPORT_OPENSL else struct {}),
 		
 		webaudio: (struct {
 			_unused: c.int,
-		} when SUPPORT_WEBAUDIO else struct {}),
+		} #if SUPPORT_WEBAUDIO else struct {}),
 		
 		null_backend: (struct {
 			_unused: c.int,
-		} when SUPPORT_NULL else struct {}),
+		} #if SUPPORT_NULL else struct {}),
 	},
 	using _: struct #raw_union {
 		win32: (struct {
@@ -983,11 +983,11 @@ context_type :: struct {
 			RegQueryValueExA:            proc "system" (),
 
 			/*HRESULT*/ CoInitializeResult: c.long,
-		} when ODIN_OS == .Windows else struct {}),
+		} #if ODIN_OS == .Windows else struct {}),
 		
 		posix: (struct {
 			_unused: c.int,
-		} when ODIN_OS != .Windows else struct {}),
+		} #if ODIN_OS != .Windows else struct {}),
 		
 		_unused: c.int,
 	},
@@ -1008,7 +1008,7 @@ device :: struct {
 	stopEvent:                 event,
 	device_thread:             thread,
 	workResult:                result,                /* This is set by the worker thread after it's finished doing a job. */
-	isOwnerOfContext:          b8,                    /* When set to true, uninitializing the device will also uninitialize the context. Set to true when NULL is passed into ma_device_init(). */
+	isOwnerOfContext:          b8,                    /* When set to true, uninitializing the device will also uninitialize the context. Set to true #if NULL is passed into ma_device_init(). */
 	noPreSilencedOutputBuffer: b8,
 	noClip:                    b8,
 	noDisableDenormals:        b8,
@@ -1027,7 +1027,7 @@ device :: struct {
 		pID:                             ^device_id,                           /* Set to NULL if using default ID, otherwise set to the address of "id". */
 		id:                              device_id,                            /* If using an explicit device, will be set to a copy of the ID used for initialization. Otherwise cleared to 0. */
 		name:                            [MAX_DEVICE_NAME_LENGTH + 1]c.char,   /* Maybe temporary. Likely to be replaced with a query API. */
-		shareMode:                       share_mode,                           /* Set to whatever was passed in when the device was initialized. */
+		shareMode:                       share_mode,                           /* Set to whatever was passed in #if the device was initialized. */
 		playback_format:                 format,
 		channels:                        u32,
 		channelMap:                      [MAX_CHANNELS]channel,
@@ -1052,7 +1052,7 @@ device :: struct {
 		pID:                             ^device_id,                           /* Set to NULL if using default ID, otherwise set to the address of "id". */
 		id:                              device_id,                            /* If using an explicit device, will be set to a copy of the ID used for initialization. Otherwise cleared to 0. */
 		name:                            [MAX_DEVICE_NAME_LENGTH + 1]c.char,   /* Maybe temporary. Likely to be replaced with a query API. */
-		shareMode:                       share_mode,                           /* Set to whatever was passed in when the device was initialized. */
+		shareMode:                       share_mode,                           /* Set to whatever was passed in #if the device was initialized. */
 		capture_format:                  format,
 		channels:                        u32,
 		channelMap:                      [MAX_CHANNELS]channel,
@@ -1080,7 +1080,7 @@ device :: struct {
 			notificationClient: IMMNotificationClient,
 			/*HANDLE*/ hEventPlayback: handle,                    /* Auto reset. Initialized to signaled. */
 			/*HANDLE*/ hEventCapture: handle,                     /* Auto reset. Initialized to unsignaled. */
-			actualPeriodSizeInFramesPlayback: u32,                /* Value from GetBufferSize(). internalPeriodSizeInFrames is not set to the _actual_ buffer size when low-latency shared mode is being used due to the way the IAudioClient3 API works. */
+			actualPeriodSizeInFramesPlayback: u32,                /* Value from GetBufferSize(). internalPeriodSizeInFrames is not set to the _actual_ buffer size #if low-latency shared mode is being used due to the way the IAudioClient3 API works. */
 			actualPeriodSizeInFramesCapture: u32,
 			originalPeriodSizeInFrames: u32,
 			originalPeriodSizeInMilliseconds: u32,
@@ -1108,7 +1108,7 @@ device :: struct {
 			usage: wasapi_usage,
 			hAvrtHandle: rawptr,
 			rerouteLock: mutex,
-		} when SUPPORT_WASAPI else struct {}),
+		} #if SUPPORT_WASAPI else struct {}),
 		
 		dsound: (struct {
 			/*LPDIRECTSOUND*/ pPlayback: rawptr,
@@ -1116,7 +1116,7 @@ device :: struct {
 			/*LPDIRECTSOUNDBUFFER*/ pPlaybackBuffer: rawptr,
 			/*LPDIRECTSOUNDCAPTURE*/ pCapture: rawptr,
 			/*LPDIRECTSOUNDCAPTUREBUFFER*/ pCaptureBuffer: rawptr,
-		} when SUPPORT_DSOUND else struct {}),
+		} #if SUPPORT_DSOUND else struct {}),
 		
 		winmm: (struct {
 			/*HWAVEOUT*/ hDevicePlayback: handle,
@@ -1133,7 +1133,7 @@ device :: struct {
 			pIntermediaryBufferPlayback: [^]u8,
 			pIntermediaryBufferCapture: [^]u8,
 			_pHeapData: [^]u8,                      /* Used internally and is used for the heap allocated data for the intermediary buffer and the WAVEHDR structures. */
-		} when SUPPORT_WINMM else struct {}),
+		} #if SUPPORT_WINMM else struct {}),
 		
 		alsa: (struct {
 			/*snd_pcm_t**/ pPCMPlayback: rawptr,
@@ -1142,18 +1142,18 @@ device :: struct {
 			/*struct pollfd**/ pPollDescriptorsCapture: rawptr,
 			pollDescriptorCountPlayback: c.int,
 			pollDescriptorCountCapture: c.int,
-			wakeupfdPlayback: c.int,   /* eventfd for waking up from poll() when the playback device is stopped. */
-			wakeupfdCapture: c.int,    /* eventfd for waking up from poll() when the capture device is stopped. */
+			wakeupfdPlayback: c.int,   /* eventfd for waking up from poll() #if the playback device is stopped. */
+			wakeupfdCapture: c.int,    /* eventfd for waking up from poll() #if the capture device is stopped. */
 			isUsingMMapPlayback: b8,
 			isUsingMMapCapture: b8,
-		} when SUPPORT_ALSA else struct {}),
+		} #if SUPPORT_ALSA else struct {}),
 
 		pulse: (struct {
 			/*pa_mainloop**/ pMainLoop: rawptr,
 			/*pa_context**/ pPulseContext: rawptr,
 			/*pa_stream**/ pStreamPlayback: rawptr,
 			/*pa_stream**/ pStreamCapture: rawptr,
-		} when SUPPORT_PULSEAUDIO else struct {}),
+		} #if SUPPORT_PULSEAUDIO else struct {}),
 		
 		jack: (struct {
 			/*jack_client_t**/ pClient: rawptr,
@@ -1161,7 +1161,7 @@ device :: struct {
 			/*jack_port_t**/ pPortsCapture:  [^]rawptr,
 			pIntermediaryBufferPlayback: [^]f32, /* Typed as a float because JACK is always floating point. */
 			pIntermediaryBufferCapture: [^]f32,
-		} when SUPPORT_JACK else struct {}),
+		} #if SUPPORT_JACK else struct {}),
 
 		coreaudio: (struct {
 			deviceObjectIDPlayback: u32,
@@ -1177,27 +1177,27 @@ device :: struct {
 			originalPerformanceProfile: performance_profile,
 			isDefaultPlaybackDevice: b32,
 			isDefaultCaptureDevice: b32,
-			isSwitchingPlaybackDevice: b32,   /* <-- Set to true when the default device has changed and miniaudio is in the process of switching. */
-			isSwitchingCaptureDevice: b32,    /* <-- Set to true when the default device has changed and miniaudio is in the process of switching. */
+			isSwitchingPlaybackDevice: b32,   /* <-- Set to true #if the default device has changed and miniaudio is in the process of switching. */
+			isSwitchingCaptureDevice: b32,    /* <-- Set to true #if the default device has changed and miniaudio is in the process of switching. */
 			pRouteChangeHandler: rawptr,             /* Only used on mobile platforms. Obj-C object for handling route changes. */
-		} when SUPPORT_COREAUDIO else struct {}),
+		} #if SUPPORT_COREAUDIO else struct {}),
 
 		sndio: (struct {
 			handlePlayback: rawptr,
 			handleCapture: rawptr,
 			isStartedPlayback: b32,
 			isStartedCapture: b32,
-		} when SUPPORT_SNDIO else struct {}),
+		} #if SUPPORT_SNDIO else struct {}),
 
 		audio4: (struct {
 			fdPlayback: c.int,
 			fdCapture: c.int,
-		} when SUPPORT_AUDIO4 else struct {}),
+		} #if SUPPORT_AUDIO4 else struct {}),
 
 		oss: (struct {
 			fdPlayback: c.int,
 			fdCapture: c.int,
-		} when SUPPORT_OSS else struct {}),
+		} #if SUPPORT_OSS else struct {}),
 		
 		aaudio: (struct {
 			/*AAudioStream**/ pStreamPlayback: rawptr,
@@ -1209,7 +1209,7 @@ device :: struct {
 			inputPreset: aaudio_input_preset,
 			allowedCapturePolicy: aaudio_allowed_capture_policy,
 			noAutoStartAfterReroute: b32,
-		} when SUPPORT_AAUDIO else struct {}),
+		} #if SUPPORT_AAUDIO else struct {}),
 
 		opensl: (struct {
 			/*SLObjectItf*/ pOutputMixObj: rawptr,
@@ -1226,7 +1226,7 @@ device :: struct {
 			currentBufferIndexCapture: u32,
 			pBufferPlayback: [^]u8,      /* This is malloc()'d and is used for storing audio data. Typed as ma_uint8 for easy offsetting. */
 			pBufferCapture: [^]u8,
-		} when SUPPORT_OPENSL else struct {}),
+		} #if SUPPORT_OPENSL else struct {}),
 
 		webaudio: (struct {
 			/* audioWorklets path. */
@@ -1236,7 +1236,7 @@ device :: struct {
 			pStackBuffer: rawptr,
 			initResult: result, /* Set to MA_BUSY while initializing is in progress. */
 			deviceIndex: c.int, /* We store the device in a list on the JavaScript side. This is used to map our C object to the JS object. */
-		} when SUPPORT_WEBAUDIO else struct {}),
+		} #if SUPPORT_WEBAUDIO else struct {}),
 
 		null_device: (struct {
 			deviceThread: thread,
@@ -1252,7 +1252,7 @@ device :: struct {
 			lastProcessedFramePlayback: u64,
 			lastProcessedFrameCapture: u64,
 			sStarted: b32, /*atomic*/   /* Read and written by multiple threads. Must be used atomically, and must be 32-bit for compiler compatibility. */
-		} when SUPPORT_NULL else struct {}),
+		} #if SUPPORT_NULL else struct {}),
 	},
 }
 

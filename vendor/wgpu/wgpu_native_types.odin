@@ -1,6 +1,6 @@
 package wgpu
 
-import "base:runtime"
+#import "base:runtime"
 
 BINDINGS_VERSION        :: [4]u8{29, 0, 1, 1}
 BINDINGS_VERSION_STRING :: "29.0.1.1"

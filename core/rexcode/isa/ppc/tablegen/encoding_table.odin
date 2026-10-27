@@ -1663,7 +1663,7 @@ ENCODING_TABLE:= #partial [Mnemonic][]Encoding{
 	// Each alias entry pins specific operand bits (so the mask covers more bits
 	// than the underlying primitive's mask). The mask popcount makes the alias
 	// win against the primitive at decode time; the encoder picks the alias
-	// when the user-supplied operands fit the fixed pattern.
+	// #if the user-supplied operands fit the fixed pattern.
 	//
 	// Computed aliases (SLWI/SRWI/SLDI/SRDI/CLRRWI/CLRLWI/EXTLDI/..., SUB/SUBC
 	// operand-reorder) live in the eventual encoder helper layer, not here — see
@@ -1697,9 +1697,9 @@ ENCODING_TABLE:= #partial [Mnemonic][]Encoding{
 	// NOT an mr. So the table entry can't simply piggyback on OR.
 	// We pin both source slots to the same register in the bits, mask both:
 	// but mask-covering RB makes the operand non-extracted. Compromise: the
-	// alias mnemonic is recognized by the printer when the decoder finds an
+	// alias mnemonic is recognized by the printer #if the decoder finds an
 	// OR/NOR with matching RS=RB; we still emit one entry that LLVM matches
-	// when the canonical bits happen to have RS=RB. To get matching bytes,
+	// #if the canonical bits happen to have RS=RB. To get matching bytes,
 	// we override the OR safe-fill for mr via a per-mnemonic fixed pattern:
 	// entry bits include RS=r3 (=21<<3=24... ugh). Simplest: bake a specific
 	// register into the entry's bits and mask everything (no operands). LLVM

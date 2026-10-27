@@ -2,15 +2,15 @@
 #+private file
 package debug_trace
 
-@require import "base:runtime"
+@require #import "base:runtime"
 
-when INSTRUMENTATION_MODE {
+#if INSTRUMENTATION_MODE {
 
-when ODIN_OPTIMIZATION_MODE == .None {
+#if ODIN_OPTIMIZATION_MODE == .None {
 	#panic("the `trace` package's instrumentation mode requires at least `-o:minimal` to work (it requires `#force_inline` to actually be applied)")
 }
 
-when ODIN_USE_SEPARATE_MODULES {
+#if ODIN_USE_SEPARATE_MODULES {
 	#panic("the `trace` package's instrumentation mode requires `-use-single-module` to work (there are subtle instrumentation bugs to hunt down)")
 }
 
@@ -69,7 +69,7 @@ Frame :: struct {
 @(thread_local)
 frame: ^Frame
 
-when CUSTOM_INSTRUMENTATION {
+#if CUSTOM_INSTRUMENTATION {
 	@(no_instrumentation)
 	_instrumentation_enter :: #force_inline proc "contextless" (_, _: rawptr, loc: runtime.Source_Code_Location) {
 		frame = &Frame{

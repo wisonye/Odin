@@ -7,9 +7,9 @@ The formats of the files `odin` exchanges with editors and other tools.
 */
 package odin_tool_format
 
-import "core:encoding/cbor"
-import "core:encoding/json"
-import "core:slice"
+#import "core:encoding/cbor"
+#import "core:encoding/json"
+#import "core:slice"
 
 // The same format as Go's `-overlay`.
 // Each key is a path the compiler would read, and its value is the path to read instead, or "" to treat it as deleted.
@@ -26,7 +26,7 @@ marshal_overlay :: proc(overlay: Overlay, allocator := context.allocator) -> (da
 
 SEMANTICS_VERSION :: 1
 
-// `file`, `type` and `entity` fields are indices into `files`, `types` and `entities`, -1 when there is none.
+// `file`, `type` and `entity` fields are indices into `files`, `types` and `entities`, -1 #if there is none.
 // Offsets are in bytes.
 // The copies of a declaration made by each instantiation of a generic are one entity, keeping only what they agree on,
 // otherwise the generic's own type, if any, and no value or layout.
@@ -81,14 +81,14 @@ Field :: struct {
 // Not those of an enclosing `foreign` block.
 Attribute :: struct {
 	name:  string,
-	value: string, // the expression as text, empty when there is none
+	value: string, // the expression as text, empty #if there is none
 }
 
 Exported_File :: struct {
 	file:        int,
 	uses:        []i32, // offset, entity, ... sorted by offset
 	definitions: []i32, // offset, entity, ... sorted by offset
-	inactive:    []i32, // from, to, ... the `when` branches never taken
+	inactive:    []i32, // from, to, ... the `#if` branches never taken
 }
 
 // One `offset, entity` pair of `uses` or `definitions`
@@ -145,7 +145,7 @@ Diagnostics :: struct {
 
 Diagnostic :: struct {
 	type: string,         // "error" or "warning"
-	pos:  Diagnostic_Pos, // zero when there is no position
+	pos:  Diagnostic_Pos, // zero #if there is no position
 	msgs: []string,       // the message, one string per line
 }
 
@@ -155,5 +155,5 @@ Diagnostic_Pos :: struct {
 	offset:     int, // in bytes
 	line:       int,
 	column:     int,
-	end_column: int, // just past the range, equal to `column` when it is empty
+	end_column: int, // just past the range, equal to `column` #if it is empty
 }

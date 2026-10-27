@@ -1,8 +1,8 @@
 // A sorting interface and algorithms.
 package sort
 
-import "core:mem"
-import "base:intrinsics"
+#import "core:mem"
+#import "base:intrinsics"
 
 _ :: intrinsics
 ORD :: intrinsics.type_is_ordered
@@ -35,8 +35,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	sort_example :: proc() {
 		data := []int{5, 2, 8, 1, 9}
@@ -77,8 +77,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	slice_interface_example :: proc() {
 		data := []int{3, 1, 2}
@@ -124,8 +124,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	reverse_interface_example :: proc() {
 		data := []int{5, 2, 8}
@@ -168,8 +168,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	reverse_sort_example :: proc() {
 		data := []int{5, 2, 8, 1}
@@ -198,8 +198,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	is_sorted_example :: proc() {
 		a := []int{1, 2, 3}
@@ -237,8 +237,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	swap_range_example :: proc() {
 		data := []int{1, 2, 3, 4}
@@ -269,8 +269,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	rotate_example :: proc() {
 		data := []int{0, 1, 2, 3}
@@ -468,8 +468,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	bubble_sort_proc_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -519,8 +519,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	bubble_sort_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -573,8 +573,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	quick_sort_proc_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -624,8 +624,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	quick_sort_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -686,8 +686,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	merge_sort_proc_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -750,8 +750,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	merge_sort_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -818,8 +818,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	heap_sort_proc_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -875,8 +875,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	heap_sort_example :: proc() {
 		data := []int{5, 3, 8, 1}
@@ -933,8 +933,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_bools_example :: proc() {
 		fmt.println(sort.compare_bools(false, true))
@@ -967,8 +967,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_ints_example :: proc() {
 		fmt.println(sort.compare_ints(1, 2))
@@ -1000,8 +1000,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_uints_example :: proc() {
 		fmt.println(sort.compare_uints(1, 2))
@@ -1033,8 +1033,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_u8s_example :: proc() {
 		fmt.println(sort.compare_u8s(1, 2))
@@ -1066,8 +1066,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_u16s_example :: proc() {
 		fmt.println(sort.compare_u16s(1, 2))
@@ -1099,8 +1099,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_u32s_example :: proc() {
 		fmt.println(sort.compare_u32s(1, 2))
@@ -1132,8 +1132,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_u64s_example :: proc() {
 		fmt.println(sort.compare_u64s(1, 2))
@@ -1165,8 +1165,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_i8s_example :: proc() {
 		fmt.println(sort.compare_i8s(-1, 2))
@@ -1198,8 +1198,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_i16s_example :: proc() {
 		fmt.println(sort.compare_i16s(-1, 2))
@@ -1231,8 +1231,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_i32s_example :: proc() {
 		fmt.println(sort.compare_i32s(-1, 2))
@@ -1264,8 +1264,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_i64s_example :: proc() {
 		fmt.println(sort.compare_i64s(-1, 2))
@@ -1300,8 +1300,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_f32s_example :: proc() {
 		fmt.println(sort.compare_f32s(1.0, 2.0))
@@ -1332,8 +1332,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_f64s_example :: proc() {
 		fmt.println(sort.compare_f64s(1.0, 2.0))
@@ -1364,8 +1364,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:sort"
+	#import "core:fmt"
+	#import "core:sort"
 
 	compare_strings_example :: proc() {
 		fmt.println(sort.compare_strings("apple", "banana"))

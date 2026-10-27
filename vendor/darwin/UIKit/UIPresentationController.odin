@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIPresentationController", objc_superclass=NS.Object)
 PresentationController :: struct {
@@ -16,7 +16,7 @@ PresentationController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PresentationController, objc_selector="initWithPresentedViewController:presentingViewController:", objc_name="initWithPresentedViewController")
 	PresentationController_initWithPresentedViewController :: proc(self: ^PresentationController, presentedViewController: ^ViewController, presentingViewController: ^ViewController) -> instancetype ---
 
@@ -101,7 +101,7 @@ AdaptivePresentationControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AdaptivePresentationControllerDelegate, objc_selector="adaptivePresentationStyleForPresentationController:", objc_name="adaptivePresentationStyleForPresentationController_")
 	AdaptivePresentationControllerDelegate_adaptivePresentationStyleForPresentationController_ :: proc(self: ^AdaptivePresentationControllerDelegate, controller: ^PresentationController) -> ModalPresentationStyle ---
 
@@ -148,7 +148,7 @@ AdaptivePresentationControllerDelegate_presentationController :: proc {
 PopoverPresentationController :: struct { using _: PresentationController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverPresentationController, objc_selector="delegate", objc_name="delegate")
 	PopoverPresentationController_delegate :: proc(self: ^PopoverPresentationController) -> ^PopoverPresentationControllerDelegate ---
 
@@ -230,7 +230,7 @@ PopoverPresentationControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverPresentationControllerDelegate, objc_selector="prepareForPopoverPresentation:", objc_name="prepareForPopoverPresentation")
 	PopoverPresentationControllerDelegate_prepareForPopoverPresentation :: proc(self: ^PopoverPresentationControllerDelegate, popoverPresentationController: ^PopoverPresentationController) ---
 
@@ -252,7 +252,7 @@ PopoverPresentationControllerSourceItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverPresentationControllerSourceItem, objc_selector="frameInView:", objc_name="frameInView")
 	PopoverPresentationControllerSourceItem_frameInView :: proc(self: ^PopoverPresentationControllerSourceItem, referenceView: ^View) -> CG.Rect ---
 }
@@ -262,7 +262,7 @@ foreign lib {
 SheetPresentationController :: struct { using _: PresentationController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SheetPresentationController, objc_selector="invalidateDetents", objc_name="invalidateDetents")
 	SheetPresentationController_invalidateDetents :: proc(self: ^SheetPresentationController) ---
 
@@ -344,7 +344,7 @@ SheetPresentationControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SheetPresentationControllerDelegate, objc_selector="sheetPresentationControllerDidChangeSelectedDetentIdentifier:", objc_name="sheetPresentationControllerDidChangeSelectedDetentIdentifier")
 	SheetPresentationControllerDelegate_sheetPresentationControllerDidChangeSelectedDetentIdentifier :: proc(self: ^SheetPresentationControllerDelegate, sheetPresentationController: ^SheetPresentationController) ---
 }
@@ -354,7 +354,7 @@ foreign lib {
 SheetPresentationControllerDetent :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SheetPresentationControllerDetent, objc_selector="init", objc_name="init")
 	SheetPresentationControllerDetent_init :: proc(self: ^SheetPresentationControllerDetent) -> instancetype ---
 
@@ -391,7 +391,7 @@ SheetPresentationControllerDetentResolutionContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SheetPresentationControllerDetentResolutionContext, objc_selector="containerTraitCollection", objc_name="containerTraitCollection")
 	SheetPresentationControllerDetentResolutionContext_containerTraitCollection :: proc(self: ^SheetPresentationControllerDetentResolutionContext) -> ^TraitCollection ---
 

@@ -1,15 +1,15 @@
 package test_wycheproof
 
-import "core:encoding/hex"
-import "core:fmt"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:fmt"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:testing"
 
-import "core:crypto/rsa"
+#import "core:crypto/rsa"
 
-import "../common"
+#import "../common"
 
 @(test)
 test_rsa_pkcs1_signature :: proc(t: ^testing.T) {

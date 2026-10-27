@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKRule", objc_superclass=NS.Object)
 Rule :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Rule, objc_selector="evaluatePredicateWithSystem:", objc_name="evaluatePredicateWithSystem")
 	Rule_evaluatePredicateWithSystem :: proc(self: ^Rule, system: ^RuleSystem) -> bool ---
 
@@ -35,7 +35,7 @@ foreign lib {
 @(objc_class="GKNSPredicateRule", objc_superclass=Rule)
 NSPredicateRule :: struct { using _: Rule}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NSPredicateRule, objc_selector="initWithPredicate:", objc_name="initWithPredicate")
 	NSPredicateRule_initWithPredicate :: proc(self: ^NSPredicateRule, predicate: ^NS.Predicate) -> instancetype ---
 
@@ -50,7 +50,7 @@ foreign lib {
 @(objc_class="GKRuleSystem", objc_superclass=NS.Object)
 RuleSystem :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RuleSystem, objc_selector="init", objc_name="init")
 	RuleSystem_init :: proc(self: ^RuleSystem) -> instancetype ---
 

@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKInvite", objc_superclass=NS.Object)
 Invite :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Invite, objc_selector="sender", objc_name="sender")
 	Invite_sender :: proc(self: ^Invite) -> ^Player ---
 
@@ -30,7 +30,7 @@ foreign lib {
 @(objc_class="GKInviteEventListener")
 InviteEventListener :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InviteEventListener, objc_selector="player:didAcceptInvite:", objc_name="player_didAcceptInvite")
 	InviteEventListener_player_didAcceptInvite :: proc(self: ^InviteEventListener, player: ^Player, invite: ^Invite) ---
 

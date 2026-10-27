@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Mutex     :: struct {}
 RWLock    :: struct {}
@@ -21,7 +21,7 @@ InitState :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	CreateMutex             :: proc() -> ^Mutex ---
 	@(synchronizes=.Acquire)
 	LockMutex               :: proc(mutex: ^Mutex) ---

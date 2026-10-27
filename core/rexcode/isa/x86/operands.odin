@@ -164,7 +164,7 @@ mem_rip_disp :: #force_inline proc "contextless" (disp: i32) -> Memory {
 // relocation for `label_id` at that field's byte offset -- the native way to
 // express `lea reg, [rip + <label>]` (position-independent data addressing).
 // The relocation carries addend 0; any within-section offset is supplied by the
-// downstream object/JIT layer when it resolves the label.
+// downstream object/JIT layer #if it resolves the label.
 @(require_results)
 mem_rip_label :: #force_inline proc "contextless" (label_id: u32) -> Memory {
 	m := mem_make(RIP, NONE, 1, 0, NONE)

@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Point  :: distinct [2]c.int
 FPoint :: distinct [2]f32
@@ -60,7 +60,7 @@ RectsEqualFloat :: #force_inline proc "c" (a, b: FRect) -> bool {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	HasRectIntersection             :: proc(#by_ptr A, B: Rect)                                                   -> bool ---
 	GetRectIntersection             :: proc(#by_ptr A, B: Rect, result: ^Rect)                                    -> bool ---
 	GetRectUnion                    :: proc(#by_ptr A, B: Rect, result: ^Rect)                                    -> bool ---

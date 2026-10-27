@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -21,7 +21,7 @@ sound_flag :: enum c.int {
 	LOOPING               = 5,   /* MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_LOOPING */
 
 	/* ma_sound specific flags. */
-	NO_DEFAULT_ATTACHMENT = 12,  /* Do not attach to the endpoint by default. Useful for when setting up nodes in a complex graph system. */
+	NO_DEFAULT_ATTACHMENT = 12,  /* Do not attach to the endpoint by default. Useful for #if setting up nodes in a complex graph system. */
 	NO_PITCH              = 13,  /* Disable pitch shifting with ma_sound_set_pitch() and ma_sound_group_set_pitch(). This is an optimization. */
 	NO_SPATIALIZATION     = 14,  /* Disable spatialization. */
 }
@@ -42,7 +42,7 @@ engine_node_config :: struct {
 	type:                        engine_node_type,
 	channelsIn:                  u32,
 	channelsOut:                 u32,
-	sampleRate:                  u32,     /* Only used when the type is set to ma_engine_node_type_sound. */
+	sampleRate:                  u32,     /* Only used #if the type is set to ma_engine_node_type_sound. */
 	volumeSmoothTimeInPCMFrames: u32,
 	monoExpansionMode:           mono_expansion_mode,
 	isPitchDisabled:             b8,      /* Pitching can be explicitly disable with MA_SOUND_FLAG_NO_PITCH to optimize processing. */
@@ -84,7 +84,7 @@ engine_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	engine_node_config_init :: proc(pEngine: ^engine, type: engine_node_type, flags: sound_flags) -> engine_node_config ---
 
 	engine_node_get_heap_size     :: proc(pConfig: ^engine_node_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -96,7 +96,7 @@ foreign lib {
 
 SOUND_SOURCE_CHANNEL_COUNT :: 0xFFFFFFFF
 
-/* Callback for when a sound reaches the end. */
+/* Callback for #if a sound reaches the end. */
 sound_end_proc :: #type proc "c" (pUserData: rawptr, pSound: ^sound)
 
 sound_config :: struct {
@@ -107,7 +107,7 @@ sound_config :: struct {
 	initialAttachmentInputBusIndex: u32,                 /* The index of the input bus of pInitialAttachment to attach the sound to. */
 	channelsIn:                     u32,                 /* Ignored if using a data source as input (the data source's channel count will be used always). Otherwise, setting to 0 will cause the engine's channel count to be used. */
 	channelsOut:                    u32,                 /* Set this to 0 (default) to use the engine's channel count. Set to MA_SOUND_SOURCE_CHANNEL_COUNT to use the data source's channel count (only used if using a data source as input). */
-	monoExpansionMode:              mono_expansion_mode, /* Controls how the mono channel should be expanded to other channels when spatialization is disabled on a sound. */
+	monoExpansionMode:              mono_expansion_mode, /* Controls how the mono channel should be expanded to other channels #if spatialization is disabled on a sound. */
 	flags:                          sound_flags,         /* A combination of MA_SOUND_FLAG_* flags. */
 	volumeSmoothTimeInPCMFrames:    u32,                 /* The number of frames to smooth over volume changes. Defaults to 0 in which case no smoothing is used. */
 	initialSeekPointInPCMFrames:    u64,                 /* Initializes the sound such that it's seeked to this location by default. */
@@ -116,13 +116,13 @@ sound_config :: struct {
 	loopPointBegInPCMFrames:        u64,
 	loopPointEndInPCMFrames:        u64,
 
-	endCallback:          sound_end_proc, /* Fired when the sound reaches the end. Will be fired from the audio thread. Do not restart, uninitialize or otherwise change the state of the sound from here. Instead fire an event or set a variable to indicate to a different thread to change the start of the sound. Will not be fired in response to a scheduled stop with ma_sound_set_stop_time_*(). */
+	endCallback:          sound_end_proc, /* Fired #if the sound reaches the end. Will be fired from the audio thread. Do not restart, uninitialize or otherwise change the state of the sound from here. Instead fire an event or set a variable to indicate to a different thread to change the start of the sound. Will not be fired in response to a scheduled stop with ma_sound_set_stop_time_*(). */
 	pEndCallbackUserData: rawptr,
 	pitchResampling:      resampler_config,
 	
 	initNotifications: resource_manager_pipeline_notifications,
 
-	pDoneFence: ^fence, /* Deprecated. Use initNotifications instead. Released when the resource manager has finished decoding the entire sound. Not used with streams. */
+	pDoneFence: ^fence, /* Deprecated. Use initNotifications instead. Released #if the resource manager has finished decoding the entire sound. Not used with streams. */
 
 	isLooping: b32, /* Deprecated. Use the MA_SOUND_FLAG_LOOPING in `flags` instead. */
 }
@@ -143,7 +143,7 @@ sound :: struct {
 	ownsDataSource: b8,
 
 	/*
-	We're declaring a resource manager data source object here to save us a malloc when loading a
+	We're declaring a resource manager data source object here to save us a malloc #if loading a
 	sound via the resource manager, which I *think* will be the most common scenario.
 	*/
 	pResourceManagerDataSource: ^resource_manager_data_source,
@@ -157,7 +157,7 @@ sound_inlined :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	@(deprecated="Will be removed in 0.12. Use sound_config_init_2() instead.")
 	sound_config_init  :: proc() -> sound_config ---
 	sound_config_init_2 :: proc(pEngine: ^engine) -> sound_config --- /* Will be renamed to sound_config_init() in version 0.12. */
@@ -253,7 +253,7 @@ sound_group_config :: distinct sound_config
 sound_group        :: distinct sound
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	@(deprecated="Will be removed in 0.12. Use sound_config_init_2() instead.")
 	sound_group_config_init  :: proc() -> sound_group_config ---
 	sound_group_config_init_2 :: proc(pEngine: ^engine) -> sound_group_config ---
@@ -328,7 +328,7 @@ engine_config :: struct {
 
 	pLog:                         ^log,                   /* When set to NULL, will use the context's log. */
 	listenerCount:                u32,                    /* Must be between 1 and MA_ENGINE_MAX_LISTENERS. */
-	channels:                     u32,                    /* The number of channels to use when mixing and spatializing. When set to 0, will use the native channel count of the device. */
+	channels:                     u32,                    /* The number of channels to use #if mixing and spatializing. When set to 0, will use the native channel count of the device. */
 	sampleRate:                   u32,                    /* The sample rate. When set to 0 will use the native sample rate of the device. */
 	periodSizeInFrames:           u32,                    /* If set to something other than 0, updates will always be exactly this size. The underlying device may be a different size, but from the perspective of the mixer that won't matter.*/
 	periodSizeInMilliseconds:     u32,                    /* Used if periodSizeInFrames is unset. */
@@ -341,7 +341,7 @@ engine_config :: struct {
 	allocationCallbacks:          allocation_callbacks,
 	noAutoStart:                  b32,                    /* When set to true, requires an explicit call to ma_engine_start(). This is false by default, meaning the engine will be started automatically in ma_engine_init(). */
 	noDevice:                     b32,                    /* When set to true, don't create a default device. ma_engine_read_pcm_frames() can be called manually to read data. */
-	monoExpansionMode:            mono_expansion_mode,    /* Controls how the mono channel should be expanded to other channels when spatialization is disabled on a sound. */
+	monoExpansionMode:            mono_expansion_mode,    /* Controls how the mono channel should be expanded to other channels #if spatialization is disabled on a sound. */
 	pResourceManagerVFS:          ^vfs,                   /* A pointer to a pre-allocated VFS object to use with the resource manager. This is ignored if pResourceManager is not NULL. */
 	onProcess:                    engine_process_proc,    /* Fired at the end of each call to ma_engine_read_pcm_frames(). For engine's that manage their own internal device (the default configuration), this will be fired from the audio thread, and you do not need to call ma_engine_read_pcm_frames() manually in order to trigger this. */
 	pProcessUserData:             rawptr,                 /* User data that's passed into onProcess. */
@@ -375,7 +375,7 @@ engine :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	engine_config_init :: proc() -> engine_config ---
 
 	engine_init                 :: proc(pConfig: ^engine_config, pEngine: ^engine) -> result ---

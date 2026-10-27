@@ -1,7 +1,7 @@
 // Tests issue #6396 https://github.com/odin-lang/Odin/issues/6396
 package test_issue_6396
 
-import "core:testing"
+#import "core:testing"
 
 Issue6396_Full_Width_Field :: bit_field u32 {
 	a: u32 | 32,

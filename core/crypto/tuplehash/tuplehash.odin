@@ -6,7 +6,7 @@ See:
 */
 package tuplehash
 
-import "../_sha3"
+#import "../_sha3"
 
 // Context is a TupleHash or TupleHashXOF instance.
 Context :: distinct _sha3.Context

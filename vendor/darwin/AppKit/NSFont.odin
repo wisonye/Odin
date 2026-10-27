@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSFont", objc_superclass=NS.Object)
 Font :: struct {
@@ -14,7 +14,7 @@ Font :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Font, objc_selector="fontWithName:size:", objc_name="fontWithName_size", objc_is_class_method=true)
 	Font_fontWithName_size :: proc(fontName: ^NS.String, fontSize: CG.Float) -> ^Font ---
 
@@ -258,7 +258,7 @@ FontDescriptor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontDescriptor, objc_selector="objectForKey:", objc_name="objectForKey")
 	FontDescriptor_objectForKey :: proc(self: ^FontDescriptor, attribute: ^NS.String) -> id ---
 
@@ -337,7 +337,7 @@ FontAssetRequest :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontAssetRequest, objc_selector="init", objc_name="init")
 	FontAssetRequest_init :: proc(self: ^FontAssetRequest) -> instancetype ---
 
@@ -362,7 +362,7 @@ FontChanging :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontChanging, objc_selector="changeFont:", objc_name="changeFont")
 	FontChanging_changeFont :: proc(self: ^FontChanging, sender: ^FontManager) ---
 
@@ -380,7 +380,7 @@ FontCollection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontCollection, objc_selector="fontCollectionWithDescriptors:", objc_name="fontCollectionWithDescriptors", objc_is_class_method=true)
 	FontCollection_fontCollectionWithDescriptors :: proc(queryDescriptors: ^NS.Array) -> ^FontCollection ---
 
@@ -465,7 +465,7 @@ FontCollection_renameFontCollectionWithName :: #force_inline proc "c" (oldName: 
 MutableFontCollection :: struct { using _: FontCollection}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableFontCollection, objc_selector="fontCollectionWithDescriptors:", objc_name="fontCollectionWithDescriptors", objc_is_class_method=true)
 	MutableFontCollection_fontCollectionWithDescriptors :: proc(queryDescriptors: ^NS.Array) -> ^MutableFontCollection ---
 
@@ -514,7 +514,7 @@ FontManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontManager, objc_selector="setFontPanelFactory:", objc_name="setFontPanelFactory", objc_is_class_method=true)
 	FontManager_setFontPanelFactory :: proc(factoryId: Class) ---
 
@@ -674,7 +674,7 @@ foreign lib {
 FontPanel :: struct { using _: Panel}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FontPanel, objc_selector="setPanelFont:isMultiple:", objc_name="setPanelFont")
 	FontPanel_setPanelFont :: proc(self: ^FontPanel, fontObj: ^Font, flag: bool) ---
 

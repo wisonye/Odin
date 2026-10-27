@@ -1,12 +1,12 @@
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(private)
 chacha8rand_refill_ref :: proc(r: ^Default_Random_State) {
 	// Initialize the base state.
 	k: [^]u32 = (^u32)(raw_data(r._buf[RNG_OUTPUT_PER_ITER:]))
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		s4 := k[0]
 		s5 := k[1]
 		s6 := k[2]
@@ -92,7 +92,7 @@ chacha8rand_refill_ref :: proc(r: ^Default_Random_State) {
 			// NB: The additions of sigma and the counter are omitted
 			STRIDE :: 4
 			d_ := dst[n:]
-			when ODIN_ENDIAN == .Little {
+			#if ODIN_ENDIAN == .Little {
 				d_[STRIDE*0] = x0
 				d_[STRIDE*1] = x1
 				d_[STRIDE*2] = x2

@@ -1,9 +1,9 @@
 package test_issue_7490
 
-import "base:intrinsics"
-import "core:mem"
-import "core:slice"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:mem"
+#import "core:slice"
+#import "core:testing"
 
 expect_elements :: proc(t: ^testing.T, got, expected: []$T) {
 	testing.expect_value(t, len(got), len(expected))
@@ -17,7 +17,7 @@ concatenate_zero_arrays :: proc(t: ^testing.T) {
 	actual := arr
 	expected := [8]u8{0, 0, 1, 0, 0, 5, 4, 3}
 	expect_elements(t, actual[:], expected[:])
-	when len(arr) == 8 {
+	#if len(arr) == 8 {
 		#assert(arr[0] == 0 && arr[2] == 1 && arr[7] == 3)
 	}
 

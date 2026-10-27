@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="AVMovie", objc_superclass=Asset)
 Movie :: struct {
@@ -15,7 +15,7 @@ Movie :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Movie, objc_selector="movieTypes", objc_name="movieTypes", objc_is_class_method=true)
 	Movie_movieTypes :: proc() -> ^NS.Array ---
 
@@ -96,7 +96,7 @@ Movie_writeMovieHeaderToURL :: #force_inline proc "c" (self: ^Movie, _URL: ^NS.U
 @(objc_class="AVMutableMovie", objc_superclass=Movie)
 MutableMovie :: struct { using _: Movie}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableMovie, objc_selector="movieWithURL:options:error:", objc_name="movieWithURL_error", objc_is_class_method=true)
 	MutableMovie_movieWithURL_error :: proc(_URL: ^NS.URL, options: ^NS.Dictionary, outError: ^^NS.Error) -> instancetype ---
 
@@ -284,7 +284,7 @@ FragmentedMovie :: struct {
 	using _: FragmentMinding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FragmentedMovie, objc_selector="tracks", objc_name="tracks")
 	FragmentedMovie_tracks :: proc(self: ^FragmentedMovie) -> ^NS.Array ---
 
@@ -315,7 +315,7 @@ FragmentedMovieInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVFragmentedMovieMinder", objc_superclass=FragmentedAssetMinder)
 FragmentedMovieMinder :: struct { using _: FragmentedAssetMinder}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FragmentedMovieMinder, objc_selector="fragmentedMovieMinderWithMovie:mindingInterval:", objc_name="fragmentedMovieMinderWithMovie", objc_is_class_method=true)
 	FragmentedMovieMinder_fragmentedMovieMinderWithMovie :: proc(movie: ^FragmentedMovie, mindingInterval: NS.TimeInterval) -> instancetype ---
 
@@ -350,7 +350,7 @@ FragmentedMovieTrackInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVMovieTrack", objc_superclass=AssetTrack)
 MovieTrack :: struct { using _: AssetTrack}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MovieTrack, objc_selector="mediaPresentationTimeRange", objc_name="mediaPresentationTimeRange")
 	MovieTrack_mediaPresentationTimeRange :: proc(self: ^MovieTrack) -> CM.TimeRange ---
 
@@ -368,7 +368,7 @@ foreign lib {
 @(objc_class="AVMutableMovieTrack", objc_superclass=MovieTrack)
 MutableMovieTrack :: struct { using _: MovieTrack}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableMovieTrack, objc_selector="mediaDataStorage", objc_name="mediaDataStorage")
 	MutableMovieTrack_mediaDataStorage :: proc(self: ^MutableMovieTrack) -> ^MediaDataStorage ---
 

@@ -1,10 +1,10 @@
 package test_core_crypto
 
-import "core:crypto"
-import ec "core:crypto/_weierstrass"
-import "core:encoding/hex"
-import "core:math/big"
-import "core:testing"
+#import "core:crypto"
+#import ec "core:crypto/_weierstrass"
+#import "core:encoding/hex"
+#import "core:math/big"
+#import "core:testing"
 
 @(private="file")
 P256_G_X : string : "6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296"

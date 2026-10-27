@@ -2,7 +2,7 @@
 #+build !js
 package mem_virtual
 
-import "core:os"
+#import "core:os"
 
 map_file :: proc{
 	map_file_from_path,

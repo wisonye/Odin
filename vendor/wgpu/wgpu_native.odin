@@ -2,7 +2,7 @@
 package wgpu
 
 @(link_prefix="wgpu")
-foreign libwgpu {
+#foreign libwgpu {
 	@(link_name="wgpuGenerateReport")
 	RawGenerateReport :: proc(instance: Instance, report: ^GlobalReport) ---
 	@(link_name="wgpuInstanceEnumerateAdapters")

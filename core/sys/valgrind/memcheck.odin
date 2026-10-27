@@ -1,7 +1,7 @@
 #+build amd64
 package sys_valgrind
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 Mem_Check_Client_Request :: enum uintptr {
 	Make_Mem_No_Access = 'M'<<24 | 'C'<<16,
@@ -30,17 +30,17 @@ mem_check_client_request_stmt :: #force_inline proc "c" (request: Mem_Check_Clie
 }
 
 // Mark memory at `raw_data(qzz)` as unaddressable for `len(qzz)` bytes.
-// Returns true when run on Valgrind and false otherwise.
+// Returns true #if run on Valgrind and false otherwise.
 make_mem_no_access :: proc "c" (qzz: []byte) -> bool {
 	return 0 != mem_check_client_request_expr(0, .Make_Mem_No_Access, uintptr(raw_data(qzz)), uintptr(len(qzz)), 0, 0, 0)
 }
 // Mark memory at `raw_data(qzz)` as addressable but undefined for `len(qzz)` bytes.
-// Returns true when run on Valgrind and false otherwise.
+// Returns true #if run on Valgrind and false otherwise.
 make_mem_undefined :: proc "c" (qzz: []byte) -> bool {
 	return 0 != mem_check_client_request_expr(0, .Make_Mem_Undefined, uintptr(raw_data(qzz)), uintptr(len(qzz)), 0, 0, 0)
 }
 // Mark memory at `raw_data(qzz)` as addressable for `len(qzz)` bytes.
-// Returns true when run on Valgrind and false otherwise.
+// Returns true #if run on Valgrind and false otherwise.
 make_mem_defined :: proc "c" (qzz: []byte) -> bool {
 	return 0 != mem_check_client_request_expr(0, .Make_Mem_Defined, uintptr(raw_data(qzz)), uintptr(len(qzz)), 0, 0, 0)
 }
@@ -63,7 +63,7 @@ check_mem_is_defined :: proc "c" (qzz: []byte) -> uintptr {
 // Similar to `make_mem_defined(qzz)` except that addressability is not altered:
 // bytes which are addressable are marked as defined, but those which
 // are not addressable are left unchanged.
-// Returns true when run on Valgrind and false otherwise.
+// Returns true #if run on Valgrind and false otherwise.
 make_mem_defined_if_addressable :: proc "c" (qzz: []byte) -> bool {
 	return 0 != mem_check_client_request_expr(0, .Make_Mem_Defined_If_Addressable, uintptr(raw_data(qzz)), uintptr(len(qzz)), 0, 0, 0)
 }

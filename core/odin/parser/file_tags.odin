@@ -1,10 +1,10 @@
 package odin_parser
 
-import "base:runtime"
-import "core:strings"
-import "core:reflect"
+#import "base:runtime"
+#import "core:strings"
+#import "core:reflect"
 
-import "../ast"
+#import "../ast"
 
 Private_Flag :: enum {
 	Public,

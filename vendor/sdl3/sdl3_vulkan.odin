@@ -1,9 +1,9 @@
 package sdl3
 
-import vk "vendor:vulkan"
+#import vk "vendor:vulkan"
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	Vulkan_LoadLibrary              :: proc(path: cstring) -> bool ---
 	Vulkan_GetVkGetInstanceProcAddr :: proc() -> FunctionPointer ---
 	Vulkan_UnloadLibrary            :: proc() ---

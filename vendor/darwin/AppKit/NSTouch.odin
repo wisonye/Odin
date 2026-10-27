@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSTouch", objc_superclass=NS.Object)
 Touch :: struct {
@@ -13,7 +13,7 @@ Touch :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Touch, objc_selector="identity", objc_name="identity")
 	Touch_identity :: proc(self: ^Touch) -> ^id ---
 
@@ -50,7 +50,7 @@ TouchBar :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TouchBar, objc_selector="init", objc_name="init")
 	TouchBar_init :: proc(self: ^TouchBar) -> instancetype ---
 
@@ -129,7 +129,7 @@ TouchBarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TouchBarDelegate, objc_selector="touchBar:makeItemForIdentifier:", objc_name="touchBar")
 	TouchBarDelegate_touchBar :: proc(self: ^TouchBarDelegate, touchBar: ^TouchBar, identifier: ^NS.String) -> ^TouchBarItem ---
 }
@@ -142,7 +142,7 @@ TouchBarItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TouchBarItem, objc_selector="initWithIdentifier:", objc_name="initWithIdentifier")
 	TouchBarItem_initWithIdentifier :: proc(self: ^TouchBarItem, identifier: ^NS.String) -> instancetype ---
 
@@ -179,7 +179,7 @@ foreign lib {
 CandidateListTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CandidateListTouchBarItem, objc_selector="updateWithInsertionPointVisibility:", objc_name="updateWithInsertionPointVisibility")
 	CandidateListTouchBarItem_updateWithInsertionPointVisibility :: proc(self: ^CandidateListTouchBarItem, isVisible: bool) ---
 
@@ -243,7 +243,7 @@ CandidateListTouchBarItemDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CandidateListTouchBarItemDelegate, objc_selector="candidateListTouchBarItem:beginSelectingCandidateAtIndex:", objc_name="candidateListTouchBarItem_beginSelectingCandidateAtIndex")
 	CandidateListTouchBarItemDelegate_candidateListTouchBarItem_beginSelectingCandidateAtIndex :: proc(self: ^CandidateListTouchBarItemDelegate, anItem: ^CandidateListTouchBarItem, index: NS.Integer) ---
 
@@ -262,7 +262,7 @@ foreign lib {
 CustomTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CustomTouchBarItem, objc_selector="view", objc_name="view")
 	CustomTouchBarItem_view :: proc(self: ^CustomTouchBarItem) -> ^View ---
 
@@ -287,7 +287,7 @@ foreign lib {
 GroupTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GroupTouchBarItem, objc_selector="groupItemWithIdentifier:items:", objc_name="groupItemWithIdentifier_items", objc_is_class_method=true)
 	GroupTouchBarItem_groupItemWithIdentifier_items :: proc(identifier: ^NS.String, items: ^NS.Array) -> instancetype ---
 
@@ -348,7 +348,7 @@ GroupTouchBarItem_groupItemWithIdentifier :: proc {
 PickerTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PickerTouchBarItem, objc_selector="pickerTouchBarItemWithIdentifier:labels:selectionMode:target:action:", objc_name="pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action", objc_is_class_method=true)
 	PickerTouchBarItem_pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action :: proc(identifier: ^NS.String, labels: ^NS.Array, selectionMode: PickerTouchBarItemSelectionMode, target: id, action: SEL) -> instancetype ---
 
@@ -454,7 +454,7 @@ TouchBarProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TouchBarProvider, objc_selector="touchBar", objc_name="touchBar")
 	TouchBarProvider_touchBar :: proc(self: ^TouchBarProvider) -> ^TouchBar ---
 }

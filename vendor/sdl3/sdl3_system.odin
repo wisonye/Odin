@@ -1,15 +1,15 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 // Windows
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 WindowsMessageHook :: #type proc "c" (userdata: rawptr, msg: ^win32.MSG) -> bool
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetWindowsMessageHook    :: proc(callback: WindowsMessageHook, userdata: rawptr) ---
 	GetDirect3D9AdapterIndex :: proc(displayID: DisplayID) -> c.int ---
 	GetDXGIOutputInfo        :: proc(displayID: DisplayID, adapterIndex: ^c.int, outputIndex: ^c.int) -> bool ---
@@ -20,14 +20,14 @@ foreign lib {
 X11EventHook :: #type proc "c" (userdata: rawptr, xevent: rawptr /* ^xlib.XEvent */) -> bool
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetX11EventHook :: proc(callback: X11EventHook, userdata: rawptr) ---
 }
 
 // Linux
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetLinuxThreadPriority          :: proc(threadID: Sint64, priority: c.int)                        -> bool ---
 	SetLinuxThreadPriorityAndPolicy :: proc(threadID: Sint64, sdlPriority: c.int, schedPolicy: c.int) -> bool ---
 }
@@ -37,7 +37,7 @@ foreign lib {
 iOSAnimationCallback :: #type proc "c" (userdata: rawptr)
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetiOSAnimationCallback :: proc(window: ^Window, interval: c.int, callback: iOSAnimationCallback, callbackParam: rawptr) -> bool ---
 	SetiOSEventPump         :: proc(enabled: bool) ---
 }
@@ -53,7 +53,7 @@ AndroidExternalStorageFlag :: enum Uint32 {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetAndroidJNIEnv               :: proc() -> rawptr ---
 	GetAndroidActivity             :: proc() -> rawptr ---
 	GetAndroidSDKVersion           :: proc() -> c.int ---
@@ -80,7 +80,7 @@ Sandbox :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	IsTablet                                   :: proc() -> bool ---
 	IsTV                                       :: proc() -> bool ---
 	GetSandbox                                 :: proc() -> Sandbox ---
@@ -100,7 +100,7 @@ XTaskQueueHandle :: distinct rawptr
 XUserHandle      :: distinct rawptr
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetGDKTaskQueue   :: proc(outTaskQueue: ^XTaskQueueHandle) -> bool ---
 	GetGDKDefaultUser :: proc(outUserHandle: ^XUserHandle)     -> bool ---
 }

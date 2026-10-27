@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import "system:Opengl32.lib"
+#foreign #import "system:Opengl32.lib"
 
 CONTEXT_MAJOR_VERSION_ARB             :: 0x2091
 CONTEXT_MINOR_VERSION_ARB             :: 0x2092
@@ -65,7 +65,7 @@ GetExtensionsStringARBType  :: #type proc "c" (HDC) -> cstring
 
 
 @(default_calling_convention="system")
-foreign Opengl32 {
+#foreign Opengl32 {
 	wglCreateContext          :: proc(hdc: HDC) -> HGLRC ---
 	wglMakeCurrent            :: proc(hdc: HDC, HGLRC: HGLRC) -> BOOL ---
 	wglGetProcAddress         :: proc(c_str: cstring) -> rawptr ---

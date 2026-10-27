@@ -21,11 +21,11 @@ package main
 //
 // Run:  cd isa/x86 && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import x "../"
+#import x "../"
 
 // Build a representative operand of the given type. Returns ok=false for
 // types we don't construct in this harness (e.g. label-relative jumps).

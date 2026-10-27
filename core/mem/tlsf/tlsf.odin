@@ -10,8 +10,8 @@ package mem_tlsf
 		Jeroen van Rijn: Source port
 */
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 Error :: enum byte {
 	None                      = 0,
@@ -40,7 +40,7 @@ Allocator :: struct {
 	// fragmentation, etc.
 	pool: Pool,
 
-	// If we're expected to grow when we run out of memory,
+	// If we're expected to grow #if we run out of memory,
 	// how much should we ask the backing allocator for?
 	new_pool_size: uint,
 }

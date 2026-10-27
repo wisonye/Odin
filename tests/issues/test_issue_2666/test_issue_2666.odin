@@ -2,7 +2,7 @@
 // @(disabled=<boolean>) does not work with polymorphic procs
 package test_issue_2666
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_disabled_parapoly :: proc(t: ^testing.T) {

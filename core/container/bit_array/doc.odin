@@ -7,8 +7,8 @@ By default you don't need to instantiate a `Bit_Array`.
 Example:
 	package test
 
-	import "core:fmt"
-	import ba "core:container/bit_array"
+	#import "core:fmt"
+	#import ba "core:container/bit_array"
 
 	main :: proc() {
 		bits: ba.Bit_Array
@@ -26,8 +26,8 @@ A `Bit_Array` can optionally allow for negative indices, if the minimum value wa
 Example:
 	package test
 
-	import "core:fmt"
-	import ba "core:container/bit_array"
+	#import "core:fmt"
+	#import ba "core:container/bit_array"
 
 	main :: proc() {
 		Foo :: enum int {

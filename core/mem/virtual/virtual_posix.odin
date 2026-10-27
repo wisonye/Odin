@@ -2,7 +2,7 @@
 #+private
 package mem_virtual
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _commit :: proc "contextless" (data: rawptr, size: uint) -> Allocator_Error {
 	if posix.mprotect(data, size, { .READ, .WRITE }) != .OK {

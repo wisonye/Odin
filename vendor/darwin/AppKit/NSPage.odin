@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSPageController", objc_superclass=ViewController)
 PageController :: struct {
@@ -13,7 +13,7 @@ PageController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageController, objc_selector="navigateForwardToObject:", objc_name="navigateForwardToObject")
 	PageController_navigateForwardToObject :: proc(self: ^PageController, object: id) ---
 
@@ -65,7 +65,7 @@ PageControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControllerDelegate, objc_selector="pageController:identifierForObject:", objc_name="pageController_identifierForObject")
 	PageControllerDelegate_pageController_identifierForObject :: proc(self: ^PageControllerDelegate, pageController: ^PageController, object: id) -> ^NS.String ---
 
@@ -93,7 +93,7 @@ foreign lib {
 PageLayout :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageLayout, objc_selector="pageLayout", objc_name="pageLayout", objc_is_class_method=true)
 	PageLayout_pageLayout :: proc() -> ^PageLayout ---
 

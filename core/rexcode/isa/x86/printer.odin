@@ -24,11 +24,11 @@ package rexcode_x86
 //   add.d eax, 42
 //   vmovaps ymm0, ymm1
 
-import "core:strings"
-import "core:reflect"
-import "core:io"
-import "core:os"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:io"
+#import "core:os"
+#import "core:rexcode/isa"
 
 // -----------------------------------------------------------------------------
 // 9.1 Printer Configuration (re-exported from isa)

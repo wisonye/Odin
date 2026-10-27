@@ -27,8 +27,8 @@ Alias_Src :: enum u8 {
 Pseudo_Alias :: struct {
 	target:    Mnemonic,     // real instruction emitted
 	src:       [4]Alias_Src, // how to fill target's four operand slots
-	lit:       i16,          // immediate when a src slot is .LIT
-	csr:       u16,          // CSR address when a src slot is .CSR_LIT
+	lit:       i16,          // immediate #if a src slot is .LIT
+	csr:       u16,          // CSR address #if a src slot is .CSR_LIT
 	nargs:     u8,           // operands the user supplies (ARG0..<ARGn)
 	rv32_only: bool,         // base gate (the *h counter reads)
 }

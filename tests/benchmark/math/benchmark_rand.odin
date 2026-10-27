@@ -1,14 +1,14 @@
 package benchmark_core_math
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:fmt"
-import "core:math/rand"
-import "core:log"
-import "core:strings"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "core:fmt"
+#import "core:math/rand"
+#import "core:log"
+#import "core:strings"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
 @(private = "file")
 ITERS :: 10000000

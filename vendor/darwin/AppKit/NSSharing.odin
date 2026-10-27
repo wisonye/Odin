@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSSharingCollaborationModeRestriction", objc_superclass=NS.Object)
 SharingCollaborationModeRestriction :: struct {
@@ -13,7 +13,7 @@ SharingCollaborationModeRestriction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingCollaborationModeRestriction, objc_selector="initWithDisabledMode:", objc_name="initWithDisabledMode_")
 	SharingCollaborationModeRestriction_initWithDisabledMode_ :: proc(self: ^SharingCollaborationModeRestriction, disabledMode: SharingCollaborationMode) -> instancetype ---
 
@@ -64,7 +64,7 @@ SharingCollaborationModeRestriction_initWithDisabledMode :: proc {
 SharingService :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingService, objc_selector="sharingServicesForItems:", objc_name="sharingServicesForItems", objc_is_class_method=true)
 	SharingService_sharingServicesForItems :: proc(items: ^NS.Array) -> ^NS.Array ---
 
@@ -137,7 +137,7 @@ SharingServiceDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServiceDelegate, objc_selector="sharingService:willShareItems:", objc_name="sharingService_willShareItems")
 	SharingServiceDelegate_sharingService_willShareItems :: proc(self: ^SharingServiceDelegate, sharingService: ^SharingService, items: ^NS.Array) ---
 
@@ -168,7 +168,7 @@ CloudSharingServiceDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloudSharingServiceDelegate, objc_selector="sharingService:didCompleteForItems:error:", objc_name="sharingService_didCompleteForItems_error")
 	CloudSharingServiceDelegate_sharingService_didCompleteForItems_error :: proc(self: ^CloudSharingServiceDelegate, sharingService: ^SharingService, items: ^NS.Array, error: ^NS.Error) ---
 
@@ -187,7 +187,7 @@ foreign lib {
 SharingServicePicker :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePicker, objc_selector="initWithItems:", objc_name="initWithItems")
 	SharingServicePicker_initWithItems :: proc(self: ^SharingServicePicker, items: ^NS.Array) -> instancetype ---
 
@@ -218,7 +218,7 @@ SharingServicePickerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePickerDelegate, objc_selector="sharingServicePicker:sharingServicesForItems:proposedSharingServices:", objc_name="sharingServicePicker_sharingServicesForItems_proposedSharingServices")
 	SharingServicePickerDelegate_sharingServicePicker_sharingServicesForItems_proposedSharingServices :: proc(self: ^SharingServicePickerDelegate, sharingServicePicker: ^SharingServicePicker, items: ^NS.Array, proposedServices: ^NS.Array) -> ^NS.Array ---
 
@@ -237,7 +237,7 @@ foreign lib {
 SharingServicePickerToolbarItem :: struct { using _: ToolbarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePickerToolbarItem, objc_selector="delegate", objc_name="delegate")
 	SharingServicePickerToolbarItem_delegate :: proc(self: ^SharingServicePickerToolbarItem) -> ^SharingServicePickerToolbarItemDelegate ---
 
@@ -253,7 +253,7 @@ SharingServicePickerToolbarItemDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePickerToolbarItemDelegate, objc_selector="itemsForSharingServicePickerToolbarItem:", objc_name="itemsForSharingServicePickerToolbarItem")
 	SharingServicePickerToolbarItemDelegate_itemsForSharingServicePickerToolbarItem :: proc(self: ^SharingServicePickerToolbarItemDelegate, pickerToolbarItem: ^SharingServicePickerToolbarItem) -> ^NS.Array ---
 }
@@ -263,7 +263,7 @@ foreign lib {
 SharingServicePickerTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePickerTouchBarItem, objc_selector="delegate", objc_name="delegate")
 	SharingServicePickerTouchBarItem_delegate :: proc(self: ^SharingServicePickerTouchBarItem) -> ^SharingServicePickerTouchBarItemDelegate ---
 
@@ -297,7 +297,7 @@ SharingServicePickerTouchBarItemDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SharingServicePickerTouchBarItemDelegate, objc_selector="itemsForSharingServicePickerTouchBarItem:", objc_name="itemsForSharingServicePickerTouchBarItem")
 	SharingServicePickerTouchBarItemDelegate_itemsForSharingServicePickerTouchBarItem :: proc(self: ^SharingServicePickerTouchBarItemDelegate, pickerTouchBarItem: ^SharingServicePickerTouchBarItem) -> ^NS.Array ---
 }

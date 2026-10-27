@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSInvocation", objc_superclass=Object)
 Invocation :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Invocation, objc_selector="invocationWithMethodSignature:", objc_name="invocationWithMethodSignature", objc_is_class_method=true)
 	Invocation_invocationWithMethodSignature :: proc(sig: ^MethodSignature) -> ^Invocation ---
 
@@ -56,7 +56,7 @@ foreign lib {
 @(objc_class="NSInvocationOperation", objc_superclass=Operation)
 InvocationOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InvocationOperation, objc_selector="initWithTarget:selector:object:", objc_name="initWithTarget")
 	InvocationOperation_initWithTarget :: proc(self: ^InvocationOperation, target: id, sel: SEL, arg: id) -> instancetype ---
 

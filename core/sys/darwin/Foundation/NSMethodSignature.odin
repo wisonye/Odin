@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSMethodSignature", objc_superclass=Object)
 MethodSignature :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MethodSignature, objc_selector="signatureWithObjCTypes:", objc_name="signatureWithObjCTypes", objc_is_class_method=true)
 	MethodSignature_signatureWithObjCTypes :: proc(types: cstring) -> ^MethodSignature ---
 

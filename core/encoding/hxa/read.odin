@@ -1,6 +1,6 @@
 package encoding_hxa
 
-import "core:fmt"
+#import "core:fmt"
 
 Read_Error :: enum {
 	None,

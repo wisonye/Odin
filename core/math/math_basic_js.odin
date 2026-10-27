@@ -1,12 +1,12 @@
 #+build js
 package math
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-foreign import "odin_env"
+#foreign #import "odin_env"
 
 @(default_calling_convention="c")
-foreign odin_env {
+#foreign odin_env {
 	@(link_name="sin", require_results)
 	sin_f64 :: proc(θ: f64) -> f64 ---
 	@(link_name="cos", require_results)

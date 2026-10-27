@@ -1,9 +1,9 @@
 #+build windows
 package sys_windows
 
-foreign import mswsock "system:mswsock.lib"
+#foreign #import mswsock "system:mswsock.lib"
 
-foreign mswsock {
+#foreign mswsock {
 	TransmitFile :: proc(
 		hSocket: SOCKET,
 		hFile: HANDLE,

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="LADomainState", objc_superclass=NS.Object)
 DomainState :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DomainState, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	DomainState_new :: proc() -> ^DomainState ---
 
@@ -28,7 +28,7 @@ foreign lib {
 @(objc_class="LADomainStateBiometry", objc_superclass=NS.Object)
 DomainStateBiometry :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DomainStateBiometry, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	DomainStateBiometry_new :: proc() -> ^DomainStateBiometry ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="LADomainStateCompanion", objc_superclass=NS.Object)
 DomainStateCompanion :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DomainStateCompanion, objc_selector="stateHashForCompanionType:", objc_name="stateHashForCompanionType")
 	DomainStateCompanion_stateHashForCompanionType :: proc(self: ^DomainStateCompanion, companionType: CompanionType) -> ^NS.Data ---
 

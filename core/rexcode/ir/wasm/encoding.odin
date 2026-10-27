@@ -52,13 +52,13 @@ Encoding :: struct #packed {
 	opcode:   u16,            // 2 -- primary opcode, or sub-opcode within a prefix group
 	imm:      [2]Imm_Kind,    // 2 -- immediate layout, walked in order
 	flags:    Encoding_Flags, // 1
-	inputs:   i8,             // 1 -- stack operands consumed;  -1 when it varies
-	outputs:  i8,             // 1 -- stack results produced;   -1 when it varies
+	inputs:   i8,             // 1 -- stack operands consumed;  -1 #if it varies
+	outputs:  i8,             // 1 -- stack results produced;   -1 #if it varies
 }
 #assert(size_of(Encoding) == 10)
 
 // `inputs`/`outputs` give an instruction's fixed stack arity: how many values
-// it pops and pushes. They are -1 when the count is not a constant of the opcode
+// it pops and pushes. They are -1 #if the count is not a constant of the opcode
 // -- i.e. it depends on a type/blocktype immediate or the surrounding control
 // frame (call/call_indirect, block/loop/if/else/end, br*/return, unreachable).
 

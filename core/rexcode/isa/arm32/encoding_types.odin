@@ -2,7 +2,7 @@
 
 package rexcode_arm32
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch32 ENCODING FUNDAMENTALS
@@ -529,7 +529,7 @@ Encoding :: struct #packed {
 inst_size_from_bits :: #force_inline proc "contextless" (bits: u32, mode: Mode) -> u8 {
 	if mode == .A32 { return 4 }
 	// For T32, check the top 5 bits of the FIRST halfword (= bits[31:27] of u32
-	// when packed as (first << 16) | second). If the high halfword is zero
+	// #if packed as (first << 16) | second). If the high halfword is zero
 	// we have a T16 16-bit form; otherwise we test the size identifier.
 	if (bits >> 16) == 0 { return 2 }
 	hw := (bits >> 27) & 0x1F

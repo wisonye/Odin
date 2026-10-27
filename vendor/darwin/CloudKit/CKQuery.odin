@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKQuery", objc_superclass=NS.Object)
 Query :: struct {
@@ -11,7 +11,7 @@ Query :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Query, objc_selector="init", objc_name="init")
 	Query_init :: proc(self: ^Query) -> instancetype ---
 
@@ -45,7 +45,7 @@ QueryCursor :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QueryCursor, objc_selector="init", objc_name="init")
 	QueryCursor_init :: proc(self: ^QueryCursor) -> instancetype ---
 
@@ -57,7 +57,7 @@ foreign lib {
 @(objc_class="CKQueryNotification", objc_superclass=Notification)
 QueryNotification :: struct { using _: Notification}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QueryNotification, objc_selector="queryNotificationReason", objc_name="queryNotificationReason")
 	QueryNotification_queryNotificationReason :: proc(self: ^QueryNotification) -> QueryNotificationReason ---
 
@@ -75,7 +75,7 @@ foreign lib {
 @(objc_class="CKQueryOperation", objc_superclass=DatabaseOperation)
 QueryOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QueryOperation, objc_selector="init", objc_name="init")
 	QueryOperation_init :: proc(self: ^QueryOperation) -> instancetype ---
 
@@ -142,7 +142,7 @@ QuerySubscription :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=QuerySubscription, objc_selector="initWithRecordType:predicate:options:", objc_name="initWithRecordType_predicate_options")
 	QuerySubscription_initWithRecordType_predicate_options :: proc(self: ^QuerySubscription, recordType: ^NS.String, predicate: ^NS.Predicate, querySubscriptionOptions: QuerySubscriptionOptions) -> instancetype ---
 

@@ -3,6 +3,6 @@
 #+private package
 package darwin_EventKit
 
-import NS "vendor:darwin/AppKit"
+#import NS "vendor:darwin/AppKit"
 
 UI_Color :: NS.Color

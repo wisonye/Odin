@@ -1,7 +1,7 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:testing"
 
 @(private="file") HAS_RETURN_ADDRESS            :: ODIN_ARCH != .wasm32 && ODIN_ARCH != .wasm64p32
 @(private="file") HAS_LEVELS                    :: HAS_RETURN_ADDRESS && !(ODIN_ARCH == .amd64 && ODIN_OS == .Windows)
@@ -14,7 +14,7 @@ within :: proc(addr: rawptr, procedure: rawptr) -> bool {
 
 @(private="file")
 leaf_return_address :: #force_no_inline proc() -> rawptr {
-	when HAS_RETURN_ADDRESS {
+	#if HAS_RETURN_ADDRESS {
 		return intrinsics.return_address()
 	} else {
 		return nil
@@ -31,7 +31,7 @@ return_address_is_in_caller :: #force_no_inline proc() -> bool {
 // level 1 from here is `mid`'s return address and frame
 @(private="file")
 leaf_level1 :: #force_no_inline proc() -> (ra, fa: rawptr) {
-	when HAS_LEVELS {
+	#if HAS_LEVELS {
 		return intrinsics.return_address(1), intrinsics.frame_address(1)
 	} else {
 		return nil, nil
@@ -53,7 +53,7 @@ calls_mid :: #force_no_inline proc() -> (ra_ok, fa_ok: bool) {
 
 @(private="file")
 address_of_return_address_holds_it :: #force_no_inline proc() -> bool {
-	when HAS_ADDRESS_OF_RETURN_ADDRESS {
+	#if HAS_ADDRESS_OF_RETURN_ADDRESS {
 		slot := intrinsics.address_of_return_address()
 		return slot^ == intrinsics.return_address()
 	} else {
@@ -67,10 +67,10 @@ test_return_address :: proc(t: ^testing.T) {
 	fa := intrinsics.frame_address()
 	testing.expect(t, uintptr(sp) <= uintptr(fa) && uintptr(fa) - uintptr(sp) < 1 << 16)
 
-	when HAS_RETURN_ADDRESS {
+	#if HAS_RETURN_ADDRESS {
 		testing.expect(t, return_address_is_in_caller())
 	}
-	when HAS_LEVELS {
+	#if HAS_LEVELS {
 		ra_ok, fa_ok := calls_mid()
 		testing.expect(t, ra_ok)
 		testing.expect(t, fa_ok)

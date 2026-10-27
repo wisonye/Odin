@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_GameKit
 
-import NS "vendor:darwin/AppKit"
+#import NS "vendor:darwin/AppKit"
 
 @(objc_class="GKDialogController", objc_superclass=NS.Responder)
 DialogController :: struct { using _: NS.Responder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DialogController, objc_selector="presentViewController:", objc_name="presentViewController")
 	DialogController_presentViewController :: proc(self: ^DialogController, viewController: ^NS.ViewController) -> bool ---
 

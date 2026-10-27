@@ -1,6 +1,6 @@
 package noise
 
-import "core:slice"
+#import "core:slice"
 
 @(private)
 Pre_Token :: enum {

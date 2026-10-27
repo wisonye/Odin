@@ -1,12 +1,12 @@
 package test_core_json_differential
 
-import "base:runtime"
-import "core:encoding/json"
-import "core:fmt"
-import "core:mem"
-import "core:reflect"
-import "core:slice"
-import ref "../reference"
+#import "base:runtime"
+#import "core:encoding/json"
+#import "core:fmt"
+#import "core:mem"
+#import "core:reflect"
+#import "core:slice"
+#import ref "../reference"
 
 // Results from the two packages have distinct types, so both are normalized before comparing.
 
@@ -201,7 +201,7 @@ elems_diff :: proc(a, b: rawptr, ea, eb: ^reflect.Type_Info, size_a, size_b, cou
 	return ""
 }
 
-// Returns "" when the value at `a` (type `ta`, written by the current package) is observably
+// Returns "" #if the value at `a` (type `ta`, written by the current package) is observably
 // the same as the value at `b` (type `tb`, written by the reference), otherwise the path to the
 // first difference and what differs. `ta` and `tb` are the same type except where `Value` is
 // involved.

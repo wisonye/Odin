@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLFence")
 Fence :: struct {
@@ -11,7 +11,7 @@ Fence :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Fence, objc_selector="device", objc_name="device")
 	Fence_device :: proc(self: ^Fence) -> ^Device ---
 

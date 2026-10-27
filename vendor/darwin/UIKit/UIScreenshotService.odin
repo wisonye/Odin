@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIScreenshotService", objc_superclass=NS.Object)
 ScreenshotService :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScreenshotService, objc_selector="init", objc_name="init")
 	ScreenshotService_init :: proc(self: ^ScreenshotService) -> instancetype ---
 
@@ -35,7 +35,7 @@ ScreenshotServiceDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScreenshotServiceDelegate, objc_selector="screenshotService:generatePDFRepresentationWithCompletion:", objc_name="screenshotService")
 	ScreenshotServiceDelegate_screenshotService :: proc(self: ^ScreenshotServiceDelegate, screenshotService: ^ScreenshotService, completionHandler: ^Objc_Block(proc "c" ( PDFData: ^NS.Data, indexOfCurrentPage: NS.Integer, rectInCurrentPage: CG.Rect ))) ---
 }

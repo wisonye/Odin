@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 PowerState :: enum c.int {
 	ERROR = -1,   /**< error determining power status */
@@ -12,6 +12,6 @@ PowerState :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPowerInfo :: proc(seconds: ^c.int, percent: ^c.int) -> PowerState ---
 }

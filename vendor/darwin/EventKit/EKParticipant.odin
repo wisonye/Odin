@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKParticipant", objc_superclass=Object)
 Participant :: struct {
@@ -10,13 +10,13 @@ Participant :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Participant, objc_selector="ABPersonInAddressBook:", objc_name="ABPersonInAddressBook")
 		Participant_ABPersonInAddressBook :: proc(self: ^Participant, addressBook: ^ABAddressBook) -> ^ABPerson ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=Participant, objc_selector="ABRecordWithAddressBook:", objc_name="ABRecordWithAddressBook")
 		Participant_ABRecordWithAddressBook :: proc(self: ^Participant, addressBook: ABAddressBookRef) -> ABRecordRef ---
 	}

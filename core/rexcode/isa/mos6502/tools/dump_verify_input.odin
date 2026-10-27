@@ -17,11 +17,11 @@ package main
 //
 // Verifier:  bash tools/verify_against_xa.sh /tmp/rexcode_mos6502.hex
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import m ".."
+#import m ".."
 
 main :: proc() {
 	fmt.println("Dumping MOS 6502 verification manifest...")

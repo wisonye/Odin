@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_AVFoundation
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="AVVideoCompositing")
 VideoCompositing :: struct {
@@ -15,7 +15,7 @@ VideoCompositing :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositing, objc_selector="renderContextChanged:", objc_name="renderContextChanged")
 	VideoCompositing_renderContextChanged :: proc(self: ^VideoCompositing, newRenderContext: ^VideoCompositionRenderContext) ---
 
@@ -58,7 +58,7 @@ VideoComposition :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoComposition, objc_selector="videoCompositionWithPropertiesOfAsset:", objc_name="videoCompositionWithPropertiesOfAsset_", objc_is_class_method=true)
 	VideoComposition_videoCompositionWithPropertiesOfAsset_ :: proc(asset: ^Asset) -> ^VideoComposition ---
 
@@ -144,7 +144,7 @@ VideoComposition_videoCompositionWithAsset :: proc {
 @(objc_class="AVMutableVideoComposition", objc_superclass=VideoComposition)
 MutableVideoComposition :: struct { using _: VideoComposition}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableVideoComposition, objc_selector="videoComposition", objc_name="videoComposition", objc_is_class_method=true)
 	MutableVideoComposition_videoComposition :: proc() -> ^MutableVideoComposition ---
 
@@ -273,7 +273,7 @@ MutableVideoCompositionInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVVideoCompositionCoreAnimationTool", objc_superclass=NS.Object)
 VideoCompositionCoreAnimationTool :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionCoreAnimationTool, objc_selector="videoCompositionCoreAnimationToolWithAdditionalLayer:asTrackID:", objc_name="videoCompositionCoreAnimationToolWithAdditionalLayer", objc_is_class_method=true)
 	VideoCompositionCoreAnimationTool_videoCompositionCoreAnimationToolWithAdditionalLayer :: proc(layer: ^CA.Layer, trackID: CM.PersistentTrackID) -> instancetype ---
 
@@ -298,7 +298,7 @@ VideoCompositionInstruction :: struct {
 	using _: VideoCompositionInstructionProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionInstruction, objc_selector="videoCompositionInstructionWithInstruction:", objc_name="videoCompositionInstructionWithInstruction", objc_is_class_method=true)
 	VideoCompositionInstruction_videoCompositionInstructionWithInstruction :: proc(instruction: ^VideoCompositionInstruction) -> ^VideoCompositionInstruction ---
 
@@ -328,7 +328,7 @@ foreign lib {
 @(objc_class="AVMutableVideoCompositionInstruction", objc_superclass=VideoCompositionInstruction)
 MutableVideoCompositionInstruction :: struct { using _: VideoCompositionInstruction}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableVideoCompositionInstruction, objc_selector="videoCompositionInstruction", objc_name="videoCompositionInstruction", objc_is_class_method=true)
 	MutableVideoCompositionInstruction_videoCompositionInstruction :: proc() -> instancetype ---
 
@@ -374,7 +374,7 @@ VideoCompositionInstructionProtocol :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionInstructionProtocol, objc_selector="timeRange", objc_name="timeRange")
 	VideoCompositionInstructionProtocol_timeRange :: proc(self: ^VideoCompositionInstructionProtocol) -> CM.TimeRange ---
 
@@ -407,7 +407,7 @@ VideoCompositionLayerInstruction :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionLayerInstruction, objc_selector="videoCompositionLayerInstructionWithLayerInstruction:", objc_name="videoCompositionLayerInstructionWithLayerInstruction", objc_is_class_method=true)
 	VideoCompositionLayerInstruction_videoCompositionLayerInstructionWithLayerInstruction :: proc(instruction: ^VideoCompositionLayerInstruction) -> ^VideoCompositionLayerInstruction ---
 
@@ -428,7 +428,7 @@ foreign lib {
 @(objc_class="AVMutableVideoCompositionLayerInstruction", objc_superclass=VideoCompositionLayerInstruction)
 MutableVideoCompositionLayerInstruction :: struct { using _: VideoCompositionLayerInstruction}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableVideoCompositionLayerInstruction, objc_selector="videoCompositionLayerInstructionWithAssetTrack:", objc_name="videoCompositionLayerInstructionWithAssetTrack", objc_is_class_method=true)
 	MutableVideoCompositionLayerInstruction_videoCompositionLayerInstructionWithAssetTrack :: proc(track: ^AssetTrack) -> instancetype ---
 
@@ -472,7 +472,7 @@ MutableVideoCompositionLayerInstructionInternal :: struct { using _: intrinsics.
 @(objc_class="AVVideoCompositionRenderContext", objc_superclass=NS.Object)
 VideoCompositionRenderContext :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionRenderContext, objc_selector="newPixelBuffer", objc_name="newPixelBuffer")
 	VideoCompositionRenderContext_newPixelBuffer :: proc(self: ^VideoCompositionRenderContext) -> CVPixelBufferRef ---
 
@@ -506,7 +506,7 @@ VideoCompositionRenderContextInternal :: struct { using _: intrinsics.objc_objec
 @(objc_class="AVVideoCompositionRenderHint", objc_superclass=NS.Object)
 VideoCompositionRenderHint :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionRenderHint, objc_selector="startCompositionTime", objc_name="startCompositionTime")
 	VideoCompositionRenderHint_startCompositionTime :: proc(self: ^VideoCompositionRenderHint) -> CM.Time ---
 
@@ -525,7 +525,7 @@ VideoCompositionValidationHandling :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoCompositionValidationHandling, objc_selector="videoComposition:shouldContinueValidatingAfterFindingInvalidValueForKey:", objc_name="videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey")
 	VideoCompositionValidationHandling_videoComposition_shouldContinueValidatingAfterFindingInvalidValueForKey :: proc(self: ^VideoCompositionValidationHandling, videoComposition: ^VideoComposition, key: ^NS.String) -> bool ---
 
@@ -556,7 +556,7 @@ VideoOutputSpecification :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoOutputSpecification, objc_selector="init", objc_name="init")
 	VideoOutputSpecification_init :: proc(self: ^VideoOutputSpecification) -> instancetype ---
 
@@ -592,7 +592,7 @@ foreign lib {
 @(objc_class="AVVideoPerformanceMetrics", objc_superclass=NS.Object)
 VideoPerformanceMetrics :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoPerformanceMetrics, objc_selector="init", objc_name="init")
 	VideoPerformanceMetrics_init :: proc(self: ^VideoPerformanceMetrics) -> instancetype ---
 

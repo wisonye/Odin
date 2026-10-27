@@ -2,16 +2,16 @@ package libc
 
 // 7.28 Unicode utilities
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.28.1 Restartable multibyte/wide character conversion functions
 	mbrtoc16 :: proc(pc16: [^]char16_t, s: cstring, n: size_t, ps: ^mbstate_t) -> size_t ---
 	c16rtomb :: proc(s: ^char, c16: char16_t, ps: ^mbstate_t) -> size_t ---

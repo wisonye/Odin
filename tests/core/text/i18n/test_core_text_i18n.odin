@@ -1,8 +1,8 @@
 package test_core_text_i18n
 
-import "base:runtime"
-import "core:testing"
-import "core:text/i18n"
+#import "base:runtime"
+#import "core:testing"
+#import "core:text/i18n"
 
 T :: i18n.get
 Tn :: i18n.get_n

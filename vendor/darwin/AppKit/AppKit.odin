@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import "base:runtime"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
+#import "base:runtime"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
 
 
 
@@ -20,7 +20,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:AppKit.framework",
 }
 
@@ -736,7 +736,7 @@ ContinuousCapacityLevelIndicatorStyle               :: 1
 DiscreteCapacityLevelIndicatorStyle                 :: 2
 RatingLevelIndicatorStyle                           :: 3
 
-foreign lib {
+#foreign lib {
 	@(link_name="NSCalibratedWhiteColorSpace") CalibratedWhiteColorSpace: ^NS.String
 	@(link_name="NSCalibratedRGBColorSpace") CalibratedRGBColorSpace: ^NS.String
 	@(link_name="NSDeviceWhiteColorSpace") DeviceWhiteColorSpace: ^NS.String
@@ -2222,7 +2222,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="NSBestDepth")
 	BestDepth :: proc(colorSpace: ColorSpaceName, bps: NS.Integer, bpp: NS.Integer, planar: bool, exactMatch: ^bool) -> WindowDepth ---
 

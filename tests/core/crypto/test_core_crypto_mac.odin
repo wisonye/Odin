@@ -1,13 +1,13 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:encoding/hex"
-import "core:mem"
-import "core:testing"
-import "core:crypto/hash"
-import "core:crypto/hmac"
-import "core:crypto/poly1305"
-import "core:crypto/siphash"
+#import "base:runtime"
+#import "core:encoding/hex"
+#import "core:mem"
+#import "core:testing"
+#import "core:crypto/hash"
+#import "core:crypto/hmac"
+#import "core:crypto/poly1305"
+#import "core:crypto/siphash"
 
 @(test)
 test_hmac :: proc(t: ^testing.T) {

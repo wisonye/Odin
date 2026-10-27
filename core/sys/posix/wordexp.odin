@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // wordexp.h - word-expansion type
 
-foreign lib {
+#foreign lib {
 	/*
 	Perform word expansion.
 
@@ -49,9 +49,9 @@ WRDE_Errno :: enum c.int {
 	// One of the unquoted characters- <newline>, '|', '&', ';', '<', '>', '(', ')', '{', '}' -
 	// appears in words in an inappropriate context.
 	BADCHAR = WRDE_BADCHAR,
-	// Reference to undefined shell variable when WRDE_UNDEF is set in flags.
+	// Reference to undefined shell variable #if WRDE_UNDEF is set in flags.
 	BADVAL  = WRDE_BADVAL,
-	// Command substitution requested when WRDE_NOCMD was set in flags.
+	// Command substitution requested #if WRDE_NOCMD was set in flags.
 	CMDSUB  = WRDE_CMDSUB,
 	// Attempt to allocate memory failed.
 	NOSPACE = WRDE_NOSPACE,
@@ -59,7 +59,7 @@ WRDE_Errno :: enum c.int {
 	SYNTAX  = WRDE_SYNTAX,
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	wordexp_t :: struct {
 		we_wordc: c.size_t,   /* [PSX] count of words matched by words */
@@ -80,7 +80,7 @@ when ODIN_OS == .Darwin {
 	WRDE_NOSPACE :: 4
 	WRDE_SYNTAX  :: 6
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	wordexp_t :: struct {
 		we_wordc:   c.size_t,   /* [PSX] count of words matched by words */
@@ -103,7 +103,7 @@ when ODIN_OS == .Darwin {
 	WRDE_NOSPACE :: 4
 	WRDE_SYNTAX  :: 6
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	wordexp_t :: struct {
 		we_wordc: c.size_t,   /* [PSX] count of words matched by words */

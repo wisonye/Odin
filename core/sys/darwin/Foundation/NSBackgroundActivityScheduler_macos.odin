@@ -6,7 +6,7 @@ package darwin_Foundation
 BackgroundActivityScheduler :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundActivityScheduler, objc_selector="initWithIdentifier:", objc_name="initWithIdentifier")
 	BackgroundActivityScheduler_initWithIdentifier :: proc(self: ^BackgroundActivityScheduler, identifier: ^String) -> instancetype ---
 

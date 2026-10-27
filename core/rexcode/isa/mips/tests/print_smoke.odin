@@ -6,10 +6,10 @@ package rexcode_mips_tests
 // exact text. Catches register-name typos, mnemonic suffix bugs, memory
 // formatting, label resolution, and the indent/separator defaults.
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import mips "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import mips "../"
 
 @(private="file") ppasses   := 0
 @(private="file") pfailures := 0

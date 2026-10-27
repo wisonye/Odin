@@ -2,21 +2,21 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="GKFriendRequestComposeViewController", objc_superclass=UI_ViewController)
 	FriendRequestComposeViewController :: struct {
 		using _: UI_ViewController,
 		using _: ViewController,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="GKFriendRequestComposeViewController", objc_superclass=UI_NavigationController)
 	FriendRequestComposeViewController :: struct { using _: UI_NavigationController}
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FriendRequestComposeViewController, objc_selector="maxNumberOfRecipients", objc_name="maxNumberOfRecipients", objc_is_class_method=true)
 	FriendRequestComposeViewController_maxNumberOfRecipients :: proc() -> NS.UInteger ---
 
@@ -43,7 +43,7 @@ foreign lib {
 @(objc_class="GKFriendRequestComposeViewControllerDelegate")
 FriendRequestComposeViewControllerDelegate :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FriendRequestComposeViewControllerDelegate, objc_selector="friendRequestComposeViewControllerDidFinish:", objc_name="friendRequestComposeViewControllerDidFinish")
 	FriendRequestComposeViewControllerDelegate_friendRequestComposeViewControllerDidFinish :: proc(self: ^FriendRequestComposeViewControllerDelegate, viewController: ^FriendRequestComposeViewController) ---
 }

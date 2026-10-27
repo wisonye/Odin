@@ -6,9 +6,9 @@ package rexcode_mips_tests
 // that mnemonics + operands survive intact, plus label inference for
 // branches and graceful handling of garbage.
 
-import "core:fmt"
-import "core:os"
-import mips "../"
+#import "core:fmt"
+#import "core:os"
+#import mips "../"
 
 @(private="file") dpasses   := 0
 @(private="file") dfailures := 0

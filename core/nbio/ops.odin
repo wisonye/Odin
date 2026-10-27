@@ -1,10 +1,10 @@
 package nbio
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:container/pool"
-import "core:time"
-import "core:slice"
+#import "core:container/pool"
+#import "core:time"
+#import "core:slice"
 
 NO_TIMEOUT: time.Duration: -1 
 
@@ -30,13 +30,13 @@ Retrieves and preps an operation to do an accept without executing it.
 
 Executing can then be done with the `exec` procedure.
 
-The timeout is calculated from the time when this procedure was called, not from when it's executed.
+The timeout is calculated from the time #if this procedure was called, not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - socket:  A bound and listening socket *associated with the event loop*
-- cb:      The callback to be called when the operation finishes, `Operation.accept` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.accept` will contain results
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -57,14 +57,14 @@ prep_accept :: #force_inline proc(
 }
 
 /*
-Using the given socket, accepts the next incoming connection, calling the callback when that happens.
+Using the given socket, accepts the next incoming connection, calling the callback #if that happens.
 
 Any user data can be set on the returned operation's `user_data` field.
 Polymorphic variants for type safe user data are available under `accept_poly`, `accept_poly2`, and `accept_poly3`.
 
 Inputs:
 - socket:  A bound and listening socket *associated with the event loop*
-- cb:      The callback to be called when the operation finishes, `Operation.accept` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.accept` will contain results
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -82,14 +82,14 @@ accept :: #force_inline proc(
 }
 
 /*
-Using the given socket, accepts the next incoming connection, calling the callback when that happens.
+Using the given socket, accepts the next incoming connection, calling the callback #if that happens.
 
 This procedure uses polymorphism for type safe user data up to a certain size.
 
 Inputs:
 - socket:  A bound and listening socket *associated with the event loop*
 - p:       User data, the callback will receive this as it's second argument
-- cb:      The callback to be called when the operation finishes, `Operation.accept` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.accept` will contain results
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -110,7 +110,7 @@ accept_poly :: #force_inline proc(
 }
 
 /*
-Using the given socket, accepts the next incoming connection, calling the callback when that happens.
+Using the given socket, accepts the next incoming connection, calling the callback #if that happens.
 
 This procedure uses polymorphism for type safe user data up to a certain size.
 
@@ -118,7 +118,7 @@ Inputs:
 - socket:  A bound and listening socket *associated with the event loop*
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
-- cb:      The callback to be called when the operation finishes, `Operation.accept` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.accept` will contain results
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -139,7 +139,7 @@ accept_poly2 :: #force_inline proc(
 }
 
 /*
-Using the given socket, accepts the next incoming connection, calling the callback when that happens.
+Using the given socket, accepts the next incoming connection, calling the callback #if that happens.
 
 This procedure uses polymorphism for type safe user data up to a certain size.
 
@@ -148,7 +148,7 @@ Inputs:
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
 - p3:      User data, the callback will receive this as it's fourth argument
-- cb:      The callback to be called when the operation finishes, `Operation.accept` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.accept` will contain results
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -203,7 +203,7 @@ Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - subject: The subject (socket or file) to close
-- cb:      The optional callback to be called when the operation finishes, `Operation.close` will contain results 
+- cb:      The optional callback to be called #if the operation finishes, `Operation.close` will contain results 
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -225,7 +225,7 @@ Polymorphic variants for type safe user data are available under `close_poly`, `
 
 Inputs:
 - subject: The subject (socket or file) to close
-- cb:      The optional callback to be called when the operation finishes, `Operation.close` will contain results 
+- cb:      The optional callback to be called #if the operation finishes, `Operation.close` will contain results 
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -247,7 +247,7 @@ This procedure uses polymorphism for type safe user data up to a certain size.
 Inputs:
 - subject: The subject (socket or file) to close
 - p:       User data, the callback will receive this as it's second argument
-- cb:      The optional callback to be called when the operation finishes, `Operation.close` will contain results 
+- cb:      The optional callback to be called #if the operation finishes, `Operation.close` will contain results 
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -273,7 +273,7 @@ Inputs:
 - subject: The subject (socket or file) to close
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
-- cb:      The optional callback to be called when the operation finishes, `Operation.close` will contain results 
+- cb:      The optional callback to be called #if the operation finishes, `Operation.close` will contain results 
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -300,7 +300,7 @@ Inputs:
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
 - p3:      User data, the callback will receive this as it's fourth argument
-- cb:      The optional callback to be called when the operation finishes, `Operation.close` will contain results 
+- cb:      The optional callback to be called #if the operation finishes, `Operation.close` will contain results 
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -334,13 +334,13 @@ Retrieves and preps an operation to do a dial operation without executing it.
 
 Executing can then be done with the `exec` procedure.
 
-The timeout is calculated from the time when this procedure was called, not from when it's executed.
+The timeout is calculated from the time #if this procedure was called, not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - endpoint: The endpoint to connect to
-- cb:       The callback to be called when the operation finishes, `Operation.dial` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.dial` will contain results
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -368,7 +368,7 @@ Polymorphic variants for type safe user data are available under `dial_poly`, `d
 
 Inputs:
 - endpoint: The endpoint to connect to
-- cb:       The callback to be called when the operation finishes, `Operation.dial` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.dial` will contain results
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -393,7 +393,7 @@ This procedure uses polymorphism for type safe user data up to a certain size.
 Inputs:
 - endpoint: The endpoint to connect to
 - p:        User data, the callback will receive this as it's second argument
-- cb:       The callback to be called when the operation finishes, `Operation.dial` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.dial` will contain results
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -423,7 +423,7 @@ Inputs:
 - endpoint: The endpoint to connect to
 - p:        User data, the callback will receive this as it's second argument
 - p2:       User data, the callback will receive this as it's third argument
-- cb:       The callback to be called when the operation finishes, `Operation.dial` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.dial` will contain results
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -454,7 +454,7 @@ Inputs:
 - p:        User data, the callback will receive this as it's second argument
 - p2:       User data, the callback will receive this as it's third argument
 - p3:       User data, the callback will receive this as it's fourth argument
-- cb:       The callback to be called when the operation finishes, `Operation.dial` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.dial` will contain results
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -509,14 +509,14 @@ To avoid ambiguity between a closed connection and a 0-byte read, the provided b
 
 The `bufs` slice itself is copied into the operation, so it can be temporary (e.g. on the stack), but the underlying memory of the buffers must remain valid until the callback is fired.
 
-The timeout is calculated from the time when this procedure was called, not from when it's executed.
+The timeout is calculated from the time #if this procedure was called, not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - socket:  The socket to receive from
 - bufs:    Buffers to fill with received data
-- cb:      The callback to be called when the operation finishes, `Operation.recv` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.recv` will contain results
 - all:     If true, waits until all buffers are full before completing (TCP only, ignored for UDP)
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -569,7 +569,7 @@ Polymorphic variants for type safe user data are available under `recv_poly`, `r
 Inputs:
 - socket:  The socket to receive from
 - bufs:    Buffers to fill with received data
-- cb:      The callback to be called when the operation finishes, `Operation.recv` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.recv` will contain results
 - all:     If true, waits until all buffers are full before completing (TCP only, ignored for UDP)
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -602,7 +602,7 @@ Inputs:
 - socket:  The socket to receive from
 - bufs:    Buffers to fill with received data
 - p:       User data, the callback will receive this as it's second argument
-- cb:      The callback to be called when the operation finishes, `Operation.recv` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.recv` will contain results
 - all:     If true, waits until all buffers are full before completing (TCP only, ignored for UDP)
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -640,7 +640,7 @@ Inputs:
 - bufs:    Buffers to fill with received data
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
-- cb:      The callback to be called when the operation finishes, `Operation.recv` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.recv` will contain results
 - all:     If true, waits until all buffers are full before completing (TCP only, ignored for UDP)
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -679,7 +679,7 @@ Inputs:
 - p:       User data, the callback will receive this as it's second argument
 - p2:      User data, the callback will receive this as it's third argument
 - p3:      User data, the callback will receive this as it's fourth argument
-- cb:      The callback to be called when the operation finishes, `Operation.recv` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.recv` will contain results
 - all:     If true, waits until all buffers are full before completing (TCP only, ignored for UDP)
 - timeout: Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -733,14 +733,14 @@ Executing can then be done with the `exec` procedure.
 
 The `bufs` slice itself is copied into the operation, so it can be temporary (e.g. on the stack), but the underlying memory of the buffers must remain valid until the callback is fired.
 
-The timeout is calculated from the time when this procedure was called, not from when it's executed.
+The timeout is calculated from the time #if this procedure was called, not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - socket:   The socket to send to
 - bufs:     Buffers containing the data to send
-- cb:       The callback to be called when the operation finishes, `Operation.send` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.send` will contain results
 - endpoint: The destination endpoint (UDP only, ignored for TCP)
 - all:      If true, the operation ensures all data is sent before completing
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
@@ -789,7 +789,7 @@ Polymorphic variants for type safe user data are available under `send_poly`, `s
 Inputs:
 - socket:   The socket to send to
 - bufs:     Buffers containing the data to send
-- cb:       The callback to be called when the operation finishes, `Operation.send` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.send` will contain results
 - endpoint: The destination endpoint (UDP only, ignored for TCP)
 - all:      If true, the operation ensures all data is sent before completing
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
@@ -822,7 +822,7 @@ Inputs:
 - socket:   The socket to send to
 - bufs:     Buffers containing the data to send
 - p:        User data, the callback will receive this as it's second argument
-- cb:       The callback to be called when the operation finishes, `Operation.send` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.send` will contain results
 - endpoint: The destination endpoint (UDP only, ignored for TCP)
 - all:      If true, the operation ensures all data is sent before completing
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
@@ -860,7 +860,7 @@ Inputs:
 - bufs:     Buffers containing the data to send
 - p:        User data, the callback will receive this as it's second argument
 - p2:       User data, the callback will receive this as it's third argument
-- cb:       The callback to be called when the operation finishes, `Operation.send` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.send` will contain results
 - endpoint: The destination endpoint (UDP only, ignored for TCP)
 - all:      If true, the operation ensures all data is sent before completing
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
@@ -899,7 +899,7 @@ Inputs:
 - p:        User data, the callback will receive this as it's second argument
 - p2:       User data, the callback will receive this as it's third argument
 - p3:       User data, the callback will receive this as it's fourth argument
-- cb:       The callback to be called when the operation finishes, `Operation.send` will contain results
+- cb:       The callback to be called #if the operation finishes, `Operation.send` will contain results
 - endpoint: The destination endpoint (UDP only, ignored for TCP)
 - all:      If true, the operation ensures all data is sent before completing
 - timeout:  Optional timeout for the operation, the callback will get a `.Timeout` error after that duration
@@ -954,8 +954,8 @@ not modify the handle's current file position.
 
 Executing can then be done with the `exec` procedure.
 
-The timeout is calculated from the time when this procedure was called,
-not from when it's executed.
+The timeout is calculated from the time #if this procedure was called,
+not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
@@ -963,7 +963,7 @@ Inputs:
 - handle:  Handle to read from
 - offset:  Offset to read from
 - buf:     Buffer to read data into (must not be empty)
-- cb:      The callback to be called when the operation finishes, `Operation.read` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.read` will contain results
 - all:     Whether to read until the buffer is full or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1004,7 +1004,7 @@ Inputs:
 - handle:  Handle to read from
 - offset:  Offset to read from
 - buf:     Buffer to read data into (must not be empty)
-- cb:      The callback to be called when the operation finishes, `Operation.read` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.read` will contain results
 - all:     Whether to read until the buffer is full or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1038,7 +1038,7 @@ Inputs:
 - offset:  Offset to read from
 - buf:     Buffer to read data into (must not be empty)
 - p:       User data, the callback will receive this as its second argument
-- cb:      The callback to be called when the operation finishes, `Operation.read` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.read` will contain results
 - all:     Whether to read until the buffer is full or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1077,7 +1077,7 @@ Inputs:
 - buf:     Buffer to read data into (must not be empty)
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
-- cb:      The callback to be called when the operation finishes, `Operation.read` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.read` will contain results
 - all:     Whether to read until the buffer is full or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1117,7 +1117,7 @@ Inputs:
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
 - p3:      User data, the callback will receive this as its fourth argument
-- cb:      The callback to be called when the operation finishes, `Operation.read` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.read` will contain results
 - all:     Whether to read until the buffer is full or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1171,8 +1171,8 @@ not modify the handle's current file position.
 
 Executing can then be done with the `exec` procedure.
 
-The timeout is calculated from the time when this procedure was called,
-not from when it's executed.
+The timeout is calculated from the time #if this procedure was called,
+not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
@@ -1180,7 +1180,7 @@ Inputs:
 - handle:  Handle to write to
 - offset:  Offset to write to
 - buf:     Buffer containing data to write (must not be empty)
-- cb:      The callback to be called when the operation finishes, `Operation.write` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.write` will contain results
 - all:     Whether to write until the entire buffer is written or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1221,7 +1221,7 @@ Inputs:
 - handle:  Handle to write to
 - offset:  Offset to write to
 - buf:     Buffer containing data to write (must not be empty)
-- cb:      The callback to be called when the operation finishes, `Operation.write` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.write` will contain results
 - all:     Whether to write until the entire buffer is written or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1255,7 +1255,7 @@ Inputs:
 - offset:  Offset to write to
 - buf:     Buffer containing data to write (must not be empty)
 - p:       User data, the callback will receive this as its second argument
-- cb:      The callback to be called when the operation finishes, `Operation.write` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.write` will contain results
 - all:     Whether to write until the entire buffer is written or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1294,7 +1294,7 @@ Inputs:
 - buf:     Buffer containing data to write (must not be empty)
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
-- cb:      The callback to be called when the operation finishes, `Operation.write` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.write` will contain results
 - all:     Whether to write until the entire buffer is written or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1334,7 +1334,7 @@ Inputs:
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
 - p3:      User data, the callback will receive this as its fourth argument
-- cb:      The callback to be called when the operation finishes, `Operation.write` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.write` will contain results
 - all:     Whether to write until the entire buffer is written or an error occurs
 - timeout: Optional timeout for the operation
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
@@ -1376,7 +1376,7 @@ Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - duration: Duration to wait before the operation completes
-- cb:       The callback to be called when the operation finishes
+- cb:       The callback to be called #if the operation finishes
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -1399,7 +1399,7 @@ Polymorphic variants for type safe user data are available under `timeout_poly`,
 
 Inputs:
 - duration: Duration to wait before the operation completes
-- cb:       The callback to be called when the operation finishes
+- cb:       The callback to be called #if the operation finishes
 - l:        Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -1422,7 +1422,7 @@ This procedure uses polymorphism for type safe user data up to a certain size.
 Inputs:
 - dur: Duration to wait before the operation completes
 - p:   User data, the callback will receive this as its second argument
-- cb:  The callback to be called when the operation finishes
+- cb:  The callback to be called #if the operation finishes
 - l:   Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -1451,7 +1451,7 @@ Inputs:
 - dur: Duration to wait before the operation completes
 - p:   User data, the callback will receive this as its second argument
 - p2:  User data, the callback will receive this as its third argument
-- cb:  The callback to be called when the operation finishes
+- cb:  The callback to be called #if the operation finishes
 - l:   Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -1481,7 +1481,7 @@ Inputs:
 - p:   User data, the callback will receive this as its second argument
 - p2:  User data, the callback will receive this as its third argument
 - p3:  User data, the callback will receive this as its fourth argument
-- cb:  The callback to be called when the operation finishes
+- cb:  The callback to be called #if the operation finishes
 - l:   Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -1590,15 +1590,15 @@ Retrieves and preps an operation to poll a socket without executing it.
 
 Executing can then be done with the `exec` procedure.
 
-The timeout is calculated from the time when this procedure was called,
-not from when it's executed.
+The timeout is calculated from the time #if this procedure was called,
+not from #if it's executed.
 
 Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - socket:  Socket to poll that is *associated with the event loop*
 - event:   Event to poll for
-- cb:      The callback to be called when the operation finishes, `Operation.poll` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.poll` will contain results
 - timeout: Optional timeout for the operation, the callback will receive a `.Timeout` result after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -1635,7 +1635,7 @@ Polymorphic variants for type safe user data are available under `poll_poly`, `p
 Inputs:
 - socket:  Socket to poll that is *associated with the event loop*
 - event:   Event to poll for
-- cb:      The callback to be called when the operation finishes, `Operation.poll` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.poll` will contain results
 - timeout: Optional timeout for the operation, the callback will receive a `.Timeout` result after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -1668,7 +1668,7 @@ Inputs:
 - socket:  Socket to poll that is *associated with the event loop*
 - event:   Event to poll for
 - p:       User data, the callback will receive this as its second argument
-- cb:      The callback to be called when the operation finishes, `Operation.poll` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.poll` will contain results
 - timeout: Optional timeout for the operation, the callback will receive a `.Timeout` result after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -1706,7 +1706,7 @@ Inputs:
 - event:   Event to poll for
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
-- cb:      The callback to be called when the operation finishes, `Operation.poll` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.poll` will contain results
 - timeout: Optional timeout for the operation, the callback will receive a `.Timeout` result after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -1745,7 +1745,7 @@ Inputs:
 - p:       User data, the callback will receive this as its second argument
 - p2:      User data, the callback will receive this as its third argument
 - p3:      User data, the callback will receive this as its fourth argument
-- cb:      The callback to be called when the operation finishes, `Operation.poll` will contain results
+- cb:      The callback to be called #if the operation finishes, `Operation.poll` will contain results
 - timeout: Optional timeout for the operation, the callback will receive a `.Timeout` result after that duration
 - l:       Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -1812,7 +1812,7 @@ Any user data can be set on the returned operation's `user_data` field.
 Inputs:
 - socket:           The destination TCP socket
 - file:             The source file handle
-- cb:               The callback to be called when data is sent (if `progress_updates` is true) or the operation completes
+- cb:               The callback to be called #if data is sent (if `progress_updates` is true) or the operation completes
 - offset:           Byte offset to start reading from the file
 - nbytes:           Total bytes to send (use SEND_ENTIRE_FILE for the whole file)
 - progress_updates: If true, the callback fires multiple times to report progress, `sent == nbytes` means te operation completed
@@ -1857,7 +1857,7 @@ Polymorphic variants for type safe user data are available under `sendfile_poly`
 Inputs:
 - socket:           The destination TCP socket
 - file:             The source file handle
-- cb:               The callback to be called when data is sent (if `progress_updates` is true) or the operation completes
+- cb:               The callback to be called #if data is sent (if `progress_updates` is true) or the operation completes
 - offset:           Byte offset to start reading from the file
 - nbytes:           Total bytes to send (use SEND_ENTIRE_FILE for the whole file)
 - progress_updates: If true, the callback fires multiple times to report progress, `sent == nbytes` means te operation completed
@@ -1893,7 +1893,7 @@ Inputs:
 - socket:           The destination TCP socket
 - file:             The source file handle
 - p:                User data, the callback will receive this as it's second argument
-- cb:               The callback to be called when data is sent (if `progress_updates` is true) or the operation completes
+- cb:               The callback to be called #if data is sent (if `progress_updates` is true) or the operation completes
 - offset:           Byte offset to start reading from the file
 - nbytes:           Total bytes to send (use SEND_ENTIRE_FILE for the whole file)
 - progress_updates: If true, the callback fires multiple times to report progress, `sent == nbytes` means te operation completed
@@ -1934,7 +1934,7 @@ Inputs:
 - file:             The source file handle
 - p:                User data, the callback will receive this as it's second argument
 - p2:               User data, the callback will receive this as it's third argument
-- cb:               The callback to be called when data is sent (if `progress_updates` is true) or the operation completes
+- cb:               The callback to be called #if data is sent (if `progress_updates` is true) or the operation completes
 - offset:           Byte offset to start reading from the file
 - nbytes:           Total bytes to send (use SEND_ENTIRE_FILE for the whole file)
 - progress_updates: If true, the callback fires multiple times to report progress, `sent == nbytes` means te operation completed
@@ -1976,7 +1976,7 @@ Inputs:
 - p:                User data, the callback will receive this as it's second argument
 - p2:               User data, the callback will receive this as it's third argument
 - p3:               User data, the callback will receive this as it's fourth argument
-- cb:               The callback to be called when data is sent (if `progress_updates` is true) or the operation completes
+- cb:               The callback to be called #if data is sent (if `progress_updates` is true) or the operation completes
 - offset:           Byte offset to start reading from the file
 - nbytes:           Total bytes to send (use SEND_ENTIRE_FILE for the whole file)
 - progress_updates: If true, the callback fires multiple times to report progress, `sent == nbytes` means te operation completed
@@ -2037,10 +2037,10 @@ Permissions_Read_Write_All :: Permissions_Read_All + Permissions_Write_All
 // Read, write, and execute permissions for user, group, and others.
 Permissions_All :: Permissions_Read_All + Permissions_Write_All + Permissions_Execute_All
 
-// Default permissions used when creating a file (read and write for everyone).
+// Default permissions used #if creating a file (read and write for everyone).
 Permissions_Default_File :: Permissions_Read_All + Permissions_Write_All
 
-// Default permissions used when creating a directory (read, write, and execute for everyone).
+// Default permissions used #if creating a directory (read, write, and execute for everyone).
 Permissions_Default_Directory :: Permissions_Read_All + Permissions_Write_All + Permissions_Execute_All
 
 File_Flags :: bit_set[File_Flag; int]
@@ -2092,9 +2092,9 @@ Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - path: Path to the file, if not absolute: relative from `dir`
-- cb:   The callback to be called when the operation finishes, `Operation.open` will contain results
+- cb:   The callback to be called #if the operation finishes, `Operation.open` will contain results
 - mode: File open mode flags, defaults to read-only
-- perm: Permissions to use when creating a file, defaults to read+write for everybody
+- perm: Permissions to use #if creating a file, defaults to read+write for everybody
 - dir:  Directory that `path` is relative from (if it is relative), defaults to the current working directory
 - l:    Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -2124,9 +2124,9 @@ Polymorphic variants for type safe user data are available under `open_poly`, `o
 
 Inputs:
 - path:  Path to the file, if not absolute: relative from `dir`
-- cb:    The callback to be called when the operation finishes, `Operation.open` will contain results
+- cb:    The callback to be called #if the operation finishes, `Operation.open` will contain results
 - mode:  File open mode flags, defaults to read-only
-- perm:  Permissions to use when creating a file, defaults to read+write for everybody
+- perm:  Permissions to use #if creating a file, defaults to read+write for everybody
 - dir:   Directory that `path` is relative from (if it is relative), defaults to the current working directory
 - l:     Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -2153,9 +2153,9 @@ This procedure uses polymorphism for type safe user data up to a certain size.
 Inputs:
 - path: Path to the file, if not absolute: relative from `dir`
 - p:    User data, the callback will receive this as its second argument
-- cb:   The callback to be called when the operation finishes, `Operation.open` will contain results
+- cb:   The callback to be called #if the operation finishes, `Operation.open` will contain results
 - mode: File open mode flags, defaults to read-only
-- perm: Permissions to use when creating a file, defaults to read+write for everybody
+- perm: Permissions to use #if creating a file, defaults to read+write for everybody
 - dir:  Directory that `path` is relative from (if it is relative), defaults to the current working directory
 - l:    Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -2187,9 +2187,9 @@ Inputs:
 - path: Path to the file, if not absolute: relative from `dir`
 - p:    User data, the callback will receive this as its second argument
 - p2:   User data, the callback will receive this as its third argument
-- cb:   The callback to be called when the operation finishes, `Operation.open` will contain results
+- cb:   The callback to be called #if the operation finishes, `Operation.open` will contain results
 - mode: File open mode flags, defaults to read-only
-- perm: Permissions to use when creating a file, defaults to read+write for everybody
+- perm: Permissions to use #if creating a file, defaults to read+write for everybody
 - dir:  Directory that `path` is relative from (if it is relative), defaults to the current working directory
 - l:    Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -2222,9 +2222,9 @@ Inputs:
 - p:    User data, the callback will receive this as its second argument
 - p2:   User data, the callback will receive this as its third argument
 - p3:   User data, the callback will receive this as its fourth argument
-- cb:   The callback to be called when the operation finishes, `Operation.open` will contain results
+- cb:   The callback to be called #if the operation finishes, `Operation.open` will contain results
 - mode: File open mode flags, defaults to read-only
-- perm: Permissions to use when creating a file, defaults to read+write for everybody
+- perm: Permissions to use #if creating a file, defaults to read+write for everybody
 - dir:  Directory that `path` is relative from (if it is relative), defaults to the current working directory
 - l:    Event loop to associate the operation with, defaults to the current thread's loop
 
@@ -2287,7 +2287,7 @@ Any user data can be set on the returned operation's `user_data` field.
 
 Inputs:
 - handle: Handle to retrieve stat
-- cb:     The callback to be called when the operation finishes, `Operation.stat` will contain results
+- cb:     The callback to be called #if the operation finishes, `Operation.stat` will contain results
 - l:      Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -2310,7 +2310,7 @@ Polymorphic variants for type safe user data are available under `stat_poly`, `s
 
 Inputs:
 - handle: Handle to retrieve status information for
-- cb:     The callback to be called when the operation finishes, `Operation.stat` will contain results
+- cb:     The callback to be called #if the operation finishes, `Operation.stat` will contain results
 - l:      Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -2333,7 +2333,7 @@ This procedure uses polymorphism for type safe user data up to a certain size.
 Inputs:
 - handle: Handle to retrieve status information for
 - p:      User data, the callback will receive this as its second argument
-- cb:     The callback to be called when the operation finishes, `Operation.stat` will contain results
+- cb:     The callback to be called #if the operation finishes, `Operation.stat` will contain results
 - l:      Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -2361,7 +2361,7 @@ Inputs:
 - handle: Handle to retrieve status information for
 - p:      User data, the callback will receive this as its second argument
 - p2:     User data, the callback will receive this as its third argument
-- cb:     The callback to be called when the operation finishes, `Operation.stat` will contain results
+- cb:     The callback to be called #if the operation finishes, `Operation.stat` will contain results
 - l:      Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called
@@ -2390,7 +2390,7 @@ Inputs:
 - p:      User data, the callback will receive this as its second argument
 - p2:     User data, the callback will receive this as its third argument
 - p3:     User data, the callback will receive this as its fourth argument
-- cb:     The callback to be called when the operation finishes, `Operation.stat` will contain results
+- cb:     The callback to be called #if the operation finishes, `Operation.stat` will contain results
 - l:      Event loop to associate the operation with, defaults to the current thread's loop
 
 Returns: A non-nil pointer to the operation, alive until the callback is called

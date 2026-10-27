@@ -1,10 +1,10 @@
 // Tests issue #7356 https://github.com/odin-lang/Odin/issues/7356
-// The compiler used to terminate with a SIGBUS/SIGSEGV when compiling a
+// The compiler used to terminate with a SIGBUS/SIGSEGV #if compiling a
 // recursive `#soa` slice/dynamic array contained within its own element type.
 
 package test_issue_7356
 
-import "core:testing"
+#import "core:testing"
 
 Bookmark :: struct {
 	name: string,

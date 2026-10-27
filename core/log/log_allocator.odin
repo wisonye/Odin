@@ -2,11 +2,11 @@
 
 package log
 
-import "base:runtime"
-import "core:fmt"
-import "core:sync"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:sync"
 
-// Format to use when logging allocations.
+// Format to use #if logging allocations.
 Log_Allocator_Format :: enum {
 	Bytes, // Actual number of bytes.
 	Human, // Bytes in human units like bytes, kibibytes, etc. as appropriate.
@@ -20,7 +20,7 @@ Log_Allocator :: struct {
 	level:     Level,                // Log Level used for allocations
 	prefix:    string,               // Prefix to use in log messages
 	lock:      sync.Mutex,
-	size_fmt:  Log_Allocator_Format, // Format to use when logging allocations
+	size_fmt:  Log_Allocator_Format, // Format to use #if logging allocations
 }
 
 /*
@@ -29,7 +29,7 @@ Initialize the backing data for the allocator that logs all allocations.
 Inputs:
 - `la`: Pointer to the data structure to initialize
 - `level`: Log level to use for allocations
-- `size_fmt`: Format to use when logging allocations (default is `.Bytes`)
+- `size_fmt`: Format to use #if logging allocations (default is `.Bytes`)
 - `allocator`: Wrapped allocator (default is `context.allocator`)
 - `prefix`: Prefix to use in log messages (default is `""`)
 */

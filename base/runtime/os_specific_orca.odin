@@ -2,7 +2,7 @@
 #+private
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 _HAS_RAND_BYTES :: false
 
@@ -18,7 +18,7 @@ log_level :: enum u32 {
 }
 
 @(default_calling_convention="c", link_prefix="oc_")
-foreign {
+#foreign {
 	abort_ext   :: proc(file: cstring, function: cstring, line: i32, fmt: cstring, #c_vararg args: ..any) -> ! ---
 	assert_fail :: proc(file: cstring, function: cstring, line: i32, src: cstring, fmt: cstring, #c_vararg args: ..any) -> ! ---
 	log_ext     :: proc(level: log_level, function: cstring, file: cstring, line: i32, fmt: cstring, #c_vararg args: ..any) ---

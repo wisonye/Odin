@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 MAJOR_VERSION :: 3
 MINOR_VERSION :: 4
@@ -17,7 +17,7 @@ VERSION :: MAJOR_VERSION*1000000 + MINOR_VERSION*1000 + MICRO_VERSION
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetVersion  :: proc() -> c.int ---
 	GetRevision :: proc() -> cstring ---
 }

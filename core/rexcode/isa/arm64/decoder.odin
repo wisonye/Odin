@@ -2,7 +2,7 @@
 
 package rexcode_arm64
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch64 DECODER
@@ -98,7 +98,7 @@ decode_one_inline :: #force_inline proc "contextless" (
 		if (word & e.mask) == e.bits {
 			// RN_RM is one operand filling both source slots, which is what
 			// makes cinc/cinv/cneg an alias at all -- the encoding is only
-			// theirs when the two register fields actually agree. No mask can
+			// theirs #if the two register fields actually agree. No mask can
 			// say that, so it is checked here; the branch costs nothing,
 			// since it is only reached on a match.
 			if e.enc[1] == .RN_RM && ((word >> 16) & 0x1F) != ((word >> 5) & 0x1F) {

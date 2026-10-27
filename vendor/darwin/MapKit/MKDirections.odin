@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKDirections", objc_superclass=NS.Object)
 Directions :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Directions, objc_selector="initWithRequest:", objc_name="initWithRequest")
 	Directions_initWithRequest :: proc(self: ^Directions, request: ^DirectionsRequest) -> instancetype ---
 
@@ -28,7 +28,7 @@ foreign lib {
 @(objc_class="MKDirectionsRequest", objc_superclass=NS.Object)
 DirectionsRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DirectionsRequest, objc_selector="setSource:", objc_name="setSource")
 	DirectionsRequest_setSource :: proc(self: ^DirectionsRequest, source: ^MapItem) ---
 
@@ -88,7 +88,7 @@ foreign lib {
 @(objc_class="MKDirectionsResponse", objc_superclass=NS.Object)
 DirectionsResponse :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DirectionsResponse, objc_selector="source", objc_name="source")
 	DirectionsResponse_source :: proc(self: ^DirectionsResponse) -> ^MapItem ---
 

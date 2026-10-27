@@ -1,13 +1,13 @@
 package benchmark_strings
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:log"
-import "core:testing"
-import "core:strings"
-import "core:text/table"
-import "core:time"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:log"
+#import "core:testing"
+#import "core:strings"
+#import "core:text/table"
+#import "core:time"
+#import "core:unicode/utf8"
 
 RUNS_PER_SIZE :: 2500
 

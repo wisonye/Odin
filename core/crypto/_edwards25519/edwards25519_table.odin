@@ -4,9 +4,9 @@ package _edwards25519
 	------ GENERATED ------ DO NOT EDIT ------ GENERATED ------ DO NOT EDIT ------ GENERATED ------
 */
 
-import "core:crypto"
+#import "core:crypto"
 
-when crypto.COMPACT_IMPLS == false {
+#if crypto.COMPACT_IMPLS == false {
 	@(private,rodata)
 	Gen_Multiply_Table_edwards25519_lo := [32]Basepoint_Multiply_Table {
 		{

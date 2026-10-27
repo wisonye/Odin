@@ -1,23 +1,23 @@
 package wgpu
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 WGPU_SHARED :: #config(WGPU_SHARED, false)
 WGPU_DEBUG  :: #config(WGPU_DEBUG,  false)
 
-@(private) TYPE :: "debug" when WGPU_DEBUG else "release"
+@(private) TYPE :: "debug" #if WGPU_DEBUG else "release"
 
-when ODIN_OS == .Windows {
-	@(private) ARCH :: "x86_64"   when ODIN_ARCH == .amd64 else "x86_64" when ODIN_ARCH == .i386 else #panic("unsupported WGPU Native architecture")
-	@(private) EXT  :: ".dll.lib" when WGPU_SHARED else ".lib"
+#if ODIN_OS == .Windows {
+	@(private) ARCH :: "x86_64"   #if ODIN_ARCH == .amd64 else "x86_64" #if ODIN_ARCH == .i386 else #panic("unsupported WGPU Native architecture")
+	@(private) EXT  :: ".dll.lib" #if WGPU_SHARED else ".lib"
 	@(private) LIB  :: "lib/wgpu-windows-" + ARCH + "-msvc-" + TYPE + "/lib/wgpu_native" + EXT
 
-	when !#exists(LIB) {
+	#if !#exists(LIB) {
 		#panic("Could not find the compiled WGPU Native library at '" + #directory + LIB + "', these can be downloaded from https://github.com/gfx-rs/wgpu-native/releases/tag/v29.0.1.1, make sure to read the docs at '" + #directory + "doc.odin'")
 	}
 
 	@(export)
-	foreign import libwgpu {
+	#foreign #import libwgpu {
 		LIB,
 		"system:d3dcompiler.lib",
 		"system:ws2_32.lib",
@@ -33,41 +33,41 @@ when ODIN_OS == .Windows {
 		"system:propsys.lib",
 		"system:runtimeobject.lib",
 	}
-} else when ODIN_OS == .Darwin {
-	@(private) ARCH :: "x86_64" when ODIN_ARCH == .amd64 else "aarch64" when ODIN_ARCH == .arm64 else #panic("unsupported WGPU Native architecture")
-	@(private) EXT  :: ".dylib" when WGPU_SHARED else ".a"
+} else #if ODIN_OS == .Darwin {
+	@(private) ARCH :: "x86_64" #if ODIN_ARCH == .amd64 else "aarch64" #if ODIN_ARCH == .arm64 else #panic("unsupported WGPU Native architecture")
+	@(private) EXT  :: ".dylib" #if WGPU_SHARED else ".a"
 	@(private) LIB  :: "lib/wgpu-macos-" + ARCH + "-" + TYPE + "/lib/libwgpu_native" + EXT
 
-	when !#exists(LIB) {
+	#if !#exists(LIB) {
 		#panic("Could not find the compiled WGPU Native library at '" + #directory + LIB + "', these can be downloaded from https://github.com/gfx-rs/wgpu-native/releases/tag/v29.0.1.1, make sure to read the docs at '" + #directory + "doc.odin'")
 	}
 
 	@(export)
-	foreign import libwgpu {
+	#foreign #import libwgpu {
 		LIB,
 		"system:Foundation.framework",
 		"system:CoreFoundation.framework",
 		"system:QuartzCore.framework",
 		"system:Metal.framework",
 	}
-} else when ODIN_OS == .Linux {
-	@(private) ARCH :: "x86_64" when ODIN_ARCH == .amd64 else "aarch64" when ODIN_ARCH == .arm64 else #panic("unsupported WGPU Native architecture")
-	@(private) EXT  :: ".so"    when WGPU_SHARED else ".a"
+} else #if ODIN_OS == .Linux {
+	@(private) ARCH :: "x86_64" #if ODIN_ARCH == .amd64 else "aarch64" #if ODIN_ARCH == .arm64 else #panic("unsupported WGPU Native architecture")
+	@(private) EXT  :: ".so"    #if WGPU_SHARED else ".a"
 	@(private) LIB  :: "lib/wgpu-linux-" + ARCH + "-" + TYPE + "/lib/libwgpu_native" + EXT
 
-	when !#exists(LIB) {
+	#if !#exists(LIB) {
 		#panic("Could not find the compiled WGPU Native library at '" + #directory + LIB + "', these can be downloaded from https://github.com/gfx-rs/wgpu-native/releases/tag/v29.0.1.1, make sure to read the docs at '" + #directory + "doc.odin'")
 	}
 
 	@(export)
-	foreign import libwgpu {
+	#foreign #import libwgpu {
 		LIB,
 		"system:dl",
 		"system:m",
 	}
-} else when ODIN_OS == .JS {
+} else #if ODIN_OS == .JS {
 	@(export)
-	foreign import libwgpu "wgpu"
+	#foreign #import libwgpu "wgpu"
 }
 
 ARRAY_LAYER_COUNT_UNDEFINED :: max(u32)
@@ -1579,7 +1579,7 @@ RenderPipelineDescriptor :: struct {
 }
 
 @(link_prefix="wgpu", default_calling_convention="c")
-foreign libwgpu {
+#foreign libwgpu {
 	@(link_name="wgpuCreateInstance")
 	RawCreateInstance :: proc(/* NULLABLE */ descriptor: /* const */ ^InstanceDescriptor = nil) -> Instance ---
 	GetInstanceFeatures :: proc(features: ^SupportedInstanceFeatures) ---
@@ -1860,7 +1860,7 @@ foreign libwgpu {
 // Wrappers of Instance
 
 CreateInstance :: proc "c" (/* NULLABLE */ descriptor: /* const */ ^InstanceDescriptor = nil) -> Instance {
-	when ODIN_OS != .JS {
+	#if ODIN_OS != .JS {
 		v := (transmute([4]u8)GetVersion()).wzyx
 
 		if v.xyz != BINDINGS_VERSION.xyz {

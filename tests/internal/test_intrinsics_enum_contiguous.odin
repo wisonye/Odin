@@ -1,7 +1,7 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:testing"
 
 @(test)
 test_intrinsics_enum_is_contiguous :: proc(t: ^testing.T) {

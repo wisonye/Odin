@@ -9,7 +9,7 @@ IndexPath :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndexPath, objc_selector="indexPathWithIndex:", objc_name="indexPathWithIndex", objc_is_class_method=true)
 	IndexPath_indexPathWithIndex :: proc(index: UInteger) -> instancetype ---
 
@@ -61,7 +61,7 @@ IndexSet :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndexSet, objc_selector="indexSet", objc_name="indexSet", objc_is_class_method=true)
 	IndexSet_indexSet :: proc() -> instancetype ---
 
@@ -163,7 +163,7 @@ foreign lib {
 @(objc_class="NSMutableIndexSet", objc_superclass=IndexSet)
 MutableIndexSet :: struct { using _: IndexSet}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableIndexSet, objc_selector="addIndexes:", objc_name="addIndexes")
 	MutableIndexSet_addIndexes :: proc(self: ^MutableIndexSet, indexSet: ^IndexSet) ---
 

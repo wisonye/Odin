@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UISpringTimingParameters", objc_superclass=NS.Object)
 SpringTimingParameters :: struct {
@@ -12,7 +12,7 @@ SpringTimingParameters :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringTimingParameters, objc_selector="init", objc_name="init")
 	SpringTimingParameters_init :: proc(self: ^SpringTimingParameters) -> instancetype ---
 

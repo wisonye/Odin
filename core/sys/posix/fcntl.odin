@@ -1,17 +1,17 @@
 #+build linux, darwin, openbsd, freebsd, netbsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // fcntl.h - file control options
 
-foreign lib {
+#foreign lib {
 	/*
 	Implemented as `return open(path, O_WRONLY|O_CREAT|O_TRUNC, mode);`
 
@@ -148,7 +148,7 @@ AT_Flag_Bits :: enum c.int {
 }
 AT_Flags :: bit_set[AT_Flag_Bits; c.int]
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	off_t :: distinct c.int64_t
 	pid_t :: distinct c.int32_t
@@ -213,7 +213,7 @@ when ODIN_OS == .Darwin {
 		l_whence: c.short,   /* [PSX] flag (Whence) of starting offset */
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	off_t :: distinct c.int64_t
 	pid_t :: distinct c.int32_t
@@ -278,7 +278,7 @@ when ODIN_OS == .Darwin {
 		l_sysid:  c.int,
 	}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	off_t :: distinct c.int64_t
 	pid_t :: distinct c.int32_t
@@ -344,7 +344,7 @@ when ODIN_OS == .Darwin {
 		l_whence: c.short,   /* [PSX] flag (Whence) of starting offset */
 	}
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	off_t :: distinct c.int64_t
 	pid_t :: distinct c.int32_t
@@ -409,7 +409,7 @@ when ODIN_OS == .Darwin {
 		l_whence: c.short,   /* [PSX] flag (Whence) of starting offset */
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	off_t :: distinct c.int64_t
 	pid_t :: distinct c.int

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 _ :: CF
 
@@ -13,7 +13,7 @@ Object :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Object, objc_selector="load", objc_name="load", objc_is_class_method=true)
 	Object_load :: proc() ---
 
@@ -122,7 +122,7 @@ foreign lib {
 	@(objc_type=Object, objc_selector="classForCoder", objc_name="classForCoder")
 	Object_classForCoder :: proc(self: ^Object) -> Class ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Object, objc_selector="poseAsClass:", objc_name="poseAsClass", objc_is_class_method=true)
 		Object_poseAsClass :: proc(aClass: Class) ---
 	}
@@ -148,7 +148,7 @@ foreign lib {
 	@(objc_type=Object, objc_selector="cancelPreviousPerformRequestsWithTarget:", objc_name="cancelPreviousPerformRequestsWithTarget_", objc_is_class_method=true)
 	Object_cancelPreviousPerformRequestsWithTarget_ :: proc(aTarget: id) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Object, objc_selector="URL:resourceDataDidBecomeAvailable:", objc_name="URL_resourceDataDidBecomeAvailable")
 		Object_URL_resourceDataDidBecomeAvailable :: proc(self: ^Object, sender: ^URL, newBytes: ^Data) ---
 
@@ -294,7 +294,7 @@ foreign lib {
 	@(objc_type=Object, objc_selector="setObservationInfo:", objc_name="setObservationInfo")
 	Object_setObservationInfo :: proc(self: ^Object, observationInfo: rawptr) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Object, objc_selector="setKeys:triggerChangeNotificationsForDependentKey:", objc_name="setKeys", objc_is_class_method=true)
 		Object_setKeys :: proc(keys: ^Array, dependentKey: ^String) ---
 	}
@@ -329,7 +329,7 @@ foreign lib {
 	@(objc_type=Object, objc_selector="performSelectorInBackground:withObject:", objc_name="performSelectorInBackground")
 	Object_performSelectorInBackground :: proc(self: ^Object, aSelector: SEL, arg: id) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Object, objc_selector="replacementObjectForArchiver:", objc_name="replacementObjectForArchiver")
 		Object_replacementObjectForArchiver :: proc(self: ^Object, archiver: ^Archiver) -> id ---
 
@@ -463,7 +463,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=Object, objc_name="URL")
 	Object_URL :: proc {
 		Object_URL_resourceDataDidBecomeAvailable,
@@ -555,7 +555,7 @@ safeRelease :: #force_inline proc "c" (self: ^ObjectProtocol) -> instancetype {
 @(objc_class="NSObject")
 ObjectProtocol :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ObjectProtocol, objc_selector="isEqual:", objc_name="isEqual")
 	ObjectProtocol_isEqual :: proc(self: ^ObjectProtocol, object: id) -> bool ---
 
@@ -630,7 +630,7 @@ ObjectProtocol_performSelector :: proc {
 @(objc_class="NSCoding")
 Coding :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Coding, objc_selector="encodeWithCoder:", objc_name="encodeWithCoder")
 	Coding_encodeWithCoder :: proc(self: ^Coding, coder: ^Coder) ---
 
@@ -642,7 +642,7 @@ foreign lib {
 @(objc_class="NSCopying")
 Copying :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Copying, objc_selector="copyWithZone:", objc_name="copyWithZone")
 	Copying_copyWithZone :: proc(self: ^Copying, zone: ^Zone) -> id ---
 }
@@ -651,7 +651,7 @@ foreign lib {
 @(objc_class="NSMutableCopying")
 MutableCopying :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableCopying, objc_selector="mutableCopyWithZone:", objc_name="mutableCopyWithZone")
 	MutableCopying_mutableCopyWithZone :: proc(self: ^MutableCopying, zone: ^Zone) -> id ---
 }
@@ -663,7 +663,7 @@ SecureCoding :: struct {
 	using _: Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SecureCoding, objc_selector="supportsSecureCoding", objc_name="supportsSecureCoding", objc_is_class_method=true)
 	SecureCoding_supportsSecureCoding :: proc() -> bool ---
 }
@@ -672,7 +672,7 @@ foreign lib {
 @(objc_class="NSDiscardableContent")
 DiscardableContent :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DiscardableContent, objc_selector="beginContentAccess", objc_name="beginContentAccess")
 	DiscardableContent_beginContentAccess :: proc(self: ^DiscardableContent) -> bool ---
 

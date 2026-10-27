@@ -9,7 +9,7 @@ EAGLLayer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EAGLLayer, objc_selector="presentsWithTransaction", objc_name="presentsWithTransaction")
 	EAGLLayer_presentsWithTransaction :: proc(self: ^EAGLLayer) -> bool ---
 

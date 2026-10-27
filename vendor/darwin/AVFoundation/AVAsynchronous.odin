@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVAsynchronousCIImageFilteringRequest", objc_superclass=NS.Object)
 AsynchronousCIImageFilteringRequest :: struct {
@@ -13,7 +13,7 @@ AsynchronousCIImageFilteringRequest :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AsynchronousCIImageFilteringRequest, objc_selector="finishWithImage:context:", objc_name="finishWithImage")
 	AsynchronousCIImageFilteringRequest_finishWithImage :: proc(self: ^AsynchronousCIImageFilteringRequest, filteredImage: ^CIImage, _context: ^CIContext) ---
 
@@ -38,7 +38,7 @@ AsynchronousCIImageFilteringRequestInternal :: struct { using _: intrinsics.objc
 @(objc_class="AVAsynchronousKeyValueLoading")
 AsynchronousKeyValueLoading :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AsynchronousKeyValueLoading, objc_selector="statusOfValueForKey:error:", objc_name="statusOfValueForKey_error")
 	AsynchronousKeyValueLoading_statusOfValueForKey_error :: proc(self: ^AsynchronousKeyValueLoading, key: ^NS.String, outError: ^^NS.Error) -> KeyValueStatus ---
 
@@ -62,7 +62,7 @@ AsynchronousVideoCompositionRequest :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AsynchronousVideoCompositionRequest, objc_selector="sourceFrameByTrackID:", objc_name="sourceFrameByTrackID")
 	AsynchronousVideoCompositionRequest_sourceFrameByTrackID :: proc(self: ^AsynchronousVideoCompositionRequest, trackID: CM.PersistentTrackID) -> CVPixelBufferRef ---
 

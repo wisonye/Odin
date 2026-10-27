@@ -2,9 +2,9 @@ package runtime
 
 @(no_instrumentation)
 bounds_trap :: proc "contextless" () -> ! {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		windows_trap_array_bounds()
-	} else when ODIN_OS == .Orca {
+	} else #if ODIN_OS == .Orca {
 		abort_ext("", "", 0, "bounds trap")
 	} else {
 		trap()
@@ -13,9 +13,9 @@ bounds_trap :: proc "contextless" () -> ! {
 
 @(no_instrumentation)
 type_assertion_trap_contextless :: proc "contextless" () -> ! {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		windows_trap_type_assertion()
-	} else when ODIN_OS == .Orca {
+	} else #if ODIN_OS == .Orca {
 		abort_ext("", "", 0, "type assertion trap")
 	} else {
 		trap()
@@ -223,7 +223,7 @@ matrix_bounds_check_error_with_context :: proc (file: string, line, column: i32,
 }
 
 
-when ODIN_NO_RTTI {
+#if ODIN_NO_RTTI {
 	type_assertion_check_with_context :: proc "odin" (ok: bool, file: string, line, column: i32) {
 		if ok {
 			return

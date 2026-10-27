@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSCachedURLResponse", objc_superclass=Object)
 CachedURLResponse :: struct {
@@ -11,7 +11,7 @@ CachedURLResponse :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CachedURLResponse, objc_selector="initWithResponse:data:", objc_name="initWithResponse_data")
 	CachedURLResponse_initWithResponse_data :: proc(self: ^CachedURLResponse, response: ^URLResponse, data: ^Data) -> instancetype ---
 

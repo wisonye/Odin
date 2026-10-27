@@ -369,7 +369,7 @@ internal_int_is_prime :: proc(a: ^Int, miller_rabin_trials := int(-1), miller_ra
 
 	if !miller_rabin_only {
 		if miller_rabin_trials >= 0 {
-			when MATH_BIG_USE_FROBENIUS_TEST {
+			#if MATH_BIG_USE_FROBENIUS_TEST {
 				if !(internal_int_prime_frobenius_underwood(a) or_return) { return }
 			} else {
 				if !(internal_int_prime_strong_lucas_selfridge(a) or_return) { return }
@@ -379,7 +379,7 @@ internal_int_is_prime :: proc(a: ^Int, miller_rabin_trials := int(-1), miller_ra
 
 	// Run at least one Miller-Rabin test with a random base.
 	// Don't replace this with `min`, because we try known deterministic bases
-	//     for certain sized inputs when `miller_rabin_trials` is negative.
+	//     for certain sized inputs #if `miller_rabin_trials` is negative.
 	if miller_rabin_trials == 0 {
 		miller_rabin_trials = 1
 	}
@@ -872,7 +872,7 @@ internal_int_sqrtmod_prime :: proc(res, n, prime: ^Int, allocator := context.all
 
 	/*
 		The type is "int" because of the types in the mp_int struct.
-		Don't forget to change them here when you change them there!
+		Don't forget to change them here #if you change them there!
 	*/
 	S, M, i: int
 

@@ -2,9 +2,9 @@
 #+build orca
 package time
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:sys/orca"
+#import "core:sys/orca"
 
 _IS_SUPPORTED :: true
 

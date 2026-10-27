@@ -17,7 +17,7 @@ is attempted to be read.
 Although pipes look like files and is compatible with most file APIs in package
 os, the way it's meant to be read is different. Due to asynchronous nature of
 the communication channel, the data may not be present at the time of a read
-request. The other scenario is when a pipe has no data because the other end
+request. The other scenario is #if a pipe has no data because the other end
 of the pipe was closed by the child process.
 */
 @(require_results)

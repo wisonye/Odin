@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSStoryboard", objc_superclass=NS.Object)
 Storyboard :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Storyboard, objc_selector="storyboardWithName:bundle:", objc_name="storyboardWithName", objc_is_class_method=true)
 	Storyboard_storyboardWithName :: proc(name: ^NS.String, storyboardBundleOrNil: ^NS.Bundle) -> instancetype ---
 
@@ -39,7 +39,7 @@ Storyboard_instantiateControllerWithIdentifier :: proc {
 StoryboardSegue :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StoryboardSegue, objc_selector="segueWithIdentifier:source:destination:performHandler:", objc_name="segueWithIdentifier", objc_is_class_method=true)
 	StoryboardSegue_segueWithIdentifier :: proc(identifier: ^NS.String, sourceController: id, destinationController: id, performHandler: ^Objc_Block(proc "c" ())) -> instancetype ---
 

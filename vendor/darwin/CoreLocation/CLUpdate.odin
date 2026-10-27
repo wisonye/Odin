@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLUpdate", objc_superclass=NS.Object)
 Update :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Update, objc_selector="authorizationDenied", objc_name="authorizationDenied")
 	Update_authorizationDenied :: proc(self: ^Update) -> bool ---
 

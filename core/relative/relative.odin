@@ -1,7 +1,7 @@
 // Relative pointers and slices.
 package relative_types
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 Pointer :: struct($Type: typeid, $Backing: typeid)
 	where
@@ -40,7 +40,7 @@ pointer_set :: proc "contextless" (p: ^$P/Pointer($T, $B), ptr: T) {
 @(require_results)
 slice_get :: proc "contextless" (p: ^$S/Slice($T/[]$E, $B)) -> (slice: T) {
 	if p.offset == 0 {
-		when size_of(E) == 0 {
+		#if size_of(E) == 0 {
 			slice = T(([^]E)(nil)[:p.len])
 		}
 	} else {
@@ -84,9 +84,9 @@ pointer_set_safe :: proc "contextless" (p: ^$P/Pointer($T, $B), ptr: T) -> Set_S
 	if ptr == nil {
 		p.offset = 0
 	} else {
-		when intrinsics.type_is_unsigned(B) {
+		#if intrinsics.type_is_unsigned(B) {
 			diff := uint(uintptr(ptr) - uintptr(p))
-			when size_of(B) < size_of(uint) {
+			#if size_of(B) < size_of(uint) {
 				if diff > uint(max(B)) {
 					return .Memory_Too_Far_Apart
 				}
@@ -97,7 +97,7 @@ pointer_set_safe :: proc "contextless" (p: ^$P/Pointer($T, $B), ptr: T) -> Set_S
 			}
 		} else {
 			diff := int(uintptr(ptr)) - int(uintptr(p))
-			when size_of(B) < size_of(int) {
+			#if size_of(B) < size_of(int) {
 				if diff > int(max(B)) {
 					return .Memory_Too_Far_Apart
 				}
@@ -118,9 +118,9 @@ slice_set_safe :: proc "contextless" (p: ^$S/Slice($T, $B), slice: T) -> Set_Saf
 		p.offset, p.len = 0, 0
 	} else {
 		ptr := raw_data(slice)
-		when intrinsics.type_is_unsigned(B) {
+		#if intrinsics.type_is_unsigned(B) {
 			diff := uint(uintptr(ptr) - uintptr(p))
-			when size_of(B) < size_of(uint) {
+			#if size_of(B) < size_of(uint) {
 				if diff > uint(max(B)) {
 					return .Memory_Too_Far_Apart
 				}
@@ -140,7 +140,7 @@ slice_set_safe :: proc "contextless" (p: ^$S/Slice($T, $B), slice: T) -> Set_Saf
 			p.len = B(len(slice))
 		} else {
 			diff := int(uintptr(ptr)) - int(uintptr(p))
-			when size_of(B) < size_of(int) {
+			#if size_of(B) < size_of(int) {
 				if diff > int(max(B)) {
 					return .Memory_Too_Far_Apart
 				}

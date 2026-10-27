@@ -1,15 +1,15 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/times.h - file access and modification times structure
 
-foreign lib {
+#foreign lib {
 	/*
 	Get time accounting information.
 
@@ -19,13 +19,13 @@ foreign lib {
 	times :: proc(buffer: ^tms) -> clock_t ---
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LTIMES :: "__times13"
 } else {
 	@(private) LTIMES :: "times"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	tms :: struct {
 		tms_utime:  clock_t, /* [PSX] user CPU time */

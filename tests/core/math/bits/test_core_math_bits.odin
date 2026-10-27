@@ -1,8 +1,8 @@
 package test_core_math_bits
 
-import "core:math/bits"
-import "core:math/rand"
-import "core:testing"
+#import "core:math/bits"
+#import "core:math/rand"
+#import "core:testing"
 
 @test
 test_log2 :: proc(t: ^testing.T) {

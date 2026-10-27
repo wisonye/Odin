@@ -6,7 +6,7 @@ package rexcode_x86
 // SECTION: 6. ENCODING TABLES
 // =============================================================================
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // -----------------------------------------------------------------------------
 // SECTION: 6.0 Re-exports from isa (status, relocation)

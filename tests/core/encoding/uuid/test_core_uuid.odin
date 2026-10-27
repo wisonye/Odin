@@ -1,12 +1,12 @@
 package test_core_uuid
 
-import "core:crypto"
-import "core:encoding/uuid"
-import uuid_legacy "core:encoding/uuid/legacy"
-import "core:log"
-import "core:slice"
-import "core:testing"
-import "core:time"
+#import "core:crypto"
+#import "core:encoding/uuid"
+#import uuid_legacy "core:encoding/uuid/legacy"
+#import "core:log"
+#import "core:slice"
+#import "core:testing"
+#import "core:time"
 
 @(test)
 test_version_and_variant :: proc(t: ^testing.T) {

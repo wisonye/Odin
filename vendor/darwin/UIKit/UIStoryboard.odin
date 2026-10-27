@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIStoryboard", objc_superclass=NS.Object)
 Storyboard :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Storyboard, objc_selector="storyboardWithName:bundle:", objc_name="storyboardWithName", objc_is_class_method=true)
 	Storyboard_storyboardWithName :: proc(name: ^NS.String, storyboardBundleOrNil: ^NS.Bundle) -> ^Storyboard ---
 
@@ -36,7 +36,7 @@ Storyboard_instantiateViewControllerWithIdentifier :: proc {
 StoryboardPopoverSegue :: struct { using _: StoryboardSegue}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StoryboardPopoverSegue, objc_selector="popoverController", objc_name="popoverController")
 	StoryboardPopoverSegue_popoverController :: proc(self: ^StoryboardPopoverSegue) -> ^PopoverController ---
 }
@@ -46,7 +46,7 @@ foreign lib {
 StoryboardSegue :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StoryboardSegue, objc_selector="segueWithIdentifier:source:destination:performHandler:", objc_name="segueWithIdentifier", objc_is_class_method=true)
 	StoryboardSegue_segueWithIdentifier :: proc(identifier: ^NS.String, source: ^ViewController, destination: ^ViewController, performHandler: ^Objc_Block(proc "c" ())) -> instancetype ---
 
@@ -74,7 +74,7 @@ foreign lib {
 StoryboardUnwindSegueSource :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StoryboardUnwindSegueSource, objc_selector="init", objc_name="init")
 	StoryboardUnwindSegueSource_init :: proc(self: ^StoryboardUnwindSegueSource) -> instancetype ---
 

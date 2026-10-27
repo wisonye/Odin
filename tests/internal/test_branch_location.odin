@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(private="file")
 returns_at :: proc(early: bool, got: ^i32) -> (expected: i32) {

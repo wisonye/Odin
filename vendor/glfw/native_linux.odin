@@ -2,10 +2,10 @@
 
 package glfw
 
-import "vendor:x11/xlib"
+#import "vendor:x11/xlib"
 
 @(default_calling_convention="c", link_prefix="glfw")
-foreign {
+#foreign {
 	GetX11Display :: proc() -> ^xlib.Display ---
 	GetX11Window :: proc(window:  WindowHandle) -> xlib.Window ---
 	GetX11Adapter :: proc(monitor: MonitorHandle) -> xlib.RRCrtc ---

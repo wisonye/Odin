@@ -2,10 +2,10 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSLayoutAnchor", objc_superclass=NS.Object)
 NSLayoutAnchor :: struct {
@@ -15,7 +15,7 @@ NSLayoutAnchor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutAnchor, objc_selector="constraintEqualToAnchor:", objc_name="constraintEqualToAnchor_")
 	NSLayoutAnchor_constraintEqualToAnchor_ :: proc(self: ^NSLayoutAnchor, anchor: ^NSLayoutAnchor) -> ^NSLayoutConstraint ---
 
@@ -70,7 +70,7 @@ NSLayoutAnchor_constraintLessThanOrEqualToAnchor :: proc {
 NSLayoutDimension :: struct { using _: NSLayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutDimension, objc_selector="constraintEqualToConstant:", objc_name="constraintEqualToConstant")
 	NSLayoutDimension_constraintEqualToConstant :: proc(self: ^NSLayoutDimension, c: CG.Float) -> ^NSLayoutConstraint ---
 
@@ -122,7 +122,7 @@ NSLayoutDimension_constraintLessThanOrEqualToAnchor :: proc {
 NSLayoutXAxisAnchor :: struct { using _: NSLayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutXAxisAnchor, objc_selector="anchorWithOffsetToAnchor:", objc_name="anchorWithOffsetToAnchor")
 	NSLayoutXAxisAnchor_anchorWithOffsetToAnchor :: proc(self: ^NSLayoutXAxisAnchor, otherAnchor: ^NSLayoutXAxisAnchor) -> ^NSLayoutDimension ---
 
@@ -141,7 +141,7 @@ foreign lib {
 NSLayoutYAxisAnchor :: struct { using _: NSLayoutAnchor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutYAxisAnchor, objc_selector="anchorWithOffsetToAnchor:", objc_name="anchorWithOffsetToAnchor")
 	NSLayoutYAxisAnchor_anchorWithOffsetToAnchor :: proc(self: ^NSLayoutYAxisAnchor, otherAnchor: ^NSLayoutYAxisAnchor) -> ^NSLayoutDimension ---
 
@@ -160,7 +160,7 @@ foreign lib {
 NSLayoutConstraint :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutConstraint, objc_selector="constraintsWithVisualFormat:options:metrics:views:", objc_name="constraintsWithVisualFormat", objc_is_class_method=true)
 	NSLayoutConstraint_constraintsWithVisualFormat :: proc(format: ^NS.String, opts: NSLayoutFormatOptions, metrics: ^NS.Dictionary, views: ^NS.Dictionary) -> ^NS.Array ---
 
@@ -236,7 +236,7 @@ NSLayoutManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutManager, objc_selector="init", objc_name="init")
 	NSLayoutManager_init :: proc(self: ^NSLayoutManager) -> instancetype ---
 
@@ -576,7 +576,7 @@ NSLayoutManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSLayoutManagerDelegate, objc_selector="layoutManager:shouldGenerateGlyphs:properties:characterIndexes:font:forGlyphRange:", objc_name="layoutManager_shouldGenerateGlyphs_properties_characterIndexes_font_forGlyphRange")
 	NSLayoutManagerDelegate_layoutManager_shouldGenerateGlyphs_properties_characterIndexes_font_forGlyphRange :: proc(self: ^NSLayoutManagerDelegate, layoutManager: ^NSLayoutManager, glyphs: ^CG.Glyph, props: ^NSGlyphProperty, charIndexes: ^NS.UInteger, aFont: ^Font, glyphRange: NS._NSRange) -> NS.UInteger ---
 

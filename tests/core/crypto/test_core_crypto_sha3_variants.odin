@@ -1,13 +1,13 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:encoding/hex"
-import "core:testing"
-import "core:crypto/kmac"
-import "core:crypto/shake"
-import "core:crypto/tuplehash"
-import "core:crypto/turboshake"
-import "core:strings"
+#import "base:runtime"
+#import "core:encoding/hex"
+#import "core:testing"
+#import "core:crypto/kmac"
+#import "core:crypto/shake"
+#import "core:crypto/tuplehash"
+#import "core:crypto/turboshake"
+#import "core:strings"
 
 @(test)
 test_shake :: proc(t: ^testing.T) {

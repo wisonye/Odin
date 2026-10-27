@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import CF "core:sys/darwin/CoreFoundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
 
 @(objc_class="AVMusicEvent", objc_superclass=NS.Object)
 MusicEvent :: struct { using _: NS.Object}
@@ -13,7 +13,7 @@ MusicEvent :: struct { using _: NS.Object}
 @(objc_class="AVAUPresetEvent", objc_superclass=MusicEvent)
 AUPresetEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUPresetEvent, objc_selector="initWithScope:element:dictionary:", objc_name="initWithScope")
 	AUPresetEvent_initWithScope :: proc(self: ^AUPresetEvent, scope: CF.UInt32, element: CF.UInt32, presetDictionary: ^NS.Dictionary) -> instancetype ---
 
@@ -37,7 +37,7 @@ foreign lib {
 @(objc_class="AVExtendedNoteOnEvent", objc_superclass=MusicEvent)
 ExtendedNoteOnEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtendedNoteOnEvent, objc_selector="initWithMIDINote:velocity:groupID:duration:", objc_name="initWithMIDINote_velocity_groupID_duration")
 	ExtendedNoteOnEvent_initWithMIDINote_velocity_groupID_duration :: proc(self: ^ExtendedNoteOnEvent, midiNote: cffi.float, velocity: cffi.float, groupID: CF.UInt32, duration: MusicTimeStamp) -> instancetype ---
 
@@ -87,7 +87,7 @@ ExtendedNoteOnEvent_initWithMIDINote :: proc {
 @(objc_class="AVExtendedTempoEvent", objc_superclass=MusicEvent)
 ExtendedTempoEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtendedTempoEvent, objc_selector="initWithTempo:", objc_name="initWithTempo")
 	ExtendedTempoEvent_initWithTempo :: proc(self: ^ExtendedTempoEvent, tempo: cffi.double) -> instancetype ---
 
@@ -102,7 +102,7 @@ foreign lib {
 @(objc_class="AVMIDIChannelEvent", objc_superclass=MusicEvent)
 MIDIChannelEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIChannelEvent, objc_selector="channel", objc_name="channel")
 	MIDIChannelEvent_channel :: proc(self: ^MIDIChannelEvent) -> CF.UInt32 ---
 
@@ -114,7 +114,7 @@ foreign lib {
 @(objc_class="AVMIDIChannelPressureEvent", objc_superclass=MIDIChannelEvent)
 MIDIChannelPressureEvent :: struct { using _: MIDIChannelEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIChannelPressureEvent, objc_selector="initWithChannel:pressure:", objc_name="initWithChannel")
 	MIDIChannelPressureEvent_initWithChannel :: proc(self: ^MIDIChannelPressureEvent, channel: CF.UInt32, pressure: CF.UInt32) -> instancetype ---
 
@@ -129,7 +129,7 @@ foreign lib {
 @(objc_class="AVMIDIControlChangeEvent", objc_superclass=MIDIChannelEvent)
 MIDIControlChangeEvent :: struct { using _: MIDIChannelEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIControlChangeEvent, objc_selector="initWithChannel:messageType:value:", objc_name="initWithChannel")
 	MIDIControlChangeEvent_initWithChannel :: proc(self: ^MIDIControlChangeEvent, channel: CF.UInt32, messageType: MIDIControlChangeMessageType, value: CF.UInt32) -> instancetype ---
 
@@ -144,7 +144,7 @@ foreign lib {
 @(objc_class="AVMIDIMetaEvent", objc_superclass=MusicEvent)
 MIDIMetaEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIMetaEvent, objc_selector="initWithType:data:", objc_name="initWithType")
 	MIDIMetaEvent_initWithType :: proc(self: ^MIDIMetaEvent, type: MIDIMetaEventType, data: ^NS.Data) -> instancetype ---
 
@@ -156,7 +156,7 @@ foreign lib {
 @(objc_class="AVMIDINoteEvent", objc_superclass=MusicEvent)
 MIDINoteEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDINoteEvent, objc_selector="initWithChannel:key:velocity:duration:", objc_name="initWithChannel")
 	MIDINoteEvent_initWithChannel :: proc(self: ^MIDINoteEvent, channel: CF.UInt32, keyNum: CF.UInt32, velocity: CF.UInt32, duration: MusicTimeStamp) -> instancetype ---
 
@@ -189,7 +189,7 @@ foreign lib {
 @(objc_class="AVMIDIPitchBendEvent", objc_superclass=MIDIChannelEvent)
 MIDIPitchBendEvent :: struct { using _: MIDIChannelEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIPitchBendEvent, objc_selector="initWithChannel:value:", objc_name="initWithChannel")
 	MIDIPitchBendEvent_initWithChannel :: proc(self: ^MIDIPitchBendEvent, channel: CF.UInt32, value: CF.UInt32) -> instancetype ---
 
@@ -204,7 +204,7 @@ foreign lib {
 @(objc_class="AVMIDIPolyPressureEvent", objc_superclass=MIDIChannelEvent)
 MIDIPolyPressureEvent :: struct { using _: MIDIChannelEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIPolyPressureEvent, objc_selector="initWithChannel:key:pressure:", objc_name="initWithChannel")
 	MIDIPolyPressureEvent_initWithChannel :: proc(self: ^MIDIPolyPressureEvent, channel: CF.UInt32, key: CF.UInt32, pressure: CF.UInt32) -> instancetype ---
 
@@ -225,7 +225,7 @@ foreign lib {
 @(objc_class="AVMIDIProgramChangeEvent", objc_superclass=MIDIChannelEvent)
 MIDIProgramChangeEvent :: struct { using _: MIDIChannelEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIProgramChangeEvent, objc_selector="initWithChannel:programNumber:", objc_name="initWithChannel")
 	MIDIProgramChangeEvent_initWithChannel :: proc(self: ^MIDIProgramChangeEvent, channel: CF.UInt32, programNumber: CF.UInt32) -> instancetype ---
 
@@ -240,7 +240,7 @@ foreign lib {
 @(objc_class="AVMIDISysexEvent", objc_superclass=MusicEvent)
 MIDISysexEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDISysexEvent, objc_selector="initWithData:", objc_name="initWithData")
 	MIDISysexEvent_initWithData :: proc(self: ^MIDISysexEvent, data: ^NS.Data) -> instancetype ---
 
@@ -252,7 +252,7 @@ foreign lib {
 @(objc_class="AVMusicUserEvent", objc_superclass=MusicEvent)
 MusicUserEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MusicUserEvent, objc_selector="initWithData:", objc_name="initWithData")
 	MusicUserEvent_initWithData :: proc(self: ^MusicUserEvent, data: ^NS.Data) -> instancetype ---
 
@@ -264,7 +264,7 @@ foreign lib {
 @(objc_class="AVParameterEvent", objc_superclass=MusicEvent)
 ParameterEvent :: struct { using _: MusicEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ParameterEvent, objc_selector="initWithParameterID:scope:element:value:", objc_name="initWithParameterID")
 	ParameterEvent_initWithParameterID :: proc(self: ^ParameterEvent, parameterID: CF.UInt32, scope: CF.UInt32, element: CF.UInt32, value: cffi.float) -> instancetype ---
 
@@ -297,7 +297,7 @@ foreign lib {
 @(objc_class="AVMusicTrack", objc_superclass=NS.Object)
 MusicTrack :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MusicTrack, objc_selector="destinationAudioUnit", objc_name="destinationAudioUnit")
 	MusicTrack_destinationAudioUnit :: proc(self: ^MusicTrack) -> ^AudioUnit ---
 

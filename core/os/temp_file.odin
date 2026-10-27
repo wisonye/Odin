@@ -1,6 +1,6 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
 @(private="file")
 MAX_ATTEMPTS :: 1<<13 // Should be enough for everyone, right?

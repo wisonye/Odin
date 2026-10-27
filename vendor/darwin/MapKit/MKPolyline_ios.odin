@@ -6,7 +6,7 @@ package darwin_MapKit
 PolylineView :: struct { using _: OverlayPathView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PolylineView, objc_selector="initWithPolyline:", objc_name="initWithPolyline")
 	PolylineView_initWithPolyline :: proc(self: ^PolylineView, polyline: ^Polyline) -> instancetype ---
 

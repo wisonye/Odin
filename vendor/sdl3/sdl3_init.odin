@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 InitFlags :: distinct bit_set[InitFlag; Uint32]
 InitFlag :: enum Uint32 {
@@ -45,7 +45,7 @@ PROP_APP_METADATA_URL_STRING        :: "SDL.app.metadata.url"
 PROP_APP_METADATA_TYPE_STRING       :: "SDL.app.metadata.type"
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	Init                   :: proc(flags: InitFlags) -> bool ---
 	InitSubSystem          :: proc(flags: InitFlags) -> bool ---
 	QuitSubSystem          :: proc(flags: InitFlags) ---

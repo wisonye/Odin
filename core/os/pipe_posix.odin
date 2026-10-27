@@ -2,8 +2,8 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "core:sys/posix"
-import "core:strings"
+#import "core:sys/posix"
+#import "core:strings"
 
 _pipe :: proc() -> (r, w: ^File, err: Error) {
 	fds: [2]posix.FD

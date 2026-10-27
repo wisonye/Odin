@@ -2,9 +2,9 @@
 #+build wasi
 package time
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:sys/wasm/wasi"
+#import "core:sys/wasm/wasi"
 
 _IS_SUPPORTED :: true
 

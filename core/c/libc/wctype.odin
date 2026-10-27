@@ -2,38 +2,38 @@ package libc
 
 // 7.30 Wide character classification and mapping utilities
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	wctrans_t :: distinct wchar_t
 	wctype_t  :: distinct ushort
 
-} else when ODIN_OS == .Linux || ODIN_OS == .JS {
+} else #if ODIN_OS == .Linux || ODIN_OS == .JS {
 	wctrans_t :: distinct intptr_t
 	wctype_t  :: distinct ulong
 
-} else when ODIN_OS == .Darwin {
+} else #if ODIN_OS == .Darwin {
 	wctrans_t :: distinct int
 	wctype_t  :: distinct u32
 
-} else when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	wctrans_t :: distinct rawptr
 	wctype_t  :: distinct rawptr
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 	wctrans_t :: distinct int
 	wctype_t  :: distinct ulong
 
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.30.2.1 Wide character classification functions
 	iswalnum  :: proc(wc: wint_t) -> int ---
 	iswalpha  :: proc(wc: wint_t) -> int ---

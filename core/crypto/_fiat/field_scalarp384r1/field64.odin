@@ -35,8 +35,8 @@ package field_scalarp384r1
 // WARNING: While big-endian is the common representation used for this
 // curve, the fiat output uses least-significant-limb first.
 
-import fiat "core:crypto/_fiat"
-import "core:math/bits"
+#import fiat "core:crypto/_fiat"
+#import "core:math/bits"
 
 // ELL is the saturated representation of the field order, least-significant
 // limb first.

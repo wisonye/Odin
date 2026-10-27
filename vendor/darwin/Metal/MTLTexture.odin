@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLTexture")
 Texture :: struct {
@@ -12,7 +12,7 @@ Texture :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Texture, objc_selector="getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:", objc_name="getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice")
 	Texture_getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice :: proc(self: ^Texture, pixelBytes: rawptr, bytesPerRow: NS.UInteger, bytesPerImage: NS.UInteger, region: Region, level: NS.UInteger, slice: NS.UInteger) ---
 
@@ -37,7 +37,7 @@ foreign lib {
 	@(objc_type=Texture, objc_selector="newTextureViewWithDescriptor:", objc_name="newTextureViewWithDescriptor")
 	Texture_newTextureViewWithDescriptor :: proc(self: ^Texture, descriptor: ^TextureViewDescriptor) -> ^Texture ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Texture, objc_selector="newRemoteTextureViewForDevice:", objc_name="newRemoteTextureViewForDevice")
 		Texture_newRemoteTextureViewForDevice :: proc(self: ^Texture, device: ^Device) -> ^Texture ---
 	}
@@ -123,7 +123,7 @@ foreign lib {
 	@(objc_type=Texture, objc_selector="gpuResourceID", objc_name="gpuResourceID")
 	Texture_gpuResourceID :: proc(self: ^Texture) -> ResourceID ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Texture, objc_selector="remoteStorageTexture", objc_name="remoteStorageTexture")
 		Texture_remoteStorageTexture :: proc(self: ^Texture) -> ^Texture ---
 	}
@@ -163,7 +163,7 @@ TextureDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureDescriptor, objc_selector="texture2DDescriptorWithPixelFormat:width:height:mipmapped:", objc_name="texture2DDescriptorWithPixelFormat", objc_is_class_method=true)
 	TextureDescriptor_texture2DDescriptorWithPixelFormat :: proc(pixelFormat: PixelFormat, width: NS.UInteger, height: NS.UInteger, mipmapped: bool) -> ^TextureDescriptor ---
 
@@ -283,7 +283,7 @@ TextureBinding :: struct {
 	using _: Binding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureBinding, objc_selector="textureType", objc_name="textureType")
 	TextureBinding_textureType :: proc(self: ^TextureBinding) -> TextureType ---
 
@@ -301,7 +301,7 @@ foreign lib {
 @(objc_class="MTLTextureReferenceType", objc_superclass=Type)
 TextureReferenceType :: struct { using _: Type}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureReferenceType, objc_selector="textureDataType", objc_name="textureDataType")
 	TextureReferenceType_textureDataType :: proc(self: ^TextureReferenceType) -> DataType ---
 
@@ -322,7 +322,7 @@ TextureViewDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureViewDescriptor, objc_selector="pixelFormat", objc_name="pixelFormat")
 	TextureViewDescriptor_pixelFormat :: proc(self: ^TextureViewDescriptor) -> PixelFormat ---
 
@@ -361,7 +361,7 @@ TextureViewPool :: struct {
 	using _: ResourceViewPool,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureViewPool, objc_selector="setTextureView:atIndex:", objc_name="setTextureView_atIndex")
 	TextureViewPool_setTextureView_atIndex :: proc(self: ^TextureViewPool, texture: ^Texture, index: NS.UInteger) -> ResourceID ---
 

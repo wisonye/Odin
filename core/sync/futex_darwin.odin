@@ -2,13 +2,13 @@
 #+build darwin
 package sync
 
-import "core:c"
-import "core:sys/darwin"
-import "core:time"
+#import "core:c"
+#import "core:sys/darwin"
+#import "core:time"
 
-foreign import System "system:System"
+#foreign #import System "system:System"
 
-foreign System {
+#foreign System {
 	// __ulock_wait is not available on 10.15
 	// See https://github.com/odin-lang/Odin/issues/1959
 	__ulock_wait  :: proc "c" (operation: u32, addr: rawptr, value: u64, timeout_us: u32) -> c.int ---
@@ -32,7 +32,7 @@ _futex_wait :: proc "contextless" (f: ^Futex, expected: u32) -> bool {
 }
 
 _futex_wait_with_timeout :: proc "contextless" (f: ^Futex, expected: u32, duration: time.Duration) -> bool {
-	when darwin.WAIT_ON_ADDRESS_AVAILABLE {
+	#if darwin.WAIT_ON_ADDRESS_AVAILABLE {
 		s: i32
 		if duration > 0 {
 			s = darwin.os_sync_wait_on_address_with_timeout(f, u64(expected), size_of(Futex), {}, .MACH_ABSOLUTE_TIME, u64(duration))
@@ -54,7 +54,7 @@ _futex_wait_with_timeout :: proc "contextless" (f: ^Futex, expected: u32, durati
 		}
 	} else {
 
-	when darwin.ULOCK_WAIT_2_AVAILABLE {
+	#if darwin.ULOCK_WAIT_2_AVAILABLE {
 		timeout_ns := u64(duration)
 		s := __ulock_wait2(UL_COMPARE_AND_WAIT | ULF_NO_ERRNO, f, u64(expected), timeout_ns, 0)
 		shortened := false
@@ -90,7 +90,7 @@ _futex_wait_with_timeout :: proc "contextless" (f: ^Futex, expected: u32, durati
 }
 
 _futex_signal :: proc "contextless" (f: ^Futex) {
-	when darwin.WAIT_ON_ADDRESS_AVAILABLE {
+	#if darwin.WAIT_ON_ADDRESS_AVAILABLE {
 		loop: for {
 			s := darwin.os_sync_wake_by_address_any(f, size_of(Futex), {})
 			if s >= 0 {
@@ -126,7 +126,7 @@ _futex_signal :: proc "contextless" (f: ^Futex) {
 }
 
 _futex_broadcast :: proc "contextless" (f: ^Futex) {
-	when darwin.WAIT_ON_ADDRESS_AVAILABLE {
+	#if darwin.WAIT_ON_ADDRESS_AVAILABLE {
 		loop: for {
 			s := darwin.os_sync_wake_by_address_all(f, size_of(Futex), {})
 			if s >= 0 {

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKScore", objc_superclass=NS.Object)
 Score :: struct {
@@ -12,7 +12,7 @@ Score :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Score, objc_selector="initWithLeaderboardIdentifier:", objc_name="initWithLeaderboardIdentifier_")
 	Score_initWithLeaderboardIdentifier_ :: proc(self: ^Score, identifier: ^NS.String) -> instancetype ---
 
@@ -108,7 +108,7 @@ Score_reportScores :: proc {
 @(objc_class="GKScoreChallenge", objc_superclass=Challenge)
 ScoreChallenge :: struct { using _: Challenge}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ScoreChallenge, objc_selector="score", objc_name="score")
 	ScoreChallenge_score :: proc(self: ^ScoreChallenge) -> ^Score ---
 

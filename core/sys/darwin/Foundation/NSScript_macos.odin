@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import CF "core:sys/darwin/CoreFoundation"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSScriptCoercionHandler", objc_superclass=Object)
 ScriptCoercionHandler :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptCoercionHandler, objc_selector="sharedCoercionHandler", objc_name="sharedCoercionHandler", objc_is_class_method=true)
 	ScriptCoercionHandler_sharedCoercionHandler :: proc() -> ^ScriptCoercionHandler ---
 
@@ -27,7 +27,7 @@ ScriptCommand :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptCommand, objc_selector="initWithCommandDescription:", objc_name="initWithCommandDescription")
 	ScriptCommand_initWithCommandDescription :: proc(self: ^ScriptCommand, commandDef: ^ScriptCommandDescription) -> instancetype ---
 
@@ -115,7 +115,7 @@ ScriptCommandDescription :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptCommandDescription, objc_selector="init", objc_name="init")
 	ScriptCommandDescription_init :: proc(self: ^ScriptCommandDescription) -> id ---
 
@@ -170,7 +170,7 @@ foreign lib {
 CloneCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloneCommand, objc_selector="setReceiversSpecifier:", objc_name="setReceiversSpecifier")
 	CloneCommand_setReceiversSpecifier :: proc(self: ^CloneCommand, receiversRef: ^ScriptObjectSpecifier) ---
 
@@ -183,7 +183,7 @@ foreign lib {
 CloseCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloseCommand, objc_selector="saveOptions", objc_name="saveOptions")
 	CloseCommand_saveOptions :: proc(self: ^CloseCommand) -> SaveOptions ---
 }
@@ -193,14 +193,14 @@ foreign lib {
 CountCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSCreateCommand", objc_superclass=ScriptCommand)
 CreateCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CreateCommand, objc_selector="createClassDescription", objc_name="createClassDescription")
 	CreateCommand_createClassDescription :: proc(self: ^CreateCommand) -> ^ScriptClassDescription ---
 
@@ -213,7 +213,7 @@ foreign lib {
 DeleteCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DeleteCommand, objc_selector="setReceiversSpecifier:", objc_name="setReceiversSpecifier")
 	DeleteCommand_setReceiversSpecifier :: proc(self: ^DeleteCommand, receiversRef: ^ScriptObjectSpecifier) ---
 
@@ -226,21 +226,21 @@ foreign lib {
 ExistsCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSGetCommand", objc_superclass=ScriptCommand)
 GetCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSMoveCommand", objc_superclass=ScriptCommand)
 MoveCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MoveCommand, objc_selector="setReceiversSpecifier:", objc_name="setReceiversSpecifier")
 	MoveCommand_setReceiversSpecifier :: proc(self: ^MoveCommand, receiversRef: ^ScriptObjectSpecifier) ---
 
@@ -253,7 +253,7 @@ foreign lib {
 QuitCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=QuitCommand, objc_selector="saveOptions", objc_name="saveOptions")
 	QuitCommand_saveOptions :: proc(self: ^QuitCommand) -> SaveOptions ---
 }
@@ -263,7 +263,7 @@ foreign lib {
 ScriptExecutionContext :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptExecutionContext, objc_selector="sharedScriptExecutionContext", objc_name="sharedScriptExecutionContext", objc_is_class_method=true)
 	ScriptExecutionContext_sharedScriptExecutionContext :: proc() -> ^ScriptExecutionContext ---
 
@@ -294,7 +294,7 @@ ScriptObjectSpecifier :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptObjectSpecifier, objc_selector="objectSpecifierWithDescriptor:", objc_name="objectSpecifierWithDescriptor", objc_is_class_method=true)
 	ScriptObjectSpecifier_objectSpecifierWithDescriptor :: proc(descriptor: ^AppleEventDescriptor) -> ^ScriptObjectSpecifier ---
 
@@ -373,7 +373,7 @@ foreign lib {
 IndexSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=IndexSpecifier, objc_selector="initWithContainerClassDescription:containerSpecifier:key:index:", objc_name="initWithContainerClassDescription")
 	IndexSpecifier_initWithContainerClassDescription :: proc(self: ^IndexSpecifier, classDesc: ^ScriptClassDescription, container: ^ScriptObjectSpecifier, property: ^String, index: Integer) -> instancetype ---
 
@@ -389,14 +389,14 @@ foreign lib {
 MiddleSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSNameSpecifier", objc_superclass=ScriptObjectSpecifier)
 NameSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NameSpecifier, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	NameSpecifier_initWithCoder :: proc(self: ^NameSpecifier, inCoder: ^Coder) -> instancetype ---
 
@@ -415,21 +415,21 @@ foreign lib {
 PropertySpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSRandomSpecifier", objc_superclass=ScriptObjectSpecifier)
 RandomSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSRangeSpecifier", objc_superclass=ScriptObjectSpecifier)
 RangeSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RangeSpecifier, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	RangeSpecifier_initWithCoder :: proc(self: ^RangeSpecifier, inCoder: ^Coder) -> instancetype ---
 
@@ -454,7 +454,7 @@ foreign lib {
 RelativeSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RelativeSpecifier, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	RelativeSpecifier_initWithCoder :: proc(self: ^RelativeSpecifier, inCoder: ^Coder) -> instancetype ---
 
@@ -479,7 +479,7 @@ foreign lib {
 UniqueIDSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UniqueIDSpecifier, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	UniqueIDSpecifier_initWithCoder :: proc(self: ^UniqueIDSpecifier, inCoder: ^Coder) -> instancetype ---
 
@@ -498,7 +498,7 @@ foreign lib {
 WhoseSpecifier :: struct { using _: ScriptObjectSpecifier}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WhoseSpecifier, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	WhoseSpecifier_initWithCoder :: proc(self: ^WhoseSpecifier, inCoder: ^Coder) -> instancetype ---
 
@@ -541,7 +541,7 @@ foreign lib {
 ScriptSuiteRegistry :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptSuiteRegistry, objc_selector="sharedScriptSuiteRegistry", objc_name="sharedScriptSuiteRegistry", objc_is_class_method=true)
 	ScriptSuiteRegistry_sharedScriptSuiteRegistry :: proc() -> ^ScriptSuiteRegistry ---
 
@@ -596,7 +596,7 @@ ScriptWhoseTest :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScriptWhoseTest, objc_selector="isTrue", objc_name="isTrue")
 	ScriptWhoseTest_isTrue :: proc(self: ^ScriptWhoseTest) -> bool ---
 
@@ -612,7 +612,7 @@ foreign lib {
 LogicalTest :: struct { using _: ScriptWhoseTest}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LogicalTest, objc_selector="initAndTestWithTests:", objc_name="initAndTestWithTests")
 	LogicalTest_initAndTestWithTests :: proc(self: ^LogicalTest, subTests: ^Array) -> instancetype ---
 
@@ -628,7 +628,7 @@ foreign lib {
 SpecifierTest :: struct { using _: ScriptWhoseTest}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpecifierTest, objc_selector="init", objc_name="init")
 	SpecifierTest_init :: proc(self: ^SpecifierTest) -> instancetype ---
 
@@ -644,7 +644,7 @@ foreign lib {
 SetCommand :: struct { using _: ScriptCommand}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SetCommand, objc_selector="setReceiversSpecifier:", objc_name="setReceiversSpecifier")
 	SetCommand_setReceiversSpecifier :: proc(self: ^SetCommand, receiversRef: ^ScriptObjectSpecifier) ---
 
@@ -657,7 +657,7 @@ foreign lib {
 PositionalSpecifier :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PositionalSpecifier, objc_selector="initWithPosition:objectSpecifier:", objc_name="initWithPosition")
 	PositionalSpecifier_initWithPosition :: proc(self: ^PositionalSpecifier, position: InsertionPosition, specifier: ^ScriptObjectSpecifier) -> instancetype ---
 

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVContinuityDevice", objc_superclass=NS.Object)
 ContinuityDevice :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContinuityDevice, objc_selector="init", objc_name="init")
 	ContinuityDevice_init :: proc(self: ^ContinuityDevice) -> instancetype ---
 

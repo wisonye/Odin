@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLLogState")
 LogState :: struct {
@@ -11,7 +11,7 @@ LogState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LogState, objc_selector="addLogHandler:", objc_name="addLogHandler")
 	LogState_addLogHandler :: proc(self: ^LogState, block: ^Objc_Block(proc "c" ( subSystem: ^NS.String, category: ^NS.String, logLevel: LogLevel, message: ^NS.String ))) ---
 }
@@ -23,7 +23,7 @@ LogStateDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LogStateDescriptor, objc_selector="level", objc_name="level")
 	LogStateDescriptor_level :: proc(self: ^LogStateDescriptor) -> LogLevel ---
 

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import "base:runtime"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import "base:runtime"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import posix "core:sys/posix"
 
 _ :: CG
 
@@ -19,7 +19,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:Foundation.framework",
 }
 
@@ -83,7 +83,7 @@ STR :: #force_inline proc "contextless" ( #const s: cstring ) -> ^String {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="NSFoundationVersionNumber")
 	FoundationVersionNumber: cffi.double
 
@@ -627,7 +627,7 @@ foreign lib {
 	@(link_name="NSFileHandleNotificationMonitorModes")
 	FileHandleNotificationMonitorModes: ^String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSHTTPPropertyStatusCodeKey")
 		HTTPPropertyStatusCodeKey: ^String
 
@@ -1355,7 +1355,7 @@ foreign lib {
 	@(link_name="NSKeyValueChangeNotificationIsPriorKey")
 	KeyValueChangeNotificationIsPriorKey: ^String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSZeroPoint")
 		ZeroPoint: CG.Point
 
@@ -1645,7 +1645,7 @@ foreign lib {
 	@(link_name="NSUserDefaultsDidChangeNotification")
 	UserDefaultsDidChangeNotification: ^String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSWeekDayNameArray")
 		WeekDayNameArray: ^String
 
@@ -2538,7 +2538,7 @@ foreign lib {
 	@(link_name="NSUserActivityTypeBrowsingWeb")
 	UserActivityTypeBrowsingWeb: ^String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSAppleScriptErrorMessage")
 		AppleScriptErrorMessage: ^String
 
@@ -2657,7 +2657,7 @@ foreign lib {
 	@(link_name="NSZoneFree")
 	ZoneFree :: proc(zone: ^Zone, ptr: rawptr) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSAllocateCollectable")
 		AllocateCollectable :: proc(size: UInteger, options: UInteger) -> rawptr ---
 
@@ -2836,7 +2836,7 @@ foreign lib {
 	@(link_name="NSCreateHashTable")
 	CreateHashTable :: proc(callBacks: HashTableCallBacks, capacity: UInteger) -> ^HashTable ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSEqualPoints")
 		EqualPoints :: proc(aPoint: CG.Point, bPoint: CG.Point) -> bool ---
 
@@ -2961,7 +2961,7 @@ foreign lib {
 	@(link_name="NSCreateMapTable")
 	CreateMapTable :: proc(keyCallBacks: MapTableKeyCallBacks, valueCallBacks: MapTableValueCallBacks, capacity: UInteger) -> ^MapTable ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="NSFileTypeForHFSTypeCode")
 		FileTypeForHFSTypeCode :: proc(hfsFileTypeCode: CF.OSType) -> ^String ---
 
@@ -2975,7 +2975,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	ScannedOption                                        :: 1
 	CollectorDisabledOption                              :: 2
 }
@@ -3025,7 +3025,7 @@ OSF1OperatingSystem                                  :: 7
 TextCheckingAllSystemTypes                           :: 4294967295
 TextCheckingAllCustomTypes                           :: 18446744069414584320
 TextCheckingAllTypes                                 :: 18446744073709551615
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	L68kContextNotSupported                              :: -4170
 	LSchedulerError                                      :: -4171
 	LBadURLSyntax                                        :: -4172
@@ -3234,7 +3234,7 @@ UbiquitousKeyValueStoreServerChange                  :: 0
 UbiquitousKeyValueStoreInitialSyncChange             :: 1
 UbiquitousKeyValueStoreQuotaViolationChange          :: 2
 UbiquitousKeyValueStoreAccountChange                 :: 3
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	NoScriptError                                        :: 0
 	ReceiverEvaluationScriptError                        :: 1
 	KeySpecifierEvaluationScriptError                    :: 2
@@ -3267,7 +3267,7 @@ MapTableObjectPointerPersonality                     :: 512
 MapTableWeakMemory                                   :: 5
 OperationQueueDefaultMaxConcurrentOperationCount     :: -1
 UndoCloseGroupingRunLoopOrdering                     :: 350000
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	NotificationDeliverImmediately                       :: 1
 	NotificationPostToAllSessions                        :: 2
 }
@@ -3317,7 +3317,7 @@ KeyValueOperator :: distinct ^String
 KeyValueChangeKey :: distinct ^String
 PropertyListReadOptions :: distinct PropertyListMutabilityOptions
 PropertyListWriteOptions :: distinct UInteger
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	Size :: CG.Size
 	SizeArray :: distinct ^Size
 	Rect :: CG.Rect
@@ -3352,7 +3352,7 @@ xpc_listener_t :: distinct ^xpc_listener_s
 xpc_listener_incoming_session_handler_t :: ^Objc_Block(proc "c" ( peer: xpc_session_t ))
 xpc_array_applier_t :: ^Objc_Block(proc "c" ( index: cffi.size_t, value: xpc_object_t ) -> cffi.bool)
 xpc_dictionary_applier_t :: ^Objc_Block(proc "c" ( key: cstring, value: xpc_object_t ) -> cffi.bool)
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	DescType :: distinct CF.ResType
 	AEKeyword :: distinct CF.FourCharCode
 	AEDataStorageType :: distinct ^OpaqueAEDataStorageType
@@ -3390,7 +3390,7 @@ LinguisticTagScheme :: distinct ^String
 LinguisticTag :: distinct ^String
 UndoManagerUserInfoKey :: distinct ^String
 UserActivityPersistentIdentifier :: distinct ^String
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	BackgroundActivityCompletionHandler :: ^Objc_Block(proc "c" ( result: BackgroundActivityResult ))
 	DistributedNotificationCenterType :: distinct ^String
 	AppleEventManagerSuspensionID :: distinct ^__NSAppleEventManagerSuspension
@@ -3707,13 +3707,13 @@ DateFormatterStyle :: enum cffi.ulong {
 	FullStyle   = 4,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	DateFormatterBehavior :: enum cffi.ulong {
 		Default = 0,
 		_10_0   = 1000,
 		_10_4   = 1040,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	DateFormatterBehavior :: enum cffi.ulong {
 		Default = 0,
 		_10_4   = 1040,
@@ -3772,13 +3772,13 @@ EnergyFormatterUnit :: enum cffi.long {
 	Kilocalorie = 1794,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	NumberFormatterBehavior :: enum cffi.ulong {
 		Default = 0,
 		_10_0   = 1000,
 		_10_4   = 1040,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	NumberFormatterBehavior :: enum cffi.ulong {
 		Default = 0,
 		_10_4   = 1040,
@@ -3909,7 +3909,7 @@ SearchPathDomainMaskFlag :: enum cffi.ulong {
 
 SearchPathDomainMask :: bit_set[SearchPathDomainMaskFlag; cffi.ulong]
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	URLHandleStatus :: enum cffi.ulong {
 		NotLoaded      = 0,
 		LoadSucceeded  = 1,
@@ -4077,7 +4077,7 @@ PropertyListFormat :: enum cffi.ulong {
 	BinaryFormat_v1_0 = 200,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	RectEdge :: enum cffi.ulong {
 		MinX     = 0,
 		MinY     = 1,
@@ -4712,7 +4712,7 @@ URLSessionTaskMetricsDomainResolutionProtocol :: enum cffi.long {
 	HTTPS   = 4,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	BackgroundActivityResult :: enum cffi.long {
 		Finished = 1,
 		Deferred = 2,
@@ -4927,7 +4927,7 @@ HashTableCallBacks :: struct #align (8) {
 	describe: proc "c" ( table: ^HashTable, _0: rawptr ) -> ^String,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	EdgeInsets :: struct #align (8) {
 		top:    CG.Float,
 		left:   CG.Float,
@@ -4983,7 +4983,7 @@ xpc_session_s :: struct {}
 
 xpc_listener_s :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	OpaqueAEDataStorageType :: struct {}
 
 	AEDesc :: struct #align (2) #max_field_align(2) {

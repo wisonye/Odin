@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKRoute", objc_superclass=NS.Object)
 Route :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Route, objc_selector="name", objc_name="name")
 	Route_name :: proc(self: ^Route) -> ^NS.String ---
 
@@ -41,7 +41,7 @@ foreign lib {
 @(objc_class="MKRouteStep", objc_superclass=NS.Object)
 RouteStep :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RouteStep, objc_selector="instructions", objc_name="instructions")
 	RouteStep_instructions :: proc(self: ^RouteStep) -> ^NS.String ---
 

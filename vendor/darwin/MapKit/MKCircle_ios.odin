@@ -6,7 +6,7 @@ package darwin_MapKit
 CircleView :: struct { using _: OverlayPathView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CircleView, objc_selector="initWithCircle:", objc_name="initWithCircle")
 	CircleView_initWithCircle :: proc(self: ^CircleView, circle: ^Circle) -> instancetype ---
 

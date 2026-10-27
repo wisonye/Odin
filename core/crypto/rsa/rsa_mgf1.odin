@@ -22,8 +22,8 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:crypto/hash"
-import "core:encoding/endian"
+#import "core:crypto/hash"
+#import "core:encoding/endian"
 
 @(private)
 mgf1_xor :: proc(data: []byte, hash_algo: hash.Algorithm, seed: []byte) {

@@ -10,7 +10,7 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	32-bit hash functions
@@ -172,7 +172,7 @@ XXH32_endian_align :: #force_inline proc(input: []u8, seed := XXH32_DEFAULT_SEED
 }
 
 XXH32 :: proc(input: []u8, seed := XXH32_DEFAULT_SEED) -> (digest: XXH32_hash) {
-	when false {
+	#if false {
 		/*
 			Simple version, good for code maintenance, but unfortunately slow for small inputs.
 		*/
@@ -181,7 +181,7 @@ XXH32 :: proc(input: []u8, seed := XXH32_DEFAULT_SEED) -> (digest: XXH32_hash) {
 		XXH32_update(&state, input)
 		return XXH32_digest(&state)
 	} else {
-		when XXH_FORCE_ALIGN_CHECK {
+		#if XXH_FORCE_ALIGN_CHECK {
 			if uintptr(raw_data(input)) & uintptr(3) == 0 {
 				/*
 					Input is 4-bytes aligned, leverage the speed benefit.

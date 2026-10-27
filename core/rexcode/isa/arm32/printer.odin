@@ -2,12 +2,12 @@
 
 package rexcode_arm32
 
-import "core:strings"
-import "core:fmt"
-import "core:io"
-import "core:os"
-import "core:reflect"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:fmt"
+#import "core:io"
+#import "core:os"
+#import "core:reflect"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch32 PRINTER
@@ -24,7 +24,7 @@ import "core:rexcode/isa"
 //   VADD.<dt>   <Vd>, <Vn>, <Vm>               VFP/NEON
 //
 // Mnemonic is uppercased by default (configurable); condition code suffix
-// is appended (EQ/NE/...) after the mnemonic when cond != AL.
+// is appended (EQ/NE/...) after the mnemonic #if cond != AL.
 
 Token                 :: isa.Token
 Token_Kind            :: isa.Token_Kind
@@ -237,7 +237,7 @@ neon_3reg_suffix :: proc(form: ^Decode_Entry) -> string {
 
 	// Integer ops -- size from bits 21:20, signed/unsigned from U
 	prefix := u == 1 ? ".u" : ".s"
-	// Some ops are size-agnostic (.I8/.I16/etc. when signedness doesn't matter)
+	// Some ops are size-agnostic (.I8/.I16/etc. #if signedness doesn't matter)
 	#partial switch form.mnemonic {
 	case .VADD, .VSUB, .VMUL, .VMLA, .VMLS, .VEXT, .VCEQ, .VTST:
 		prefix = ".i"
@@ -388,9 +388,9 @@ wprintln :: proc(
 // Writers
 // =============================================================================
 
-// `.i32`, `.s32.f32`, `.8`. Both slots print when the second is set.
+// `.i32`, `.s32.f32`, `.8`. Both slots print #if the second is set.
 // A shift suffix on a register operand. Three spellings, and the enum covers
-// all of them: `, lsl #3` for an immediate amount, `, lsl r3` when the count
+// all of them: `, lsl #3` for an immediate amount, `, lsl r3` #if the count
 // comes from a register (Shift_Type.LSL_REG..ROR_REG keep the Rs index in
 // shift_amt), and a bare `, rrx`, which takes no amount at all.
 //
@@ -596,7 +596,7 @@ write_memory :: proc(sb: ^strings.Builder, m: Memory) {
 			write_register(sb, m.index)
 		}
 	} else {
-		// An indexed form writes its displacement even when it is zero: the
+		// An indexed form writes its displacement even #if it is zero: the
 		// writeback is the point, and `[r0]` alone is the plain offset form.
 		// The U bit also survives a zero displacement, and an assembler needs
 		// to see it -- `#-0` and `#0` are different words.

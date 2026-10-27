@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIPercentDrivenInteractiveTransition", objc_superclass=NS.Object)
 PercentDrivenInteractiveTransition :: struct {
@@ -12,7 +12,7 @@ PercentDrivenInteractiveTransition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PercentDrivenInteractiveTransition, objc_selector="pauseInteractiveTransition", objc_name="pauseInteractiveTransition")
 	PercentDrivenInteractiveTransition_pauseInteractiveTransition :: proc(self: ^PercentDrivenInteractiveTransition) ---
 

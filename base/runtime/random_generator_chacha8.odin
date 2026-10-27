@@ -1,6 +1,6 @@
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // This is an implementation of the Chacha8Rand DRBG, as specified
 // in https://github.com/C2SP/C2SP/blob/main/chacha8rand.md
@@ -152,9 +152,9 @@ chacha8rand_refill :: proc(r: ^Default_Random_State) {
 
 	// i386 has insufficient vector registers to use the
 	// accelerated path at the moment.
-	when ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
+	#if ODIN_ARCH == .amd64 && intrinsics.has_target_feature("avx2") {
 		chacha8rand_refill_simd256(r)
-	} else when HAS_HARDWARE_SIMD && ODIN_ARCH != .i386 {
+	} else #if HAS_HARDWARE_SIMD && ODIN_ARCH != .i386 {
 		chacha8rand_refill_simd128(r)
 	} else {
 		chacha8rand_refill_ref(r)

@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSButton", objc_superclass=Control)
 Button :: struct {
@@ -15,7 +15,7 @@ Button :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Button, objc_selector="buttonWithTitle:image:target:action:", objc_name="buttonWithTitle_image_target_action", objc_is_class_method=true)
 	Button_buttonWithTitle_image_target_action :: proc(title: ^NS.String, image: ^Image, target: id, action: SEL) -> instancetype ---
 
@@ -229,7 +229,7 @@ Button_buttonWithTitle :: proc {
 ButtonCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ButtonCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	ButtonCell_initTextCell :: proc(self: ^ButtonCell, string: ^NS.String) -> instancetype ---
 
@@ -413,7 +413,7 @@ ButtonCell_setKeyEquivalentFont :: proc {
 ButtonTouchBarItem :: struct { using _: TouchBarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ButtonTouchBarItem, objc_selector="buttonTouchBarItemWithIdentifier:title:target:action:", objc_name="buttonTouchBarItemWithIdentifier_title_target_action", objc_is_class_method=true)
 	ButtonTouchBarItem_buttonTouchBarItemWithIdentifier_title_target_action :: proc(identifier: ^NS.String, title: ^NS.String, target: id, action: SEL) -> instancetype ---
 

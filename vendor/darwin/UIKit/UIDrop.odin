@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIDropProposal", objc_superclass=NS.Object)
 DropProposal :: struct {
@@ -12,7 +12,7 @@ DropProposal :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DropProposal, objc_selector="initWithDropOperation:", objc_name="initWithDropOperation")
 	DropProposal_initWithDropOperation :: proc(self: ^DropProposal, operation: DropOperation) -> instancetype ---
 
@@ -47,7 +47,7 @@ DropSession :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DropSession, objc_selector="loadObjectsOfClass:completion:", objc_name="loadObjectsOfClass")
 	DropSession_loadObjectsOfClass :: proc(self: ^DropSession, aClass: ^Class, completion: ^Objc_Block(proc "c" ( objects: ^NS.Array ))) -> ^NS.Progress ---
 

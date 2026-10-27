@@ -43,7 +43,7 @@ package math
 //         and that
 //          2/sqrt(pi) = 1.128379167095512573896158903121545171688
 //         is close to one. The interval is chosen because the fix
-//         point of erf(x) is near 0.6174 (i.e., erf(x)=x when x is
+//         point of erf(x) is near 0.6174 (i.e., erf(x)=x #if x is
 //         near 0.6174), and by some experiment, 0.84375 is chosen to
 //         guarantee the error is less than one ulp for erf.
 //

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKContainer", objc_superclass=NS.Object)
 Container :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Container, objc_selector="init", objc_name="init")
 	Container_init :: proc(self: ^Container) -> instancetype ---
 

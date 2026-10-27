@@ -1,8 +1,8 @@
 package libc
 
-import "core:c"
+#import "core:c"
 
-#assert(!ODIN_NO_CRT, `"core:c/libc" cannot be imported when '-no-crt' is used`)
+#assert(!ODIN_NO_CRT, `"core:c/libc" cannot be imported #if '-no-crt' is used`)
 
 char           :: c.char // assuming -funsigned-char
 

@@ -3,7 +3,7 @@
 package sys_llvm
 
 @(default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.bitreverse.i8")
 	bit_reverse_u8 :: proc(u8) -> u8 ---
 	@(link_name="llvm.bitreverse.i16")

@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSCell", objc_superclass=NS.Object)
 Cell :: struct {
@@ -17,7 +17,7 @@ Cell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Cell, objc_selector="init", objc_name="init")
 	Cell_init :: proc(self: ^Cell) -> instancetype ---
 

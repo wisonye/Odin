@@ -8,7 +8,7 @@
 // Being an ABI guarantee, must be cross-checked against a c compiler
 package test_issue_sysv_abi
 
-import "core:testing"
+#import "core:testing"
 
 Pad_Int_Float    :: struct { a: i64, b: f32 }  // f32 alone in eightbyte 1
 Pad_Float_Double :: struct { a: f32, b: f64 }  // f32 alone in eightbyte 0
@@ -17,10 +17,10 @@ Nested           :: struct { a: struct{ x: f32 }, b: f64 }
 Union_Float      :: struct #raw_union { x: f32, y: f32 }
 Union_In_Struct  :: struct { u: Union_Float, b: f64 }
 
-foreign import lib "../build/test_issue_sysv_abi_c.o"
+#foreign #import lib "../build/test_issue_sysv_abi_c.o"
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	c_pad_int_float    :: proc(s: Pad_Int_Float,    next: f64) -> f64 ---
 	c_pad_float_double :: proc(s: Pad_Float_Double, next: f64) -> f64 ---
 	c_no_pad           :: proc(s: No_Pad,           next: f64) -> f64 ---

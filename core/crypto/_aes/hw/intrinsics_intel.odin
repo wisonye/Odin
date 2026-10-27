@@ -1,8 +1,8 @@
 #+build amd64
 package aes_hw
 
-import "core:simd"
-import "core:simd/x86"
+#import "core:simd"
+#import "core:simd/x86"
 
 // Intel/RISC-V semantics.
 

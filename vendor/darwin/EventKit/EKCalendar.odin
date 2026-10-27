@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_EventKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKCalendar", objc_superclass=Object)
 Calendar :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Calendar, objc_selector="calendarWithEventStore:", objc_name="calendarWithEventStore", objc_is_class_method=true)
 	Calendar_calendarWithEventStore :: proc(eventStore: ^EventStore) -> ^Calendar ---
 
@@ -48,7 +48,7 @@ foreign lib {
 	@(objc_type=Calendar, objc_selector="setCGColor:", objc_name="setCGColor")
 	Calendar_setCGColor :: proc(self: ^Calendar, CGColor: CG.ColorRef) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Calendar, objc_selector="color", objc_name="color")
 		Calendar_color :: proc(self: ^Calendar) -> ^UI_Color ---
 
@@ -67,7 +67,7 @@ foreign lib {
 @(objc_class="EKCalendarItem", objc_superclass=Object)
 CalendarItem :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarItem, objc_selector="addAlarm:", objc_name="addAlarm")
 	CalendarItem_addAlarm :: proc(self: ^CalendarItem, alarm: ^Alarm) ---
 
@@ -163,7 +163,7 @@ foreign lib {
 @(objc_class="EKReminder", objc_superclass=CalendarItem)
 Reminder :: struct { using _: CalendarItem}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Reminder, objc_selector="reminderWithEventStore:", objc_name="reminderWithEventStore", objc_is_class_method=true)
 	Reminder_reminderWithEventStore :: proc(eventStore: ^EventStore) -> ^Reminder ---
 

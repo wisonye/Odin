@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "core:simd"
+#import "core:simd"
 
 _SIDD_UBYTE_OPS                :: 0b0000_0000
 _SIDD_UWORD_OPS                :: 0b0000_0001
@@ -97,7 +97,7 @@ _mm_cmpgt_epi64 :: #force_inline proc "c" (a: __m128i, b: __m128i) -> __m128i {
 	return transmute(__m128i)simd.lanes_gt(a, b)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(require_results, enable_target_feature="sse4.2")
 	_mm_crc32_u64 :: #force_inline proc "c" (crc: u64, v: u64) -> u64 {
 		return crc32_64_64(crc, v)
@@ -105,7 +105,7 @@ when ODIN_ARCH == .amd64 {
 }
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	// SSE 4.2 string and text comparison ops
 	@(link_name="llvm.x86.sse42.pcmpestrm128")
 	pcmpestrm128 :: proc(a: i8x16, la: i32, b: i8x16, lb: i32, #const imm8: i8) -> u8x16 ---

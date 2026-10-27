@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 PropertiesID :: distinct Uint32
 
@@ -20,7 +20,7 @@ EnumeratePropertiesCallback :: #type proc "c" (userdata: rawptr, props: Properti
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results) GetGlobalProperties :: proc() -> PropertiesID ---
 	@(require_results) CreateProperties    :: proc() -> PropertiesID ---
 	@(require_results) HasProperty         :: proc(props: PropertiesID, name: cstring) -> bool ---

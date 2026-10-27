@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSApplication", objc_superclass=Responder)
 Application :: struct {
@@ -15,7 +15,7 @@ Application :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Application, objc_selector="hide:", objc_name="hide")
 	Application_hide :: proc(self: ^Application, sender: id) ---
 
@@ -403,7 +403,7 @@ ApplicationDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ApplicationDelegate, objc_selector="applicationShouldTerminate:", objc_name="applicationShouldTerminate")
 	ApplicationDelegate_applicationShouldTerminate :: proc(self: ^ApplicationDelegate, sender: ^Application) -> ApplicationTerminateReply ---
 

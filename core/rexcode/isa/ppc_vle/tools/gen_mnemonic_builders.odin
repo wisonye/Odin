@@ -29,11 +29,11 @@ package main
 // Run with: odin run tools/gen_mnemonic_builders.odin -file
 // Output:   mnemonic_builders.odin (written to current directory, move to package root)
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import vle "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import vle "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 

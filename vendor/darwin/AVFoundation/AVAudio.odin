@@ -2,17 +2,17 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import AT "vendor:darwin/AudioToolbox"
-import cffi "core:c"
-import CM "vendor:darwin/CoreMedia"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import AT "vendor:darwin/AudioToolbox"
+#import cffi "core:c"
+#import CM "vendor:darwin/CoreMedia"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="AVAudioApplication", objc_superclass=NS.Object)
 AudioApplication :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioApplication, objc_selector="init", objc_name="init")
 	AudioApplication_init :: proc(self: ^AudioApplication) -> instancetype ---
 
@@ -64,7 +64,7 @@ AudioBuffer :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioBuffer, objc_selector="format", objc_name="format")
 	AudioBuffer_format :: proc(self: ^AudioBuffer) -> ^AudioFormat ---
 
@@ -79,7 +79,7 @@ foreign lib {
 @(objc_class="AVAudioCompressedBuffer", objc_superclass=AudioBuffer)
 AudioCompressedBuffer :: struct { using _: AudioBuffer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioCompressedBuffer, objc_selector="initWithFormat:packetCapacity:maximumPacketSize:", objc_name="initWithFormat_packetCapacity_maximumPacketSize")
 	AudioCompressedBuffer_initWithFormat_packetCapacity_maximumPacketSize :: proc(self: ^AudioCompressedBuffer, format: ^AudioFormat, packetCapacity: AudioPacketCount, maximumPacketSize: NS.Integer) -> instancetype ---
 
@@ -129,7 +129,7 @@ AudioCompressedBuffer_initWithFormat :: proc {
 @(objc_class="AVAudioPCMBuffer", objc_superclass=AudioBuffer)
 AudioPCMBuffer :: struct { using _: AudioBuffer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioPCMBuffer, objc_selector="initWithPCMFormat:frameCapacity:", objc_name="initWithPCMFormat_frameCapacity")
 	AudioPCMBuffer_initWithPCMFormat_frameCapacity :: proc(self: ^AudioPCMBuffer, format: ^AudioFormat, frameCapacity: AudioFrameCount) -> instancetype ---
 
@@ -173,7 +173,7 @@ AudioChannelLayout :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioChannelLayout, objc_selector="init", objc_name="init")
 	AudioChannelLayout_init :: proc(self: ^AudioChannelLayout) -> instancetype ---
 
@@ -206,7 +206,7 @@ foreign lib {
 @(objc_class="AVAudioConnectionPoint", objc_superclass=NS.Object)
 AudioConnectionPoint :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioConnectionPoint, objc_selector="initWithNode:bus:", objc_name="initWithNode")
 	AudioConnectionPoint_initWithNode :: proc(self: ^AudioConnectionPoint, node: ^AudioNode, bus: AudioNodeBus) -> instancetype ---
 
@@ -224,7 +224,7 @@ foreign lib {
 @(objc_class="AVAudioConverter", objc_superclass=NS.Object)
 AudioConverter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioConverter, objc_selector="initFromFormat:toFormat:", objc_name="initFromFormat")
 	AudioConverter_initFromFormat :: proc(self: ^AudioConverter, fromFormat: ^AudioFormat, toFormat: ^AudioFormat) -> instancetype ---
 
@@ -361,7 +361,7 @@ AudioConverter_convertToBuffer_fromBuffer :: #force_inline proc "c" (self: ^Audi
 @(objc_class="AVAudioEngine", objc_superclass=NS.Object)
 AudioEngine :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioEngine, objc_selector="init", objc_name="init")
 	AudioEngine_init :: proc(self: ^AudioEngine) -> instancetype ---
 
@@ -552,7 +552,7 @@ AudioEngine_renderOffline :: #force_inline proc "c" (self: ^AudioEngine, numberO
 @(objc_class="AVAudioEnvironmentDistanceAttenuationParameters", objc_superclass=NS.Object)
 AudioEnvironmentDistanceAttenuationParameters :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioEnvironmentDistanceAttenuationParameters, objc_selector="init", objc_name="init")
 	AudioEnvironmentDistanceAttenuationParameters_init :: proc(self: ^AudioEnvironmentDistanceAttenuationParameters) -> instancetype ---
 
@@ -585,7 +585,7 @@ foreign lib {
 @(objc_class="AVAudioEnvironmentReverbParameters", objc_superclass=NS.Object)
 AudioEnvironmentReverbParameters :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioEnvironmentReverbParameters, objc_selector="init", objc_name="init")
 	AudioEnvironmentReverbParameters_init :: proc(self: ^AudioEnvironmentReverbParameters) -> instancetype ---
 
@@ -612,7 +612,7 @@ foreign lib {
 @(objc_class="AVAudioFile", objc_superclass=NS.Object)
 AudioFile :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioFile, objc_selector="init", objc_name="init")
 	AudioFile_init :: proc(self: ^AudioFile) -> instancetype ---
 
@@ -734,7 +734,7 @@ AudioFormat :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioFormat, objc_selector="initWithStreamDescription:", objc_name="initWithStreamDescription_")
 	AudioFormat_initWithStreamDescription_ :: proc(self: ^AudioFormat, asbd: ^AT.StreamBasicDescription) -> instancetype ---
 
@@ -824,7 +824,7 @@ AudioMix :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioMix, objc_selector="inputParameters", objc_name="inputParameters")
 	AudioMix_inputParameters :: proc(self: ^AudioMix) -> ^NS.Array ---
 }
@@ -833,7 +833,7 @@ foreign lib {
 @(objc_class="AVMutableAudioMix", objc_superclass=AudioMix)
 MutableAudioMix :: struct { using _: AudioMix}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableAudioMix, objc_selector="audioMix", objc_name="audioMix", objc_is_class_method=true)
 	MutableAudioMix_audioMix :: proc() -> instancetype ---
 
@@ -860,7 +860,7 @@ AudioMixInputParameters :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioMixInputParameters, objc_selector="getVolumeRampForTime:startVolume:endVolume:timeRange:", objc_name="getVolumeRampForTime")
 	AudioMixInputParameters_getVolumeRampForTime :: proc(self: ^AudioMixInputParameters, time: CM.Time, startVolume: ^cffi.float, endVolume: ^cffi.float, timeRange: ^CM.TimeRange) -> bool ---
 
@@ -878,7 +878,7 @@ foreign lib {
 @(objc_class="AVMutableAudioMixInputParameters", objc_superclass=AudioMixInputParameters)
 MutableAudioMixInputParameters :: struct { using _: AudioMixInputParameters}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableAudioMixInputParameters, objc_selector="audioMixInputParametersWithTrack:", objc_name="audioMixInputParametersWithTrack", objc_is_class_method=true)
 	MutableAudioMixInputParameters_audioMixInputParametersWithTrack :: proc(track: ^AssetTrack) -> instancetype ---
 
@@ -926,7 +926,7 @@ AudioMixing :: struct {
 	using _: Audio3DMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioMixing, objc_selector="destinationForMixer:bus:", objc_name="destinationForMixer")
 	AudioMixing_destinationForMixer :: proc(self: ^AudioMixing, mixer: ^AudioNode, bus: AudioNodeBus) -> ^AudioMixingDestination ---
 
@@ -944,7 +944,7 @@ AudioMixingDestination :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioMixingDestination, objc_selector="init", objc_name="init")
 	AudioMixingDestination_init :: proc(self: ^AudioMixingDestination) -> instancetype ---
 
@@ -956,7 +956,7 @@ foreign lib {
 @(objc_class="AVAudioNode", objc_superclass=NS.Object)
 AudioNode :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioNode, objc_selector="reset", objc_name="reset")
 	AudioNode_reset :: proc(self: ^AudioNode) ---
 
@@ -1007,7 +1007,7 @@ AudioEnvironmentNode :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioEnvironmentNode, objc_selector="init", objc_name="init")
 	AudioEnvironmentNode_init :: proc(self: ^AudioEnvironmentNode) -> instancetype ---
 
@@ -1064,7 +1064,7 @@ foreign lib {
 @(objc_class="AVAudioIONode", objc_superclass=AudioNode)
 AudioIONode :: struct { using _: AudioNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioIONode, objc_selector="setVoiceProcessingEnabled:error:", objc_name="setVoiceProcessingEnabled_error")
 	AudioIONode_setVoiceProcessingEnabled_error :: proc(self: ^AudioIONode, enabled: bool, outError: ^^NS.Error) -> bool ---
 
@@ -1094,7 +1094,7 @@ AudioInputNode :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioInputNode, objc_selector="init", objc_name="init")
 	AudioInputNode_init :: proc(self: ^AudioInputNode) -> instancetype ---
 
@@ -1136,7 +1136,7 @@ AudioMixerNode :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioMixerNode, objc_selector="init", objc_name="init")
 	AudioMixerNode_init :: proc(self: ^AudioMixerNode) -> instancetype ---
 
@@ -1154,7 +1154,7 @@ foreign lib {
 @(objc_class="AVAudioOutputNode", objc_superclass=AudioIONode)
 AudioOutputNode :: struct { using _: AudioIONode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioOutputNode, objc_selector="init", objc_name="init")
 	AudioOutputNode_init :: proc(self: ^AudioOutputNode) -> instancetype ---
 
@@ -1169,7 +1169,7 @@ foreign lib {
 @(objc_class="AVAudioSinkNode", objc_superclass=AudioNode)
 AudioSinkNode :: struct { using _: AudioNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSinkNode, objc_selector="init", objc_name="init")
 	AudioSinkNode_init :: proc(self: ^AudioSinkNode) -> instancetype ---
 
@@ -1184,7 +1184,7 @@ AudioSourceNode :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSourceNode, objc_selector="init", objc_name="init")
 	AudioSourceNode_init :: proc(self: ^AudioSourceNode) -> instancetype ---
 
@@ -1199,7 +1199,7 @@ foreign lib {
 @(objc_class="AVAudioPlayer", objc_superclass=NS.Object)
 AudioPlayer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioPlayer, objc_selector="initWithContentsOfURL:error:", objc_name="initWithContentsOfURL_error")
 	AudioPlayer_initWithContentsOfURL_error :: proc(self: ^AudioPlayer, url: ^NS.URL, outError: ^^NS.Error) -> instancetype ---
 
@@ -1384,14 +1384,14 @@ AudioPlayerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioPlayerDelegate, objc_selector="audioPlayerDidFinishPlaying:successfully:", objc_name="audioPlayerDidFinishPlaying")
 	AudioPlayerDelegate_audioPlayerDidFinishPlaying :: proc(self: ^AudioPlayerDelegate, player: ^AudioPlayer, flag: bool) ---
 
 	@(objc_type=AudioPlayerDelegate, objc_selector="audioPlayerDecodeErrorDidOccur:error:", objc_name="audioPlayerDecodeErrorDidOccur")
 	AudioPlayerDelegate_audioPlayerDecodeErrorDidOccur :: proc(self: ^AudioPlayerDelegate, player: ^AudioPlayer, error: ^NS.Error) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=AudioPlayerDelegate, objc_selector="audioPlayerBeginInterruption:", objc_name="audioPlayerBeginInterruption")
 		AudioPlayerDelegate_audioPlayerBeginInterruption :: proc(self: ^AudioPlayerDelegate, player: ^AudioPlayer) ---
 
@@ -1413,7 +1413,7 @@ AudioPlayerNode :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioPlayerNode, objc_selector="init", objc_name="init")
 	AudioPlayerNode_init :: proc(self: ^AudioPlayerNode) -> instancetype ---
 
@@ -1492,7 +1492,7 @@ AudioPlayerNode_scheduleSegment :: proc {
 @(objc_class="AVAudioRecorder", objc_superclass=NS.Object)
 AudioRecorder :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioRecorder, objc_selector="initWithURL:settings:error:", objc_name="initWithURL_settings_error")
 	AudioRecorder_initWithURL_settings_error :: proc(self: ^AudioRecorder, url: ^NS.URL, settings: ^NS.Dictionary, outError: ^^NS.Error) -> instancetype ---
 
@@ -1605,14 +1605,14 @@ AudioRecorderDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioRecorderDelegate, objc_selector="audioRecorderDidFinishRecording:successfully:", objc_name="audioRecorderDidFinishRecording")
 	AudioRecorderDelegate_audioRecorderDidFinishRecording :: proc(self: ^AudioRecorderDelegate, recorder: ^AudioRecorder, flag: bool) ---
 
 	@(objc_type=AudioRecorderDelegate, objc_selector="audioRecorderEncodeErrorDidOccur:error:", objc_name="audioRecorderEncodeErrorDidOccur")
 	AudioRecorderDelegate_audioRecorderEncodeErrorDidOccur :: proc(self: ^AudioRecorderDelegate, recorder: ^AudioRecorder, error: ^NS.Error) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=AudioRecorderDelegate, objc_selector="audioRecorderBeginInterruption:", objc_name="audioRecorderBeginInterruption")
 		AudioRecorderDelegate_audioRecorderBeginInterruption :: proc(self: ^AudioRecorderDelegate, recorder: ^AudioRecorder) ---
 
@@ -1631,7 +1631,7 @@ foreign lib {
 @(objc_class="AVAudioRoutingArbiter", objc_superclass=NS.Object)
 AudioRoutingArbiter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioRoutingArbiter, objc_selector="init", objc_name="init")
 	AudioRoutingArbiter_init :: proc(self: ^AudioRoutingArbiter) -> instancetype ---
 
@@ -1652,7 +1652,7 @@ foreign lib {
 @(objc_class="AVAudioSequencer", objc_superclass=NS.Object)
 AudioSequencer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSequencer, objc_selector="init", objc_name="init")
 	AudioSequencer_init :: proc(self: ^AudioSequencer) -> instancetype ---
 
@@ -1784,7 +1784,7 @@ AudioSequencer_startAndReturnError :: #force_inline proc "c" (self: ^AudioSequen
 @(objc_class="AVAudioSession", objc_superclass=NS.Object)
 AudioSession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSession, objc_selector="sharedInstance", objc_name="sharedInstance", objc_is_class_method=true)
 	AudioSession_sharedInstance :: proc() -> ^AudioSession ---
 
@@ -2230,7 +2230,7 @@ AudioSessionDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionDelegate, objc_selector="beginInterruption", objc_name="beginInterruption")
 	AudioSessionDelegate_beginInterruption :: proc(self: ^AudioSessionDelegate) ---
 
@@ -2248,7 +2248,7 @@ foreign lib {
 @(objc_class="AVAudioSessionCapability", objc_superclass=NS.Object)
 AudioSessionCapability :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionCapability, objc_selector="isSupported", objc_name="isSupported")
 	AudioSessionCapability_isSupported :: proc(self: ^AudioSessionCapability) -> bool ---
 
@@ -2260,7 +2260,7 @@ foreign lib {
 @(objc_class="AVAudioSessionChannelDescription", objc_superclass=NS.Object)
 AudioSessionChannelDescription :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionChannelDescription, objc_selector="channelName", objc_name="channelName")
 	AudioSessionChannelDescription_channelName :: proc(self: ^AudioSessionChannelDescription) -> ^NS.String ---
 
@@ -2278,7 +2278,7 @@ foreign lib {
 @(objc_class="AVAudioSessionDataSourceDescription", objc_superclass=NS.Object)
 AudioSessionDataSourceDescription :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionDataSourceDescription, objc_selector="setPreferredPolarPattern:error:", objc_name="setPreferredPolarPattern_error")
 	AudioSessionDataSourceDescription_setPreferredPolarPattern_error :: proc(self: ^AudioSessionDataSourceDescription, pattern: ^NS.String, outError: ^^NS.Error) -> bool ---
 
@@ -2317,7 +2317,7 @@ AudioSessionDataSourceDescription_setPreferredPolarPattern :: #force_inline proc
 @(objc_class="AVAudioSessionPortDescription", objc_superclass=NS.Object)
 AudioSessionPortDescription :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionPortDescription, objc_selector="setPreferredDataSource:error:", objc_name="setPreferredDataSource_error")
 	AudioSessionPortDescription_setPreferredDataSource_error :: proc(self: ^AudioSessionPortDescription, dataSource: ^AudioSessionDataSourceDescription, outError: ^^NS.Error) -> bool ---
 
@@ -2365,7 +2365,7 @@ AudioSessionPortDescription_setPreferredDataSource :: #force_inline proc "c" (se
 @(objc_class="AVAudioSessionPortExtensionBluetoothMicrophone", objc_superclass=NS.Object)
 AudioSessionPortExtensionBluetoothMicrophone :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionPortExtensionBluetoothMicrophone, objc_selector="highQualityRecording", objc_name="highQualityRecording")
 	AudioSessionPortExtensionBluetoothMicrophone_highQualityRecording :: proc(self: ^AudioSessionPortExtensionBluetoothMicrophone) -> ^AudioSessionCapability ---
 
@@ -2377,7 +2377,7 @@ foreign lib {
 @(objc_class="AVAudioSessionRouteDescription", objc_superclass=NS.Object)
 AudioSessionRouteDescription :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioSessionRouteDescription, objc_selector="inputs", objc_name="inputs")
 	AudioSessionRouteDescription_inputs :: proc(self: ^AudioSessionRouteDescription) -> ^NS.Array ---
 
@@ -2392,7 +2392,7 @@ AudioStereoMixing :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioStereoMixing, objc_selector="pan", objc_name="pan")
 	AudioStereoMixing_pan :: proc(self: ^AudioStereoMixing) -> cffi.float ---
 
@@ -2404,7 +2404,7 @@ foreign lib {
 @(objc_class="AVAudioTime", objc_superclass=NS.Object)
 AudioTime :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioTime, objc_selector="initWithAudioTimeStamp:sampleRate:", objc_name="initWithAudioTimeStamp")
 	AudioTime_initWithAudioTimeStamp :: proc(self: ^AudioTime, ts: ^AT.TimeStamp, sampleRate: cffi.double) -> instancetype ---
 
@@ -2475,7 +2475,7 @@ AudioTime_timeWithHostTime :: proc {
 @(objc_class="AVAudioUnit", objc_superclass=AudioNode)
 AudioUnit :: struct { using _: AudioNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnit, objc_selector="instantiateWithComponentDescription:options:completionHandler:", objc_name="instantiateWithComponentDescription", objc_is_class_method=true)
 	AudioUnit_instantiateWithComponentDescription :: proc(audioComponentDescription: AT.ComponentDescription, options: AT.ComponentInstantiationOptions, completionHandler: ^Objc_Block(proc "c" ( audioUnit: ^AudioUnit, error: ^NS.Error ))) ---
 
@@ -2514,7 +2514,7 @@ AudioUnit_loadAudioUnitPresetAtURL :: #force_inline proc "c" (self: ^AudioUnit, 
 @(objc_class="AVAudioUnitComponent", objc_superclass=NS.Object)
 AudioUnitComponent :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitComponent, objc_selector="supportsNumberInputChannels:outputChannels:", objc_name="supportsNumberInputChannels")
 	AudioUnitComponent_supportsNumberInputChannels :: proc(self: ^AudioUnitComponent, numInputChannels: NS.Integer, numOutputChannels: NS.Integer) -> bool ---
 
@@ -2569,10 +2569,10 @@ foreign lib {
 	@(objc_type=AudioUnitComponent, objc_selector="iconURL", objc_name="iconURL")
 	AudioUnitComponent_iconURL :: proc(self: ^AudioUnitComponent) -> ^NS.URL ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=AudioUnitComponent, objc_selector="icon", objc_name="icon")
 		AudioUnitComponent_icon :: proc(self: ^AudioUnitComponent) -> ^NSImage ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=AudioUnitComponent, objc_selector="icon", objc_name="icon")
 		AudioUnitComponent_icon :: proc(self: ^AudioUnitComponent) -> ^UIImage ---
 	}
@@ -2591,7 +2591,7 @@ foreign lib {
 @(objc_class="AVAudioUnitComponentManager", objc_superclass=NS.Object)
 AudioUnitComponentManager :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitComponentManager, objc_selector="sharedAudioUnitComponentManager", objc_name="sharedAudioUnitComponentManager", objc_is_class_method=true)
 	AudioUnitComponentManager_sharedAudioUnitComponentManager :: proc() -> instancetype ---
 
@@ -2615,7 +2615,7 @@ foreign lib {
 @(objc_class="AVAudioUnitDelay", objc_superclass=AudioUnitEffect)
 AudioUnitDelay :: struct { using _: AudioUnitEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitDelay, objc_selector="delayTime", objc_name="delayTime")
 	AudioUnitDelay_delayTime :: proc(self: ^AudioUnitDelay) -> NS.TimeInterval ---
 
@@ -2645,7 +2645,7 @@ foreign lib {
 @(objc_class="AVAudioUnitDistortion", objc_superclass=AudioUnitEffect)
 AudioUnitDistortion :: struct { using _: AudioUnitEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitDistortion, objc_selector="loadFactoryPreset:", objc_name="loadFactoryPreset")
 	AudioUnitDistortion_loadFactoryPreset :: proc(self: ^AudioUnitDistortion, preset: AudioUnitDistortionPreset) ---
 
@@ -2666,7 +2666,7 @@ foreign lib {
 @(objc_class="AVAudioUnitEQ", objc_superclass=AudioUnitEffect)
 AudioUnitEQ :: struct { using _: AudioUnitEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitEQ, objc_selector="initWithNumberOfBands:", objc_name="initWithNumberOfBands")
 	AudioUnitEQ_initWithNumberOfBands :: proc(self: ^AudioUnitEQ, numberOfBands: NS.UInteger) -> instancetype ---
 
@@ -2684,7 +2684,7 @@ foreign lib {
 @(objc_class="AVAudioUnitEQFilterParameters", objc_superclass=NS.Object)
 AudioUnitEQFilterParameters :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitEQFilterParameters, objc_selector="init", objc_name="init")
 	AudioUnitEQFilterParameters_init :: proc(self: ^AudioUnitEQFilterParameters) -> instancetype ---
 
@@ -2723,7 +2723,7 @@ foreign lib {
 @(objc_class="AVAudioUnitEffect", objc_superclass=AudioUnit)
 AudioUnitEffect :: struct { using _: AudioUnit}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitEffect, objc_selector="initWithAudioComponentDescription:", objc_name="initWithAudioComponentDescription")
 	AudioUnitEffect_initWithAudioComponentDescription :: proc(self: ^AudioUnitEffect, audioComponentDescription: AT.ComponentDescription) -> instancetype ---
 
@@ -2741,7 +2741,7 @@ AudioUnitGenerator :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitGenerator, objc_selector="initWithAudioComponentDescription:", objc_name="initWithAudioComponentDescription")
 	AudioUnitGenerator_initWithAudioComponentDescription :: proc(self: ^AudioUnitGenerator, audioComponentDescription: AT.ComponentDescription) -> instancetype ---
 
@@ -2759,7 +2759,7 @@ AudioUnitMIDIInstrument :: struct {
 	using _: AudioMixing,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitMIDIInstrument, objc_selector="initWithAudioComponentDescription:", objc_name="initWithAudioComponentDescription")
 	AudioUnitMIDIInstrument_initWithAudioComponentDescription :: proc(self: ^AudioUnitMIDIInstrument, description: AT.ComponentDescription) -> instancetype ---
 
@@ -2818,7 +2818,7 @@ AudioUnitMIDIInstrument_sendMIDIEvent :: proc {
 @(objc_class="AVAudioUnitReverb", objc_superclass=AudioUnitEffect)
 AudioUnitReverb :: struct { using _: AudioUnitEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitReverb, objc_selector="loadFactoryPreset:", objc_name="loadFactoryPreset")
 	AudioUnitReverb_loadFactoryPreset :: proc(self: ^AudioUnitReverb, preset: AudioUnitReverbPreset) ---
 
@@ -2833,7 +2833,7 @@ foreign lib {
 @(objc_class="AVAudioUnitSampler", objc_superclass=AudioUnitMIDIInstrument)
 AudioUnitSampler :: struct { using _: AudioUnitMIDIInstrument}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitSampler, objc_selector="loadSoundBankInstrumentAtURL:program:bankMSB:bankLSB:error:", objc_name="loadSoundBankInstrumentAtURL_error")
 	AudioUnitSampler_loadSoundBankInstrumentAtURL_error :: proc(self: ^AudioUnitSampler, bankURL: ^NS.URL, program: cffi.uint8_t, bankMSB: cffi.uint8_t, bankLSB: cffi.uint8_t, outError: ^^NS.Error) -> bool ---
 
@@ -2893,7 +2893,7 @@ AudioUnitSampler_loadAudioFilesAtURLs :: #force_inline proc "c" (self: ^AudioUni
 @(objc_class="AVAudioUnitTimeEffect", objc_superclass=AudioUnit)
 AudioUnitTimeEffect :: struct { using _: AudioUnit}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitTimeEffect, objc_selector="initWithAudioComponentDescription:", objc_name="initWithAudioComponentDescription")
 	AudioUnitTimeEffect_initWithAudioComponentDescription :: proc(self: ^AudioUnitTimeEffect, audioComponentDescription: AT.ComponentDescription) -> instancetype ---
 
@@ -2908,7 +2908,7 @@ foreign lib {
 @(objc_class="AVAudioUnitTimePitch", objc_superclass=AudioUnitTimeEffect)
 AudioUnitTimePitch :: struct { using _: AudioUnitTimeEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitTimePitch, objc_selector="rate", objc_name="rate")
 	AudioUnitTimePitch_rate :: proc(self: ^AudioUnitTimePitch) -> cffi.float ---
 
@@ -2932,7 +2932,7 @@ foreign lib {
 @(objc_class="AVAudioUnitVarispeed", objc_superclass=AudioUnitTimeEffect)
 AudioUnitVarispeed :: struct { using _: AudioUnitTimeEffect}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AudioUnitVarispeed, objc_selector="rate", objc_name="rate")
 	AudioUnitVarispeed_rate :: proc(self: ^AudioUnitVarispeed) -> cffi.float ---
 

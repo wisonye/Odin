@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
 @(require_results)
 file_allocator :: proc() -> runtime.Allocator {

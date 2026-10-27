@@ -1,22 +1,22 @@
 // Bindings for [[ ENet ; https://github.com/lsalzman/enet ]].
 package ENet
 
-when ODIN_OS == .Windows {
-	when ODIN_ARCH == .amd64 {
-		foreign import ENet {
+#if ODIN_OS == .Windows {
+	#if ODIN_ARCH == .amd64 {
+		#foreign #import ENet {
 			"lib/enet64.lib",
 			"system:Ws2_32.lib",
 			"system:Winmm.lib",
 		}
 	} else {
-		foreign import ENet {
+		#foreign #import ENet {
 			"lib/enet.lib",
 			"system:Ws2_32.lib",
 			"system:Winmm.lib",
 		}
 	}
 } else {
-	foreign import ENet "system:enet"
+	#foreign #import ENet "system:enet"
 }
 
 VERSION_MAJOR :: u8(1)
@@ -341,7 +341,7 @@ Event :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="enet_")
-foreign ENet {
+#foreign ENet {
 	initialize                     :: proc() -> i32 ---
 	initialize_with_callbacks      :: proc(version: Version, inits: ^Callbacks) -> i32 ---
 	deinitialize                   :: proc() ---

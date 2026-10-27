@@ -1,14 +1,14 @@
 package encoding_endian
 
-import "base:intrinsics"
-import "core:math/bits"
+#import "base:intrinsics"
+#import "core:math/bits"
 
 Byte_Order :: enum u8 {
 	Little,
 	Big,
 }
 
-PLATFORM_BYTE_ORDER :: Byte_Order.Little when ODIN_ENDIAN == .Little else Byte_Order.Big
+PLATFORM_BYTE_ORDER :: Byte_Order.Little #if ODIN_ENDIAN == .Little else Byte_Order.Big
 
 unchecked_get_u16le :: #force_inline proc "contextless" (b: []byte) -> u16 {
 	return bits.from_le_u16(intrinsics.unaligned_load((^u16)(raw_data(b))))

@@ -1,7 +1,7 @@
 package reflect
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 _ :: intrinsics
 
 Type_Info :: runtime.Type_Info
@@ -140,7 +140,7 @@ type_info_core :: runtime.type_info_core
 type_info_base_without_enum :: type_info_core
 
 
-when !ODIN_NO_RTTI {
+#if !ODIN_NO_RTTI {
 	// typeid_base returns the base-type of a `typeid` stripping the `distinct`ness from the first level
 	typeid_base :: runtime.typeid_base
 
@@ -862,7 +862,7 @@ enum_name_from_value_any :: proc(value: any) -> (name: string, ok: bool) {
 // Returns whether the value given has a defined name in the enum type.
 @(require_results)
 enum_value_has_name :: proc(value: $T) -> bool where intrinsics.type_is_enum(T) {
-	when len(T) == cap(T) {
+	#if len(T) == cap(T) {
 		return value >= min(T) && value <= max(T)
 	} else {
 		if value < min(T) || value > max(T) {
@@ -1699,7 +1699,7 @@ relative_pointer_to_absolute_raw :: proc(data: rawptr, base_integer_id: typeid) 
 		if ptr^ == 0 {
 			return nil
 		}
-		when intrinsics.type_is_unsigned(T) {
+		#if intrinsics.type_is_unsigned(T) {
 			return rawptr(uintptr(ptr) + uintptr(ptr^))
 		} else {
 			return rawptr(uintptr(ptr) + uintptr(i64(ptr^)))

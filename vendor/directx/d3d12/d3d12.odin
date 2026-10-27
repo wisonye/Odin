@@ -1,11 +1,11 @@
 // Bindings for [[ Direct3D 12 ; https://learn.microsoft.com/en-us/windows/win32/direct3d12/direct3d-12-graphics ]].
 package directx_d3d12
 
-foreign import "system:d3d12.lib"
+#foreign #import "system:d3d12.lib"
 
-import "../dxgi"
-import "../d3d_common"
-import win32 "core:sys/windows"
+#import "../dxgi"
+#import "../d3d_common"
+#import win32 "core:sys/windows"
 
 IUnknown        :: dxgi.IUnknown
 IUnknown_VTable :: dxgi.IUnknown_VTable
@@ -29,7 +29,7 @@ LPCWSTR :: win32.LPCWSTR
 IBlob   :: d3d_common.ID3DBlob
 
 @(default_calling_convention="system", link_prefix="D3D12")
-foreign d3d12 {
+#foreign d3d12 {
 	CreateDevice                             :: proc(pAdapter: ^IUnknown, MinimumFeatureLevel: FEATURE_LEVEL, riid: ^IID, ppDevice: ^rawptr) -> HRESULT ---
 	CreateRootSignatureDeserializer          :: proc(pSrcData: rawptr, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: ^IID, ppRootSignatureDeserializer: ^rawptr) -> HRESULT ---
 	CreateVersionedRootSignatureDeserializer :: proc(pSrcData: rawptr, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: ^IID, ppRootSignatureDeserializer: ^rawptr) -> HRESULT ---

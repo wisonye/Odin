@@ -1,12 +1,12 @@
 package benchmark_runtime
 
-import "base:runtime"
-import "core:fmt"
-import "core:log"
-import "core:testing"
-import "core:strings"
-import "core:text/table"
-import "core:time"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:log"
+#import "core:testing"
+#import "core:strings"
+#import "core:text/table"
+#import "core:time"
 
 RUNS_PER_SIZE :: 2500
 
@@ -137,10 +137,10 @@ run_trial_size_cmp :: proc(p: proc "contextless" (rawptr, rawptr, int) -> $R, si
 	time.stopwatch_start(&watch)
 	for _ in 0..<runs {
 		result := p(&left[0], &right[0], size)
-		when R == bool {
+		#if R == bool {
 			assert(result == false, loc = loc)
 			accumulator += 1
-		} else when R == int {
+		} else #if R == int {
 			assert(result == -1, loc = loc)
 			accumulator += result
 		}

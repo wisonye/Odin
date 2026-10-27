@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 _pipe :: proc() -> (r, w: ^File, err: Error) {
 	fds: [2]linux.Fd

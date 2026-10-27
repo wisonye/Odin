@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSTintConfiguration", objc_superclass=NS.Object)
 TintConfiguration :: struct {
@@ -12,7 +12,7 @@ TintConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TintConfiguration, objc_selector="tintConfigurationWithPreferredColor:", objc_name="tintConfigurationWithPreferredColor", objc_is_class_method=true)
 	TintConfiguration_tintConfigurationWithPreferredColor :: proc(color: ^Color) -> instancetype ---
 

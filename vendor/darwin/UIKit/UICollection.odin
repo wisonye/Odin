@@ -2,10 +2,10 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CA "vendor:darwin/QuartzCore"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="UICollectionLayoutListConfiguration", objc_superclass=NS.Object)
 CollectionLayoutListConfiguration :: struct {
@@ -14,7 +14,7 @@ CollectionLayoutListConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionLayoutListConfiguration, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	CollectionLayoutListConfiguration_new :: proc() -> ^CollectionLayoutListConfiguration ---
 
@@ -96,7 +96,7 @@ CollectionLayoutSectionOrthogonalScrollingProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionLayoutSectionOrthogonalScrollingProperties, objc_selector="decelerationRate", objc_name="decelerationRate")
 	CollectionLayoutSectionOrthogonalScrollingProperties_decelerationRate :: proc(self: ^CollectionLayoutSectionOrthogonalScrollingProperties) -> CollectionLayoutSectionOrthogonalScrollingDecelerationRate ---
 
@@ -115,7 +115,7 @@ foreign lib {
 CollectionReusableView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionReusableView, objc_selector="prepareForReuse", objc_name="prepareForReuse")
 	CollectionReusableView_prepareForReuse :: proc(self: ^CollectionReusableView) ---
 
@@ -143,7 +143,7 @@ CollectionView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionView, objc_selector="initWithFrame:collectionViewLayout:", objc_name="initWithFrame")
 	CollectionView_initWithFrame :: proc(self: ^CollectionView, frame: CG.Rect, layout: ^CollectionViewLayout) -> instancetype ---
 
@@ -445,7 +445,7 @@ CollectionViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDelegate, objc_selector="collectionView:shouldHighlightItemAtIndexPath:", objc_name="collectionView_shouldHighlightItemAtIndexPath")
 	CollectionViewDelegate_collectionView_shouldHighlightItemAtIndexPath :: proc(self: ^CollectionViewDelegate, collectionView: ^CollectionView, indexPath: ^NS.IndexPath) -> bool ---
 
@@ -575,7 +575,7 @@ CollectionViewDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDataSource, objc_selector="collectionView:numberOfItemsInSection:", objc_name="collectionView_numberOfItemsInSection")
 	CollectionViewDataSource_collectionView_numberOfItemsInSection :: proc(self: ^CollectionViewDataSource, collectionView: ^CollectionView, section: NS.Integer) -> NS.Integer ---
 
@@ -606,7 +606,7 @@ foreign lib {
 CollectionViewCell :: struct { using _: CollectionReusableView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewCell, objc_selector="setNeedsUpdateConfiguration", objc_name="setNeedsUpdateConfiguration")
 	CollectionViewCell_setNeedsUpdateConfiguration :: proc(self: ^CollectionViewCell) ---
 
@@ -685,7 +685,7 @@ foreign lib {
 CollectionViewCellRegistration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewCellRegistration, objc_selector="registrationWithCellClass:configurationHandler:", objc_name="registrationWithCellClass", objc_is_class_method=true)
 	CollectionViewCellRegistration_registrationWithCellClass :: proc(cellClass: Class, configurationHandler: CollectionViewCellRegistrationConfigurationHandler) -> instancetype ---
 
@@ -707,7 +707,7 @@ foreign lib {
 CollectionViewCompositionalLayout :: struct { using _: CollectionViewLayout}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewCompositionalLayout, objc_selector="initWithSection:", objc_name="initWithSection_")
 	CollectionViewCompositionalLayout_initWithSection_ :: proc(self: ^CollectionViewCompositionalLayout, section: ^NSCollectionLayoutSection) -> instancetype ---
 
@@ -756,7 +756,7 @@ CollectionViewCompositionalLayoutConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewCompositionalLayoutConfiguration, objc_selector="scrollDirection", objc_name="scrollDirection")
 	CollectionViewCompositionalLayoutConfiguration_scrollDirection :: proc(self: ^CollectionViewCompositionalLayoutConfiguration) -> CollectionViewScrollDirection ---
 
@@ -791,7 +791,7 @@ CollectionViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewController, objc_selector="initWithCollectionViewLayout:", objc_name="initWithCollectionViewLayout")
 	CollectionViewController_initWithCollectionViewLayout :: proc(self: ^CollectionViewController, layout: ^CollectionViewLayout) -> instancetype ---
 
@@ -837,7 +837,7 @@ CollectionViewDataSourcePrefetching :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDataSourcePrefetching, objc_selector="collectionView:prefetchItemsAtIndexPaths:", objc_name="collectionView_prefetchItemsAtIndexPaths")
 	CollectionViewDataSourcePrefetching_collectionView_prefetchItemsAtIndexPaths :: proc(self: ^CollectionViewDataSourcePrefetching, collectionView: ^CollectionView, indexPaths: ^NS.Array) ---
 
@@ -853,7 +853,7 @@ CollectionViewDelegateFlowLayout :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDelegateFlowLayout, objc_selector="collectionView:layout:sizeForItemAtIndexPath:", objc_name="collectionView_layout_sizeForItemAtIndexPath")
 	CollectionViewDelegateFlowLayout_collectionView_layout_sizeForItemAtIndexPath :: proc(self: ^CollectionViewDelegateFlowLayout, collectionView: ^CollectionView, collectionViewLayout: ^CollectionViewLayout, indexPath: ^NS.IndexPath) -> CG.Size ---
 
@@ -881,7 +881,7 @@ CollectionViewDiffableDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDiffableDataSource, objc_selector="initWithCollectionView:cellProvider:", objc_name="initWithCollectionView")
 	CollectionViewDiffableDataSource_initWithCollectionView :: proc(self: ^CollectionViewDiffableDataSource, collectionView: ^CollectionView, cellProvider: CollectionViewDiffableDataSourceCellProvider) -> instancetype ---
 
@@ -968,7 +968,7 @@ CollectionViewDiffableDataSourceReorderingHandlers :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDiffableDataSourceReorderingHandlers, objc_selector="canReorderItemHandler", objc_name="canReorderItemHandler")
 	CollectionViewDiffableDataSourceReorderingHandlers_canReorderItemHandler :: proc(self: ^CollectionViewDiffableDataSourceReorderingHandlers) -> ^Objc_Block(proc "c" () -> bool) ---
 
@@ -996,7 +996,7 @@ CollectionViewDiffableDataSourceSectionSnapshotHandlers :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDiffableDataSourceSectionSnapshotHandlers, objc_selector="shouldExpandItemHandler", objc_name="shouldExpandItemHandler")
 	CollectionViewDiffableDataSourceSectionSnapshotHandlers_shouldExpandItemHandler :: proc(self: ^CollectionViewDiffableDataSourceSectionSnapshotHandlers) -> ^Objc_Block(proc "c" () -> bool) ---
 
@@ -1036,7 +1036,7 @@ CollectionViewDragDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDragDelegate, objc_selector="collectionView:itemsForBeginningDragSession:atIndexPath:", objc_name="collectionView_itemsForBeginningDragSession_atIndexPath")
 	CollectionViewDragDelegate_collectionView_itemsForBeginningDragSession_atIndexPath :: proc(self: ^CollectionViewDragDelegate, collectionView: ^CollectionView, session: ^DragSession, indexPath: ^NS.IndexPath) -> ^NS.Array ---
 
@@ -1067,7 +1067,7 @@ CollectionViewDropDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropDelegate, objc_selector="collectionView:performDropWithCoordinator:", objc_name="collectionView_performDropWithCoordinator")
 	CollectionViewDropDelegate_collectionView_performDropWithCoordinator :: proc(self: ^CollectionViewDropDelegate, collectionView: ^CollectionView, coordinator: ^CollectionViewDropCoordinator) ---
 
@@ -1098,7 +1098,7 @@ CollectionViewDropCoordinator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropCoordinator, objc_selector="dropItem:toPlaceholder:", objc_name="dropItem_toPlaceholder")
 	CollectionViewDropCoordinator_dropItem_toPlaceholder :: proc(self: ^CollectionViewDropCoordinator, dragItem: ^DragItem, placeholder: ^CollectionViewDropPlaceholder) -> ^CollectionViewDropPlaceholderContext ---
 
@@ -1140,7 +1140,7 @@ CollectionViewDropItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropItem, objc_selector="dragItem", objc_name="dragItem")
 	CollectionViewDropItem_dragItem :: proc(self: ^CollectionViewDropItem) -> ^DragItem ---
 
@@ -1156,7 +1156,7 @@ foreign lib {
 CollectionViewDropPlaceholder :: struct { using _: CollectionViewPlaceholder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropPlaceholder, objc_selector="previewParametersProvider", objc_name="previewParametersProvider")
 	CollectionViewDropPlaceholder_previewParametersProvider :: proc(self: ^CollectionViewDropPlaceholder) -> ^Objc_Block(proc "c" () -> ^DragPreviewParameters) ---
 
@@ -1172,7 +1172,7 @@ CollectionViewDropPlaceholderContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropPlaceholderContext, objc_selector="commitInsertionWithDataSourceUpdates:", objc_name="commitInsertionWithDataSourceUpdates")
 	CollectionViewDropPlaceholderContext_commitInsertionWithDataSourceUpdates :: proc(self: ^CollectionViewDropPlaceholderContext, dataSourceUpdates: ^Objc_Block(proc "c" ( insertionIndexPath: ^NS.IndexPath ))) -> bool ---
 
@@ -1191,7 +1191,7 @@ foreign lib {
 CollectionViewDropProposal :: struct { using _: DropProposal}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewDropProposal, objc_selector="initWithDropOperation:intent:", objc_name="initWithDropOperation")
 	CollectionViewDropProposal_initWithDropOperation :: proc(self: ^CollectionViewDropProposal, operation: DropOperation, intent: CollectionViewDropIntent) -> instancetype ---
 
@@ -1204,7 +1204,7 @@ foreign lib {
 CollectionViewFlowLayout :: struct { using _: CollectionViewLayout}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewFlowLayout, objc_selector="minimumLineSpacing", objc_name="minimumLineSpacing")
 	CollectionViewFlowLayout_minimumLineSpacing :: proc(self: ^CollectionViewFlowLayout) -> CG.Float ---
 
@@ -1277,7 +1277,7 @@ foreign lib {
 CollectionViewFlowLayoutInvalidationContext :: struct { using _: CollectionViewLayoutInvalidationContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewFlowLayoutInvalidationContext, objc_selector="invalidateFlowLayoutDelegateMetrics", objc_name="invalidateFlowLayoutDelegateMetrics")
 	CollectionViewFlowLayoutInvalidationContext_invalidateFlowLayoutDelegateMetrics :: proc(self: ^CollectionViewFlowLayoutInvalidationContext) -> bool ---
 
@@ -1296,7 +1296,7 @@ foreign lib {
 CollectionViewFocusUpdateContext :: struct { using _: FocusUpdateContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewFocusUpdateContext, objc_selector="previouslyFocusedIndexPath", objc_name="previouslyFocusedIndexPath")
 	CollectionViewFocusUpdateContext_previouslyFocusedIndexPath :: proc(self: ^CollectionViewFocusUpdateContext) -> ^NS.IndexPath ---
 
@@ -1312,7 +1312,7 @@ CollectionViewLayout :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewLayout, objc_selector="init", objc_name="init")
 	CollectionViewLayout_init :: proc(self: ^CollectionViewLayout) -> instancetype ---
 
@@ -1461,7 +1461,7 @@ CollectionViewLayoutAttributes :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewLayoutAttributes, objc_selector="layoutAttributesForCellWithIndexPath:", objc_name="layoutAttributesForCellWithIndexPath", objc_is_class_method=true)
 	CollectionViewLayoutAttributes_layoutAttributesForCellWithIndexPath :: proc(indexPath: ^NS.IndexPath) -> instancetype ---
 
@@ -1543,7 +1543,7 @@ foreign lib {
 CollectionViewLayoutInvalidationContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewLayoutInvalidationContext, objc_selector="invalidateItemsAtIndexPaths:", objc_name="invalidateItemsAtIndexPaths")
 	CollectionViewLayoutInvalidationContext_invalidateItemsAtIndexPaths :: proc(self: ^CollectionViewLayoutInvalidationContext, indexPaths: ^NS.Array) ---
 
@@ -1595,7 +1595,7 @@ foreign lib {
 CollectionViewListCell :: struct { using _: CollectionViewCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewListCell, objc_selector="defaultContentConfiguration", objc_name="defaultContentConfiguration")
 	CollectionViewListCell_defaultContentConfiguration :: proc(self: ^CollectionViewListCell) -> ^ListContentConfiguration ---
 
@@ -1632,7 +1632,7 @@ foreign lib {
 CollectionViewPlaceholder :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewPlaceholder, objc_selector="initWithInsertionIndexPath:reuseIdentifier:", objc_name="initWithInsertionIndexPath")
 	CollectionViewPlaceholder_initWithInsertionIndexPath :: proc(self: ^CollectionViewPlaceholder, insertionIndexPath: ^NS.IndexPath, reuseIdentifier: ^NS.String) -> instancetype ---
 
@@ -1654,7 +1654,7 @@ foreign lib {
 CollectionViewSupplementaryRegistration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewSupplementaryRegistration, objc_selector="registrationWithSupplementaryClass:elementKind:configurationHandler:", objc_name="registrationWithSupplementaryClass", objc_is_class_method=true)
 	CollectionViewSupplementaryRegistration_registrationWithSupplementaryClass :: proc(supplementaryClass: Class, elementKind: ^NS.String, configurationHandler: CollectionViewSupplementaryRegistrationConfigurationHandler) -> instancetype ---
 
@@ -1679,7 +1679,7 @@ foreign lib {
 CollectionViewTransitionLayout :: struct { using _: CollectionViewLayout}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewTransitionLayout, objc_selector="initWithCurrentLayout:nextLayout:", objc_name="initWithCurrentLayout")
 	CollectionViewTransitionLayout_initWithCurrentLayout :: proc(self: ^CollectionViewTransitionLayout, currentLayout: ^CollectionViewLayout, newLayout: ^CollectionViewLayout) -> instancetype ---
 
@@ -1713,7 +1713,7 @@ foreign lib {
 CollectionViewUpdateItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollectionViewUpdateItem, objc_selector="indexPathBeforeUpdate", objc_name="indexPathBeforeUpdate")
 	CollectionViewUpdateItem_indexPathBeforeUpdate :: proc(self: ^CollectionViewUpdateItem) -> ^NS.IndexPath ---
 

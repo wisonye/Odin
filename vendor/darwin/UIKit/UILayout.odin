@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UILayoutGuide", objc_superclass=NS.Object)
 LayoutGuide :: struct {
@@ -13,7 +13,7 @@ LayoutGuide :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutGuide, objc_selector="layoutFrame", objc_name="layoutFrame")
 	LayoutGuide_layoutFrame :: proc(self: ^LayoutGuide) -> CG.Rect ---
 
@@ -74,7 +74,7 @@ LayoutGuideAspectFitting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutGuideAspectFitting, objc_selector="aspectRatio", objc_name="aspectRatio")
 	LayoutGuideAspectFitting_aspectRatio :: proc(self: ^LayoutGuideAspectFitting) -> CG.Float ---
 
@@ -87,7 +87,7 @@ foreign lib {
 TrackingLayoutGuide :: struct { using _: LayoutGuide}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TrackingLayoutGuide, objc_selector="setConstraints:activeWhenNearEdge:", objc_name="setConstraints_activeWhenNearEdge")
 	TrackingLayoutGuide_setConstraints_activeWhenNearEdge :: proc(self: ^TrackingLayoutGuide, trackingConstraints: ^NS.Array, edge: NSDirectionalRectEdge) ---
 
@@ -109,7 +109,7 @@ foreign lib {
 FocusGuide :: struct { using _: LayoutGuide}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusGuide, objc_selector="isEnabled", objc_name="isEnabled")
 	FocusGuide_isEnabled :: proc(self: ^FocusGuide) -> bool ---
 
@@ -134,7 +134,7 @@ foreign lib {
 KeyboardLayoutGuide :: struct { using _: TrackingLayoutGuide}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyboardLayoutGuide, objc_selector="followsUndockedKeyboard", objc_name="followsUndockedKeyboard")
 	KeyboardLayoutGuide_followsUndockedKeyboard :: proc(self: ^KeyboardLayoutGuide) -> bool ---
 
@@ -162,7 +162,7 @@ LayoutSupport :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutSupport, objc_selector="length", objc_name="length")
 	LayoutSupport_length :: proc(self: ^LayoutSupport) -> CG.Float ---
 

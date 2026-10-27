@@ -1,17 +1,17 @@
 #+build amd64
 package test_internal
 
-import "core:fmt"
-import "core:testing"
+#import "core:fmt"
+#import "core:testing"
 
-// The `asm` restriction to amd64 is enforced in the parser, so a `when ODIN_ARCH` guard inside the
+// The `asm` restriction to amd64 is enforced in the parser, so a `#if ODIN_ARCH` guard inside the
 // body cannot suppress it -- the body is parsed either way. The file needs a build tag instead.
 //
 // A template of more than one instruction can write its output before a later instruction has read
 // its inputs, so the output must not share a register with one of them. Without an early-clobber the
 // allocator was free to overlap them and `mov r, a; add r, b` computed `a + a`.
 //
-// The shape below matters: the defect only appears when surrounding register pressure makes the
+// The shape below matters: the defect only appears #if surrounding register pressure makes the
 // allocator pick an input's register for the output, and two asm calls as arguments to one variadic
 // call is what did it. The same calls in separate statements were always correct
 @(test)

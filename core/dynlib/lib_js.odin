@@ -2,7 +2,7 @@
 #+private
 package dynlib
 
-import "base:runtime"
+#import "base:runtime"
 
 _LIBRARY_FILE_EXTENSION :: ""
 

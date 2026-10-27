@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILexicon", objc_superclass=NS.Object)
 Lexicon :: struct {
@@ -11,7 +11,7 @@ Lexicon :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Lexicon, objc_selector="entries", objc_name="entries")
 	Lexicon_entries :: proc(self: ^Lexicon) -> ^NS.Array ---
 }
@@ -24,7 +24,7 @@ LexiconEntry :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LexiconEntry, objc_selector="documentText", objc_name="documentText")
 	LexiconEntry_documentText :: proc(self: ^LexiconEntry) -> ^NS.String ---
 

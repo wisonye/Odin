@@ -1,14 +1,14 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:io"
-import "core:mem"
-import "core:sync"
-import "core:time"
-import "core:unicode/utf16"
-import win32 "core:sys/windows"
+#import "core:io"
+#import "core:mem"
+#import "core:sync"
+#import "core:time"
+#import "core:unicode/utf16"
+#import win32 "core:sys/windows"
 
 INVALID_HANDLE :: ~uintptr(0)
 

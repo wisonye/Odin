@@ -3,8 +3,8 @@ package darwin_Foundation
 
 // Hand-written Odin-specific helpers which complement the generated bindings.
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(private="file")
 msgSend :: intrinsics.objc_send
@@ -20,7 +20,7 @@ UIntegerMax :: max(UInteger)
 Float :: CG.Float
 Point :: CG.Point
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	// `NSSize` and `NSRect` only exist on macOS, they are provided on iOS as well for portable code
 	Size :: CG.Size
 	Rect :: CG.Rect
@@ -38,7 +38,7 @@ AT :: MakeConstantString
 
 // CFString is 'toll-free bridged' with its Cocoa Foundation counterpart, NSString.
 MakeConstantString :: proc "c" (#const c: cstring) -> ^String {
-	foreign lib {
+	#foreign lib {
 		__CFStringMakeConstantString :: proc "c" (c: cstring) -> ^String ---
 	}
 	return __CFStringMakeConstantString(c)

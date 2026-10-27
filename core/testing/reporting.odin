@@ -9,13 +9,13 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import "base:runtime"
-import "core:fmt"
-import "core:io"
-import "core:mem"
-import "core:path/filepath"
-import "core:strings"
-import "core:terminal/ansi"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:io"
+#import "core:mem"
+#import "core:path/filepath"
+#import "core:strings"
+#import "core:terminal/ansi"
 
 // Definitions of colors for use in the test runner.
 SGR_RESET   :: ansi.CSI + ansi.RESET           + ansi.SGR
@@ -84,7 +84,7 @@ make_report :: proc(internal_tests: []Internal_Test) -> (report: Report, error: 
 				}) or_return
 			}
 
-			when PROGRESS_WIDTH == 0 {
+			#if PROGRESS_WIDTH == 0 {
 				report.progress_width = max(report.progress_width, index - pkg_start)
 			}
 
@@ -104,7 +104,7 @@ make_report :: proc(internal_tests: []Internal_Test) -> (report: Report, error: 
 			test_states = report.all_test_states[pkg_start:],
 		}) or_return
 	}
-	when PROGRESS_WIDTH == 0 {
+	#if PROGRESS_WIDTH == 0 {
 		report.progress_width = max(report.progress_width, len(internal_tests) - pkg_start)
 	} else {
 		report.progress_width = PROGRESS_WIDTH

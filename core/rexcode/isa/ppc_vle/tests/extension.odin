@@ -2,11 +2,11 @@
 
 package rexcode_ppc_vle_tests
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import v ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import v ".."
+#import "core:rexcode/isa"
 
 @(private="file")
 check :: proc(name: string, ok: bool) {

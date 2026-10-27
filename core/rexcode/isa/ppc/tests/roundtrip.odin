@@ -2,10 +2,10 @@
 
 package rexcode_ppc_tests
 
-import "core:fmt"
-import "core:os"
-import p ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import p ".."
+#import "core:rexcode/isa"
 
 @(private="file")
 check_roundtrip :: proc(name: string, inst: p.Instruction, want_bytes: []u8) {

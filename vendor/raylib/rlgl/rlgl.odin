@@ -107,8 +107,8 @@
 
 package rlgl
 
-import "core:c"
-import rl "../."
+#import "core:c"
+#import rl "../."
 
 VERSION :: "6.0"
 
@@ -116,55 +116,55 @@ RAYLIB_SHARED :: #config(RAYLIB_SHARED, false)
 RAYLIB_WASM_LIB :: #config(RAYLIB_WASM_LIB, "../wasm/libraylib.web.a")
 
 // Note: We pull in the full raylib library. If you want a truly stand-alone rlgl, then:
-// - Compile a separate rlgl library and use that in the foreign import blocks below.
-// - Remove the `import rl "../."` line
+// - Compile a separate rlgl library and use that in the foreign #import blocks below.
+// - Remove the `#import rl "../."` line
 // - Copy the code from raylib.odin for any types we alias from that package (see PixelFormat etc)
-when ODIN_OS == .Windows {
-	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" when RAYLIB_SHARED else "libcmt"))
-	foreign import lib {
-		"../windows/raylibdll.lib" when RAYLIB_SHARED else "../windows/raylib.lib" ,
+#if ODIN_OS == .Windows {
+	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" #if RAYLIB_SHARED else "libcmt"))
+	#foreign #import lib {
+		"../windows/raylibdll.lib" #if RAYLIB_SHARED else "../windows/raylib.lib" ,
 		"system:Winmm.lib",
 		"system:Gdi32.lib",
 		"system:User32.lib",
 		"system:Shell32.lib",
 	}
-} else when ODIN_OS == .Linux  {
-	when ODIN_ARCH == .arm64 {
-		foreign import lib {
+} else #if ODIN_OS == .Linux  {
+	#if ODIN_ARCH == .arm64 {
+		#foreign #import lib {
 			// Note(bumbread): I'm not sure why in `linux/` folder there are
 			// multiple copies of raylib.so, but since these bindings are for
 			// particular version of the library, I better specify it. Ideally,
 			// though, it's best specified in terms of major (.so.4)
-			"../linux-arm64/libraylib.so.600" when RAYLIB_SHARED else "../linux-arm64/libraylib.a",
+			"../linux-arm64/libraylib.so.600" #if RAYLIB_SHARED else "../linux-arm64/libraylib.a",
 			"system:dl",
 			"system:pthread",
 			"system:X11",
 		}
 	} else {
-		foreign import lib {
+		#foreign #import lib {
 			// Note(bumbread): I'm not sure why in `linux/` folder there are
 			// multiple copies of raylib.so, but since these bindings are for
 			// particular version of the library, I better specify it. Ideally,
 			// though, it's best specified in terms of major (.so.4)
-			"../linux/libraylib.so.600" when RAYLIB_SHARED else "../linux/libraylib.a",
+			"../linux/libraylib.so.600" #if RAYLIB_SHARED else "../linux/libraylib.a",
 			"system:dl",
 			"system:pthread",
 			"system:X11",
 		}
 	}
-} else when ODIN_OS == .Darwin {
-	foreign import lib {
-		"../macos/libraylib.600.dylib" when RAYLIB_SHARED else "../macos/libraylib.a",
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib {
+		"../macos/libraylib.600.dylib" #if RAYLIB_SHARED else "../macos/libraylib.a",
 		"system:Cocoa.framework",
 		"system:OpenGL.framework",
 		"system:IOKit.framework",
 	}
-} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib {
+} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib {
 		RAYLIB_WASM_LIB,
 	}
 } else {
-	foreign import lib "system:raylib"
+	#foreign #import lib "system:raylib"
 }
 
 GRAPHICS_API_OPENGL_11  :: false
@@ -174,11 +174,11 @@ GRAPHICS_API_OPENGL_ES2 :: false
 GRAPHICS_API_OPENGL_43  :: false
 GRAPHICS_API_OPENGL_ES3 :: false
 
-when GRAPHICS_API_OPENGL_ES3 {
+#if GRAPHICS_API_OPENGL_ES3 {
 	GRAPHICS_API_OPENGL_ES2 :: true
 }
  
-when !GRAPHICS_API_OPENGL_ES2 {
+#if !GRAPHICS_API_OPENGL_ES2 {
 	// This is the maximum amount of elements (quads) per batch
 	// NOTE: Be careful with text, every letter maps to a quad
 	DEFAULT_BATCH_BUFFER_ELEMENTS :: 8192
@@ -289,7 +289,7 @@ BLEND_COLOR                          :: 0x8005      // GL_BLEND_COLOR
 //----------------------------------------------------------------------------------
 
 
-VertexBufferIndexType :: c.ushort when GRAPHICS_API_OPENGL_ES2 else c.uint
+VertexBufferIndexType :: c.ushort #if GRAPHICS_API_OPENGL_ES2 else c.uint
 
 // Dynamic vertex buffers (position + texcoords + colors + indices arrays)
 VertexBuffer :: struct {
@@ -384,7 +384,7 @@ CullMode :: enum c.int {
 Matrix :: rl.Matrix
 
 @(default_calling_convention="c", link_prefix="rl")
-foreign lib {
+#foreign lib {
 	//------------------------------------------------------------------------------------
 	// Functions Declaration - Matrix operations
 	//------------------------------------------------------------------------------------
@@ -432,7 +432,7 @@ foreign lib {
 	DisableVertexBufferElement :: proc() ---                      // Disable vertex buffer element (VBO element)
 	EnableVertexAttribute      :: proc(index: c.uint) ---         // Enable vertex attribute index
 	DisableVertexAttribute     :: proc(index: c.uint) ---         // Disable vertex attribute index
-	when GRAPHICS_API_OPENGL_11 {
+	#if GRAPHICS_API_OPENGL_11 {
 		EnableStatePointer :: proc(vertexAttribType: c.int, buffer: rawptr) ---
 		DisableStatePointer :: proc(vertexAttribType: c.int) ---
 	}

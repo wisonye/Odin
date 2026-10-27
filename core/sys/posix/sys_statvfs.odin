@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/statvfs.h - VFS File System information structure
 
-foreign lib {
+#foreign lib {
 
 	/*
 	Obtains information about the file system containing the fildes.
@@ -38,7 +38,7 @@ VFS_Flag_Bits :: enum c.ulong {
 }
 VFS_Flags :: bit_set[VFS_Flag_Bits; c.ulong]
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LFSTATVFS :: "__fstatvfs90"
 	@(private) LSTATVFS  :: "__statvfs90"
 } else {
@@ -46,7 +46,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LSTATVFS  :: "statvfs"
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 	
 	fsblkcnt_t :: distinct c.uint
 
@@ -67,7 +67,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 	ST_RDONLY :: 0x00000001
 	ST_NOSUID :: 0x00000002
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 	
 	fsblkcnt_t :: distinct c.uint64_t
 
@@ -88,7 +88,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 	ST_RDONLY :: 0x00000001
 	ST_NOSUID :: 0x00000002
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 	
 	fsblkcnt_t :: distinct c.uint64_t
 
@@ -131,7 +131,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 	ST_RDONLY :: 0x00000001
 	ST_NOSUID :: 0x00000008
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	fsblkcnt_t :: distinct c.uint64_t
 

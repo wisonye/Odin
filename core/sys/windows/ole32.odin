@@ -2,7 +2,7 @@ package sys_windows
 
 // Don't add a `#+build windows` guard to this file. It's used for `dxgi` on non-Windows platforms, for example.
 
-foreign import Ole32 "system:Ole32.lib"
+#foreign #import Ole32 "system:Ole32.lib"
 
 //objbase.h
 // Note(Dragos): https://learn.microsoft.com/en-us/windows/win32/api/objbase/ne-objbase-coinit makes you believe that MULTITHREADED == 3. That is wrong. See definition of objbase.h
@@ -42,7 +42,7 @@ IUnknown_VTable :: struct {
 LPUNKNOWN :: ^IUnknown
 
 @(default_calling_convention="system")
-foreign Ole32 {
+#foreign Ole32 {
 	CoInitialize   :: proc(reserved: rawptr = nil) -> HRESULT ---
 	CoInitializeEx :: proc(reserved: rawptr = nil, co_init: COINIT = .APARTMENTTHREADED) -> HRESULT ---
 	CoUninitialize :: proc() ---

@@ -5,8 +5,8 @@ package math_big
 	Made available under Odin's license.
 */
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 /*
 	TODO: Int.flags and Constants like ONE, NAN, etc, are not yet properly handled everywhere.
@@ -531,7 +531,7 @@ int_to_bytes_big :: proc(a: ^Int, buf: []u8, signed := false, allocator := conte
 
 /*
 	Return Python 3.x compatible Little Endian binary representation of `a`, either signed or unsigned.
-	If `a` is negative when asking for an unsigned number, we return an error like Python does.
+	If `a` is negative #if asking for an unsigned number, we return an error like Python does.
 */
 int_to_bytes_little_python :: proc(a: ^Int, buf: []u8, signed := false, allocator := context.allocator) -> (err: Error) {
 	assert_if_nil(a)
@@ -567,7 +567,7 @@ int_to_bytes_little_python :: proc(a: ^Int, buf: []u8, signed := false, allocato
 
 /*
 	Return Python 3.x compatible Big Endian binary representation of `a`, either signed or unsigned.
-	If `a` is negative when asking for an unsigned number, we return an error like Python does.
+	If `a` is negative #if asking for an unsigned number, we return an error like Python does.
 */
 int_to_bytes_big_python :: proc(a: ^Int, buf: []u8, signed := false, allocator := context.allocator) -> (err: Error) {
 	assert_if_nil(a)

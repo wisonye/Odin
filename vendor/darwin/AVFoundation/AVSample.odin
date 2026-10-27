@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
-import CA "vendor:darwin/QuartzCore"
-import AT "vendor:darwin/AudioToolbox"
+#import cffi "core:c"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CA "vendor:darwin/QuartzCore"
+#import AT "vendor:darwin/AudioToolbox"
 
 @(objc_class="AVSampleBufferAudioRenderer", objc_superclass=NS.Object)
 SampleBufferAudioRenderer :: struct {
@@ -16,7 +16,7 @@ SampleBufferAudioRenderer :: struct {
 	using _: QueuedSampleBufferRendering,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferAudioRenderer, objc_selector="status", objc_name="status")
 	SampleBufferAudioRenderer_status :: proc(self: ^SampleBufferAudioRenderer) -> QueuedSampleBufferRenderingStatus ---
 
@@ -65,7 +65,7 @@ SampleBufferAudioRendererInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVSampleBufferDisplayLayer", objc_superclass=CA.Layer)
 SampleBufferDisplayLayer :: struct { using _: CA.Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferDisplayLayer, objc_selector="controlTimebase", objc_name="controlTimebase")
 	SampleBufferDisplayLayer_controlTimebase :: proc(self: ^SampleBufferDisplayLayer) -> CM.TimebaseRef ---
 
@@ -147,7 +147,7 @@ SampleBufferDisplayLayerInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVSampleBufferGenerator", objc_superclass=NS.Object)
 SampleBufferGenerator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferGenerator, objc_selector="init", objc_name="init")
 	SampleBufferGenerator_init :: proc(self: ^SampleBufferGenerator) -> instancetype ---
 
@@ -199,7 +199,7 @@ SampleBufferGeneratorInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVSampleBufferGeneratorBatch", objc_superclass=NS.Object)
 SampleBufferGeneratorBatch :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferGeneratorBatch, objc_selector="init", objc_name="init")
 	SampleBufferGeneratorBatch_init :: proc(self: ^SampleBufferGeneratorBatch) -> instancetype ---
 
@@ -217,7 +217,7 @@ foreign lib {
 @(objc_class="AVSampleBufferRenderSynchronizer", objc_superclass=NS.Object)
 SampleBufferRenderSynchronizer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferRenderSynchronizer, objc_selector="currentTime", objc_name="currentTime")
 	SampleBufferRenderSynchronizer_currentTime :: proc(self: ^SampleBufferRenderSynchronizer) -> CM.Time ---
 
@@ -284,7 +284,7 @@ SampleBufferRenderSynchronizerInternal :: struct { using _: intrinsics.objc_obje
 @(objc_class="AVSampleBufferRequest", objc_superclass=NS.Object)
 SampleBufferRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferRequest, objc_selector="init", objc_name="init")
 	SampleBufferRequest_init :: proc(self: ^SampleBufferRequest) -> instancetype ---
 
@@ -345,7 +345,7 @@ SampleBufferVideoRenderer :: struct {
 	using _: QueuedSampleBufferRendering,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleBufferVideoRenderer, objc_selector="flushWithRemovalOfDisplayedImage:completionHandler:", objc_name="flushWithRemovalOfDisplayedImage")
 	SampleBufferVideoRenderer_flushWithRemovalOfDisplayedImage :: proc(self: ^SampleBufferVideoRenderer, removeDisplayedImage: bool, handler: ^Objc_Block(proc "c" ())) ---
 
@@ -384,7 +384,7 @@ SampleCursor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SampleCursor, objc_selector="init", objc_name="init")
 	SampleCursor_init :: proc(self: ^SampleCursor) -> instancetype ---
 

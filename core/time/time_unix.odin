@@ -2,7 +2,7 @@
 #+build darwin, freebsd, openbsd, netbsd
 package time
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _IS_SUPPORTED :: true
 
@@ -31,7 +31,7 @@ _sleep :: proc "contextless" (d: Duration) {
 	}
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	TICK_CLOCK :: posix.Clock(4) // CLOCK_MONOTONIC_RAW
 } else {
 	// It looks like the BSDs don't have a CLOCK_MONOTONIC_RAW equivalent.

@@ -6,7 +6,7 @@ package rexcode_ppc_vle_generated
 // Reverse decode tables (source: ENCODING_TABLE), keyed by primary opcode.
 // Two dispatch namespaces: 16-bit (SHORT) and 32-bit (LONG).
 
-import lib "../.."
+#import lib "../.."
 
 @(rodata)
 DECODE_ENTRIES := [222]lib.Decode_Entry{

@@ -1,7 +1,7 @@
 #+build ignore
 package custom_formatter_example
-import "core:fmt"
-import "core:io"
+#import "core:fmt"
+#import "core:io"
 
 SomeType :: struct {
 	value: int,

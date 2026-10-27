@@ -1,8 +1,8 @@
 #+private
 package slice
 
-import "base:builtin"
-import "base:intrinsics"
+#import "base:builtin"
+#import "base:intrinsics"
 _ :: intrinsics
 
 ORD :: intrinsics.type_is_ordered
@@ -15,11 +15,11 @@ Sort_Kind :: enum {
 
 _stable_sort_general :: proc(data: $T/[]$E, call: $P, $KIND: Sort_Kind) where (ORD(E) && KIND == .Ordered) || (KIND != .Ordered) #no_bounds_check {
 	less :: #force_inline proc(a, b: E, call: P) -> bool {
-		when KIND == .Ordered {
+		#if KIND == .Ordered {
 			return a < b
-		} else when KIND == .Less {
+		} else #if KIND == .Less {
 			return call(a, b)
-		} else when KIND == .Cmp {
+		} else #if KIND == .Cmp {
 			return call(a, b) == .Less
 		} else {
 			#panic("unhandled Sort_Kind")

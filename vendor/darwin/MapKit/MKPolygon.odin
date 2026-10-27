@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="MKPolygon", objc_superclass=MultiPoint)
 Polygon :: struct {
@@ -12,7 +12,7 @@ Polygon :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Polygon, objc_selector="polygonWithPoints:count:", objc_name="polygonWithPoints_count", objc_is_class_method=true)
 	Polygon_polygonWithPoints_count :: proc(points: ^MapPoint, count: NS.UInteger) -> instancetype ---
 
@@ -47,7 +47,7 @@ Polygon_polygonWithCoordinates :: proc {
 @(objc_class="MKPolygonRenderer", objc_superclass=OverlayPathRenderer)
 PolygonRenderer :: struct { using _: OverlayPathRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PolygonRenderer, objc_selector="initWithPolygon:", objc_name="initWithPolygon")
 	PolygonRenderer_initWithPolygon :: proc(self: ^PolygonRenderer, polygon: ^Polygon) -> instancetype ---
 

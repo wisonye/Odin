@@ -10,7 +10,7 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 *************************************************************************
@@ -126,7 +126,7 @@ XXH_xorshift_64 :: #force_inline proc(v: xxh_u64, #any_int shift: uint) -> (res:
 }
 
 /*
-	This is a fast avalanche stage, suitable when input bits are already partially mixed
+	This is a fast avalanche stage, suitable #if input bits are already partially mixed
 */
 @(optimization_mode="favor_size")
 XXH3_avalanche :: #force_inline proc(h64: xxh_u64) -> (res: xxh_u64) {
@@ -138,7 +138,7 @@ XXH3_avalanche :: #force_inline proc(h64: xxh_u64) -> (res: xxh_u64) {
 
 /*
 	This is a stronger avalanche, inspired by Pelle Evensen's rrmxmx
-	preferable when input has not been previously mixed
+	preferable #if input has not been previously mixed
 */
 @(optimization_mode="favor_size")
 XXH3_rrmxmx :: #force_inline proc(h64, length: xxh_u64) -> (res: xxh_u64) {
@@ -499,7 +499,7 @@ XXH3_128 :: proc { XXH3_128_default, XXH3_128_with_seed, XXH3_128_with_secret }
 	Instead of iterating over individual inputs, we use a set of single shot
 	functions which piece together a range of lengths and operate in constant time.
 	Additionally, the number of multiplies has been significantly reduced. This
-	reduces latency, especially when emulating 64-bit multiplies on 32-bit.
+	reduces latency, especially #if emulating 64-bit multiplies on 32-bit.
 
 	Depending on the platform, this may or may not be faster than XXH32, but it
 	is almost guaranteed to be faster than XXH64.
@@ -599,7 +599,7 @@ XXH3_len_0to16_64b :: #force_inline proc(input: []u8, secret: []u8, seed: xxh_u6
 
 	However, they are very unlikely.
 
-	Keep this in mind when using the unseeded XXH3_64bits() variant: As with all
+	Keep this in mind #if using the unseeded XXH3_64bits() variant: As with all
 	unseeded non-cryptographic hashes, it does not attempt to defend itself
 	against specially crafted inputs, only random inputs.
 
@@ -716,7 +716,7 @@ XXH_writeLE64 :: #force_inline proc(dst: []u8, v64: u64le) {
  * This means that in the (relatively likely) case of a multiply by zero, the
  * original input is preserved.
  *
- * On 128-bit inputs, we swap 64-bit pairs when we add the input to improve
+ * On 128-bit inputs, we swap 64-bit pairs #if we add the input to improve
  * cross-pollination, as otherwise the upper and lower halves would be
  * essentially independent.
  *
@@ -789,11 +789,11 @@ XXH3_accumulate_512_simd_generic :: #force_inline proc(acc: []xxh_u64, input: []
 		data_key := data_val ~ sec
 
 		// Swap adjacent lanes
-		when W == 2 {
+		#if W == 2 {
 			data_val = swizzle(data_val, 1, 0)
-		} else when W == 4 {
+		} else #if W == 4 {
 			data_val = swizzle(data_val, 1, 0, 3, 2)
-		} else when W == 8 {
+		} else #if W == 8 {
 			data_val = swizzle(data_val, 1, 0, 3, 2, 5, 4, 7, 6)
 		} else {
 			#panic("Unsupported vector size!")
@@ -836,7 +836,7 @@ XXH3_init_custom_secret_simd_generic :: #force_inline proc(custom_secret: []u8, 
 }
 
 XXH3_accumulate_512 :: #force_inline proc(acc: []xxh_u64, input: []u8, secret: []u8) {
-	when XXH_NATIVE_WIDTH > 1 {
+	#if XXH_NATIVE_WIDTH > 1 {
 		XXH3_accumulate_512_simd_generic(acc, input, secret, XXH_NATIVE_WIDTH)
 	} else {
 		XXH3_accumulate_512_scalar(acc, input, secret)
@@ -844,7 +844,7 @@ XXH3_accumulate_512 :: #force_inline proc(acc: []xxh_u64, input: []u8, secret: [
 }
 
 XXH3_scramble_accumulator :: #force_inline proc(acc: []xxh_u64, secret: []u8) {
-	when XXH_NATIVE_WIDTH > 1 {
+	#if XXH_NATIVE_WIDTH > 1 {
 		XXH3_scramble_accumulator_simd_generic(acc, secret, XXH_NATIVE_WIDTH)
 	} else {
 		XXH3_scramble_accumulator_scalar(acc, secret)
@@ -852,7 +852,7 @@ XXH3_scramble_accumulator :: #force_inline proc(acc: []xxh_u64, secret: []u8) {
 }
 
 XXH3_init_custom_secret :: #force_inline proc(custom_secret: []u8, seed64: xxh_u64) {
-	when XXH_NATIVE_WIDTH > 1 {
+	#if XXH_NATIVE_WIDTH > 1 {
 		XXH3_init_custom_secret_simd_generic(custom_secret, seed64, XXH_NATIVE_WIDTH)
 	} else {
 		XXH3_init_custom_secret_scalar(custom_secret, seed64)
@@ -871,7 +871,7 @@ XXH3_accumulate :: #force_inline proc(
 	acc: []xxh_u64, input: []u8, secret: []u8, nbStripes: uint, f_acc512: XXH3_accumulate_512_f) {
 
 	#no_bounds_check for n := uint(0); n < nbStripes; n += 1 {
-		when !XXH_DISABLE_PREFETCH {
+		#if !XXH_DISABLE_PREFETCH {
 			in_ptr := &input[n * XXH_STRIPE_LEN]
 			prefetch(in_ptr, XXH_PREFETCH_DIST)
 		}
@@ -980,7 +980,7 @@ XXH3_hashLong_64b_withSeed_internal :: #force_inline proc(
 	and then use this key for long mode hashing.
 
 	This operation is decently fast but nonetheless costs a little bit of time.
-	Try to avoid it whenever possible (typically when seed==0).
+	Try to avoid it whenever possible (typically #if seed==0).
 
 	It's important for performance that XXH3_hashLong is not inlined. Not sure
 	why (uop cache maybe?), but the difference is large and easily measurable.

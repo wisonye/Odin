@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 /**
  * Struct describing raw data information about a chunk.
@@ -34,7 +34,7 @@ chunk_info_t :: struct {
 }
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Retrieve the chunk table offset for the part in question.
 	*/
 	get_chunk_table_offset :: proc(ctxt: const_context_t , part_index: c.int, chunk_offset_out: ^c.uint64_t) -> result_t ---
@@ -89,13 +89,13 @@ foreign lib {
 
 	/**************************************/
 
-	/** Initialize a \c chunk_info_t structure when encoding scanline
+	/** Initialize a \c chunk_info_t structure #if encoding scanline
 	 * data (similar to read but does not do anything with a chunk
 	 * table).
 	 */
 	write_scanline_chunk_info :: proc(ctxt: context_t, part_index: c.int, y: c.int, cinfo: ^chunk_info_t) -> result_t ---
 
-	/** Initialize a \c chunk_info_t structure when encoding tiled data
+	/** Initialize a \c chunk_info_t structure #if encoding tiled data
 	 * (similar to read but does not do anything with a chunk table).
 	 */
 	write_tile_chunk_info :: proc(

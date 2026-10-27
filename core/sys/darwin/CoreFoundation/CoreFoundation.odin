@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_CoreFoundation
 
-import "base:intrinsics"
-import cffi "core:c"
-import darwin "core:sys/darwin"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import darwin "core:sys/darwin"
+#import posix "core:sys/posix"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreFoundation.framework",
 }
 
@@ -39,7 +39,7 @@ DISPATCH_TIME_NOW       :: 0
 DISPATCH_TIME_FOREVER   :: 0xFFFFFFFFFFFFFFFF
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name = "__CFStringMakeConstantString")
 	StringMakeConstantString :: proc "c" ( c: cstring ) -> StringRef ---
 }
@@ -62,7 +62,7 @@ StringCopyToOdinString :: proc( theString: StringRef, allocator := context.alloc
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="kCFCoreFoundationVersionNumber")
 	kCoreFoundationVersionNumber: cffi.double
 
@@ -1194,7 +1194,7 @@ foreign lib {
 	@(link_name="kCFUserNotificationOtherButtonAccessibilityIdentifierKey")
 	kUserNotificationOtherButtonAccessibilityIdentifierKey: StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kCFXMLTreeErrorDescription")
 		kXMLTreeErrorDescription: StringRef
 
@@ -1562,7 +1562,7 @@ foreign lib {
 	@(link_name="CFNotificationCenterGetLocalCenter")
 	NotificationCenterGetLocalCenter :: proc() -> NotificationCenterRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="CFNotificationCenterGetDistributedCenter")
 		NotificationCenterGetDistributedCenter :: proc() -> NotificationCenterRef ---
 	}
@@ -3816,7 +3816,7 @@ foreign lib {
 	@(link_name="CFUserNotificationDisplayAlert")
 	UserNotificationDisplayAlert :: proc(timeout: TimeInterval, flags: OptionFlags, iconURL: URLRef, soundURL: URLRef, localizationURL: URLRef, alertHeader: StringRef, alertMessage: StringRef, defaultButtonTitle: StringRef, alternateButtonTitle: StringRef, otherButtonTitle: StringRef, responseFlags: ^OptionFlags) -> SInt32 ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="CFXMLNodeGetTypeID")
 		XMLNodeGetTypeID :: proc() -> TypeID ---
 
@@ -3952,7 +3952,7 @@ kUserNotificationOtherResponse              :: 2
 kUserNotificationCancelResponse             :: 3
 kUserNotificationNoDefaultButtonFlag        :: 32
 kUserNotificationUseRadioButtonsFlag        :: 64
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	kXMLNodeCurrentVersion                      :: 1
 }
 kNotFound                                   :: -1
@@ -4187,7 +4187,7 @@ FileDescriptorRef :: ^__CFFileDescriptor
 FileDescriptorCallBack :: proc "c" ( f: FileDescriptorRef, callBackTypes: OptionFlags, info: rawptr )
 UserNotificationRef :: ^__CFUserNotification
 UserNotificationCallBack :: proc "c" ( userNotification: UserNotificationRef, responseFlags: OptionFlags )
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	XMLNodeRef :: ^__CFXMLNode
 	XMLTreeRef :: TreeRef
 	XMLParserRef :: ^__CFXMLParser
@@ -4737,7 +4737,7 @@ StringTokenizerTokenTypeFlag :: enum cffi.ulong {
 StringTokenizerTokenType :: bit_set[StringTokenizerTokenTypeFlag; cffi.ulong]
 StringTokenizerTokenType_None :: StringTokenizerTokenType{}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	XMLNodeTypeCode :: enum cffi.long {
 		Document                 = 1,
 		Element                  = 2,
@@ -5162,7 +5162,7 @@ FileDescriptorContext :: struct #align (8) {
 
 __CFUserNotification :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	__CFXMLNode :: struct {}
 
 	XMLElementInfo :: struct #align (8) {

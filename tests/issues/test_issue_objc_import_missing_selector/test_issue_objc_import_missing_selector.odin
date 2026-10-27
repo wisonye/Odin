@@ -2,14 +2,14 @@
 // Expected: 1 error, for `Object_noSelector`.
 package test_issue_objc_import_missing_selector
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-foreign import lib "system:Foundation.framework"
+#foreign #import lib "system:Foundation.framework"
 
 @(objc_class="NSObject")
 Object :: struct {using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Object, objc_name="noSelector")
 	Object_noSelector :: proc(self: ^Object) -> ^Object ---
 

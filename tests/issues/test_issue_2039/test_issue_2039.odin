@@ -1,6 +1,6 @@
 package test_issue_2039
 
-import "core:testing"
+#import "core:testing"
 
 VTable :: struct {
 	get: proc(t: ^VTable) -> ^VTable,

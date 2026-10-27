@@ -1,7 +1,7 @@
 package mem
 
-import "base:builtin"
-import "base:runtime"
+#import "base:builtin"
+#import "base:runtime"
 
 /*
 Memory layout of the `any` type.

@@ -1,6 +1,6 @@
 package sysinfo
 
-import "core:sys/unix"
+#import "core:sys/unix"
 
 @(private)
 _cpu_core_count :: proc "contextless" () -> (physical: int, logical: int, ok: bool) {

@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_QuartzCore
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CALayoutManager")
 LayoutManager :: struct {
@@ -12,7 +12,7 @@ LayoutManager :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LayoutManager, objc_selector="preferredSizeOfLayer:", objc_name="preferredSizeOfLayer")
 	LayoutManager_preferredSizeOfLayer :: proc(self: ^LayoutManager, layer: ^Layer) -> CG.Size ---
 

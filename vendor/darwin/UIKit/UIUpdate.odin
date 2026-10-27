@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="UIUpdateActionPhase", objc_superclass=NS.Object)
 UpdateActionPhase :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UpdateActionPhase, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	UpdateActionPhase_new :: proc() -> ^UpdateActionPhase ---
 
@@ -58,7 +58,7 @@ foreign lib {
 UpdateInfo :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UpdateInfo, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	UpdateInfo_new :: proc() -> ^UpdateInfo ---
 
@@ -95,7 +95,7 @@ foreign lib {
 UpdateLink :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UpdateLink, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	UpdateLink_new :: proc() -> ^UpdateLink ---
 

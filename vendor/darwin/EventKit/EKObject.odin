@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKObject", objc_superclass=NS.Object)
 Object :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Object, objc_selector="reset", objc_name="reset")
 	Object_reset :: proc(self: ^Object) ---
 

@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -55,7 +55,7 @@ ma_tell_proc :: proc "c" (pUserData: rawptr, pCursor: ^i64) -> result
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	vfs_open               :: proc(pVFS: ^vfs, pFilePath: cstring,      openMode: open_mode_flags, pFile: ^vfs_file) -> result ---
 	vfs_open_w             :: proc(pVFS: ^vfs, pFilePath: [^]c.wchar_t, openMode: open_mode_flags, pFile: ^vfs_file) -> result ---
 	vfs_close              :: proc(pVFS: ^vfs, file: vfs_file) -> result ---

@@ -2,7 +2,7 @@
 #+build windows
 package test_issue_7562
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 // Keep the buffer behind a separate call so optimized builds retain the
 // large stack allocation and the compiler-generated call to __chkstk.

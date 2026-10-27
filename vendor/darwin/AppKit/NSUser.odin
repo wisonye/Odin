@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSUserActivityRestoring")
 UserActivityRestoring :: struct {
@@ -12,7 +12,7 @@ UserActivityRestoring :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserActivityRestoring, objc_selector="restoreUserActivityState:", objc_name="restoreUserActivityState")
 	UserActivityRestoring_restoreUserActivityState :: proc(self: ^UserActivityRestoring, userActivity: ^NS.UserActivity) ---
 }
@@ -22,7 +22,7 @@ foreign lib {
 UserDefaultsController :: struct { using _: Controller}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserDefaultsController, objc_selector="initWithDefaults:initialValues:", objc_name="initWithDefaults")
 	UserDefaultsController_initWithDefaults :: proc(self: ^UserDefaultsController, defaults: ^NS.UserDefaults, initialValues: ^NS.Dictionary) -> instancetype ---
 
@@ -68,7 +68,7 @@ foreign lib {
 UserInterfaceCompression :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserInterfaceCompression, objc_selector="compressWithPrioritizedCompressionOptions:", objc_name="compressWithPrioritizedCompressionOptions")
 	UserInterfaceCompression_compressWithPrioritizedCompressionOptions :: proc(self: ^UserInterfaceCompression, prioritizedOptions: ^NS.Array) ---
 
@@ -88,7 +88,7 @@ UserInterfaceCompressionOptions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserInterfaceCompressionOptions, objc_selector="init", objc_name="init")
 	UserInterfaceCompressionOptions_init :: proc(self: ^UserInterfaceCompressionOptions) -> instancetype ---
 
@@ -137,7 +137,7 @@ foreign lib {
 UserInterfaceItemIdentification :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserInterfaceItemIdentification, objc_selector="identifier", objc_name="identifier")
 	UserInterfaceItemIdentification_identifier :: proc(self: ^UserInterfaceItemIdentification) -> ^NS.String ---
 
@@ -153,7 +153,7 @@ UserInterfaceItemSearching :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserInterfaceItemSearching, objc_selector="searchForItemsWithSearchString:resultLimit:matchedItemHandler:", objc_name="searchForItemsWithSearchString")
 	UserInterfaceItemSearching_searchForItemsWithSearchString :: proc(self: ^UserInterfaceItemSearching, searchString: ^NS.String, resultLimit: NS.Integer, handleMatchedItems: ^Objc_Block(proc "c" ( items: ^NS.Array ))) ---
 
@@ -172,7 +172,7 @@ foreign lib {
 UserInterfaceValidations :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserInterfaceValidations, objc_selector="validateUserInterfaceItem:", objc_name="validateUserInterfaceItem")
 	UserInterfaceValidations_validateUserInterfaceItem :: proc(self: ^UserInterfaceValidations, item: ^ValidatedUserInterfaceItem) -> bool ---
 }

@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_ModelIO
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:ModelIO.framework",
 }
 
@@ -95,8 +95,8 @@ vector_double4   :: simd_double4
 
 
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kMDLabelBundleURL")
 		LabelBundleURL: CF.StringRef
 
@@ -188,7 +188,7 @@ foreign lib {
 	@(link_name="MDLVertexAttributeTextureCoordinate")
 	VertexAttributeTextureCoordinate: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="MDLabelGetTypeID")
 		LabelGetTypeID :: proc() -> CF.TypeID ---
 
@@ -211,12 +211,12 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	LabelRef :: distinct ^__MDLabel
 }
 VoxelIndex :: distinct [4]cffi.int
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	LabelDomain :: enum cffi.uint {
 		UserDomain  = 0,
 		LocalDomain = 1,
@@ -439,7 +439,7 @@ TransformOpRotationOrder :: enum cffi.ulong {
 	ZYX = 6,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	__MDLabel :: struct {}
 }
 

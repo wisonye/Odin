@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKDistanceFormatter", objc_superclass=NS.Formatter)
 DistanceFormatter :: struct { using _: NS.Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DistanceFormatter, objc_selector="stringFromDistance:", objc_name="stringFromDistance")
 	DistanceFormatter_stringFromDistance :: proc(self: ^DistanceFormatter, distance: CL.LocationDistance) -> ^NS.String ---
 

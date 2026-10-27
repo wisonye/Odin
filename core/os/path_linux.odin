@@ -1,11 +1,11 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:strings"
-import "core:strconv"
-import "core:sys/linux"
+#import "core:strings"
+#import "core:strconv"
+#import "core:sys/linux"
 
 _Path_Separator        :: '/'
 _Path_Separator_String :: "/"

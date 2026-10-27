@@ -1,8 +1,8 @@
 package sysinfo
 
-import sys "core:sys/unix"
-import "core:strings"
-import "base:runtime"
+#import sys "core:sys/unix"
+#import "core:strings"
+#import "base:runtime"
 
 @(private)
 _os_version :: proc (allocator: runtime.Allocator, loc := #caller_location) -> (res: OS_Version, ok: bool) {

@@ -10,8 +10,8 @@ package i18n
 	List of contributors:
 		Jeroen van Rijn: Initial implementation.
 */
-import "base:runtime"
-import "core:os"
+#import "base:runtime"
+#import "core:os"
 
 @(private)
 read_file :: proc(filename: string, allocator: runtime.Allocator) -> (data: []u8, err: Error) {

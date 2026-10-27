@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CoreLocation
 
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLBackgroundActivitySession", objc_superclass=NS.Object)
 BackgroundActivitySession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundActivitySession, objc_selector="init", objc_name="init")
 	BackgroundActivitySession_init :: proc(self: ^BackgroundActivitySession) -> instancetype ---
 
@@ -29,7 +29,7 @@ foreign lib {
 @(objc_class="CLBackgroundActivitySessionDiagnostic", objc_superclass=NS.Object)
 BackgroundActivitySessionDiagnostic :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BackgroundActivitySessionDiagnostic, objc_selector="authorizationDenied", objc_name="authorizationDenied")
 	BackgroundActivitySessionDiagnostic_authorizationDenied :: proc(self: ^BackgroundActivitySessionDiagnostic) -> bool ---
 

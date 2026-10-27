@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKAgent", objc_superclass=Component)
 Agent :: struct {
@@ -12,7 +12,7 @@ Agent :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Agent, objc_selector="delegate", objc_name="delegate")
 	Agent_delegate :: proc(self: ^Agent) -> ^AgentDelegate ---
 
@@ -63,7 +63,7 @@ AgentDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AgentDelegate, objc_selector="agentWillUpdate:", objc_name="agentWillUpdate")
 	AgentDelegate_agentWillUpdate :: proc(self: ^AgentDelegate, agent: ^Agent) ---
 
@@ -78,7 +78,7 @@ Agent2D :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Agent2D, objc_selector="updateWithDeltaTime:", objc_name="updateWithDeltaTime")
 	Agent2D_updateWithDeltaTime :: proc(self: ^Agent2D, seconds: NS.TimeInterval) ---
 
@@ -102,7 +102,7 @@ foreign lib {
 @(objc_class="GKAgent3D", objc_superclass=Agent)
 Agent3D :: struct { using _: Agent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Agent3D, objc_selector="updateWithDeltaTime:", objc_name="updateWithDeltaTime")
 	Agent3D_updateWithDeltaTime :: proc(self: ^Agent3D, seconds: NS.TimeInterval) ---
 

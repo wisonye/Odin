@@ -19,12 +19,12 @@ package main
 //
 // Verifier:  bash tools/verify_against_armips.sh /tmp/rexcode_rsp.hex
 
-import "core:fmt"
-import "core:os"
-import "core:reflect"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:reflect"
+#import "core:strings"
 
-import r ".."
+#import r ".."
 
 mnemonic_str :: proc(mn: r.Mnemonic) -> string {
 	s, ok := reflect.enum_name_from_value(mn)
@@ -49,7 +49,7 @@ armips_lacks :: proc(mn: r.Mnemonic) -> bool {
 	// Mnemonics the standard armips 0.11.0 doesn't recognise.
 	// Upstream armips removed LWV (known broken RSP instruction), but we
 	// build a patched armips at ~/.local/bin/armips-lwv that restores it.
-	// The verifier prefers that binary when present, so we emit normal asm
+	// The verifier prefers that binary #if present, so we emit normal asm
 	// here.
 	_ = mn
 	return false

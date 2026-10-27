@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "core:simd"
+#import "core:simd"
 
 // Shift packed 32-bit integers in `a` right by the amount specified by
 // the corresponding element in `count` while shifting in zeros, and store the results in `dst`.

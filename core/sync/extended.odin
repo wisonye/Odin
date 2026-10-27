@@ -1,7 +1,7 @@
 package sync
 
-import "core:time"
-import vg "core:sys/valgrind"
+#import "core:time"
+#import vg "core:sys/valgrind"
 _ :: vg
 
 /*
@@ -164,7 +164,7 @@ This procedure initializes the barrier for the specified amount of participant
 threads.
 */
 barrier_init :: proc "contextless" (b: ^Barrier, thread_count: int) {
-	when ODIN_VALGRIND_SUPPORT {
+	#if ODIN_VALGRIND_SUPPORT {
 		vg.helgrind_barrier_resize_pre(b, uint(thread_count))
 	}
 	b.index = 0
@@ -181,7 +181,7 @@ to `barrier_wait` are allowed within the thread procedure.
 */
 @(synchronizes=.Acq_Rel)
 barrier_wait :: proc "contextless" (b: ^Barrier) -> (is_leader: bool) {
-	when ODIN_VALGRIND_SUPPORT {
+	#if ODIN_VALGRIND_SUPPORT {
 		vg.helgrind_barrier_wait_pre(b)
 	}
 	guard(&b.mutex)
@@ -203,7 +203,7 @@ barrier_wait :: proc "contextless" (b: ^Barrier) -> (is_leader: bool) {
 /*
 Auto-reset event.
 
-Represents a thread synchronization primitive that, when signalled, releases one
+Represents a thread synchronization primitive that, #if signalled, releases one
 single waiting thread and then resets automatically to a state where it can be
 signalled again.
 

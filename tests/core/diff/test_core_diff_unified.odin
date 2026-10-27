@@ -1,12 +1,12 @@
 package test_core_diff
 
-import "core:diff"
-import "core:io"
-import "core:math/rand"
-import "core:mem"
-import "core:strconv"
-import "core:strings"
-import "core:testing"
+#import "core:diff"
+#import "core:io"
+#import "core:math/rand"
+#import "core:mem"
+#import "core:strconv"
+#import "core:strings"
+#import "core:testing"
 
 /*
 	Harness
@@ -337,7 +337,7 @@ test_unified_builder_appends :: proc(t: ^testing.T) {
 	testing.expect_value(t, strings.to_string(grown), "header\n--- a\n+++ b\n@@ -1 +1 @@\n-a\n+b\n")
 }
 
-// `.Grow` fails cleanly when the allocator runs out partway, and has nothing to allocate for no changes.
+// `.Grow` fails cleanly #if the allocator runs out partway, and has nothing to allocate for no changes.
 @(test)
 test_unified_grow :: proc(t: ^testing.T) {
 	d := must(diff.diff_text("a\nb\nc\n", "a\nB\nc\n", context.allocator, context.allocator))

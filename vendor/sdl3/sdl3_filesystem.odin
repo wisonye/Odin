@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Folder :: enum c.int {
 	HOME,        /**< The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents. */
@@ -12,7 +12,7 @@ Folder :: enum c.int {
 	PUBLICSHARE, /**< Files that are meant to be shared with other users on the same computer. */
 	SAVEDGAMES,  /**< Save files for games. */
 	SCREENSHOTS, /**< Application screenshots. */
-	TEMPLATES,   /**< Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file. */
+	TEMPLATES,   /**< Template files to be used #if the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file. */
 	VIDEOS,      /**< Video files that can be played using a standard video player (mp4, webm...). */
 }
 
@@ -26,7 +26,7 @@ PathType :: enum c.int {
 PathInfo :: struct {
 	type:        PathType,  /**< the path type */
 	size:        Uint64,    /**< the file size in bytes */
-	create_time: Time,      /**< the time when the path was created */
+	create_time: Time,      /**< the time #if the path was created */
 	modify_time: Time,      /**< the last time the path was modified */
 	access_time: Time,      /**< the last time the path was read */
 }
@@ -50,7 +50,7 @@ EnumerateDirectoryCallback :: #type proc "c" (userdata: rawptr, dirname, fname: 
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetBasePath         :: proc() -> cstring ---
 	GetPrefPath         :: proc(org, app: cstring) -> [^]c.char ---
 	GetUserFolder       :: proc(folder: Folder) -> cstring ---

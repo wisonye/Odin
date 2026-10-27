@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLResidencySet")
 ResidencySet :: struct {
@@ -12,7 +12,7 @@ ResidencySet :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResidencySet, objc_selector="requestResidency", objc_name="requestResidency")
 	ResidencySet_requestResidency :: proc(self: ^ResidencySet) ---
 
@@ -63,7 +63,7 @@ ResidencySetDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ResidencySetDescriptor, objc_selector="label", objc_name="label")
 	ResidencySetDescriptor_label :: proc(self: ^ResidencySetDescriptor) -> ^NS.String ---
 

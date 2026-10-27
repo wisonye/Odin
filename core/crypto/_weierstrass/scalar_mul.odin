@@ -1,16 +1,16 @@
 package _weierstrass
 
-import "core:crypto"
-@(require) import subtle "core:crypto/_subtle"
+#import "core:crypto"
+@(require) #import subtle "core:crypto/_subtle"
 
 pt_scalar_mul :: proc "contextless" (
 	p, a: ^$T,
 	sc: ^$S,
 	unsafe_is_vartime: bool = false,
 ) {
-	when T == Point_p256r1 && S == Scalar_p256r1 {
+	#if T == Point_p256r1 && S == Scalar_p256r1 {
 		SC_SZ :: SC_SIZE_P256R1
-	} else when T == Point_p384r1 && S == Scalar_p384r1 {
+	} else #if T == Point_p384r1 && S == Scalar_p384r1 {
 		SC_SZ :: SC_SIZE_P384R1
 	} else {
 		#panic("weierstrass: invalid curve")
@@ -31,11 +31,11 @@ pt_scalar_mul_bytes :: proc "contextless" (
 	sc: []byte,
 	unsafe_is_vartime: bool = false,
 ) {
-	when T == Point_p256r1 {
+	#if T == Point_p256r1 {
 		p_tbl: Multiply_Table_p256r1 = ---
 		q, tmp: Point_p256r1 = ---, ---
 		SC_SZ :: SC_SIZE_P256R1
-	} else when T == Point_p384r1 {
+	} else #if T == Point_p384r1 {
 		p_tbl: Multiply_Table_p384r1 = ---
 		q, tmp: Point_p384r1 = ---, ---
 		SC_SZ :: SC_SIZE_P384R1
@@ -82,10 +82,10 @@ pt_double_scalar_mul_generator_vartime :: proc "contextless" (
 	//
 	// Note: In the unlikely event where we support curves with an
 	// efficent endomorphism (secp256k1), scalarmul + GLV is faster.
-	when T == Point_p256r1 && Q == Scalar_p256r1 {
+	#if T == Point_p256r1 && Q == Scalar_p256r1 {
 		q_tbl: Multiply_Table_p256r1 = ---
 		SC_SZ :: SC_SIZE_P256R1
-	} else when T == Point_p384r1 && Q == Scalar_p384r1 {
+	} else #if T == Point_p384r1 && Q == Scalar_p384r1 {
 		q_tbl: Multiply_Table_p384r1 = ---
 		SC_SZ :: SC_SIZE_P384R1
 	} else {
@@ -97,18 +97,18 @@ pt_double_scalar_mul_generator_vartime :: proc "contextless" (
 	sc_bytes(sc_g_bytes[:], sc_g)
 
 	r, tmp: T = ---, ---
-	when crypto.COMPACT_IMPLS == true {
+	#if crypto.COMPACT_IMPLS == true {
 		pt_generator(&r)
-		when T == Point_p256r1 {
+		#if T == Point_p256r1 {
 			g_tbl: Multiply_Table_p256r1 = ---
-		} else when T == Point_p384r1 {
+		} else #if T == Point_p384r1 {
 			g_tbl: Multiply_Table_p384r1 = ---
 		}
 		mul_tbl_set(&g_tbl, &r, true)
 	} else {
-		when T == Point_p256r1 {
+		#if T == Point_p256r1 {
 			g_tbl := &Gen_Multiply_Table_p256r1_lo[31]
-		} else when T == Point_p384r1 {
+		} else #if T == Point_p384r1 {
 			g_tbl := &Gen_Multiply_Table_p384r1_lo[47]
 		}
 	}
@@ -127,7 +127,7 @@ pt_double_scalar_mul_generator_vartime :: proc "contextless" (
 			pt_double(&r, &r)
 		}
 		mul_tbl_lookup_add(&r, &tmp, &q_tbl, u64(hi_q), true)
-		when crypto.COMPACT_IMPLS == true {
+		#if crypto.COMPACT_IMPLS == true {
 			mul_tbl_lookup_add(&r, &tmp, &g_tbl, u64(hi_g), true)
 		} else {
 			mul_affine_tbl_lookup_add(&r, &tmp, g_tbl, u64(hi_g), true)
@@ -138,7 +138,7 @@ pt_double_scalar_mul_generator_vartime :: proc "contextless" (
 		pt_double(&r, &r)
 		pt_double(&r, &r)
 		mul_tbl_lookup_add(&r, &tmp, &q_tbl, u64(lo_q), true)
-		when crypto.COMPACT_IMPLS == true {
+		#if crypto.COMPACT_IMPLS == true {
 			mul_tbl_lookup_add(&r, &tmp, &g_tbl, u64(lo_g), true)
 		} else {
 			mul_affine_tbl_lookup_add(&r, &tmp, g_tbl, u64(lo_g), true)
@@ -148,7 +148,7 @@ pt_double_scalar_mul_generator_vartime :: proc "contextless" (
 	pt_set(p, &r)
 }
 
-when crypto.COMPACT_IMPLS == true {
+#if crypto.COMPACT_IMPLS == true {
 	pt_scalar_mul_generator :: proc "contextless" (
 		p: ^$T,
 		sc: ^$S,
@@ -165,12 +165,12 @@ when crypto.COMPACT_IMPLS == true {
 		sc: ^$S,
 		unsafe_is_vartime: bool = false,
 	) {
-		when T == Point_p256r1 && S == Scalar_p256r1 {
+		#if T == Point_p256r1 && S == Scalar_p256r1 {
 			p_tbl_hi := &Gen_Multiply_Table_p256r1_hi
 			p_tbl_lo := &Gen_Multiply_Table_p256r1_lo
 			tmp: Point_p256r1 = ---
 			SC_SZ :: SC_SIZE_P256R1
-		} else when T == Point_p384r1 && S == Scalar_p384r1 {
+		} else #if T == Point_p384r1 && S == Scalar_p384r1 {
 			p_tbl_hi := &Gen_Multiply_Table_p384r1_hi
 			p_tbl_lo := &Gen_Multiply_Table_p384r1_lo
 			tmp: Point_p384r1 = ---
@@ -207,9 +207,9 @@ mul_tbl_set :: proc "contextless"(
 	point: ^$U,
 	unsafe_is_vartime: bool,
 ) {
-	when T == Multiply_Table_p256r1 && U == Point_p256r1{
+	#if T == Multiply_Table_p256r1 && U == Point_p256r1{
 		tmp: Point_p256r1
-	} else when T == Multiply_Table_p384r1 && U == Point_p384r1{
+	} else #if T == Multiply_Table_p384r1 && U == Point_p384r1{
 		tmp: Point_p384r1
 	} else {
 		#panic("weierstrass: invalid curve")
@@ -252,7 +252,7 @@ mul_tbl_lookup_add :: proc "contextless" (
 	pt_add(point, point, tmp)
 }
 
-when crypto.COMPACT_IMPLS == false {
+#if crypto.COMPACT_IMPLS == false {
 	@(private)
 	Affine_Point_p256r1 :: struct {
 		x: Field_Element_p256r1,

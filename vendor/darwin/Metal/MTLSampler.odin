@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MTLSamplerState")
 SamplerState :: struct {
@@ -12,7 +12,7 @@ SamplerState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SamplerState, objc_selector="label", objc_name="label")
 	SamplerState_label :: proc(self: ^SamplerState) -> ^NS.String ---
 
@@ -30,7 +30,7 @@ SamplerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SamplerDescriptor, objc_selector="minFilter", objc_name="minFilter")
 	SamplerDescriptor_minFilter :: proc(self: ^SamplerDescriptor) -> SamplerMinMagFilter ---
 

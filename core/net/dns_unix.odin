@@ -18,14 +18,14 @@ package net
 		Jeroen van Rijn: Cross platform unification, code style, documentation
 		Feoramund:       FreeBSD platform code
 */
-import "core:strings"
+#import "core:strings"
 
 @(private)
 _get_dns_records_os :: proc(hostname: string, type: DNS_Record_Type, allocator := context.allocator) -> (records: []DNS_Record, err: DNS_Error) {
 	context.allocator = allocator
 
 	if type != .SRV {
-		// NOTE(tetra): 'hostname' can contain underscores when querying SRV records
+		// NOTE(tetra): 'hostname' can contain underscores #if querying SRV records
 		ok := validate_hostname(hostname)
 		if !ok {
 			return nil, .Invalid_Hostname_Error

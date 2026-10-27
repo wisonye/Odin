@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import cffi "core:c"
-import Sec "core:sys/darwin/Security"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import Sec "core:sys/darwin/Security"
 
 @(objc_class="NSURL", objc_superclass=Object)
 URL :: struct {
@@ -13,7 +13,7 @@ URL :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URL, objc_selector="initWithScheme:host:path:", objc_name="initWithScheme")
 	URL_initWithScheme :: proc(self: ^URL, scheme: ^String, host: ^String, path: ^String) -> instancetype ---
 
@@ -242,7 +242,7 @@ foreign lib {
 	@(objc_type=URL, objc_selector="URLByResolvingSymlinksInPath", objc_name="URLByResolvingSymlinksInPath")
 	URL_URLByResolvingSymlinksInPath :: proc(self: ^URL) -> ^URL ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=URL, objc_selector="resourceDataUsingCache:", objc_name="resourceDataUsingCache")
 		URL_resourceDataUsingCache :: proc(self: ^URL, shouldUseCache: bool) -> ^Data ---
 
@@ -398,7 +398,7 @@ URL_checkResourceIsReachableAndReturnError :: #force_inline proc "c" (self: ^URL
 @(objc_class="NSURLProtocol", objc_superclass=Object)
 URLProtocol :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLProtocol, objc_selector="initWithRequest:cachedResponse:client:", objc_name="initWithRequest")
 	URLProtocol_initWithRequest :: proc(self: ^URLProtocol, request: ^URLRequest, cachedResponse: ^CachedURLResponse, client: ^URLProtocolClient) -> instancetype ---
 
@@ -462,7 +462,7 @@ URLAuthenticationChallenge :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLAuthenticationChallenge, objc_selector="initWithProtectionSpace:proposedCredential:previousFailureCount:failureResponse:error:sender:", objc_name="initWithProtectionSpace")
 	URLAuthenticationChallenge_initWithProtectionSpace :: proc(self: ^URLAuthenticationChallenge, space: ^URLProtectionSpace, credential: ^URLCredential, previousFailureCount: Integer, response: ^URLResponse, error: ^Error, sender: ^URLAuthenticationChallengeSender) -> instancetype ---
 
@@ -499,7 +499,7 @@ URLAuthenticationChallengeSender :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLAuthenticationChallengeSender, objc_selector="useCredential:forAuthenticationChallenge:", objc_name="useCredential")
 	URLAuthenticationChallengeSender_useCredential :: proc(self: ^URLAuthenticationChallengeSender, credential: ^URLCredential, challenge: ^URLAuthenticationChallenge) ---
 
@@ -520,7 +520,7 @@ foreign lib {
 @(objc_class="NSURLCache", objc_superclass=Object)
 URLCache :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLCache, objc_selector="initWithMemoryCapacity:diskCapacity:diskPath:", objc_name="initWithMemoryCapacity_diskCapacity_diskPath")
 	URLCache_initWithMemoryCapacity_diskCapacity_diskPath :: proc(self: ^URLCache, memoryCapacity: UInteger, diskCapacity: UInteger, path: ^String) -> instancetype ---
 
@@ -601,7 +601,7 @@ URLComponents :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLComponents, objc_selector="init", objc_name="init")
 	URLComponents_init :: proc(self: ^URLComponents) -> instancetype ---
 
@@ -777,7 +777,7 @@ URLComponents_componentsWithString :: proc {
 @(objc_class="NSURLConnection", objc_superclass=Object)
 URLConnection :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLConnection, objc_selector="initWithRequest:delegate:startImmediately:", objc_name="initWithRequest_delegate_startImmediately")
 	URLConnection_initWithRequest_delegate_startImmediately :: proc(self: ^URLConnection, request: ^URLRequest, delegate: id, startImmediately: bool) -> instancetype ---
 
@@ -842,7 +842,7 @@ URLConnectionDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLConnectionDelegate, objc_selector="connection:didFailWithError:", objc_name="connection_didFailWithError")
 	URLConnectionDelegate_connection_didFailWithError :: proc(self: ^URLConnectionDelegate, connection: ^URLConnection, error: ^Error) ---
 
@@ -873,7 +873,7 @@ URLConnectionDataDelegate :: struct {
 	using _: URLConnectionDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLConnectionDataDelegate, objc_selector="connection:willSendRequest:redirectResponse:", objc_name="connection_willSendRequest_redirectResponse")
 	URLConnectionDataDelegate_connection_willSendRequest_redirectResponse :: proc(self: ^URLConnectionDataDelegate, connection: ^URLConnection, request: ^URLRequest, response: ^URLResponse) -> ^URLRequest ---
 
@@ -915,7 +915,7 @@ URLConnectionDownloadDelegate :: struct {
 	using _: URLConnectionDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLConnectionDownloadDelegate, objc_selector="connection:didWriteData:totalBytesWritten:expectedTotalBytes:", objc_name="connection")
 	URLConnectionDownloadDelegate_connection :: proc(self: ^URLConnectionDownloadDelegate, connection: ^URLConnection, bytesWritten: cffi.longlong, totalBytesWritten: cffi.longlong, expectedTotalBytes: cffi.longlong) ---
 
@@ -934,7 +934,7 @@ URLCredential :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLCredential, objc_selector="persistence", objc_name="persistence")
 	URLCredential_persistence :: proc(self: ^URLCredential) -> URLCredentialPersistence ---
 
@@ -980,7 +980,7 @@ URLCredentialInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="NSURLCredentialStorage", objc_superclass=Object)
 URLCredentialStorage :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLCredentialStorage, objc_selector="credentialsForProtectionSpace:", objc_name="credentialsForProtectionSpace")
 	URLCredentialStorage_credentialsForProtectionSpace :: proc(self: ^URLCredentialStorage, space: ^URLProtectionSpace) -> ^Dictionary ---
 
@@ -1054,7 +1054,7 @@ URLProtectionSpace :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLProtectionSpace, objc_selector="initWithHost:port:protocol:realm:authenticationMethod:", objc_name="initWithHost")
 	URLProtectionSpace_initWithHost :: proc(self: ^URLProtectionSpace, host: ^String, port: Integer, protocol: ^String, realm: ^String, authenticationMethod: ^String) -> instancetype ---
 
@@ -1103,7 +1103,7 @@ URLProtocolClient :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLProtocolClient, objc_selector="URLProtocol:wasRedirectedToRequest:redirectResponse:", objc_name="URLProtocol_wasRedirectedToRequest_redirectResponse")
 	URLProtocolClient_URLProtocol_wasRedirectedToRequest_redirectResponse :: proc(self: ^URLProtocolClient, protocol: ^URLProtocol, request: ^URLRequest, redirectResponse: ^URLResponse) ---
 
@@ -1137,7 +1137,7 @@ URLQueryItem :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLQueryItem, objc_selector="initWithName:value:", objc_name="initWithName")
 	URLQueryItem_initWithName :: proc(self: ^URLQueryItem, name: ^String, value: ^String) -> instancetype ---
 
@@ -1160,7 +1160,7 @@ URLRequest :: struct {
 	using _: MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLRequest, objc_selector="requestWithURL:", objc_name="requestWithURL_", objc_is_class_method=true)
 	URLRequest_requestWithURL_ :: proc(_URL: ^URL) -> instancetype ---
 
@@ -1258,7 +1258,7 @@ URLRequest_initWithURL :: proc {
 @(objc_class="NSMutableURLRequest", objc_superclass=URLRequest)
 MutableURLRequest :: struct { using _: URLRequest}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableURLRequest, objc_selector="URL", objc_name="URL")
 	MutableURLRequest_URL :: proc(self: ^MutableURLRequest) -> ^URL ---
 
@@ -1398,7 +1398,7 @@ URLResponse :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLResponse, objc_selector="initWithURL:MIMEType:expectedContentLength:textEncodingName:", objc_name="initWithURL")
 	URLResponse_initWithURL :: proc(self: ^URLResponse, _URL: ^URL, MIMEType: ^String, length: Integer, name: ^String) -> instancetype ---
 
@@ -1426,7 +1426,7 @@ URLResponseInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="NSURLSession", objc_superclass=Object)
 URLSession :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSession, objc_selector="sessionWithConfiguration:", objc_name="sessionWithConfiguration_", objc_is_class_method=true)
 	URLSession_sessionWithConfiguration_ :: proc(configuration: ^URLSessionConfiguration) -> ^URLSession ---
 
@@ -1607,7 +1607,7 @@ URLSessionDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionDelegate, objc_selector="URLSession:didBecomeInvalidWithError:", objc_name="URLSession_didBecomeInvalidWithError")
 	URLSessionDelegate_URLSession_didBecomeInvalidWithError :: proc(self: ^URLSessionDelegate, session: ^URLSession, error: ^Error) ---
 
@@ -1633,7 +1633,7 @@ URLSessionConfiguration :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionConfiguration, objc_selector="backgroundSessionConfigurationWithIdentifier:", objc_name="backgroundSessionConfigurationWithIdentifier", objc_is_class_method=true)
 	URLSessionConfiguration_backgroundSessionConfigurationWithIdentifier :: proc(identifier: ^String) -> ^URLSessionConfiguration ---
 
@@ -1849,7 +1849,7 @@ URLSessionDataDelegate :: struct {
 	using _: URLSessionTaskDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionDataDelegate, objc_selector="URLSession:dataTask:didReceiveResponse:completionHandler:", objc_name="URLSession_dataTask_didReceiveResponse_completionHandler")
 	URLSessionDataDelegate_URLSession_dataTask_didReceiveResponse_completionHandler :: proc(self: ^URLSessionDataDelegate, session: ^URLSession, dataTask: ^URLSessionDataTask, response: ^URLResponse, completionHandler: ^Objc_Block(proc "c" ( disposition: URLSessionResponseDisposition ))) ---
 
@@ -1881,7 +1881,7 @@ URLSessionDataDelegate_URLSession :: proc {
 @(objc_class="NSURLSessionDataTask", objc_superclass=URLSessionTask)
 URLSessionDataTask :: struct { using _: URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionDataTask, objc_selector="init", objc_name="init")
 	URLSessionDataTask_init :: proc(self: ^URLSessionDataTask) -> instancetype ---
 
@@ -1896,7 +1896,7 @@ URLSessionDownloadDelegate :: struct {
 	using _: URLSessionTaskDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionDownloadDelegate, objc_selector="URLSession:downloadTask:didFinishDownloadingToURL:", objc_name="URLSession_downloadTask_didFinishDownloadingToURL")
 	URLSessionDownloadDelegate_URLSession_downloadTask_didFinishDownloadingToURL :: proc(self: ^URLSessionDownloadDelegate, session: ^URLSession, downloadTask: ^URLSessionDownloadTask, location: ^URL) ---
 
@@ -1920,7 +1920,7 @@ URLSessionDownloadDelegate_URLSession :: proc {
 @(objc_class="NSURLSessionDownloadTask", objc_superclass=URLSessionTask)
 URLSessionDownloadTask :: struct { using _: URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionDownloadTask, objc_selector="cancelByProducingResumeData:", objc_name="cancelByProducingResumeData")
 	URLSessionDownloadTask_cancelByProducingResumeData :: proc(self: ^URLSessionDownloadTask, completionHandler: ^Objc_Block(proc "c" ( resumeData: ^Data ))) ---
 
@@ -1938,7 +1938,7 @@ URLSessionStreamDelegate :: struct {
 	using _: URLSessionTaskDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionStreamDelegate, objc_selector="URLSession:readClosedForStreamTask:", objc_name="URLSession_readClosedForStreamTask")
 	URLSessionStreamDelegate_URLSession_readClosedForStreamTask :: proc(self: ^URLSessionStreamDelegate, session: ^URLSession, streamTask: ^URLSessionStreamTask) ---
 
@@ -1956,7 +1956,7 @@ foreign lib {
 @(objc_class="NSURLSessionStreamTask", objc_superclass=URLSessionTask)
 URLSessionStreamTask :: struct { using _: URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionStreamTask, objc_selector="readDataOfMinLength:maxLength:timeout:completionHandler:", objc_name="readDataOfMinLength")
 	URLSessionStreamTask_readDataOfMinLength :: proc(self: ^URLSessionStreamTask, minBytes: UInteger, maxBytes: UInteger, timeout: TimeInterval, completionHandler: ^Objc_Block(proc "c" ( data: ^Data, atEOF: bool, error: ^Error ))) ---
 
@@ -1993,7 +1993,7 @@ URLSessionTask :: struct {
 	using _: ProgressReporting,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionTask, objc_selector="cancel", objc_name="cancel")
 	URLSessionTask_cancel :: proc(self: ^URLSessionTask) ---
 
@@ -2092,7 +2092,7 @@ URLSessionTaskDelegate :: struct {
 	using _: URLSessionDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionTaskDelegate, objc_selector="URLSession:didCreateTask:", objc_name="URLSession_didCreateTask")
 	URLSessionTaskDelegate_URLSession_didCreateTask :: proc(self: ^URLSessionTaskDelegate, session: ^URLSession, task: ^URLSessionTask) ---
 
@@ -2131,7 +2131,7 @@ foreign lib {
 @(objc_class="NSURLSessionTaskMetrics", objc_superclass=Object)
 URLSessionTaskMetrics :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionTaskMetrics, objc_selector="init", objc_name="init")
 	URLSessionTaskMetrics_init :: proc(self: ^URLSessionTaskMetrics) -> instancetype ---
 
@@ -2152,7 +2152,7 @@ foreign lib {
 @(objc_class="NSURLSessionTaskTransactionMetrics", objc_superclass=Object)
 URLSessionTaskTransactionMetrics :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionTaskTransactionMetrics, objc_selector="init", objc_name="init")
 	URLSessionTaskTransactionMetrics_init :: proc(self: ^URLSessionTaskTransactionMetrics) -> instancetype ---
 
@@ -2266,7 +2266,7 @@ foreign lib {
 @(objc_class="NSURLSessionUploadTask", objc_superclass=URLSessionDataTask)
 URLSessionUploadTask :: struct { using _: URLSessionDataTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionUploadTask, objc_selector="init", objc_name="init")
 	URLSessionUploadTask_init :: proc(self: ^URLSessionUploadTask) -> instancetype ---
 
@@ -2284,7 +2284,7 @@ URLSessionWebSocketDelegate :: struct {
 	using _: URLSessionTaskDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionWebSocketDelegate, objc_selector="URLSession:webSocketTask:didOpenWithProtocol:", objc_name="URLSession_webSocketTask_didOpenWithProtocol")
 	URLSessionWebSocketDelegate_URLSession_webSocketTask_didOpenWithProtocol :: proc(self: ^URLSessionWebSocketDelegate, session: ^URLSession, webSocketTask: ^URLSessionWebSocketTask, protocol: ^String) ---
 
@@ -2304,7 +2304,7 @@ URLSessionWebSocketDelegate_URLSession :: proc {
 @(objc_class="NSURLSessionWebSocketMessage", objc_superclass=Object)
 URLSessionWebSocketMessage :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionWebSocketMessage, objc_selector="initWithData:", objc_name="initWithData")
 	URLSessionWebSocketMessage_initWithData :: proc(self: ^URLSessionWebSocketMessage, data: ^Data) -> instancetype ---
 
@@ -2331,7 +2331,7 @@ foreign lib {
 @(objc_class="NSURLSessionWebSocketTask", objc_superclass=URLSessionTask)
 URLSessionWebSocketTask :: struct { using _: URLSessionTask}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=URLSessionWebSocketTask, objc_selector="sendMessage:completionHandler:", objc_name="sendMessage")
 	URLSessionWebSocketTask_sendMessage :: proc(self: ^URLSessionWebSocketTask, message: ^URLSessionWebSocketMessage, completionHandler: ^Objc_Block(proc "c" ( error: ^Error ))) ---
 

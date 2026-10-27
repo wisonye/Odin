@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKScene", objc_superclass=NS.Object)
 Scene :: struct {
@@ -12,7 +12,7 @@ Scene :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Scene, objc_selector="sceneWithFileNamed:", objc_name="sceneWithFileNamed_", objc_is_class_method=true)
 	Scene_sceneWithFileNamed_ :: proc(filename: ^NS.String) -> instancetype ---
 

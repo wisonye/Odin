@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPDFInfo", objc_superclass=NS.Object)
 PDFInfo :: struct {
@@ -12,7 +12,7 @@ PDFInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PDFInfo, objc_selector="URL", objc_name="URL")
 	PDFInfo_URL :: proc(self: ^PDFInfo) -> ^NS.URL ---
 
@@ -52,7 +52,7 @@ foreign lib {
 PDFPanel :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PDFPanel, objc_selector="panel", objc_name="panel", objc_is_class_method=true)
 	PDFPanel_panel :: proc() -> ^PDFPanel ---
 

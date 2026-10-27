@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CKSyncEngine", objc_superclass=NS.Object)
 SyncEngine :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngine, objc_selector="initWithConfiguration:", objc_name="initWithConfiguration")
 	SyncEngine_initWithConfiguration :: proc(self: ^SyncEngine, configuration: ^SyncEngineConfiguration) -> instancetype ---
 
@@ -44,7 +44,7 @@ foreign lib {
 @(objc_class="CKSyncEngineState", objc_superclass=NS.Object)
 SyncEngineState :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineState, objc_selector="init", objc_name="init")
 	SyncEngineState_init :: proc(self: ^SyncEngineState) -> instancetype ---
 
@@ -86,7 +86,7 @@ SyncEngineDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineDelegate, objc_selector="syncEngine:handleEvent:", objc_name="syncEngine_handleEvent")
 	SyncEngineDelegate_syncEngine_handleEvent :: proc(self: ^SyncEngineDelegate, syncEngine: ^SyncEngine, event: ^SyncEngineEvent) ---
 
@@ -110,7 +110,7 @@ SyncEngineDelegate_syncEngine :: proc {
 @(objc_class="CKSyncEngineConfiguration", objc_superclass=NS.Object)
 SyncEngineConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineConfiguration, objc_selector="initWithDatabase:stateSerialization:delegate:", objc_name="initWithDatabase")
 	SyncEngineConfiguration_initWithDatabase :: proc(self: ^SyncEngineConfiguration, database: ^Database, stateSerialization: ^SyncEngineStateSerialization, delegate: ^SyncEngineDelegate) -> instancetype ---
 
@@ -155,7 +155,7 @@ foreign lib {
 @(objc_class="CKSyncEngineAccountChangeEvent", objc_superclass=SyncEngineEvent)
 SyncEngineAccountChangeEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineAccountChangeEvent, objc_selector="changeType", objc_name="changeType")
 	SyncEngineAccountChangeEvent_changeType :: proc(self: ^SyncEngineAccountChangeEvent) -> SyncEngineAccountChangeType ---
 
@@ -170,7 +170,7 @@ foreign lib {
 @(objc_class="CKSyncEngineDidFetchChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineDidFetchChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineDidFetchChangesEvent, objc_selector="context", objc_name="context")
 	SyncEngineDidFetchChangesEvent_context :: proc(self: ^SyncEngineDidFetchChangesEvent) -> ^SyncEngineFetchChangesContext ---
 }
@@ -179,7 +179,7 @@ foreign lib {
 @(objc_class="CKSyncEngineDidFetchRecordZoneChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineDidFetchRecordZoneChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineDidFetchRecordZoneChangesEvent, objc_selector="zoneID", objc_name="zoneID")
 	SyncEngineDidFetchRecordZoneChangesEvent_zoneID :: proc(self: ^SyncEngineDidFetchRecordZoneChangesEvent) -> ^RecordZoneID ---
 
@@ -191,7 +191,7 @@ foreign lib {
 @(objc_class="CKSyncEngineDidSendChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineDidSendChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineDidSendChangesEvent, objc_selector="context", objc_name="context")
 	SyncEngineDidSendChangesEvent_context :: proc(self: ^SyncEngineDidSendChangesEvent) -> ^SyncEngineSendChangesContext ---
 }
@@ -200,7 +200,7 @@ foreign lib {
 @(objc_class="CKSyncEngineEvent", objc_superclass=NS.Object)
 SyncEngineEvent :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineEvent, objc_selector="init", objc_name="init")
 	SyncEngineEvent_init :: proc(self: ^SyncEngineEvent) -> instancetype ---
 
@@ -251,7 +251,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFailedRecordSave", objc_superclass=NS.Object)
 SyncEngineFailedRecordSave :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFailedRecordSave, objc_selector="init", objc_name="init")
 	SyncEngineFailedRecordSave_init :: proc(self: ^SyncEngineFailedRecordSave) -> instancetype ---
 
@@ -269,7 +269,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFailedZoneSave", objc_superclass=NS.Object)
 SyncEngineFailedZoneSave :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFailedZoneSave, objc_selector="init", objc_name="init")
 	SyncEngineFailedZoneSave_init :: proc(self: ^SyncEngineFailedZoneSave) -> instancetype ---
 
@@ -290,7 +290,7 @@ SyncEngineFetchChangesOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchChangesOptions, objc_selector="initWithScope:", objc_name="initWithScope")
 	SyncEngineFetchChangesOptions_initWithScope :: proc(self: ^SyncEngineFetchChangesOptions, scope: ^SyncEngineFetchChangesScope) -> instancetype ---
 
@@ -317,7 +317,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFetchChangesContext", objc_superclass=NS.Object)
 SyncEngineFetchChangesContext :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchChangesContext, objc_selector="init", objc_name="init")
 	SyncEngineFetchChangesContext_init :: proc(self: ^SyncEngineFetchChangesContext) -> instancetype ---
 
@@ -338,7 +338,7 @@ SyncEngineFetchChangesScope :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchChangesScope, objc_selector="initWithZoneIDs:", objc_name="initWithZoneIDs")
 	SyncEngineFetchChangesScope_initWithZoneIDs :: proc(self: ^SyncEngineFetchChangesScope, zoneIDs: ^NS.Set) -> instancetype ---
 
@@ -359,7 +359,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFetchedDatabaseChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineFetchedDatabaseChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchedDatabaseChangesEvent, objc_selector="modifications", objc_name="modifications")
 	SyncEngineFetchedDatabaseChangesEvent_modifications :: proc(self: ^SyncEngineFetchedDatabaseChangesEvent) -> ^NS.Array ---
 
@@ -371,7 +371,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFetchedRecordDeletion", objc_superclass=NS.Object)
 SyncEngineFetchedRecordDeletion :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchedRecordDeletion, objc_selector="init", objc_name="init")
 	SyncEngineFetchedRecordDeletion_init :: proc(self: ^SyncEngineFetchedRecordDeletion) -> instancetype ---
 
@@ -389,7 +389,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFetchedRecordZoneChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineFetchedRecordZoneChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchedRecordZoneChangesEvent, objc_selector="modifications", objc_name="modifications")
 	SyncEngineFetchedRecordZoneChangesEvent_modifications :: proc(self: ^SyncEngineFetchedRecordZoneChangesEvent) -> ^NS.Array ---
 
@@ -401,7 +401,7 @@ foreign lib {
 @(objc_class="CKSyncEngineFetchedZoneDeletion", objc_superclass=NS.Object)
 SyncEngineFetchedZoneDeletion :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineFetchedZoneDeletion, objc_selector="init", objc_name="init")
 	SyncEngineFetchedZoneDeletion_init :: proc(self: ^SyncEngineFetchedZoneDeletion) -> instancetype ---
 
@@ -419,7 +419,7 @@ foreign lib {
 @(objc_class="CKSyncEnginePendingDatabaseChange", objc_superclass=NS.Object)
 SyncEnginePendingDatabaseChange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEnginePendingDatabaseChange, objc_selector="init", objc_name="init")
 	SyncEnginePendingDatabaseChange_init :: proc(self: ^SyncEnginePendingDatabaseChange) -> instancetype ---
 
@@ -437,7 +437,7 @@ foreign lib {
 @(objc_class="CKSyncEnginePendingRecordZoneChange", objc_superclass=NS.Object)
 SyncEnginePendingRecordZoneChange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEnginePendingRecordZoneChange, objc_selector="initWithRecordID:type:", objc_name="initWithRecordID")
 	SyncEnginePendingRecordZoneChange_initWithRecordID :: proc(self: ^SyncEnginePendingRecordZoneChange, recordID: ^RecordID, type: SyncEnginePendingRecordZoneChangeType) -> instancetype ---
 
@@ -458,7 +458,7 @@ foreign lib {
 @(objc_class="CKSyncEnginePendingZoneDelete", objc_superclass=SyncEnginePendingDatabaseChange)
 SyncEnginePendingZoneDelete :: struct { using _: SyncEnginePendingDatabaseChange}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEnginePendingZoneDelete, objc_selector="initWithZoneID:", objc_name="initWithZoneID")
 	SyncEnginePendingZoneDelete_initWithZoneID :: proc(self: ^SyncEnginePendingZoneDelete, zoneID: ^RecordZoneID) -> instancetype ---
 }
@@ -467,7 +467,7 @@ foreign lib {
 @(objc_class="CKSyncEnginePendingZoneSave", objc_superclass=SyncEnginePendingDatabaseChange)
 SyncEnginePendingZoneSave :: struct { using _: SyncEnginePendingDatabaseChange}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEnginePendingZoneSave, objc_selector="initWithZone:", objc_name="initWithZone")
 	SyncEnginePendingZoneSave_initWithZone :: proc(self: ^SyncEnginePendingZoneSave, zone: ^RecordZone) -> instancetype ---
 
@@ -479,7 +479,7 @@ foreign lib {
 @(objc_class="CKSyncEngineRecordZoneChangeBatch", objc_superclass=NS.Object)
 SyncEngineRecordZoneChangeBatch :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineRecordZoneChangeBatch, objc_selector="initWithPendingChanges:recordProvider:", objc_name="initWithPendingChanges")
 	SyncEngineRecordZoneChangeBatch_initWithPendingChanges :: proc(self: ^SyncEngineRecordZoneChangeBatch, pendingChanges: ^NS.Array, recordProvider: ^Objc_Block(proc "c" ( recordID: ^RecordID ) -> ^Record)) -> instancetype ---
 
@@ -512,7 +512,7 @@ SyncEngineSendChangesOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineSendChangesOptions, objc_selector="initWithScope:", objc_name="initWithScope")
 	SyncEngineSendChangesOptions_initWithScope :: proc(self: ^SyncEngineSendChangesOptions, scope: ^SyncEngineSendChangesScope) -> instancetype ---
 
@@ -533,7 +533,7 @@ foreign lib {
 @(objc_class="CKSyncEngineSendChangesContext", objc_superclass=NS.Object)
 SyncEngineSendChangesContext :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineSendChangesContext, objc_selector="init", objc_name="init")
 	SyncEngineSendChangesContext_init :: proc(self: ^SyncEngineSendChangesContext) -> instancetype ---
 
@@ -554,7 +554,7 @@ SyncEngineSendChangesScope :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineSendChangesScope, objc_selector="initWithZoneIDs:", objc_name="initWithZoneIDs")
 	SyncEngineSendChangesScope_initWithZoneIDs :: proc(self: ^SyncEngineSendChangesScope, zoneIDs: ^NS.Set) -> instancetype ---
 
@@ -584,7 +584,7 @@ foreign lib {
 @(objc_class="CKSyncEngineSentDatabaseChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineSentDatabaseChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineSentDatabaseChangesEvent, objc_selector="savedZones", objc_name="savedZones")
 	SyncEngineSentDatabaseChangesEvent_savedZones :: proc(self: ^SyncEngineSentDatabaseChangesEvent) -> ^NS.Array ---
 
@@ -602,7 +602,7 @@ foreign lib {
 @(objc_class="CKSyncEngineSentRecordZoneChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineSentRecordZoneChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineSentRecordZoneChangesEvent, objc_selector="savedRecords", objc_name="savedRecords")
 	SyncEngineSentRecordZoneChangesEvent_savedRecords :: proc(self: ^SyncEngineSentRecordZoneChangesEvent) -> ^NS.Array ---
 
@@ -623,7 +623,7 @@ SyncEngineStateSerialization :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineStateSerialization, objc_selector="init", objc_name="init")
 	SyncEngineStateSerialization_init :: proc(self: ^SyncEngineStateSerialization) -> instancetype ---
 
@@ -635,7 +635,7 @@ foreign lib {
 @(objc_class="CKSyncEngineStateUpdateEvent", objc_superclass=SyncEngineEvent)
 SyncEngineStateUpdateEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineStateUpdateEvent, objc_selector="stateSerialization", objc_name="stateSerialization")
 	SyncEngineStateUpdateEvent_stateSerialization :: proc(self: ^SyncEngineStateUpdateEvent) -> ^SyncEngineStateSerialization ---
 }
@@ -644,7 +644,7 @@ foreign lib {
 @(objc_class="CKSyncEngineWillFetchChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineWillFetchChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineWillFetchChangesEvent, objc_selector="context", objc_name="context")
 	SyncEngineWillFetchChangesEvent_context :: proc(self: ^SyncEngineWillFetchChangesEvent) -> ^SyncEngineFetchChangesContext ---
 }
@@ -653,7 +653,7 @@ foreign lib {
 @(objc_class="CKSyncEngineWillFetchRecordZoneChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineWillFetchRecordZoneChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineWillFetchRecordZoneChangesEvent, objc_selector="zoneID", objc_name="zoneID")
 	SyncEngineWillFetchRecordZoneChangesEvent_zoneID :: proc(self: ^SyncEngineWillFetchRecordZoneChangesEvent) -> ^RecordZoneID ---
 }
@@ -662,7 +662,7 @@ foreign lib {
 @(objc_class="CKSyncEngineWillSendChangesEvent", objc_superclass=SyncEngineEvent)
 SyncEngineWillSendChangesEvent :: struct { using _: SyncEngineEvent}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SyncEngineWillSendChangesEvent, objc_selector="context", objc_name="context")
 	SyncEngineWillSendChangesEvent_context :: proc(self: ^SyncEngineWillSendChangesEvent) -> ^SyncEngineSendChangesContext ---
 }

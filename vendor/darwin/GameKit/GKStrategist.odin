@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKStrategist")
 Strategist :: struct {
@@ -11,7 +11,7 @@ Strategist :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Strategist, objc_selector="bestMoveForActivePlayer", objc_name="bestMoveForActivePlayer")
 	Strategist_bestMoveForActivePlayer :: proc(self: ^Strategist) -> ^GameModelUpdate ---
 
@@ -35,7 +35,7 @@ MinmaxStrategist :: struct {
 	using _: Strategist,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MinmaxStrategist, objc_selector="bestMoveForPlayer:", objc_name="bestMoveForPlayer")
 	MinmaxStrategist_bestMoveForPlayer :: proc(self: ^MinmaxStrategist, player: ^GameModelPlayer) -> ^GameModelUpdate ---
 
@@ -56,7 +56,7 @@ MonteCarloStrategist :: struct {
 	using _: Strategist,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MonteCarloStrategist, objc_selector="budget", objc_name="budget")
 	MonteCarloStrategist_budget :: proc(self: ^MonteCarloStrategist) -> NS.UInteger ---
 

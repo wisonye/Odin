@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIKey", objc_superclass=NS.Object)
 Key :: struct {
@@ -13,7 +13,7 @@ Key :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Key, objc_selector="characters", objc_name="characters")
 	Key_characters :: proc(self: ^Key) -> ^NS.String ---
 
@@ -32,7 +32,7 @@ foreign lib {
 KeyCommand :: struct { using _: Command}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyCommand, objc_selector="init", objc_name="init")
 	KeyCommand_init :: proc(self: ^KeyCommand) -> instancetype ---
 
@@ -143,7 +143,7 @@ KeyInput :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyInput, objc_selector="insertText:", objc_name="insertText")
 	KeyInput_insertText :: proc(self: ^KeyInput, text: ^NS.String) ---
 

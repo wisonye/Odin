@@ -6,7 +6,7 @@ package darwin_AudioToolbox
 AutomaticSpatialAudio :: struct { using _: SpatialAudioExperience}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AutomaticSpatialAudio, objc_selector="init", objc_name="init")
 	AutomaticSpatialAudio_init :: proc(self: ^AutomaticSpatialAudio) -> instancetype ---
 
@@ -19,7 +19,7 @@ foreign lib {
 BypassedSpatialAudio :: struct { using _: SpatialAudioExperience}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BypassedSpatialAudio, objc_selector="init", objc_name="init")
 	BypassedSpatialAudio_init :: proc(self: ^BypassedSpatialAudio) -> instancetype ---
 
@@ -32,7 +32,7 @@ foreign lib {
 FixedSpatialAudio :: struct { using _: SpatialAudioExperience}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FixedSpatialAudio, objc_selector="initWithSoundStageSize:", objc_name="initWithSoundStageSize")
 	FixedSpatialAudio_initWithSoundStageSize :: proc(self: ^FixedSpatialAudio, soundStageSize: SoundStageSize) -> instancetype ---
 
@@ -48,7 +48,7 @@ foreign lib {
 HeadTrackedSpatialAudio :: struct { using _: SpatialAudioExperience}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HeadTrackedSpatialAudio, objc_selector="initWithSoundStageSize:anchoringStrategy:", objc_name="initWithSoundStageSize")
 	HeadTrackedSpatialAudio_initWithSoundStageSize :: proc(self: ^HeadTrackedSpatialAudio, soundStageSize: SoundStageSize, anchoringStrategy: ^AnchoringStrategy) -> instancetype ---
 

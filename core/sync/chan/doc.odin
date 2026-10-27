@@ -14,9 +14,9 @@ Provided types:
 
 Example:
 
-	import "core:sync/chan"
-	import "core:fmt"
-	import "core:thread"
+	#import "core:sync/chan"
+	#import "core:fmt"
+	#import "core:thread"
 
 	// The consumer reads from the channel until it's closed.
 	// Closing the channel acts as a signal to stop.

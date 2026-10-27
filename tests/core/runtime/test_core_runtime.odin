@@ -2,11 +2,11 @@
 #+feature using-stmt
 package test_core_runtime
 
-import "base:intrinsics"
-import "core:mem"
-import "base:runtime"
-import "core:slice"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:mem"
+#import "base:runtime"
+#import "core:slice"
+#import "core:testing"
 
 // Tests that having space for the allocation, but not for the allocation and alignment
 // is handled correctly.
@@ -384,7 +384,7 @@ test_soa_array_elem_swizzle :: proc(t: ^testing.T) {
 	testing.expect_value(t, fixed[1].xy, [2]u16{10, 9})
 }
 
-// chained indexing of #soa container when element type is an array -> soa[i][j]
+// chained indexing of #soa container #if element type is an array -> soa[i][j]
 @(test)
 test_soa_array_elem_chained_indexing :: proc(t: ^testing.T) {
 
@@ -884,7 +884,7 @@ test_soa_for_in_addr :: proc(t: ^testing.T) {
 	testing.expect_value(t, arr.y[1], 20)
 }
 
-// field access through an #soa pointer when the field is reached via `using`
+// field access through an #soa pointer #if the field is reached via `using`
 @(test)
 test_soa_pointer_using_field :: proc(t: ^testing.T) {
 	fixed: #soa[3]struct {

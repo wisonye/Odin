@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_QuartzCore
 
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CARenderer", objc_superclass=NS.Object)
 Renderer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Renderer, objc_selector="rendererWithCGLContext:options:", objc_name="rendererWithCGLContext", objc_is_class_method=true)
 	Renderer_rendererWithCGLContext :: proc(ctx: rawptr, dict: ^NS.Dictionary) -> ^Renderer ---
 

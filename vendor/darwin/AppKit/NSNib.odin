@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSNib", objc_superclass=NS.Object)
 Nib :: struct {
@@ -11,7 +11,7 @@ Nib :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Nib, objc_selector="initWithNibNamed:bundle:", objc_name="initWithNibNamed")
 	Nib_initWithNibNamed :: proc(self: ^Nib, nibName: ^NS.String, bundle: ^NS.Bundle) -> instancetype ---
 

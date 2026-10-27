@@ -1,11 +1,11 @@
 package tests_core_os
 
-import "core:fmt"
-import "core:os"
-import "core:log"
-import "core:testing"
-import "core:slice"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:log"
+#import "core:testing"
+#import "core:slice"
+#import "core:strings"
 
 @(test)
 test_executable :: proc(t: ^testing.T) {
@@ -42,7 +42,7 @@ test_clean_path :: proc(t: ^testing.T) {
 		expected: string,
 	}
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		test_cases := [?]Test_Case {
 			{`W:/odin\examples\demo/demo.odin`,    `W:\odin\examples\demo\demo.odin`},
 			{`\\server\share\path\file.ext`,       `\\server\share\path\file.ext`},
@@ -121,7 +121,7 @@ replace_path_separators :: proc(t: ^testing.T) {
 
 @(test)
 test_is_absolute_path :: proc(t: ^testing.T) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		testing.expect(t, os.is_absolute_path(`C:\Windows`))
 	} else {
 		testing.expect(t, os.is_absolute_path("/home"))
@@ -176,7 +176,7 @@ test_get_relative_path :: proc(t: ^testing.T) {
 		{"..", ""},
 	}
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		for &tc in test_cases {
 			tc.base = posix_to_dos_path(tc.base)
 			tc.target = posix_to_dos_path(tc.target)
@@ -194,7 +194,7 @@ test_get_relative_path :: proc(t: ^testing.T) {
 		result, err := os.get_relative_path(tc.base, tc.target, context.temp_allocator)
 		joined, err2 := os.join_path({tc.base, result}, context.temp_allocator)
 
-		when ODIN_OS == .Windows {
+		#if ODIN_OS == .Windows {
 			passed          := strings.equal_fold(result, tc.expected) && err == nil
 			join_guaranteed := strings.equal_fold(joined, tc.target) && err2 == nil
 		} else {
@@ -228,7 +228,7 @@ test_split_path :: proc(t: ^testing.T) {
 		{ "/home/foo/bar.tar.gz", "/home/foo", "bar.tar.gz" },
 	}
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		for &tc in test_cases {
 			tc.path = posix_to_dos_path(tc.path)
 			tc.dir = posix_to_dos_path(tc.dir)
@@ -261,7 +261,7 @@ test_join_path :: proc(t: ^testing.T) {
 		{ {"", "home", "", "", "foo", "" }, "home/foo"  },
 	}
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		for &tc in test_cases {
 			for &elem in tc.elems {
 				elem = posix_to_dos_path(elem)
@@ -441,7 +441,7 @@ test_split_path_list :: proc(t: ^testing.T) {
 		expected: []string,
 	}
 
-	when ODIN_OS != .Windows {
+	#if ODIN_OS != .Windows {
 		test_cases := [?]Test_Case {
 			{``, {}},
 			{`/bin:`, {`/bin`, ``}},
@@ -478,7 +478,7 @@ test_split_path_list :: proc(t: ^testing.T) {
 
 @(test)
 test_split_list :: proc(t: ^testing.T) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		test_split_list_windows(t)
 	} else {
 		test_split_list_unix(t)

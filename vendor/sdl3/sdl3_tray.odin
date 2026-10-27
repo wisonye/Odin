@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 Tray :: struct {}
 TrayMenu :: struct {}
@@ -25,7 +25,7 @@ TrayCallback :: #type proc "c" (userdata: rawptr, entry: ^TrayEntry)
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	CreateTray             :: proc(icon: ^Surface, tooltip: cstring) -> ^Tray ---
 	SetTrayIcon            :: proc(tray: ^Tray, icon: ^Surface) ---
 	SetTrayTooltip         :: proc(tray: ^Tray, tooltip: cstring) ---

@@ -2,14 +2,14 @@
 #+private
 package thread
 
-import "core:sys/posix"
-import "core:c"
+#import "core:sys/posix"
+#import "core:c"
 
 _MAX_PTHREAD_NAME_LENGTH :: 64
 
-foreign import pthread "system:System.framework"
+#foreign #import pthread "system:System.framework"
 
-foreign pthread {
+#foreign pthread {
 	pthread_getname_np :: proc(thread: posix.pthread_t, name: [^]u8, len: c.size_t) -> posix.Errno ---
 	pthread_setname_np :: proc(name: [^]u8) -> posix.Errno ---
 }

@@ -3,7 +3,7 @@ Various useful bit operations in constant time.
 */
 package _subtle
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // Copyright (c) 2016 Thomas Pornin <pornin@bolet.org>
 // All rights reserved.

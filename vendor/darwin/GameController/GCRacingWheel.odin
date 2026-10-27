@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCRacingWheel", objc_superclass=NS.Object)
 RacingWheel :: struct {
@@ -10,7 +10,7 @@ RacingWheel :: struct {
 	using _: Device,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RacingWheel, objc_selector="init", objc_name="init")
 	RacingWheel_init :: proc(self: ^RacingWheel) -> instancetype ---
 
@@ -52,7 +52,7 @@ RacingWheelInput :: struct {
 	using _: DevicePhysicalInput,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RacingWheelInput, objc_selector="capture", objc_name="capture")
 	RacingWheelInput_capture :: proc(self: ^RacingWheelInput) -> ^RacingWheelInputState ---
 
@@ -67,7 +67,7 @@ RacingWheelInputState :: struct {
 	using _: DevicePhysicalInputState,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RacingWheelInputState, objc_selector="wheel", objc_name="wheel")
 	RacingWheelInputState_wheel :: proc(self: ^RacingWheelInputState) -> ^SteeringWheelElement ---
 

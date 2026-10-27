@@ -1,12 +1,12 @@
 // Bindings for [[ SDL3 ; https://wiki.libsdl.org/SDL3/FrontPage ]].
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 main_func :: #type proc "c" (argc: c.int, argv: [^]cstring) -> c.int
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	AppInit               :: proc(appstate: ^rawptr, argc: c.int, argv: [^]cstring) -> AppResult ---
 	AppIterate            :: proc(appstate: rawptr) -> AppResult ---
 	AppEvent              :: proc(appstate: rawptr, event: ^Event) -> AppResult ---
@@ -20,6 +20,6 @@ foreign lib {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	SDL_main :: proc(argc: c.int, argv: [^]cstring) -> c.int ---
 }

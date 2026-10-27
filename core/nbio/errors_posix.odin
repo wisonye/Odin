@@ -2,7 +2,7 @@
 #+private
 package nbio
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 PLATFORM_ERR_UNSUPPORTED       :: posix.Errno.ENOSYS
 PLATFORM_ERR_ALLOCATION_FAILED :: posix.Errno.ENOMEM

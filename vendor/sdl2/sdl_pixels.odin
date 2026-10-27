@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 ALPHA_OPAQUE      :: 255
@@ -162,14 +162,14 @@ PixelFormatEnum :: enum u32 {
 	ARGB2101010 = 1<<28 | PIXELTYPE_PACKED32<<24 | PACKEDORDER_ARGB<<20 | PACKEDLAYOUT_2101010<<16 | 32<<8 | 4<<0,
 
 	/* Aliases for RGBA byte arrays of color data, for the current platform */
-	RGBA32 = RGBA8888 when ODIN_ENDIAN == .Big else ABGR8888,
-	ARGB32 = ARGB8888 when ODIN_ENDIAN == .Big else BGRA8888,
-	BGRA32 = BGRA8888 when ODIN_ENDIAN == .Big else ARGB8888,
-	ABGR32 = ABGR8888 when ODIN_ENDIAN == .Big else RGBA8888,
-	RGBX32 = RGBX8888 when ODIN_ENDIAN == .Big else XBGR8888,
-	XRGB32 = XRGB8888 when ODIN_ENDIAN == .Big else BGRX8888,
-	BGRX32 = BGRX8888 when ODIN_ENDIAN == .Big else XRGB8888,
-	XBGR32 = XBGR8888 when ODIN_ENDIAN == .Big else RGBX8888,
+	RGBA32 = RGBA8888 #if ODIN_ENDIAN == .Big else ABGR8888,
+	ARGB32 = ARGB8888 #if ODIN_ENDIAN == .Big else BGRA8888,
+	BGRA32 = BGRA8888 #if ODIN_ENDIAN == .Big else ARGB8888,
+	ABGR32 = ABGR8888 #if ODIN_ENDIAN == .Big else RGBA8888,
+	RGBX32 = RGBX8888 #if ODIN_ENDIAN == .Big else XBGR8888,
+	XRGB32 = XRGB8888 #if ODIN_ENDIAN == .Big else BGRX8888,
+	BGRX32 = BGRX8888 #if ODIN_ENDIAN == .Big else XRGB8888,
+	XBGR32 = XBGR8888 #if ODIN_ENDIAN == .Big else RGBX8888,
 
 	YV12 =      /**< Planar mode: Y + V + U  (3 planes) */
 		'Y'<<0 | 'V'<<8 | '1'<<16 | '2'<<24,
@@ -229,7 +229,7 @@ PixelFormat :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPixelFormatName     :: proc(format: u32) -> cstring ---
 	PixelFormatEnumToMasks :: proc(format: u32, bpp: ^c.int, Rmask, Gmask, Bmask, Amask: ^u32) -> bool ---
 	MasksToPixelFormatEnum :: proc(bpp: c.int, Rmask, Gmask, Bmask, Amask: u32) -> u32 ---

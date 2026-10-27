@@ -16,5 +16,5 @@ _cpu_features :: proc "contextless" () -> (features: CPU_Features) {
 
 @(private)
 _cpu_name :: proc() -> (name: string) {
-	return "wasm32" when ODIN_ARCH == .wasm32 else "wasm64p32"
+	return "wasm32" #if ODIN_ARCH == .wasm32 else "wasm64p32"
 }

@@ -1,13 +1,13 @@
 // Bindings for [[ SDL2 Mixer ; https://wiki.libsdl.org/SDL2_mixer/FrontPage ]].
 package sdl2_mixer
 
-import "core:c"
-import SDL ".."
+#import "core:c"
+#import SDL ".."
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL2_mixer.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL2_mixer.lib"
 } else {
-	foreign import lib "system:SDL2_mixer"
+	#foreign #import lib "system:SDL2_mixer"
 }
 
 MAJOR_VERSION :: 2
@@ -109,7 +109,7 @@ LoadWAV :: #force_inline proc "c" (file: cstring) -> ^Chunk {
 MixFunc :: proc "c" (udata: rawptr, stream: [^]u8, len: c.int)
 
 @(default_calling_convention="c", link_prefix="Mix_")
-foreign lib {
+#foreign lib {
 	Linked_Version :: proc() -> ^SDL.version ---
 
 	Init :: proc(flags: InitFlags) -> c.int ---
@@ -165,7 +165,7 @@ FadeInChannel :: #force_inline proc "c" (channel: c.int, chunk: ^Chunk, loops: c
 
 
 @(default_calling_convention="c", link_prefix="Mix_")
-foreign lib {
+#foreign lib {
 	RegisterEffect        :: proc(chan: c.int, f: EffectFunc_t, d: EffectDone_t, arg: rawptr) -> c.int ---
 	UnregisterEffect      :: proc(channel: c.int, f: EffectFunc_t) -> c.int ---
 	UnregisterAllEffects  :: proc(channel: c.int) -> c.int ---

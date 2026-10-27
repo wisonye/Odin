@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIZoomTransitionOptions", objc_superclass=NS.Object)
 ZoomTransitionOptions :: struct {
@@ -12,7 +12,7 @@ ZoomTransitionOptions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomTransitionOptions, objc_selector="interactiveDismissShouldBegin", objc_name="interactiveDismissShouldBegin")
 	ZoomTransitionOptions_interactiveDismissShouldBegin :: proc(self: ^ZoomTransitionOptions) -> ^Objc_Block(proc "c" () -> bool) ---
 
@@ -43,7 +43,7 @@ foreign lib {
 ZoomTransitionAlignmentRectContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomTransitionAlignmentRectContext, objc_selector="sourceView", objc_name="sourceView")
 	ZoomTransitionAlignmentRectContext_sourceView :: proc(self: ^ZoomTransitionAlignmentRectContext) -> ^View ---
 
@@ -56,7 +56,7 @@ foreign lib {
 ZoomTransitionInteractionContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomTransitionInteractionContext, objc_selector="location", objc_name="location")
 	ZoomTransitionInteractionContext_location :: proc(self: ^ZoomTransitionInteractionContext) -> CG.Point ---
 
@@ -72,7 +72,7 @@ foreign lib {
 ZoomTransitionSourceViewProviderContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomTransitionSourceViewProviderContext, objc_selector="init", objc_name="init")
 	ZoomTransitionSourceViewProviderContext_init :: proc(self: ^ZoomTransitionSourceViewProviderContext) -> instancetype ---
 

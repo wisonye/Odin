@@ -1,8 +1,8 @@
 package container_handle_map
 
-import "base:runtime"
-import "base:intrinsics"
-@(require) import "core:container/xar"
+#import "base:runtime"
+#import "base:intrinsics"
+@(require) #import "core:container/xar"
 
 Dynamic_Handle_Map :: struct($T: typeid, $Handle_Type: typeid)
 	where

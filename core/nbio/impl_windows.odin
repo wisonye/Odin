@@ -1,20 +1,20 @@
 #+private file
 package nbio
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:container/avl"
-import "core:container/pool"
-import "core:container/queue"
-import "core:mem"
-import "core:net"
-import "core:path/filepath"
-import "core:slice"
-import "core:strings"
-import "core:sync"
-import "core:time"
+#import "core:container/avl"
+#import "core:container/pool"
+#import "core:container/queue"
+#import "core:mem"
+#import "core:net"
+#import "core:path/filepath"
+#import "core:slice"
+#import "core:strings"
+#import "core:sync"
+#import "core:time"
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
 @(private="package")
 _FULLY_SUPPORTED :: true
@@ -180,7 +180,7 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> (err: General_Error) {
 	l.now = time.now()
 	next_timeout := check_timeouts(l)
 
-	// Prevent infinite loop when callback adds to completed by storing length.
+	// Prevent infinite loop #if callback adds to completed by storing length.
 	n := queue.len(l.completed)
 	if n > 0 {
 		for _ in 0 ..< n {
@@ -797,7 +797,7 @@ _associate_handle :: proc(handle: uintptr, l: ^Event_Loop) -> (Handle, Associati
 	cmode |= win.FILE_SKIP_SET_EVENT_ON_HANDLE
 	ok := win.SetFileCompletionNotificationModes(win.HANDLE(handle), cmode)
 
-	// This is an assertion because I don't believe this can happen when we just successfully
+	// This is an assertion because I don't believe this can happen #if we just successfully
 	// called `CreateIoCompletionPort`.
 	assert(ok == true, "unexpected SetFileCompletionNotificationModes error")
 
@@ -1055,7 +1055,7 @@ accept_callback :: proc(op: ^Operation) {
 		win.setsockopt(win.SOCKET(op.accept.client), win.SOL_SOCKET, win.SO_UPDATE_ACCEPT_CONTEXT, &listener, size_of(listener))
 
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the socket.
+		// This error could also happen #if the user calls close on the socket.
 		if check_timed_out(op, op.accept.expires) {
 			op.accept.err = Accept_Error.Timeout
 			return
@@ -1202,7 +1202,7 @@ read_callback :: proc(op: ^Operation) -> Op_Result {
 	#partial switch err {
 	case .SUCCESS:
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the handle.
+		// This error could also happen #if the user calls close on the handle.
 		if check_timed_out(op, op.read.expires) {
 			op.read.err = .Timeout
 			return .Done
@@ -1279,7 +1279,7 @@ write_callback :: proc(op: ^Operation) -> Op_Result {
 	#partial switch err {
 	case .SUCCESS:
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the handle.
+		// This error could also happen #if the user calls close on the handle.
 		if check_timed_out(op, op.write.expires) {
 			op.write.err = .Timeout
 			return .Done
@@ -1374,7 +1374,7 @@ recv_callback :: proc(op: ^Operation) -> Op_Result {
 	#partial switch err {
 	case .SUCCESS:
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the socket.
+		// This error could also happen #if the user calls close on the socket.
 		if check_timed_out(op, op.recv.expires) {
 			switch _ in op.recv.socket {
 			case TCP_Socket: op.recv.err = net.TCP_Recv_Error.Timeout
@@ -1495,7 +1495,7 @@ send_callback :: proc(op: ^Operation) -> Op_Result {
 	#partial switch err {
 	case .SUCCESS:
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the socket.
+		// This error could also happen #if the user calls close on the socket.
 		if check_timed_out(op, op.send.expires) {
 			switch _ in op.send.socket {
 			case TCP_Socket: op.send.err = net.TCP_Send_Error.Timeout
@@ -1587,7 +1587,7 @@ sendfile_callback :: proc(op: ^Operation) -> Op_Result {
 	#partial switch err {
 	case .SUCCESS:
 	case .OPERATION_ABORTED:
-		// This error could also happen when the user calls close on the socket.
+		// This error could also happen #if the user calls close on the socket.
 		if check_timed_out(op, op.sendfile.expires) {
 			op.sendfile.err = TCP_Send_Error.Timeout
 			return .Done
@@ -1671,7 +1671,7 @@ poll_exec :: proc(op: ^Operation) -> Op_Result {
 	)
 
 	// The AFD handle is not set to skip completion on success, so a completion is
-	// queued even when this finishes synchronously.
+	// queued even #if this finishes synchronously.
 	#partial switch win.System_Error(win.RtlNtStatusToDosError(status)) {
 	case .SUCCESS, .IO_PENDING:
 		return .Pending
@@ -1865,7 +1865,7 @@ wsa_get_result :: proc(socket: win.SOCKET, over: win.OVERLAPPED) -> (n: int, err
 		_n: win.DWORD
 		res := win.WSAGetOverlappedResult(socket, &over, &_n, false, &flags)
 		assert(!res)
-		n = int(_n) // NOTE: It is possible that an amount of bytes is present when the operation was cancelled.
+		n = int(_n) // NOTE: It is possible that an amount of bytes is present #if the operation was cancelled.
 		err = win.System_Error(win.WSAGetLastError())
 	}
 

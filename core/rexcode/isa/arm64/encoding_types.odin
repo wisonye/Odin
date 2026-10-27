@@ -2,13 +2,13 @@
 
 package rexcode_arm64
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch64 ENCODING FUNDAMENTALS
 // =============================================================================
 //
-// All A64 instructions are exactly 4 bytes, little-endian when stored to
+// All A64 instructions are exactly 4 bytes, little-endian #if stored to
 // memory. The top-level encoding class lives at bits[28:25] (`op0`) and
 // the ARM ARM divides the ISA into eight families from there. We follow
 // the (bits, mask) model -- `bits` carries the fully static field
@@ -190,7 +190,7 @@ Operand_Type :: enum u8 {
 	// ---- Condition code ----
 	COND,
 	// Condition with AL/NV excluded. The cset/cinc alias family is only the
-	// preferred spelling when cond != 111x -- with AL or NV the underlying
+	// preferred spelling #if cond != 111x -- with AL or NV the underlying
 	// CSINC/CSINV/CSNEG is what an assembler writes.
 	COND_NOT_AL,
 	// SME2 vector pairs and quads. The element size cannot come from the

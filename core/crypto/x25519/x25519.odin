@@ -6,16 +6,16 @@ See:
 */
 package x25519
 
-import "core:crypto"
-import ed "core:crypto/_edwards25519"
-import field "core:crypto/_fiat/field_curve25519"
+#import "core:crypto"
+#import ed "core:crypto/_edwards25519"
+#import field "core:crypto/_fiat/field_curve25519"
 
 // SCALAR_SIZE is the size of a X25519 scalar (private key) in bytes.
 SCALAR_SIZE :: 32
 // POINT_SIZE is the size of a X25519 point (public key/shared secret) in bytes.
 POINT_SIZE :: 32
 
-when crypto.COMPACT_IMPLS == true {
+#if crypto.COMPACT_IMPLS == true {
 	@(private,rodata)
 	_BASE_POINT: [32]byte = {9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 }
@@ -124,7 +124,7 @@ scalarmult :: proc(dst, scalar, point: []byte) {
 // scalarmult_basepoint "multiplies" the provided scalar with the X25519
 // base point and writes the resulting point to dst.
 scalarmult_basepoint :: proc(dst, scalar: []byte) {
-	when crypto.COMPACT_IMPLS == true {
+	#if crypto.COMPACT_IMPLS == true {
 		scalarmult(dst, scalar, _BASE_POINT[:])
 	} else {
 		ensure(len(scalar) == SCALAR_SIZE, "crypto/x25519: invalid scalar size")

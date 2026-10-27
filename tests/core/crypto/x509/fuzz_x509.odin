@@ -8,9 +8,9 @@ package test_core_x509
 // error paths (the runner's tracking allocator), and on success every
 // raw view lies within the input buffer.
 
-import "core:crypto/x509"
-import "core:math/rand"
-import "core:testing"
+#import "core:crypto/x509"
+#import "core:math/rand"
+#import "core:testing"
 
 FUZZ_MUTATE_ITERS :: 1500
 FUZZ_RANDOM_ITERS :: 2048

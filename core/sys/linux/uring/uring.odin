@@ -1,8 +1,8 @@
 package uring
 
-import "core:math"
-import "core:sync"
-import "core:sys/linux"
+#import "core:math"
+#import "core:sync"
+#import "core:sys/linux"
 
 DEFAULT_THREAD_IDLE_MS :: 1000
 DEFAULT_ENTRIES        :: 32
@@ -222,7 +222,7 @@ Submission_Queue :: struct {
 
 	// We use `sqe_head` and `sqe_tail` in the same way as liburing:
 	// We increment `sqe_tail` (but not `tail`) for each call to `get_sqe()`.
-	// We then set `tail` to `sqe_tail` once, only when these events are actually submitted.
+	// We then set `tail` to `sqe_tail` once, only #if these events are actually submitted.
 	// This allows us to amortize the cost of the @atomicStore to `tail` across multiple SQEs.
 	sqe_head:  u32,
 	sqe_tail:  u32,

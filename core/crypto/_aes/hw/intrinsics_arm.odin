@@ -1,8 +1,8 @@
 #+build arm64,arm32
 package aes_hw
 
-import "core:simd"
-import "core:simd/arm"
+#import "core:simd"
+#import "core:simd/arm"
 
 // https://blog.michaelbrase.com/2018/05/08/emulating-x86-aes-intrinsics-on-armv8-a/
 
@@ -71,22 +71,22 @@ _mm_slli_si128 :: #force_inline proc "c" (a: simd.u8x16, $IMM8: u32) -> simd.u8x
 	return simd.shuffle(
 		simd.u8x16{},
 		a,
-		0 when shift > 15 else (16 - shift + 0),
-		1 when shift > 15 else (16 - shift + 1),
-		2 when shift > 15 else (16 - shift + 2),
-		3 when shift > 15 else (16 - shift + 3),
-		4 when shift > 15 else (16 - shift + 4),
-		5 when shift > 15 else (16 - shift + 5),
-		6 when shift > 15 else (16 - shift + 6),
-		7 when shift > 15 else (16 - shift + 7),
-		8 when shift > 15 else (16 - shift + 8),
-		9 when shift > 15 else (16 - shift + 9),
-		10 when shift > 15 else (16 - shift + 10),
-		11 when shift > 15 else (16 - shift + 11),
-		12 when shift > 15 else (16 - shift + 12),
-		13 when shift > 15 else (16 - shift + 13),
-		14 when shift > 15 else (16 - shift + 14),
-		15 when shift > 15 else (16 - shift + 15),
+		0 #if shift > 15 else (16 - shift + 0),
+		1 #if shift > 15 else (16 - shift + 1),
+		2 #if shift > 15 else (16 - shift + 2),
+		3 #if shift > 15 else (16 - shift + 3),
+		4 #if shift > 15 else (16 - shift + 4),
+		5 #if shift > 15 else (16 - shift + 5),
+		6 #if shift > 15 else (16 - shift + 6),
+		7 #if shift > 15 else (16 - shift + 7),
+		8 #if shift > 15 else (16 - shift + 8),
+		9 #if shift > 15 else (16 - shift + 9),
+		10 #if shift > 15 else (16 - shift + 10),
+		11 #if shift > 15 else (16 - shift + 11),
+		12 #if shift > 15 else (16 - shift + 12),
+		13 #if shift > 15 else (16 - shift + 13),
+		14 #if shift > 15 else (16 - shift + 14),
+		15 #if shift > 15 else (16 - shift + 15),
 	)
 }
 

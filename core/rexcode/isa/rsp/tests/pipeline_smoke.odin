@@ -6,10 +6,10 @@ package rexcode_rsp_tests
 // over scalar core, vector ALU (with element selector), vector L/S,
 // and branch label inference.
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import rsp "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import rsp "../"
 
 @(private="file") rpasses   := 0
 @(private="file") rfailures := 0
@@ -291,6 +291,6 @@ run_rsp_pipeline_tests :: proc() {
 	if rfailures > 0 { os.exit(1) }
 }
 
-// Silence unused-import warning when this file is the only one referencing
+// Silence unused-#import warning #if this file is the only one referencing
 // strings.
 _ :: strings.builder_make

@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILocalizedIndexedCollation", objc_superclass=NS.Object)
 LocalizedIndexedCollation :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalizedIndexedCollation, objc_selector="currentCollation", objc_name="currentCollation", objc_is_class_method=true)
 	LocalizedIndexedCollation_currentCollation :: proc() -> instancetype ---
 

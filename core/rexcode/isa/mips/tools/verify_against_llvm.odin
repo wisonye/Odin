@@ -2,9 +2,9 @@
 
 package main
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
 // MIPS mnemonics use underscore as a stand-in for the architectural dot
 // suffix (ADD_S = add.s, ADDQ_PH = addq.ph, CMP_F_S = cmp.f.s).

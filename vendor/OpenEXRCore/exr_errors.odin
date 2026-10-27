@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 #assert(size_of(c.int) == size_of(i32))
 
@@ -49,7 +49,7 @@ error_code_t :: result_t
 
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Return a static string corresponding to the specified error code.
 	 *
 	 * The string should not be freed (it is compiled into the binary).

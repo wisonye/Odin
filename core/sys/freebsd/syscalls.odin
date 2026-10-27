@@ -8,8 +8,8 @@ package sys_freebsd
 		Feoramund: Initial implementation.
 */
 
-import "base:intrinsics"
-import "core:c"
+#import "base:intrinsics"
+#import "core:c"
 
 // FreeBSD 15 syscall numbers
 // See: https://alfonsosiciliano.gitlab.io/posts/2023-08-28-freebsd-15-system-calls.html

@@ -2,11 +2,11 @@
 #+private
 package dynlib
 
-import "base:runtime"
+#import "base:runtime"
 
-import win32 "core:sys/windows"
-import "core:strings"
-import "core:reflect"
+#import win32 "core:sys/windows"
+#import "core:strings"
+#import "core:reflect"
 
 _LIBRARY_FILE_EXTENSION :: "dll"
 

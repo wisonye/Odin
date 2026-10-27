@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSSpringLoadingDestination")
 SpringLoadingDestination :: struct {
@@ -12,7 +12,7 @@ SpringLoadingDestination :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringLoadingDestination, objc_selector="springLoadingActivated:draggingInfo:", objc_name="springLoadingActivated")
 	SpringLoadingDestination_springLoadingActivated :: proc(self: ^SpringLoadingDestination, activated: bool, draggingInfo: ^DraggingInfo) ---
 

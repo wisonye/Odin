@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // #force_no_inline so conversions are not folded;
 // they must go through the runtime __fixunsdfti/__fixdfti

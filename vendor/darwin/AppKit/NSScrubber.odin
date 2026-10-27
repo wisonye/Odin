@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSScrubber", objc_superclass=View)
 Scrubber :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Scrubber, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	Scrubber_initWithFrame :: proc(self: ^Scrubber, frameRect: NS.Rect) -> instancetype ---
 
@@ -149,7 +149,7 @@ ScrubberDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberDelegate, objc_selector="scrubber:didSelectItemAtIndex:", objc_name="scrubber_didSelectItemAtIndex")
 	ScrubberDelegate_scrubber_didSelectItemAtIndex :: proc(self: ^ScrubberDelegate, scrubber: ^Scrubber, selectedIndex: NS.Integer) ---
 
@@ -177,7 +177,7 @@ ScrubberDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberDataSource, objc_selector="numberOfItemsForScrubber:", objc_name="numberOfItemsForScrubber")
 	ScrubberDataSource_numberOfItemsForScrubber :: proc(self: ^ScrubberDataSource, scrubber: ^Scrubber) -> NS.Integer ---
 
@@ -190,7 +190,7 @@ foreign lib {
 ScrubberArrangedView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberArrangedView, objc_selector="applyLayoutAttributes:", objc_name="applyLayoutAttributes")
 	ScrubberArrangedView_applyLayoutAttributes :: proc(self: ^ScrubberArrangedView, layoutAttributes: ^ScrubberLayoutAttributes) ---
 
@@ -212,7 +212,7 @@ foreign lib {
 ScrubberFlowLayout :: struct { using _: ScrubberLayout}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberFlowLayout, objc_selector="invalidateLayoutForItemsAtIndexes:", objc_name="invalidateLayoutForItemsAtIndexes")
 	ScrubberFlowLayout_invalidateLayoutForItemsAtIndexes :: proc(self: ^ScrubberFlowLayout, invalidItemIndexes: ^NS.IndexSet) ---
 
@@ -237,7 +237,7 @@ ScrubberFlowLayoutDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberFlowLayoutDelegate, objc_selector="scrubber:layout:sizeForItemAtIndex:", objc_name="scrubber")
 	ScrubberFlowLayoutDelegate_scrubber :: proc(self: ^ScrubberFlowLayoutDelegate, scrubber: ^Scrubber, layout: ^ScrubberFlowLayout, itemIndex: NS.Integer) -> NS.Size ---
 }
@@ -247,7 +247,7 @@ foreign lib {
 ScrubberImageItemView :: struct { using _: ScrubberItemView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberImageItemView, objc_selector="imageView", objc_name="imageView")
 	ScrubberImageItemView_imageView :: proc(self: ^ScrubberImageItemView) -> ^ImageView ---
 
@@ -269,7 +269,7 @@ foreign lib {
 ScrubberItemView :: struct { using _: ScrubberArrangedView}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSScrubberLayout", objc_superclass=NS.Object)
@@ -279,7 +279,7 @@ ScrubberLayout :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberLayout, objc_selector="init", objc_name="init")
 	ScrubberLayout_init :: proc(self: ^ScrubberLayout) -> instancetype ---
 
@@ -331,7 +331,7 @@ ScrubberLayoutAttributes :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberLayoutAttributes, objc_selector="layoutAttributesForItemAtIndex:", objc_name="layoutAttributesForItemAtIndex", objc_is_class_method=true)
 	ScrubberLayoutAttributes_layoutAttributesForItemAtIndex :: proc(index: NS.Integer) -> instancetype ---
 
@@ -359,7 +359,7 @@ foreign lib {
 ScrubberProportionalLayout :: struct { using _: ScrubberLayout}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberProportionalLayout, objc_selector="initWithNumberOfVisibleItems:", objc_name="initWithNumberOfVisibleItems")
 	ScrubberProportionalLayout_initWithNumberOfVisibleItems :: proc(self: ^ScrubberProportionalLayout, numberOfVisibleItems: NS.Integer) -> instancetype ---
 
@@ -381,7 +381,7 @@ ScrubberSelectionStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberSelectionStyle, objc_selector="init", objc_name="init")
 	ScrubberSelectionStyle_init :: proc(self: ^ScrubberSelectionStyle) -> instancetype ---
 
@@ -403,14 +403,14 @@ foreign lib {
 ScrubberSelectionView :: struct { using _: ScrubberArrangedView}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSScrubberTextItemView", objc_superclass=ScrubberItemView)
 ScrubberTextItemView :: struct { using _: ScrubberItemView}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrubberTextItemView, objc_selector="textField", objc_name="textField")
 	ScrubberTextItemView_textField :: proc(self: ^ScrubberTextItemView) -> ^TextField ---
 

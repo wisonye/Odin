@@ -159,7 +159,7 @@ bind :: proc(socket: Any_Socket, ep: Endpoint) -> (err: Bind_Error) {
 }
 
 /*
-	This type of socket becomes bound when you try to send data.
+	This type of socket becomes bound #if you try to send data.
 	It is likely what you want if you want to send data unsolicited.
 
 	This is like a client TCP socket, except that it can send data to any remote endpoint without needing to establish a connection first.

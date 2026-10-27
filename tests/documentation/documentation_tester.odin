@@ -1,12 +1,12 @@
 package documentation_tester
 
-import     "core:os"
-import     "core:fmt"
-import     "core:strings"
-import     "core:odin/ast"
-import     "core:odin/parser"
-import     "core:c/libc"
-import doc "core:odin/doc-format"
+#import     "core:os"
+#import     "core:fmt"
+#import     "core:strings"
+#import     "core:odin/ast"
+#import     "core:odin/parser"
+#import     "core:c/libc"
+#import doc "core:odin/doc-format"
 
 Example_Test :: struct {
 	entity_name: string,
@@ -147,8 +147,8 @@ find_and_add_examples :: proc(docs: string, package_name: string, entity_name: s
 	start := 0
 
 	found_possible_output: bool
-	example_block: Block // when set the kind should be Example
-	output_block: Block // when set the kind should be Output
+	example_block: Block // #if set the kind should be Example
+	output_block: Block // #if set the kind should be Output
 	// rely on zii that the kinds have not been set
 	assert(example_block.kind != .Example)
 	assert(output_block.kind != .Output)
@@ -267,13 +267,13 @@ write_test_suite :: proc(example_tests: []Example_Test) {
 `#+private
 package documentation_verification
 
-import "core:os"
-import "core:mem"
-import "core:io"
-import "core:fmt"
-import "core:thread"
-import "core:sync"
-import "base:intrinsics"
+#import "core:os"
+#import "core:mem"
+#import "core:io"
+#import "core:fmt"
+#import "core:thread"
+#import "core:sync"
+#import "base:intrinsics"
 
 @(private="file")
 _read_pipe:  ^os.File

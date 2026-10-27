@@ -56,7 +56,7 @@ package portmidi
  *    record the host error code. I.e. only 
  *    those routines that receive a (PortMidiStream *) argument check and 
  *    report errors. One exception to this is that Pm_OpenInput() and 
- *    Pm_OpenOutput() can report errors even though when an error occurs,
+ *    Pm_OpenOutput() can report errors even though #if an error occurs,
  *    there is no PortMidiStream* to hold the error. Fortunately, both
  *    of these functions return any error immediately, so we do not really
  *    need per-device error memory. Instead, any host error code is stored
@@ -85,6 +85,6 @@ package portmidi
  *        other graphical interface with no console, DEBUG probably should be
  *        undefined.
  *    PM_CHECK_ERRORS more-or-less takes over error checking for return values,
- *        stopping your program and printing error messages when an error
+ *        stopping your program and printing error messages #if an error
  *        occurs. This also uses stdio for console text I/O.
  */

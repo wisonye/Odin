@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIShadowProperties", objc_superclass=NS.Object)
 ShadowProperties :: struct {
@@ -13,7 +13,7 @@ ShadowProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ShadowProperties, objc_selector="color", objc_name="color")
 	ShadowProperties_color :: proc(self: ^ShadowProperties) -> ^Color ---
 

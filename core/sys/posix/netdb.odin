@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // netdb.h - definitions for network database operations
 
-foreign lib {
+#foreign lib {
 	/*
 	Translate node/serv name and return a set of socket addresses and associated information to be
 	used in creating a socket with which to address the specified service.
@@ -273,8 +273,8 @@ Addrinfo_Flag_Bits :: enum c.int {
 	V4MAPPED    = log2(AI_V4MAPPED),
 	// Query for both IPv4 and IPv6 addresses.
 	ALL         = log2(AI_ALL),
-	// Query for IPv4 addresses only when an IPv4 address is configured; query for IPv6 addresses
-	// only when an IPv6 address is configured.
+	// Query for IPv4 addresses only #if an IPv4 address is configured; query for IPv6 addresses
+	// only #if an IPv6 address is configured.
 	ADDRCONFIG  = log2(AI_ADDRCONFIG),
 }
 Addrinfo_Flags :: bit_set[Addrinfo_Flag_Bits; c.int]
@@ -319,7 +319,7 @@ Info_Errno :: enum c.int {
 	OVERFLOW = EAI_OVERFLOW,
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD || ODIN_OS == .OpenBSD || ODIN_OS == .Linux {
 
 	hostent :: struct {
 		h_name:      cstring,                /* [PSX] official name of host */
@@ -352,7 +352,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 	// The highest reserved port number.
 	IPPORT_RESERVED :: 1024
 
-	when ODIN_OS == .Linux || ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .Linux || ODIN_OS == .OpenBSD {
 		addrinfo :: struct {
 			ai_flags:     Addrinfo_Flags, /* [PSX] input flags */
 			ai_family:    AF,             /* [PSX] address family of socket */
@@ -376,7 +376,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		}
 	}
 
-	when ODIN_OS == .Darwin {
+	#if ODIN_OS == .Darwin {
 
 		AI_PASSIVE     :: 0x00000001
 		AI_CANONNAME   :: 0x00000002
@@ -393,7 +393,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		NI_NUMERICSCOPE :: 0x00000100
 		NI_DGRAM        :: 0x00000010
 
-	} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
+	} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD {
 
 		AI_PASSIVE     :: 0x00000001
 		AI_CANONNAME   :: 0x00000002
@@ -410,7 +410,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		NI_NUMERICSCOPE :: 0x00000010
 		NI_DGRAM        :: 0x00000020
 
-	} else when ODIN_OS == .OpenBSD {
+	} else #if ODIN_OS == .OpenBSD {
 
 		AI_PASSIVE     :: 1
 		AI_CANONNAME   :: 2
@@ -427,7 +427,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		NI_NUMERICSCOPE :: 32
 		NI_DGRAM        :: 16
 
-	} else when ODIN_OS == .Linux {
+	} else #if ODIN_OS == .Linux {
 
 		AI_PASSIVE     :: 0x001
 		AI_CANONNAME   :: 0x002
@@ -446,7 +446,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 
 	}
 
-	when ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .OpenBSD {
 
 		EAI_AGAIN    :: -3
 		EAI_BADFLAGS :: -1
@@ -459,7 +459,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		EAI_SYSTEM   :: -11
 		EAI_OVERFLOW :: -14
 
-	} else when ODIN_OS == .Linux {
+	} else #if ODIN_OS == .Linux {
 
 		EAI_AGAIN    :: -3
 		EAI_BADFLAGS :: -1

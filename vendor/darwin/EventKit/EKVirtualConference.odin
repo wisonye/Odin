@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKVirtualConferenceDescriptor", objc_superclass=NS.Object)
 VirtualConferenceDescriptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualConferenceDescriptor, objc_selector="initWithTitle:URLDescriptors:conferenceDetails:", objc_name="initWithTitle")
 	VirtualConferenceDescriptor_initWithTitle :: proc(self: ^VirtualConferenceDescriptor, title: ^NS.String, URLDescriptors: ^NS.Array, conferenceDetails: ^NS.String) -> instancetype ---
 
@@ -34,7 +34,7 @@ VirtualConferenceProvider :: struct {
 	using _: NS.ExtensionRequestHandling,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualConferenceProvider, objc_selector="fetchAvailableRoomTypesWithCompletionHandler:", objc_name="fetchAvailableRoomTypesWithCompletionHandler")
 	VirtualConferenceProvider_fetchAvailableRoomTypesWithCompletionHandler :: proc(self: ^VirtualConferenceProvider, completionHandler: ^Objc_Block(proc "c" ( _0: ^NS.Array, _1: ^NS.Error ))) ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="EKVirtualConferenceRoomTypeDescriptor", objc_superclass=NS.Object)
 VirtualConferenceRoomTypeDescriptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualConferenceRoomTypeDescriptor, objc_selector="initWithTitle:identifier:", objc_name="initWithTitle")
 	VirtualConferenceRoomTypeDescriptor_initWithTitle :: proc(self: ^VirtualConferenceRoomTypeDescriptor, title: ^NS.String, identifier: ^NS.String) -> instancetype ---
 
@@ -67,7 +67,7 @@ foreign lib {
 @(objc_class="EKVirtualConferenceURLDescriptor", objc_superclass=NS.Object)
 VirtualConferenceURLDescriptor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualConferenceURLDescriptor, objc_selector="initWithTitle:URL:", objc_name="initWithTitle")
 	VirtualConferenceURLDescriptor_initWithTitle :: proc(self: ^VirtualConferenceURLDescriptor, title: ^NS.String, _URL: ^NS.URL) -> instancetype ---
 

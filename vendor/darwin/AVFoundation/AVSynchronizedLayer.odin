@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CA "vendor:darwin/QuartzCore"
-import "base:intrinsics"
+#import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
 
 @(objc_class="AVSynchronizedLayer", objc_superclass=CA.Layer)
 SynchronizedLayer :: struct { using _: CA.Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SynchronizedLayer, objc_selector="synchronizedLayerWithPlayerItem:", objc_name="synchronizedLayerWithPlayerItem", objc_is_class_method=true)
 	SynchronizedLayer_synchronizedLayerWithPlayerItem :: proc(playerItem: ^PlayerItem) -> ^SynchronizedLayer ---
 

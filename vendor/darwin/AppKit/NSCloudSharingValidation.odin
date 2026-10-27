@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSCloudSharingValidation")
 CloudSharingValidation :: struct {
@@ -12,7 +12,7 @@ CloudSharingValidation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloudSharingValidation, objc_selector="cloudShareForUserInterfaceItem:", objc_name="cloudShareForUserInterfaceItem")
 	CloudSharingValidation_cloudShareForUserInterfaceItem :: proc(self: ^CloudSharingValidation, item: ^ValidatedUserInterfaceItem) -> ^CKShare ---
 }

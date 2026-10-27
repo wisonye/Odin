@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKLocationSortDescriptor", objc_superclass=NS.SortDescriptor)
 LocationSortDescriptor :: struct {
@@ -10,7 +10,7 @@ LocationSortDescriptor :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocationSortDescriptor, objc_selector="init", objc_name="init")
 	LocationSortDescriptor_init :: proc(self: ^LocationSortDescriptor) -> instancetype ---
 

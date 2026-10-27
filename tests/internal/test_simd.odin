@@ -1,12 +1,12 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:math"
-import "core:simd"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:math"
+#import "core:simd"
+#import "core:testing"
 
 // `simd_interleave` derives its lane count as operand width times argument count, so it is a
-// power of two only when the argument count is. The rejection of the rest cannot be asserted
+// power of two only #if the argument count is. The rejection of the rest cannot be asserted
 // from a test -- it is a compile error -- so what is pinned here is the other side: the widths
 // that must keep working, and the values they carry.
 

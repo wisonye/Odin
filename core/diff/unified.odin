@@ -1,9 +1,9 @@
 package diff
 
-import "base:runtime"
-import "core:io"
-import "core:strings"
-import "core:terminal/ansi"
+#import "base:runtime"
+#import "core:io"
+#import "core:strings"
+#import "core:terminal/ansi"
 
 Unified_Kind :: enum u8 {
 	Hunk_Header, // "@@ -a,b +c,d @@"; the ranges are in `Unified_Line.hunk`
@@ -17,7 +17,7 @@ Unified_Line :: struct {
 	kind:           Unified_Kind,
 	text:           string, // the line without its prefix or newline; empty for `.Hunk_Header` and `.No_Newline`
 	hunk:           Hunk,   // only set for `.Hunk_Header`
-	a_line, b_line: int,    // 1-based line numbers; 0 when the line is not on that side
+	a_line, b_line: int,    // 1-based line numbers; 0 #if the line is not on that side
 }
 
 Unified_Iterator :: struct {
@@ -298,7 +298,7 @@ write_unified_to_builder :: proc(
 		assert(err == nil, "unified output outgrew its own size", loc)
 
 	case .Grow:
-		// A builder only fails to take a write when it cannot grow
+		// A builder only fails to take a write #if it cannot grow
 		start := len(sb.buf)
 		if write_unified(strings.to_writer(sb), d, a_name, b_name, context_len, style, emphasis, scratch, loc) != nil {
 			resize(&sb.buf, start, loc)

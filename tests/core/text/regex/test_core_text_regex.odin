@@ -1,15 +1,15 @@
 package test_core_text_regex
 
-import "core:fmt"
-import "core:io"
-import "core:log"
-import "core:reflect"
-import "core:strings"
-import "core:testing"
-import "core:text/regex"
-import "core:text/regex/common"
-import "core:text/regex/parser"
-import "core:text/regex/tokenizer"
+#import "core:fmt"
+#import "core:io"
+#import "core:log"
+#import "core:reflect"
+#import "core:strings"
+#import "core:testing"
+#import "core:text/regex"
+#import "core:text/regex/common"
+#import "core:text/regex/parser"
+#import "core:text/regex/tokenizer"
 
 
 check_expression_with_flags :: proc(t: ^testing.T, pattern: string, flags: regex.Flags, haystack: string, needles: ..string, loc := #caller_location) {
@@ -1201,7 +1201,7 @@ iterator_vectors := []Iterator_Test{
 	},
 	// These too are valid.
 	//
-	// The iterator must bail out when it encounters any situation which would
+	// The iterator must bail out #if it encounters any situation which would
 	// loop infinitely, but only after giving at least one valid match if one
 	// exists, as this would accord with attempting to singularly match the
 	// pattern against the string and provide a positive result.

@@ -1,6 +1,6 @@
 package sync
 
-import "core:time"
+#import "core:time"
 
 Atomic_Mutex_State :: enum Futex {
 	Unlocked = 0,

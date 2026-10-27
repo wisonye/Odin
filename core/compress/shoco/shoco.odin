@@ -11,8 +11,8 @@ package compress_shoco
 	An implementation of [shoco](https://github.com/Ed-von-Schleck/shoco) by Christian Schramm.
 */
 
-import "base:intrinsics"
-import "core:compress"
+#import "base:intrinsics"
+#import "core:compress"
 
 Shoco_Pack :: struct {
 	word:           u32,
@@ -39,7 +39,7 @@ Shoco_Model :: struct {
 }
 
 compress_bound :: proc(uncompressed_size: int) -> (worst_case_compressed_size: int) {
-	// Worst case compression happens when input is non-ASCII (128-255)
+	// Worst case compression happens #if input is non-ASCII (128-255)
 	// Encoded as 0x00 + the byte in question.
 	return uncompressed_size * 2
 }
@@ -135,7 +135,7 @@ decompress_slice_to_output_buffer :: proc(input: []u8, output: []u8, model := DE
 			}
 
 			code := intrinsics.unaligned_load((^u32)(&input[inp]))
-			when ODIN_ENDIAN == .Little {
+			#if ODIN_ENDIAN == .Little {
 				code = intrinsics.byte_swap(code)
 			}
 
@@ -268,7 +268,7 @@ compress_string_to_buffer :: proc(input: string, output: []u8, model := DEFAULT_
 				}
 
 				// In the little-endian world, we need to swap what's in the register to match the memory representation.
-				when ODIN_ENDIAN == .Little {
+				#if ODIN_ENDIAN == .Little {
 					code = intrinsics.byte_swap(code)
 				}
 				out_ptr := raw_data(output[out:])

@@ -1,11 +1,11 @@
 package aes
 
-import "core:bytes"
-import "core:crypto"
-import "core:crypto/_aes"
-import "core:crypto/_aes/ct64"
-import aes_hw "core:crypto/_aes/hw"
-import "core:encoding/endian"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:crypto/_aes"
+#import "core:crypto/_aes/ct64"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:encoding/endian"
 
 // GCM_IV_SIZE is the default size of the GCM IV in bytes.
 GCM_IV_SIZE :: 12
@@ -27,7 +27,7 @@ Context_GCM :: struct {
 
 // init_gcm initializes a Context_GCM with the provided key.
 init_gcm :: proc(ctx: ^Context_GCM, key: []byte, impl := DEFAULT_IMPLEMENTATION) {
-	when aes_hw.HAS_GHASH {
+	#if aes_hw.HAS_GHASH {
 		impl := aes_hw.is_ghash_supported() ? impl : .Portable
 
 	}

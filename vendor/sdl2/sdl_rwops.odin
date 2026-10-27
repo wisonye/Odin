@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 /* RWops Types */
@@ -74,7 +74,7 @@ SEEK_CUR :: 1 /**< Seek relative to current read point */
 SEEK_END :: 2 /**< Seek relative to the end of data */
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	RWFromFile     :: proc(file: cstring, mode: cstring) -> ^RWops ---
 	RWFromFP       :: proc(fp: rawptr, autoclose: bool) -> ^RWops ---
 	RWFromMem      :: proc(mem: rawptr, size: c.int) -> ^RWops ---

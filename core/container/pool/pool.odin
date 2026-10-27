@@ -1,9 +1,9 @@
 package container_pool
 
-import "base:intrinsics"
-import "base:runtime"
-import "base:sanitizer"
-import "core:sync"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "base:sanitizer"
+#import "core:sync"
 
 _ :: sanitizer
 _ :: sync
@@ -52,7 +52,7 @@ destroy :: proc(p: ^Pool($T)) {
 
 	sync.atomic_store_explicit(&p.num_ready, 0, .Relaxed)
 
-	when .Address in ODIN_SANITIZER_FLAGS {
+	#if .Address in ODIN_SANITIZER_FLAGS {
 		for ; elem != nil; elem = _get_next(p, elem) {
 			_unpoison_elem(p, elem)
 		}
@@ -119,7 +119,7 @@ _set_next :: proc(p: ^Pool($T), elem: ^T, next: ^T) {
 }
 
 _poison_elem :: proc(p: ^Pool($T), elem: ^T) {
-	when .Address in ODIN_SANITIZER_FLAGS {
+	#if .Address in ODIN_SANITIZER_FLAGS {
 		if p.link_off > 0 {
 			sanitizer.address_poison_rawptr(elem, int(p.link_off))
 		}
@@ -133,7 +133,7 @@ _poison_elem :: proc(p: ^Pool($T), elem: ^T) {
 }
 
 _unpoison_elem :: proc(p: ^Pool($T), elem: ^T) {
-	when .Address in ODIN_SANITIZER_FLAGS {
+	#if .Address in ODIN_SANITIZER_FLAGS {
 		if p.link_off > 0 {
 			sanitizer.address_unpoison_rawptr(elem, int(p.link_off))
 		}

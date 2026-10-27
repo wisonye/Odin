@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLMonitoringEvent", objc_superclass=NS.Object)
 MonitoringEvent :: struct {
@@ -10,7 +10,7 @@ MonitoringEvent :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MonitoringEvent, objc_selector="init", objc_name="init")
 	MonitoringEvent_init :: proc(self: ^MonitoringEvent) -> instancetype ---
 
@@ -67,7 +67,7 @@ MonitoringRecord :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MonitoringRecord, objc_selector="init", objc_name="init")
 	MonitoringRecord_init :: proc(self: ^MonitoringRecord) -> instancetype ---
 

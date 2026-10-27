@@ -1,10 +1,10 @@
 #+vet explicit-allocators
 package debug_trace
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:mem"
-import "core:sync"
+#import "core:mem"
+#import "core:sync"
 
 /*
 The backtrace tracking allocator is a similar allocator as the `core:mem` tracking allocator but keeps
@@ -15,7 +15,7 @@ Print results at the end using `tracking_allocator_print_results`.
 Example:
 	package main
 
-	import "core:debug/trace"
+	#import "core:debug/trace"
 
 	main :: proc() {
 		track: trace.Tracking_Allocator
@@ -67,7 +67,7 @@ Tracking_Allocator_Bad_Free_Entry :: struct {
 }
 
 /*
-Callback type for when tracking allocator runs into a bad free.
+Callback type for #if tracking allocator runs into a bad free.
 */
 Tracking_Allocator_Bad_Free_Callback :: #type proc(
 	t: ^Tracking_Allocator,

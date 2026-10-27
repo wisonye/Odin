@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSUserNotification", objc_superclass=Object)
 UserNotification :: struct {
@@ -11,7 +11,7 @@ UserNotification :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotification, objc_selector="init", objc_name="init")
 	UserNotification_init :: proc(self: ^UserNotification) -> instancetype ---
 
@@ -138,7 +138,7 @@ UserNotificationAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationAction, objc_selector="actionWithIdentifier:title:", objc_name="actionWithIdentifier", objc_is_class_method=true)
 	UserNotificationAction_actionWithIdentifier :: proc(identifier: ^String, title: ^String) -> instancetype ---
 
@@ -154,7 +154,7 @@ foreign lib {
 UserNotificationCenter :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationCenter, objc_selector="scheduleNotification:", objc_name="scheduleNotification")
 	UserNotificationCenter_scheduleNotification :: proc(self: ^UserNotificationCenter, notification: ^UserNotification) ---
 
@@ -197,7 +197,7 @@ UserNotificationCenterDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationCenterDelegate, objc_selector="userNotificationCenter:didDeliverNotification:", objc_name="userNotificationCenter_didDeliverNotification")
 	UserNotificationCenterDelegate_userNotificationCenter_didDeliverNotification :: proc(self: ^UserNotificationCenterDelegate, center: ^UserNotificationCenter, notification: ^UserNotification) ---
 
@@ -213,7 +213,7 @@ foreign lib {
 UserScriptTask :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserScriptTask, objc_selector="initWithURL:error:", objc_name="initWithURL_error")
 	UserScriptTask_initWithURL_error :: proc(self: ^UserScriptTask, url: ^URL, error: ^^Error) -> instancetype ---
 
@@ -238,7 +238,7 @@ UserScriptTask_initWithURL :: #force_inline proc "c" (self: ^UserScriptTask, url
 UserAppleScriptTask :: struct { using _: UserScriptTask}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserAppleScriptTask, objc_selector="executeWithAppleEvent:completionHandler:", objc_name="executeWithAppleEvent")
 	UserAppleScriptTask_executeWithAppleEvent :: proc(self: ^UserAppleScriptTask, event: ^AppleEventDescriptor, handler: UserAppleScriptTaskCompletionHandler) ---
 }
@@ -248,7 +248,7 @@ foreign lib {
 UserAutomatorTask :: struct { using _: UserScriptTask}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserAutomatorTask, objc_selector="executeWithInput:completionHandler:", objc_name="executeWithInput")
 	UserAutomatorTask_executeWithInput :: proc(self: ^UserAutomatorTask, input: ^SecureCoding, handler: UserAutomatorTaskCompletionHandler) ---
 
@@ -264,7 +264,7 @@ foreign lib {
 UserUnixTask :: struct { using _: UserScriptTask}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserUnixTask, objc_selector="executeWithArguments:completionHandler:", objc_name="executeWithArguments")
 	UserUnixTask_executeWithArguments :: proc(self: ^UserUnixTask, arguments: ^Array, handler: UserUnixTaskCompletionHandler) ---
 

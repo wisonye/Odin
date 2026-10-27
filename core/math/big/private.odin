@@ -18,7 +18,7 @@ package math_big
 	These aren't exported for the same reasons.
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	Multiplies |a| * |b| and only computes upto digs digits of result.
@@ -36,7 +36,7 @@ _private_int_mul :: proc(dest, a, b: ^Int, digits: int, allocator := context.all
 	}
 
 	/*
-		Set up temporary output `Int`, which we'll swap for `dest` when done.
+		Set up temporary output `Int`, which we'll swap for `dest` #if done.
 	*/
 
 	t := &Int{}
@@ -440,7 +440,7 @@ _private_int_mul_high :: proc(dest, a, b: ^Int, digits: int, allocator := contex
 	}
 
 	/*
-		Set up temporary output `Int`, which we'll swap for `dest` when done.
+		Set up temporary output `Int`, which we'll swap for `dest` #if done.
 	*/
 
 	t := &Int{}
@@ -1314,7 +1314,7 @@ _private_int_div_recursive :: proc(quotient, remainder, a, b: ^Int, allocator :=
 	m := A.used - B.used
 
 	/*
-		Q = 0. We already ensured that when we called `internal_init_multi`.
+		Q = 0. We already ensured that #if we called `internal_init_multi`.
 	*/
 	for m > n {
 		/*
@@ -1471,7 +1471,7 @@ _private_int_recursive_product :: proc(res: ^Int, start, stop: int, level := int
 	num_factors := (stop - start) >> 1
 	if num_factors == 2 {
 		internal_set(t1, start, false)                               or_return
-		when true {
+		#if true {
 			internal_grow(t2, t1.used + 1, false)                    or_return
 			internal_add(t2, t1, 2)                                  or_return
 		} else {
@@ -1942,7 +1942,7 @@ _private_int_montgomery_reduce :: proc(x, n: ^Int, rho: DIGIT, allocator := cont
 }
 
 /*
-	Shifts with subtractions when the result is greater than b.
+	Shifts with subtractions #if the result is greater than b.
 
 	The method is slightly modified to shift B unconditionally upto just under
 	the leading bit of b.  This saves alot of multiple precision shifting.
@@ -1999,7 +1999,7 @@ _private_int_montgomery_setup :: proc(n: ^Int, allocator := context.allocator) -
 	x *= 2 - (b * x)              /* here x*a==1 mod 2**8 */
 	x *= 2 - (b * x)              /* here x*a==1 mod 2**16 */
 
-	when _DIGIT_TYPE_BITS == 64 {
+	#if _DIGIT_TYPE_BITS == 64 {
 		x *= 2 - (b * x)              /* here x*a==1 mod 2**32 */
 		x *= 2 - (b * x)              /* here x*a==1 mod 2**64 */
 	}

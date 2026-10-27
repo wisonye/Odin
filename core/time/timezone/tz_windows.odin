@@ -2,9 +2,9 @@
 #+private
 package timezone
 
-import "core:strings"
-import "core:sys/windows"
-import "core:time/datetime"
+#import "core:strings"
+#import "core:sys/windows"
+#import "core:time/datetime"
 
 TZ_Abbrev :: struct {
 	std: string,

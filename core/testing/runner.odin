@@ -10,31 +10,31 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import            "base:intrinsics"
-import            "base:runtime"
-import            "core:bytes"
-@(require) import "core:encoding/base64"
-@(require) import "core:encoding/json"
-import            "core:fmt"
-import            "core:io"
-@(require) import "core:log"
-import            "core:math/rand"
-import            "core:mem"
-import            "core:os"
-import            "core:slice"
-@(require) import "core:strings"
-import            "core:sync/chan"
-import            "core:terminal"
-import            "core:terminal/ansi"
-import            "core:thread"
-import            "core:time"
-import            "core:path/slashpath"
+#import            "base:intrinsics"
+#import            "base:runtime"
+#import            "core:bytes"
+@(require) #import "core:encoding/base64"
+@(require) #import "core:encoding/json"
+#import            "core:fmt"
+#import            "core:io"
+@(require) #import "core:log"
+#import            "core:math/rand"
+#import            "core:mem"
+#import            "core:os"
+#import            "core:slice"
+@(require) #import "core:strings"
+#import            "core:sync/chan"
+#import            "core:terminal"
+#import            "core:terminal/ansi"
+#import            "core:thread"
+#import            "core:time"
+#import            "core:path/slashpath"
 
-// Specify how many threads to use when running tests.
+// Specify how many threads to use #if running tests.
 TEST_THREADS          : int    : #config(ODIN_TEST_THREADS,              0)
 // Track the memory used by each test.
 TRACKING_MEMORY       : bool   : #config(ODIN_TEST_TRACK_MEMORY,         true)
-// Always report how much memory is used, even when there are no leaks or bad frees.
+// Always report how much memory is used, even #if there are no leaks or bad frees.
 ALWAYS_REPORT_MEMORY  : bool   : #config(ODIN_TEST_ALWAYS_REPORT_MEMORY, false)
 // Treat memory leaks and bad frees as errors.
 FAIL_ON_BAD_MEMORY    : bool   : #config(ODIN_TEST_FAIL_ON_BAD_MEMORY,   false)
@@ -42,13 +42,13 @@ FAIL_ON_BAD_MEMORY    : bool   : #config(ODIN_TEST_FAIL_ON_BAD_MEMORY,   false)
 PER_THREAD_MEMORY     : int    : #config(ODIN_TEST_THREAD_MEMORY, mem.ROLLBACK_STACK_DEFAULT_BLOCK_SIZE)
 // Select a specific set of tests to run by name.
 // Each test is separated by a comma and may optionally include the package name.
-// This may be useful when running tests on multiple packages with `-all-packages`.
+// This may be useful #if running tests on multiple packages with `-all-packages`.
 // The format is: `package.test_name,test_name_only,...`
 TEST_NAMES            : string : #config(ODIN_TEST_NAMES,                "")
 // Show the fancy animated progress report.
 // This requires terminal color support, as well as STDOUT to not be redirected to a file.
 FANCY_OUTPUT          : bool   : #config(ODIN_TEST_FANCY,                true)
-// Copy failed tests to the clipboard when done.
+// Copy failed tests to the clipboard #if done.
 USE_CLIPBOARD         : bool   : #config(ODIN_TEST_CLIPBOARD,            false)
 // How many test results to show at a time per package.
 PROGRESS_WIDTH        : int    : #config(ODIN_TEST_PROGRESS_WIDTH,       24)
@@ -56,9 +56,9 @@ PROGRESS_WIDTH        : int    : #config(ODIN_TEST_PROGRESS_WIDTH,       24)
 // If it is unspecified, it will be set to the system cycle counter at startup.
 SHARED_RANDOM_SEED    : u64    : #config(ODIN_TEST_RANDOM_SEED,          0)
 // Set the lowest log level for this test run.
-LOG_LEVEL_DEFAULT     : string : "debug" when ODIN_DEBUG else "info"
+LOG_LEVEL_DEFAULT     : string : "debug" #if ODIN_DEBUG else "info"
 LOG_LEVEL             : string : #config(ODIN_TEST_LOG_LEVEL,            LOG_LEVEL_DEFAULT)
-// Report a message at the info level when a test has changed its state.
+// Report a message at the info level #if a test has changed its state.
 LOG_STATE_CHANGES     : bool   : #config(ODIN_TEST_LOG_STATE_CHANGES,    false)
 // Show only the most necessary logging information.
 USING_SHORT_LOGS      : bool   : #config(ODIN_TEST_SHORT_LOGS,           false)
@@ -69,11 +69,11 @@ JSON_REPORT           : string : #config(ODIN_TEST_JSON_REPORT,          "")
 GO_TO_ERROR           : bool   : #config(ODIN_TEST_GO_TO_ERROR,          false)
 
 get_log_level :: #force_inline proc() -> runtime.Logger_Level {
-	when LOG_LEVEL == "debug"   { return .Debug   } else
-	when LOG_LEVEL == "info"    { return .Info    } else
-	when LOG_LEVEL == "warning" { return .Warning } else
-	when LOG_LEVEL == "error"   { return .Error   } else
-	when LOG_LEVEL == "fatal"   { return .Fatal   } else {
+	#if LOG_LEVEL == "debug"   { return .Debug   } else
+	#if LOG_LEVEL == "info"    { return .Info    } else
+	#if LOG_LEVEL == "warning" { return .Warning } else
+	#if LOG_LEVEL == "error"   { return .Error   } else
+	#if LOG_LEVEL == "fatal"   { return .Fatal   } else {
 		#panic("Unknown `ODIN_TEST_LOG_LEVEL`: \"" + LOG_LEVEL + "\", possible levels are: \"debug\", \"info\", \"warning\", \"error\", or \"fatal\".")
 	}
 }
@@ -104,7 +104,7 @@ end_t :: proc(t: ^T) {
 	t.cleanups = {}
 }
 
-when TRACKING_MEMORY && FAIL_ON_BAD_MEMORY {
+#if TRACKING_MEMORY && FAIL_ON_BAD_MEMORY {
 	Task_Data :: struct {
 		it: Internal_Test,
 		t: T,
@@ -165,7 +165,7 @@ run_test_task :: proc(task: thread.Task) {
 
 	end_t(&data.t)
 
-	when TRACKING_MEMORY && FAIL_ON_BAD_MEMORY {
+	#if TRACKING_MEMORY && FAIL_ON_BAD_MEMORY {
 		// NOTE(Feoramund): The simplest way to handle treating memory failures
 		// as errors is to allow the test task runner to access the tracking
 		// allocator itself.
@@ -231,7 +231,7 @@ parse_cli_options :: proc(argv: []string, opts: ^Options, stdout, stderr: io.Wri
 			fmt.wprintln(stdout, "        -tests:<test_name[,...]>")
 			fmt.wprintln(stdout, "            Specify a specific set of tests to run by name.\n" +
 			                      "            Each test is separated by a comma and may optionally include the package name.\n" +
-			                      "            This may be useful when running tests on multiple packages with `-all-packages`.\n" +
+			                      "            This may be useful #if running tests on multiple packages with `-all-packages`.\n" +
 			                      "            The format is: `package.test_name,test_name_only,...`")
 			fmt.wprintln(stdout)
 			os.exit(0)
@@ -267,14 +267,14 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 		}
 	}
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		set_utf8_codepage()
 		defer restore_old_codepage()
 	}
 
 	// `-vet` needs parameters to be shadowed by themselves first as an
 	// explicit declaration, to allow the next line to work.
-	// NOTE(@harold): Moved out of scope below as it's no longer under a `when` block, but under `if`.
+	// NOTE(@harold): Moved out of scope below as it's no longer under a `#if` block, but under `if`.
 	internal_tests := internal_tests
 
 	stdout := os.to_stream(os.stdout)
@@ -348,7 +348,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 	total_test_count    := len(internal_tests)
 
 
-	// This is strictly for updating the window title when the progress
+	// This is strictly for updating the window title #if the progress
 	// report is disabled. We're otherwise able to depend on the call to
 	// `needs_to_redraw`.
 	last_done_count := -1
@@ -377,7 +377,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 
 	// -- Set thread count.
 
-	when TEST_THREADS == 0 {
+	#if TEST_THREADS == 0 {
 		thread_count := os.get_processor_core_count()
 	} else {
 		thread_count := max(1, TEST_THREADS)
@@ -458,7 +458,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 	fmt.assertf(alloc_error == nil, "Error allocating memory for task allocators: %v", alloc_error)
 	defer delete(task_allocators)
 
-	when TRACKING_MEMORY {
+	#if TRACKING_MEMORY {
 		task_memory_trackers: []mem.Tracking_Allocator = ---
 		task_memory_trackers, alloc_error = make([]mem.Tracking_Allocator, thread_count)
 		fmt.assertf(alloc_error == nil, "Error allocating memory for memory trackers: %v", alloc_error)
@@ -468,14 +468,14 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 	#no_bounds_check for i in 0 ..< thread_count {
 		alloc_error = mem.rollback_stack_init(&task_allocators[i], PER_THREAD_MEMORY)
 		fmt.assertf(alloc_error == nil, "Error allocating memory for task allocator #%i: %v", i, alloc_error)
-		when TRACKING_MEMORY {
+		#if TRACKING_MEMORY {
 			mem.tracking_allocator_init(&task_memory_trackers[i], mem.rollback_stack_allocator(&task_allocators[i]))
 			task_memory_trackers[i].bad_free_callback = mem.tracking_allocator_bad_free_callback_add_to_array
 		}
 	}
 
 	defer #no_bounds_check for i in 0 ..< thread_count {
-		when TRACKING_MEMORY {
+		#if TRACKING_MEMORY {
 			mem.tracking_allocator_destroy(&task_memory_trackers[i])
 		}
 		mem.rollback_stack_destroy(&task_allocators[i])
@@ -501,13 +501,13 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 	fmt.assertf(alloc_error == nil, "Error allocating memory for sorted failed test reasons: %v", alloc_error)
 	defer delete(sorted_failed_test_reasons)
 
-	when USE_CLIPBOARD {
+	#if USE_CLIPBOARD {
 		clipboard_buffer: bytes.Buffer
 		bytes.buffer_init_allocator(&clipboard_buffer, 0, CLIPBOARD_BUFFER_SIZE)
 		defer bytes.buffer_destroy(&clipboard_buffer)
 	}
 
-	when SHARED_RANDOM_SEED == 0 {
+	#if SHARED_RANDOM_SEED == 0 {
 		shared_random_seed := cast(u64)intrinsics.read_cycle_counter()
 	} else {
 		shared_random_seed := SHARED_RANDOM_SEED
@@ -546,9 +546,9 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 			data.t._log_allocator = shared_log_allocator
 			data.allocator_index = task_index
 
-			#no_bounds_check when TRACKING_MEMORY {
+			#no_bounds_check #if TRACKING_MEMORY {
 				task_allocator := mem.tracking_allocator(&task_memory_trackers[task_index])
-				when FAIL_ON_BAD_MEMORY {
+				#if FAIL_ON_BAD_MEMORY {
 					data.tracking_allocator = &task_memory_trackers[task_index]
 				}
 			} else {
@@ -576,7 +576,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 		draw_status_bar(stdout, thread_count_status_string, total_done_count, total_test_count)
 	}
 
-	when TEST_THREADS == 0 {
+	#if TEST_THREADS == 0 {
 		log.infof("Starting test runner with %i thread%s. Set with -define:ODIN_TEST_THREADS=n.",
 			thread_count,
 			"" if thread_count == 1 else "s")
@@ -586,24 +586,24 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 			"" if thread_count == 1 else "s")
 	}
 
-	when SHARED_RANDOM_SEED == 0 {
+	#if SHARED_RANDOM_SEED == 0 {
 		log.infof("The random seed sent to every test is: %v. Set with -define:ODIN_TEST_RANDOM_SEED=n.", shared_random_seed)
 	} else {
 		log.infof("The random seed sent to every test is: %v.", shared_random_seed)
 	}
 
-	when TRACKING_MEMORY {
-		when ALWAYS_REPORT_MEMORY {
-			log.info("Memory tracking is enabled. Tests will log their memory usage when complete.")
+	#if TRACKING_MEMORY {
+		#if ALWAYS_REPORT_MEMORY {
+			log.info("Memory tracking is enabled. Tests will log their memory usage #if complete.")
 		} else {
 			log.info("Memory tracking is enabled. Tests will log their memory usage if there's an issue.")
 		}
 		log.info("< Final Mem/ Total Mem> <  Peak Mem> (#Free/Alloc) :: [package.test_name]")
 	} else {
-		when ALWAYS_REPORT_MEMORY {
+		#if ALWAYS_REPORT_MEMORY {
 			log.warn("ODIN_TEST_ALWAYS_REPORT_MEMORY is true, but ODIN_TEST_TRACK_MEMORY is false.")
 		}
-		when FAIL_ON_BAD_MEMORY {
+		#if FAIL_ON_BAD_MEMORY {
 			log.warn("ODIN_TEST_FAIL_ON_BAD_MEMORY is true, but ODIN_TEST_TRACK_MEMORY is false.")
 		}
 	}
@@ -633,12 +633,12 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 		cycle_pool: for task in thread.pool_pop_done(&pool) {
 			data := cast(^Task_Data)(task.data)
 
-			when TRACKING_MEMORY {
+			#if TRACKING_MEMORY {
 				#no_bounds_check tracker := &task_memory_trackers[data.allocator_index]
 
 				memory_is_in_bad_state := len(tracker.allocation_map) + len(tracker.bad_free_array) > 0
 
-				when ALWAYS_REPORT_MEMORY {
+				#if ALWAYS_REPORT_MEMORY {
 					should_report := true
 				} else {
 					should_report := memory_is_in_bad_state
@@ -647,7 +647,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 				if should_report {
 					write_memory_report(batch_writer, tracker, data.it.pkg, data.it.name)
 
-					when FAIL_ON_BAD_MEMORY {
+					#if FAIL_ON_BAD_MEMORY {
 						log.log(.Error if memory_is_in_bad_state else .Info, bytes.buffer_to_string(&batch_buffer))
 					} else {
 						log.log(.Warning if memory_is_in_bad_state else .Info, bytes.buffer_to_string(&batch_buffer))
@@ -697,7 +697,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 						total_done_count += 1
 					}
 
-					when LOG_STATE_CHANGES {
+					#if LOG_STATE_CHANGES {
 						log.infof("Test #%i %s.%s changed state to %v.", task_channel.test_index, it.pkg, it.name, event.new_state)
 					}
 
@@ -792,7 +792,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 
 		// Because the bounds checking procs send directly to STDERR with
 		// no way to redirect or handle them, we need to at least try to
-		// let the user see those messages when using the animated progress
+		// let the user see those messages #if using the animated progress
 		// report. This flag may be set by the block of code below if a
 		// signal is raised.
 		//
@@ -879,7 +879,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 		}
 
 		// Because each thread has its own messenger channel, log messages
-		// arrive in chunks that are in-order, but when they're merged with the
+		// arrive in chunks that are in-order, but #if they're merged with the
 		// logs from other threads, they become out-of-order.
 		slice.stable_sort_by(log_messages[:], proc(a, b: Log_Message) -> bool {
 			return time.diff(a.time, b.time) > 0
@@ -974,7 +974,7 @@ runner :: proc(internal_tests: []Internal_Test) -> bool {
 		}
 
 		if total_success_count > 0 {
-			when USE_CLIPBOARD {
+			#if USE_CLIPBOARD {
 				clipboard_writer := io.to_writer(bytes.buffer_to_stream(&clipboard_buffer))
 				fmt.wprint(clipboard_writer, "-define:ODIN_TEST_NAMES=")
 				for test_index in sorted_failed_test_reasons {
@@ -1018,7 +1018,7 @@ To partly mitigate this, redirect STDERR to a file or use the -define:ODIN_TEST_
 
 	fmt.wprintln(stderr, bytes.buffer_to_string(&batch_buffer))
 
-	when JSON_REPORT != "" {
+	#if JSON_REPORT != "" {
 		json_report: JSON
 
 		json_fd, err := os.open(JSON_REPORT, {.Write, .Create, .Trunc}, {.Read_User, .Write_User, .Read_Group, .Read_Other})

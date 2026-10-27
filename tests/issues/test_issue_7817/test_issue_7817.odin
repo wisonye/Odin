@@ -1,6 +1,6 @@
 package test_issue_7817
 
-import "core:testing"
+#import "core:testing"
 
 // A polymorphic union instantiated with a still-polymorphic record operand, such as `Maybe(Box($T))` in a
 // procedure signature, checked its variants as if the operand were concrete, and reported a non-specialized

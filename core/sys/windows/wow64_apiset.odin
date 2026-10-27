@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetSystemWow64Directory2W         :: proc(lpBuffer: LPWSTR, uSize: UINT, ImageFileMachineTyp: WORD) -> UINT ---
 	GetSystemWow64DirectoryW          :: proc(lpBuffer: LPWSTR, uSize: UINT) -> UINT ---
 	IsWow64GuestMachineSupported      :: proc(WowGuestMachine: USHORT, MachineIsSupported: ^BOOL) -> HRESULT ---

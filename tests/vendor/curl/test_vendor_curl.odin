@@ -1,9 +1,9 @@
 #+build windows, linux, darwin
 package test_vendor_curl
 
-import "base:runtime"
-import "core:testing"
-import "vendor:curl"
+#import "base:runtime"
+#import "core:testing"
+#import "vendor:curl"
 
 @(test)
 test_curl :: proc(t: ^testing.T) {

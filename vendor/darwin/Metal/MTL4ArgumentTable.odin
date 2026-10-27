@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4ArgumentTable")
 MTL4ArgumentTable :: struct {
@@ -11,7 +11,7 @@ MTL4ArgumentTable :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4ArgumentTable, objc_selector="setAddress:atIndex:", objc_name="setAddress_atIndex")
 	MTL4ArgumentTable_setAddress_atIndex :: proc(self: ^MTL4ArgumentTable, gpuAddress: GPUAddress, bindingIndex: NS.UInteger) ---
 
@@ -49,7 +49,7 @@ MTL4ArgumentTableDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4ArgumentTableDescriptor, objc_selector="maxBufferBindCount", objc_name="maxBufferBindCount")
 	MTL4ArgumentTableDescriptor_maxBufferBindCount :: proc(self: ^MTL4ArgumentTableDescriptor) -> NS.UInteger ---
 

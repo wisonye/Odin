@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKSelectionAccessory", objc_superclass=NS.Object)
 SelectionAccessory :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SelectionAccessory, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SelectionAccessory_new :: proc() -> ^SelectionAccessory ---
 

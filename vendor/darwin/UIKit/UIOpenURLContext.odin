@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIOpenURLContext", objc_superclass=NS.Object)
 OpenURLContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenURLContext, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	OpenURLContext_new :: proc() -> ^OpenURLContext ---
 

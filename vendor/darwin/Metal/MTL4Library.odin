@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4LibraryDescriptor", objc_superclass=NS.Object)
 MTL4LibraryDescriptor :: struct {
@@ -10,7 +10,7 @@ MTL4LibraryDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4LibraryDescriptor, objc_selector="source", objc_name="source")
 	MTL4LibraryDescriptor_source :: proc(self: ^MTL4LibraryDescriptor) -> ^NS.String ---
 
@@ -34,7 +34,7 @@ foreign lib {
 @(objc_class="MTL4LibraryFunctionDescriptor", objc_superclass=MTL4FunctionDescriptor)
 MTL4LibraryFunctionDescriptor :: struct { using _: MTL4FunctionDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4LibraryFunctionDescriptor, objc_selector="name", objc_name="name")
 	MTL4LibraryFunctionDescriptor_name :: proc(self: ^MTL4LibraryFunctionDescriptor) -> ^NS.String ---
 

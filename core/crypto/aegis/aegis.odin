@@ -8,9 +8,9 @@ See:
 */
 package aegis
 
-import "core:bytes"
-import "core:crypto"
-import "core:crypto/aes"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:crypto/aes"
 
 // KEY_SIZE_128L is the AEGIS-128L key size in bytes.
 KEY_SIZE_128L :: 16

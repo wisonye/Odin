@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 
 header :: struct {
@@ -40,7 +40,7 @@ Hcode :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	easy_header :: proc(easy:    ^CURL,
 	                    name:    cstring,
 	                    index:   c.size_t,

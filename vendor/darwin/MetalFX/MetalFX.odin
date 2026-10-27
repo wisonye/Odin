@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import cffi "core:c"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -13,7 +13,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:MetalFX.framework",
 }
 

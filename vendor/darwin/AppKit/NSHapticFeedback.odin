@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSHapticFeedbackManager", objc_superclass=NS.Object)
 HapticFeedbackManager :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticFeedbackManager, objc_selector="defaultPerformer", objc_name="defaultPerformer", objc_is_class_method=true)
 	HapticFeedbackManager_defaultPerformer :: proc() -> ^HapticFeedbackPerformer ---
 }
@@ -22,7 +22,7 @@ HapticFeedbackPerformer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HapticFeedbackPerformer, objc_selector="performFeedbackPattern:performanceTime:", objc_name="performFeedbackPattern")
 	HapticFeedbackPerformer_performFeedbackPattern :: proc(self: ^HapticFeedbackPerformer, pattern: HapticFeedbackPattern, performanceTime: HapticFeedbackPerformanceTime) ---
 }

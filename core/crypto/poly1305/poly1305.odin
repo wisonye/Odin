@@ -6,10 +6,10 @@ See:
 */
 package poly1305
 
-import "core:crypto"
-import field "core:crypto/_fiat/field_poly1305"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:crypto"
+#import field "core:crypto/_fiat/field_poly1305"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // KEY_SIZE is the Poly1305 key size in bytes.
 KEY_SIZE :: 32

@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 DateTime :: struct {
 	year:        c.int,  /**< Year */
@@ -27,7 +27,7 @@ TimeFormat :: enum c.int {
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetDateTimeLocalePreferences :: proc(dateFormat: ^DateFormat, timeFormat: ^TimeFormat) -> bool ---
 	GetCurrentTime               :: proc(ticks: ^Time) -> bool ---
 	TimeToDateTime               :: proc(ticks: Time, dt: ^DateTime, localTime: bool) -> bool ---

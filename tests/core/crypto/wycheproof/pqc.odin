@@ -1,19 +1,19 @@
 package test_wycheproof
 
-import "core:encoding/hex"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:slice"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:slice"
+#import "core:testing"
 
-import "core:crypto/_mlkem"
-import "core:crypto/mlkem"
+#import "core:crypto/_mlkem"
+#import "core:crypto/mlkem"
 
-import "core:crypto/_mldsa"
-import "core:crypto/mldsa"
+#import "core:crypto/_mldsa"
+#import "core:crypto/mldsa"
 
-import "../common"
+#import "../common"
 
 @(test)
 test_mlkem :: proc(t: ^testing.T) {

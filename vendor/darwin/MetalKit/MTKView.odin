@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_MetalKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import CA "vendor:darwin/QuartzCore"
-import MTL "vendor:darwin/Metal"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CA "vendor:darwin/QuartzCore"
+#import MTL "vendor:darwin/Metal"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MTKView", objc_superclass=UI_View)
 View :: struct {
@@ -16,7 +16,7 @@ View :: struct {
 	using _: CA.LayerDelegate,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=View, objc_selector="initWithFrame:device:", objc_name="initWithFrame")
 	View_initWithFrame :: proc(self: ^View, frameRect: CG.Rect, device: ^MTL.Device) -> instancetype ---
 
@@ -175,7 +175,7 @@ ViewDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewDelegate, objc_selector="mtkView:drawableSizeWillChange:", objc_name="mtkView")
 	ViewDelegate_mtkView :: proc(self: ^ViewDelegate, view: ^View, size: CG.Size) ---
 

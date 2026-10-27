@@ -5,13 +5,13 @@ virtual.Arena usage
 
 Example:
 	// Source: https://github.com/odin-lang/examples/blob/master/arena_allocator/arena_allocator.odin
-	import "core:fmt"
-	import "core:os"
+	#import "core:fmt"
+	#import "core:os"
 
 	// virtual package implements a multi-purpose arena allocator. If you are on a
 	// platform that does not support virtual memory, then there is also a similar
 	// arena in `core:mem`.
-	import vmem "core:mem/virtual"
+	#import vmem "core:mem/virtual"
 
 	load_files :: proc() -> ([]string, vmem.Arena) {
 		// This creates a growing virtual memory arena. It uses virtual memory and
@@ -59,10 +59,10 @@ virtual.map_file usage
 
 Example:
 	// Source: https://github.com/odin-lang/examples/blob/master/arena_allocator/arena_allocator.odin
-	import "core:fmt"
+	#import "core:fmt"
 
 	// virtual package implements cross-platform file memory mapping
-	import vmem "core:mem/virtual"
+	#import vmem "core:mem/virtual"
 
 	main :: proc() {
 		data, err := vmem.map_file_from_path(#file, {.Read})

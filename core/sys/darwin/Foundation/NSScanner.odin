@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSScanner", objc_superclass=Object)
 Scanner :: struct {
@@ -10,7 +10,7 @@ Scanner :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Scanner, objc_selector="initWithString:", objc_name="initWithString")
 	Scanner_initWithString :: proc(self: ^Scanner, string: ^String) -> instancetype ---
 

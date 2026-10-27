@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIPrintFormatter", objc_superclass=NS.Object)
 PrintFormatter :: struct {
@@ -13,7 +13,7 @@ PrintFormatter :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintFormatter, objc_selector="removeFromPrintPageRenderer", objc_name="removeFromPrintPageRenderer")
 	PrintFormatter_removeFromPrintPageRenderer :: proc(self: ^PrintFormatter) ---
 
@@ -68,7 +68,7 @@ foreign lib {
 MarkupTextPrintFormatter :: struct { using _: PrintFormatter}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MarkupTextPrintFormatter, objc_selector="initWithMarkupText:", objc_name="initWithMarkupText")
 	MarkupTextPrintFormatter_initWithMarkupText :: proc(self: ^MarkupTextPrintFormatter, markupText: ^NS.String) -> instancetype ---
 
@@ -84,7 +84,7 @@ foreign lib {
 SimpleTextPrintFormatter :: struct { using _: PrintFormatter}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SimpleTextPrintFormatter, objc_selector="initWithText:", objc_name="initWithText")
 	SimpleTextPrintFormatter_initWithText :: proc(self: ^SimpleTextPrintFormatter, text: ^NS.String) -> instancetype ---
 
@@ -131,7 +131,7 @@ PrintInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintInfo, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	PrintInfo_initWithCoder :: proc(self: ^PrintInfo, coder: ^NS.Coder) -> instancetype ---
 
@@ -180,7 +180,7 @@ foreign lib {
 PrintInteractionController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintInteractionController, objc_selector="canPrintURL:", objc_name="canPrintURL", objc_is_class_method=true)
 	PrintInteractionController_canPrintURL :: proc(url: ^NS.URL) -> bool ---
 
@@ -283,7 +283,7 @@ PrintInteractionControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintInteractionControllerDelegate, objc_selector="printInteractionControllerParentViewController:", objc_name="printInteractionControllerParentViewController")
 	PrintInteractionControllerDelegate_printInteractionControllerParentViewController :: proc(self: ^PrintInteractionControllerDelegate, printInteractionController: ^PrintInteractionController) -> ^ViewController ---
 
@@ -320,7 +320,7 @@ foreign lib {
 PrintPageRenderer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintPageRenderer, objc_selector="printFormattersForPageAtIndex:", objc_name="printFormattersForPageAtIndex")
 	PrintPageRenderer_printFormattersForPageAtIndex :: proc(self: ^PrintPageRenderer, pageIndex: NS.Integer) -> ^NS.Array ---
 
@@ -381,7 +381,7 @@ foreign lib {
 PrintPaper :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintPaper, objc_selector="bestPaperForPageSize:withPapersFromArray:", objc_name="bestPaperForPageSize", objc_is_class_method=true)
 	PrintPaper_bestPaperForPageSize :: proc(contentSize: CG.Size, paperList: ^NS.Array) -> ^PrintPaper ---
 
@@ -400,7 +400,7 @@ foreign lib {
 PrintServiceExtension :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintServiceExtension, objc_selector="printerDestinationsForPrintInfo:", objc_name="printerDestinationsForPrintInfo")
 	PrintServiceExtension_printerDestinationsForPrintInfo :: proc(self: ^PrintServiceExtension, printInfo: ^PrintInfo) -> ^NS.Array ---
 }

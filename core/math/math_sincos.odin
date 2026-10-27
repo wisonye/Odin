@@ -1,6 +1,6 @@
 package math
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // The original C code, the long comment, and the constants
 // below were from http://netlib.sandia.gov/cephes/cmath/sin.c,

@@ -2,17 +2,17 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSManagedObjectContext")
 NSManagedObjectContext :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSManagedObjectModel")
 NSManagedObjectModel :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

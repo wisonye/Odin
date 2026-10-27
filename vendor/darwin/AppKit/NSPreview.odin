@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPreviewRepresentableActivityItem")
 PreviewRepresentableActivityItem :: struct {
@@ -12,7 +12,7 @@ PreviewRepresentableActivityItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewRepresentableActivityItem, objc_selector="item", objc_name="item")
 	PreviewRepresentableActivityItem_item :: proc(self: ^PreviewRepresentableActivityItem) -> id ---
 
@@ -34,7 +34,7 @@ PreviewRepresentingActivityItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewRepresentingActivityItem, objc_selector="initWithItem:title:image:icon:", objc_name="initWithItem_title_image_icon")
 	PreviewRepresentingActivityItem_initWithItem_title_image_icon :: proc(self: ^PreviewRepresentingActivityItem, item: id, title: ^NS.String, image: ^Image, icon: ^Image) -> instancetype ---
 

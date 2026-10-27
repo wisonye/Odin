@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_QuartzCore
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAConstraint", objc_superclass=NS.Object)
 Constraint :: struct {
@@ -11,7 +11,7 @@ Constraint :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Constraint, objc_selector="constraintWithAttribute:relativeTo:attribute:scale:offset:", objc_name="constraintWithAttribute_relativeTo_attribute_scale_offset", objc_is_class_method=true)
 	Constraint_constraintWithAttribute_relativeTo_attribute_scale_offset :: proc(attr: ConstraintAttribute, srcId: ^NS.String, srcAttr: ConstraintAttribute, m: CG.Float, c: CG.Float) -> instancetype ---
 
@@ -56,7 +56,7 @@ ConstraintLayoutManager :: struct {
 	using _: LayoutManager,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ConstraintLayoutManager, objc_selector="layoutManager", objc_name="layoutManager", objc_is_class_method=true)
 	ConstraintLayoutManager_layoutManager :: proc() -> instancetype ---
 }

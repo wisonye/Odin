@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKPeerPickerController", objc_superclass=NS.Object)
 PeerPickerController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PeerPickerController, objc_selector="show", objc_name="show")
 	PeerPickerController_show :: proc(self: ^PeerPickerController) ---
 
@@ -40,7 +40,7 @@ PeerPickerControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PeerPickerControllerDelegate, objc_selector="peerPickerController:didSelectConnectionType:", objc_name="peerPickerController_didSelectConnectionType")
 	PeerPickerControllerDelegate_peerPickerController_didSelectConnectionType :: proc(self: ^PeerPickerControllerDelegate, picker: ^PeerPickerController, type: PeerPickerConnectionType) ---
 

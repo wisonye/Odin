@@ -1,10 +1,10 @@
 #+build js
 package fmt
 
-foreign import "odin_env"
+#foreign #import "odin_env"
 
 @(private="file")
-foreign odin_env {
+#foreign odin_env {
 	write :: proc "contextless" (fd: u32, p: []byte) ---
 }
 

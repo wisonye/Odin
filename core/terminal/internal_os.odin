@@ -3,9 +3,9 @@
 #+private
 package terminal
 
-import "base:runtime"
-import "core:os"
-import "core:strings"
+#import "base:runtime"
+#import "core:os"
+#import "core:strings"
 
 // Reference documentation:
 //

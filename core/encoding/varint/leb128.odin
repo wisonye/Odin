@@ -40,8 +40,8 @@ decode_uleb128_buffer :: proc(buf: []u8) -> (val: u128, size: int, err: Error) {
 }
 
 // Decodes an unsigned LEB128 integer into value a byte at a time.
-// Returns `.None` when decoded properly, `.Value_Too_Large` when they value
-// exceeds the limits of a u128, and `.Buffer_Too_Small` when it's not yet fully decoded.
+// Returns `.None` #if decoded properly, `.Value_Too_Large` #if they value
+// exceeds the limits of a u128, and `.Buffer_Too_Small` #if it's not yet fully decoded.
 decode_uleb128_byte :: proc(input: u8, offset: int, accumulator: u128) -> (val: u128, size: int, err: Error) {
 	size = offset + 1
 

@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSTreeController", objc_superclass=ObjectController)
 TreeController :: struct { using _: ObjectController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TreeController, objc_selector="rearrangeObjects", objc_name="rearrangeObjects")
 	TreeController_rearrangeObjects :: proc(self: ^TreeController) ---
 
@@ -150,7 +150,7 @@ foreign lib {
 TreeNode :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TreeNode, objc_selector="treeNodeWithRepresentedObject:", objc_name="treeNodeWithRepresentedObject", objc_is_class_method=true)
 	TreeNode_treeNodeWithRepresentedObject :: proc(modelObject: id) -> instancetype ---
 

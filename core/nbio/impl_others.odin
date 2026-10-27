@@ -7,12 +7,12 @@
 #+private
 package nbio
 
-import "core:container/avl"
-import "core:container/pool"
-import "core:container/queue"
-import "core:mem"
-import "core:slice"
-import "core:time"
+#import "core:container/avl"
+#import "core:container/pool"
+#import "core:container/queue"
+#import "core:mem"
+#import "core:slice"
+#import "core:time"
 
 _FULLY_SUPPORTED :: false
 

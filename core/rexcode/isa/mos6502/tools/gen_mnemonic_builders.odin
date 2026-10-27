@@ -23,11 +23,11 @@ package main
 // Output: mnemonic_builders.odin (written to current directory; move/copy to
 // the package root).
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import m6502 "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import m6502 "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 

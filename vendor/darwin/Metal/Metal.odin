@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -14,7 +14,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:Metal.framework",
 }
 
@@ -23,7 +23,7 @@ foreign import lib {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="MTLTensorDomain")
 	TensorDomain: ^NS.String
 
@@ -87,7 +87,7 @@ foreign lib {
 	@(link_name="MTLCounterErrorDomain")
 	CounterErrorDomain: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="MTLDeviceWasAddedNotification")
 		DeviceWasAddedNotification: ^NS.String
 
@@ -131,7 +131,7 @@ foreign lib {
 	@(link_name="MTLCopyAllDevices")
 	CopyAllDevices :: proc() -> ^NS.Array ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="MTLCopyAllDevicesWithObserver")
 		CopyAllDevicesWithObserver :: proc(observer: ^^NS.ObjectProtocol, handler: DeviceNotificationHandler) -> ^NS.Array ---
 
@@ -172,7 +172,7 @@ CommonCounter :: distinct ^NS.String
 CommonCounterSet :: distinct ^NS.String
 MTL4NewBinaryFunctionCompletionHandler :: ^Objc_Block(proc "c" ( function: ^MTL4BinaryFunctionProtocol, error: ^NS.Error ))
 MTL4NewMachineLearningPipelineStateCompletionHandler :: ^Objc_Block(proc "c" ( mlPipelineState: ^MTL4MachineLearningPipelineState, error: ^NS.Error ))
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	DeviceNotificationName :: distinct ^NS.String
 	DeviceNotificationHandler :: ^Objc_Block(proc "c" ( device: ^Device, notifyName: ^NS.String ))
 }
@@ -786,7 +786,7 @@ GPUFamily :: enum cffi.long {
 	Metal4       = 5002,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	DeviceLocation :: enum cffi.ulong {
 		BuiltIn     = 0,
 		Slot        = 1,

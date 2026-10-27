@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLIOCommandBuffer")
 IOCommandBuffer :: struct {
@@ -12,7 +12,7 @@ IOCommandBuffer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOCommandBuffer, objc_selector="addCompletedHandler:", objc_name="addCompletedHandler")
 	IOCommandBuffer_addCompletedHandler :: proc(self: ^IOCommandBuffer, block: IOCommandBufferHandler) ---
 
@@ -75,7 +75,7 @@ IOCommandQueue :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOCommandQueue, objc_selector="enqueueBarrier", objc_name="enqueueBarrier")
 	IOCommandQueue_enqueueBarrier :: proc(self: ^IOCommandQueue) ---
 
@@ -99,7 +99,7 @@ IOCommandQueueDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOCommandQueueDescriptor, objc_selector="maxCommandBufferCount", objc_name="maxCommandBufferCount")
 	IOCommandQueueDescriptor_maxCommandBufferCount :: proc(self: ^IOCommandQueueDescriptor) -> NS.UInteger ---
 
@@ -138,7 +138,7 @@ IOFileHandle :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOFileHandle, objc_selector="label", objc_name="label")
 	IOFileHandle_label :: proc(self: ^IOFileHandle) -> ^NS.String ---
 
@@ -153,7 +153,7 @@ IOScratchBuffer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOScratchBuffer, objc_selector="buffer", objc_name="buffer")
 	IOScratchBuffer_buffer :: proc(self: ^IOScratchBuffer) -> ^Buffer ---
 }
@@ -165,7 +165,7 @@ IOScratchBufferAllocator :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IOScratchBufferAllocator, objc_selector="newScratchBufferWithMinimumSize:", objc_name="newScratchBufferWithMinimumSize")
 	IOScratchBufferAllocator_newScratchBufferWithMinimumSize :: proc(self: ^IOScratchBufferAllocator, minimumSize: NS.UInteger) -> ^IOScratchBuffer ---
 }

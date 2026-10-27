@@ -1,16 +1,16 @@
 #+build darwin, netbsd, openbsd, freebsd
 package kqueue
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
-import "core:sys/posix"
+#import "core:c"
+#import "core:sys/posix"
 
 KQ :: posix.FD
 
@@ -108,7 +108,7 @@ USER_FLAGS_MASK         :: transmute(User_Flags)u32(0x00FFFFFF)
 // Data is nanoseconds.
 TIMER_FLAGS_NSECONDS :: _TIMER_FLAGS_NSECONDS
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	_Filter_Backing :: distinct i16
 	_Flags_Backing  :: distinct u16
@@ -150,7 +150,7 @@ when ODIN_OS == .Darwin {
 		udata:  rawptr,
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	_Filter_Backing :: distinct i16
 	_Flags_Backing  :: distinct u16
@@ -193,7 +193,7 @@ when ODIN_OS == .Darwin {
 		// Extensions.
 		ext: [4]u64,
 	}
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	_Filter_Backing :: distinct u32
 	_Flags_Backing  :: distinct u32
@@ -233,7 +233,7 @@ when ODIN_OS == .Darwin {
 		// Opaque user data passed through the kernel unchanged.
 		udata:  rawptr,
 	}
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	_Filter_Backing :: distinct i16
 	_Flags_Backing  :: distinct u16
@@ -276,7 +276,7 @@ when ODIN_OS == .Darwin {
 	}
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private)
 	LKEVENT :: "__kevent50"
 } else {
@@ -287,7 +287,7 @@ when ODIN_OS == .NetBSD {
 @(private)
 log2 :: intrinsics.constant_log2
 
-foreign lib {
+#foreign lib {
 	@(link_name="kqueue")
 	_kqueue :: proc() -> KQ ---
 	@(link_name=LKEVENT)

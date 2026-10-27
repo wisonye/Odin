@@ -5,9 +5,9 @@ See: [[ https://www.rfc-editor.org/rfc/rfc5869 ]]
 */
 package hkdf
 
-import "core:crypto"
-import "core:crypto/hash"
-import "core:crypto/hmac"
+#import "core:crypto"
+#import "core:crypto/hash"
+#import "core:crypto/hmac"
 
 // extract_and_expand derives output keying material (OKM) via the
 // HKDF-Extract and HKDF-Expand algorithms, with the specified has

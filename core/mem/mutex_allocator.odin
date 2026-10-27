@@ -1,7 +1,7 @@
 #+build !freestanding, wasm32, wasm64p32
 package mem
 
-import "core:sync"
+#import "core:sync"
 
 /*
 The data for mutex allocator.

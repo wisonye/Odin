@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLType", objc_superclass=NS.Object)
 Type :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Type, objc_selector="dataType", objc_name="dataType")
 	Type_dataType :: proc(self: ^Type) -> DataType ---
 }
@@ -16,7 +16,7 @@ foreign lib {
 @(objc_class="MTLArrayType", objc_superclass=Type)
 ArrayType :: struct { using _: Type}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ArrayType, objc_selector="elementStructType", objc_name="elementStructType")
 	ArrayType_elementStructType :: proc(self: ^ArrayType) -> ^StructType ---
 
@@ -49,7 +49,7 @@ foreign lib {
 @(objc_class="MTLPointerType", objc_superclass=Type)
 PointerType :: struct { using _: Type}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerType, objc_selector="elementStructType", objc_name="elementStructType")
 	PointerType_elementStructType :: proc(self: ^PointerType) -> ^StructType ---
 
@@ -76,7 +76,7 @@ foreign lib {
 @(objc_class="MTLStructType", objc_superclass=Type)
 StructType :: struct { using _: Type}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StructType, objc_selector="memberByName:", objc_name="memberByName")
 	StructType_memberByName :: proc(self: ^StructType, name: ^NS.String) -> ^StructMember ---
 
@@ -88,7 +88,7 @@ foreign lib {
 @(objc_class="MTLStructMember", objc_superclass=NS.Object)
 StructMember :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StructMember, objc_selector="structType", objc_name="structType")
 	StructMember_structType :: proc(self: ^StructMember) -> ^StructType ---
 

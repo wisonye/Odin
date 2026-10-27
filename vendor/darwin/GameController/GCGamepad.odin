@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCGamepad", objc_superclass=PhysicalInputProfile)
 Gamepad :: struct { using _: PhysicalInputProfile}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Gamepad, objc_selector="saveSnapshot", objc_name="saveSnapshot")
 	Gamepad_saveSnapshot :: proc(self: ^Gamepad) -> ^GamepadSnapshot ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="GCGamepadSnapshot", objc_superclass=Gamepad)
 GamepadSnapshot :: struct { using _: Gamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GamepadSnapshot, objc_selector="initWithSnapshotData:", objc_name="initWithSnapshotData")
 	GamepadSnapshot_initWithSnapshotData :: proc(self: ^GamepadSnapshot, data: ^NS.Data) -> instancetype ---
 

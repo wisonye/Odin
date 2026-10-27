@@ -1,6 +1,6 @@
 package libc_tests
 
-import "core:c/libc"
+#import "core:c/libc"
 
 test_stdio :: proc() {
     c: libc.char = 'C';

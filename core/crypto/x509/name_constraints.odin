@@ -1,8 +1,8 @@
 package x509
 
-import "core:bytes"
-import "core:encoding/asn1"
-import "core:strings"
+#import "core:bytes"
+#import "core:encoding/asn1"
+#import "core:strings"
 
 // Name-constraint processing (RFC 5280 section 4.2.1.10 + the section 6.1.4
 // path-validation checks), scoped to the dNSName and iPAddress GeneralName
@@ -30,8 +30,8 @@ _GN_IP :: 7         // iPAddress        [7]
 // (leaf at index 0, trust anchor last). Each CA's constraints apply to every
 // certificate below it; checking each CA independently against each
 // subordinate yields the RFC 5280 permitted=intersection / excluded=union
-// semantics without accumulator state. Returns true when the chain is
-// acceptable, false when a name is forbidden (or a constraint cannot be
+// semantics without accumulator state. Returns true #if the chain is
+// acceptable, false #if a name is forbidden (or a constraint cannot be
 // evaluated, in which case we reject rather than guess).
 @(private)
 _check_name_constraints :: proc(chain: []^Certificate) -> bool {
@@ -78,7 +78,7 @@ _find_name_constraints :: proc(cert: ^Certificate) -> (der: []byte, ok: bool) {
 }
 
 // _names_permitted checks a subordinate certificate's dNSName and iPAddress
-// SANs against one CA's NameConstraints: each name form, when the CA lists
+// SANs against one CA's NameConstraints: each name form, #if the CA lists
 // permitted subtrees for it, must match at least one; and no name may match an
 // excluded subtree.
 @(private)
@@ -103,10 +103,10 @@ _names_permitted :: proc(nc: []byte, sub: ^Certificate) -> bool {
 }
 
 // _nc_decidable structurally validates a NameConstraints and reports whether we
-// can fully evaluate it. It returns false, so the caller fails closed, when the
+// can fully evaluate it. It returns false, so the caller fails closed, #if the
 // extension is malformed (an element other than permittedSubtrees [0] /
 // excludedSubtrees [1], neither section present, or an empty GeneralSubtrees,
-// which SIZE (1..MAX) forbids), or when a subtree uses a base form other than
+// which SIZE (1..MAX) forbids), or #if a subtree uses a base form other than
 // dNSName / iPAddress or carries a minimum/maximum (barred by the RFC 5280
 // profile). Only a NameConstraints whose every subtree is a bare
 // dNSName/iPAddress is decidable.
@@ -304,7 +304,7 @@ _ip_in_subnet :: proc "contextless" (ip, addr, mask: []byte) -> bool {
 }
 
 // _dns_in_constraint implements the RFC 5280 section 4.2.1.10 dNSName rule:
-// `name` satisfies `constraint` when it equals the constraint or extends it on
+// `name` satisfies `constraint` #if it equals the constraint or extends it on
 // the left at a label boundary. An empty constraint matches everything; a
 // leading-dot constraint (".example.com") matches proper subdomains only.
 // Comparison is ASCII case-insensitive.

@@ -2,8 +2,8 @@
 
 package rexcode_spirv
 
-import "base:intrinsics"
-import "core:strings"
+#import "base:intrinsics"
+#import "core:strings"
 
 // =============================================================================
 // SECTION: Decoder  (SPIR-V word stream -> Module)

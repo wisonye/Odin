@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_QuartzCore
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="CAGradientLayer", objc_superclass=Layer)
 GradientLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GradientLayer, objc_selector="colors", objc_name="colors")
 	GradientLayer_colors :: proc(self: ^GradientLayer) -> ^NS.Array ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="CAReplicatorLayer", objc_superclass=Layer)
 ReplicatorLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ReplicatorLayer, objc_selector="instanceCount", objc_name="instanceCount")
 	ReplicatorLayer_instanceCount :: proc(self: ^ReplicatorLayer) -> NS.Integer ---
 
@@ -106,7 +106,7 @@ foreign lib {
 @(objc_class="CAScrollLayer", objc_superclass=Layer)
 ScrollLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollLayer, objc_selector="scrollToPoint:", objc_name="scrollToPoint")
 	ScrollLayer_scrollToPoint :: proc(self: ^ScrollLayer, p: CG.Point) ---
 
@@ -124,7 +124,7 @@ foreign lib {
 @(objc_class="CAShapeLayer", objc_superclass=Layer)
 ShapeLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShapeLayer, objc_selector="path", objc_name="path")
 	ShapeLayer_path :: proc(self: ^ShapeLayer) -> CG.PathRef ---
 
@@ -202,7 +202,7 @@ foreign lib {
 @(objc_class="CATextLayer", objc_superclass=Layer)
 TextLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLayer, objc_selector="string", objc_name="string")
 	TextLayer_string :: proc(self: ^TextLayer) -> id ---
 
@@ -256,7 +256,7 @@ foreign lib {
 @(objc_class="CATiledLayer", objc_superclass=Layer)
 TiledLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TiledLayer, objc_selector="fadeDuration", objc_name="fadeDuration", objc_is_class_method=true)
 	TiledLayer_fadeDuration :: proc() -> CF.TimeInterval ---
 

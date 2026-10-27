@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // termios.h - define values for termios
 
-foreign lib {
+#foreign lib {
 	/*
 	Get the input baud rate.
 
@@ -233,7 +233,7 @@ TC_Queue :: enum c.int {
 	TCIOFLUSH = TCIOFLUSH,
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	cc_t      :: distinct c.uchar
 	_speed_t  :: distinct c.ulong
@@ -353,7 +353,7 @@ when ODIN_OS == .Darwin {
 	TCOOFF :: 1
 	TCOON  :: 2
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	cc_t      :: distinct c.uchar
 	_speed_t  :: distinct c.uint
@@ -399,7 +399,7 @@ when ODIN_OS == .Darwin {
 	OPOST    :: 0x00000001
 	ONLCR    :: 0x00000002
 	OCRNL    :: 0x00000010
-	when ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .OpenBSD {
 		ONOCR  :: 0x00000040
 		ONLRET :: 0x00000080
 	} else {
@@ -478,7 +478,7 @@ when ODIN_OS == .Darwin {
 	TCOOFF :: 1
 	TCOON  :: 2
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 	cc_t      :: distinct c.uchar
 	_speed_t  :: distinct c.uint
 	tcflag_t  :: distinct c.uint

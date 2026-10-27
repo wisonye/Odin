@@ -1,6 +1,6 @@
 package rand
 
-import "core:math"
+#import "core:math"
 
 // exp_float64 returns a exponential distribution in the range (0, max(f64)],
 // with an exponential distribution who rate parameter is 1 (lambda) and whose mean

@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
-import cffi "core:c"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="NSStream", objc_superclass=Object)
 Stream :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Stream, objc_selector="open", objc_name="open")
 	Stream_open :: proc(self: ^Stream) ---
 
@@ -42,7 +42,7 @@ foreign lib {
 	@(objc_type=Stream, objc_selector="getStreamsToHostWithName:port:inputStream:outputStream:", objc_name="getStreamsToHostWithName", objc_is_class_method=true)
 	Stream_getStreamsToHostWithName :: proc(hostname: ^String, port: Integer, inputStream: ^^InputStream, outputStream: ^^OutputStream) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Stream, objc_selector="getStreamsToHost:port:inputStream:outputStream:", objc_name="getStreamsToHost", objc_is_class_method=true)
 		Stream_getStreamsToHost :: proc(host: ^Host, port: Integer, inputStream: ^^InputStream, outputStream: ^^OutputStream) ---
 	}
@@ -58,7 +58,7 @@ StreamDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StreamDelegate, objc_selector="stream:handleEvent:", objc_name="stream")
 	StreamDelegate_stream :: proc(self: ^StreamDelegate, aStream: ^Stream, eventCode: StreamEvent) ---
 }
@@ -67,7 +67,7 @@ foreign lib {
 @(objc_class="NSInputStream", objc_superclass=Stream)
 InputStream :: struct { using _: Stream}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InputStream, objc_selector="read:maxLength:", objc_name="read")
 	InputStream_read :: proc(self: ^InputStream, buffer: ^cffi.uint8_t, len: UInteger) -> Integer ---
 
@@ -100,7 +100,7 @@ foreign lib {
 @(objc_class="NSOutputStream", objc_superclass=Stream)
 OutputStream :: struct { using _: Stream}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OutputStream, objc_selector="write:maxLength:", objc_name="write")
 	OutputStream_write :: proc(self: ^OutputStream, buffer: ^cffi.uint8_t, len: UInteger) -> Integer ---
 

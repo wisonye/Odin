@@ -2,22 +2,22 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIInputSuggestion", objc_superclass=NS.Object)
 InputSuggestion :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UISmartReplySuggestion", objc_superclass=InputSuggestion)
 SmartReplySuggestion :: struct { using _: InputSuggestion}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SmartReplySuggestion, objc_selector="smartReply", objc_name="smartReply")
 	SmartReplySuggestion_smartReply :: proc(self: ^SmartReplySuggestion) -> ^NS.String ---
 }
@@ -27,7 +27,7 @@ foreign lib {
 InputView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputView, objc_selector="initWithFrame:inputViewStyle:", objc_name="initWithFrame")
 	InputView_initWithFrame :: proc(self: ^InputView, frame: CG.Rect, inputViewStyle: InputViewStyle) -> instancetype ---
 
@@ -52,7 +52,7 @@ InputViewAudioFeedback :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputViewAudioFeedback, objc_selector="enableInputClicksWhenVisible", objc_name="enableInputClicksWhenVisible")
 	InputViewAudioFeedback_enableInputClicksWhenVisible :: proc(self: ^InputViewAudioFeedback) -> bool ---
 }
@@ -65,7 +65,7 @@ InputViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputViewController, objc_selector="dismissKeyboard", objc_name="dismissKeyboard")
 	InputViewController_dismissKeyboard :: proc(self: ^InputViewController) ---
 

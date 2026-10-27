@@ -3,9 +3,9 @@ package darwin_MetalKit
 
 // Hand-written helper for driving an `MTKView` with Odin procedures, without `@(objc_implement)`.
 
-import "base:intrinsics"
-import CG   "core:sys/darwin/CoreGraphics"
-import ObjC "core:sys/darwin/ObjectiveC"
+#import "base:intrinsics"
+#import CG   "core:sys/darwin/CoreGraphics"
+#import ObjC "core:sys/darwin/ObjectiveC"
 
 OdinViewDelegate :: struct {
 	drawInMTKView:          proc "c" (self: ^OdinViewDelegate, view: ^View),

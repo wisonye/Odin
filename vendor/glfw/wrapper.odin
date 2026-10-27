@@ -1,7 +1,7 @@
 package glfw
 
-import "core:c"
-import glfw "bindings"
+#import "core:c"
+#import glfw "bindings"
 
 Init      :: glfw.Init
 Terminate :: glfw.Terminate

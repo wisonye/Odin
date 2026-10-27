@@ -1,7 +1,7 @@
 #+private
 package _mlkem
 
-import "core:crypto"
+#import "core:crypto"
 
 Polyvec :: struct {
 	vec: [K_MAX]Poly,

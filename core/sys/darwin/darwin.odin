@@ -1,10 +1,10 @@
 #+build darwin
 package darwin
 
-import "core:c"
+#import "core:c"
 
 @(export)
-foreign import system "system:System"
+#foreign #import system "system:System"
 
 Bool :: b8
 
@@ -33,7 +33,7 @@ RUsage :: struct {
 	ru_nivcsw:   c.long,
 }
 
-foreign system {
+#foreign system {
 	__error :: proc() -> ^i32 ---
 }
 

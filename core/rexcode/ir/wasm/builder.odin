@@ -3,7 +3,7 @@
 
 package rexcode_wasm
 
-import "base:runtime"
+#import "base:runtime"
 
 // =============================================================================
 // SECTION: Builder  (constructing ir.Operations for a WASM function body)

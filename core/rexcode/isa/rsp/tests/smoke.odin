@@ -7,9 +7,9 @@ package rexcode_rsp_tests
 //
 // Run with: odin run rsp/tests
 
-import "core:fmt"
-import "core:os"
-import rsp "../"
+#import "core:fmt"
+#import "core:os"
+#import rsp "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

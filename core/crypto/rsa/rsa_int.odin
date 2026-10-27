@@ -1,7 +1,7 @@
 #+private
 package rsa
 
-import "core:bytes"
+#import "core:bytes"
 
 Big_Int :: struct($N: int) {
 	v: [N]byte,

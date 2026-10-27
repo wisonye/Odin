@@ -2,7 +2,7 @@
 
 package rexcode_mos65816
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // W65C816S ENCODING FUNDAMENTALS
@@ -62,10 +62,10 @@ Operand_Type :: enum u8 {
 
 	// Immediates
 	IMM_8,             // always 8-bit (COP, REP, SEP, WDM, BRK signature, ...)
-	IMM_M8,            // 8-bit when M=1
-	IMM_M16,           // 16-bit when M=0
-	IMM_X8,            // 8-bit when X=1
-	IMM_X16,           // 16-bit when X=0
+	IMM_M8,            // 8-bit #if M=1
+	IMM_M16,           // 16-bit #if M=0
+	IMM_X8,            // 8-bit #if X=1
+	IMM_X16,           // 16-bit #if X=0
 
 	// Branches
 	REL,               // signed 8-bit PC-rel

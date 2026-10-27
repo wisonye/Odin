@@ -11,13 +11,13 @@ package png
 	These are a few useful utility functions to work with PNG images.
 */
 
-import "core:image"
-import "core:compress/zlib"
-import coretime "core:time"
-import "core:strings"
-import "core:bytes"
-import "core:mem"
-import "base:runtime"
+#import "core:image"
+#import "core:compress/zlib"
+#import coretime "core:time"
+#import "core:strings"
+#import "core:bytes"
+#import "core:mem"
+#import "base:runtime"
 
 /*
 	Cleanup of image-specific data.

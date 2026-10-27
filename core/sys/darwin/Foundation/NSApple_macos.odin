@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_Foundation
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import posix "core:sys/posix"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import posix "core:sys/posix"
 
 @(objc_class="NSAppleEventDescriptor", objc_superclass=Object)
 AppleEventDescriptor :: struct {
@@ -14,7 +14,7 @@ AppleEventDescriptor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AppleEventDescriptor, objc_selector="nullDescriptor", objc_name="nullDescriptor", objc_is_class_method=true)
 	AppleEventDescriptor_nullDescriptor :: proc() -> ^AppleEventDescriptor ---
 
@@ -207,7 +207,7 @@ AppleEventDescriptor_sendEventWithOptions :: #force_inline proc "c" (self: ^Appl
 AppleEventManager :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AppleEventManager, objc_selector="sharedAppleEventManager", objc_name="sharedAppleEventManager", objc_is_class_method=true)
 	AppleEventManager_sharedAppleEventManager :: proc() -> ^AppleEventManager ---
 
@@ -250,7 +250,7 @@ AppleScript :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AppleScript, objc_selector="initWithContentsOfURL:error:", objc_name="initWithContentsOfURL")
 	AppleScript_initWithContentsOfURL :: proc(self: ^AppleScript, url: ^URL, errorInfo: ^^Dictionary) -> instancetype ---
 

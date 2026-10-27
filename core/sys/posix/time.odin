@@ -1,18 +1,18 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
-import "core:c/libc"
+#import "core:c"
+#import "core:c/libc"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // time.h - time types
 
-foreign lib {
+#foreign lib {
 	/*
 	Convert the broken down time in the structure to a string form: Sun Sep 16 01:03:52 1973.
 
@@ -160,7 +160,7 @@ Clock :: enum clockid_t {
 	THREAD_CPUTIME_ID  = CLOCK_THREAD_CPUTIME_ID,
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LCTIMER       :: "__ctime_r50"
 	@(private) LGMTIMER      :: "__gmtime_r50"
 	@(private) LLOCALTIMER   :: "__localtime_r50"
@@ -180,7 +180,7 @@ when ODIN_OS == .NetBSD {
 	@(private) LTIMEZONE     :: "timezone"
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	clockid_t :: distinct c.int
 
@@ -189,11 +189,11 @@ when ODIN_OS == .Darwin {
 	CLOCK_REALTIME           :: 0
 	CLOCK_THREAD_CPUTIME_ID  :: 16
 
-	foreign lib {
+	#foreign lib {
 		getdate_err: Errno
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	clockid_t :: distinct c.int
 
@@ -202,11 +202,11 @@ when ODIN_OS == .Darwin {
 	CLOCK_REALTIME           :: 0
 	CLOCK_THREAD_CPUTIME_ID  :: 14
 
-	foreign lib {
+	#foreign lib {
 		getdate_err: Errno
 	}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	clockid_t :: distinct c.uint
 
@@ -215,11 +215,11 @@ when ODIN_OS == .Darwin {
 	CLOCK_REALTIME           :: 0
 	CLOCK_THREAD_CPUTIME_ID  :: 0x20000000
 
-	foreign lib {
+	#foreign lib {
 		getdate_err: Errno
 	}
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	clockid_t :: distinct c.uint
 
@@ -230,7 +230,7 @@ when ODIN_OS == .Darwin {
 
 	getdate_err: Errno = .ENOSYS // NOTE: looks like it's not a thing on OpenBSD.
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	clockid_t :: distinct c.int
 
@@ -239,7 +239,7 @@ when ODIN_OS == .Darwin {
 	CLOCK_REALTIME           :: 0
 	CLOCK_THREAD_CPUTIME_ID  :: 3
 
-	foreign lib {
+	#foreign lib {
 		getdate_err: Errno
 	}
 }

@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 MAX_LOG_CALLBACKS :: 4
 
@@ -42,11 +42,11 @@ log :: struct {
 	callbacks:           [MAX_LOG_CALLBACKS]log_callback,
 	callbackCount:       u32,
 	allocationCallbacks: allocation_callbacks,    /* Need to store these persistently because log_postv() might need to allocate a buffer on the heap. */
-	lock:                (struct {} when NO_THREADING else mutex),
+	lock:                (struct {} #if NO_THREADING else mutex),
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	log_callback_init :: proc(onLog: log_callback_proc, pUserData: rawptr) -> log_callback ---
 
 	log_init                :: proc(pAllocationCallbacks: ^allocation_callbacks, pLog: ^log) -> result ---

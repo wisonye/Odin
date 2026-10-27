@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSDictionaryController", objc_superclass=ArrayController)
 DictionaryController :: struct { using _: ArrayController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DictionaryController, objc_selector="newObject", objc_name="newObject")
 	DictionaryController_newObject :: proc(self: ^DictionaryController) -> ^DictionaryControllerKeyValuePair ---
 
@@ -54,7 +54,7 @@ foreign lib {
 DictionaryControllerKeyValuePair :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DictionaryControllerKeyValuePair, objc_selector="init", objc_name="init")
 	DictionaryControllerKeyValuePair_init :: proc(self: ^DictionaryControllerKeyValuePair) -> instancetype ---
 

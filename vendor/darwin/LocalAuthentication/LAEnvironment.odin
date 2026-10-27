@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="LAEnvironment", objc_superclass=NS.Object)
 Environment :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Environment, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	Environment_new :: proc() -> ^Environment ---
 
@@ -35,7 +35,7 @@ EnvironmentState :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentState, objc_selector="init", objc_name="init")
 	EnvironmentState_init :: proc(self: ^EnvironmentState) -> instancetype ---
 
@@ -59,7 +59,7 @@ foreign lib {
 @(objc_class="LAEnvironmentMechanism", objc_superclass=NS.Object)
 EnvironmentMechanism :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentMechanism, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	EnvironmentMechanism_new :: proc() -> ^EnvironmentMechanism ---
 
@@ -80,7 +80,7 @@ foreign lib {
 @(objc_class="LAEnvironmentMechanismBiometry", objc_superclass=EnvironmentMechanism)
 EnvironmentMechanismBiometry :: struct { using _: EnvironmentMechanism}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentMechanismBiometry, objc_selector="biometryType", objc_name="biometryType")
 	EnvironmentMechanismBiometry_biometryType :: proc(self: ^EnvironmentMechanismBiometry) -> BiometryType ---
 
@@ -101,7 +101,7 @@ foreign lib {
 @(objc_class="LAEnvironmentMechanismCompanion", objc_superclass=EnvironmentMechanism)
 EnvironmentMechanismCompanion :: struct { using _: EnvironmentMechanism}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentMechanismCompanion, objc_selector="type", objc_name="type")
 	EnvironmentMechanismCompanion_type :: proc(self: ^EnvironmentMechanismCompanion) -> CompanionType ---
 
@@ -113,7 +113,7 @@ foreign lib {
 @(objc_class="LAEnvironmentMechanismUserPassword", objc_superclass=EnvironmentMechanism)
 EnvironmentMechanismUserPassword :: struct { using _: EnvironmentMechanism}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentMechanismUserPassword, objc_selector="isSet", objc_name="isSet")
 	EnvironmentMechanismUserPassword_isSet :: proc(self: ^EnvironmentMechanismUserPassword) -> bool ---
 }
@@ -125,7 +125,7 @@ EnvironmentObserver :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EnvironmentObserver, objc_selector="environment:stateDidChangeFromOldState:", objc_name="environment")
 	EnvironmentObserver_environment :: proc(self: ^EnvironmentObserver, environment: ^Environment, oldState: ^EnvironmentState) ---
 }

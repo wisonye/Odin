@@ -1,13 +1,13 @@
 package benchmark_core_crypto
 
-import "core:log"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "core:log"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
-import "core:crypto"
-import "core:crypto/mldsa"
-import "core:crypto/mlkem"
+#import "core:crypto"
+#import "core:crypto/mldsa"
+#import "core:crypto/mlkem"
 
 @(private = "file")
 MLKEM_ITERS :: 50000

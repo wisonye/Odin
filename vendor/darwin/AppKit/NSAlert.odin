@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSAlert", objc_superclass=NS.Object)
 Alert :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Alert, objc_selector="alertWithError:", objc_name="alertWithError", objc_is_class_method=true)
 	Alert_alertWithError :: proc(error: ^NS.Error) -> ^Alert ---
 
@@ -109,7 +109,7 @@ AlertDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlertDelegate, objc_selector="alertShowHelp:", objc_name="alertShowHelp")
 	AlertDelegate_alertShowHelp :: proc(self: ^AlertDelegate, alert: ^Alert) -> bool ---
 }

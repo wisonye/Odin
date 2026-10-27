@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_EventKit
 
-import cffi "core:c"
-import CL "vendor:darwin/CoreLocation"
-import MK "vendor:darwin/MapKit"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CL "vendor:darwin/CoreLocation"
+#import MK "vendor:darwin/MapKit"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKStructuredLocation", objc_superclass=Object)
 StructuredLocation :: struct {
@@ -13,7 +13,7 @@ StructuredLocation :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StructuredLocation, objc_selector="locationWithTitle:", objc_name="locationWithTitle", objc_is_class_method=true)
 	StructuredLocation_locationWithTitle :: proc(title: ^NS.String) -> instancetype ---
 

@@ -9,8 +9,8 @@ package main
 // Verifies that the generated decode tables are consistent with ENC_TABLE.
 // Run with: odin run verify_tables.odin -file
 
-import "core:fmt"
-import x86 "../"
+#import "core:fmt"
+#import x86 "../"
 
 main :: proc() {
 	fmt.println("Verifying decoder tables...")

@@ -1,7 +1,7 @@
 // Tests issue #7587 https://github.com/odin-lang/Odin/issues/7587
 package test_issue_7587
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_issue_7587 :: proc(t: ^testing.T) {

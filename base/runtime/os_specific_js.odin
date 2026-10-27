@@ -2,12 +2,12 @@
 #+private
 package runtime
 
-foreign import "odin_env"
+#foreign #import "odin_env"
 
 _HAS_RAND_BYTES :: true
 
 _stderr_write :: proc "contextless" (data: []byte) -> (int, _OS_Errno) {
-	foreign odin_env {
+	#foreign odin_env {
 		write :: proc "contextless" (fd: u32, p: []byte) ---
 	}
 	write(2, data)
@@ -15,7 +15,7 @@ _stderr_write :: proc "contextless" (data: []byte) -> (int, _OS_Errno) {
 }
 
 _rand_bytes :: proc "contextless" (dst: []byte) {
-	foreign odin_env {
+	#foreign odin_env {
 		@(link_name = "rand_bytes")
 		env_rand_bytes :: proc "contextless" (buf: []byte) ---
 	}

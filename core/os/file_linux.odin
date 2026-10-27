@@ -1,14 +1,14 @@
 #+private
 package os
 
-import "base:runtime"
-import "core:io"
-import "core:time"
-import "core:sync"
-import "core:sys/linux"
-import "core:sys/posix"
+#import "base:runtime"
+#import "core:io"
+#import "core:time"
+#import "core:sync"
+#import "core:sys/linux"
+#import "core:sys/posix"
 
-// Most implementations will EINVAL at some point when doing big writes.
+// Most implementations will EINVAL at some point #if doing big writes.
 // In practice a read/write call would probably never read/write these big buffers all at once,
 // which is why the number of bytes is returned and why there are procs that will call this in a
 // loop for you.
@@ -70,7 +70,7 @@ _open :: proc(name: string, flags: File_Flags, perm: Permissions) -> (f: ^File, 
 	// terminal would be incredibly rare. This has no effect on files while
 	// allowing us to open serial devices.
 	sys_flags: linux.Open_Flags = {.NOCTTY, .CLOEXEC}
-	when size_of(rawptr) == 4 {
+	#if size_of(rawptr) == 4 {
 		sys_flags += {.LARGEFILE}
 	}
 	switch flags & (O_RDONLY|O_WRONLY|O_RDWR) {

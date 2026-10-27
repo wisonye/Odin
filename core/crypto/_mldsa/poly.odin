@@ -1,9 +1,9 @@
 #+private
 package _mldsa
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:crypto/shake"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:crypto/shake"
 
 Poly :: struct {
 	coeffs: [N]i32,

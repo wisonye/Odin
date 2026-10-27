@@ -1,7 +1,7 @@
 package darwin
 
-import "core:c"
-import "base:intrinsics"
+#import "core:c"
+#import "base:intrinsics"
 
 // IMPORTANT NOTE: direct syscall usage is not allowed by Apple's review process of apps and should
 // be entirely avoided in the builtin Odin collections, these are here for users if they don't
@@ -10,7 +10,7 @@ import "base:intrinsics"
 /* flock */
 LOCK_SH :: 1 /* shared lock */
 LOCK_EX :: 2 /* exclusive lock */
-LOCK_NB :: 4 /* don't block when locking */
+LOCK_NB :: 4 /* don't block #if locking */
 LOCK_UN :: 8 /* unlock */
 
 /* sys/unistd.h for access */

@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 *************************************************************************************************************************************************************
@@ -100,7 +100,7 @@ resampler :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	linear_resampler_config_init :: proc(format: format, channels: u32, sampleRateIn, sampleRateOut: u32) -> linear_resampler_config ---
 
 	linear_resampler_get_heap_size                   :: proc(pConfig: ^linear_resampler_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -134,7 +134,7 @@ foreign lib {
 	/*
 	Converts the given input data.
 
-	Both the input and output frames must be in the format specified in the config when the resampler was initialized.
+	Both the input and output frames must be in the format specified in the config #if the resampler was initialized.
 
 	On input, [pFrameCountOut] contains the number of output frames to process. On output it contains the number of output frames that
 	were actually processed, which may be less than the requested amount which will happen if there's not enough input data. You can use
@@ -210,7 +210,7 @@ channel_conversion_path :: enum c.int {
 	passthrough,
 	mono_out,    /* Converting to mono. */
 	mono_in,     /* Converting from mono. */
-	shuffle,     /* Simple shuffle. Will use this when all channels are present in both input and output channel maps, but just in a different order. */
+	shuffle,     /* Simple shuffle. Will use this #if all channels are present in both input and output channel maps, but just in a different order. */
 	weights,     /* Blended based on weights. */
 }
 
@@ -228,8 +228,8 @@ channel_converter_config :: struct {
 	pChannelMapIn:                   [^]channel,
 	pChannelMapOut:                  [^]channel,
 	mixingMode:                      channel_mix_mode,
-	calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored when an input LFE is present. */
-	ppWeights:                       ^[^]f32, /* [in][out]. Only used when mixingMode is set to ma_channel_mix_mode_custom_weights. */
+	calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored #if an input LFE is present. */
+	ppWeights:                       ^[^]f32, /* [in][out]. Only used #if mixingMode is set to ma_channel_mix_mode_custom_weights. */
 }
 
 channel_converter :: struct {
@@ -253,7 +253,7 @@ channel_converter :: struct {
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	channel_converter_config_init :: proc(format: format, channelsIn: u32, pChannelMapIn: [^]channel, channelsOut: u32, pChannelMapOut: [^]channel, mixingMode: channel_mix_mode) -> channel_converter_config ---
 
 	channel_converter_get_heap_size          :: proc(pConfig: ^channel_converter_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -282,8 +282,8 @@ data_converter_config :: struct {
 	pChannelMapOut:                  [^]channel,
 	ditherMode:                      dither_mode,
 	channelMixMode:                  channel_mix_mode,
-	calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored when an input LFE is present. */
-	ppChannelWeights:                ^[^]f32, /* [in][out]. Only used when channelMixMode is set to ma_channel_mix_mode_custom_weights. */
+	calculateLFEFromSpatialChannels: b32, /* When an output LFE channel is present, but no input LFE, set to true to set the output LFE to the average of all spatial channels (LR, FR, etc.). Ignored #if an input LFE is present. */
+	ppChannelWeights:                ^[^]f32, /* [in][out]. Only used #if channelMixMode is set to ma_channel_mix_mode_custom_weights. */
 	allowDynamicSampleRate:          b32,
 	resampling:                      resampler_config,
 }
@@ -305,7 +305,7 @@ data_converter :: struct {
 	sampleRateIn:            u32,
 	sampleRateOut:           u32,
 	ditherMode:              dither_mode,
-	executionPath:           data_converter_execution_path, /* The execution path the data converter will follow when processing. */
+	executionPath:           data_converter_execution_path, /* The execution path the data converter will follow #if processing. */
 	channelConverter:        channel_converter,
 	resampler:               resampler,
 	hasPreFormatConversion:  b8,
@@ -321,7 +321,7 @@ data_converter :: struct {
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	data_converter_config_init_default :: proc() -> data_converter_config ---
 	data_converter_config_init :: proc(formatIn, formatOut: format, channelsIn, channelsOut: u32, sampleRateIn, sampleRateOut: u32) -> data_converter_config ---
 
@@ -349,7 +349,7 @@ Format Conversion
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	pcm_u8_to_s16  :: proc(pOut: rawptr, pIn: rawptr, count: u64, ditherMode: dither_mode) ---
 	pcm_u8_to_s24  :: proc(pOut: rawptr, pIn: rawptr, count: u64, ditherMode: dither_mode) ---
 	pcm_u8_to_s32  :: proc(pOut: rawptr, pIn: rawptr, count: u64, ditherMode: dither_mode) ---
@@ -396,7 +396,7 @@ This is used in the shuffle table to indicate that the channel index is undefine
 CHANNEL_INDEX_NULL :: 255
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	/*
 	Retrieves the channel position of the specified channel in the given channel map.
 
@@ -501,7 +501,7 @@ Conversion Helpers
 ************************************************************************************************************************************************************/
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	/*
 	High-level helper for doing a full format conversion in one go. Returns the number of output frames. Call this with pOut set to NULL to
 	determine the required size of the output buffer. frameCountOut should be set to the capacity of pOut. If pOut is NULL, frameCountOut is
@@ -542,7 +542,7 @@ pcm_rb :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	rb_init_ex              :: proc(subbufferSizeInBytes, subbufferCount, subbufferStrideInBytes: c.size_t, pOptionalPreallocatedBuffer: rawptr, pAllocationCallbacks: ^allocation_callbacks, pRB: ^rb) -> result ---
 	rb_init                 :: proc(bufferSizeInBytes: c.size_t, pOptionalPreallocatedBuffer: rawptr, pAllocationCallbacks: ^allocation_callbacks, pRB: ^rb) -> result ---
 	rb_uninit               :: proc(pRB: ^rb) ---
@@ -585,7 +585,7 @@ foreign lib {
 }
 
 /*
-The idea of the duplex ring buffer is to act as the intermediary buffer when running two asynchronous devices in a duplex set up. The
+The idea of the duplex ring buffer is to act as the intermediary buffer #if running two asynchronous devices in a duplex set up. The
 capture device writes to it, and then a playback device reads from it.
 
 At the moment this is just a simple naive implementation, but in the future I want to implement some dynamic resampling to seamlessly
@@ -599,7 +599,7 @@ duplex_rb :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	duplex_rb_init   :: proc(captureFormat: format, captureChannels: u32, sampleRate: u32, captureInternalSampleRate, captureInternalPeriodSizeInFrames: u32, pAllocationCallbacks: ^allocation_callbacks, pRB: ^duplex_rb) -> result ---
 	duplex_rb_uninit :: proc(pRB: ^duplex_rb) -> result ---
 }

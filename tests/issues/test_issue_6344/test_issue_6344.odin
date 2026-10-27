@@ -1,7 +1,7 @@
 // Tests issue #6344 https://github.com/odin-lang/Odin/issues/6344
 package test_issue_6344
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_soa_dynamic_field_write :: proc(t: ^testing.T) {

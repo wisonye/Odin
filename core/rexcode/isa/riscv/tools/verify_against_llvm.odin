@@ -2,9 +2,9 @@
 
 package main
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
 // RISC-V mnemonics use underscore for various suffixes:
 //   ADD_W -> addw, FADD_S -> fadd.s, AMOSWAP_W -> amoswap.w, etc.
@@ -69,7 +69,7 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		// FENCE aliases
 		{"fence","fence"},
 		// Compressed bases that decode as "c.unimp" / "c.nop" / "c.ebreak"
-		// when all operand bits are zero (special encodings)
+		// #if all operand bits are zero (special encodings)
 		{"c_addi4spn", "c_unimp"},   // all-zero compressed = c.unimp
 		{"c_addi",     "c_nop"},     // C.ADDI with rd=0 -> C.NOP
 		{"c_jalr",     "c_ebreak"},  // C.JALR rd=0 -> C.EBREAK

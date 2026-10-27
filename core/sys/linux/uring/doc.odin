@@ -6,12 +6,12 @@ The following example shows a simple `cat` program implementation using the pack
 Example:
 	package main
 
-	import "base:runtime"
+	#import "base:runtime"
 
-	import "core:fmt"
-	import "core:os"
-	import "core:sys/linux"
-	import "core:sys/linux/uring"
+	#import "core:fmt"
+	#import "core:os"
+	#import "core:sys/linux"
+	#import "core:sys/linux/uring"
 
 	Request :: struct {
 		path:       cstring,

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="LASecret", objc_superclass=NS.Object)
 Secret :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Secret, objc_selector="loadDataWithCompletion:", objc_name="loadDataWithCompletion")
 	Secret_loadDataWithCompletion :: proc(self: ^Secret, handler: ^Objc_Block(proc "c" ( _0: ^NS.Data, _1: ^NS.Error ))) ---
 

@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4Compiler")
 MTL4Compiler :: struct {
@@ -11,7 +11,7 @@ MTL4Compiler :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4Compiler, objc_selector="newLibraryWithDescriptor:error:", objc_name="newLibraryWithDescriptor_error")
 	MTL4Compiler_newLibraryWithDescriptor_error :: proc(self: ^MTL4Compiler, descriptor: ^MTL4LibraryDescriptor, error: ^^NS.Error) -> ^Library ---
 
@@ -206,7 +206,7 @@ MTL4CompilerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CompilerDescriptor, objc_selector="label", objc_name="label")
 	MTL4CompilerDescriptor_label :: proc(self: ^MTL4CompilerDescriptor) -> ^NS.String ---
 
@@ -227,7 +227,7 @@ MTL4CompilerTask :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CompilerTask, objc_selector="waitUntilCompleted", objc_name="waitUntilCompleted")
 	MTL4CompilerTask_waitUntilCompleted :: proc(self: ^MTL4CompilerTask) ---
 
@@ -245,7 +245,7 @@ MTL4CompilerTaskOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CompilerTaskOptions, objc_selector="lookupArchives", objc_name="lookupArchives")
 	MTL4CompilerTaskOptions_lookupArchives :: proc(self: ^MTL4CompilerTaskOptions) -> ^NS.Array ---
 

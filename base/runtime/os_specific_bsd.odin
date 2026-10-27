@@ -2,16 +2,16 @@
 #+private
 package runtime
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
 _HAS_RAND_BYTES :: true
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	@(link_name="write")
 	_unix_write :: proc(fd: i32, buf: rawptr, size: int) -> int ---
 
-	when ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 		@(link_name="__errno") __error :: proc() -> ^i32 ---
 	} else {
 		__error :: proc() -> ^i32 ---
@@ -35,7 +35,7 @@ _rand_bytes :: proc "contextless" (dst: []byte) {
 
 _exit :: proc "contextless" (code: int) -> ! {
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		exit :: proc(status: i32) -> ! ---
 	}
 	exit(i32(code))

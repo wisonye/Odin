@@ -2,7 +2,7 @@
 #+feature dynamic-literals
 package test_issue_829
 
-import "core:testing"
+#import "core:testing"
 
 /* Original issue #829 example */
 env : map[string]proc(a, b : int) -> int = {

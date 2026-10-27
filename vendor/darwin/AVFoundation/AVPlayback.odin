@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import CM "vendor:darwin/CoreMedia"
-import cffi "core:c"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CM "vendor:darwin/CoreMedia"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="AVPlaybackCoordinationMedium", objc_superclass=NS.Object)
 PlaybackCoordinationMedium :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlaybackCoordinationMedium, objc_selector="init", objc_name="init")
 	PlaybackCoordinationMedium_init :: proc(self: ^PlaybackCoordinationMedium) -> instancetype ---
 
@@ -22,7 +22,7 @@ foreign lib {
 @(objc_class="AVPlaybackCoordinator", objc_superclass=NS.Object)
 PlaybackCoordinator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlaybackCoordinator, objc_selector="init", objc_name="init")
 	PlaybackCoordinator_init :: proc(self: ^PlaybackCoordinator) -> instancetype ---
 
@@ -64,7 +64,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinator", objc_superclass=PlaybackCoordinator)
 DelegatingPlaybackCoordinator :: struct { using _: PlaybackCoordinator}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinator, objc_selector="initWithPlaybackControlDelegate:", objc_name="initWithPlaybackControlDelegate")
 	DelegatingPlaybackCoordinator_initWithPlaybackControlDelegate :: proc(self: ^DelegatingPlaybackCoordinator, playbackControlDelegate: ^PlaybackCoordinatorPlaybackControlDelegate) -> instancetype ---
 
@@ -91,7 +91,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinatorBufferingCommand", objc_superclass=DelegatingPlaybackCoordinatorPlaybackControlCommand)
 DelegatingPlaybackCoordinatorBufferingCommand :: struct { using _: DelegatingPlaybackCoordinatorPlaybackControlCommand}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinatorBufferingCommand, objc_selector="init", objc_name="init")
 	DelegatingPlaybackCoordinatorBufferingCommand_init :: proc(self: ^DelegatingPlaybackCoordinatorBufferingCommand) -> instancetype ---
 
@@ -109,7 +109,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinatorPauseCommand", objc_superclass=DelegatingPlaybackCoordinatorPlaybackControlCommand)
 DelegatingPlaybackCoordinatorPauseCommand :: struct { using _: DelegatingPlaybackCoordinatorPlaybackControlCommand}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinatorPauseCommand, objc_selector="init", objc_name="init")
 	DelegatingPlaybackCoordinatorPauseCommand_init :: proc(self: ^DelegatingPlaybackCoordinatorPauseCommand) -> instancetype ---
 
@@ -127,7 +127,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinatorPlayCommand", objc_superclass=DelegatingPlaybackCoordinatorPlaybackControlCommand)
 DelegatingPlaybackCoordinatorPlayCommand :: struct { using _: DelegatingPlaybackCoordinatorPlaybackControlCommand}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinatorPlayCommand, objc_selector="init", objc_name="init")
 	DelegatingPlaybackCoordinatorPlayCommand_init :: proc(self: ^DelegatingPlaybackCoordinatorPlayCommand) -> instancetype ---
 
@@ -148,7 +148,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinatorPlaybackControlCommand", objc_superclass=NS.Object)
 DelegatingPlaybackCoordinatorPlaybackControlCommand :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinatorPlaybackControlCommand, objc_selector="init", objc_name="init")
 	DelegatingPlaybackCoordinatorPlaybackControlCommand_init :: proc(self: ^DelegatingPlaybackCoordinatorPlaybackControlCommand) -> instancetype ---
 
@@ -166,7 +166,7 @@ foreign lib {
 @(objc_class="AVDelegatingPlaybackCoordinatorSeekCommand", objc_superclass=DelegatingPlaybackCoordinatorPlaybackControlCommand)
 DelegatingPlaybackCoordinatorSeekCommand :: struct { using _: DelegatingPlaybackCoordinatorPlaybackControlCommand}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DelegatingPlaybackCoordinatorSeekCommand, objc_selector="init", objc_name="init")
 	DelegatingPlaybackCoordinatorSeekCommand_init :: proc(self: ^DelegatingPlaybackCoordinatorSeekCommand) -> instancetype ---
 
@@ -193,7 +193,7 @@ PlaybackCoordinatorPlaybackControlDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PlaybackCoordinatorPlaybackControlDelegate, objc_selector="playbackCoordinator:didIssuePlayCommand:completionHandler:", objc_name="playbackCoordinator_didIssuePlayCommand_completionHandler")
 	PlaybackCoordinatorPlaybackControlDelegate_playbackCoordinator_didIssuePlayCommand_completionHandler :: proc(self: ^PlaybackCoordinatorPlaybackControlDelegate, coordinator: ^DelegatingPlaybackCoordinator, playCommand: ^DelegatingPlaybackCoordinatorPlayCommand, completionHandler: ^Objc_Block(proc "c" ())) ---
 

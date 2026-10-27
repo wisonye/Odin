@@ -1,7 +1,7 @@
 package slice
 
-import "base:builtin"
-import "base:runtime"
+#import "base:builtin"
+#import "base:runtime"
 
 ptr_add :: proc "contextless" (p: $P/^$T, x: int) -> ^T {
 	return ([^]T)(p)[x:]
@@ -69,7 +69,7 @@ ptr_swap_overlapping :: proc "contextless" (x, y: rawptr, len: int) {
 
 
 ptr_rotate :: proc "contextless" (left: int, mid: ^$T, right: int) {
-	when size_of(T) != 0 {
+	#if size_of(T) != 0 {
 		left, mid, right := left, mid, right
 
 		// TODO(bill): Optimization with a buffer for smaller ranges

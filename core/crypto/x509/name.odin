@@ -1,8 +1,8 @@
 package x509
 
-import "core:bytes"
-import "core:encoding/asn1"
-import "core:strings"
+#import "core:bytes"
+#import "core:encoding/asn1"
+#import "core:strings"
 
 // Consumer-facing helpers for reading the primitives `parse` leaves as raw DER:
 // distinguished-name (Name) decoding, plus a serial-number display formatter.

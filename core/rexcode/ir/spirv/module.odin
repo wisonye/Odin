@@ -2,7 +2,7 @@
 
 package rexcode_spirv
 
-import "core:rexcode/ir"
+#import "core:rexcode/ir"
 
 // =============================================================================
 // SECTION: Module  (the SPIR-V module -- ir core + SPIR-V's own sections)

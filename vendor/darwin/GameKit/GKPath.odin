@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKPath", objc_superclass=NS.Object)
 Path :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Path, objc_selector="pathWithPoints:count:radius:cyclical:", objc_name="pathWithPoints", objc_is_class_method=true)
 	Path_pathWithPoints :: proc(points: ^^vector_float2, count: cffi.size_t, radius: cffi.float, cyclical: bool) -> instancetype ---
 

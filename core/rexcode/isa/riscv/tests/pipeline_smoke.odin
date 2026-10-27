@@ -8,9 +8,9 @@ package rexcode_riscv_tests
 // gather code), XLEN filtering for RV32-only and RV64-only entries, and
 // representative spots from each extension (M/A/F/D).
 
-import "core:fmt"
-import "core:os"
-import rv "../"
+#import "core:fmt"
+#import "core:os"
+#import rv "../"
 
 @(private="file") rpasses   := 0
 @(private="file") rfailures := 0

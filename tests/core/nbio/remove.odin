@@ -1,10 +1,10 @@
 package tests_nbio
 
-import "core:nbio"
-import "core:net"
-import "core:testing"
-import "core:time"
-import "core:log"
+#import "core:nbio"
+#import "core:net"
+#import "core:testing"
+#import "core:time"
+#import "core:log"
 
 // Removals are pretty complex.
 
@@ -146,7 +146,7 @@ immediate_remove_of_sendfile_without_stat :: proc(t: ^testing.T) {
 	}
 }
 
-// Open should free the temporary memory allocated for the path when removed.
+// Open should free the temporary memory allocated for the path #if removed.
 // Can't really test that though, so should be checked manually that the internal callback is called but not the external.
 @(test)
 remove_open :: proc(t: ^testing.T) {
@@ -164,7 +164,7 @@ remove_open :: proc(t: ^testing.T) {
 	}
 }
 
-// Dial should close the socket when removed.
+// Dial should close the socket #if removed.
 // Can't really test that though, so should be checked manually that the internal callback is called but not the external.
 @(test)
 remove_dial :: proc(t: ^testing.T) {

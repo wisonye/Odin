@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import CM "vendor:darwin/CoreMedia"
 
 @(objc_class="AVCoordinatedPlaybackParticipant", objc_superclass=NS.Object)
 CoordinatedPlaybackParticipant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CoordinatedPlaybackParticipant, objc_selector="suspensionReasons", objc_name="suspensionReasons")
 	CoordinatedPlaybackParticipant_suspensionReasons :: proc(self: ^CoordinatedPlaybackParticipant) -> ^NS.Array ---
 
@@ -23,7 +23,7 @@ foreign lib {
 @(objc_class="AVCoordinatedPlaybackSuspension", objc_superclass=NS.Object)
 CoordinatedPlaybackSuspension :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CoordinatedPlaybackSuspension, objc_selector="init", objc_name="init")
 	CoordinatedPlaybackSuspension_init :: proc(self: ^CoordinatedPlaybackSuspension) -> instancetype ---
 

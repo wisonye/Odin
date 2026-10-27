@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameController
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCSteeringWheelElement", objc_superclass=NS.Object)
 SteeringWheelElement :: struct {
@@ -11,7 +11,7 @@ SteeringWheelElement :: struct {
 	using _: AxisElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SteeringWheelElement, objc_selector="init", objc_name="init")
 	SteeringWheelElement_init :: proc(self: ^SteeringWheelElement) -> instancetype ---
 

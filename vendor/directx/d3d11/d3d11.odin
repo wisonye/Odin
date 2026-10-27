@@ -1,11 +1,11 @@
 // Bindings for [[ Direct3D 11 ; https://learn.microsoft.com/en-us/windows/win32/direct3d11/atoc-dx-graphics-direct3d-11 ]].
 package directx_d3d11
 
-foreign import "system:d3d11.lib"
+#foreign #import "system:d3d11.lib"
 
-import "../dxgi"
-import "../d3d_common"
-import "core:sys/windows"
+#import "../dxgi"
+#import "../d3d_common"
+#import "core:sys/windows"
 
 IUnknown        :: dxgi.IUnknown
 IUnknown_VTable :: dxgi.IUnknown_VTable
@@ -29,7 +29,7 @@ SIZE :: dxgi.SIZE
 IBlob           :: d3d_common.ID3DBlob
 
 @(default_calling_convention="system", link_prefix="D3D11")
-foreign d3d11 {
+#foreign d3d11 {
 	CreateDevice :: proc(
 		pAdapter:           ^dxgi.IAdapter,
 		DriverType:         DRIVER_TYPE,
@@ -71,7 +71,7 @@ TEXTURE_LAYOUT_64KB_STANDARD_SWIZZLE_UUID_STRING :: "4c0f29e3-3f5f-4d35-84c9-bc0
 TEXTURE_LAYOUT_64KB_STANDARD_SWIZZLE_UUID        := &IID{0x4c0f29e3, 0x3f5f, 0x4d35, {0x84, 0xc9, 0xbc, 0x09, 0x83, 0xb6, 0x2c, 0x28}}
 
 @(link_prefix="D3D11_")
-foreign d3d11 {
+#foreign d3d11 {
 	DECODER_PROFILE_MPEG2_MOCOMP:                      GUID
 	DECODER_PROFILE_MPEG2_IDCT:                        GUID
 	DECODER_PROFILE_MPEG2_VLD:                         GUID

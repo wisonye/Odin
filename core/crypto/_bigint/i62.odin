@@ -22,10 +22,10 @@ package _bigint
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "base:intrinsics"
-import "core:math/bits"
-import subtle "core:crypto/_subtle"
-import "core:slice"
+#import "base:intrinsics"
+#import "core:math/bits"
+#import subtle "core:crypto/_subtle"
+#import "core:slice"
 
 @(private="file")
 I62_MASK :: 0x3fff_ffff_ffff_ffff

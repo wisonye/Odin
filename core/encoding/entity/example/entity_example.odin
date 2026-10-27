@@ -1,10 +1,10 @@
 package unicode_entity_example
 
-import "core:encoding/xml"
-import "core:strings"
-import "core:mem"
-import "core:fmt"
-import "core:time"
+#import "core:encoding/xml"
+#import "core:strings"
+#import "core:mem"
+#import "core:fmt"
+#import "core:time"
 
 doc_print :: proc(doc: ^xml.Document) {
 	buf: strings.Builder

@@ -1,6 +1,6 @@
 package glfw_bindings
 
-import "core:c"
+#import "core:c"
 
 WindowHandle  :: distinct rawptr
 MonitorHandle :: distinct rawptr

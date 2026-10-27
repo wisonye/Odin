@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
 
 _ :: CG
 
 @(objc_class="NSCoder", objc_superclass=Object)
 Coder :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Coder, objc_selector="encodeValueOfObjCType:at:", objc_name="encodeValueOfObjCType")
 	Coder_encodeValueOfObjCType :: proc(self: ^Coder, type: cstring, addr: rawptr) ---
 
@@ -65,7 +65,7 @@ foreign lib {
 	@(objc_type=Coder, objc_selector="decodeBytesWithReturnedLength:", objc_name="decodeBytesWithReturnedLength")
 	Coder_decodeBytesWithReturnedLength :: proc(self: ^Coder, lengthp: ^UInteger) -> rawptr ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Coder, objc_selector="encodePropertyList:", objc_name="encodePropertyList")
 		Coder_encodePropertyList :: proc(self: ^Coder, aPropertyList: id) ---
 
@@ -196,7 +196,7 @@ foreign lib {
 	@(objc_type=Coder, objc_selector="error", objc_name="error")
 	Coder_error :: proc(self: ^Coder) -> ^Error ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Coder, objc_selector="encodeNXObject:", objc_name="encodeNXObject")
 		Coder_encodeNXObject :: proc(self: ^Coder, object: id) ---
 
@@ -207,7 +207,7 @@ foreign lib {
 	@(objc_type=Coder, objc_selector="decodeValueOfObjCType:at:", objc_name="decodeValueOfObjCType_at")
 	Coder_decodeValueOfObjCType_at :: proc(self: ^Coder, type: cstring, data: rawptr) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Coder, objc_selector="encodePoint:", objc_name="encodePoint_")
 		Coder_encodePoint_ :: proc(self: ^Coder, point: CG.Point) ---
 
@@ -248,7 +248,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=Coder, objc_name="encodePoint")
 	Coder_encodePoint :: proc {
 		Coder_encodePoint_,
@@ -329,7 +329,7 @@ Coder_decodeTopLevelObjectOfClasses :: #force_inline proc "c" (self: ^Coder, cla
 @(objc_class="NSXPCCoder", objc_superclass=Coder)
 XPCCoder :: struct { using _: Coder}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XPCCoder, objc_selector="encodeXPCObject:forKey:", objc_name="encodeXPCObject")
 	XPCCoder_encodeXPCObject :: proc(self: ^XPCCoder, xpcObject: xpc_object_t, key: ^String) ---
 

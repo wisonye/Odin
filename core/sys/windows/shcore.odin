@@ -2,10 +2,10 @@
 
 package sys_windows
 
-foreign import shcore "system:Shcore.lib"
+#foreign #import shcore "system:Shcore.lib"
 
 @(default_calling_convention="system")
-foreign shcore {
+#foreign shcore {
 	GetProcessDpiAwareness :: proc(hprocess: HANDLE, value: ^PROCESS_DPI_AWARENESS) -> HRESULT ---
 	SetProcessDpiAwareness :: proc(value: PROCESS_DPI_AWARENESS) -> HRESULT ---
 	GetDpiForMonitor       :: proc(hmonitor: HMONITOR, dpiType: MONITOR_DPI_TYPE, dpiX: ^UINT, dpiY: ^UINT) -> HRESULT ---

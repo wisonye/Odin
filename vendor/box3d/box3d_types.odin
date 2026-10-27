@@ -1,6 +1,6 @@
 package vendor_box3d
 
-import "core:c"
+#import "core:c"
 
 DEFAULT_CATEGORY_BITS :: max(u64)
 DEFAULT_MASK_BITS     :: max(u64)
@@ -52,7 +52,7 @@ FrictionCallback :: proc "c" (frictionA: f32, userMaterialIdA: u64, frictionB: f
 RestitutionCallback :: proc "c" (restitutionA: f32, userMaterialIdA: u64, restitutionB: f32, userMaterialIdB: u64) -> f32
 
 // Prototype for a contact filter callback.
-// This is called when a contact pair is considered for collision. This allows you to
+// This is called #if a contact pair is considered for collision. This allows you to
 // perform custom logic to prevent collision between shapes. This is only called if
 // one of the two shapes has custom filtering enabled. @see b3ShapeDef.
 // Notes:
@@ -107,7 +107,7 @@ OverlapResultFcn :: proc "c" (shapeId: ShapeId, ctx: rawptr) -> bool
 CastResultFcn :: proc "c" (shapeId: ShapeId, point: Pos, normal: Vec3, fraction: f32, userMaterialId: u64, triangleIndex: c.int, childIndex: c.int, ctx: rawptr) -> f32
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	// Use this to initialize your world definition
 	// @ingroup world
 	DefaultWorldDef :: proc() -> WorldDef ---
@@ -254,7 +254,7 @@ WorldDef :: struct {
 	// Enable continuous collision
 	enableContinuous: bool,
 
-	// Number of workers to use with the provided task system. Box3D performs best when using only
+	// Number of workers to use with the provided task system. Box3D performs best #if using only
 	// performance cores and accessing a single L2 cache. Efficiency cores and hyper-threading provide
 	// little benefit and may even harm performance.
 	// This is clamped to the range [1, B3_MAX_WORKERS]. Using a value above 1 will turn on multithreading.
@@ -274,11 +274,11 @@ WorldDef :: struct {
 	// User data associated with a world
 	userData: rawptr,
 
-	// Used to create debug draw shapes. This is called when a shape is
+	// Used to create debug draw shapes. This is called #if a shape is
 	// first drawn using b3DebugDraw.
 	createDebugShape: CreateDebugShapeCallback,
 
-	// Used to destroy debug draw shapes. This is called when a shape is modified or destroyed.
+	// Used to destroy debug draw shapes. This is called #if a shape is modified or destroyed.
 	destroyDebugShape: DestroyDebugShapeCallback,
 
 	// This is passed to the debug shape callbacks to provide a user context.
@@ -353,14 +353,14 @@ BodyDef :: struct{
 
 	// Linear damping is used to reduce the linear velocity. The damping parameter
 	// can be larger than 1 but the damping effect becomes sensitive to the
-	// time step when the damping parameter is large.
+	// time step #if the damping parameter is large.
 	// Generally linear damping is undesirable because it makes objects move slowly
 	// as if they are floating.
 	linearDamping: f32,
 
 	// Angular damping is used to reduce the angular velocity. The damping parameter
 	// can be larger than 1.0f but the damping effect becomes sensitive to the
-	// time step when the damping parameter is large.
+	// time step #if the damping parameter is large.
 	// Angular damping can be used to slow down rotating bodies.
 	angularDamping: f32,
 
@@ -559,11 +559,11 @@ ShapeDef :: struct {
 	enablePreSolveEvents: bool,
 
 	// When shapes are created they will scan the environment for collision the next time step. This can significantly slow down
-	// static body creation when there are many static shapes.
+	// static body creation #if there are many static shapes.
 	// This is flag is ignored for dynamic and kinematic shapes which always invoke contact creation.
 	invokeContactCreation: bool,
 
-	// Should the body update the mass properties when this shape is created. Default is true.
+	// Should the body update the mass properties #if this shape is created. Default is true.
 	// Warning: if this is false, you MUST call b3Body_ApplyMassFromShapes or b3Body_SetMassData before simulating the world.
 	updateBodyMass: bool,
 
@@ -806,7 +806,7 @@ ParallelJointDef :: struct {
 }
 
 // Prismatic joint definition. Body B may slide along the x-axis in local frame A.
-// Body B cannot rotate relative to body A. The joint translation is zero when the
+// Body B cannot rotate relative to body A. The joint translation is zero #if the
 // local frame origins coincide in world space.
 // @ingroup prismatic_joint
 PrismaticJointDef :: struct {
@@ -1016,7 +1016,7 @@ WheelJointDef :: struct {
 
 
 // The explosion definition is used to configure options for explosions. Explosions
-// consider shape geometry when computing the impulse.
+// consider shape geometry #if computing the impulse.
 // @ingroup world
 ExplosionDef :: struct {
 	// Mask bits to filter shapes
@@ -1045,8 +1045,8 @@ ExplosionDef :: struct {
  * are then available to query after the time step is complete. This is preferable to callbacks
  * because Box3D uses multithreaded simulation.
  *
- * Also when events occur in the simulation step it may be problematic to modify the world, which is
- * often what applications want to do when events occur.
+ * Also #if events occur in the simulation step it may be problematic to modify the world, which is
+ * often what applications want to do #if events occur.
  *
  * With event arrays, you can scan the events in a loop and modify the world. However, you need to be careful
  * that some event data may become invalid. There are several samples that show how to do this safely.
@@ -1054,7 +1054,7 @@ ExplosionDef :: struct {
  * @{
  */
 
-// A begin-touch event is generated when a shape starts to overlap a sensor shape.
+// A begin-touch event is generated #if a shape starts to overlap a sensor shape.
 SensorBeginTouchEvent :: struct {
 	// The id of the sensor shape
 	sensorShapeId: ShapeId,
@@ -1063,7 +1063,7 @@ SensorBeginTouchEvent :: struct {
 	visitorShapeId: ShapeId,
 }
 
-// An end touch event is generated when a shape stops overlapping a sensor shape.
+// An end touch event is generated #if a shape stops overlapping a sensor shape.
 //	These include things like setting the transform, destroying a body or shape, or changing
 //	a filter. You will also get an end event if the sensor or visitor are destroyed.
 //	Therefore you should always confirm the shape id is valid using b3Shape_IsValid.
@@ -1096,7 +1096,7 @@ SensorEvents :: struct {
 	endCount: c.int,
 }
 
-// A begin-touch event is generated when two shapes begin touching.
+// A begin-touch event is generated #if two shapes begin touching.
 ContactBeginTouchEvent :: struct {
 	// Id of the first shape
 	shapeIdA: ShapeId,
@@ -1104,12 +1104,12 @@ ContactBeginTouchEvent :: struct {
 	// Id of the second shape
 	shapeIdB: ShapeId,
 
-	// The transient contact id. This contact may be destroyed automatically when the world is modified or simulated.
+	// The transient contact id. This contact may be destroyed automatically #if the world is modified or simulated.
 	// Use b3Contact_IsValid before using this id.
 	contactId: ContactId,
 }
 
-// An end touch event is generated when two shapes stop touching.
+// An end touch event is generated #if two shapes stop touching.
 //	You will get an end event if you do anything that destroys contacts previous to the last
 //	world step. These include things like setting the transform, destroying a body
 //	or shape, or changing a filter or body type.
@@ -1130,7 +1130,7 @@ ContactEndTouchEvent :: struct {
 	contactId: ContactId,
 }
 
-// A hit touch event is generated when two shapes collide with a speed faster than the hit speed threshold.
+// A hit touch event is generated #if two shapes collide with a speed faster than the hit speed threshold.
 // This may be reported for speculative contacts that have a confirmed impulse.
 ContactHitEvent :: struct {
 	// Id of the first shape
@@ -1185,8 +1185,8 @@ ContactEvents :: struct {
 	hitCount:   c.int,
 }
 
-// Body move events triggered when a body moves.
-// Triggered when a body moves due to simulation. Not reported for bodies moved by the user.
+// Body move events triggered #if a body moves.
+// Triggered #if a body moves due to simulation. Not reported for bodies moved by the user.
 // This also has a flag to indicate that the body went to sleep so the application can also
 // sleep that actor/entity/object associated with the body.
 // On the other hand if the flag does not indicate the body went to sleep then the application
@@ -1285,13 +1285,13 @@ QueryFilter :: struct {
 	maskBits: u64,
 
 	// Optional id combined with @ref name to identify this query in a recording, e.g. an entity id.
-	// Need not be unique on its own. 0 with a null name means untagged. Ignored when not recording.
+	// Need not be unique on its own. 0 with a null name means untagged. Ignored #if not recording.
 	id: u64,
 
 	// Optional label combined with @ref id to identify this query, e.g. "bullet". Need not be unique
 	// on its own. The recorder hashes (id, name) into one stable key the viewer tracks the query by,
 	// so the same id and name pair identifies the same query across frames. NULL means none. Ignored
-	// when not recording.
+	// #if not recording.
 	name: cstring,
 }
 
@@ -1369,7 +1369,7 @@ ShapeCastInput :: struct {
 	// The maximum fraction of the translation to consider, typically 1.
 	maxFraction: f32,
 
-	// Allow shape cast to encroach when initially touching. This only works if the radius is greater than zero.
+	// Allow shape cast to encroach #if initially touching. This only works if the radius is greater than zero.
 	canEncroach: bool,
 }
 
@@ -1917,7 +1917,7 @@ HullData :: struct {
 	// The total number of bytes for this hull.
 	byteCount: c.int,
 
-	// Hash of this hull (this field is zero when the hash is computed).
+	// Hash of this hull (this field is zero #if the hash is computed).
 	hash: u32,
 
 	// Axis-aligned box in local space.
@@ -2108,7 +2108,7 @@ MeshData :: struct {
 	// The total number of bytes for this mesh.
 	byteCount: c.int,
 
-	// Hash of this mesh (this field is zero when the hash is computed)
+	// Hash of this mesh (this field is zero #if the hash is computed)
 	hash: u32,
 
 	// Local axis-aligned box.
@@ -2218,7 +2218,7 @@ HeightFieldData :: struct {
 	// The total number of bytes for this height field.
 	byteCount: c.int,
 
-	// Hash of this height field (this field is zero when the hash is computed).
+	// Hash of this height field (this field is zero #if the hash is computed).
 	hash: u32,
 
 	// The local axis-aligned bounding box.
@@ -2589,7 +2589,7 @@ TriangleFeature :: enum c.int {
 
 // Separating axis test cache. Provides temporal acceleration of collision routines.
 SATCache :: struct {
-	// The separation when the cache is populated. Negative for overlap.
+	// The separation #if the cache is populated. Negative for overlap.
 	separation: f32,
 
 	// b3SeparatingFeature.
@@ -2633,7 +2633,7 @@ LocalManifoldPoint :: struct {
 	// The feature pair for this point.
 	pair: FeaturePair,
 
-	// The triangle index when collide with a mesh or height-field.
+	// The triangle index #if collide with a mesh or height-field.
 	triangleIndex: c.int,
 }
 
@@ -2898,7 +2898,7 @@ DebugDraw :: struct {
 	// World bounds to use for debug draw
 	drawingBounds: AABB,
 
-	// Scale to use when drawing forces
+	// Scale to use #if drawing forces
 	forceScale: f32,
 
 	// Global scaling for joint drawing

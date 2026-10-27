@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKFetchRecordZoneChangesOptions", objc_superclass=NS.Object)
 FetchRecordZoneChangesOptions :: struct {
@@ -11,7 +11,7 @@ FetchRecordZoneChangesOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordZoneChangesOptions, objc_selector="previousServerChangeToken", objc_name="previousServerChangeToken")
 	FetchRecordZoneChangesOptions_previousServerChangeToken :: proc(self: ^FetchRecordZoneChangesOptions) -> ^ServerChangeToken ---
 
@@ -39,7 +39,7 @@ FetchRecordZoneChangesConfiguration :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordZoneChangesConfiguration, objc_selector="previousServerChangeToken", objc_name="previousServerChangeToken")
 	FetchRecordZoneChangesConfiguration_previousServerChangeToken :: proc(self: ^FetchRecordZoneChangesConfiguration) -> ^ServerChangeToken ---
 
@@ -63,7 +63,7 @@ foreign lib {
 @(objc_class="CKFetchRecordZoneChangesOperation", objc_superclass=DatabaseOperation)
 FetchRecordZoneChangesOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordZoneChangesOperation, objc_selector="init", objc_name="init")
 	FetchRecordZoneChangesOperation_init :: proc(self: ^FetchRecordZoneChangesOperation) -> instancetype ---
 

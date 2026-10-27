@@ -1,10 +1,10 @@
 package sysinfo
 
-import     "base:intrinsics"
-import     "base:runtime"
-import     "core:strings"
-import     "core:unicode/utf16"
-import sys "core:sys/windows"
+#import     "base:intrinsics"
+#import     "base:runtime"
+#import     "core:strings"
+#import     "core:unicode/utf16"
+#import sys "core:sys/windows"
 
 @(private)
 _os_version :: proc (allocator: runtime.Allocator, loc := #caller_location) -> (res: OS_Version, ok: bool) {

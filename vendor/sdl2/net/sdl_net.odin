@@ -1,13 +1,13 @@
 // Bindings for [[ SDL2 Net ; https://wiki.libsdl.org/SDL2_net/FrontPage ]].
 package sdl2_net
 
-import "core:c"
-import SDL ".."
+#import "core:c"
+#import SDL ".."
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL2_net.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL2_net.lib"
 } else {
-	foreign import lib "system:SDL2_net"
+	#foreign #import lib "system:SDL2_net"
 }
 
 bool :: SDL.bool
@@ -28,7 +28,7 @@ INADDR_BROADCAST :: 0xFFFFFFFF
 
 
 @(default_calling_convention="c", link_prefix="SDLNet_")
-foreign lib {
+#foreign lib {
 	Linked_Version :: proc() -> ^SDL.version ---
 
 	Init :: proc() -> c.int ---
@@ -47,7 +47,7 @@ foreign lib {
 TCPsocket :: distinct rawptr
 
 @(default_calling_convention="c", link_prefix="SDLNet_")
-foreign lib {
+#foreign lib {
 	TCP_Open           :: proc(ip: ^IPaddress) -> TCPsocket ---
 	TCP_OpenServer     :: proc(ip: ^IPaddress) -> TCPsocket ---
 	TCP_OpenClient     :: proc(ip: ^IPaddress) -> TCPsocket ---
@@ -80,7 +80,7 @@ UDPpacket :: struct {
 /***********************************************************************/
 
 @(default_calling_convention="c", link_prefix="SDLNet_")
-foreign lib {
+#foreign lib {
 	AllocPacket  :: proc(size: c.int) -> ^UDPpacket ---
 	ResizePacket :: proc(packet: ^UDPpacket, newsize: c.int) -> c.int ---
 	FreePacket   :: proc(packet: ^UDPpacket) ---
@@ -145,7 +145,7 @@ SocketReady :: #force_inline proc "c" (sock: rawptr) -> bool {
 
 
 @(default_calling_convention="c", link_prefix="SDLNet_")
-foreign lib {
+#foreign lib {
 	AllocSocketSet :: proc(maxsockets: c.int) -> SocketSet ---
 	AddSocket      :: proc(set: SocketSet, sock: GenericSocket) -> c.int ---
 	DelSocket      :: proc(set: SocketSet, sock: GenericSocket) -> c.int ---
@@ -159,7 +159,7 @@ foreign lib {
 /***********************************************************************/
 
 @(default_calling_convention="c", link_prefix="SDLNet_")
-foreign lib {
+#foreign lib {
 	SetError :: proc(fmt: cstring, #c_vararg args: ..any) ---
 	GetError :: proc() -> cstring ---
 }

@@ -9,7 +9,7 @@ Orthography :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Orthography, objc_selector="initWithDominantScript:languageMap:", objc_name="initWithDominantScript")
 	Orthography_initWithDominantScript :: proc(self: ^Orthography, script: ^String, _map: ^Dictionary) -> instancetype ---
 

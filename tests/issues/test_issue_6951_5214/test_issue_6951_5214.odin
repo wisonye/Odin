@@ -2,7 +2,7 @@
 // and #5214 https://github.com/odin-lang/Odin/issues/5214
 package test_issue_6951_5214
 
-import "core:testing"
+#import "core:testing"
 
 // Passing a `$` proc parameter to another `$` parameter used to reuse the first instantiation,
 // making every forwarding call run the procedure given to the first one.

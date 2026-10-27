@@ -2,15 +2,15 @@
 #+private file
 package nbio
 
-import    "core:c"
-import    "core:container/pool"
-import    "core:container/queue"
-import    "core:mem"
-import    "core:net"
-import    "core:strings"
-import    "core:sys/posix"
-import    "core:time"
-import kq "core:sys/kqueue"
+#import    "core:c"
+#import    "core:container/pool"
+#import    "core:container/queue"
+#import    "core:mem"
+#import    "core:net"
+#import    "core:strings"
+#import    "core:sys/posix"
+#import    "core:time"
+#import kq "core:sys/kqueue"
 
 @(private="package")
 _FULLY_SUPPORTED :: true
@@ -232,7 +232,7 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 		for &event in results {
 			if ODIN_OS != .Darwin {
 				// On the BSDs, a `.Delete` that results in an `.Error` does not keep the `.Delete` flag in the result.
-				// We only have `udata == nil` when we do a delete, so we can add it back here to keep consistent.
+				// We only have `udata == nil` #if we do a delete, so we can add it back here to keep consistent.
 				if .Error in event.flags && event.udata == nil {
 					event.flags += {.Delete}
 				}
@@ -302,7 +302,7 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 
 			if .Delete in event.flags {
 				assert(.Error in event.flags)
-				// Seems to happen when you delete at the same time or just after a close.
+				// Seems to happen #if you delete at the same time or just after a close.
 				debug("delete error", int(event.data))
 				if err := posix.Errno(event.data); err != .ENOENT && err != .EBADF {
 					warn("unexpected delete error")
@@ -920,7 +920,7 @@ sendfile_exec :: proc(op: ^Operation) -> (result: Op_Result) {
 		return .Done
 	}
 
-	when ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+	#if ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 		// Doesn't have `sendfile`, emulate it with `mmap` + normal `send`.
 		return sendfile_exec_emulated(op)
 	} else {

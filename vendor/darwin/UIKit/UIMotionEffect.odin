@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIMotionEffect", objc_superclass=NS.Object)
 MotionEffect :: struct {
@@ -12,7 +12,7 @@ MotionEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MotionEffect, objc_selector="init", objc_name="init")
 	MotionEffect_init :: proc(self: ^MotionEffect) -> instancetype ---
 
@@ -28,7 +28,7 @@ foreign lib {
 InterpolatingMotionEffect :: struct { using _: MotionEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InterpolatingMotionEffect, objc_selector="initWithKeyPath:type:", objc_name="initWithKeyPath")
 	InterpolatingMotionEffect_initWithKeyPath :: proc(self: ^InterpolatingMotionEffect, keyPath: ^NS.String, type: InterpolatingMotionEffectType) -> instancetype ---
 
@@ -59,7 +59,7 @@ foreign lib {
 MotionEffectGroup :: struct { using _: MotionEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MotionEffectGroup, objc_selector="motionEffects", objc_name="motionEffects")
 	MotionEffectGroup_motionEffects :: proc(self: ^MotionEffectGroup) -> ^NS.Array ---
 

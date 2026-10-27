@@ -15,9 +15,9 @@ package sha2
         zhibog, dotbmp:  Initial implementation.
 */
 
-@(require) import "core:crypto"
-@(require) import "core:encoding/endian"
-import "core:math/bits"
+@(require) #import "core:crypto"
+@(require) #import "core:encoding/endian"
+#import "core:math/bits"
 
 // DIGEST_SIZE_224 is the SHA-224 digest size in bytes.
 DIGEST_SIZE_224 :: 28
@@ -95,7 +95,7 @@ ERR_HW_NOT_SUPPORTED :: "crypto/sha2: hardware implementation unsupported"
 
 @(private)
 _init :: proc(ctx: ^$T) {
-	when T == Context_256 {
+	#if T == Context_256 {
 		switch ctx.md_bits {
 		case 224:
 			ctx.h[0] = 0xc1059ed8
@@ -120,7 +120,7 @@ _init :: proc(ctx: ^$T) {
 		}
 
 		ctx.is_hw_accelerated = is_hardware_accelerated_256()
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		switch ctx.md_bits {
 		case 256:
 			// SHA-512/256
@@ -169,9 +169,9 @@ _init :: proc(ctx: ^$T) {
 update :: proc(ctx: ^$T, data: []byte) {
 	ensure(ctx.is_initialized)
 
-	when T == Context_256 {
+	#if T == Context_256 {
 		CURR_BLOCK_SIZE :: BLOCK_SIZE_256
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		CURR_BLOCK_SIZE :: BLOCK_SIZE_512
 	}
 
@@ -217,10 +217,10 @@ final :: proc(ctx: ^$T, hash: []byte, finalize_clone: bool = false) {
 	length := ctx.length
 
 	raw_pad: [BLOCK_SIZE_512]byte
-	when T == Context_256 {
+	#if T == Context_256 {
 		CURR_BLOCK_SIZE :: BLOCK_SIZE_256
 		pm_len := 8 // 64-bits for length
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		CURR_BLOCK_SIZE :: BLOCK_SIZE_512
 		pm_len := 16 // 128-bits for length
 	}
@@ -235,22 +235,22 @@ final :: proc(ctx: ^$T, hash: []byte, finalize_clone: bool = false) {
 	}
 
 	length_hi, length_lo := bits.mul_u64(length, 8) // Length in bits
-	when T == Context_256 {
+	#if T == Context_256 {
 		_ = length_hi
 		endian.unchecked_put_u64be(pad[:], length_lo)
 		update(ctx, pad[:8])
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		endian.unchecked_put_u64be(pad[:], length_hi)
 		endian.unchecked_put_u64be(pad[8:], length_lo)
 		update(ctx, pad[0:16])
 	}
 	assert(ctx.bitlength == 0) // Check for bugs
 
-	when T == Context_256 {
+	#if T == Context_256 {
 		for i := 0; i < ctx.md_bits / 32; i += 1 {
 			endian.unchecked_put_u32be(hash[i * 4:], ctx.h[i])
 		}
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		for i := 0; i < ctx.md_bits / 64; i += 1 {
 			endian.unchecked_put_u64be(hash[i * 8:], ctx.h[i])
 		}
@@ -407,7 +407,7 @@ SHA512_F4 :: #force_inline proc "contextless" (x: u64) -> u64 {
 
 @(private = "file")
 sha2_transf :: proc "contextless" (ctx: ^$T, data: []byte) #no_bounds_check {
-	when T == Context_256 {
+	#if T == Context_256 {
 		if ctx.is_hw_accelerated {
 			sha256_transf_hw(ctx, data)
 			return
@@ -418,7 +418,7 @@ sha2_transf :: proc "contextless" (ctx: ^$T, data: []byte) #no_bounds_check {
 		t1, t2: u32
 
 		CURR_BLOCK_SIZE :: BLOCK_SIZE_256
-	} else when T == Context_512 {
+	} else #if T == Context_512 {
 		if ctx.is_hw_accelerated {
 			sha512_transf_hw(ctx, data)
 			return
@@ -434,18 +434,18 @@ sha2_transf :: proc "contextless" (ctx: ^$T, data: []byte) #no_bounds_check {
 	data := data
 	for len(data) >= CURR_BLOCK_SIZE {
 		for i in 0 ..< 16 {
-			when T == Context_256 {
+			#if T == Context_256 {
 				w[i] = endian.unchecked_get_u32be(data[i * 4:])
-			} else when T == Context_512 {
+			} else #if T == Context_512 {
 				w[i] = endian.unchecked_get_u64be(data[i * 8:])
 			}
 		}
 
-		when T == Context_256 {
+		#if T == Context_256 {
 			for i in 16 ..< SHA256_ROUNDS {
 				w[i] = SHA256_F4(w[i - 2]) + w[i - 7] + SHA256_F3(w[i - 15]) + w[i - 16]
 			}
-		} else when T == Context_512 {
+		} else #if T == Context_512 {
 			for i in 16 ..< SHA512_ROUNDS {
 				w[i] = SHA512_F4(w[i - 2]) + w[i - 7] + SHA512_F3(w[i - 15]) + w[i - 16]
 			}
@@ -455,7 +455,7 @@ sha2_transf :: proc "contextless" (ctx: ^$T, data: []byte) #no_bounds_check {
 			wv[i] = ctx.h[i]
 		}
 
-		when T == Context_256 {
+		#if T == Context_256 {
 			for i in 0 ..< SHA256_ROUNDS {
 				t1 = wv[7] + SHA256_F2(wv[4]) + SHA256_CH(wv[4], wv[5], wv[6]) + SHA256_K[i] + w[i]
 				t2 = SHA256_F1(wv[0]) + SHA256_MAJ(wv[0], wv[1], wv[2])
@@ -468,7 +468,7 @@ sha2_transf :: proc "contextless" (ctx: ^$T, data: []byte) #no_bounds_check {
 				wv[1] = wv[0]
 				wv[0] = t1 + t2
 			}
-		} else when T == Context_512 {
+		} else #if T == Context_512 {
 			for i in 0 ..< SHA512_ROUNDS {
 				t1 = wv[7] + SHA512_F2(wv[4]) + SHA512_CH(wv[4], wv[5], wv[6]) + SHA512_K[i] + w[i]
 				t2 = SHA512_F1(wv[0]) + SHA512_MAJ(wv[0], wv[1], wv[2])

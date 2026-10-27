@@ -12,7 +12,7 @@ package math_big
 	This file contains basic arithmetic operations like `add`, `sub`, `mul`, `div`, ...
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	===========================

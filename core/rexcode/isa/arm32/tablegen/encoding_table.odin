@@ -25,12 +25,12 @@ package rexcode_arm32_tablegen
 //   §10 A32 Advanced SIMD (NEON) -- vector arithmetic + load/store
 //   §11 T16 Thumb-1 (16-bit) encodings
 //   §12 T32 Thumb-2 (32-bit) encodings
-//   §13 VFP / NEON Thumb-2 encodings (when distinct)
+//   §13 VFP / NEON Thumb-2 encodings (#if distinct)
 //
 // Conventions:
 //   * A32 conditional instructions have bits 31:28 (cond) as OPERAND-driven.
 //     The static `bits` contain 0 for those positions, and `mask` doesn't lock
-//     them. The encoder OR's the user-supplied cond into bits 31:28 when the
+//     them. The encoder OR's the user-supplied cond into bits 31:28 #if the
 //     entry's flags.cond_in_28 is true. For UNCONDITIONAL classes (top nibble
 //     1111), we set bits 31:28 = 1111 and mask locks them, and flags.cond_in_28
 //     is false.
@@ -1505,7 +1505,7 @@ ENCODING_TABLE := #partial [Mnemonic][]Encoding{
 		{.VMOV, {.SPR, .SPR, .GPR, .GPR, .NONE, .NONE}, {.VM_S, .VM_S_PLUS1, .RT_A32, .RT2_A32, .NONE, .NONE}, 0x0C400A10, 0x0FF00FD0, .VFPV2, .A32, {}, {}},
 		// ---- VMOV NEON modified immediate ----
 		//   1111 0010 1 D 000 imm3 Vd cmode 0 Q op 1 imm4   (op=0 VMOV, op=1 VMVN)
-		// cmode mappings (8 forms when op=0):
+		// cmode mappings (8 forms #if op=0):
 		//   0000 .I32 (low byte broadcast)        → 0xF2800010
 		//   0010 .I32 shifted 8 bits              → 0xF2800210
 		//   0100 .I32 shifted 16 bits             → 0xF2800410

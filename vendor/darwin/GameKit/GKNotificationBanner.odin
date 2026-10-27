@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKNotificationBanner", objc_superclass=NS.Object)
 NotificationBanner :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NotificationBanner, objc_selector="showBannerWithTitle:message:completionHandler:", objc_name="showBannerWithTitle_message_completionHandler", objc_is_class_method=true)
 	NotificationBanner_showBannerWithTitle_message_completionHandler :: proc(title: ^NS.String, message: ^NS.String, completionHandler: ^Objc_Block(proc "c" ())) ---
 

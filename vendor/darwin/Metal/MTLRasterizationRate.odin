@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="MTLRasterizationRateLayerArray", objc_superclass=NS.Object)
 RasterizationRateLayerArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RasterizationRateLayerArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	RasterizationRateLayerArray_objectAtIndexedSubscript :: proc(self: ^RasterizationRateLayerArray, layerIndex: NS.UInteger) -> ^RasterizationRateLayerDescriptor ---
 
@@ -24,7 +24,7 @@ RasterizationRateLayerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RasterizationRateLayerDescriptor, objc_selector="init", objc_name="init")
 	RasterizationRateLayerDescriptor_init :: proc(self: ^RasterizationRateLayerDescriptor) -> instancetype ---
 
@@ -71,7 +71,7 @@ RasterizationRateMap :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RasterizationRateMap, objc_selector="copyParameterDataToBuffer:offset:", objc_name="copyParameterDataToBuffer")
 	RasterizationRateMap_copyParameterDataToBuffer :: proc(self: ^RasterizationRateMap, buffer: ^Buffer, offset: NS.UInteger) ---
 
@@ -110,7 +110,7 @@ RasterizationRateMapDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RasterizationRateMapDescriptor, objc_selector="rasterizationRateMapDescriptorWithScreenSize:", objc_name="rasterizationRateMapDescriptorWithScreenSize_", objc_is_class_method=true)
 	RasterizationRateMapDescriptor_rasterizationRateMapDescriptorWithScreenSize_ :: proc(screenSize: Size) -> ^RasterizationRateMapDescriptor ---
 
@@ -158,7 +158,7 @@ RasterizationRateMapDescriptor_rasterizationRateMapDescriptorWithScreenSize :: p
 @(objc_class="MTLRasterizationRateSampleArray", objc_superclass=NS.Object)
 RasterizationRateSampleArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RasterizationRateSampleArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	RasterizationRateSampleArray_objectAtIndexedSubscript :: proc(self: ^RasterizationRateSampleArray, index: NS.UInteger) -> ^NS.Number ---
 

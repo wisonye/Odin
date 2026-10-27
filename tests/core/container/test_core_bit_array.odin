@@ -1,10 +1,10 @@
 package test_core_container
 
-import "core:container/bit_array"
-import "core:log"
-import "core:math/rand"
-import "core:slice"
-import "core:testing"
+#import "core:container/bit_array"
+#import "core:log"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:testing"
 
 ELEM_BIT_SIZE :: 8 * size_of(u64)
 

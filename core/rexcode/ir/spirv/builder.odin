@@ -2,7 +2,7 @@
 
 package rexcode_spirv
 
-import "base:runtime"
+#import "base:runtime"
 
 // =============================================================================
 // SECTION: Builder  (typed instruction construction -- infrastructure)

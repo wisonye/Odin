@@ -1,6 +1,6 @@
 package mem_virtual
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _reserve :: proc "contextless" (size: uint, address_hint: uintptr) -> (data: []byte, err: Allocator_Error) {
 	result := posix.mmap(rawptr(address_hint), size, {}, {.ANONYMOUS, .PRIVATE})

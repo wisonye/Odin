@@ -1,8 +1,8 @@
 package sdl3
 
-import "base:builtin"
-import "base:intrinsics"
-import "core:c"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "core:c"
 
 #assert(size_of(c.int) == size_of(b32))
 #assert(size_of(c.int) == size_of(rune))
@@ -62,7 +62,7 @@ realloc_func :: #type proc "c" (mem: rawptr, size: uint) -> rawptr
 free_func    :: #type proc "c" (mem: rawptr)
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results)
 	malloc  :: proc(size: uint) -> rawptr ---
 
@@ -101,7 +101,7 @@ foreign lib {
 Environment :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results)
 	GetEnvironment           :: proc() -> ^Environment ---
 	@(require_results)
@@ -116,7 +116,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results)
 	getenv           :: proc(name: cstring) -> cstring  ---
 	@(require_results)
@@ -130,7 +130,7 @@ CompareCallback   :: #type proc "c" (a, b: rawptr) -> c.int
 CompareCallback_r :: #type proc "c" (userdata: rawptr, a, b: rawptr) -> c.int
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	qsort   :: proc(base: rawptr, nmemb: uint,  size:  uint, compare: CompareCallback) ---
 	bsearch :: proc(key: rawptr,  base: rawptr, nmemb: uint, size: uint, compare: CompareCallback) -> rawptr ---
 
@@ -146,7 +146,7 @@ clamp :: builtin.clamp
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	isalpha  :: proc(x: rune) -> b32 ---
 	isalnum  :: proc(x: rune) -> b32 ---
 	isblank  :: proc(x: rune) -> b32 ---
@@ -181,7 +181,7 @@ zeroa :: #force_inline proc "contextless" (x: []$T) {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	memcpy  :: proc(dst, src: rawptr, len: uint)      -> rawptr ---
 	memmove :: proc(dst, src: rawptr, len: uint)      -> rawptr ---
 	memset  :: proc(dst: rawptr, c: c.int, len: uint) -> rawptr ---
@@ -190,7 +190,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	wcslen      :: proc(wstr: [^]wchar_t)                                -> uint ---
 	wcsnlen     :: proc(wstr: [^]wchar_t, maxlen: uint)                  -> uint       ---
 	wcslcpy     :: proc(dst, src: [^]wchar_t, maxlen: uint)              -> uint       ---
@@ -206,7 +206,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	strlen       :: proc(str: cstring)                                    -> uint       ---
 	strnlen      :: proc(str: cstring, maxlen: uint)                      -> uint       ---
 	strlcpy      :: proc(dst: [^]u8, src: cstring, maxlen: uint)          -> uint       ---
@@ -251,7 +251,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	sscanf       :: proc(text: cstring, fmt: cstring, #c_vararg args: ..any)                  -> c.int ---
 	vsscanf      :: proc(text: cstring, fmt: cstring, ap: c.va_list)                          -> c.int ---
 	snprintf     :: proc(text: [^]u8,      maxlen: uint, fmt: cstring, #c_vararg args: ..any) -> c.int ---
@@ -263,7 +263,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	srand        :: proc(seed: Uint64)                        ---
 	rand         :: proc(n: Sint32) -> Sint32                 ---
 	randf        :: proc() -> f32                             ---
@@ -274,7 +274,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	acos         :: proc(x: f64)           -> f64    ---
 	acosf        :: proc(x: f32)           -> f32    ---
 	asin         :: proc(x: f64)           -> f64    ---
@@ -330,7 +330,7 @@ iconv_t :: ^iconv_data_t
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	iconv_open   :: proc(tocode: cstring) -> iconv_t ---
 	iconv_close  :: proc(cd: iconv_t)     -> c.int ---
 	iconv        :: proc(cd: iconv_t, inbuf: ^cstring, inbytesleft: ^uint, outbuf: ^[^]u8, outbytesleft: ^uint) -> uint    ---

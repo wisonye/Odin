@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CLPlacemark", objc_superclass=NS.Object)
 Placemark :: struct {
@@ -12,7 +12,7 @@ Placemark :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Placemark, objc_selector="init", objc_name="init")
 	Placemark_init :: proc(self: ^Placemark) -> instancetype ---
 

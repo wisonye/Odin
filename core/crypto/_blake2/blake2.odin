@@ -10,9 +10,9 @@ package _blake2
     Implementation of the BLAKE2 hashing algorithm, as defined in <https://datatracker.ietf.org/doc/html/rfc7693> and <https://www.blake2.net/>
 */
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:encoding/endian"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:encoding/endian"
 
 BLAKE2S_BLOCK_SIZE :: 64
 BLAKE2S_SIZE :: 32
@@ -78,9 +78,9 @@ BLAKE2B_IV := [8]u64 {
 }
 
 init :: proc "contextless" (ctx: ^$T, cfg: ^Blake2_Config) {
-	when T == Blake2s_Context {
+	#if T == Blake2s_Context {
 		MAX_SIZE :: BLAKE2S_SIZE
-	} else when T == Blake2b_Context {
+	} else #if T == Blake2b_Context {
 		MAX_SIZE :: BLAKE2B_SIZE
 	}
 	ensure_contextless(cfg.size <= MAX_SIZE, "blake2: requested output size exceeeds algorithm max")
@@ -94,16 +94,16 @@ init :: proc "contextless" (ctx: ^$T, cfg: ^Blake2_Config) {
 	p[1] = byte(len(cfg.key))
 
 	if cfg.salt != nil {
-		when T == Blake2s_Context {
+		#if T == Blake2s_Context {
 			copy(p[16:], cfg.salt)
-		} else when T == Blake2b_Context {
+		} else #if T == Blake2b_Context {
 			copy(p[32:], cfg.salt)
 		}
 	}
 	if cfg.person != nil {
-		when T == Blake2s_Context {
+		#if T == Blake2s_Context {
 			copy(p[24:], cfg.person)
-		} else when T == Blake2b_Context {
+		} else #if T == Blake2b_Context {
 			copy(p[48:], cfg.person)
 		}
 	}
@@ -112,7 +112,7 @@ init :: proc "contextless" (ctx: ^$T, cfg: ^Blake2_Config) {
 		p[2] = cfg.tree.(Blake2_Tree).fanout
 		p[3] = cfg.tree.(Blake2_Tree).max_depth
 		endian.unchecked_put_u32le(p[4:], cfg.tree.(Blake2_Tree).leaf_size)
-		when T == Blake2s_Context {
+		#if T == Blake2s_Context {
 			p[8] = byte(cfg.tree.(Blake2_Tree).node_offset)
 			p[9] = byte(cfg.tree.(Blake2_Tree).node_offset >> 8)
 			p[10] = byte(cfg.tree.(Blake2_Tree).node_offset >> 16)
@@ -121,7 +121,7 @@ init :: proc "contextless" (ctx: ^$T, cfg: ^Blake2_Config) {
 			p[13] = byte(cfg.tree.(Blake2_Tree).node_offset >> 40)
 			p[14] = cfg.tree.(Blake2_Tree).node_depth
 			p[15] = cfg.tree.(Blake2_Tree).inner_hash_size
-		} else when T == Blake2b_Context {
+		} else #if T == Blake2b_Context {
 			endian.unchecked_put_u64le(p[8:], cfg.tree.(Blake2_Tree).node_offset)
 			p[16] = cfg.tree.(Blake2_Tree).node_depth
 			p[17] = cfg.tree.(Blake2_Tree).inner_hash_size
@@ -131,10 +131,10 @@ init :: proc "contextless" (ctx: ^$T, cfg: ^Blake2_Config) {
 	}
 	ctx.size = cfg.size
 	for i := 0; i < 8; i += 1 {
-		when T == Blake2s_Context {
+		#if T == Blake2s_Context {
 			ctx.h[i] = BLAKE2S_IV[i] ~ endian.unchecked_get_u32le(p[i * 4:])
 		}
-		when T == Blake2b_Context {
+		#if T == Blake2b_Context {
 			ctx.h[i] = BLAKE2B_IV[i] ~ endian.unchecked_get_u64le(p[i * 8:])
 		}
 	}
@@ -158,9 +158,9 @@ update :: proc "contextless" (ctx: ^$T, p: []byte) {
 	ensure_contextless(ctx.is_initialized)
 
 	p := p
-	when T == Blake2s_Context {
+	#if T == Blake2s_Context {
 		BLOCK_SIZE :: BLAKE2S_BLOCK_SIZE
-	} else when T == Blake2b_Context {
+	} else #if T == Blake2b_Context {
 		BLOCK_SIZE :: BLAKE2B_BLOCK_SIZE
 	}
 
@@ -194,9 +194,9 @@ final :: proc "contextless" (ctx: ^$T, hash: []byte, finalize_clone: bool = fals
 	defer(reset(ctx))
 
 	ensure_contextless(len(hash) >= int(ctx.size), "crypto/blake2: invalid destination digest size")
-	when T == Blake2s_Context {
+	#if T == Blake2s_Context {
 		blake2s_final(ctx, hash)
-	} else when T == Blake2b_Context {
+	} else #if T == Blake2b_Context {
 		blake2b_final(ctx, hash)
 	}
 }
@@ -265,9 +265,9 @@ blake2b_final :: proc "contextless" (ctx: ^Blake2b_Context, hash: []byte) {
 
 @(private)
 blocks :: proc "contextless" (ctx: ^$T, p: []byte) {
-	when T == Blake2s_Context {
+	#if T == Blake2s_Context {
 		blake2s_blocks(ctx, p)
-	} else when T == Blake2b_Context {
+	} else #if T == Blake2b_Context {
 		blake2b_blocks(ctx, p)
 	}
 }

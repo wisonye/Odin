@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -45,7 +45,7 @@ encoder :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	encoder_config_init      :: proc(encodingFormat: encoding_format, format: format, channels: u32, sampleRate: u32) -> encoder_config ---
 
 	encoder_init             :: proc(onWrite: encoder_write_proc, onSeek: encoder_seek_proc, pUserData: rawptr, pConfig: ^encoder_config, pEncoder: ^encoder) -> result ---

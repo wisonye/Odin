@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSString", objc_superclass=Object)
 String :: struct {
@@ -12,7 +12,7 @@ String :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=String, objc_selector="characterAtIndex:", objc_name="characterAtIndex")
 	String_characterAtIndex :: proc(self: ^String, index: UInteger) -> unichar ---
 
@@ -751,7 +751,7 @@ String_stringWithContentsOfFile_usedEncoding :: #force_inline proc "c" (path: ^S
 @(objc_class="NSMutableString", objc_superclass=String)
 MutableString :: struct { using _: String}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableString, objc_selector="replaceCharactersInRange:withString:", objc_name="replaceCharactersInRange")
 	MutableString_replaceCharactersInRange :: proc(self: ^MutableString, range: _NSRange, aString: ^String) ---
 

@@ -54,7 +54,7 @@ __crc32cw :: #force_inline proc "c" (crc: uint32_t, data: uint32_t) -> uint32_t 
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/__crc32d)
 @(require_results, enable_target_feature = "crc")
 __crc32d :: #force_inline proc "c" (crc: uint32_t, data: uint64_t) -> uint32_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return ___crc32d(crc, data)
 	} else {
 		b := uint32_t(data & 0xffffffff)
@@ -68,7 +68,7 @@ __crc32d :: #force_inline proc "c" (crc: uint32_t, data: uint64_t) -> uint32_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/__crc32cd)
 @(require_results, enable_target_feature = "crc")
 __crc32cd :: #force_inline proc "c" (crc: uint32_t, data: uint64_t) -> uint32_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return ___crc32cd(crc, data)
 	} else {
 		b := uint32_t(data & 0xffffffff)
@@ -78,24 +78,24 @@ __crc32cd :: #force_inline proc "c" (crc: uint32_t, data: uint64_t) -> uint32_t 
 }
 
 @(private, default_calling_convention = "none")
-foreign _ {
-	@(link_name = "llvm.aarch64.crc32b" when ODIN_ARCH == .arm64 else "llvm.arm.crc32b")
+#foreign _ {
+	@(link_name = "llvm.aarch64.crc32b" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32b")
 	___crc32b :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
-	@(link_name = "llvm.aarch64.crc32h" when ODIN_ARCH == .arm64 else "llvm.arm.crc32h")
+	@(link_name = "llvm.aarch64.crc32h" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32h")
 	___crc32h :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
-	@(link_name = "llvm.aarch64.crc32w" when ODIN_ARCH == .arm64 else "llvm.arm.crc32w")
+	@(link_name = "llvm.aarch64.crc32w" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32w")
 	___crc32w :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
-	@(link_name = "llvm.aarch64.crc32cb" when ODIN_ARCH == .arm64 else "llvm.arm.crc32cb")
+	@(link_name = "llvm.aarch64.crc32cb" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32cb")
 	___crc32cb :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
-	@(link_name = "llvm.aarch64.crc32ch" when ODIN_ARCH == .arm64 else "llvm.arm.crc32ch")
+	@(link_name = "llvm.aarch64.crc32ch" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32ch")
 	___crc32ch :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
-	@(link_name = "llvm.aarch64.crc32cw" when ODIN_ARCH == .arm64 else "llvm.arm.crc32cw")
+	@(link_name = "llvm.aarch64.crc32cw" #if ODIN_ARCH == .arm64 else "llvm.arm.crc32cw")
 	___crc32cw :: proc(crc: uint32_t, data: uint32_t) -> uint32_t ---
 }
 
-when ODIN_ARCH == .arm64 {
+#if ODIN_ARCH == .arm64 {
 	@(private, default_calling_convention = "none")
-	foreign _ {
+	#foreign _ {
 		@(link_name = "llvm.aarch64.crc32x")
 		___crc32d :: proc(crc: uint32_t, data: uint64_t) -> uint32_t ---
 		@(link_name = "llvm.aarch64.crc32cx")

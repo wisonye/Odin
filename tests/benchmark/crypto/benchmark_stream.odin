@@ -1,13 +1,13 @@
 package benchmark_core_crypto
 
-import "base:runtime"
-import "core:crypto"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "base:runtime"
+#import "core:crypto"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
-import "core:crypto/aes"
-import "core:crypto/chacha20"
+#import "core:crypto/aes"
+#import "core:crypto/chacha20"
 
 @(private = "file")
 ITERS :: 10000

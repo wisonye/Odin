@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CKRecord", objc_superclass=NS.Object)
 Record :: struct {
@@ -12,7 +12,7 @@ Record :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Record, objc_selector="init", objc_name="init")
 	Record_init :: proc(self: ^Record) -> instancetype ---
 
@@ -109,7 +109,7 @@ RecordID :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordID, objc_selector="init", objc_name="init")
 	RecordID_init :: proc(self: ^RecordID) -> instancetype ---
 
@@ -144,7 +144,7 @@ RecordKeyValueSetting :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordKeyValueSetting, objc_selector="objectForKey:", objc_name="objectForKey")
 	RecordKeyValueSetting_objectForKey :: proc(self: ^RecordKeyValueSetting, key: ^NS.String) -> ^RecordValue ---
 
@@ -179,7 +179,7 @@ RecordZone :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordZone, objc_selector="defaultRecordZone", objc_name="defaultRecordZone", objc_is_class_method=true)
 	RecordZone_defaultRecordZone :: proc() -> ^RecordZone ---
 
@@ -219,7 +219,7 @@ RecordZoneID :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordZoneID, objc_selector="init", objc_name="init")
 	RecordZoneID_init :: proc(self: ^RecordZoneID) -> instancetype ---
 
@@ -240,7 +240,7 @@ foreign lib {
 @(objc_class="CKRecordZoneNotification", objc_superclass=Notification)
 RecordZoneNotification :: struct { using _: Notification}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordZoneNotification, objc_selector="recordZoneID", objc_name="recordZoneID")
 	RecordZoneNotification_recordZoneID :: proc(self: ^RecordZoneNotification) -> ^RecordZoneID ---
 
@@ -256,7 +256,7 @@ RecordZoneSubscription :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RecordZoneSubscription, objc_selector="initWithZoneID:", objc_name="initWithZoneID_")
 	RecordZoneSubscription_initWithZoneID_ :: proc(self: ^RecordZoneSubscription, zoneID: ^RecordZoneID) -> instancetype ---
 

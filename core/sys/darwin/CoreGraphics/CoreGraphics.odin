@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_CoreGraphics
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import darwin "core:sys/darwin"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import darwin "core:sys/darwin"
+#import posix "core:sys/posix"
 
 _ :: darwin
 
@@ -18,7 +18,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreGraphics.framework",
 }
 
@@ -29,9 +29,9 @@ NSObject  :: intrinsics.objc_object
 MTLDevice :: intrinsics.objc_object
 cl_device_id :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(link_prefix="CG", default_calling_convention="c")
-	foreign lib {
+	#foreign lib {
 		DisplayCreateUUIDFromDisplayID :: proc( displayID: DirectDisplayID ) -> CF.UUIDRef ---
 		DisplayGetDisplayIDFromUUID :: proc( uuid: CF.UUIDRef ) -> DirectDisplayID ---
 	}
@@ -39,7 +39,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="CGPointZero")
 	PointZero: Point
 
@@ -355,7 +355,7 @@ foreign lib {
 	@(link_name="kCGPDFTagPropertyLanguageText")
 	PDFTagPropertyLanguageText: PDFTagProperty
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kCGWindowNumber")
 		WindowNumber: CF.StringRef
 
@@ -2028,7 +2028,7 @@ foreign lib {
 	@(link_name="CGPDFOperatorTableSetCallback")
 	PDFOperatorTableSetCallback :: proc(table: PDFOperatorTableRef, name: cstring, callback: PDFOperatorCallback) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="CGWindowListCopyWindowInfo")
 		WindowListCopyWindowInfo :: proc(option: WindowListOption, relativeToWindow: WindowID) -> CF.ArrayRef ---
 
@@ -2678,7 +2678,7 @@ PDFTagProperty :: distinct CF.StringRef
 PDFOperatorTableRef :: distinct ^PDFOperatorTable
 PDFScannerRef :: distinct ^PDFScanner
 PDFOperatorCallback :: proc "c" ( scanner: PDFScannerRef, info: rawptr )
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	WindowID :: distinct cffi.uint32_t
 	WindowLevel :: distinct cffi.int32_t
 	DirectDisplayID :: distinct cffi.uint32_t
@@ -3062,7 +3062,7 @@ PDFTagType :: enum cffi.int {
 	Object             = 800,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	WindowSharingType :: enum cffi.uint {
 		None      = 0,
 		ReadOnly  = 1,
@@ -3523,7 +3523,7 @@ PDFOperatorTable :: struct {}
 
 PDFScanner :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	DisplayMode :: struct {}
 
 	DeviceColor :: struct #align (4) {

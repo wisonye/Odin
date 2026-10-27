@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSToolbar", objc_superclass=NS.Object)
 Toolbar :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Toolbar, objc_selector="initWithIdentifier:", objc_name="initWithIdentifier")
 	Toolbar_initWithIdentifier :: proc(self: ^Toolbar, identifier: ^NS.String) -> instancetype ---
 
@@ -155,7 +155,7 @@ ToolbarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolbarDelegate, objc_selector="toolbar:itemForItemIdentifier:willBeInsertedIntoToolbar:", objc_name="toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar")
 	ToolbarDelegate_toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar :: proc(self: ^ToolbarDelegate, toolbar: ^Toolbar, itemIdentifier: ^NS.String, flag: bool) -> ^ToolbarItem ---
 
@@ -195,7 +195,7 @@ ToolbarItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolbarItem, objc_selector="initWithItemIdentifier:", objc_name="initWithItemIdentifier")
 	ToolbarItem_initWithItemIdentifier :: proc(self: ^ToolbarItem, itemIdentifier: ^NS.String) -> instancetype ---
 
@@ -352,7 +352,7 @@ foreign lib {
 SearchToolbarItem :: struct { using _: ToolbarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchToolbarItem, objc_selector="beginSearchInteraction", objc_name="beginSearchInteraction")
 	SearchToolbarItem_beginSearchInteraction :: proc(self: ^SearchToolbarItem) ---
 
@@ -389,7 +389,7 @@ foreign lib {
 ToolbarItemGroup :: struct { using _: ToolbarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolbarItemGroup, objc_selector="groupWithItemIdentifier:titles:selectionMode:labels:target:action:", objc_name="groupWithItemIdentifier_titles_selectionMode_labels_target_action", objc_is_class_method=true)
 	ToolbarItemGroup_groupWithItemIdentifier_titles_selectionMode_labels_target_action :: proc(itemIdentifier: ^NS.String, titles: ^NS.Array, selectionMode: ToolbarItemGroupSelectionMode, labels: ^NS.Array, target: id, action: SEL) -> instancetype ---
 
@@ -435,7 +435,7 @@ ToolbarItemValidation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolbarItemValidation, objc_selector="validateToolbarItem:", objc_name="validateToolbarItem")
 	ToolbarItemValidation_validateToolbarItem :: proc(self: ^ToolbarItemValidation, item: ^ToolbarItem) -> bool ---
 }
@@ -445,7 +445,7 @@ foreign lib {
 TrackingSeparatorToolbarItem :: struct { using _: ToolbarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TrackingSeparatorToolbarItem, objc_selector="trackingSeparatorToolbarItemWithIdentifier:splitView:dividerIndex:", objc_name="trackingSeparatorToolbarItemWithIdentifier", objc_is_class_method=true)
 	TrackingSeparatorToolbarItem_trackingSeparatorToolbarItemWithIdentifier :: proc(identifier: ^NS.String, splitView: ^SplitView, dividerIndex: NS.Integer) -> instancetype ---
 

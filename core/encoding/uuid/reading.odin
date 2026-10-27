@@ -1,7 +1,7 @@
 package uuid
 
-import "base:runtime"
-import "core:time"
+#import "base:runtime"
+#import "core:time"
 
 /*
 Convert a string to a UUID.

@@ -9,7 +9,7 @@ TextCheckingResult :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextCheckingResult, objc_selector="resultType", objc_name="resultType")
 	TextCheckingResult_resultType :: proc(self: ^TextCheckingResult) -> TextCheckingType ---
 

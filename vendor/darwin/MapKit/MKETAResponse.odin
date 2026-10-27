@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKETAResponse", objc_superclass=NS.Object)
 ETAResponse :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ETAResponse, objc_selector="source", objc_name="source")
 	ETAResponse_source :: proc(self: ^ETAResponse) -> ^MapItem ---
 

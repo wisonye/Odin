@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLTensor")
 Tensor :: struct {
@@ -11,7 +11,7 @@ Tensor :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Tensor, objc_selector="replaceSliceOrigin:sliceDimensions:withBytes:strides:", objc_name="replaceSliceOrigin")
 	Tensor_replaceSliceOrigin :: proc(self: ^Tensor, sliceOrigin: ^TensorExtents, sliceDimensions: ^TensorExtents, bytes: rawptr, strides: ^TensorExtents) ---
 
@@ -47,7 +47,7 @@ TensorDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TensorDescriptor, objc_selector="dimensions", objc_name="dimensions")
 	TensorDescriptor_dimensions :: proc(self: ^TensorDescriptor) -> ^TensorExtents ---
 
@@ -104,7 +104,7 @@ TensorBinding :: struct {
 	using _: Binding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TensorBinding, objc_selector="tensorDataType", objc_name="tensorDataType")
 	TensorBinding_tensorDataType :: proc(self: ^TensorBinding) -> TensorDataType ---
 
@@ -119,7 +119,7 @@ foreign lib {
 @(objc_class="MTLTensorExtents", objc_superclass=NS.Object)
 TensorExtents :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TensorExtents, objc_selector="initWithRank:values:", objc_name="initWithRank")
 	TensorExtents_initWithRank :: proc(self: ^TensorExtents, rank: NS.UInteger, values: ^NS.Integer) -> instancetype ---
 
@@ -134,7 +134,7 @@ foreign lib {
 @(objc_class="MTLTensorReferenceType", objc_superclass=Type)
 TensorReferenceType :: struct { using _: Type}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TensorReferenceType, objc_selector="tensorDataType", objc_name="tensorDataType")
 	TensorReferenceType_tensorDataType :: proc(self: ^TensorReferenceType) -> TensorDataType ---
 

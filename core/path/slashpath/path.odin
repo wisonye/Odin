@@ -4,8 +4,8 @@
 // To manipulate operating system specific paths, use the path/filepath package
 package slashpath
 
-import "base:runtime"
-import "core:strings"
+#import "base:runtime"
+#import "core:strings"
 
 // is_separator checks whether the byte is a valid separator character
 is_separator :: proc(c: byte) -> bool {

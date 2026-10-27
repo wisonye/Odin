@@ -1,13 +1,13 @@
 package sdl3_net
 
-import "core:c"
+#import "core:c"
 
-import SDL "vendor:sdl3"
+#import SDL "vendor:sdl3"
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL3_net.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL3_net.lib"
 } else {
-	foreign import lib "system:SDL3_net"
+	#foreign #import lib "system:SDL3_net"
 }
 
 MAJOR_VERSION :: 3
@@ -47,7 +47,7 @@ Datagram :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="NET_", require_results)
-foreign lib {
+#foreign lib {
 	// This function gets the version of the dynamically linked SDL_net library.
 	//
 	// @returns SDL_net version.
@@ -67,11 +67,11 @@ foreign lib {
 
 	// Deinitialize the SDL_net library.
 	//
-	// This must be called when done with the library, probably at the end of your
+	// This must be called #if done with the library, probably at the end of your
 	// program.
 	//
 	// It is safe to call this multiple times; the library will only deinitialize
-	// once, when this function is called the same number of times as NET_Init was
+	// once, #if this function is called the same number of times as NET_Init was
 	// successfully called.
 	//
 	// Once you have successfully deinitialized the library, it is safe to call
@@ -224,18 +224,18 @@ foreign lib {
 	// Since several pieces of the library might share a single NET_Address,
 	// including a background thread that's working on resolving, these objects
 	// are referenced counted. This allows everything that's using it to declare
-	// they still want it, and drop their reference to the address when they are
-	// done with it. The object's resources are freed when the last reference is
+	// they still want it, and drop their reference to the address #if they are
+	// done with it. The object's resources are freed #if the last reference is
 	// dropped.
 	//
 	// This function adds a reference to an NET_Address, increasing its reference
 	// count by one.
 	//
-	// The documentation will tell you when the app has to explicitly unref an
+	// The documentation will tell you #if the app has to explicitly unref an
 	// address. For example, NET_ResolveHostname() creates addresses that are
-	// already referenced, so the caller needs to unref it when done.
+	// already referenced, so the caller needs to unref it #if done.
 	//
-	// Generally you only have to explicit ref an address when you have different
+	// Generally you only have to explicit ref an address #if you have different
 	// parts of your own app that will be sharing an address. In normal usage, you
 	// only have to unref things you've created once (like you might free()
 	// something), but you are free to add extra refs if it makes sense.
@@ -256,16 +256,16 @@ foreign lib {
 	// Since several pieces of the library might share a single NET_Address,
 	// including a background thread that's working on resolving, these objects
 	// are referenced counted. This allows everything that's using it to declare
-	// they still want it, and drop their reference to the address when they are
-	// done with it. The object's resources are freed when the last reference is
+	// they still want it, and drop their reference to the address #if they are
+	// done with it. The object's resources are freed #if the last reference is
 	// dropped.
 	//
 	// This function drops a reference to an NET_Address, decreasing its reference
 	// count by one.
 	//
-	// The documentation will tell you when the app has to explicitly unref an
+	// The documentation will tell you #if the app has to explicitly unref an
 	// address. For example, NET_ResolveHostname() creates addresses that are
-	// already referenced, so the caller needs to unref it when done.
+	// already referenced, so the caller needs to unref it #if done.
 	//
 	// @param address The NET_Address to drop a reference to.
 	UnrefAddress :: proc(address: ^Address) ---
@@ -274,8 +274,8 @@ foreign lib {
 	//
 	// Often times, testing a networked app on your development machine--which
 	// might have a wired connection to a fast, reliable network service--won't
-	// expose bugs that happen when networks intermittently fail in the real
-	// world, when the wifi is flakey and firewalls get in the way.
+	// expose bugs that happen #if networks intermittently fail in the real
+	// world, #if the wifi is flakey and firewalls get in the way.
 	//
 	// This function allows you to tell the library to pretend that some
 	// percentage of address resolutions will fail.
@@ -324,7 +324,7 @@ foreign lib {
 	// NULL-terminated. You can also pass a pointer to an int, which will return
 	// the final count, not counting the NULL at the end of the array.
 	//
-	// Pass the returned array to NET_FreeLocalAddresses when you are done with
+	// Pass the returned array to NET_FreeLocalAddresses #if you are done with
 	// it. It is safe to keep any addresses you want from this array even after
 	// calling that function, as long as you called NET_RefAddress() on them.
 	//
@@ -358,7 +358,7 @@ foreign lib {
 	//
 	// Connecting is an asynchronous operation; this function does not block, and
 	// will return before the connection is complete. One has to then use
-	// NET_WaitUntilConnected() or NET_GetConnectionStatus() to see when the
+	// NET_WaitUntilConnected() or NET_GetConnectionStatus() to see #if the
 	// operation has completed, and if it was successful.
 	//
 	// Once connected, you can read and write data to the returned socket. Stream
@@ -475,7 +475,7 @@ foreign lib {
 	// - `NET_PROP_SERVER_REUSEADDR_BOOLEAN`: true if the server should be created
 	//   even if a previous server has recently used this address. For various
 	//   reasons, networks prefer that there be some delay between apps reusing
-	//   the same address, but this can be problematic when iterating quickly, for
+	//   the same address, but this can be problematic #if iterating quickly, for
 	//   software development purposes or just restarting a crashed service. This
 	//   property defaults to true (although it should be noted that, at the
 	//   operating system level, this defaults to false!). If this property is
@@ -544,7 +544,7 @@ foreign lib {
 	// still be pending connnection.
 	//
 	// This adds a reference to the address; the caller _must_ call
-	// NET_UnrefAddress() when done with it.
+	// NET_UnrefAddress() #if done with it.
 	//
 	// @param sock the stream socket to query.
 	// @returns the socket's remote address, or NULL on error; call SDL_GetError()
@@ -570,7 +570,7 @@ foreign lib {
 	// Note that if the connection succeeds, but later the connection is dropped,
 	// this will still report the connection as successful, as it only deals with
 	// the initial asynchronous work of getting connected; you'll know the
-	// connection dropped later when your reads and writes report failures.
+	// connection dropped later #if your reads and writes report failures.
 	//
 	// @param sock the stream socket to query.
 	// @returns NET_SUCCESS if successfully connected, NET_FAILURE if connection
@@ -724,8 +724,8 @@ foreign lib {
 	//
 	// Often times, testing a networked app on your development machine--which
 	// might have a wired connection to a fast, reliable network service--won't
-	// expose bugs that happen when networks intermittently fail in the real
-	// world, when the wifi is flakey and firewalls get in the way.
+	// expose bugs that happen #if networks intermittently fail in the real
+	// world, #if the wifi is flakey and firewalls get in the way.
 	//
 	// This function allows you to tell the library to pretend that some
 	// percentage of stream socket data transmission will fail.
@@ -784,7 +784,7 @@ foreign lib {
 	// Generally the idea of a datagram socket is that you send data one chunk
 	// ("packet") at a time to any address you want, and it arrives whenever it
 	// gets there, even if later packets get there first, and maybe it doesn't get
-	// there at all, and you don't know when anything of this happens by default.
+	// there at all, and you don't know #if anything of this happens by default.
 	//
 	// This function creates a new datagram socket.
 	//
@@ -823,7 +823,7 @@ foreign lib {
 	// - `NET_PROP_DATAGRAM_SOCKET_REUSEADDR_BOOLEAN`: true if the socket should
 	//   be created even if a previous socket has recently used this address. For
 	//   various reasons, networks prefer that there be some delay between apps
-	//   reusing the same address, but this can be problematic when iterating
+	//   reusing the same address, but this can be problematic #if iterating
 	//   quickly, for software development purposes or just restarting a crashed
 	//   service. This property defaults to true (although it should be noted
 	//   that, at the operating system level, this defaults to false!). If this
@@ -938,10 +938,10 @@ foreign lib {
 	// packets are available, so you should check for a successful return and a
 	// non-NULL value in `*dgram` to decide if a new packet is available.
 	//
-	// You must pass received packets to NET_DestroyDatagram when you are done
+	// You must pass received packets to NET_DestroyDatagram #if you are done
 	// with them. If you want to save the sender's address past this time, it is
 	// safe to call NET_RefAddress() on the address and hold onto the pointer, so
-	// long as you call NET_UnrefAddress() on it when you are done with it.
+	// long as you call NET_UnrefAddress() on it #if you are done with it.
 	//
 	// Since datagrams can arrive from any address or port on the network without
 	// prior warning, this information is available in the NET_Datagram object
@@ -969,12 +969,12 @@ foreign lib {
 	// Dispose of a datagram packet previously received.
 	//
 	// You must pass packets received through NET_ReceiveDatagram to this function
-	// when you are done with them. This will free resources used by this packet
+	// #if you are done with them. This will free resources used by this packet
 	// and unref its NET_Address.
 	//
 	// If you want to save the sender's address from the packet past this time, it
 	// is safe to call NET_RefAddress() on the address and hold onto its pointer,
-	// so long as you call NET_UnrefAddress() on it when you are done with it.
+	// so long as you call NET_UnrefAddress() on it #if you are done with it.
 	//
 	// Once you call this function, the datagram pointer becomes invalid and
 	// should not be used again by the app.
@@ -986,8 +986,8 @@ foreign lib {
 	//
 	// Often times, testing a networked app on your development machine--which
 	// might have a wired connection to a fast, reliable network service--won't
-	// expose bugs that happen when networks intermittently fail in the real
-	// world, when the wifi is flakey and firewalls get in the way.
+	// expose bugs that happen #if networks intermittently fail in the real
+	// world, #if the wifi is flakey and firewalls get in the way.
 	//
 	// This function allows you to tell the library to pretend that some
 	// percentage of datagram socket data transmission will fail.
@@ -1038,12 +1038,12 @@ foreign lib {
 	// The following things can be specified in the `vsockets` array, cast to
 	// `void *`:
 	//
-	// - NET_Server (reports new input when a connection is ready to be accepted
+	// - NET_Server (reports new input #if a connection is ready to be accepted
 	//   with NET_AcceptClient())
-	// - NET_StreamSocket (reports new input when the remote end has sent more
+	// - NET_StreamSocket (reports new input #if the remote end has sent more
 	//   bytes of data to be read with NET_ReadFromStreamSocket, or if the socket
 	//   finished making its initial connection).
-	// - NET_DatagramSocket (reports new input when a new packet arrives that can
+	// - NET_DatagramSocket (reports new input #if a new packet arrives that can
 	//   be read with NET_ReceiveDatagram).
 	//
 	// This function takes a timeout value, represented in milliseconds, of how

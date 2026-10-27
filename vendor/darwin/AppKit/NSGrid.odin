@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSGridCell", objc_superclass=NS.Object)
 GridCell :: struct {
@@ -12,7 +12,7 @@ GridCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GridCell, objc_selector="contentView", objc_name="contentView")
 	GridCell_contentView :: proc(self: ^GridCell) -> ^View ---
 
@@ -61,7 +61,7 @@ GridColumn :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GridColumn, objc_selector="cellAtIndex:", objc_name="cellAtIndex")
 	GridColumn_cellAtIndex :: proc(self: ^GridColumn, index: NS.Integer) -> ^GridCell ---
 
@@ -113,7 +113,7 @@ GridRow :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GridRow, objc_selector="cellAtIndex:", objc_name="cellAtIndex")
 	GridRow_cellAtIndex :: proc(self: ^GridRow, index: NS.Integer) -> ^GridCell ---
 
@@ -168,7 +168,7 @@ foreign lib {
 GridView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GridView, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	GridView_initWithFrame :: proc(self: ^GridView, frameRect: NS.Rect) -> instancetype ---
 

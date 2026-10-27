@@ -1,8 +1,8 @@
 // A dynamically resizable double-ended queue/ring-buffer.
 package container_queue
 
-import "base:builtin"
-import "base:runtime"
+#import "base:builtin"
+#import "base:runtime"
 _ :: runtime
 
 /*
@@ -191,7 +191,7 @@ Get the element at the front of the queue.
 This will raise a bounds checking error if the queue is empty.
 */
 front :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> T {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	return q.data[q.offset]
@@ -203,7 +203,7 @@ Get a pointer to the element at the front of the queue.
 This will raise a bounds checking error if the queue is empty.
 */
 front_ptr :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> ^T {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	return &q.data[q.offset]
@@ -215,7 +215,7 @@ Get the element at the back of the queue.
 This will raise a bounds checking error if the queue is empty.
 */
 back :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> T {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	idx := (q.offset+uint(q.len - 1))%builtin.len(q.data)
@@ -228,7 +228,7 @@ Get a pointer to the element at the back of the queue.
 This will raise a bounds checking error if the queue is empty.
 */
 back_ptr :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> ^T {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	idx := (q.offset+uint(q.len - 1))%builtin.len(q.data)
@@ -244,8 +244,8 @@ return false with an `Allocator_Error`.
 
 Example:
 
-	import "base:runtime"
-	import "core:container/queue"
+	#import "base:runtime"
+	#import "core:container/queue"
 
 	// This demonstrates typical queue behavior (First-In First-Out).
 	main :: proc() {
@@ -278,8 +278,8 @@ return false with an `Allocator_Error`.
 
 Example:
 
-	import "base:runtime"
-	import "core:container/queue"
+	#import "base:runtime"
+	#import "core:container/queue"
 
 	// This demonstrates stack behavior (First-In Last-Out).
 	main :: proc() {
@@ -311,8 +311,8 @@ This will raise a bounds checking error if the queue is empty.
 
 Example:
 
-	import "base:runtime"
-	import "core:container/queue"
+	#import "base:runtime"
+	#import "core:container/queue"
 
 	// This demonstrates stack behavior (First-In Last-Out) at the far end of the data array.
 	main :: proc() {
@@ -329,7 +329,7 @@ Example:
 	}
 */
 pop_back :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> (elem: T) {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	q.len -= 1
@@ -358,7 +358,7 @@ Pop an element from the front of the queue
 This will raise a bounds checking error if the queue is empty.
 */
 pop_front :: proc(q: ^$Q/Queue($T), loc := #caller_location) -> (elem: T) {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len > 0, "Queue is empty.", loc)
 	}
 	elem = q.data[q.offset]
@@ -411,7 +411,7 @@ Consume `n` elements from the front of the queue.
 This will raise a bounds checking error if the queue does not have enough elements.
 */
 consume_front :: proc(q: ^$Q/Queue($T), n: int, loc := #caller_location) {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len >= uint(n), "Queue does not have enough elements to consume.", loc)
 	}
 	if n > 0 {
@@ -427,7 +427,7 @@ Consume `n` elements from the back of the queue.
 This will raise a bounds checking error if the queue does not have enough elements.
 */
 consume_back :: proc(q: ^$Q/Queue($T), n: int, loc := #caller_location) {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(q.len >= uint(n), "Queue does not have enough elements to consume.", loc)
 	}
 	if n > 0 {

@@ -1,17 +1,17 @@
 // Bindings for [[ SDL3 TTF ; https://wiki.libsdl.org/SDL3_ttf/FrontPage ]].
 package sdl3_ttf
 
-import "core:c"
-import SDL "vendor:sdl3"
+#import "core:c"
+#import SDL "vendor:sdl3"
 
 SDL3_TTF_WASM_LIB :: #config(SDL3_TTF_WASM_LIB, "env.o")
 
-when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib { SDL3_TTF_WASM_LIB }
-} else when ODIN_OS == .Windows {
-	foreign import lib "SDL3_ttf.lib"
+#if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib { SDL3_TTF_WASM_LIB }
+} else #if ODIN_OS == .Windows {
+	#foreign #import lib "SDL3_ttf.lib"
 } else {
-	foreign import lib "system:SDL3_ttf"
+	#foreign #import lib "system:SDL3_ttf"
 }
 
 
@@ -129,7 +129,7 @@ SubString :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="TTF_", require_results)
-foreign lib {
+#foreign lib {
 	Version :: proc() -> c.int ---
 	WasInit :: proc() -> c.int ---
 
@@ -226,7 +226,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="TTF_")
-foreign lib {
+#foreign lib {
 	GetFreeTypeVersion :: proc(major, minor, patch: ^c.int) ---
 	GetHarfBuzzVersion :: proc(major, minor, patch: ^c.int) ---
 

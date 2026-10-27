@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "core:simd"
+#import "core:simd"
 
 // SSE4 rounding constants
 _MM_FROUND_TO_NEAREST_INT :: 0x00
@@ -29,14 +29,14 @@ _mm_blend_epi16 :: #force_inline proc "c" (a, b: __m128i, $IMM8: u8) -> __m128i 
 	return transmute(__m128i)simd.shuffle(
 		transmute(i16x8)b,
 		transmute(i16x8)a,
-		0 when (IMM8 >> 0) & 1 == 1 else 8,
-		1 when (IMM8 >> 1) & 1 == 1 else 9,
-		2 when (IMM8 >> 2) & 1 == 1 else 10,
-		3 when (IMM8 >> 3) & 1 == 1 else 11,
-		4 when (IMM8 >> 4) & 1 == 1 else 12,
-		5 when (IMM8 >> 5) & 1 == 1 else 13,
-		6 when (IMM8 >> 6) & 1 == 1 else 14,
-		7 when (IMM8 >> 7) & 1 == 1 else 15,
+		0 #if (IMM8 >> 0) & 1 == 1 else 8,
+		1 #if (IMM8 >> 1) & 1 == 1 else 9,
+		2 #if (IMM8 >> 2) & 1 == 1 else 10,
+		3 #if (IMM8 >> 3) & 1 == 1 else 11,
+		4 #if (IMM8 >> 4) & 1 == 1 else 12,
+		5 #if (IMM8 >> 5) & 1 == 1 else 13,
+		6 #if (IMM8 >> 6) & 1 == 1 else 14,
+		7 #if (IMM8 >> 7) & 1 == 1 else 15,
 	)
 }
 @(require_results, enable_target_feature="sse4.1")
@@ -52,8 +52,8 @@ _mm_blend_pd :: #force_inline proc "c" (a, b: __m128d, $IMM2: u8) -> __m128d {
 	return simd.shuffle(
 		a,
 		b,
-		2 when (IMM2 >> 0) & 1 == 1 else 0,
-		3 when (IMM2 >> 1) & 1 == 1 else 1,
+		2 #if (IMM2 >> 0) & 1 == 1 else 0,
+		3 #if (IMM2 >> 1) & 1 == 1 else 1,
 	)
 }
 @(require_results, enable_target_feature="sse4.1")
@@ -61,10 +61,10 @@ _mm_blend_ps :: #force_inline proc "c" (a, b: __m128, $IMM4: u8) -> __m128 {
 	return simd.shuffle(
 		a,
 		b,
-		4 when (IMM4 >> 0) & 1 == 1 else 0,
-		5 when (IMM4 >> 1) & 1 == 1 else 1,
-		6 when (IMM4 >> 2) & 1 == 1 else 2,
-		7 when (IMM4 >> 3) & 1 == 1 else 3,
+		4 #if (IMM4 >> 0) & 1 == 1 else 0,
+		5 #if (IMM4 >> 1) & 1 == 1 else 1,
+		6 #if (IMM4 >> 2) & 1 == 1 else 2,
+		7 #if (IMM4 >> 3) & 1 == 1 else 3,
 	)
 }
 @(require_results, enable_target_feature="sse4.1")
@@ -303,7 +303,7 @@ _mm_test_mix_ones_zeros :: #force_inline proc "c" (a: __m128i, mask: __m128i) ->
 }
 
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(require_results, enable_target_feature="sse4.1")
 	_mm_extract_epi64 :: #force_inline proc "c" (a: __m128i, $IMM1: u32) -> i64 {
 		return simd.extract(transmute(i64x2)a, IMM1)
@@ -317,7 +317,7 @@ when ODIN_ARCH == .amd64 {
 
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.sse41.pblendvb")
 	pblendvb   :: proc(a, b: i8x16, mask: i8x16) -> i8x16 ---
 	@(link_name = "llvm.x86.sse41.blendvpd")

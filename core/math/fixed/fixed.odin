@@ -1,9 +1,9 @@
 // Fixed-point rational numbers and conversion to/from `f64`.
 package math_fixed
 
-import "core:math"
-import "core:strconv"
-import "base:intrinsics"
+#import "core:math"
+#import "core:strconv"
+#import "base:intrinsics"
 _, _, _ :: intrinsics, strconv, math
 
 Fixed :: struct($Backing: typeid, $Fraction_Width: uint)
@@ -123,7 +123,7 @@ write :: proc(dst: []byte, x: $T/Fixed($Backing, $Fraction_Width)) -> string {
 			x.i = -x.i
 		}
 
-		when size_of(Backing) < 16 {
+		#if size_of(Backing) < 16 {
 			T :: u64
 			write_uint :: strconv.write_uint
 		} else {

@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIPress", objc_superclass=NS.Object)
 Press :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Press, objc_selector="timestamp", objc_name="timestamp")
 	Press_timestamp :: proc(self: ^Press) -> NS.TimeInterval ---
 

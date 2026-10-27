@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="GKPlayer", objc_superclass=BasePlayer)
 Player :: struct { using _: BasePlayer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Player, objc_selector="scopedIDsArePersistent", objc_name="scopedIDsArePersistent")
 	Player_scopedIDsArePersistent :: proc(self: ^Player) -> bool ---
 
@@ -55,7 +55,7 @@ PlayerInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="GKLocalPlayer", objc_superclass=Player)
 LocalPlayer :: struct { using _: Player}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalPlayer, objc_selector="loadRecentPlayersWithCompletionHandler:", objc_name="loadRecentPlayersWithCompletionHandler")
 	LocalPlayer_loadRecentPlayersWithCompletionHandler :: proc(self: ^LocalPlayer, completionHandler: ^Objc_Block(proc "c" ( recentPlayers: ^NS.Array, error: ^NS.Error ))) ---
 

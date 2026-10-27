@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKSystemSharingUIObserver", objc_superclass=NS.Object)
 SystemSharingUIObserver :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SystemSharingUIObserver, objc_selector="init", objc_name="init")
 	SystemSharingUIObserver_init :: proc(self: ^SystemSharingUIObserver) -> instancetype ---
 

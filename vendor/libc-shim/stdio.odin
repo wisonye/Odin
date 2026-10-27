@@ -1,12 +1,12 @@
 #+build !freestanding
 package odin_libc
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:c"
-import "core:strconv"
+#import "core:c"
+#import "core:strconv"
 
-import stb "vendor:stb/sprintf"
+#import stb "vendor:stb/sprintf"
 
 FILE :: rawptr
 

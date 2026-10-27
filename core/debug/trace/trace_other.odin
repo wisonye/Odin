@@ -5,9 +5,9 @@
 #+vet explicit-allocators
 package debug_trace
 
-@(require) import "base:runtime"
+@(require) #import "base:runtime"
 
-when !INSTRUMENTATION_MODE {
+#if !INSTRUMENTATION_MODE {
 
 @(private="package")
 _Capture_Entry :: struct {}

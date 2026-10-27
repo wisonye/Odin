@@ -1,7 +1,7 @@
 package test_core_mem
 
-import "core:testing"
-import "core:mem"
+#import "core:testing"
+#import "core:mem"
 
 
 expect_arena_allocation :: proc(t: ^testing.T, expected_used_bytes, num_bytes, alignment: int) {

@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_GameKit
 
-import NS "vendor:darwin/AppKit"
-import "base:intrinsics"
+#import NS "vendor:darwin/AppKit"
+#import "base:intrinsics"
 
 @(objc_class="GKChallengesViewController", objc_superclass=NS.ViewController)
 ChallengesViewController :: struct {
@@ -12,7 +12,7 @@ ChallengesViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengesViewController, objc_selector="challengeDelegate", objc_name="challengeDelegate")
 	ChallengesViewController_challengeDelegate :: proc(self: ^ChallengesViewController) -> ^ChallengesViewControllerDelegate ---
 
@@ -25,7 +25,7 @@ foreign lib {
 ChallengesViewControllerDelegate :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengesViewControllerDelegate, objc_selector="challengesViewControllerDidFinish:", objc_name="challengesViewControllerDidFinish")
 	ChallengesViewControllerDelegate_challengesViewControllerDidFinish :: proc(self: ^ChallengesViewControllerDelegate, viewController: ^ChallengesViewController) ---
 }

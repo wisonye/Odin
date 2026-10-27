@@ -6,7 +6,7 @@ MSAN_ENABLED :: .Memory in ODIN_SANITIZER_FLAGS
 
 @(private="file")
 @(default_calling_convention="system")
-foreign {
+#foreign {
 	__msan_unpoison :: proc(addr: rawptr, size: uint) ---
 }
 
@@ -19,7 +19,7 @@ address within the slice as if it had already been initialized.
 When msan is not enabled this procedure does nothing.
 */
 memory_unpoison_slice :: proc "contextless" (region: $T/[]$E) {
-	when MSAN_ENABLED {
+	#if MSAN_ENABLED {
 		__msan_unpoison(raw_data(region),  size_of(E) * len(region))
 	}
 }
@@ -33,7 +33,7 @@ within the region the pointer points to as if it had already been initialized.
 When msan is not enabled this procedure does nothing.
 */
 memory_unpoison_ptr :: proc "contextless" (ptr: ^$T) {
-	when MSAN_ENABLED {
+	#if MSAN_ENABLED {
 		__msan_unpoison(ptr, size_of(T))
 	}
 }
@@ -47,7 +47,7 @@ within this range as if it had already been initialized.
 When msan is not enabled this procedure does nothing.
 */
 memory_unpoison_rawptr :: proc "contextless" (ptr: rawptr, len: int) {
-	when MSAN_ENABLED {
+	#if MSAN_ENABLED {
 		__msan_unpoison(ptr, uint(len))
 	}
 }
@@ -61,7 +61,7 @@ within this range as if it had already been initialized.
 When msan is not enabled this procedure does nothing.
 */
 memory_unpoison_rawptr_uint :: proc "contextless" (ptr: rawptr, len: uint) {
-	when MSAN_ENABLED {
+	#if MSAN_ENABLED {
 		__msan_unpoison(ptr, len)
 	}
 }

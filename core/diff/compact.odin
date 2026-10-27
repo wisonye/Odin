@@ -341,7 +341,7 @@ indent_best_end :: proc "contextless" (indents: []u8, g: Group, earliest_end: in
 	return
 }
 
-// Negative when `x` is better than `y`, and zero when they are as good.
+// Negative #if `x` is better than `y`, and zero #if they are as good.
 @(require_results)
 indent_compare :: proc "contextless" (x, y: Indent_Score) -> int {
 	sign := 0

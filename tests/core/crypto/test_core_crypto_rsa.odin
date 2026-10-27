@@ -1,13 +1,13 @@
 #+build !riscv64
 package test_core_crypto
 
-import "core:bytes"
-import "core:encoding/hex"
-import "core:log"
-import "core:testing"
+#import "core:bytes"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:testing"
 
-import "core:crypto"
-import "core:crypto/rsa"
+#import "core:crypto"
+#import "core:crypto/rsa"
 
 // BUG/yawning: RISC-V fails the PSS test in CI with a nonsensical
 // bounds-checking error suggesting something spooky, as the failure

@@ -1,11 +1,11 @@
 package odin_libc
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
-import "core:strings"
-import "core:mem"
-import "core:bytes"
+#import "core:c"
+#import "core:strings"
+#import "core:mem"
+#import "core:bytes"
 
 // NOTE: already defined by Odin.
 // void *memcpy(void *, const void *, size_t);

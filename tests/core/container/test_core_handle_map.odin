@@ -1,8 +1,8 @@
 package test_core_container
 
-import hm "core:container/handle_map"
-import    "core:container/xar"
-import    "core:testing"
+#import hm "core:container/handle_map"
+#import    "core:container/xar"
+#import    "core:testing"
 
 Item :: struct {
 	v: int,

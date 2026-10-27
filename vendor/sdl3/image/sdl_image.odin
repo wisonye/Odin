@@ -1,13 +1,13 @@
 // Bindings for [[ SDL3 Image ; https://wiki.libsdl.org/SDL3_image/FrontPage ]].
 package sdl3_image
 
-import "core:c"
-import SDL "vendor:sdl3"
+#import "core:c"
+#import SDL "vendor:sdl3"
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL3_image.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL3_image.lib"
 } else {
-	foreign import lib "system:SDL3_image"
+	#foreign #import lib "system:SDL3_image"
 }
 
 MAJOR_VERSION :: 3
@@ -67,7 +67,7 @@ PROP_METADATA_FRAME_COUNT_NUMBER   :: "SDL_image.metadata.frame_count"
 PROP_METADATA_LOOP_COUNT_NUMBER    :: "SDL_image.metadata.loop_count"
 
 @(default_calling_convention="c", link_prefix="IMG_")
-foreign lib {
+#foreign lib {
 	Version :: proc() -> c.int ---
 
 	/* Load an image from an SDL data source.

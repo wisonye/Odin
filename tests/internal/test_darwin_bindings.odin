@@ -1,13 +1,13 @@
 #+build darwin
 package test_internal
 
-import "core:c"
-import "core:log"
-import "core:testing"
-import si   "core:sys/info"
-import ObjC "core:sys/darwin/ObjectiveC"
-import NS   "core:sys/darwin/Foundation"
-import MTL  "vendor:darwin/Metal"
+#import "core:c"
+#import "core:log"
+#import "core:testing"
+#import si   "core:sys/info"
+#import ObjC "core:sys/darwin/ObjectiveC"
+#import NS   "core:sys/darwin/Foundation"
+#import MTL  "vendor:darwin/Metal"
 
 // Methods with an `NSError**` out-parameter return the error as a second value.
 @(test)

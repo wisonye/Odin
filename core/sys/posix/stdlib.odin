@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
-foreign lib {
+#foreign lib {
 	/*
 	Takes a pointer to a radix-64 representation, in which the first digit is the least significant,
 	and return the corresponding long value. 
@@ -362,7 +362,7 @@ foreign lib {
 	setkey :: proc(key: [^]byte) ---
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LINITSTATE :: "__initstate60"
 	@(private) LSRANDOM   :: "__srandom60"
 	@(private) LUNSETENV  :: "__unsetenv13"

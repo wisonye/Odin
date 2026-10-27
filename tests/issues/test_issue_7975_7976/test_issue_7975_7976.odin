@@ -2,7 +2,7 @@
 // Constant arguments to `min`, `max` and `clamp` are unified into a single type, as non-constant ones are
 package test_issue_7975_7976
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_constant_min_max_clamp :: proc(t: ^testing.T) {

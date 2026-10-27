@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSRuleEditor", objc_superclass=Control)
 RuleEditor :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RuleEditor, objc_selector="reloadCriteria", objc_name="reloadCriteria")
 	RuleEditor_reloadCriteria :: proc(self: ^RuleEditor) ---
 
@@ -146,7 +146,7 @@ RuleEditorDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RuleEditorDelegate, objc_selector="ruleEditor:numberOfChildrenForCriterion:withRowType:", objc_name="ruleEditor_numberOfChildrenForCriterion_withRowType")
 	RuleEditorDelegate_ruleEditor_numberOfChildrenForCriterion_withRowType :: proc(self: ^RuleEditorDelegate, editor: ^RuleEditor, criterion: id, rowType: RuleEditorRowType) -> NS.Integer ---
 

@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIToolTipConfiguration", objc_superclass=NS.Object)
 ToolTipConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolTipConfiguration, objc_selector="configurationWithToolTip:", objc_name="configurationWithToolTip_", objc_is_class_method=true)
 	ToolTipConfiguration_configurationWithToolTip_ :: proc(toolTip: ^NS.String) -> instancetype ---
 
@@ -44,7 +44,7 @@ ToolTipInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolTipInteraction, objc_selector="init", objc_name="init")
 	ToolTipInteraction_init :: proc(self: ^ToolTipInteraction) -> instancetype ---
 
@@ -78,7 +78,7 @@ ToolTipInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ToolTipInteractionDelegate, objc_selector="toolTipInteraction:configurationAtPoint:", objc_name="toolTipInteraction")
 	ToolTipInteractionDelegate_toolTipInteraction :: proc(self: ^ToolTipInteractionDelegate, interaction: ^ToolTipInteraction, point: CG.Point) -> ^ToolTipConfiguration ---
 }

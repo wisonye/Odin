@@ -2,7 +2,7 @@
 #+build windows
 package testing
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 old_console_codepage: win32.CODEPAGE
 

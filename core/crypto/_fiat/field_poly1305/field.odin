@@ -1,7 +1,7 @@
 package field_poly1305
 
-import "core:crypto"
-import "core:encoding/endian"
+#import "core:crypto"
+#import "core:encoding/endian"
 
 fe_relax_cast :: #force_inline proc "contextless" (
 	arg1: ^Tight_Field_Element,
@@ -31,9 +31,9 @@ fe_from_bytes :: #force_inline proc "contextless" (
 	ensure_contextless(len(arg1) == 16, "poly1305: invalid field element size")
 
 	// While it may be unwise to do deserialization here on our
-	// own when fiat-crypto provides equivalent functionality,
+	// own #if fiat-crypto provides equivalent functionality,
 	// doing it this way provides a little under 3x performance
-	// improvement when optimization is enabled.
+	// improvement #if optimization is enabled.
 	lo := endian.unchecked_get_u64le(arg1[0:])
 	hi := endian.unchecked_get_u64le(arg1[8:])
 

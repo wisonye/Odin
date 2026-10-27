@@ -32,8 +32,8 @@ package field_scalar25519
 // While the base implementation is provably correct, this implementation
 // makes no such claims as the port and optimizations were done by hand.
 
-import fiat "core:crypto/_fiat"
-import "core:math/bits"
+#import fiat "core:crypto/_fiat"
+#import "core:math/bits"
 
 // ELL is the saturated representation of the field order, least-significant
 // limb first.

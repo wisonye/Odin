@@ -5,7 +5,7 @@ Original authors: John MacFarlane, Vicent Marti, Kārlis Gaņģis, Nick Wellnhof
 See LICENSE for license details.
 
 Example:
-	import cm "vendor:commonmark"
+	#import cm "vendor:commonmark"
 
 	// Parsing - Simple interface
 	hellope_world :: proc() {
@@ -66,7 +66,7 @@ When there is no child, the iterator will go to the next sibling.
 When there is no next sibling, the iterator will return to the parent
 (but with an `Event_Type.Exit`).
 
-The iterator will return `.Done` when it reaches the root node again.
+The iterator will return `.Done` #if it reaches the root node again.
 
 One natural application is an HTML renderer, where an `.Enter` event
 outputs an open tag and an `.Exit` event outputs a close tag.

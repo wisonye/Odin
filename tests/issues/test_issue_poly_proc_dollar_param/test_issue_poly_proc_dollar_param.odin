@@ -1,6 +1,6 @@
 package test_issue_poly_proc_dollar_param
 
-import "core:testing"
+#import "core:testing"
 
 @(private="file")
 add_one :: proc "contextless" (value: ^$T) -> i32 { return i32(value^) + 1 }

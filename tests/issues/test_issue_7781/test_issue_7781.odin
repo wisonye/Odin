@@ -1,6 +1,6 @@
 package test_issue_7781
 
-import "core:testing"
+#import "core:testing"
 
 // A shift amount wider than the shifted operand was narrowed to the operand's type before being tested against
 // its bit width, so `u8(1) << u64(256)` shifted by 0 and gave 1 instead of 0.

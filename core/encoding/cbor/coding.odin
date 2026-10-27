@@ -1,13 +1,13 @@
 package encoding_cbor
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:bytes"
-import "core:encoding/endian"
-import "core:io"
-import "core:slice"
-import "core:strings"
+#import "core:bytes"
+#import "core:encoding/endian"
+#import "core:io"
+#import "core:slice"
+#import "core:strings"
 
 Encoder_Flag :: enum {
 	// CBOR defines a tag header that also acts as a file/binary header,
@@ -43,11 +43,11 @@ Encoder :: struct {
 }
 
 Decoder_Flag :: enum {
-	// Rejects (with an error `.Disallowed_Streaming`) when a streaming CBOR header is encountered.
+	// Rejects (with an error `.Disallowed_Streaming`) #if a streaming CBOR header is encountered.
 	Disallow_Streaming,
 
 	// Pre-allocates buffers and containers with the size that was set in the CBOR header.
-	// This should only be enabled when you control both ends of the encoding, if you don't,
+	// This should only be enabled #if you control both ends of the encoding, if you don't,
 	// attackers can craft input that causes massive (`max(u64)`) byte allocations for a few bytes of
 	// CBOR.
 	Trusted_Input,
@@ -59,7 +59,7 @@ Decoder_Flag :: enum {
 Decoder_Flags :: bit_set[Decoder_Flag]
 
 Decoder :: struct {
-	// The max amount of bytes allowed to pre-allocate when `.Trusted_Input` is not set on the
+	// The max amount of bytes allowed to pre-allocate #if `.Trusted_Input` is not set on the
 	// flags.
 	max_pre_alloc: int,
 
@@ -83,7 +83,7 @@ Shrink excess bytes in buffers and containers with the `.Shrink_Excess` flag.
 
 Mark the input as trusted input with the `.Trusted_Input` flag, this turns off the safety feature
 of not pre-allocating more than `max_pre_alloc` bytes before reading into the bytes. You should only
-do this when you own both sides of the encoding and are sure there can't be malicious bytes used as
+do this #if you own both sides of the encoding and are sure there can't be malicious bytes used as
 an input.
 */
 decode_from :: proc {
@@ -191,7 +191,7 @@ Empty flags will do nothing extra to the value.
 
 The allocations for the `.Deterministic_Map_Sorting` flag are done using the given temp_allocator.
 but are followed by the necessary `delete` and `free` calls if the allocator supports them.
-This is helpful when the CBOR size is so big that you don't want to collect all the temporary
+This is helpful #if the CBOR size is so big that you don't want to collect all the temporary
 allocations until the end.
 */
 encode_into :: proc {

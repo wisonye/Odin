@@ -6,10 +6,10 @@ package sha2
 //
 // See: https://github.com/noloader/SHA-Intrinsics
 
-import "base:intrinsics"
-import "core:simd"
-import "core:simd/arm"
-import "core:sys/info"
+#import "base:intrinsics"
+#import "core:simd"
+#import "core:simd/arm"
+#import "core:sys/info"
 
 // is_hardware_accelerated_256 returns true if and only if (⟺) hardware
 // accelerated SHA-224/SHA-256 is supported.
@@ -71,7 +71,7 @@ sha256_transf_hw :: proc "contextless" (ctx: ^Context_256, data: []byte) #no_bou
 		msg_3 := intrinsics.unaligned_load((^simd.u32x4)(raw_data(data[48:])))
 
 		// Reverse for little endian
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			msg_0 = byteswap_u32x4(msg_0)
 			msg_1 = byteswap_u32x4(msg_1)
 			msg_2 = byteswap_u32x4(msg_2)
@@ -210,7 +210,7 @@ sha256_transf_hw :: proc "contextless" (ctx: ^Context_256, data: []byte) #no_bou
 	intrinsics.unaligned_store((^simd.u32x4)(&ctx.h[4]), state_1)
 }
 
-when ODIN_ENDIAN == .Little {
+#if ODIN_ENDIAN == .Little {
 	@(private = "file", enable_target_feature = "neon")
 	byteswap_u32x4 :: #force_inline proc "contextless" (a: simd.u32x4) -> simd.u32x4 {
 		return transmute(simd.u32x4)(

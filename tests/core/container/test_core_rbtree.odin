@@ -1,11 +1,11 @@
 package test_core_container
 
-import rb "core:container/rbtree"
-import "core:math/rand"
-import "core:testing"
-import "base:intrinsics"
-import "core:slice"
-import "core:log"
+#import rb "core:container/rbtree"
+#import "core:math/rand"
+#import "core:testing"
+#import "base:intrinsics"
+#import "core:slice"
+#import "core:log"
 
 test_rbtree_integer :: proc(t: ^testing.T, $Key: typeid, $Value: typeid) {
 	log.infof("Testing Red-Black Tree($Key=%v,$Value=%v) using random seed %v.", type_info_of(Key), type_info_of(Value), t.seed)

@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import version "system:version.lib"
+#foreign #import version "system:version.lib"
 
 @(default_calling_convention = "system")
-foreign version {
+#foreign version {
 	GetFileVersionInfoSizeW   :: proc(lpwstrFilename: LPCWSTR, lpdwHandle: LPDWORD) -> DWORD ---
 	GetFileVersionInfoW       :: proc(lptstrFilename: LPCWSTR, dwHandle: DWORD, dwLen: DWORD, lpData: LPVOID) -> BOOL ---
 

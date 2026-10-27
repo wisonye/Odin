@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="MTLRenderPassDescriptor", objc_superclass=NS.Object)
 RenderPassDescriptor :: struct {
@@ -12,7 +12,7 @@ RenderPassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassDescriptor, objc_selector="renderPassDescriptor", objc_name="renderPassDescriptor", objc_is_class_method=true)
 	RenderPassDescriptor_renderPassDescriptor :: proc() -> ^RenderPassDescriptor ---
 
@@ -135,7 +135,7 @@ RenderPassAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassAttachmentDescriptor, objc_selector="texture", objc_name="texture")
 	RenderPassAttachmentDescriptor_texture :: proc(self: ^RenderPassAttachmentDescriptor) -> ^Texture ---
 
@@ -207,7 +207,7 @@ foreign lib {
 @(objc_class="MTLRenderPassColorAttachmentDescriptor", objc_superclass=RenderPassAttachmentDescriptor)
 RenderPassColorAttachmentDescriptor :: struct { using _: RenderPassAttachmentDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassColorAttachmentDescriptor, objc_selector="clearColor", objc_name="clearColor")
 	RenderPassColorAttachmentDescriptor_clearColor :: proc(self: ^RenderPassColorAttachmentDescriptor) -> ClearColor ---
 
@@ -219,7 +219,7 @@ foreign lib {
 @(objc_class="MTLRenderPassColorAttachmentDescriptorArray", objc_superclass=NS.Object)
 RenderPassColorAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassColorAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	RenderPassColorAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^RenderPassColorAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^RenderPassColorAttachmentDescriptor ---
 
@@ -231,7 +231,7 @@ foreign lib {
 @(objc_class="MTLRenderPassDepthAttachmentDescriptor", objc_superclass=RenderPassAttachmentDescriptor)
 RenderPassDepthAttachmentDescriptor :: struct { using _: RenderPassAttachmentDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassDepthAttachmentDescriptor, objc_selector="clearDepth", objc_name="clearDepth")
 	RenderPassDepthAttachmentDescriptor_clearDepth :: proc(self: ^RenderPassDepthAttachmentDescriptor) -> cffi.double ---
 
@@ -252,7 +252,7 @@ RenderPassSampleBufferAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassSampleBufferAttachmentDescriptor, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	RenderPassSampleBufferAttachmentDescriptor_sampleBuffer :: proc(self: ^RenderPassSampleBufferAttachmentDescriptor) -> ^CounterSampleBuffer ---
 
@@ -288,7 +288,7 @@ foreign lib {
 @(objc_class="MTLRenderPassSampleBufferAttachmentDescriptorArray", objc_superclass=NS.Object)
 RenderPassSampleBufferAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassSampleBufferAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	RenderPassSampleBufferAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^RenderPassSampleBufferAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^RenderPassSampleBufferAttachmentDescriptor ---
 
@@ -300,7 +300,7 @@ foreign lib {
 @(objc_class="MTLRenderPassStencilAttachmentDescriptor", objc_superclass=RenderPassAttachmentDescriptor)
 RenderPassStencilAttachmentDescriptor :: struct { using _: RenderPassAttachmentDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPassStencilAttachmentDescriptor, objc_selector="clearStencil", objc_name="clearStencil")
 	RenderPassStencilAttachmentDescriptor_clearStencil :: proc(self: ^RenderPassStencilAttachmentDescriptor) -> cffi.uint32_t ---
 
@@ -322,7 +322,7 @@ RenderPipelineState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineState, objc_selector="functionHandleWithName:stage:", objc_name="functionHandleWithName")
 	RenderPipelineState_functionHandleWithName :: proc(self: ^RenderPipelineState, name: ^NS.String, stage: RenderStages) -> ^FunctionHandle ---
 
@@ -424,7 +424,7 @@ RenderPipelineDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	RenderPipelineDescriptor_reset :: proc(self: ^RenderPipelineDescriptor) ---
 
@@ -628,7 +628,7 @@ foreign lib {
 @(objc_class="MTLRenderPipelineReflection", objc_superclass=NS.Object)
 RenderPipelineReflection :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineReflection, objc_selector="vertexBindings", objc_name="vertexBindings")
 	RenderPipelineReflection_vertexBindings :: proc(self: ^RenderPipelineReflection) -> ^NS.Array ---
 
@@ -661,7 +661,7 @@ MeshRenderPipelineDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshRenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	MeshRenderPipelineDescriptor_reset :: proc(self: ^MeshRenderPipelineDescriptor) ---
 
@@ -835,7 +835,7 @@ RenderPipelineColorAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineColorAttachmentDescriptor, objc_selector="pixelFormat", objc_name="pixelFormat")
 	RenderPipelineColorAttachmentDescriptor_pixelFormat :: proc(self: ^RenderPipelineColorAttachmentDescriptor) -> PixelFormat ---
 
@@ -895,7 +895,7 @@ foreign lib {
 @(objc_class="MTLRenderPipelineColorAttachmentDescriptorArray", objc_superclass=NS.Object)
 RenderPipelineColorAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineColorAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	RenderPipelineColorAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^RenderPipelineColorAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^RenderPipelineColorAttachmentDescriptor ---
 
@@ -910,7 +910,7 @@ RenderPipelineFunctionsDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderPipelineFunctionsDescriptor, objc_selector="vertexAdditionalBinaryFunctions", objc_name="vertexAdditionalBinaryFunctions")
 	RenderPipelineFunctionsDescriptor_vertexAdditionalBinaryFunctions :: proc(self: ^RenderPipelineFunctionsDescriptor) -> ^NS.Array ---
 
@@ -937,7 +937,7 @@ TileRenderPipelineDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TileRenderPipelineDescriptor, objc_selector="reset", objc_name="reset")
 	TileRenderPipelineDescriptor_reset :: proc(self: ^TileRenderPipelineDescriptor) ---
 
@@ -1027,7 +1027,7 @@ TileRenderPipelineColorAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TileRenderPipelineColorAttachmentDescriptor, objc_selector="pixelFormat", objc_name="pixelFormat")
 	TileRenderPipelineColorAttachmentDescriptor_pixelFormat :: proc(self: ^TileRenderPipelineColorAttachmentDescriptor) -> PixelFormat ---
 
@@ -1039,7 +1039,7 @@ foreign lib {
 @(objc_class="MTLTileRenderPipelineColorAttachmentDescriptorArray", objc_superclass=NS.Object)
 TileRenderPipelineColorAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TileRenderPipelineColorAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	TileRenderPipelineColorAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^TileRenderPipelineColorAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^TileRenderPipelineColorAttachmentDescriptor ---
 

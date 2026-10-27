@@ -1,14 +1,14 @@
 // Bindings for [[ DXC ; https://learn.microsoft.com/en-us/windows/win32/api/dxcapi/ ]].
 package directx_dxc
 
-when ODIN_OS == .Windows {
-	foreign import dxcompiler "dxcompiler.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import dxcompiler "dxcompiler.lib"
 } else {
-	foreign import dxcompiler "system:dxcompiler"
+	#foreign #import dxcompiler "system:dxcompiler"
 }
 
 @(default_calling_convention="c", link_prefix="Dxc")
-foreign dxcompiler {
+#foreign dxcompiler {
 	CreateInstance  :: proc (rclsid: ^CLSID, riid: ^IID, ppv: rawptr) -> HRESULT ---
 	CreateInstance2 :: proc (pMalloc: ^IMalloc, rclsid: ^CLSID, riid: ^IID, ppv: rawptr) -> HRESULT ---
 }

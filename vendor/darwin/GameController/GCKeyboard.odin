@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCKeyboard", objc_superclass=NS.Object)
 Keyboard :: struct {
@@ -10,7 +10,7 @@ Keyboard :: struct {
 	using _: Device,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Keyboard, objc_selector="keyboardInput", objc_name="keyboardInput")
 	Keyboard_keyboardInput :: proc(self: ^Keyboard) -> ^KeyboardInput ---
 
@@ -22,7 +22,7 @@ foreign lib {
 @(objc_class="GCKeyboardInput", objc_superclass=PhysicalInputProfile)
 KeyboardInput :: struct { using _: PhysicalInputProfile}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyboardInput, objc_selector="buttonForKeyCode:", objc_name="buttonForKeyCode")
 	KeyboardInput_buttonForKeyCode :: proc(self: ^KeyboardInput, code: KeyCode) -> ^ControllerButtonInput ---
 

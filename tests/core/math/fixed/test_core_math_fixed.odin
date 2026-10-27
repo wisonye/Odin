@@ -1,8 +1,8 @@
 package test_core_math_fixed
 
-import "base:intrinsics"
-import "core:math/fixed"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:math/fixed"
+#import "core:testing"
 
 @test
 test_fixed_4_4_unsigned :: proc(t: ^testing.T) {

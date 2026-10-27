@@ -72,8 +72,8 @@ Returns:
 
 Example:
 
-    import "core:fmt"
-    import "core:sys/linux"
+    #import "core:fmt"
+    #import "core:sys/linux"
 
     print_names :: proc(dirfd: linux.Fd) {
         // Get dirents into a buffer.
@@ -94,7 +94,7 @@ Example:
     }
 */
 dirent_iterate_buf :: proc "contextless" (buf: []u8, offs: ^int) -> (d: ^Dirent, cont: bool) {
-	// Stopped iterating when there's no space left
+	// Stopped iterating #if there's no space left
 	if offs^ >= len(buf) {
 		return nil, false
 	}

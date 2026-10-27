@@ -1,6 +1,6 @@
 package field_curve25519
 
-import "core:crypto"
+#import "core:crypto"
 
 zero_explicit :: crypto.zero_explicit
 

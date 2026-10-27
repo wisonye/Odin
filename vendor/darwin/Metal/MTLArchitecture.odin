@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLArchitecture", objc_superclass=NS.Object)
 Architecture :: struct {
@@ -10,7 +10,7 @@ Architecture :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Architecture, objc_selector="name", objc_name="name")
 	Architecture_name :: proc(self: ^Architecture) -> ^NS.String ---
 }

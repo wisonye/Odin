@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIWindow", objc_superclass=View)
 Window :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Window, objc_selector="initWithWindowScene:", objc_name="initWithWindowScene")
 	Window_initWithWindowScene :: proc(self: ^Window, windowScene: ^WindowScene) -> instancetype ---
 
@@ -92,7 +92,7 @@ foreign lib {
 WindowScene :: struct { using _: Scene}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowScene, objc_selector="requestGeometryUpdateWithPreferences:errorHandler:", objc_name="requestGeometryUpdateWithPreferences")
 	WindowScene_requestGeometryUpdateWithPreferences :: proc(self: ^WindowScene, geometryPreferences: ^WindowSceneGeometryPreferences, errorHandler: ^Objc_Block(proc "c" ( error: ^NS.Error ))) ---
 
@@ -150,7 +150,7 @@ foreign lib {
 WindowSceneDelegate :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIWindowSceneDelegate")
@@ -160,7 +160,7 @@ WindowSceneDelegateProtocol :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneDelegateProtocol, objc_selector="windowScene:didUpdateCoordinateSpace:interfaceOrientation:traitCollection:", objc_name="windowScene_didUpdateCoordinateSpace_interfaceOrientation_traitCollection")
 	WindowSceneDelegateProtocol_windowScene_didUpdateCoordinateSpace_interfaceOrientation_traitCollection :: proc(self: ^WindowSceneDelegateProtocol, windowScene: ^WindowScene, previousCoordinateSpace: ^CoordinateSpace, previousInterfaceOrientation: InterfaceOrientation, previousTraitCollection: ^TraitCollection) ---
 
@@ -196,7 +196,7 @@ WindowSceneDelegateProtocol_windowScene :: proc {
 WindowSceneActivationConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneActivationConfiguration, objc_selector="initWithUserActivity:", objc_name="initWithUserActivity")
 	WindowSceneActivationConfiguration_initWithUserActivity :: proc(self: ^WindowSceneActivationConfiguration, userActivity: ^NS.UserActivity) -> instancetype ---
 
@@ -227,7 +227,7 @@ foreign lib {
 WindowSceneActivationAction :: struct { using _: Action}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneActivationAction, objc_selector="actionWithIdentifier:alternateAction:configurationProvider:", objc_name="actionWithIdentifier", objc_is_class_method=true)
 	WindowSceneActivationAction_actionWithIdentifier :: proc(identifier: ^NS.String, alternateAction: ^Action, configurationProvider: WindowSceneActivationActionConfigurationProvider) -> instancetype ---
 
@@ -252,7 +252,7 @@ WindowSceneActivationInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneActivationInteraction, objc_selector="initWithConfigurationProvider:errorHandler:", objc_name="initWithConfigurationProvider")
 	WindowSceneActivationInteraction_initWithConfigurationProvider :: proc(self: ^WindowSceneActivationInteraction, configurationProvider: WindowSceneActivationInteractionConfigurationProvider, errorHandler: ^Objc_Block(proc "c" ( _0: ^NS.Error ))) -> instancetype ---
 
@@ -268,7 +268,7 @@ foreign lib {
 WindowSceneActivationRequestOptions :: struct { using _: SceneActivationRequestOptions}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneActivationRequestOptions, objc_selector="preferredPresentationStyle", objc_name="preferredPresentationStyle")
 	WindowSceneActivationRequestOptions_preferredPresentationStyle :: proc(self: ^WindowSceneActivationRequestOptions) -> WindowScenePresentationStyle ---
 
@@ -287,7 +287,7 @@ foreign lib {
 WindowSceneDestructionRequestOptions :: struct { using _: SceneDestructionRequestOptions}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneDestructionRequestOptions, objc_selector="windowDismissalAnimation", objc_name="windowDismissalAnimation")
 	WindowSceneDestructionRequestOptions_windowDismissalAnimation :: proc(self: ^WindowSceneDestructionRequestOptions) -> WindowSceneDismissalAnimation ---
 
@@ -303,7 +303,7 @@ WindowSceneDragInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneDragInteraction, objc_selector="gestureForFailureRelationships", objc_name="gestureForFailureRelationships")
 	WindowSceneDragInteraction_gestureForFailureRelationships :: proc(self: ^WindowSceneDragInteraction) -> ^GestureRecognizer ---
 }
@@ -316,7 +316,7 @@ WindowSceneGeometry :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneGeometry, objc_selector="init", objc_name="init")
 	WindowSceneGeometry_init :: proc(self: ^WindowSceneGeometry) -> instancetype ---
 
@@ -353,7 +353,7 @@ foreign lib {
 WindowSceneGeometryPreferences :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneGeometryPreferences, objc_selector="init", objc_name="init")
 	WindowSceneGeometryPreferences_init :: proc(self: ^WindowSceneGeometryPreferences) -> instancetype ---
 
@@ -366,7 +366,7 @@ foreign lib {
 WindowSceneGeometryPreferencesIOS :: struct { using _: WindowSceneGeometryPreferences}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneGeometryPreferencesIOS, objc_selector="init", objc_name="init")
 	WindowSceneGeometryPreferencesIOS_init :: proc(self: ^WindowSceneGeometryPreferencesIOS) -> instancetype ---
 
@@ -385,7 +385,7 @@ foreign lib {
 WindowSceneGeometryPreferencesMac :: struct { using _: WindowSceneGeometryPreferences}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneGeometryPreferencesMac, objc_selector="init", objc_name="init")
 	WindowSceneGeometryPreferencesMac_init :: proc(self: ^WindowSceneGeometryPreferencesMac) -> instancetype ---
 
@@ -404,7 +404,7 @@ foreign lib {
 WindowSceneGeometryPreferencesVision :: struct { using _: WindowSceneGeometryPreferences}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneGeometryPreferencesVision, objc_selector="init", objc_name="init")
 	WindowSceneGeometryPreferencesVision_init :: proc(self: ^WindowSceneGeometryPreferencesVision) -> instancetype ---
 
@@ -444,7 +444,7 @@ WindowScenePlacement :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowScenePlacement, objc_selector="init", objc_name="init")
 	WindowScenePlacement_init :: proc(self: ^WindowScenePlacement) -> instancetype ---
 
@@ -457,7 +457,7 @@ foreign lib {
 WindowSceneProminentPlacement :: struct { using _: WindowScenePlacement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneProminentPlacement, objc_selector="prominentPlacement", objc_name="prominentPlacement", objc_is_class_method=true)
 	WindowSceneProminentPlacement_prominentPlacement :: proc() -> instancetype ---
 }
@@ -467,7 +467,7 @@ foreign lib {
 WindowScenePushPlacement :: struct { using _: WindowScenePlacement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowScenePushPlacement, objc_selector="placementTargetingSceneSession:", objc_name="placementTargetingSceneSession", objc_is_class_method=true)
 	WindowScenePushPlacement_placementTargetingSceneSession :: proc(targetSceneSession: ^SceneSession) -> instancetype ---
 }
@@ -477,7 +477,7 @@ foreign lib {
 WindowSceneReplacePlacement :: struct { using _: WindowScenePlacement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneReplacePlacement, objc_selector="placementToReplaceSceneSession:", objc_name="placementToReplaceSceneSession", objc_is_class_method=true)
 	WindowSceneReplacePlacement_placementToReplaceSceneSession :: proc(sceneSession: ^SceneSession) -> instancetype ---
 }
@@ -487,7 +487,7 @@ foreign lib {
 WindowSceneStandardPlacement :: struct { using _: WindowScenePlacement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowSceneStandardPlacement, objc_selector="standardPlacement", objc_name="standardPlacement", objc_is_class_method=true)
 	WindowSceneStandardPlacement_standardPlacement :: proc() -> instancetype ---
 }

@@ -9,8 +9,8 @@ package regex_tokenizer
 		Feoramund: Initial implementation.
 */
 
-import "core:text/regex/common"
-import "core:unicode/utf8"
+#import "core:text/regex/common"
+#import "core:unicode/utf8"
 
 Token_Kind :: enum {
 	Invalid,
@@ -345,7 +345,7 @@ scan :: proc(t: ^Tokenizer) -> (token: Token) {
 		.Invalid,
 		.Open_Paren, .Open_Paren_Non_Capture,
 		.Alternate:
-			// Never prepend a Concatenate token when the _last token_ was one
+			// Never prepend a Concatenate token #if the _last token_ was one
 			// of these.
 			break
 		case:

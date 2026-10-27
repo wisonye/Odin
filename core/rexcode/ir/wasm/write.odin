@@ -3,8 +3,8 @@
 
 package rexcode_wasm
 
-import "base:runtime"
-import "core:slice"
+#import "base:runtime"
+#import "core:slice"
 
 // =============================================================================
 // SECTION: Container encode  (ir Module -> a whole .wasm binary module)

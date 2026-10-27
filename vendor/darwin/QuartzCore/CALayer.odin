@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_QuartzCore
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CALayer", objc_superclass=NS.Object)
 Layer :: struct {
@@ -15,7 +15,7 @@ Layer :: struct {
 	using _: MediaTiming,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Layer, objc_selector="layer", objc_name="layer", objc_is_class_method=true)
 	Layer_layer :: proc() -> instancetype ---
 
@@ -535,7 +535,7 @@ LayerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LayerDelegate, objc_selector="displayLayer:", objc_name="displayLayer")
 	LayerDelegate_displayLayer :: proc(self: ^LayerDelegate, layer: ^Layer) ---
 

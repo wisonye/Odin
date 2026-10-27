@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSXMLParser", objc_superclass=Object)
 XMLParser :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLParser, objc_selector="initWithContentsOfURL:", objc_name="initWithContentsOfURL")
 	XMLParser_initWithContentsOfURL :: proc(self: ^XMLParser, url: ^URL) -> instancetype ---
 
@@ -82,7 +82,7 @@ XMLParserDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=XMLParserDelegate, objc_selector="parserDidStartDocument:", objc_name="parserDidStartDocument")
 	XMLParserDelegate_parserDidStartDocument :: proc(self: ^XMLParserDelegate, parser: ^XMLParser) ---
 

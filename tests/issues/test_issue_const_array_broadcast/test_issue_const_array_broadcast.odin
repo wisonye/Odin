@@ -1,6 +1,6 @@
 package test_issue_const_array_broadcast
 
-import "core:testing"
+#import "core:testing"
 
 // A value assigned to an array is broadcast to every element of every level, but the constant
 // lowering only recognised a literal whose type was the immediate element type. `[4][8]Item` has

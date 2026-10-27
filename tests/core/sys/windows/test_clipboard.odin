@@ -1,11 +1,11 @@
 #+build windows
 package test_core_sys_windows
 
-import "core:testing"
-import win32 "core:sys/windows"
-import "base:runtime"
-import "core:strings"
-import "core:mem"
+#import "core:testing"
+#import win32 "core:sys/windows"
+#import "base:runtime"
+#import "core:strings"
+#import "core:mem"
 
 read_from_clipboard :: proc(wnd_handle: win32.HWND, allocator: runtime.Allocator) -> (result: string, ok: win32.BOOL) {
 	win32.IsClipboardFormatAvailable(win32.CF_TEXT) or_return

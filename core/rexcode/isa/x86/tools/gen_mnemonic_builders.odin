@@ -14,11 +14,11 @@ package main
 // Output: x86/mnemonic_builders.odin. The path is anchored via #directory, so
 // this runs correctly from any working directory (e.g. the repo root).
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import x86 "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import x86 "../"
 
 // Convert mnemonic to lowercase string
 mnemonic_to_lower :: proc(m: x86.Mnemonic) -> string {
@@ -79,7 +79,7 @@ main :: proc() {
 			// Skip encodings we can't generate builders for (implicit-only operands, etc.)
 			can_generate_builder(enc) or_continue
 
-			// A typed builder may bake a pre-matched form hint only when the
+			// A typed builder may bake a pre-matched form hint only #if the
 			// matcher's pick is value-INDEPENDENT (no immediate/relative size
 			// selection); otherwise the matcher might choose a shorter form for
 			// some values, so we leave enc_hint=0 (matcher path). The first form
@@ -99,7 +99,7 @@ main :: proc() {
 
 				// Use the generated procedure name as the dedup key
 				// This catches cases like MOV {RM8, R8} vs MOV {R8, RM8} which both
-				// generate mov_r8_r8 when RM8 is used as register
+				// generate mov_r8_r8 #if RM8 is used as register
 				if proc_name in seen_proc_names { continue }
 				seen_proc_names[proc_name] = true
 
@@ -824,7 +824,7 @@ generate_operand_expr :: proc(sb: ^strings.Builder, info: Operand_Info, param_na
 }
 
 // Generate parameter names for all operands
-// This ensures unique names even when multiple operands have similar types
+// This ensures unique names even #if multiple operands have similar types
 param_names :: proc(sig: Operand_Signature) -> [4]string {
 	result: [4]string
 	src_count := 0

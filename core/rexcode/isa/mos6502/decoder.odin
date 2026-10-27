@@ -2,7 +2,7 @@
 
 package rexcode_mos6502
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MOS 6502 DECODER

@@ -9,7 +9,7 @@ Notification :: struct {
 	using _: Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Notification, objc_selector="initWithName:object:userInfo:", objc_name="initWithName")
 	Notification_initWithName :: proc(self: ^Notification, name: ^String, object: id, userInfo: ^Dictionary) -> instancetype ---
 
@@ -47,7 +47,7 @@ Notification_notificationWithName :: proc {
 @(objc_class="NSNotificationCenter", objc_superclass=Object)
 NotificationCenter :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NotificationCenter, objc_selector="addObserver:selector:name:object:", objc_name="addObserver")
 	NotificationCenter_addObserver :: proc(self: ^NotificationCenter, observer: id, aSelector: SEL, aName: ^String, anObject: id) ---
 
@@ -91,7 +91,7 @@ NotificationCenter_removeObserver :: proc {
 @(objc_class="NSNotificationQueue", objc_superclass=Object)
 NotificationQueue :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NotificationQueue, objc_selector="initWithNotificationCenter:", objc_name="initWithNotificationCenter")
 	NotificationQueue_initWithNotificationCenter :: proc(self: ^NotificationQueue, notificationCenter: ^NotificationCenter) -> instancetype ---
 

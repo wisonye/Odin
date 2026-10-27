@@ -1,9 +1,9 @@
 package test_core_text_edit
 
-import "core:slice"
-import "core:strings"
-import "core:testing"
-import "core:text/edit"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
+#import "core:text/edit"
 
 // "hi", a thumbs-up with a skin tone modifier, an "e" with a combining acute, and "!".
 // The escapes are spelled out so the byte offsets below do not depend on how this

@@ -1,15 +1,15 @@
 #+feature dynamic-literals
 package test_encoding_cbor
 
-import "base:intrinsics"
-import "core:bytes"
-import "core:encoding/cbor"
-import "core:fmt"
-import "core:io"
-import "core:math/big"
-import "core:reflect"
-import "core:testing"
-import "core:time"
+#import "base:intrinsics"
+#import "core:bytes"
+#import "core:encoding/cbor"
+#import "core:fmt"
+#import "core:io"
+#import "core:math/big"
+#import "core:reflect"
+#import "core:testing"
+#import "core:time"
 
 Foo :: struct {
 	str: string,
@@ -442,7 +442,7 @@ test_lying_length_array :: proc(t: ^testing.T) {
 @(test)
 test_unmarshal_map_into_struct_partially :: proc(t: ^testing.T) {
 
-	// Tests that when unmarshalling into a struct that has less fields than the binary map has fields,
+	// Tests that #if unmarshalling into a struct that has less fields than the binary map has fields,
 	// the additional fields in the binary are skipped and the rest of the binary is correctly decoded.
 
 	Foo :: struct {
@@ -874,11 +874,11 @@ expect_float :: proc(t: ^testing.T, encoded: string, expected: $T, loc := #calle
 
 	#partial switch r in res {
 	case f16:
-		when T == f16 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
+		#if T == f16 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
 	case f32:
-		when T == f32 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
+		#if T == f32 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
 	case f64:
-		when T == f64 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
+		#if T == f64 { testing.expect_value(t, res, expected, loc) } else { unreachable() }
 	case:
 		unreachable()
 	}

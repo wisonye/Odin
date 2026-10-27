@@ -1,10 +1,10 @@
 package ecdh
 
-import "core:crypto"
-import secec "core:crypto/_weierstrass"
-import "core:crypto/x25519"
-import "core:crypto/x448"
-import "core:reflect"
+#import "core:crypto"
+#import secec "core:crypto/_weierstrass"
+#import "core:crypto/x25519"
+#import "core:crypto/x448"
+#import "core:reflect"
 
 // Note: For these primitives scalar size = point size
 @(private="file")
@@ -498,7 +498,7 @@ curve :: proc(k: ^$T) -> Curve where (T == Private_Key || T == Public_Key) {
 // key_size returns the key size of a Private_Key or Public_Key in bytes.
 @(require_results)
 key_size :: proc(k: ^$T) -> int where (T == Private_Key || T == Public_Key) {
-	when T == Private_Key {
+	#if T == Private_Key {
 		return PRIVATE_KEY_SIZES[k._curve]
 	} else {
 		return PUBLIC_KEY_SIZES[k._curve]

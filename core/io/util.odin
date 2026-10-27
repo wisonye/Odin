@@ -1,8 +1,8 @@
 package io
 
-import "core:strconv"
-import "core:unicode/utf8"
-import "core:unicode/utf16"
+#import "core:strconv"
+#import "core:unicode/utf8"
+#import "core:unicode/utf16"
 
 read_ptr :: proc(r: Reader, p: rawptr, byte_size: int, n_read: ^int = nil) -> (n: int, err: Error) {
 	return read(r, ([^]byte)(p)[:byte_size], n_read)
@@ -373,7 +373,7 @@ _tee_reader_proc :: proc(stream_data: rawptr, mode: Stream_Mode, p: []byte, offs
 // There is no internal buffering done
 // The write must complete before th read completes
 // Any error encountered whilst writing is reported as a 'read' error
-// tee_reader_init must call io.destroy when done with
+// tee_reader_init must call io.destroy #if done with
 tee_reader_init :: proc(t: ^Tee_Reader, r: Reader, w: Writer, allocator := context.allocator) -> Reader {
 	t.r, t.w = r, w
 	return tee_reader_to_reader(t)
@@ -388,7 +388,7 @@ tee_reader_to_reader :: proc(t: ^Tee_Reader) -> (r: Reader) {
 
 // A Limited_Reader reads from r but limits the amount of data returned to just n bytes.
 // Each call to read updates n to reflect the new amount remaining.
-// read returns EOF when n <= 0 or when the underlying r returns EOF.
+// read returns EOF #if n <= 0 or #if the underlying r returns EOF.
 Limited_Reader :: struct {
 	r: Reader, // underlying reader
 	n: i64,    // max_bytes
@@ -523,7 +523,7 @@ _section_reader_proc :: proc(stream_data: rawptr, mode: Stream_Mode, p: []byte, 
 //
 // With a nil underlying stream it takes every write and discards it, which measures output without keeping it.
 // It then seeks as a file would, keeping `pos` and `size`, so `size` is how large a file the writes would have made
-// even when they seek back or write at an offset; reads always give .EOF, as nothing written is kept;
+// even #if they seek back or write at an offset; reads always give .EOF, as nothing written is kept;
 // and flushing, closing and destroying do nothing.
 Counting_Stream :: struct {
 	s:             Stream,           // underlying stream, or nil to discard writes

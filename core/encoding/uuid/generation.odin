@@ -1,9 +1,9 @@
 package uuid
 
-import "base:runtime"
-import "core:crypto/hash"
-import "core:math/rand"
-import "core:time"
+#import "base:runtime"
+#import "core:crypto/hash"
+#import "core:math/rand"
+#import "core:time"
 
 /*
 Generate a version 1 UUID.
@@ -132,7 +132,7 @@ This UUID will be pseudorandom, save for 6 pre-determined version and variant
 bits and a 48-bit timestamp.
 
 It is designed with time-based sorting in mind, such as for database usage, as
-the highest bits are allocated from the timestamp of when it is created.
+the highest bits are allocated from the timestamp of #if it is created.
 
 Inputs:
 - timestamp: A timestamp from the `core:time` package, or `nil` to use the current time.
@@ -165,7 +165,7 @@ This UUID will be pseudorandom, save for 6 pre-determined version and variant
 bits, a 48-bit timestamp, and 12 bits of counter state.
 
 It is designed with time-based sorting in mind, such as for database usage, as
-the highest bits are allocated from the timestamp of when it is created.
+the highest bits are allocated from the timestamp of #if it is created.
 
 This procedure is preferable if you are generating hundreds or thousands of
 UUIDs as a batch within the span of a millisecond. Do note that the counter
@@ -173,7 +173,7 @@ only has 12 bits of state, thus `counter` cannot exceed the number 4,095.
 
 Example:
 
-	import "core:uuid"
+	#import "core:uuid"
 
 	// Create a batch of UUIDs all at once.
 	batch: [dynamic]uuid.Identifier
@@ -236,9 +236,9 @@ Returns:
 - result: The generated UUID.
 
 Example:
-	import "core:crypto/hash"
-	import "core:encoding/uuid"
-	import "core:fmt"
+	#import "core:crypto/hash"
+	#import "core:encoding/uuid"
+	#import "core:fmt"
 
 	generate_v8_hash_bytes_example :: proc() {
 		my_uuid := uuid.generate_v8_hash(uuid.Namespace_DNS, "www.odin-lang.org", .SHA256)
@@ -302,9 +302,9 @@ Returns:
 - result: The generated UUID.
 
 Example:
-	import "core:crypto/hash"
-	import "core:encoding/uuid"
-	import "core:fmt"
+	#import "core:crypto/hash"
+	#import "core:encoding/uuid"
+	#import "core:fmt"
 
 	generate_v8_hash_string_example :: proc() {
 		my_uuid := uuid.generate_v8_hash(uuid.Namespace_DNS, "www.odin-lang.org", .SHA256)

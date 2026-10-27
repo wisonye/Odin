@@ -3,7 +3,7 @@
 
 package rexcode_wasm
 
-import "core:rexcode/ir"
+#import "core:rexcode/ir"
 
 // =============================================================================
 // SECTION: Module  (the WASM module -- ir core + WASM's own container sections)
@@ -90,7 +90,7 @@ Export :: struct {
 //
 // After `decode`, `base.functions` spans the whole WASM function index space:
 // imported functions occupy the low indices (their `blocks` are empty -- an
-// import has no body) followed by the module-defined functions (each a single
+// #import has no body) followed by the module-defined functions (each a single
 // `ir.Block` whose ops are the decoded body). `ir.Function.signature` is the
 // function's typeidx (an index into `func_types`, by convention), and its
 // `name` is resolved from the export and "name" custom sections.
@@ -186,7 +186,7 @@ section_name :: #force_inline proc "contextless" (id: Section_Id) -> string {
 	switch id {
 	case .CUSTOM:     return "custom"
 	case .TYPE:       return "type"
-	case .IMPORT:     return "import"
+	case .IMPORT:     return "#import"
 	case .FUNCTION:   return "function"
 	case .TABLE:      return "table"
 	case .MEMORY:     return "memory"

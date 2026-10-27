@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSHelpManager", objc_superclass=NS.Object)
 HelpManager :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HelpManager, objc_selector="setContextHelp:forObject:", objc_name="setContextHelp")
 	HelpManager_setContextHelp :: proc(self: ^HelpManager, attrString: ^NS.AttributedString, object: id) ---
 

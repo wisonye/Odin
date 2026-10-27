@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4StaticLinkingDescriptor", objc_superclass=NS.Object)
 MTL4StaticLinkingDescriptor :: struct {
@@ -10,7 +10,7 @@ MTL4StaticLinkingDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4StaticLinkingDescriptor, objc_selector="functionDescriptors", objc_name="functionDescriptors")
 	MTL4StaticLinkingDescriptor_functionDescriptors :: proc(self: ^MTL4StaticLinkingDescriptor) -> ^NS.Array ---
 

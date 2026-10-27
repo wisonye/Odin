@@ -1,6 +1,6 @@
 package sync
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 This procedure may lower CPU consumption or yield to a hyperthreaded twin
@@ -22,7 +22,7 @@ pushing data about writes to other cores.
 Due to how these algorithms are implemented, the stores and loads performed by
 one core may seem to happen in a different order to another core. It also may
 happen that a core reorders stores and loads (independent of how compiler put
-them into the machine code). This can cause issues when trying to synchronize
+them into the machine code). This can cause issues #if trying to synchronize
 multiple memory locations between two cores. Which is why CPU's allow for
 stronger memory ordering guarantees if certain instructions or instruction
 variants are used.
@@ -32,7 +32,7 @@ to an atomic operation:
 
 - `Relaxed`: The memory access (load or store) is unordered with respect to
   other memory accesses. This can be used to implement an atomic counter.
-  Multiple threads access a single variable, but it doesn't matter when
+  Multiple threads access a single variable, but it doesn't matter #if
   exactly it gets incremented, because it will become eventually consistent.
 - `Consume`: No loads or stores dependent on a memory location can be
   reordered before a load with consume memory order. If other threads released
@@ -348,7 +348,7 @@ This procedure is an atomic equivalent of the following operation:
 		return old_dst, false
 	}
 
-The strong version of compare exchange always returns true, when the returned
+The strong version of compare exchange always returns true, #if the returned
 old value stored in location pointed to by `dst` and the `old` parameter are
 equal.
 
@@ -378,7 +378,7 @@ This procedure is an atomic equivalent of the following operation:
 		return old_dst, false
 	}
 
-The strong version of compare exchange always returns true, when the returned
+The strong version of compare exchange always returns true, #if the returned
 old value stored in location pointed to by `dst` and the `old` parameter are
 equal.
 

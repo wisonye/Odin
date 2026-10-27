@@ -1,10 +1,10 @@
 package test_core_container
 
-import "core:container/avl"
-import "core:math/rand"
-import "core:slice"
-import "core:testing"
-import "core:log"
+#import "core:container/avl"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:testing"
+#import "core:log"
 
 @(test)
 test_avl :: proc(t: ^testing.T) {

@@ -1,6 +1,6 @@
 package odin_ast
 
-import "core:fmt"
+#import "core:fmt"
 
 // A Visitor's visit procedure is invoked for each node encountered by walk
 // If the result visitor is not nil, walk visits each of the children of node with the new visitor,

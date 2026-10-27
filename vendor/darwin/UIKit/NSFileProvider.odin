@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSFileProviderExtension", objc_superclass=NS.Object)
 NSFileProviderExtension :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSFileProviderExtension, objc_selector="itemForIdentifier:error:", objc_name="itemForIdentifier_error")
 	NSFileProviderExtension_itemForIdentifier_error :: proc(self: ^NSFileProviderExtension, identifier: ^NS.String, error: ^^NS.Error) -> ^NSFileProviderItem ---
 
@@ -67,7 +67,7 @@ NSFileProviderItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSFileProviderItem, objc_selector="itemIdentifier", objc_name="itemIdentifier")
 	NSFileProviderItem_itemIdentifier :: proc(self: ^NSFileProviderItem) -> ^NS.String ---
 
@@ -173,7 +173,7 @@ foreign lib {
 NSFileProviderItemVersion :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSFileProviderItemVersion, objc_selector="initWithContentVersion:metadataVersion:", objc_name="initWithContentVersion")
 	NSFileProviderItemVersion_initWithContentVersion :: proc(self: ^NSFileProviderItemVersion, contentVersion: ^NS.Data, metadataVersion: ^NS.Data) -> instancetype ---
 

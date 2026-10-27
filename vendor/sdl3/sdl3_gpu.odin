@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 GPUDevice           :: struct {}
 GPUBuffer           :: struct {}
@@ -640,7 +640,7 @@ GPUDepthStencilState :: struct {
 	compare_mask:        Uint8,              /**< Selects the bits of the stencil values participating in the stencil test. */
 	write_mask:          Uint8,              /**< Selects the bits of the stencil values updated by the stencil test. */
 	enable_depth_test:   bool,               /**< true enables the depth test. */
-	enable_depth_write:  bool,               /**< true enables depth writes. Depth writes are always disabled when enable_depth_test is false. */
+	enable_depth_write:  bool,               /**< true enables depth writes. Depth writes are always disabled #if enable_depth_test is false. */
 	enable_stencil_test: bool,               /**< true enables the stencil test. */
 	_: Uint8,
 	_: Uint8,
@@ -729,7 +729,7 @@ GPUBlitInfo :: struct {
 	load_op:     GPULoadOp,      /**< What is done with the contents of the destination before the blit. */
 	clear_color: FColor,         /**< The color to clear the destination region to before the blit. Ignored if load_op is not GPU_LOADOP_CLEAR. */
 	flip_mode:   FlipMode,       /**< The flip mode for the source region. */
-	filter:      GPUFilter,      /**< The filter mode used when blitting. */
+	filter:      GPUFilter,      /**< The filter mode used #if blitting. */
 	cycle:       bool,           /**< true cycles the destination texture if it is already bound. */
 	_: Uint8,
 	_: Uint8,
@@ -817,7 +817,7 @@ PROP_GPU_DEVICE_DRIVER_VERSION_STRING     :: "SDL.gpu.device.driver_version"
 PROP_GPU_DEVICE_DRIVER_INFO_STRING        :: "SDL.gpu.device.driver_info"
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GPUSupportsShaderFormats              :: proc(format_flags: GPUShaderFormat, name: cstring) -> bool ---
 	GPUSupportsProperties                 :: proc(props: PropertiesID) -> bool ---
 	CreateGPUDevice                       :: proc(format_flags: GPUShaderFormat, debug_mode: bool, name: cstring) -> ^GPUDevice ---
@@ -920,7 +920,7 @@ foreign lib {
 
 // GDK
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GDKSuspendGPU :: proc(device: ^GPUDevice) ---
 	GDKResumeGPU  :: proc(device: ^GPUDevice) ---
 }

@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import ioringapi "system:kernel32.lib"
+#foreign #import ioringapi "system:kernel32.lib"
 
 HIORING :: distinct rawptr
 
@@ -85,7 +85,7 @@ FILE_SEGMENT_ELEMENT :: struct #raw_union {
 
 
 @(default_calling_convention="system")
-foreign ioringapi {
+#foreign ioringapi {
 	QueryIoRingCapabilities :: proc(capabilities: ^IORING_CAPABILITIES) -> HRESULT ---
 	IsIoRingOpSupported :: proc(ioRing: HIORING, op: IORING_OP_CODE) -> BOOL ---
 	CreateIoRing :: proc(ioringVersion: IORING_VERSION, flags: IORING_CREATE_FLAGS, submissionQueueSize: UINT32, completionQueueSize: UINT32, h: ^HIORING) -> HRESULT ---

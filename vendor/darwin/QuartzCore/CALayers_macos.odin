@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_QuartzCore
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="CAOpenGLLayer", objc_superclass=Layer)
 OpenGLLayer :: struct { using _: Layer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenGLLayer, objc_selector="canDrawInCGLContext:pixelFormat:forLayerTime:displayTime:", objc_name="canDrawInCGLContext")
 	OpenGLLayer_canDrawInCGLContext :: proc(self: ^OpenGLLayer, ctx: CGLContextObj, pf: CGLPixelFormatObj, t: CF.TimeInterval, ts: ^CVTimeStamp) -> bool ---
 

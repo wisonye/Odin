@@ -1,7 +1,7 @@
 package os
 
-import "core:io"
-import "base:runtime"
+#import "core:io"
+#import "base:runtime"
 
 /*
 	General errors that are common within this package which cannot

@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIGuidedAccessRestrictionDelegate")
 GuidedAccessRestrictionDelegate :: struct {
@@ -12,7 +12,7 @@ GuidedAccessRestrictionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GuidedAccessRestrictionDelegate, objc_selector="guidedAccessRestrictionWithIdentifier:didChangeState:", objc_name="guidedAccessRestrictionWithIdentifier")
 	GuidedAccessRestrictionDelegate_guidedAccessRestrictionWithIdentifier :: proc(self: ^GuidedAccessRestrictionDelegate, restrictionIdentifier: ^NS.String, newRestrictionState: GuidedAccessRestrictionState) ---
 

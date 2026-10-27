@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIPrinter", objc_superclass=NS.Object)
 Printer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Printer, objc_selector="printerWithURL:", objc_name="printerWithURL", objc_is_class_method=true)
 	Printer_printerWithURL :: proc(url: ^NS.URL) -> ^Printer ---
 
@@ -47,7 +47,7 @@ PrinterDestination :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrinterDestination, objc_selector="initWithURL:", objc_name="initWithURL")
 	PrinterDestination_initWithURL :: proc(self: ^PrinterDestination, url: ^NS.URL) -> instancetype ---
 
@@ -75,7 +75,7 @@ foreign lib {
 PrinterPickerController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrinterPickerController, objc_selector="printerPickerControllerWithInitiallySelectedPrinter:", objc_name="printerPickerControllerWithInitiallySelectedPrinter", objc_is_class_method=true)
 	PrinterPickerController_printerPickerControllerWithInitiallySelectedPrinter :: proc(printer: ^Printer) -> ^PrinterPickerController ---
 
@@ -109,7 +109,7 @@ PrinterPickerControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrinterPickerControllerDelegate, objc_selector="printerPickerControllerParentViewController:", objc_name="printerPickerControllerParentViewController")
 	PrinterPickerControllerDelegate_printerPickerControllerParentViewController :: proc(self: ^PrinterPickerControllerDelegate, printerPickerController: ^PrinterPickerController) -> ^ViewController ---
 

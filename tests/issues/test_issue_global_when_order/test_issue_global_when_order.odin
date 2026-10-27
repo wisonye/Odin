@@ -1,27 +1,27 @@
-// Global 'when's are resolved when a lookup needs a name they may declare, whatever the source order
+// Global '#if's are resolved #if a lookup needs a name they may declare, whatever the source order
 package test_issue_global_when_order
 
-import "core:testing"
+#import "core:testing"
 
-// needs a name declared by a later 'when'
-when HAS_FOO { X :: 1 } else { X :: 2 }
-when true { HAS_FOO :: true }
+// needs a name declared by a later '#if'
+#if HAS_FOO { X :: 1 } else { X :: 2 }
+#if true { HAS_FOO :: true }
 
-// nested 'when's and 'else when' chains
-when A_ENABLED {
-	when B_VALUE == 3 { NESTED :: "three" } else { NESTED :: "other" }
+// nested '#if's and 'else #if' chains
+#if A_ENABLED {
+	#if B_VALUE == 3 { NESTED :: "three" } else { NESTED :: "other" }
 }
-when false { B_VALUE :: 1 } else when true { B_VALUE :: 3 } else { B_VALUE :: 4 }
+#if false { B_VALUE :: 1 } else #if true { B_VALUE :: 3 } else { B_VALUE :: 4 }
 A_ENABLED :: B_VALUE > 0
 
 // file private names
-when PRIV == 5 { FROM_PRIV :: true } else { FROM_PRIV :: false }
-when true { @(private="file") PRIV :: 5 }
+#if PRIV == 5 { FROM_PRIV :: true } else { FROM_PRIV :: false }
+#if true { @(private="file") PRIV :: 5 }
 
-// a 'when' within a 'foreign' block
-when size_of(type_of(foreign_proc)) == size_of(rawptr) { FOREIGN_OK :: true } else { FOREIGN_OK :: false }
-foreign {
-	when true {
+// a '#if' within a 'foreign' block
+#if size_of(type_of(foreign_proc)) == size_of(rawptr) { FOREIGN_OK :: true } else { FOREIGN_OK :: false }
+#foreign {
+	#if true {
 		foreign_proc :: proc "c" () ---
 	}
 }

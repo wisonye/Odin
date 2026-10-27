@@ -5,7 +5,7 @@ package sys_windows
 // See: https://learn.microsoft.com/en-us/windows/win32/dlgbox/using-common-dialog-boxes
 // Corresponds to Commdlg.h
 
-foreign import "system:Comdlg32.lib"
+#foreign #import "system:Comdlg32.lib"
 
 // OpenFile/SaveFile dialogs
 
@@ -38,7 +38,7 @@ OPENFILENAMEW :: struct {
 }
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	GetOpenFileNameW     :: proc(arg1: ^OPENFILENAMEW) -> BOOL ---
 	GetSaveFileNameW     :: proc(arg1: ^OPENFILENAMEW) -> BOOL ---
 
@@ -97,7 +97,7 @@ CHOOSECOLORW :: struct {
 }
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	ChooseColorW :: proc(lpcc: ^CHOOSECOLORW) -> BOOL ---
 }
 
@@ -157,7 +157,7 @@ FR_MATCHKASHIDA          :: 0x40000000
 FR_MATCHALEFHAMZA        :: 0x80000000
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	FindTextW :: proc(lpcc: ^FINDREPLACEW) -> HWND ---
 	ReplaceTextW :: proc(lpcc: ^FINDREPLACEW) -> HWND ---
 }
@@ -189,7 +189,7 @@ CHOOSEFONTW :: struct {
 }
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	ChooseFontW :: proc(lpcc: ^CHOOSEFONTW) -> BOOL ---
 }
 
@@ -292,7 +292,7 @@ DEVNAMES :: struct {
 }
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	PrintDlgW :: proc(lpcc: ^PRINTDLGW) -> BOOL ---
 	PrintDlgExW :: proc(lpcc: ^PRINTDLGEXW) -> HRESULT ---
 }
@@ -327,7 +327,7 @@ PD_NOCURRENTPAGE               :: 0x00800000
 PD_EXCLUSIONFLAGS              :: 0x01000000
 PD_USELARGETEMPLATE            :: 0x10000000
 
-//  Define the start page for the print dialog when using PrintDlgEx.
+//  Define the start page for the print dialog #if using PrintDlgEx.
 START_PAGE_GENERAL             :: 0xffffffff
 
 //  Result action ids for PrintDlgEx.
@@ -367,7 +367,7 @@ PAGESETUPDLGW :: struct {
 }
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	PageSetupDlgW :: proc(lpcc: ^PAGESETUPDLGW) -> BOOL ---
 }
 
@@ -395,7 +395,7 @@ PSD_NONETWORKBUTTON                :: 0x00200000 // must be same as PD_*
 // Common error codes for all comdlg32 dialogs (CommDlgExtendedError)
 
 @(default_calling_convention="system")
-foreign Comdlg32 {
+#foreign Comdlg32 {
 	CommDlgExtendedError :: proc() -> u32 ---
 }
 

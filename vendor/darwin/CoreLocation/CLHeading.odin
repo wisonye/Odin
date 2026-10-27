@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLHeading", objc_superclass=NS.Object)
 Heading :: struct {
@@ -11,7 +11,7 @@ Heading :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Heading, objc_selector="magneticHeading", objc_name="magneticHeading")
 	Heading_magneticHeading :: proc(self: ^Heading) -> LocationDirection ---
 

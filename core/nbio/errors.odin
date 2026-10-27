@@ -1,8 +1,8 @@
 package nbio
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:reflect"
+#import "core:reflect"
 
 Error :: intrinsics.type_merge(
 	Network_Error,

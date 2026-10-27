@@ -2,7 +2,7 @@
 
 package rexcode_mos6502
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MOS 6502 ENCODING FUNDAMENTALS
@@ -25,7 +25,7 @@ import "core:rexcode/isa"
 //   - .HUC6280      PC Engine / TurboGrafx-16 superset of 65C02.
 //
 // 65C816 (SNES, Apple IIgs) is a separate 16/24-bit ISA and lives in a
-// sibling subpackage if/when added.
+// sibling subpackage if/#if added.
 
 Error            :: isa.Error
 Error_Code       :: isa.Error_Code

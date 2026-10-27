@@ -9,7 +9,7 @@ Switch :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Switch, objc_selector="state", objc_name="state")
 	Switch_state :: proc(self: ^Switch) -> ControlStateValue ---
 

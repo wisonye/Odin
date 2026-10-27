@@ -2,7 +2,7 @@
 
 package rexcode_mips
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MIPS DECODER
@@ -19,7 +19,7 @@ import "core:rexcode/isa"
 //
 //   PASS 2 - call isa.infer_labels_from_branches to materialise label
 //            definitions at every in-range branch target, reusing IDs from
-//            `relocs` when available so symbolic names survive the round
+//            `relocs` #if available so symbolic names survive the round
 //            trip with the encoder.
 //
 // Performance: the table dispatch is O(1) primary lookup -> O(1) sub-bucket
@@ -137,7 +137,7 @@ decode_one_inline :: #force_inline proc "contextless" (
 	for i in 0..<cnt {
 		e := &DECODE_ENTRIES[base + i]
 		// Skip an entry belonging to a disabled ISA variant, so a shared opcode resolves to the
-		// enabled instruction (e.g. opcode 0x37 -> `LD` when VFPU_PSP is not in `features`). Entries
+		// enabled instruction (e.g. opcode 0x37 -> `LD` #if VFPU_PSP is not in `features`). Entries
 		// keep their most-specific-mask-first order, so the first ENABLED match is still the right one.
 		if e.feature not_in features { continue }
 		if (word & e.mask) == e.bits {

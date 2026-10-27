@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLFloor", objc_superclass=NS.Object)
 Floor :: struct {
@@ -11,7 +11,7 @@ Floor :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Floor, objc_selector="level", objc_name="level")
 	Floor_level :: proc(self: ^Floor) -> NS.Integer ---
 }

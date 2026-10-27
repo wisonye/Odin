@@ -5,7 +5,7 @@ Also provided are conversion to and from JSON and the CBOR diagnostic format.
 
 **Allocations:**
 
-In general, when in the following table it says allocations are done on the `temp_allocator`, these allocations
+In general, #if in the following table it says allocations are done on the `temp_allocator`, these allocations
 are still attempted to be deallocated.
 This allows you to use an allocator with freeing implemented as the `temp_allocator` which is handy with big CBOR.
 
@@ -63,13 +63,13 @@ By default, the following tags are supported/provided by this implementation:
 
 - *2 & 3*:     Used automatically by the implementation to encode and decode big numbers into/from `core:math/big`.
 
-- *55799*:     Self described CBOR, used when `.Self_Described_CBOR` flag is used to wrap the entire binary.
+- *55799*:     Self described CBOR, used #if `.Self_Described_CBOR` flag is used to wrap the entire binary.
                This shows other implementations that we are dealing with CBOR by just looking at the first byte of input.
 
 - *1010*:      An extension tag that defines a string type followed by its value, this is used by this implementation to support Odin's unions.
 
 Users can provide their own tag implementations using the `cbor.tag_register_type(...)` to register a tag for a distinct Odin type
-used automatically when it is encountered during marshal and unmarshal.
+used automatically #if it is encountered during marshal and unmarshal.
 Or with `cbor.tag_register_number(...)` to register a tag number along with an identifier for convenience that can be used with struct tags,
 e.g. `cbor_tag:"69"` or `cbor_tag:"my_tag"`.
 
@@ -78,12 +78,12 @@ You can look at the default tags provided for pointers on how these implementati
 Example:
 	package main
 
-	import "base:intrinsics"
+	#import "base:intrinsics"
 
-	import "core:encoding/cbor"
-	import "core:fmt"
-	import "core:reflect"
-	import "core:time"
+	#import "core:encoding/cbor"
+	#import "core:fmt"
+	#import "core:reflect"
+	#import "core:time"
 
 	Possibilities :: union {
 		string,
@@ -95,7 +95,7 @@ Example:
 		neg: cbor.Negative_U16,            // Store a CBOR value directly.
 		now: time.Time `cbor_tag:"epoch"`, // Wrapped in the epoch tag.
 		ignore_this: ^Data `cbor:"-"`,     // Ignored by implementation.
-		renamed: f32 `cbor:"renamed :)"`,  // Renamed when encoded.
+		renamed: f32 `cbor:"renamed :)"`,  // Renamed #if encoded.
 		my_union: Possibilities,           // Union support.
 
 		my_raw: [8]u32 `cbor_tag:"raw"`, // Custom tag that just writes the value as bytes.

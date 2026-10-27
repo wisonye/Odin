@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSMetadataItem", objc_superclass=Object)
 MetadataItem :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataItem, objc_selector="initWithURL:", objc_name="initWithURL")
 	MetadataItem_initWithURL :: proc(self: ^MetadataItem, url: ^URL) -> instancetype ---
 
@@ -25,7 +25,7 @@ foreign lib {
 @(objc_class="NSMetadataQuery", objc_superclass=Object)
 MetadataQuery :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataQuery, objc_selector="startQuery", objc_name="startQuery")
 	MetadataQuery_startQuery :: proc(self: ^MetadataQuery) -> bool ---
 
@@ -136,7 +136,7 @@ MetadataQueryDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataQueryDelegate, objc_selector="metadataQuery:replacementObjectForResultObject:", objc_name="metadataQuery_replacementObjectForResultObject")
 	MetadataQueryDelegate_metadataQuery_replacementObjectForResultObject :: proc(self: ^MetadataQueryDelegate, query: ^MetadataQuery, result: ^MetadataItem) -> id ---
 
@@ -156,7 +156,7 @@ MetadataQueryDelegate_metadataQuery :: proc {
 @(objc_class="NSMetadataQueryAttributeValueTuple", objc_superclass=Object)
 MetadataQueryAttributeValueTuple :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataQueryAttributeValueTuple, objc_selector="attribute", objc_name="attribute")
 	MetadataQueryAttributeValueTuple_attribute :: proc(self: ^MetadataQueryAttributeValueTuple) -> ^String ---
 
@@ -171,7 +171,7 @@ foreign lib {
 @(objc_class="NSMetadataQueryResultGroup", objc_superclass=Object)
 MetadataQueryResultGroup :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataQueryResultGroup, objc_selector="resultAtIndex:", objc_name="resultAtIndex")
 	MetadataQueryResultGroup_resultAtIndex :: proc(self: ^MetadataQueryResultGroup, idx: UInteger) -> id ---
 

@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIPasteConfiguration", objc_superclass=NS.Object)
 PasteConfiguration :: struct {
@@ -14,7 +14,7 @@ PasteConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteConfiguration, objc_selector="init", objc_name="init")
 	PasteConfiguration_init :: proc(self: ^PasteConfiguration) -> instancetype ---
 
@@ -45,7 +45,7 @@ PasteConfigurationSupporting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteConfigurationSupporting, objc_selector="pasteItemProviders:", objc_name="pasteItemProviders")
 	PasteConfigurationSupporting_pasteItemProviders :: proc(self: ^PasteConfigurationSupporting, itemProviders: ^NS.Array) ---
 
@@ -64,7 +64,7 @@ foreign lib {
 PasteControl :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteControl, objc_selector="initWithConfiguration:", objc_name="initWithConfiguration")
 	PasteControl_initWithConfiguration :: proc(self: ^PasteControl, configuration: ^PasteControlConfiguration) -> instancetype ---
 
@@ -92,7 +92,7 @@ PasteControlConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteControlConfiguration, objc_selector="displayMode", objc_name="displayMode")
 	PasteControlConfiguration_displayMode :: proc(self: ^PasteControlConfiguration) -> PasteControlDisplayMode ---
 

@@ -1,15 +1,15 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // libgen.h - definitions for pattern matching functions
 
-foreign lib {
+#foreign lib {
 	/*
 	Takes the pathname pointed to by path and return a pointer to the final component of the
 	pathname, deleting any trailing '/' characters.
@@ -75,7 +75,7 @@ foreign lib {
 	dirname :: proc(path: cstring) -> cstring ---
 }
 
-when ODIN_OS == .Linux {
+#if ODIN_OS == .Linux {
 	@(private) LBASENAME :: "__xpg_basename"
 } else {
 	@(private) LBASENAME :: "basename"

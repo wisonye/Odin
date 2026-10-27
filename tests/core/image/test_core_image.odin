@@ -10,22 +10,22 @@
 #+feature dynamic-literals
 package test_core_image
 
-import "core:testing"
+#import "core:testing"
 
-import "core:compress"
-import "core:image"
-import "core:image/bmp"
-import pbm "core:image/netpbm"
-import "core:image/png"
-import "core:image/qoi"
-import "core:image/tga"
-import "core:image/jpeg"
+#import "core:compress"
+#import "core:image"
+#import "core:image/bmp"
+#import pbm "core:image/netpbm"
+#import "core:image/png"
+#import "core:image/qoi"
+#import "core:image/tga"
+#import "core:image/jpeg"
 
-import "core:bytes"
-import "core:hash"
-import "core:strings"
-import "core:mem"
-import "core:time"
+#import "core:bytes"
+#import "core:hash"
+#import "core:strings"
+#import "core:mem"
+#import "core:time"
 
 TEST_SUITE_PATH_PNG :: ODIN_ROOT + "tests/core/assets/PNG"
 TEST_SUITE_PATH_BMP :: ODIN_ROOT + "tests/core/assets/BMP"
@@ -2413,7 +2413,7 @@ run_jpg_suite :: proc(t: ^testing.T, suite: []Test) {
 			testing.expectf(t, test.hash == img_hash, "%v test #1's hash is %08x, expected %08x with %v.", file.file, img_hash, test.hash, test.options)
 
 			// Optionally save to QOI file to check file loaded properly during development
-			when false {
+			#if false {
 				test_qoi := strings.concatenate({TEST_SUITE_PATH_JPG, "/", file.file, ".qoi"}, context.temp_allocator)
 				save_err := qoi.save(test_qoi, img)
 				testing.expectf(t, save_err == nil, "expected saving to QOI not to raise error, got %v", save_err)

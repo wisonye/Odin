@@ -20,11 +20,11 @@ package main
 // Run with: odin run tools/gen_mnemonic_builders.odin -file
 //           (writes ppc/mnemonic_builders.odin)
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import ppc "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import ppc "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 

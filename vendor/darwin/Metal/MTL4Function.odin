@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4FunctionDescriptor", objc_superclass=NS.Object)
 MTL4FunctionDescriptor :: struct {
@@ -14,7 +14,7 @@ MTL4FunctionDescriptor :: struct {
 @(objc_class="MTL4SpecializedFunctionDescriptor", objc_superclass=MTL4FunctionDescriptor)
 MTL4SpecializedFunctionDescriptor :: struct { using _: MTL4FunctionDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4SpecializedFunctionDescriptor, objc_selector="functionDescriptor", objc_name="functionDescriptor")
 	MTL4SpecializedFunctionDescriptor_functionDescriptor :: proc(self: ^MTL4SpecializedFunctionDescriptor) -> ^MTL4FunctionDescriptor ---
 
@@ -38,7 +38,7 @@ foreign lib {
 @(objc_class="MTL4StitchedFunctionDescriptor", objc_superclass=MTL4FunctionDescriptor)
 MTL4StitchedFunctionDescriptor :: struct { using _: MTL4FunctionDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4StitchedFunctionDescriptor, objc_selector="functionGraph", objc_name="functionGraph")
 	MTL4StitchedFunctionDescriptor_functionGraph :: proc(self: ^MTL4StitchedFunctionDescriptor) -> ^FunctionStitchingGraph ---
 

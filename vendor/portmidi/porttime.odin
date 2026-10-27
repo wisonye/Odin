@@ -1,13 +1,13 @@
 package portmidi
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
-	foreign import lib "portmidi_s.lib"
-} else when ODIN_OS == .Darwin && !PORTMIDI_SHARED {
-	foreign import lib "darwin/portmidi_s.a"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "portmidi_s.lib"
+} else #if ODIN_OS == .Darwin && !PORTMIDI_SHARED {
+	#foreign #import lib "darwin/portmidi_s.a"
 } else {
-	foreign import lib "system:portmidi"
+	#foreign #import lib "system:portmidi"
 }
 
 /*
@@ -29,7 +29,7 @@ TimerError :: enum c.int {
 TimerCallback :: proc "c" (timestamp: Timestamp, userData: rawptr)
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/**
 		Start a timer thread that calls `callback` every `resolution` milliseconds, with `userData` as its second
 		argument. The callback may be nil to only start the clock. If you want to use the timer as the time source

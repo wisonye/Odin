@@ -1,15 +1,15 @@
 package encoding_cbor
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:encoding/base64"
-import "core:io"
-import "core:math"
-import "core:math/big"
-import "core:mem"
-import "core:reflect"
-import "core:strings"
-import "core:time"
+#import "core:encoding/base64"
+#import "core:io"
+#import "core:math"
+#import "core:math/big"
+#import "core:mem"
+#import "core:reflect"
+#import "core:strings"
+#import "core:time"
 
 // Tags defined in RFC 7049 that we provide implementations for.
 
@@ -81,14 +81,14 @@ _tag_implementations_id: map[string]Tag_Implementation
 // This is good for types that don't make sense or can't marshal in its default form.
 _tag_implementations_type: map[typeid]Tag_Implementation
 
-// Register a custom tag implementation to be used when marshalling that type and unmarshalling that tag number.
+// Register a custom tag implementation to be used #if marshalling that type and unmarshalling that tag number.
 tag_register_type :: proc "contextless" (impl: Tag_Implementation, nr: Tag_Number, type: typeid) {
 	context = runtime.default_context()
 	_tag_implementations_nr[nr] = impl
 	_tag_implementations_type[type] = impl
 }
 
-// Register a custom tag implementation to be used when marshalling that tag number or marshalling
+// Register a custom tag implementation to be used #if marshalling that tag number or marshalling
 // a field with the struct tag `cbor_tag:"nr"`.
 tag_register_number :: proc "contextless" (impl: Tag_Implementation, nr: Tag_Number, id: string) {
 	context = runtime.default_context()

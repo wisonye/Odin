@@ -11,7 +11,7 @@ Array :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Array, objc_selector="objectAtIndex:", objc_name="objectAtIndex")
 	Array_objectAtIndex :: proc(self: ^Array, index: UInteger) -> id ---
 
@@ -353,7 +353,7 @@ Array_writeToURL_ :: #force_inline proc "c" (self: ^Array, url: ^URL) -> (ok: bo
 @(objc_class="NSMutableArray", objc_superclass=Array)
 MutableArray :: struct { using _: Array}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableArray, objc_selector="addObject:", objc_name="addObject")
 	MutableArray_addObject :: proc(self: ^MutableArray, anObject: id) ---
 

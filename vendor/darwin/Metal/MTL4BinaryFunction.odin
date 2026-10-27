@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4BinaryFunction")
 MTL4BinaryFunction :: struct { using _: intrinsics.objc_object}
@@ -15,7 +15,7 @@ MTL4BinaryFunctionProtocol :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4BinaryFunctionProtocol, objc_selector="name", objc_name="name")
 	MTL4BinaryFunctionProtocol_name :: proc(self: ^MTL4BinaryFunctionProtocol) -> ^NS.String ---
 
@@ -30,7 +30,7 @@ MTL4BinaryFunctionDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4BinaryFunctionDescriptor, objc_selector="name", objc_name="name")
 	MTL4BinaryFunctionDescriptor_name :: proc(self: ^MTL4BinaryFunctionDescriptor) -> ^NS.String ---
 

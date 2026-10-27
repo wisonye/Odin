@@ -2,15 +2,15 @@
 #+feature using-stmt
 package fontstash
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:log"
-import "core:mem"
-import "core:math"
-import "core:strings"
-import "core:slice"
+#import "core:log"
+#import "core:mem"
+#import "core:math"
+#import "core:strings"
+#import "core:slice"
 
-import stbtt "vendor:stb/truetype"
+#import stbtt "vendor:stb/truetype"
 
 // This is a port from Fontstash into odin - specialized for nanovg
 
@@ -115,7 +115,7 @@ FontContext :: struct {
 	// callbacks with userData passed
 	userData: rawptr, // by default set to the context
 
-	// called when a texture is expanded and needs handling
+	// called #if a texture is expanded and needs handling
 	callbackResize: proc(data: rawptr, w, h: int), 
 	// called in state_end to update the texture region that changed
 	callbackUpdate: proc(data: rawptr, dirtyRect: [4]f32, textureData: rawptr), 
@@ -760,7 +760,7 @@ __dirtyRectReset :: proc(using ctx: ^FontContext) {
 	dirtyRect[3] = 0
 }
 
-// true when the dirty rectangle is valid and needs a texture update on the gpu
+// true #if the dirty rectangle is valid and needs a texture update on the gpu
 ValidateTexture :: proc(using ctx: ^FontContext, dirty: ^[4]f32) -> bool {
 	if dirtyRect[0] < dirtyRect[2] && dirtyRect[1] < dirtyRect[3] {
 		dirty[0] = dirtyRect[0]

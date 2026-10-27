@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIPopoverBackgroundView", objc_superclass=View)
 PopoverBackgroundView :: struct {
@@ -13,7 +13,7 @@ PopoverBackgroundView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverBackgroundView, objc_selector="arrowOffset", objc_name="arrowOffset")
 	PopoverBackgroundView_arrowOffset :: proc(self: ^PopoverBackgroundView) -> CG.Float ---
 
@@ -35,7 +35,7 @@ foreign lib {
 PopoverBackgroundViewMethods :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverBackgroundViewMethods, objc_selector="arrowBase", objc_name="arrowBase", objc_is_class_method=true)
 	PopoverBackgroundViewMethods_arrowBase :: proc() -> CG.Float ---
 
@@ -54,7 +54,7 @@ PopoverController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverController, objc_selector="initWithContentViewController:", objc_name="initWithContentViewController")
 	PopoverController_initWithContentViewController :: proc(self: ^PopoverController, viewController: ^ViewController) -> instancetype ---
 
@@ -142,7 +142,7 @@ PopoverControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopoverControllerDelegate, objc_selector="popoverControllerShouldDismissPopover:", objc_name="popoverControllerShouldDismissPopover")
 	PopoverControllerDelegate_popoverControllerShouldDismissPopover :: proc(self: ^PopoverControllerDelegate, popoverController: ^PopoverController) -> bool ---
 

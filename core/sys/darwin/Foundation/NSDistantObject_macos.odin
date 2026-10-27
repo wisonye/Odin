@@ -9,7 +9,7 @@ DistantObject :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DistantObject, objc_selector="proxyWithTarget:connection:", objc_name="proxyWithTarget", objc_is_class_method=true)
 	DistantObject_proxyWithTarget :: proc(target: id, connection: ^Connection) -> id ---
 
@@ -37,7 +37,7 @@ foreign lib {
 DistantObjectRequest :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DistantObjectRequest, objc_selector="replyWithException:", objc_name="replyWithException")
 	DistantObjectRequest_replyWithException :: proc(self: ^DistantObjectRequest, exception: ^Exception) ---
 

@@ -1,13 +1,13 @@
 package netpbm
 
-import "core:bytes"
-import "core:fmt"
-import "core:image"
-import "core:mem"
-import "core:strconv"
-import "core:strings"
-import "core:unicode"
-import "base:runtime"
+#import "core:bytes"
+#import "core:fmt"
+#import "core:image"
+#import "core:mem"
+#import "core:strconv"
+#import "core:strings"
+#import "core:unicode"
+#import "base:runtime"
 
 Image        :: image.Image
 Format       :: image.Netpbm_Format

@@ -34,11 +34,11 @@ package main
 // Output: mnemonic_builders.odin (written to current directory; move to the
 // riscv package root).
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import rv "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import rv "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 

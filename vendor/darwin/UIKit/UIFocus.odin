@@ -2,10 +2,10 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="UIFocusAnimationContext")
 FocusAnimationContext :: struct {
@@ -14,7 +14,7 @@ FocusAnimationContext :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusAnimationContext, objc_selector="duration", objc_name="duration")
 	FocusAnimationContext_duration :: proc(self: ^FocusAnimationContext) -> NS.TimeInterval ---
 }
@@ -24,7 +24,7 @@ foreign lib {
 FocusAnimationCoordinator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusAnimationCoordinator, objc_selector="addCoordinatedAnimations:completion:", objc_name="addCoordinatedAnimations")
 	FocusAnimationCoordinator_addCoordinatedAnimations :: proc(self: ^FocusAnimationCoordinator, animations: ^Objc_Block(proc "c" ()), completion: ^Objc_Block(proc "c" ())) ---
 
@@ -40,7 +40,7 @@ foreign lib {
 FocusDebugger :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusDebugger, objc_selector="help", objc_name="help", objc_is_class_method=true)
 	FocusDebugger_help :: proc() -> ^FocusDebuggerOutput ---
 
@@ -68,7 +68,7 @@ FocusDebuggerOutput :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIFocusEffect", objc_superclass=NS.Object)
@@ -78,7 +78,7 @@ FocusEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	FocusEffect_effect :: proc() -> instancetype ---
 
@@ -94,7 +94,7 @@ foreign lib {
 FocusHaloEffect :: struct { using _: FocusEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusHaloEffect, objc_selector="effectWithRect:", objc_name="effectWithRect", objc_is_class_method=true)
 	FocusHaloEffect_effectWithRect :: proc(rect: CG.Rect) -> instancetype ---
 
@@ -131,7 +131,7 @@ FocusEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusEnvironment, objc_selector="setNeedsFocusUpdate", objc_name="setNeedsFocusUpdate")
 	FocusEnvironment_setNeedsFocusUpdate :: proc(self: ^FocusEnvironment) ---
 
@@ -171,7 +171,7 @@ FocusItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusItem, objc_selector="didHintFocusMovement:", objc_name="didHintFocusMovement")
 	FocusItem_didHintFocusMovement :: proc(self: ^FocusItem, hint: ^FocusMovementHint) ---
 
@@ -202,7 +202,7 @@ FocusItemContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusItemContainer, objc_selector="focusItemsInRect:", objc_name="focusItemsInRect")
 	FocusItemContainer_focusItemsInRect :: proc(self: ^FocusItemContainer, rect: CG.Rect) -> ^NS.Array ---
 
@@ -218,7 +218,7 @@ FocusItemScrollableContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusItemScrollableContainer, objc_selector="contentOffset", objc_name="contentOffset")
 	FocusItemScrollableContainer_contentOffset :: proc(self: ^FocusItemScrollableContainer) -> CG.Point ---
 
@@ -240,7 +240,7 @@ FocusMovementHint :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusMovementHint, objc_selector="init", objc_name="init")
 	FocusMovementHint_init :: proc(self: ^FocusMovementHint) -> instancetype ---
 
@@ -268,7 +268,7 @@ foreign lib {
 FocusSystem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusSystem, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	FocusSystem_new :: proc() -> ^FocusSystem ---
 
@@ -299,7 +299,7 @@ foreign lib {
 FocusUpdateContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FocusUpdateContext, objc_selector="previouslyFocusedItem", objc_name="previouslyFocusedItem")
 	FocusUpdateContext_previouslyFocusedItem :: proc(self: ^FocusUpdateContext) -> ^FocusItem ---
 

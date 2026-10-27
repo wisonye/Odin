@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UICellConfigurationState", objc_superclass=ViewConfigurationState)
 CellConfigurationState :: struct { using _: ViewConfigurationState}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellConfigurationState, objc_selector="isEditing", objc_name="isEditing")
 	CellConfigurationState_isEditing :: proc(self: ^CellConfigurationState) -> bool ---
 
@@ -56,7 +56,7 @@ CellAccessory :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessory, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	CellAccessory_initWithCoder :: proc(self: ^CellAccessory, coder: ^NS.Coder) -> instancetype ---
 
@@ -93,14 +93,14 @@ foreign lib {
 CellAccessoryCheckmark :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UICellAccessoryCustomView", objc_superclass=CellAccessory)
 CellAccessoryCustomView :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryCustomView, objc_selector="initWithCustomView:placement:", objc_name="initWithCustomView")
 	CellAccessoryCustomView_initWithCustomView :: proc(self: ^CellAccessoryCustomView, customView: ^View, placement: CellAccessoryPlacement) -> instancetype ---
 
@@ -137,7 +137,7 @@ foreign lib {
 CellAccessoryDelete :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryDelete, objc_selector="backgroundColor", objc_name="backgroundColor")
 	CellAccessoryDelete_backgroundColor :: proc(self: ^CellAccessoryDelete) -> ^Color ---
 
@@ -156,7 +156,7 @@ foreign lib {
 CellAccessoryDetail :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryDetail, objc_selector="actionHandler", objc_name="actionHandler")
 	CellAccessoryDetail_actionHandler :: proc(self: ^CellAccessoryDetail) -> ^Objc_Block(proc "c" ()) ---
 
@@ -169,14 +169,14 @@ foreign lib {
 CellAccessoryDisclosureIndicator :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UICellAccessoryInsert", objc_superclass=CellAccessory)
 CellAccessoryInsert :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryInsert, objc_selector="backgroundColor", objc_name="backgroundColor")
 	CellAccessoryInsert_backgroundColor :: proc(self: ^CellAccessoryInsert) -> ^Color ---
 
@@ -195,7 +195,7 @@ foreign lib {
 CellAccessoryLabel :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryLabel, objc_selector="initWithText:", objc_name="initWithText")
 	CellAccessoryLabel_initWithText :: proc(self: ^CellAccessoryLabel, text: ^NS.String) -> instancetype ---
 
@@ -229,7 +229,7 @@ foreign lib {
 CellAccessoryMultiselect :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryMultiselect, objc_selector="backgroundColor", objc_name="backgroundColor")
 	CellAccessoryMultiselect_backgroundColor :: proc(self: ^CellAccessoryMultiselect) -> ^Color ---
 
@@ -242,7 +242,7 @@ foreign lib {
 CellAccessoryOutlineDisclosure :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryOutlineDisclosure, objc_selector="style", objc_name="style")
 	CellAccessoryOutlineDisclosure_style :: proc(self: ^CellAccessoryOutlineDisclosure) -> CellAccessoryOutlineDisclosureStyle ---
 
@@ -261,7 +261,7 @@ foreign lib {
 CellAccessoryPopUpMenu :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryPopUpMenu, objc_selector="initWithMenu:", objc_name="initWithMenu")
 	CellAccessoryPopUpMenu_initWithMenu :: proc(self: ^CellAccessoryPopUpMenu, menu: ^Menu) -> instancetype ---
 
@@ -289,7 +289,7 @@ foreign lib {
 CellAccessoryReorder :: struct { using _: CellAccessory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CellAccessoryReorder, objc_selector="showsVerticalSeparator", objc_name="showsVerticalSeparator")
 	CellAccessoryReorder_showsVerticalSeparator :: proc(self: ^CellAccessoryReorder) -> bool ---
 

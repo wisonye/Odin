@@ -1,6 +1,6 @@
 package unicode
 
-import "base:runtime"
+#import "base:runtime"
 
 MAX_RUNE         :: '\U0010ffff' // Maximum valid unicode code point
 REPLACEMENT_CHAR :: '\ufffd'     // Represented an invalid code point
@@ -102,7 +102,7 @@ Inputs:
 - r: The rune which will be check for having the property of being a letter.
 
 Returns:
-`true` when the rune `r` is a letter. `false` will be returned in all other cases.
+`true` #if the rune `r` is a letter. `false` will be returned in all other cases.
 */
 @(require_results)
 is_letter :: proc(r: rune) -> bool #no_bounds_check {

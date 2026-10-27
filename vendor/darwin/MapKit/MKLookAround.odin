@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import CL "vendor:darwin/CoreLocation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="MKLookAroundScene", objc_superclass=NS.Object)
 LookAroundScene :: struct {
@@ -13,7 +13,7 @@ LookAroundScene :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundScene, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	LookAroundScene_new :: proc() -> ^LookAroundScene ---
 
@@ -25,7 +25,7 @@ foreign lib {
 @(objc_class="MKLookAroundSceneRequest", objc_superclass=NS.Object)
 LookAroundSceneRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundSceneRequest, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	LookAroundSceneRequest_new :: proc() -> ^LookAroundSceneRequest ---
 
@@ -61,7 +61,7 @@ foreign lib {
 @(objc_class="MKLookAroundSnapshot", objc_superclass=NS.Object)
 LookAroundSnapshot :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundSnapshot, objc_selector="image", objc_name="image")
 	LookAroundSnapshot_image :: proc(self: ^LookAroundSnapshot) -> ^UI_Image ---
 }
@@ -70,7 +70,7 @@ foreign lib {
 @(objc_class="MKLookAroundSnapshotOptions", objc_superclass=NS.Object)
 LookAroundSnapshotOptions :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundSnapshotOptions, objc_selector="pointOfInterestFilter", objc_name="pointOfInterestFilter")
 	LookAroundSnapshotOptions_pointOfInterestFilter :: proc(self: ^LookAroundSnapshotOptions) -> ^PointOfInterestFilter ---
 
@@ -83,7 +83,7 @@ foreign lib {
 	@(objc_type=LookAroundSnapshotOptions, objc_selector="setSize:", objc_name="setSize")
 	LookAroundSnapshotOptions_setSize :: proc(self: ^LookAroundSnapshotOptions, size: CG.Size) ---
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=LookAroundSnapshotOptions, objc_selector="traitCollection", objc_name="traitCollection")
 		LookAroundSnapshotOptions_traitCollection :: proc(self: ^LookAroundSnapshotOptions) -> ^UI_TraitCollection ---
 
@@ -96,7 +96,7 @@ foreign lib {
 @(objc_class="MKLookAroundSnapshotter", objc_superclass=NS.Object)
 LookAroundSnapshotter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundSnapshotter, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	LookAroundSnapshotter_new :: proc() -> ^LookAroundSnapshotter ---
 
@@ -124,7 +124,7 @@ LookAroundViewController :: struct {
 	using _: NS.Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundViewController, objc_selector="initWithScene:", objc_name="initWithScene")
 	LookAroundViewController_initWithScene :: proc(self: ^LookAroundViewController, scene: ^LookAroundScene) -> instancetype ---
 
@@ -178,7 +178,7 @@ LookAroundViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LookAroundViewControllerDelegate, objc_selector="lookAroundViewControllerWillUpdateScene:", objc_name="lookAroundViewControllerWillUpdateScene")
 	LookAroundViewControllerDelegate_lookAroundViewControllerWillUpdateScene :: proc(self: ^LookAroundViewControllerDelegate, viewController: ^LookAroundViewController) ---
 

@@ -3,9 +3,9 @@
 // operations into an abstracted stream interface.
 package io
 
-import "base:intrinsics"
-import "core:unicode/utf8"
-import "core:unicode/utf16"
+#import "base:intrinsics"
+#import "core:unicode/utf8"
+#import "core:unicode/utf16"
 
 // Seek whence values
 Seek_From :: enum {
@@ -18,7 +18,7 @@ Error :: enum i32 {
 	// No Error
 	None = 0,
 
-	// EOF is the error returned by `read` when no more input is available
+	// EOF is the error returned by `read` #if no more input is available
 	EOF,
 
 	// Unexpected_EOF means that EOF was encountered in the middle of reading a fixed-sized block of data
@@ -33,7 +33,7 @@ Error :: enum i32 {
 	// Short_Buffer means that a read/write required a longer buffer than was provided
 	Short_Buffer,
 
-	// No_Progress is returned by some implementations of `io.Reader` when many calls
+	// No_Progress is returned by some implementations of `io.Reader` #if many calls
 	// to `read` have failed to return any data or error.
 	// This is usually a sign of a broken `io.Reader` implementation
 	No_Progress,
@@ -62,7 +62,7 @@ Error :: enum i32 {
 	// Stream cannot be used since it has been Closed
 	Closed,
 
-	// Unsupported is returned when a procedure has not been implemented for an io.Stream
+	// Unsupported is returned #if a procedure has not been implemented for an io.Stream
 	Unsupported = -1,
 
 	Empty = Unsupported,
@@ -377,7 +377,7 @@ read_full :: proc(r: Reader, buf: []byte) -> (n: int, err: Error) {
 
 // read_at_least reads from r into buf until it has read at least min bytes. It returns the number
 // of bytes copied and an error if fewer bytes were read. `.EOF` is only returned if no bytes were read.
-// `.Unexpected_EOF` is returned when an `.EOF ` is returned by the passed Reader after reading
+// `.Unexpected_EOF` is returned #if an `.EOF ` is returned by the passed Reader after reading
 // fewer than min bytes. If len(buf) is less than min, `.Short_Buffer` is returned.
 read_at_least :: proc(r: Reader, buf: []byte, min: int) -> (n: int, err: Error) {
 	if len(buf) < min {

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // setjmp.h - stack environment declarations
 
-foreign lib {
+#foreign lib {
 	/*
 	Equivalent to longjmp() but must not touch signals.
 
@@ -45,7 +45,7 @@ foreign lib {
 
 sigjmp_buf :: distinct jmp_buf
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LSIGSETJMP  :: "__sigsetjmp14"
 	@(private) LSIGLONGJMP :: "__siglongjmp14"
 } else {

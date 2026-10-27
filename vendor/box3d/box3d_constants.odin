@@ -2,7 +2,7 @@ package vendor_box3d
 
 
 @(link_prefix="b3", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	// Box3D bases all length units on meters, but you may need different units for your game.
 	// You can set this value to use different units. This should be done at application startup
 	// and only modified once. Default value is 1.
@@ -24,7 +24,7 @@ foreign lib {
 // from the origin, so the sanity limit widens to keep valid far-field positions from tripping it.
 @(require_results)
 HUGE :: #force_inline proc "c" () -> f32 {
-	when DOUBLE_PRECISION {
+	#if DOUBLE_PRECISION {
 		return 1.0e9 * GetLengthUnitsPerMeter()
 	} else {
 		return 1.0e5 * GetLengthUnitsPerMeter()

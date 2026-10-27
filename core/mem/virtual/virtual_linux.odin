@@ -2,7 +2,7 @@
 #+private
 package mem_virtual
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 _reserve :: proc "contextless" (size: uint, address_hint: uintptr) -> (data: []byte, err: Allocator_Error) {
 	addr, errno := linux.mmap(address_hint, size, {}, {.PRIVATE, .ANONYMOUS})

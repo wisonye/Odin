@@ -1,8 +1,8 @@
 package container_small_array
 
-import "base:builtin"
-@require import "base:intrinsics"
-@require import "base:runtime"
+#import "base:builtin"
+@require #import "base:intrinsics"
+@require #import "base:runtime"
 
 /*
 A fixed-size stack-allocated array operated on in a dynamic fashion.
@@ -13,7 +13,7 @@ Fields:
 
 Example:
 
-	import "core:container/small_array"
+	#import "core:container/small_array"
 
 	example :: proc() {
 		a: small_array.Small_Array(100, int)
@@ -74,8 +74,8 @@ Returns a slice of the data.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	slice_example :: proc() {
 		print :: proc(a: ^small_array.Small_Array($N, int)) {
@@ -162,8 +162,8 @@ Attempt to get a copy of the item at the specified position.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	get_safe_example :: proc() {
 		a: small_array.Small_Array(5, rune)
@@ -219,8 +219,8 @@ This will result in:
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	set_example :: proc() {
 		a: small_array.Small_Array(5, rune)
@@ -272,8 +272,8 @@ The new length will be:
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	resize_example :: proc() {
 		a: small_array.Small_Array(5, int)
@@ -316,8 +316,8 @@ The new length will be:
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	non_zero_resize_example :: proc() {
 		a: small_array.Small_Array(5, int)
@@ -355,8 +355,8 @@ Attempts to add the given element to the end.
 
 Example:
 	
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	push_back_example :: proc() {
 		a: small_array.Small_Array(2, int)
@@ -397,8 +397,8 @@ through get_ptr(_safe) to reference incorrect elements.
 
 Example:
 	
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	push_front_example :: proc() {
 		a: small_array.Small_Array(2, int)
@@ -437,8 +437,8 @@ This operation assumes that the small-array is not empty.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	pop_back_example :: proc() {
 		a: small_array.Small_Array(5, int)
@@ -476,8 +476,8 @@ through get_ptr(_safe) to reference incorrect elements.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	pop_front_example :: proc() {
 		a: small_array.Small_Array(5, int)
@@ -515,7 +515,7 @@ Unlike `pop_back`, it does not assume that the array is non-empty.
 
 Example:
 
-	import "core:container/small_array"
+	#import "core:container/small_array"
 
 	pop_back_safe_example :: proc() {
 		a: small_array.Small_Array(3, int)
@@ -553,7 +553,7 @@ through get_ptr(_safe) to reference incorrect elements.
 
 Example:
 
-	import "core:container/small_array"
+	#import "core:container/small_array"
 
 	pop_front_safe_example :: proc() {
 		a: small_array.Small_Array(3, int)
@@ -590,8 +590,8 @@ Note: This procedure assumes that the array has a sufficient length.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	consume_example :: proc() {
 		a: small_array.Small_Array(3, int)
@@ -624,8 +624,8 @@ through get_ptr(_safe) to reference incorrect elements.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	ordered_remove_example :: proc() {
 		a: small_array.Small_Array(4, int)
@@ -658,8 +658,8 @@ Removes the element at the specified index without retaining order.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	unordered_remove_example :: proc() {
 		a: small_array.Small_Array(4, int)
@@ -692,8 +692,8 @@ Sets the length of the small-array to 0.
 
 Example:
 	
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	clear_example :: proc() {
 		a: small_array.Small_Array(4, int)
@@ -728,8 +728,8 @@ false if there is not enough space to fit all of them.
 
 Example:
 	
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	push_back_elems_example :: proc() {
 		a: small_array.Small_Array(100, int)
@@ -766,8 +766,8 @@ through get_ptr(_safe) to reference incorrect elements.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	inject_at_example :: proc() {
 		arr: small_array.Small_Array(100, rune)
@@ -810,8 +810,8 @@ Tries to append the element(s) to the small-array.
 
 Example:
 
-	import "core:container/small_array"
-	import "core:fmt"
+	#import "core:container/small_array"
+	#import "core:fmt"
 
 	push_example :: proc() {
 		a: small_array.Small_Array(100, int)

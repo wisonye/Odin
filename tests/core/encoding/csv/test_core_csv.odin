@@ -1,7 +1,7 @@
 package test_core_csv
 
-import "core:encoding/csv"
-import "core:testing"
+#import "core:encoding/csv"
+#import "core:testing"
 
 @(test)
 read_final_record :: proc(t: ^testing.T) {

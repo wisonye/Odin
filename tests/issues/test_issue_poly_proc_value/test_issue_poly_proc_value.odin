@@ -3,7 +3,7 @@
 
 package test_issues
 
-import "core:container/avl"
+#import "core:container/avl"
 
 poly :: proc(a: $T) -> T { return a }
 

@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_CoreText
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import posix "core:sys/posix"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -16,7 +16,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreText.framework",
 }
 
@@ -25,7 +25,7 @@ foreign import lib {
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="kCTFontSymbolicTrait")
 	kFontSymbolicTrait: CF.StringRef
 

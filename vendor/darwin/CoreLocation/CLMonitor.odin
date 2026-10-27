@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="CLMonitor", objc_superclass=NS.Object)
 Monitor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Monitor, objc_selector="requestMonitorWithConfiguration:completion:", objc_name="requestMonitorWithConfiguration", objc_is_class_method=true)
 	Monitor_requestMonitorWithConfiguration :: proc(config: ^MonitorConfiguration, completionHandler: ^Objc_Block(proc "c" ( monitor: ^Monitor ))) ---
 
@@ -49,7 +49,7 @@ Monitor_addConditionForMonitoring :: proc {
 @(objc_class="CLMonitorConfiguration", objc_superclass=NS.Object)
 MonitorConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MonitorConfiguration, objc_selector="configWithMonitorName:queue:eventHandler:", objc_name="configWithMonitorName", objc_is_class_method=true)
 	MonitorConfiguration_configWithMonitorName :: proc(name: ^NS.String, queue: CF.dispatch_queue_t, eventHandler: ^Objc_Block(proc "c" ( monitor: ^Monitor, event: ^MonitoringEvent ))) -> ^MonitorConfiguration ---
 

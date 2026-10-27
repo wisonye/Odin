@@ -8,7 +8,7 @@ package sys_freebsd
 		Feoramund: Initial implementation.
 */
 
-import "core:c"
+#import "core:c"
 
 // These definitions have been extracted from a system running FreeBSD 14.0-RELEASE.
 // Most comments come from system header files.
@@ -210,7 +210,7 @@ Socket_Option :: enum c.int {
 	KEEPALIVE         = 0x00000008, /* keep connections alive */
 	DONTROUTE         = 0x00000010, /* just use interface addresses */
 	BROADCAST         = 0x00000020, /* permit sending of broadcast msgs */
-	USELOOPBACK       = 0x00000040, /* bypass hardware when possible */
+	USELOOPBACK       = 0x00000040, /* bypass hardware #if possible */
 	LINGER            = 0x00000080, /* linger on close if data present */
 	OOBINLINE         = 0x00000100, /* leave received OOB data in line */
 	REUSEPORT         = 0x00000200, /* allow local address & port reuse */
@@ -722,7 +722,7 @@ File_Status_Flag :: enum c.int {
 	APPEND          = 0x0008,     /* set append mode */
 	SHLOCK          = 0x0010,     /* open with shared file lock */
 	EXLOCK          = 0x0020,     /* open with exclusive file lock */
-	ASYNC           = 0x0040,     /* signal pgrp when data ready */
+	ASYNC           = 0x0040,     /* signal pgrp #if data ready */
 	FSYNC           = 0x0080,     /* synchronous writes */
 	SYNC            = 0x0080,     /* POSIX synonym for O_FSYNC */
 	NOFOLLOW        = 0x0100,     /* don't follow symlinks */
@@ -770,7 +770,7 @@ File_Status_Index :: enum c.int {
 	SHLOCK          = 4,
 	EXLOCK          = 5,
 
-	/* Enable the SIGIO signal to be sent to the process group when
+	/* Enable the SIGIO signal to be sent to the process group #if
 	   I/O is possible, e.g., upon availability of data to be read. */
 	ASYNC           = 6,
 

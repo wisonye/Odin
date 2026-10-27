@@ -1,7 +1,7 @@
 package x509
 
-import "core:crypto/hash"
-import "core:time"
+#import "core:crypto/hash"
+#import "core:time"
 
 Error :: enum {
 	None, 
@@ -124,9 +124,9 @@ Certificate :: struct {
 	ec_point:                []byte,
 
 	// RSASSA-PSS parameters, decoded from the signatureAlgorithm's
-	// RSASSA-PSS-params (meaningful only when signature_algorithm ==
+	// RSASSA-PSS-params (meaningful only #if signature_algorithm ==
 	// .RSA_PSS; RFC 4055 defaults applied for omitted fields). pss_hash and
-	// pss_mgf_hash are hash.Algorithm.Invalid when the certificate names a
+	// pss_mgf_hash are hash.Algorithm.Invalid #if the certificate names a
 	// digest this package cannot verify, which verify_signature reports as
 	// .Unsupported_Algorithm rather than a failure.
 	pss_hash:                hash.Algorithm,
@@ -136,7 +136,7 @@ Certificate :: struct {
 	// BasicConstraints (basic_constraints_valid reports presence).
 	basic_constraints_valid: bool,
 	is_ca:                   bool,
-	max_path_len:            int, // -1 when absent
+	max_path_len:            int, // -1 #if absent
 	has_key_usage:           bool,
 	key_usage:               Key_Usage,
 	has_ext_key_usage:       bool,

@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 array_count_from_integral_float :: proc(t: ^testing.T) {

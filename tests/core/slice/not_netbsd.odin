@@ -1,9 +1,9 @@
 #+build !netbsd
 package test_core_slice
 
-import "core:slice"
-import "core:testing"
-import "core:math/rand"
+#import "core:slice"
+#import "core:testing"
+#import "core:math/rand"
 
 // Disable on NetBSD due to Illegal Instruction on CI, even with `microarch:native`
 // `@(test, disable="...")` still runs the test.

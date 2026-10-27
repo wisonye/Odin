@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:simd"
-import "core:testing"
+#import "core:simd"
+#import "core:testing"
 
 // #align(N) below the type alignment;
 // the struct only guarantees N for fields

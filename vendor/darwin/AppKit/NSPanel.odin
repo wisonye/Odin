@@ -6,7 +6,7 @@ package darwin_AppKit
 Panel :: struct { using _: Window}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Panel, objc_selector="isFloatingPanel", objc_name="isFloatingPanel")
 	Panel_isFloatingPanel :: proc(self: ^Panel) -> bool ---
 

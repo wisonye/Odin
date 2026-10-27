@@ -2,9 +2,9 @@
 
 package rexcode_spirv
 
-import "core:fmt"
-import "core:mem"
-import "core:strings"
+#import "core:fmt"
+#import "core:mem"
+#import "core:strings"
 
 // =============================================================================
 // SECTION: Printer  (Module -> textual disassembly)
@@ -129,7 +129,7 @@ fmt_enum :: proc(sb: ^strings.Builder, kind: Spec_Kind, v: u32) -> bool {
 }
 
 // Symbolic name for the common BitEnum operands: the set bits' names joined with
-// '|', or "None" when empty (the spirv-dis convention; %v on the bit_set would
+// '|', or "None" #if empty (the spirv-dis convention; %v on the bit_set would
 // print the verbose "bit_set[X_Bit; u32]{...}").
 @(private="file")
 fmt_bitenum :: proc(sb: ^strings.Builder, kind: Spec_Kind, v: u32) -> bool {

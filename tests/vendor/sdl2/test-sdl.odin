@@ -1,8 +1,8 @@
 package test_vendor_sdl2
 
-import "core:log"
-import "core:testing"
-import SDL "vendor:sdl2"
+#import "core:log"
+#import "core:testing"
+#import SDL "vendor:sdl2"
 
 // Links `vendor:sdl2` and prints its version as a line `VERSION SDL2 <version>`. On Windows the library is the DLL of
 // `vendor:sdl2`, which `test.bat` copies next to the test, and its version must be the one the bindings were written for. Elsewhere
@@ -14,7 +14,7 @@ test_sdl :: proc(t: ^testing.T) {
 	linked: SDL.version
 	SDL.GetVersion(&linked)
 	log.infof("VERSION SDL2 %v.%v.%v", linked.major, linked.minor, linked.patch)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		got      := [3]int{int(linked.major), int(linked.minor), int(linked.patch)}
 		bindings := [3]int{SDL.MAJOR_VERSION, SDL.MINOR_VERSION, SDL.PATCHLEVEL}
 		testing.expectf(t, got == bindings, "the SDL2 DLL is %v but the bindings are for %v", got, bindings)

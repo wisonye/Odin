@@ -1,11 +1,11 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	/*
 	Calculates a buffer size in milliseconds (rounded up) from the specified number of frames and sample rate.
 	*/
@@ -104,7 +104,7 @@ foreign lib {
 	/*
 	Mixes the specified number of frames in floating point format with a volume factor.
 
-	This will run on an optimized path when the volume is equal to 1.
+	This will run on an optimized path #if the volume is equal to 1.
 	*/
 	ma_mix_pcm_frames_f32 :: proc(pDst: ^f32, pSrc: ^f32, frameCount: u64, channels: u32, volume: f32) -> result ---
 }
@@ -150,12 +150,12 @@ data_source_base :: struct {
 	loopEndInFrames:  u64,                        /* Relative to rangeBegInFrames. Set to -1 for the end of the range. */
 	pCurrent:         ^data_source,               /* When non-NULL, the data source being initialized will act as a proxy and will route all operations to pCurrent. Used in conjunction with pNext/onGetNext for seamless chaining. */
 	pNext:            ^data_source,               /* When set to NULL, onGetNext will be used. */
-	onGetNext:        data_source_get_next_proc,  /* Will be used when pNext is NULL. If both are NULL, no next will be used. */
+	onGetNext:        data_source_get_next_proc,  /* Will be used #if pNext is NULL. If both are NULL, no next will be used. */
 	isLooping:        b32, /*atomic*/
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	data_source_config_init :: proc() -> data_source_config ---
 	
 	data_source_init                         :: proc(pConfig: ^data_source_config, pDataSource: ^data_source) -> result ---
@@ -196,7 +196,7 @@ audio_buffer_ref :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	audio_buffer_ref_init                      :: proc(format: format, channels: u32, pData: rawptr, sizeInFrames: u64, pAudioBufferRef: ^audio_buffer_ref) -> result ---
 	audio_buffer_ref_uninit                    :: proc(pAudioBufferRef: ^audio_buffer_ref) ---
 	audio_buffer_ref_set_data                  :: proc(pAudioBufferRef: ^audio_buffer_ref, pData: rawptr, sizeInFrames: u64) -> result ---
@@ -228,7 +228,7 @@ audio_buffer :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	audio_buffer_config_init :: proc(format: format, channels: u32, sizeInFrames: u64, pData: rawptr, pAllocationCallbacks: ^allocation_callbacks) -> audio_buffer_config ---
 
 	audio_buffer_init                     :: proc(pConfig: ^audio_buffer_config, pAudioBuffer: ^audio_buffer) -> result ---
@@ -271,7 +271,7 @@ paged_audio_buffer_data :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	paged_audio_buffer_data_init                     :: proc(format: format, channels: u32, pData: ^paged_audio_buffer_data) -> result ---
 	paged_audio_buffer_data_uninit                   :: proc(pData: ^paged_audio_buffer_data, pAllocationCallbacks: ^allocation_callbacks) ---
 	paged_audio_buffer_data_get_head                 :: proc(pData: ^paged_audio_buffer_data) -> ^paged_audio_buffer_page ---
@@ -297,7 +297,7 @@ paged_audio_buffer :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	paged_audio_buffer_config_init :: proc(pData: ^paged_audio_buffer_data) -> paged_audio_buffer_config ---
 
 	paged_audio_buffer_init                     :: proc(pConfig: ^paged_audio_buffer_config, pPagedAudioBuffer: ^paged_audio_buffer) -> result ---
@@ -323,7 +323,7 @@ pulsewave :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	pulsewave_config_init :: proc(format: format, channels: u32, sampleRate: u32, dutyCycle: f64, amplitude: f64, frequency: f64) -> pulsewave_config ---
 
 	pulsewave_init              :: proc(pConfig: ^pulsewave_config, pWaveForm: ^pulsewave) -> result ---

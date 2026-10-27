@@ -3,8 +3,8 @@
 
 package test_issues
 
-import "base:runtime"
-import "core:testing"
+#import "base:runtime"
+#import "core:testing"
 
 @(disabled=true)
 disabled_proc :: proc(n: ^int) { n^ += 1 }

@@ -1,9 +1,9 @@
 package field_p256r1
 
-import "core:crypto"
-import subtle "core:crypto/_subtle"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 fe_clear :: proc "contextless" (arg1: ^Montgomery_Domain_Field_Element) {
 	crypto.zero_explicit(arg1, size_of(Montgomery_Domain_Field_Element))

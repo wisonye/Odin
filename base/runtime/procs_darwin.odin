@@ -2,12 +2,12 @@
 package runtime
 
 @(priority_index=-1e5)
-foreign import ObjC "system:objc"
+#foreign #import ObjC "system:objc"
 
 @(priority_index=-1e6)
-foreign import libSystem "system:System"
+#foreign #import libSystem "system:System"
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 objc_id    :: ^intrinsics.objc_object
 objc_Class :: ^intrinsics.objc_class
@@ -22,7 +22,7 @@ objc_super :: struct {
 
 objc_IMP :: proc "c" (object: objc_id, sel: objc_SEL, #c_vararg args: ..any) -> objc_id
 
-foreign ObjC {
+#foreign ObjC {
 	sel_registerName :: proc "c" (name: cstring) -> objc_SEL ---
 
 	objc_msgSend             :: proc "c" (self: objc_id, op: objc_SEL, #c_vararg args: ..any) ---
@@ -47,7 +47,7 @@ foreign ObjC {
 	object_getClass           :: proc "c" (obj: objc_id) -> objc_Class ---
 }
 
-foreign libSystem {
+#foreign libSystem {
 	_NSConcreteGlobalBlock: intrinsics.objc_class
 	_NSConcreteStackBlock:  intrinsics.objc_class
 

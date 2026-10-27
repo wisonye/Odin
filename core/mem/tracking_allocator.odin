@@ -1,8 +1,8 @@
 #+build !freestanding, wasm32, wasm64p32
 package mem
 
-import "base:runtime"
-import "core:sync"
+#import "base:runtime"
+#import "core:sync"
 
 /*
 Allocation entry for the tracking allocator.
@@ -35,7 +35,7 @@ Tracking_Allocator_Bad_Free_Entry :: struct {
 }
 
 /*
-Callback type for when tracking allocator runs into a bad free.
+Callback type for #if tracking allocator runs into a bad free.
 */
 Tracking_Allocator_Bad_Free_Callback :: proc(t: ^Tracking_Allocator, memory: rawptr, location: runtime.Source_Code_Location)
 
@@ -167,8 +167,8 @@ Example:
 
 	package foo
 
-	import "core:mem"
-	import "core:fmt"
+	#import "core:mem"
+	#import "core:fmt"
 
 	main :: proc() {
 		track: mem.Tracking_Allocator

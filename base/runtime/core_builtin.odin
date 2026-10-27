@@ -1,6 +1,6 @@
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 MAP_ENABLED :: !ODIN_BEDROCK
 
@@ -27,7 +27,7 @@ Returns:
 
 Example:
 	package container_of
-	import "base:runtime"
+	#import "base:runtime"
 
 	Node :: struct {
 		value: int,
@@ -55,8 +55,8 @@ container_of :: #force_inline proc "contextless" (ptr: $P/^$Field_Type, $T: type
 }
 
 
-when !NO_DEFAULT_TEMP_ALLOCATOR {
-	when ODIN_ARCH == .i386 && ODIN_OS == .Windows {
+#if !NO_DEFAULT_TEMP_ALLOCATOR {
+	#if ODIN_ARCH == .i386 && ODIN_OS == .Windows {
 		// Thread-local storage is problematic on Windows i386
 		global_default_temp_allocator_data: Default_Temp_Allocator
 	} else {
@@ -65,10 +65,10 @@ when !NO_DEFAULT_TEMP_ALLOCATOR {
 }
 
 // Initializes the global temporary allocator used as the default `context.temp_allocator`.
-// This is ignored when `NO_DEFAULT_TEMP_ALLOCATOR` is true.
+// This is ignored #if `NO_DEFAULT_TEMP_ALLOCATOR` is true.
 @(builtin, disabled=NO_DEFAULT_TEMP_ALLOCATOR)
 init_global_temporary_allocator :: proc "odin" (size: int, backup_allocator := context.allocator) {
-	when !NO_DEFAULT_TEMP_ALLOCATOR {
+	#if !NO_DEFAULT_TEMP_ALLOCATOR {
 		default_temp_allocator_init(&global_default_temp_allocator_data, size, backup_allocator)
 	}
 }
@@ -495,7 +495,7 @@ delete_cstring16 :: proc(str: cstring16, allocator := context.allocator, loc := 
 	return mem_free((^u16)(str), allocator, loc)
 }
 
-when MAP_ENABLED {
+#if MAP_ENABLED {
 	// `delete_map` will try to free the underlying data of the passed map, with the given `allocator` if the allocator supports this operation.
 	//
 	// Note: Prefer the procedure group `delete`.
@@ -613,7 +613,7 @@ _make_dynamic_array_len_cap :: proc(#no_alias array: ^Raw_Dynamic_Array, size_of
 	return
 }
 
-when MAP_ENABLED {
+#if MAP_ENABLED {
 	// `make_map` initializes a map with an allocator. Like `new`, the first argument is a type, not a value.
 	// Unlike `new`, `make`'s return value is the same as the type of its argument, not a pointer to it.
 	//
@@ -678,7 +678,7 @@ make :: proc{
 	make_soa_dynamic_array_len_cap,
 }
 
-when MAP_ENABLED {
+#if MAP_ENABLED {
 
 	// `clear_map` will set the length of a passed map to `0`
 	//
@@ -721,7 +721,7 @@ when MAP_ENABLED {
 	delete_key :: proc(m: ^$T/map[$K]$V, key: K) -> (deleted_key: K, deleted_value: V) {
 		if m != nil {
 			key := key
-			when ODIN_OPTIMIZATION_MODE >= .Size {
+			#if ODIN_OPTIMIZATION_MODE >= .Size {
 				old_k, old_v, ok := map_erase_static(m, &key)
 			} else {
 				old_k, old_v, ok := map_erase_dynamic((^Raw_Map)(m), map_info(T), uintptr(&key))
@@ -784,15 +784,15 @@ _append_elem_ptr :: #force_no_inline proc(#no_alias array: ^Raw_Dynamic_Array, a
 // `append_elem` appends an element to the end of a dynamic array.
 @builtin
 append_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast arg: E, loc := #caller_location) -> (num_appended: int, err: Allocator_Error) #optional_allocator_error {
-	when size_of(E) == 0 {
+	#if size_of(E) == 0 {
 		if array == nil {
 			return
 		}
 		(^Raw_Dynamic_Array)(array).len += 1
 		return 1, nil
-	} else when intrinsics.type_is_internally_pointer_like(E) {
+	} else #if intrinsics.type_is_internally_pointer_like(E) {
 		return _append_elem_ptr((^Raw_Dynamic_Array)(array), rawptr(arg), should_zero=true, loc=loc)
-	} else when ODIN_OPTIMIZATION_MODE <= .Size {
+	} else #if ODIN_OPTIMIZATION_MODE <= .Size {
 		arg := arg
 		return _append_elem((^Raw_Dynamic_Array)(array), size_of(E), align_of(E), &arg, should_zero=true, loc=loc)
 	} else {
@@ -826,12 +826,12 @@ append_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast arg: E, loc 
 // Note: Prefer using the procedure group `non_zero_append
 @builtin
 non_zero_append_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast arg: E, loc := #caller_location) -> (num_appended: int, err: Allocator_Error) #optional_allocator_error {
-	when size_of(E) == 0 {
+	#if size_of(E) == 0 {
 		(^Raw_Dynamic_Array)(array).len += 1
 		return 1, nil
-	} else when intrinsics.type_is_internally_pointer_like(E) {
+	} else #if intrinsics.type_is_internally_pointer_like(E) {
 		return _append_elem_ptr((^Raw_Dynamic_Array)(array), rawptr(arg), should_zero=false, loc=loc)
-	} else when ODIN_OPTIMIZATION_MODE <= .Size {
+	} else #if ODIN_OPTIMIZATION_MODE <= .Size {
 		arg := arg
 		return _append_elem((^Raw_Dynamic_Array)(array), size_of(E), align_of(E), &arg, should_zero=false, loc=loc)
 	} else {
@@ -892,7 +892,7 @@ _append_elems :: #force_no_inline proc(#no_alias array: ^Raw_Dynamic_Array, size
 // Note: Prefer using the procedure group `append`.
 @builtin
 append_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast args: ..E, loc := #caller_location) -> (num_appended: int, err: Allocator_Error) #optional_allocator_error {
-	when size_of(E) == 0 {
+	#if size_of(E) == 0 {
 		a := (^Raw_Dynamic_Array)(array)
 		a.len += len(args)
 		return len(args), nil
@@ -906,7 +906,7 @@ append_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast args: ..E, 
 // Note: Prefer using the procedure group `non_zero_append
 @builtin
 non_zero_append_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #no_broadcast args: ..E, loc := #caller_location) -> (num_appended: int, err: Allocator_Error) #optional_allocator_error {
-	when size_of(E) == 0 {
+	#if size_of(E) == 0 {
 		a := (^Raw_Dynamic_Array)(array)
 		a.len += len(args)
 		return len(args), nil
@@ -971,7 +971,7 @@ append_fixed_capacity_elem :: proc "contextless" (array: ^$T/[dynamic; $N]$E, #n
 		return 0
 	}
 
-	when size_of(E) != 0 {
+	#if size_of(E) != 0 {
 		#no_bounds_check (^Raw)(array).data[(^Raw)(array).len] = arg
 	}
 	(^Raw)(array).len += 1
@@ -987,7 +987,7 @@ append_fixed_capacity_elems :: proc "contextless" (array: ^$T/[dynamic; $N]$E, #
 
 	num_appended = min(N - len(array), len(args))
 
-	#no_bounds_check when size_of(E) != 0 {
+	#no_bounds_check #if size_of(E) != 0 {
 		intrinsics.mem_copy(&raw.data[raw.len], raw_data(args), num_appended*size_of(E))
 	}
 
@@ -1042,7 +1042,7 @@ non_zero_append :: proc{
 }
 
 
-// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` when it was not possible,
+// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` #if it was not possible,
 // whatever `err` happens to be.
 @builtin
 append_nothing_dynamic_array :: proc(#no_alias array: ^$T/[dynamic]$E, loc := #caller_location) -> (n: int, err: Allocator_Error) #optional_allocator_error {
@@ -1054,7 +1054,7 @@ append_nothing_dynamic_array :: proc(#no_alias array: ^$T/[dynamic]$E, loc := #c
 	return len(array)-prev_len, nil
 }
 
-// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` when it was not possible,
+// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` #if it was not possible,
 // whatever `err` happens to be.
 @builtin
 append_nothing_fixed_capacity_dynamic_array :: proc "contextless" (array: ^$T/[dynamic; $N]$E) -> (n: int, ok: bool) {
@@ -1067,7 +1067,7 @@ append_nothing_fixed_capacity_dynamic_array :: proc "contextless" (array: ^$T/[d
 }
 
 
-// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` when it was not possible,
+// `append_nothing` appends an empty value to a dynamic array. It returns `1, nil` if successful, and `0, err` #if it was not possible,
 // whatever `err` happens to be.
 @builtin
 append_nothing :: proc{
@@ -1079,7 +1079,7 @@ append_nothing :: proc{
 // `inject_at_elem` injects an element in a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #no_broadcast arg: E, loc := #caller_location) -> (ok: bool, err: Allocator_Error) #no_bounds_check #optional_allocator_error {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1090,7 +1090,7 @@ inject_at_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #n
 	new_size := n + m
 
 	resize(array, new_size, loc) or_return
-	when size_of(E) != 0 {
+	#if size_of(E) != 0 {
 		copy(array[index + m:], array[index:])
 		array[index] = arg
 	}
@@ -1101,7 +1101,7 @@ inject_at_elem :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #n
 // `inject_at_elems` injects multiple elements in a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #no_broadcast args: ..E, loc := #caller_location) -> (ok: bool, err: Allocator_Error) #no_bounds_check #optional_allocator_error {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1117,7 +1117,7 @@ inject_at_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #
 	new_size := n + m
 
 	resize(array, new_size, loc) or_return
-	when size_of(E) != 0 {
+	#if size_of(E) != 0 {
 		copy(array[index + m:], array[index:])
 		copy(array[index:], args)
 	}
@@ -1128,7 +1128,7 @@ inject_at_elems :: proc(#no_alias array: ^$T/[dynamic]$E, #any_int index: int, #
 // `inject_at_elem_string` injects a string into a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elem_string :: proc(#no_alias array: ^$T/[dynamic]$E/u8, #any_int index: int, arg: string, loc := #caller_location) -> (ok: bool, err: Allocator_Error) #no_bounds_check #optional_allocator_error {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1154,7 +1154,7 @@ inject_at_elem_string :: proc(#no_alias array: ^$T/[dynamic]$E/u8, #any_int inde
 // `inject_at_elem_fixed_capacity_dynamic_array` injects an element in a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elem_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E, #any_int index: int, #no_broadcast arg: E, loc := #caller_location) -> (ok: bool) #no_bounds_check {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1165,7 +1165,7 @@ inject_at_elem_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E, 
 	new_size := n + m
 
 	resize(array, new_size) or_return
-	when size_of(E) != 0 {
+	#if size_of(E) != 0 {
 		copy(array[index + m:], array[index:])
 		array[index] = arg
 	}
@@ -1175,7 +1175,7 @@ inject_at_elem_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E, 
 // `inject_at_elems_fixed_capacity_dynamic_array` injects multiple elements in a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elems_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E, #any_int index: int, #no_broadcast args: ..E, loc := #caller_location) -> (ok: bool) #no_bounds_check {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1190,7 +1190,7 @@ inject_at_elems_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E,
 	new_size := n + m
 
 	resize(array, new_size) or_return
-	when size_of(E) != 0 {
+	#if size_of(E) != 0 {
 		copy(array[index + m:], array[index:])
 		copy(array[index:], args)
 	}
@@ -1200,7 +1200,7 @@ inject_at_elems_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E,
 // `inject_at_elem_string_fixed_capacity_dynamic_array` injects a string into a dynamic array at a specified index and moves the previous elements after that index "across"
 @builtin
 inject_at_elem_string_fixed_capacity_dynamic_array :: proc(array: ^$T/[dynamic; $N]$E/u8, #any_int index: int, arg: string, loc := #caller_location) -> (ok: bool) #no_bounds_check {
-	when !ODIN_NO_BOUNDS_CHECK {
+	#if !ODIN_NO_BOUNDS_CHECK {
 		ensure(index >= 0, "Index must be positive.", loc)
 	}
 	if array == nil {
@@ -1608,7 +1608,7 @@ _shrink_dynamic_array :: proc(#no_alias a: ^Raw_Dynamic_Array, size_of_elem, ali
 	return true, nil
 }
 
-when MAP_ENABLED {
+#if MAP_ENABLED {
 	@builtin
 	map_insert :: proc(m: ^$T/map[$K]$V, key: K, value: V, loc := #caller_location) -> (value_ptr: ^V, err: Allocator_Error) #optional_allocator_error {
 		key, value := key, value
@@ -1664,7 +1664,7 @@ when MAP_ENABLED {
 @builtin
 card :: proc "contextless" (s: $S/bit_set[$E; $U]) -> int {
 	Backing :: intrinsics.type_bit_set_underlying_type(S)
-	when intrinsics.type_is_array(Backing) {
+	#if intrinsics.type_is_array(Backing) {
 		// bit_set backed by an array of integers: sum the population count of each element
 		backing := transmute(Backing)s
 		count := 0
@@ -1682,7 +1682,7 @@ card :: proc "contextless" (s: $S/bit_set[$E; $U]) -> int {
 // Evaluates the condition and panics the program if and only if (⟺) the condition is false.
 // This uses the `context.assertion_failure_procedure` to assert.
 //
-// This routine will be ignored when `ODIN_DISABLE_ASSERT` is true.
+// This routine will be ignored #if `ODIN_DISABLE_ASSERT` is true.
 @builtin
 @(disabled=ODIN_DISABLE_ASSERT)
 assert :: proc(condition: bool, message := #caller_expression(condition), loc := #caller_location) {
@@ -1746,7 +1746,7 @@ unimplemented :: proc(message := "", loc := #caller_location) -> ! {
 // Evaluates the condition and panics the program if and only if (⟺) the condition is false.
 // This uses the `default_assertion_contextless_failure_proc` to assert.
 //
-// This routine will be ignored when `ODIN_DISABLE_ASSERT` is true.
+// This routine will be ignored #if `ODIN_DISABLE_ASSERT` is true.
 @builtin
 @(disabled=ODIN_DISABLE_ASSERT)
 assert_contextless :: proc "contextless" (condition: bool, message := #caller_expression(condition), loc := #caller_location) {

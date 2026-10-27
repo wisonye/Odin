@@ -1,10 +1,10 @@
 #+build js wasm32, js wasm64p32
 package wasm_js_interface
 
-foreign import dom_lib "odin_dom"
+#foreign #import dom_lib "odin_dom"
 
 @(default_calling_convention="contextless")
-foreign dom_lib {
+#foreign dom_lib {
 	get_element_value_f64    :: proc(id: string) -> f64 ---
 	set_element_value_f64    :: proc(id: string, value: f64) ---
 
@@ -28,7 +28,7 @@ foreign dom_lib {
 
 get_element_value_string :: proc "contextless" (id: string, buf: []byte) -> string {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="get_element_value_string")
 		_get_element_value_string :: proc(id: string, buf: []byte) -> int ---
 	}
@@ -38,7 +38,7 @@ get_element_value_string :: proc "contextless" (id: string, buf: []byte) -> stri
 
 get_element_key_string :: proc "contextless" (id: string, key: string, buf: []byte) -> string {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="get_element_key_string")
 		_get_element_key_string :: proc(id: string, key: string, buf: []byte) -> int ---
 	}
@@ -51,7 +51,7 @@ get_element_key_string :: proc "contextless" (id: string, key: string, buf: []by
 
 get_element_min_max :: proc "contextless" (id: string) -> (min, max: f64) {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="get_element_min_max")
 		_get_element_min_max :: proc(min_max: ^[2]f64, id: string) ---
 	}
@@ -67,7 +67,7 @@ Rect :: struct {
 
 get_bounding_client_rect :: proc "contextless" (id: string) -> (rect: Rect) {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="get_bounding_client_rect")
 		_get_bounding_client_rect :: proc(rect: ^Rect, id: string) ---
 	}
@@ -77,7 +77,7 @@ get_bounding_client_rect :: proc "contextless" (id: string) -> (rect: Rect) {
 
 window_get_rect :: proc "contextless" () -> (rect: Rect) {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="window_get_rect")
 		_window_get_rect :: proc(rect: ^Rect) ---
 	}
@@ -87,7 +87,7 @@ window_get_rect :: proc "contextless" () -> (rect: Rect) {
 
 window_get_scroll :: proc "contextless" () -> (x, y: f64) {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="window_get_scroll")
 		_window_get_scroll :: proc(scroll: ^[2]f64) ---
 	}

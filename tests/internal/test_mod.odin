@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // % operator (truncated remainder)
 // remainder = x - y * trunc(x / y)

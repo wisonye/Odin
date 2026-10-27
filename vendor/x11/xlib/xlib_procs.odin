@@ -1,14 +1,14 @@
 #+build linux, openbsd, freebsd
 package xlib
 
-foreign import xlib "system:X11"
-foreign xlib {
+#foreign #import xlib "system:X11"
+#foreign xlib {
 	@(link_name="_Xdebug") _Xdebug: i32
 }
 
-foreign import xcursor "system:Xcursor"
+#foreign #import xcursor "system:Xcursor"
 @(default_calling_convention="c", link_prefix="X")
-foreign xcursor {
+#foreign xcursor {
 	cursorGetTheme          :: proc(display: ^Display) -> cstring ---
 	cursorGetDefaultSize    :: proc(display: ^Display) -> i32 ---
 	cursorLibraryLoadCursor :: proc(display: ^Display, name: cstring) -> Cursor ---
@@ -18,16 +18,16 @@ foreign xcursor {
 	cursorImageDestroy      :: proc(img: rawptr) ---
 }
 
-foreign import xfixes "system:Xfixes"
+#foreign #import xfixes "system:Xfixes"
 @(default_calling_convention="c", link_prefix="XFixes")
-foreign xfixes {
+#foreign xfixes {
 	HideCursor :: proc(display: ^Display, window: Window) ---
 	ShowCursor :: proc(display: ^Display, window: Window) ---
 }
 
-foreign import xrandr "system:Xrandr"
+#foreign #import xrandr "system:Xrandr"
 @(default_calling_convention="c")
-foreign xrandr {
+#foreign xrandr {
 	XRRSizes :: proc(display: ^Display, screen: i32, nsizes: ^i32) -> [^]XRRScreenSize ---
 	XRRGetScreenResources :: proc(display: ^Display, window: Window) -> ^XRRScreenResources ---
 	XRRFreeScreenResources :: proc(resources: ^XRRScreenResources) ---
@@ -38,8 +38,8 @@ foreign xrandr {
 	XRRGetMonitors :: proc(dpy: ^Display, window: Window, get_active: b32, nmonitors: ^i32) -> [^]XRRMonitorInfo ---
 }
 
-foreign import xinput "system:Xi"
-foreign xinput {
+#foreign #import xinput "system:Xi"
+#foreign xinput {
 	XISelectEvents :: proc(display: ^Display, window: Window, masks: [^]XIEventMask, num_masks: i32) -> i32 ---
 	XIQueryVersion :: proc(display: ^Display, major: ^i32, minor: ^i32) -> Status ---
 }
@@ -56,7 +56,7 @@ XIMaskIsSet :: proc(ptr: [^]u8, event: i32) -> bool {
 /* ----  X11/Xlib.h ---------------------------------------------------------*/
 
 @(default_calling_convention="c", link_prefix="X")
-foreign xlib {
+#foreign xlib {
 	// Free data allocated by Xlib
 	Free              :: proc(ptr: rawptr) ---
 	// Opening/closing a display
@@ -1722,7 +1722,7 @@ foreign xlib {
 }
 
 @(default_calling_convention="c")
-foreign xlib {
+#foreign xlib {
 	XcmsLookupColor :: proc(
 		display:  ^Display,
 		colormap: Colormap,

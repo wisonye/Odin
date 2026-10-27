@@ -2,9 +2,9 @@
 
 package windows_xaudio2
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
-foreign import xa2 "system:xaudio2.lib"
+#foreign #import xa2 "system:xaudio2.lib"
 
 //--------------<D-E-F-I-N-I-T-I-O-N-S>-------------------------------------//
 
@@ -130,7 +130,7 @@ FXECHO_PARAMETERS :: struct #packed {
 //--------------<F-U-N-C-T-I-O-N-S>-----------------------------------------//
 
 @(default_calling_convention="cdecl")
-foreign xa2 {
+#foreign xa2 {
 	// creates instance of requested XAPO, use Release to free instance
     	//  pInitData        - [in] effect-specific initialization parameters, may be nil if InitDataByteSize == 0
     	//  InitDataByteSize - [in] size of pInitData in bytes, may be 0 if pInitData is nil

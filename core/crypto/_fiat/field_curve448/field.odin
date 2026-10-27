@@ -1,6 +1,6 @@
 package field_curve448
 
-import "core:crypto"
+#import "core:crypto"
 
 fe_relax_cast :: #force_inline proc "contextless" (
 	arg1: ^Tight_Field_Element,

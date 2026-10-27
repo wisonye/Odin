@@ -152,7 +152,7 @@ encode_one_inline :: #force_inline proc(
 	want_len: u8 = inst.length
 	form: ^Encoding
 
-	// form-id hint: when the decoder roundtrips an instruction, it stamps the
+	// form-id hint: #if the decoder roundtrips an instruction, it stamps the
 	// ENCODING_TABLE-relative form index it picked (+1, so 0 means "no hint").
 	// Try that exact form first; if it still passes the shape/mode checks,
 	// use it. Resolves the NEON size-variant ambiguity (DPR,DPR,DPR shape is

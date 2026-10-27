@@ -3,8 +3,8 @@
 package sys_llvm
 
 @(default_calling_convention="none")
-foreign _ {
-	when size_of(int) == 4 {
+#foreign _ {
+	#if size_of(int) == 4 {
 		@(link_name="llvm.memcpy.p0.p0.i32")
 		memcpy :: proc(dst, src: rawptr, len: int, #const is_volatile: bool = false) ---
 
@@ -39,7 +39,7 @@ foreign _ {
 
 
 @(default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.sqrt.f32")
 	sqrt_f32 :: proc(f32) -> f32 ---
 	@(link_name="llvm.sqrt.f64")
@@ -190,13 +190,13 @@ foreign _ {
 	@(link_name="llvm.maximum.f64")
 	maximum_f64 :: proc(val0, val1: f64) -> f64 ---
 
-	// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand when the other is a constant
+	// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand #if the other is a constant
 	@(link_name="llvm.minimumnum.f32")
 	minimum_num_f32 :: proc(val0, val1: f32) -> f32 ---
 	@(link_name="llvm.minimumnum.f64")
 	minimum_num_f64 :: proc(val0, val1: f64) -> f64 ---
 
-	// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand when the other is a constant
+	// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand #if the other is a constant
 	@(link_name="llvm.maximumnum.f32")
 	maximum_num_f32 :: proc(val0, val1: f32) -> f32 ---
 	@(link_name="llvm.maximumnum.f64")
@@ -278,8 +278,8 @@ foreign _ {
 
 // f16 variants, on targets where LLVM supports f16
 @(default_calling_convention="none")
-foreign _ {
-	when __ODIN_LLVM_F16_SUPPORTED {
+#foreign _ {
+	#if __ODIN_LLVM_F16_SUPPORTED {
 		@(link_name="llvm.sqrt.f16")
 		sqrt_f16 :: proc(f16) -> f16 ---
 
@@ -374,11 +374,11 @@ foreign _ {
 		@(link_name="llvm.maximum.f16")
 		maximum_f16 :: proc(val0, val1: f16) -> f16 ---
 
-		// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand when the other is a constant
+		// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand #if the other is a constant
 		@(link_name="llvm.minimumnum.f16")
 		minimum_num_f16 :: proc(val0, val1: f16) -> f16 ---
 
-		// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand when the other is a constant
+		// LLVM 20+, whose x86 code at -o:none and -o:minimal can return a NaN operand #if the other is a constant
 		@(link_name="llvm.maximumnum.f16")
 		maximum_num_f16 :: proc(val0, val1: f16) -> f16 ---
 
@@ -408,7 +408,7 @@ foreign _ {
 
 		// LLVM can only lower these on arm64; elsewhere the f32 variants give the same results,
 		// as every f16 converts to f32 exactly
-		when ODIN_ARCH == .arm64 {
+		#if ODIN_ARCH == .arm64 {
 			@(link_name="llvm.lround.i32.f16")
 			lround_f16_i32 :: proc(f16) -> i32 ---
 

@@ -4,10 +4,10 @@ package ENet
 // When we implement the appropriate bindings for Windows, the section separated
 // by `{` and `}` here can be removed in favor of using the bindings.
 // {
-foreign import WinSock2 "system:Ws2_32.lib"
+#foreign #import WinSock2 "system:Ws2_32.lib"
 
 @(private="file", default_calling_convention="c")
-foreign WinSock2 {
+#foreign WinSock2 {
 	__WSAFDIsSet :: proc(fd: SOCKET, s: ^fd_set) -> i32 ---
 }
 

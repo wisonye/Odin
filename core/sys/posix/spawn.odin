@@ -1,13 +1,13 @@
 #+build linux, darwin, openbsd, freebsd, netbsd
 package posix
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System.framework"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System.framework"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
-foreign lib {
+#foreign lib {
 	/*
 	Creates a child process from a provided filepath
 	spawnp searches directories on the path for the file

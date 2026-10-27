@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLVisibleFunctionTable")
 VisibleFunctionTable :: struct {
@@ -11,7 +11,7 @@ VisibleFunctionTable :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VisibleFunctionTable, objc_selector="setFunction:atIndex:", objc_name="setFunction")
 	VisibleFunctionTable_setFunction :: proc(self: ^VisibleFunctionTable, function: ^FunctionHandle, index: NS.UInteger) ---
 
@@ -38,7 +38,7 @@ VisibleFunctionTableDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=VisibleFunctionTableDescriptor, objc_selector="visibleFunctionTableDescriptor", objc_name="visibleFunctionTableDescriptor", objc_is_class_method=true)
 	VisibleFunctionTableDescriptor_visibleFunctionTableDescriptor :: proc() -> ^VisibleFunctionTableDescriptor ---
 

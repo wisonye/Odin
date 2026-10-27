@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UICollisionBehavior", objc_superclass=DynamicBehavior)
 CollisionBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollisionBehavior, objc_selector="initWithItems:", objc_name="initWithItems")
 	CollisionBehavior_initWithItems :: proc(self: ^CollisionBehavior, items: ^NS.Array) -> instancetype ---
 
@@ -77,7 +77,7 @@ CollisionBehaviorDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CollisionBehaviorDelegate, objc_selector="collisionBehavior:beganContactForItem:withItem:atPoint:", objc_name="collisionBehavior_beganContactForItem_withItem_atPoint")
 	CollisionBehaviorDelegate_collisionBehavior_beganContactForItem_withItem_atPoint :: proc(self: ^CollisionBehaviorDelegate, behavior: ^CollisionBehavior, item1: ^DynamicItem, item2: ^DynamicItem, p: CG.Point) ---
 

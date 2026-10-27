@@ -1,7 +1,7 @@
 // Windows Audio Session API Bindings Package
 package wasapi
 
-import "core:sys/windows"
+#import "core:sys/windows"
 
 
 KSDATAFORMAT_SUBTYPE_IEEE_FLOAT_STRING :: "00000003-0000-0010-8000-00aa00389b71"

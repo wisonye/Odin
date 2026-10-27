@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCMouse", objc_superclass=NS.Object)
 Mouse :: struct {
@@ -10,7 +10,7 @@ Mouse :: struct {
 	using _: Device,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Mouse, objc_selector="mice", objc_name="mice", objc_is_class_method=true)
 	Mouse_mice :: proc() -> ^NS.Array ---
 
@@ -25,7 +25,7 @@ foreign lib {
 @(objc_class="GCMouseInput", objc_superclass=PhysicalInputProfile)
 MouseInput :: struct { using _: PhysicalInputProfile}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MouseInput, objc_selector="mouseMovedHandler", objc_name="mouseMovedHandler")
 	MouseInput_mouseMovedHandler :: proc(self: ^MouseInput) -> MouseMoved ---
 

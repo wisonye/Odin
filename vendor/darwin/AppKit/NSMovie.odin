@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSMovie", objc_superclass=NS.Object)
 Movie :: struct {
@@ -11,7 +11,7 @@ Movie :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Movie, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	Movie_initWithCoder :: proc(self: ^Movie, coder: ^NS.Coder) -> instancetype ---
 

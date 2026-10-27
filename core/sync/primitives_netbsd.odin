@@ -1,9 +1,9 @@
 #+private
 package sync
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
-foreign libc {
+#foreign libc {
 	_lwp_self :: proc "c" () -> i32 ---
 }
 

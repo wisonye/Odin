@@ -2,10 +2,10 @@
 
 package rexcode_ppc_vle_tests
 
-import "core:fmt"
-import "core:os"
-import v ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import v ".."
+#import "core:rexcode/isa"
 
 @(private="file")
 check :: proc(name: string, instructions: []v.Instruction, label_defs: []isa.Label_Definition, want: []u8) {

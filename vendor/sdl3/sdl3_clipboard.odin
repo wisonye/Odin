@@ -4,7 +4,7 @@ ClipboardDataCallback    :: #type proc "c" (userdata: rawptr, mime_type: cstring
 ClipboardCleanupCallback :: #type proc "c" (userdata: rawptr)
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetClipboardText        :: proc(text: cstring) -> bool ---
 	GetClipboardText        :: proc() -> [^]Uint8 ---
 	HasClipboardText        :: proc() -> bool ---

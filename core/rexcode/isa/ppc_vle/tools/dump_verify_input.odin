@@ -20,11 +20,11 @@ package main
 //
 // Verifier:  bash tools/verify_against_vle_as.sh /tmp/rexcode_ppc_vle.hex
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import v ".."
+#import v ".."
 
 main :: proc() {
 	fmt.println("Dumping PPC VLE verification manifest...")
@@ -37,7 +37,7 @@ main :: proc() {
 	// Prologue: triggers SHF_PPC_VLE on .text so objdump decodes the
 	// subsequent raw data as VLE instructions.
 	strings.write_string(&asm_buf, ".section .text\n.machine vle\nse_isync\n")
-	// Track the prologue byte count so the verifier can skip it when
+	// Track the prologue byte count so the verifier can skip it #if
 	// matching against our expected hex.
 	prologue_bytes := 2   // se_isync = 0x0001 (2 bytes)
 	_ = prologue_bytes

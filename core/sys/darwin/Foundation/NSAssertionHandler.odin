@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSAssertionHandler", objc_superclass=Object)
 AssertionHandler :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssertionHandler, objc_selector="handleFailureInMethod:object:file:lineNumber:description:", objc_name="handleFailureInMethod")
 	AssertionHandler_handleFailureInMethod :: proc(self: ^AssertionHandler, selector: SEL, object: id, fileName: ^String, line: Integer, format: ^String) ---
 

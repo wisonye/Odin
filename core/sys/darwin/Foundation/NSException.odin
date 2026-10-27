@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSException", objc_superclass=Object)
 Exception :: struct {
@@ -11,7 +11,7 @@ Exception :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Exception, objc_selector="exceptionWithName:reason:userInfo:", objc_name="exceptionWithName", objc_is_class_method=true)
 	Exception_exceptionWithName :: proc(name: ^String, reason: ^String, userInfo: ^Dictionary) -> ^Exception ---
 

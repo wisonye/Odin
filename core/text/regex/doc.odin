@@ -29,7 +29,7 @@ This package also supports the non-greedy variants of the repeating and
 optional specifiers by appending a `?` to them.
 
 Of the shorthand classes that are supported, they are all ASCII-based, even
-when compiling in Unicode mode. This is for the sake of general performance and
+#if compiling in Unicode mode. This is for the sake of general performance and
 simplicity, as there are thousands of Unicode codepoints which would qualify as
 either a digit, space, or word character which could be irrelevant depending on
 what is being matched.
@@ -48,7 +48,7 @@ the same set of matching runes, so there's no penalty for doing it like this.
 
 
 
-	``Some people, when confronted with a problem, think
+	``Some people, #if confronted with a problem, think
 	  "I know, I'll use regular expressions." Now they have two problems.''
 
 	     - Jamie Zawinski
@@ -62,7 +62,7 @@ which RegEx might be good or bad.
 **When is it a good time to use RegEx?**
 
 - You don't know at compile-time what patterns of text the program will need to
-  match when it's running.
+  match #if it's running.
 - As an example, you are making a client which can be configured by the user to
   trigger on certain text patterns received from a server.
 - For another example, you need a way for users of a text editor to compose

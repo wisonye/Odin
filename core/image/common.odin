@@ -9,11 +9,11 @@ package image
 		Ginger Bill:     Cosmetic changes.
 */
 
-import "core:bytes"
-import "core:mem"
-import "core:io"
-import "core:compress"
-import "base:runtime"
+#import "core:bytes"
+#import "core:mem"
+#import "core:io"
+#import "core:compress"
+#import "base:runtime"
 
 /*
 	67_108_864 pixels max by default.
@@ -738,7 +738,7 @@ pixels_to_image :: proc(pixels: [][$N]$E, width: int, height: int) -> (img: Imag
 
 	img.height   = height
 	img.width    = width
-	img.depth    = 8 when E == u8 else 16
+	img.depth    = 8 #if E == u8 else 16
 	img.channels = N
 
 	s := transmute(runtime.Raw_Slice)pixels
@@ -1428,30 +1428,30 @@ apply_palette_rgba :: proc(img: ^Image, palette: [256]RGBA_Pixel, allocator := c
 apply_palette :: proc{apply_palette_rgb, apply_palette_rgba}
 
 blend_single_channel :: #force_inline proc(fg, alpha, bg: $T) -> (res: T) where T == u8 || T == u16 {
-	MAX :: 256 when T == u8 else 65536
+	MAX :: 256 #if T == u8 else 65536
 
 	c := u32(fg) * (MAX - u32(alpha)) + u32(bg) * (1 + u32(alpha))
 	return T(c & (MAX - 1))
 }
 
 blend_pixel :: #force_inline proc(fg: [$N]$T, alpha: T, bg: [N]T) -> (res: [N]T) where (T == u8 || T == u16), N >= 1, N <= 4 {
-	MAX :: 256 when T == u8 else 65536
+	MAX :: 256 #if T == u8 else 65536
 
-	when N == 1 {
+	#if N == 1 {
 		r := u32(fg.r) * (MAX - u32(alpha)) + u32(bg.r) * (1 + u32(alpha))
 		return {T(r & (MAX - 1))}
 	}
-	when N == 2 {
+	#if N == 2 {
 		r := u32(fg.r) * (MAX - u32(alpha)) + u32(bg.r) * (1 + u32(alpha))
 		g := u32(fg.g) * (MAX - u32(alpha)) + u32(bg.g) * (1 + u32(alpha))
 		return {T(r & (MAX - 1)), T(g & (MAX - 1))}
 	}
-	when N == 3 || N == 4 {
+	#if N == 3 || N == 4 {
 		r := u32(fg.r) * (MAX - u32(alpha)) + u32(bg.r) * (1 + u32(alpha))
 		g := u32(fg.g) * (MAX - u32(alpha)) + u32(bg.g) * (1 + u32(alpha))
 		b := u32(fg.b) * (MAX - u32(alpha)) + u32(bg.b) * (1 + u32(alpha))
 
-		when N == 3 {
+		#if N == 3 {
 			return {T(r & (MAX - 1)), T(g & (MAX - 1)), T(b & (MAX - 1))}
 		} else {
 			return {T(r & (MAX - 1)), T(g & (MAX - 1)), T(b & (MAX - 1)), MAX - 1}

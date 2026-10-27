@@ -1,12 +1,12 @@
 // Reader and writer for a variant of the `.ini` file format with `key = value` entries in `[sections]`.
 package encoding_ini
 
-import    "base:runtime"
-import    "base:intrinsics"
-import    "core:strings"
-import    "core:strconv"
-import    "core:io"
-import    "core:fmt"
+#import    "base:runtime"
+#import    "base:intrinsics"
+#import    "core:strings"
+#import    "core:strconv"
+#import    "core:io"
+#import    "core:fmt"
 _ :: fmt
 
 Options :: struct {
@@ -151,7 +151,7 @@ write_pair :: proc(w: io.Writer, key: string, value: $T, n_written: ^int = nil) 
 	defer if n_written != nil { n_written^ += n }
 	io.write_string(w, key,   &n) or_return
 	io.write_string(w, " = ", &n) or_return
-	when intrinsics.type_is_string(T) {
+	#if intrinsics.type_is_string(T) {
 		val := string(value)
 		if len(val) > 0 && (val[0] == ' ' || val[len(val)-1] == ' ') {
 			io.write_quoted_string(w, val, n_written=&n) or_return

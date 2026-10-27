@@ -1,22 +1,22 @@
 #+build linux, windows, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
-import "core:c/libc"
+#import "core:c"
+#import "core:c/libc"
 
-when ODIN_OS == .Windows {
-	foreign import lib "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // signal.h - signals
 
-foreign lib {
+#foreign lib {
 	/*
 	Set a signal handler.
 
@@ -119,7 +119,7 @@ SIGINT  :: libc.SIGINT
 SIGSEGV :: libc.SIGSEGV
 SIGTERM :: libc.SIGTERM
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	SIGALRM   :: -1
 	SIGBUS    :: -1
 	SIGCHLD   :: -1

@@ -14,9 +14,9 @@ package sm3
         zhibog, dotbmp:  Initial implementation.
 */
 
-import "core:crypto"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:crypto"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 // DIGEST_SIZE is the SM3 digest size in bytes.
 DIGEST_SIZE :: 32

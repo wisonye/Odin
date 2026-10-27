@@ -21,7 +21,7 @@
 #+no-instrumentation
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 Fast_Math_Flag :: enum u8 {
@@ -167,14 +167,14 @@ Type_Info_Struct :: struct {
 	soa_len:       i32,
 	soa_base_type: ^Type_Info,
 
-	equal: Equal_Proc, // set only when the struct has .Comparable set but does not have .Simple_Compare set
+	equal: Equal_Proc, // set only #if the struct has .Comparable set but does not have .Simple_Compare set
 }
 Type_Info_Union :: struct {
 	variants:     []^Type_Info,
 	tag_offset:   uintptr,
 	tag_type:     ^Type_Info,
 
-	equal: Equal_Proc, // set only when the struct has .Comparable set but does not have .Simple_Compare set
+	equal: Equal_Proc, // set only #if the struct has .Comparable set but does not have .Simple_Compare set
 
 	custom_align: bool,
 	no_nil:       bool,
@@ -285,7 +285,7 @@ type_table: []^Type_Info
 
 args__: []cstring
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	// NOTE(Jeroen): If we're a Windows DLL, fwdReason will be populated.
 	// This tells a DLL if it's first loaded, about to be unloaded, or a thread is joining/exiting.
 
@@ -340,7 +340,7 @@ MAP_CACHE_LINE_SIZE :: 1 << MAP_CACHE_LINE_LOG2
 // In the optimal case, len(Map_Cell(T){}.data) = 1 so the cell array can be treated
 // as a regular array of T, which is the case for hashes.
 Map_Cell :: struct($T: typeid) #align(MAP_CACHE_LINE_SIZE) {
-	data: [MAP_CACHE_LINE_SIZE / size_of(T) when 0 < size_of(T) && size_of(T) < MAP_CACHE_LINE_SIZE else 1]T,
+	data: [MAP_CACHE_LINE_SIZE / size_of(T) #if 0 < size_of(T) && size_of(T) < MAP_CACHE_LINE_SIZE else 1]T,
 }
 
 // So we can operate on a cell data structure at runtime without any type
@@ -564,7 +564,7 @@ Raw_Any :: struct {
 	data: rawptr,
 	id:   typeid,
 }
-when !ODIN_NO_RTTI {
+#if !ODIN_NO_RTTI {
 	#assert(size_of(Raw_Any) == size_of(any))
 }
 
@@ -726,7 +726,7 @@ Odin_Optimization_Mode :: type_of(ODIN_OPTIMIZATION_MODE)
 
 // IMPORTANT NOTE(bill): Do not call this unless you want to explicitly set up the entry point and how it gets called
 // This is probably only useful for freestanding targets
-foreign {
+#foreign {
 	@(link_name="__$startup_runtime")
 	_startup_runtime :: proc "odin" () ---
 	@(link_name="__$cleanup_runtime")
@@ -824,7 +824,7 @@ __type_info_of :: proc "contextless" (id: typeid) -> ^Type_Info #no_bounds_check
 	return type_table[0]
 }
 
-when !ODIN_NO_RTTI {
+#if !ODIN_NO_RTTI {
 	// typeid_base returns the base-type of a `typeid` stripping the `distinct`ness from the first level
 	@(require_results)
 	typeid_base :: proc "contextless" (id: typeid) -> typeid {
@@ -900,11 +900,11 @@ __init_context :: proc "contextless" (c: ^Context) {
 	c.allocator.data = nil
 
 	c.temp_allocator.procedure = default_temp_allocator_proc
-	when !NO_DEFAULT_TEMP_ALLOCATOR {
+	#if !NO_DEFAULT_TEMP_ALLOCATOR {
 		c.temp_allocator.data = &global_default_temp_allocator_data
 	}
 	
-	when !ODIN_DISABLE_ASSERT {
+	#if !ODIN_DISABLE_ASSERT {
 		c.assertion_failure_proc = default_assertion_failure_proc
 	}
 
@@ -920,10 +920,10 @@ default_assertion_failure_proc :: proc(prefix, message: string, loc: Source_Code
 }
 
 default_assertion_contextless_failure_proc :: proc "contextless" (prefix, message: string, loc: Source_Code_Location) -> ! {
-	when ODIN_OS == .Freestanding {
+	#if ODIN_OS == .Freestanding {
 		// Do nothing
 	} else {
-		when ODIN_OS != .Orca && !ODIN_DISABLE_ASSERT {
+		#if ODIN_OS != .Orca && !ODIN_DISABLE_ASSERT {
 			print_caller_location(loc)
 			print_string(" ")
 		}
@@ -933,7 +933,7 @@ default_assertion_contextless_failure_proc :: proc "contextless" (prefix, messag
 			print_string(message)
 		}
 
-		when ODIN_OS == .Orca {
+		#if ODIN_OS == .Orca {
 			assert_fail(
 				cstring(raw_data(loc.file_path)),
 				cstring(raw_data(loc.procedure)),
@@ -945,7 +945,7 @@ default_assertion_contextless_failure_proc :: proc "contextless" (prefix, messag
 			print_byte('\n')
 		}
 	}
-	when ODIN_CODEPAGE_MAGIC {
+	#if ODIN_CODEPAGE_MAGIC {
 		SetConsoleOutputCP(old_console_codepage)
 	}
 	trap()
@@ -953,7 +953,7 @@ default_assertion_contextless_failure_proc :: proc "contextless" (prefix, messag
 
 ODIN_CODEPAGE_MAGIC :: ODIN_OS == .Windows && #config(ODIN_CODEPAGE_MAGIC, !ODIN_BEDROCK)
 
-when ODIN_CODEPAGE_MAGIC {
+#if ODIN_CODEPAGE_MAGIC {
 	@(private)
 	old_console_codepage: u32
 
@@ -961,9 +961,9 @@ when ODIN_CODEPAGE_MAGIC {
 	UTF_8 :: 65001
 }
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 @(default_calling_convention="system")
-foreign kernel32 {
+#foreign kernel32 {
 	GetConsoleOutputCP :: proc() -> u32 ---
 	SetConsoleOutputCP :: proc(codepage: u32) -> b32 ---
 }

@@ -1,14 +1,14 @@
 package test_noise
 
-import "core:crypto/ecdh"
-import "core:crypto/noise"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:strings"
-import "core:testing"
+#import "core:crypto/ecdh"
+#import "core:crypto/noise"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:strings"
+#import "core:testing"
 
-import "../common"
+#import "../common"
 
 ARENA_SIZE :: 8 * 1024 * 1024
 

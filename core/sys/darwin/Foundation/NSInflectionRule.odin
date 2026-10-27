@@ -9,7 +9,7 @@ InflectionRule :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InflectionRule, objc_selector="init", objc_name="init")
 	InflectionRule_init :: proc(self: ^InflectionRule) -> id ---
 
@@ -27,7 +27,7 @@ foreign lib {
 @(objc_class="NSInflectionRuleExplicit", objc_superclass=InflectionRule)
 InflectionRuleExplicit :: struct { using _: InflectionRule}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InflectionRuleExplicit, objc_selector="initWithMorphology:", objc_name="initWithMorphology")
 	InflectionRuleExplicit_initWithMorphology :: proc(self: ^InflectionRuleExplicit, morphology: ^Morphology) -> instancetype ---
 

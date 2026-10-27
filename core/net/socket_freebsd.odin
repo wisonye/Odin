@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:sys/freebsd"
-import "core:time"
+#import "core:sys/freebsd"
+#import "core:time"
 
 Fd :: freebsd.Fd
 

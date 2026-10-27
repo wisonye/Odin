@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="CKShare", objc_superclass=Record)
 Share :: struct {
@@ -12,7 +12,7 @@ Share :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Share, objc_selector="initWithRootRecord:", objc_name="initWithRootRecord_")
 	Share_initWithRootRecord_ :: proc(self: ^Share, rootRecord: ^Record) -> instancetype ---
 
@@ -112,7 +112,7 @@ ShareAccessRequester :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShareAccessRequester, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	ShareAccessRequester_new :: proc() -> ^ShareAccessRequester ---
 
@@ -137,7 +137,7 @@ ShareBlockedIdentity :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShareBlockedIdentity, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	ShareBlockedIdentity_new :: proc() -> ^ShareBlockedIdentity ---
 
@@ -159,7 +159,7 @@ ShareMetadata :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShareMetadata, objc_selector="init", objc_name="init")
 	ShareMetadata_init :: proc(self: ^ShareMetadata) -> instancetype ---
 
@@ -205,7 +205,7 @@ FetchShareMetadataOptions :: struct { using _: intrinsics.objc_object}
 @(objc_class="CKFetchShareMetadataOperation", objc_superclass=Operation)
 FetchShareMetadataOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchShareMetadataOperation, objc_selector="init", objc_name="init")
 	FetchShareMetadataOperation_init :: proc(self: ^FetchShareMetadataOperation) -> instancetype ---
 
@@ -251,7 +251,7 @@ ShareParticipant :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShareParticipant, objc_selector="init", objc_name="init")
 	ShareParticipant_init :: proc(self: ^ShareParticipant) -> instancetype ---
 
@@ -299,7 +299,7 @@ foreign lib {
 @(objc_class="CKShareRequestAccessOperation", objc_superclass=Operation)
 ShareRequestAccessOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ShareRequestAccessOperation, objc_selector="init", objc_name="init")
 	ShareRequestAccessOperation_init :: proc(self: ^ShareRequestAccessOperation) -> instancetype ---
 

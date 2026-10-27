@@ -1,7 +1,7 @@
 package wgpu_sdl3_glue
 
-import "vendor:sdl3"
-import "vendor:wgpu"
+#import "vendor:sdl3"
+#import "vendor:wgpu"
 
 GetSurface :: proc(instance: wgpu.Instance, window: ^sdl3.Window) -> wgpu.Surface {
 	view  := sdl3.Metal_CreateView(window)

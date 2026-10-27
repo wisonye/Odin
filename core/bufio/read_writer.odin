@@ -1,6 +1,6 @@
 package bufio
 
-import "core:io"
+#import "core:io"
 
 // Read_Writer stores pointers to a Reader and a Writer
 Read_Writer :: struct {

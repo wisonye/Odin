@@ -10,13 +10,13 @@ package compress_zlib
 		Ginger Bill:     Cosmetic changes.
 */
 
-import "core:compress"
+#import "core:compress"
 
-import "base:intrinsics"
-import "core:mem"
-import "core:io"
-import "core:hash"
-import "core:bytes"
+#import "base:intrinsics"
+#import "core:mem"
+#import "core:io"
+#import "core:hash"
+#import "core:bytes"
 
 /*
 	zlib.inflate decompresses a ZLIB stream passed in as a []u8 or io.Stream.

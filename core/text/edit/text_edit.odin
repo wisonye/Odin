@@ -7,11 +7,11 @@ Based off the articles by rxi:
 */
 package text_edit
 
-import "base:runtime"
-import "core:time"
-import "core:mem"
-import "core:strings"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "core:time"
+#import "core:mem"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 DEFAULT_UNDO_TIMEOUT :: 300 * time.Millisecond
 
@@ -123,7 +123,7 @@ setup_once :: proc(s: ^State, builder: ^strings.Builder) {
 	undo_clear(s, &s.redo)
 }
 
-// returns true when the builder had content to be cleared
+// returns true #if the builder had content to be cleared
 // clear builder&selection and the undo|redo stacks
 clear_all :: proc(s: ^State) -> (cleared: bool) {
 	if s.builder != nil && len(s.builder.buf) > 0 {
@@ -265,7 +265,7 @@ has_selection :: proc(s: ^State) -> bool {
 
 // return the clamped lo/hi of the current selection
 // since the selection[0] moves around and could be ahead of selection[1]
-// useful when rendering and needing left->right
+// useful #if rendering and needing left->right
 sorted_selection :: proc(s: ^State) -> (lo, hi: int) {
 	lo = min(s.selection[0], s.selection[1])
 	hi = max(s.selection[0], s.selection[1])
@@ -405,7 +405,7 @@ current_selected_text :: proc(s: ^State) -> string {
 	return ""
 }
 
-// copy & delete the current selection when copy() succeeds
+// copy & delete the current selection #if copy() succeeds
 cut :: proc(s: ^State) -> bool {
 	if copy(s) {
 		selection_delete(s)

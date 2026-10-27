@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSDictionary", objc_superclass=Object)
 Dictionary :: struct {
@@ -14,7 +14,7 @@ Dictionary :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Dictionary, objc_selector="objectForKey:", objc_name="objectForKey")
 	Dictionary_objectForKey :: proc(self: ^Dictionary, aKey: id) -> id ---
 
@@ -271,7 +271,7 @@ Dictionary_writeToURL_ :: #force_inline proc "c" (self: ^Dictionary, url: ^URL) 
 @(objc_class="NSMutableDictionary", objc_superclass=Dictionary)
 MutableDictionary :: struct { using _: Dictionary}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableDictionary, objc_selector="removeObjectForKey:", objc_name="removeObjectForKey")
 	MutableDictionary_removeObjectForKey :: proc(self: ^MutableDictionary, aKey: id) ---
 

@@ -8,7 +8,7 @@ See:
 */
 package turboshake
 
-import "../_sha3"
+#import "../_sha3"
 
 // Context is a TurboSHAKE128 or TurboSHAKE256 instance.
 Context :: distinct _sha3.Context

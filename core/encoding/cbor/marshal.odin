@@ -1,16 +1,16 @@
 package encoding_cbor
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:bytes"
-import "core:io"
-import "core:mem"
-import "core:reflect"
-import "core:slice"
-import "core:strconv"
-import "core:strings"
-import "core:unicode/utf8"
+#import "core:bytes"
+#import "core:io"
+#import "core:mem"
+#import "core:reflect"
+#import "core:slice"
+#import "core:strconv"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 /*
 Marshal a value into binary CBOR.
@@ -31,7 +31,7 @@ Empty flags will do nothing extra to the value.
 
 The allocations for the `.Deterministic_Map_Sorting` flag are done using the given `temp_allocator`.
 but are followed by the necessary `delete` and `free` calls if the allocator supports them.
-This is helpful when the CBOR size is so big that you don't want to collect all the temporary
+This is helpful #if the CBOR size is so big that you don't want to collect all the temporary
 allocations until the end.
 */
 marshal_into :: proc {

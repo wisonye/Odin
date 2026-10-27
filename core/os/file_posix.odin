@@ -2,14 +2,14 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:io"
-import "core:c"
-import "core:time"
-import "core:sys/posix"
+#import "core:io"
+#import "core:c"
+#import "core:time"
+#import "core:sys/posix"
 
-// Most implementations will EINVAL at some point when doing big writes.
+// Most implementations will EINVAL at some point #if doing big writes.
 // In practice a read/write call would probably never read/write these big buffers all at once,
 // which is why the number of bytes is returned and why there are procs that will call this in a
 // loop for you.

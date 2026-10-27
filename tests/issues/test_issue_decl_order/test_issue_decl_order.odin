@@ -2,7 +2,7 @@
 // Each case puts the declaration that used to break first in source order.
 package test_issue_decl_order
 
-import "core:testing"
+#import "core:testing"
 
 // A global's initializer reads other globals, directly and through procedures, so they must be
 // initialized in dependency order rather than source order.
@@ -68,13 +68,13 @@ in_progress_type_as_polymorphic_argument :: proc(t: ^testing.T) {
 }
 
 // A foreign library alias declared after the foreign block that uses it.
-foreign lib {
+#foreign lib {
 	@(link_name="odin_test_issue_decl_order_never_called")
 	never_called :: proc "c" () ---
 }
-when ODIN_OS == .Windows {
-	foreign import lib_ "system:kernel32.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib_ "system:kernel32.lib"
 } else {
-	foreign import lib_ "system:c"
+	#foreign #import lib_ "system:c"
 }
 lib :: lib_

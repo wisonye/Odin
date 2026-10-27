@@ -2,23 +2,23 @@
 #+private file
 package debug_trace
 
-@require import "base:intrinsics"
-@require import "base:runtime"
+@require #import "base:intrinsics"
+@require #import "base:runtime"
 
-@require import "core:c"
-@require import "core:strings"
-@require import "core:sys/posix"
+@require #import "core:c"
+@require #import "core:strings"
+@require #import "core:sys/posix"
 
-when !INSTRUMENTATION_MODE {
+#if !INSTRUMENTATION_MODE {
 
-foreign import lib "system:c"
+#foreign #import lib "system:c"
 
 @(private="package")
 _Capture_Entry :: rawptr
 
 @(private="package")
 _capture :: #force_no_inline proc(buf: Capture, skip: int) -> (n: int) {
-	foreign lib {
+	#foreign lib {
 		backtrace :: proc(buffer: [^]rawptr, size: c.int) -> c.int ---
 	}
 
@@ -48,7 +48,7 @@ _locations_destroy :: proc(locations: []Location, allocator: runtime.Allocator) 
 
 @(private="package")
 _resolve :: proc(bt: Capture, allocator, temp_allocator: runtime.Allocator) -> (locations: []Location, err: Resolve_Error) {
-	foreign lib {
+	#foreign lib {
 		backtrace_symbols :: proc(buffer: [^]rawptr, size: c.int) -> [^]cstring ---
 		@(link_name="free")
 		backtrace_free :: proc(ptr: rawptr) ---
@@ -71,7 +71,7 @@ _resolve :: proc(bt: Capture, allocator, temp_allocator: runtime.Allocator) -> (
 	}
 
 	// Debug info is needed.
-	when !ODIN_DEBUG {
+	#if !ODIN_DEBUG {
 		fill_unresolved(locations, msgs, allocator)
 		return
 	}

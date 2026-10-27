@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSProxy")
 Proxy :: struct {
@@ -10,7 +10,7 @@ Proxy :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Proxy, objc_selector="alloc", objc_name="alloc", objc_is_class_method=true)
 	Proxy_alloc :: proc() -> ^Proxy ---
 

@@ -7,9 +7,9 @@ package rexcode_mos65816_tests
 // disambiguation (M and X), 24-bit long addressing, block move, and the
 // new 65816-specific mnemonics (JML/JSL/PEA/PEI/PER/REP/SEP/MVN/XBA/XCE).
 
-import "core:fmt"
-import "core:os"
-import m "../"
+#import "core:fmt"
+#import "core:os"
+#import m "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

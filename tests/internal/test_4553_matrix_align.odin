@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // See: https://github.com/odin-lang/Odin/issues/4553
 // It would be great if Odin had the ability to test against LLVM output since
@@ -11,7 +11,7 @@ import "core:testing"
 @test
 test_4553_matrix_align :: proc(t: ^testing.T) {
 	test_mat :: proc($T: typeid, $R: u32, $C: u32) {
-		when R * C <= 16 {
+		#if R * C <= 16 {
 			return_matrix :: proc() -> matrix[R, C]T {
 				ret : matrix[R, C]T
 				return ret

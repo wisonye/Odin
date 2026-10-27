@@ -6,7 +6,7 @@ package darwin_Foundation
 DistributedLock :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DistributedLock, objc_selector="lockWithPath:", objc_name="lockWithPath", objc_is_class_method=true)
 	DistributedLock_lockWithPath :: proc(path: ^String) -> ^DistributedLock ---
 

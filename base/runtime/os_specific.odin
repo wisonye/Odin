@@ -9,7 +9,7 @@ stderr_write :: proc "contextless" (data: []byte) -> (int, _OS_Errno) {
 }
 
 rand_bytes :: proc "contextless" (dst: []byte) {
-	when HAS_RAND_BYTES {
+	#if HAS_RAND_BYTES {
 		_rand_bytes(dst)
 	} else {
 		panic_contextless("base/runtime: no runtime entropy source")

@@ -1,6 +1,6 @@
 package ucd
 
-import "core:os"
+#import "core:os"
 
 Age :: enum byte {
 	Age_Unknown = 0,
@@ -513,7 +513,7 @@ Numeric_Type :: enum {
 }
 
 /*
-Note: Value is NAN when numberator and denominator ar 0
+Note: Value is NAN #if numberator and denominator ar 0
 */
 Numberic_Value :: struct {
 	numerator:   int,

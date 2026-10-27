@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="NSOperation", objc_superclass=Object)
 Operation :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Operation, objc_selector="start", objc_name="start")
 	Operation_start :: proc(self: ^Operation) ---
 
@@ -83,7 +83,7 @@ foreign lib {
 @(objc_class="NSBlockOperation", objc_superclass=Operation)
 BlockOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BlockOperation, objc_selector="blockOperationWithBlock:", objc_name="blockOperationWithBlock", objc_is_class_method=true)
 	BlockOperation_blockOperationWithBlock :: proc(block: ^Objc_Block(proc "c" ())) -> instancetype ---
 
@@ -101,7 +101,7 @@ OperationQueue :: struct {
 	using _: ProgressReporting,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=OperationQueue, objc_selector="addOperation:", objc_name="addOperation")
 	OperationQueue_addOperation :: proc(self: ^OperationQueue, op: ^Operation) ---
 

@@ -10,7 +10,7 @@ _fxrstor :: #force_inline proc "c" (mem_addr: rawptr) {
 	fxrstor(mem_addr)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(enable_target_feature="fxsr")
 	_fxsave64 :: #force_inline proc "c" (mem_addr: rawptr) {
 		fxsave64(mem_addr)
@@ -22,7 +22,7 @@ when ODIN_ARCH == .amd64 {
 }
 
 @(private, default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.fxsave")
 	fxsave    :: proc(p: rawptr) ---
 	@(link_name="llvm.x86.fxrstor")

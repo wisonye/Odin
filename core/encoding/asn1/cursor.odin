@@ -1,7 +1,7 @@
 package asn1
 
-import "core:strings"
-import dt "core:time"
+#import "core:strings"
+#import dt "core:time"
 
 // Cursor is a position into DER input, advanced by the read_* procs.
 Cursor :: struct {
@@ -242,7 +242,7 @@ read_null :: proc "contextless" (r: ^Cursor) -> Error {
 // validated for minimal base-128 encoding. The validation is structural 
 // only: arc magnitude is unbounded per X.660, so PKIX consumers should 
 // compare these bytes directly against known-OID constants. 
-// oid_components/oid_to_string decode arcs when needed, reporting 
+// oid_components/oid_to_string decode arcs #if needed, reporting 
 // Arc_Overflow for arcs beyond u64.
 read_oid :: proc "contextless" (r: ^Cursor) -> (raw: []byte, err: Error) {
 	raw, err = expect(r, universal(.Object_Identifier))
@@ -362,7 +362,7 @@ oid_components :: proc(raw: []byte, allocator := context.allocator) -> (arcs: []
 		if first {
 			// X.690 section 8.19.4: the first subidentifier encodes the first
 			// two arcs as arc1*40 + arc2 (arc1 limited to 0..2; arc2
-			// unbounded only when arc1 == 2).
+			// unbounded only #if arc1 == 2).
 			switch {
 			case acc < 40:
 				out[idx] = 0

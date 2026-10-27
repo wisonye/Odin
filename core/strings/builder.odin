@@ -1,9 +1,9 @@
 package strings
 
-import "base:runtime"
-import "core:unicode/utf8"
-import "core:strconv"
-import "core:io"
+#import "base:runtime"
+#import "core:unicode/utf8"
+#import "core:strconv"
+#import "core:io"
 /*
 Type definition for a procedure that flushes a Builder
 
@@ -80,8 +80,8 @@ Produces a String Builder
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 	builder_make_example :: proc() {
 		sb := strings.builder_make()
 		strings.write_byte(&sb, 'a')
@@ -224,7 +224,7 @@ builder_destroy :: proc(b: ^Builder) {
 	b.buf = nil
 }
 /*
-Reserves the Builder byte buffer to a specific capacity, when it's higher than before
+Reserves the Builder byte buffer to a specific capacity, #if it's higher than before
 
 Inputs:
 - b: A pointer to the Builder
@@ -255,8 +255,8 @@ Returns:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 	builder_from_bytes_example :: proc() {
 		bytes: [8]byte // <-- gets filled
 		builder := strings.builder_from_bytes(bytes[:])
@@ -394,8 +394,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_byte_example :: proc() {
 		builder := strings.builder_make()
@@ -424,8 +424,8 @@ Inputs:
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_bytes_example :: proc() {
 		builder := strings.builder_make()
@@ -460,8 +460,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_rune_example :: proc() {
 		builder := strings.builder_make()
@@ -500,8 +500,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_quoted_rune_example :: proc() {
 		builder := strings.builder_make()
@@ -533,8 +533,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_string_example :: proc() {
 		builder := strings.builder_make()
@@ -555,7 +555,7 @@ write_string :: proc(b: ^Builder, s: string, loc := #caller_location) -> (n: int
 	return n1-n0
 }
 /*
-Pops and returns the last byte in the Builder or 0 when the Builder is empty
+Pops and returns the last byte in the Builder or 0 #if the Builder is empty
 
 Inputs:
 - b: A pointer to the Builder
@@ -608,8 +608,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_quoted_string_example :: proc() {
 		builder := strings.builder_make()
@@ -643,8 +643,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_encoded_rune_example :: proc() {
 		builder := strings.builder_make()
@@ -751,8 +751,8 @@ NOTE: The backing dynamic array may be fixed in capacity or fail to resize, `n` 
 
 Example:
 
-	import "core:fmt"
-	import "core:strings"
+	#import "core:fmt"
+	#import "core:strings"
 
 	write_f32_example :: proc() {
 		builder := strings.builder_make()

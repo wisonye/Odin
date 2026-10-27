@@ -33,7 +33,7 @@ _mm_aeskeygenassist_si128 :: #force_inline proc "c" (a: __m128i, $IMM8: u8) -> _
 
 
 @(private, default_calling_convention = "none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.aesni.aesdec")
 	aesdec :: proc(a, b: __m128i) -> __m128i ---
 	@(link_name = "llvm.x86.aesni.aesdeclast")

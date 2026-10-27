@@ -10,7 +10,7 @@ MapTable :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MapTable, objc_selector="initWithKeyOptions:valueOptions:capacity:", objc_name="initWithKeyOptions")
 	MapTable_initWithKeyOptions :: proc(self: ^MapTable, keyOptions: PointerFunctionsOptions, valueOptions: PointerFunctionsOptions, initialCapacity: UInteger) -> instancetype ---
 

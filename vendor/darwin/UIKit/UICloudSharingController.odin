@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UICloudSharingController", objc_superclass=ViewController)
 CloudSharingController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloudSharingController, objc_selector="initWithNibName:bundle:", objc_name="initWithNibName")
 	CloudSharingController_initWithNibName :: proc(self: ^CloudSharingController, nibNameOrNil: ^NS.String, nibBundleOrNil: ^NS.Bundle) -> instancetype ---
 
@@ -49,7 +49,7 @@ CloudSharingControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CloudSharingControllerDelegate, objc_selector="cloudSharingController:failedToSaveShareWithError:", objc_name="cloudSharingController")
 	CloudSharingControllerDelegate_cloudSharingController :: proc(self: ^CloudSharingControllerDelegate, csc: ^CloudSharingController, error: ^NS.Error) ---
 

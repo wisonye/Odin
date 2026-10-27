@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:sys/posix"
-import "core:time"
+#import "core:sys/posix"
+#import "core:time"
 
 _SOCKET_OPTION_BROADCAST                 :: posix.Sock_Option.BROADCAST
 _SOCKET_OPTION_REUSE_ADDRESS             :: posix.Sock_Option.REUSEADDR

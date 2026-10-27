@@ -17,7 +17,7 @@ package shake
         zhibog, dotbmp:  Initial implementation.
 */
 
-import "../_sha3"
+#import "../_sha3"
 
 // Context is a SHAKE128, SHAKE256, cSHAKE128, or cSHAKE256 instance.
 Context :: distinct _sha3.Context

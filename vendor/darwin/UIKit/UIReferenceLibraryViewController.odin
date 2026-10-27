@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIReferenceLibraryViewController", objc_superclass=ViewController)
 ReferenceLibraryViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ReferenceLibraryViewController, objc_selector="dictionaryHasDefinitionForTerm:", objc_name="dictionaryHasDefinitionForTerm", objc_is_class_method=true)
 	ReferenceLibraryViewController_dictionaryHasDefinitionForTerm :: proc(term: ^NS.String) -> bool ---
 

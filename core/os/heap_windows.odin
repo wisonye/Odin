@@ -1,8 +1,8 @@
 #+private
 package os
 
-import "core:mem"
-import win32 "core:sys/windows"
+#import "core:mem"
+#import win32 "core:sys/windows"
 
 heap_alloc :: proc(size: int, zero_memory: bool) -> rawptr {
 	return win32.HeapAlloc(win32.GetProcessHeap(), win32.HEAP_ZERO_MEMORY if zero_memory else 0, uint(size))

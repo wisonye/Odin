@@ -22,23 +22,23 @@ package net
 */
 
 @(require)
-import "base:runtime"
-import "core:bufio"
-import "core:io"
-import "core:mem"
-import "core:strings"
-import "core:time"
+#import "base:runtime"
+#import "core:bufio"
+#import "core:io"
+#import "core:mem"
+#import "core:strings"
+#import "core:time"
 
 @(require)
-import "core:sync"
+#import "core:sync"
 
 dns_config_initialized: sync.Once
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	dns_configuration := DNS_Configuration{
 		resolv_conf = "",
 		hosts_file  = "%WINDIR%\\system32\\drivers\\etc\\hosts",
 	}
-} else when ODIN_OS == .Linux || ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .Linux || ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	dns_configuration := DNS_Configuration{
 		resolv_conf = "/etc/resolv.conf",
 		hosts_file  = "/etc/hosts",
@@ -48,7 +48,7 @@ when ODIN_OS == .Windows {
 }
 
 init_dns_configuration :: proc() {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		_init_dns_configuration()
 	}
 }
@@ -528,7 +528,7 @@ decode_hostname :: proc(packet: []u8, start_idx: int, allocator := context.alloc
 
 		switch {
 
-		// A pointer is when the two higher bits are set.
+		// A pointer is #if the two higher bits are set.
 		case packet[cur_idx] & 0xC0 == 0xC0:
 			if len(packet[cur_idx:]) < 2 {
 				return

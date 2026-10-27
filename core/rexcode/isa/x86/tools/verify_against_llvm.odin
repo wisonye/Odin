@@ -2,9 +2,9 @@
 
 package main
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
 normalize_our :: proc(name: string) -> string {
 	s := strings.to_lower(name, context.temp_allocator)
@@ -25,7 +25,7 @@ normalize_llvm :: proc(line: string) -> string {
 }
 
 // Strip common x86 disasm-syntax extras: LLVM may prefix with "rep "/"lock "/
-// "data16 " when our entry already encodes the prefix, or print "movabs" for
+// "data16 " #if our entry already encodes the prefix, or print "movabs" for
 // MOV-immediate-64. Treat these as the underlying mnemonic.
 strip_prefix_words :: proc(s: string) -> string {
 	out := s

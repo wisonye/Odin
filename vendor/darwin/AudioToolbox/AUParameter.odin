@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_AudioToolbox
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AUParameter", objc_superclass=AUParameterNode)
 AUParameter :: struct {
@@ -11,7 +11,7 @@ AUParameter :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUParameter, objc_selector="setValue:originator:", objc_name="setValue_originator")
 	AUParameter_setValue_originator :: proc(self: ^AUParameter, value: AUValue, originator: AUParameterObserverToken) ---
 
@@ -75,7 +75,7 @@ AUParameterGroup :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUParameterGroup, objc_selector="children", objc_name="children")
 	AUParameterGroup_children :: proc(self: ^AUParameterGroup) -> ^NS.Array ---
 
@@ -87,7 +87,7 @@ foreign lib {
 @(objc_class="AUParameterNode", objc_superclass=NS.Object)
 AUParameterNode :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUParameterNode, objc_selector="displayNameWithLength:", objc_name="displayNameWithLength")
 	AUParameterNode_displayNameWithLength :: proc(self: ^AUParameterNode, maximumLength: NS.Integer) -> ^NS.String ---
 
@@ -150,7 +150,7 @@ AUParameterTree :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUParameterTree, objc_selector="parameterWithAddress:", objc_name="parameterWithAddress")
 	AUParameterTree_parameterWithAddress :: proc(self: ^AUParameterTree, address: AUParameterAddress) -> ^AUParameter ---
 

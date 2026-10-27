@@ -1,6 +1,6 @@
 package x509
 
-import "core:encoding/asn1"
+#import "core:encoding/asn1"
 
 // Extension encoders. Each returns a complete DER Extension
 //   Extension ::= SEQUENCE { extnID OID, critical BOOLEAN DEFAULT FALSE, extnValue OCTET STRING }
@@ -11,7 +11,7 @@ import "core:encoding/asn1"
 
 // marshal_ext_basic_constraints encodes id-ce-basicConstraints:
 //   BasicConstraints ::= SEQUENCE { cA BOOLEAN DEFAULT FALSE, pathLenConstraint INTEGER OPTIONAL }
-// cA is emitted only when `is_ca`; pathLenConstraint only when is_ca and
+// cA is emitted only #if `is_ca`; pathLenConstraint only #if is_ca and
 // `max_path_len` >= 0 (a negative value means "absent").
 @(require_results)
 marshal_ext_basic_constraints :: proc(is_ca: bool, max_path_len: int, critical: bool, allocator := context.allocator) -> (der: []byte, err: Error) {

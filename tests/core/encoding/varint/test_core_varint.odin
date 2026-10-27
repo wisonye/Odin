@@ -1,9 +1,9 @@
 package test_core_varint
 
-import "core:encoding/varint"
-import "core:testing"
-import "core:slice"
-import "core:math/rand"
+#import "core:encoding/varint"
+#import "core:testing"
+#import "core:slice"
+#import "core:math/rand"
 
 NUM_RANDOM_TESTS_PER_BYTE_SIZE :: 10_000
 

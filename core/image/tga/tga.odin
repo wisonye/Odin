@@ -10,11 +10,11 @@ package tga
 		Benoit Jacquier: tga loader
 */
 
-import "core:mem"
-import "core:image"
-import "core:bytes"
-import "core:compress"
-import "core:strings"
+#import "core:mem"
+#import "core:image"
+#import "core:bytes"
+#import "core:compress"
+#import "core:strings"
 
 // TODO: alpha_premultiply support
 

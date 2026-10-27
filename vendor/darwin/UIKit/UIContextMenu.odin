@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIContextMenuConfiguration", objc_superclass=NS.Object)
 ContextMenuConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuConfiguration, objc_selector="configurationWithIdentifier:previewProvider:actionProvider:", objc_name="configurationWithIdentifier", objc_is_class_method=true)
 	ContextMenuConfiguration_configurationWithIdentifier :: proc(identifier: ^NS.Copying, previewProvider: ContextMenuContentPreviewProvider, actionProvider: ContextMenuActionProvider) -> instancetype ---
 
@@ -44,7 +44,7 @@ ContextMenuInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	ContextMenuInteraction_initWithDelegate :: proc(self: ^ContextMenuInteraction, delegate: ^ContextMenuInteractionDelegate) -> instancetype ---
 
@@ -78,7 +78,7 @@ ContextMenuInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuInteractionDelegate, objc_selector="contextMenuInteraction:configurationForMenuAtLocation:", objc_name="contextMenuInteraction_configurationForMenuAtLocation")
 	ContextMenuInteractionDelegate_contextMenuInteraction_configurationForMenuAtLocation :: proc(self: ^ContextMenuInteractionDelegate, interaction: ^ContextMenuInteraction, location: CG.Point) -> ^ContextMenuConfiguration ---
 
@@ -112,7 +112,7 @@ ContextMenuInteractionAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuInteractionAnimating, objc_selector="addAnimations:", objc_name="addAnimations")
 	ContextMenuInteractionAnimating_addAnimations :: proc(self: ^ContextMenuInteractionAnimating, animations: ^Objc_Block(proc "c" ())) ---
 
@@ -131,7 +131,7 @@ ContextMenuInteractionCommitAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuInteractionCommitAnimating, objc_selector="preferredCommitStyle", objc_name="preferredCommitStyle")
 	ContextMenuInteractionCommitAnimating_preferredCommitStyle :: proc(self: ^ContextMenuInteractionCommitAnimating) -> ContextMenuInteractionCommitStyle ---
 
@@ -144,7 +144,7 @@ foreign lib {
 ContextMenuSystem :: struct { using _: MenuSystem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContextMenuSystem, objc_selector="sharedSystem", objc_name="sharedSystem", objc_is_class_method=true)
 	ContextMenuSystem_sharedSystem :: proc() -> ^ContextMenuSystem ---
 

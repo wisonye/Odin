@@ -1,6 +1,6 @@
 package bufio
 
-import "core:io"
+#import "core:io"
 
 // Lookahead_Reader provides io lookahead.
 // This is useful for tokenizers/parsers.

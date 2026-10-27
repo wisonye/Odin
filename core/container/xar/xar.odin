@@ -9,7 +9,7 @@
 
 	Example:
 
-		import "core:container/xar"
+		#import "core:container/xar"
 
 		example :: proc() {
 			x: xar.Array(int, 4)
@@ -26,8 +26,8 @@
 */
 package container_xar
 
-@(require) import "base:intrinsics"
-@(require) import "base:runtime"
+@(require) #import "base:intrinsics"
+@(require) #import "base:runtime"
 
 PLATFORM_BITS :: 8*size_of(uint)
 _LOG2_PLATFORM_BITS :: intrinsics.constant_log2(PLATFORM_BITS)
@@ -37,7 +37,7 @@ MAX_SHIFT :: PLATFORM_BITS>>1
 /*
 	An Exponential Array with stable element addresses.
 
-	Unlike `[dynamic]T` which reallocates and moves elements when growing, `Array`
+	Unlike `[dynamic]T` which reallocates and moves elements #if growing, `Array`
 	allocates separate chunks of exponentially increasing size. This guarantees
 	that pointers to elements remain valid for the lifetime of the container.
 
@@ -61,7 +61,7 @@ MAX_SHIFT :: PLATFORM_BITS>>1
 
 	Example:
 
-		import "core:container/xar"
+		#import "core:container/xar"
 
 		example :: proc() {
 			// Xar with initial chunk size of 16 (1 << 4)
@@ -181,7 +181,7 @@ as long as the element is not removed and the array is not destroyed.
 
 Example:
 
-	import "core:container/xar"
+	#import "core:container/xar"
 
 	get_ptr_example :: proc() {
 		x: xar.Array(int, 4)
@@ -244,7 +244,7 @@ Allocates a new chunk if necessary. Existing elements aren't moved, and their po
 
 Example:
 
-	import "core:container/xar"
+	#import "core:container/xar"
 
 	push_back_example :: proc() {
 		x: xar.Array(string, 4)
@@ -296,7 +296,7 @@ append_and_get_ptr       :: array_push_back_elem_and_get_ptr
 
 /*
 Append an element and return a stable pointer to it.
-This is useful when you need to initialize a complex struct in-place or
+This is useful #if you need to initialize a complex struct in-place or
 retain a reference to the newly added element.
 
 **Inputs**
@@ -309,7 +309,7 @@ retain a reference to the newly added element.
 
 Example:
 
-	import "core:container/xar"
+	#import "core:container/xar"
 
 	push_back_and_get_ptr_example :: proc() {
 		x: xar.Array(My_Struct, 4)
@@ -375,7 +375,7 @@ array_pop_safe :: proc(x: ^$X/Array($T, $SHIFT)) -> (val: T, ok: bool) {
 
 	Example:
 
-		import "core:container/xar"
+		#import "core:container/xar"
 
 		unordered_remove_example :: proc() {
 			x: xar.Array(int, 4)
@@ -437,8 +437,8 @@ Create an iterator for traversing the exponential array.
 
 Example:
 
-	import "core:container/xar"
-	import "core:fmt"
+	#import "core:container/xar"
+	#import "core:fmt"
 
 	iterator_example :: proc() {
 		x: xar.Array(int, 4)

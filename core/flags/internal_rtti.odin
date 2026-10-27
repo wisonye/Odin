@@ -1,18 +1,18 @@
 #+private
 package flags
 
-import            "base:intrinsics"
-import            "base:runtime"
-import            "core:fmt"
-import            "core:mem"
-import            "core:net"
-@(require) import "core:os"
-import            "core:reflect"
-import            "core:strconv"
-import            "core:strings"
-@(require) import "core:time"
-@(require) import "core:time/datetime"
-import            "core:unicode/utf8"
+#import            "base:intrinsics"
+#import            "base:runtime"
+#import            "core:fmt"
+#import            "core:mem"
+#import            "core:net"
+@(require) #import "core:os"
+#import            "core:reflect"
+#import            "core:strconv"
+#import            "core:strings"
+@(require) #import "core:time"
+@(require) #import "core:time/datetime"
+#import            "core:unicode/utf8"
 
 @(optimization_mode="favor_size")
 parse_and_set_pointer_by_base_type :: proc(ptr: rawptr, str: string, type_info: ^runtime.Type_Info) -> bool {
@@ -276,7 +276,7 @@ parse_and_set_pointer_by_named_type :: proc(ptr: rawptr, str: string, data_type:
 		return
 	}
 
-	when IMPORTING_TIME {
+	#if IMPORTING_TIME {
 		if data_type == time.Time {
 			// NOTE: The leap second data is discarded.
 			res, consumed := time.rfc3339_to_time_utc(str)
@@ -308,7 +308,7 @@ parse_and_set_pointer_by_named_type :: proc(ptr: rawptr, str: string, data_type:
 		}
 	}
 
-	when IMPORTING_NET {
+	#if IMPORTING_NET {
 		if data_type == net.Host_Or_Endpoint {
 			addr, net_error := net.parse_hostname_or_endpoint(str)
 			if net_error != nil {

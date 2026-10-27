@@ -1,16 +1,16 @@
 #+build windows
 package test_vendor_commonmark
 
-import "core:c/libc"
-import "core:strings"
-import "core:testing"
-import cm "vendor:commonmark"
+#import "core:c/libc"
+#import "core:strings"
+#import "core:testing"
+#import cm "vendor:commonmark"
 
 // Odin's bindings declare `Node` as a mirror of cmark's internal `struct cmark_node`, so its layout has to match the
 // C compiler's exactly. The numbers are `sizeof` and `offsetof` of cmark 0.31.2 built for a 64-bit target.
 @(test)
 test_node_layout :: proc(t: ^testing.T) {
-	when size_of(rawptr) == 8 {
+	#if size_of(rawptr) == 8 {
 		testing.expect_value(t, size_of(cm.Node), 104)
 		testing.expect_value(t, align_of(cm.Node), 8)
 		testing.expect_value(t, offset_of(cm.Node, mem), 0)
@@ -234,7 +234,7 @@ test_renderers :: proc(t: ^testing.T) {
 }
 
 // Deeply nested and repetitive input used to make cmark take quadratic time (CVE-2023-22484, CVE-2023-22486).
-// Each input is large enough to take many seconds when quadratic and a few milliseconds otherwise.
+// Each input is large enough to take many seconds #if quadratic and a few milliseconds otherwise.
 @(test)
 test_pathological_input :: proc(t: ^testing.T) {
 	inputs := [?]string{

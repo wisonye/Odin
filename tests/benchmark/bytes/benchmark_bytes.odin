@@ -1,12 +1,12 @@
 package benchmark_bytes
 
-import "core:bytes"
-import "core:fmt"
-import "core:log"
-import "core:testing"
-import "core:strings"
-import "core:text/table"
-import "core:time"
+#import "core:bytes"
+#import "core:fmt"
+#import "core:log"
+#import "core:testing"
+#import "core:strings"
+#import "core:text/table"
+#import "core:time"
 
 RUNS_PER_SIZE :: 2500
 

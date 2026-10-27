@@ -2,7 +2,7 @@
 
 package test_issue_6874
 
-import "core:fmt"
+#import "core:fmt"
 
 PersonData :: struct {
 	health: int,

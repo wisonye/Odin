@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSTimer", objc_superclass=Object)
 Timer :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Timer, objc_selector="timerWithTimeInterval:invocation:repeats:", objc_name="timerWithTimeInterval_invocation_repeats", objc_is_class_method=true)
 	Timer_timerWithTimeInterval_invocation_repeats :: proc(ti: TimeInterval, invocation: ^Invocation, yesOrNo: bool) -> ^Timer ---
 

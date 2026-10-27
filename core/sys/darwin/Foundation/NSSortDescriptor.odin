@@ -9,7 +9,7 @@ SortDescriptor :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SortDescriptor, objc_selector="sortDescriptorWithKey:ascending:", objc_name="sortDescriptorWithKey_ascending", objc_is_class_method=true)
 	SortDescriptor_sortDescriptorWithKey_ascending :: proc(key: ^String, ascending: bool) -> instancetype ---
 

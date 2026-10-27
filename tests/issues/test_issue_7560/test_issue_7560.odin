@@ -1,6 +1,6 @@
 package test_issue_7560
 
-import "core:testing"
+#import "core:testing"
 
 // Indexing a global matrix with a runtime index emitted a constant GEP with a non-constant index, which LLVM
 // rejected with "Use of instruction is not an instruction!".

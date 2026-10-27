@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKMatchmaker", objc_superclass=NS.Object)
 Matchmaker :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Matchmaker, objc_selector="sharedMatchmaker", objc_name="sharedMatchmaker", objc_is_class_method=true)
 	Matchmaker_sharedMatchmaker :: proc() -> ^Matchmaker ---
 
@@ -74,18 +74,18 @@ foreign lib {
 }
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="GKMatchmakerViewController", objc_superclass=UI_ViewController)
 	MatchmakerViewController :: struct {
 		using _: UI_ViewController,
 		using _: ViewController,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="GKMatchmakerViewController", objc_superclass=UI_NavigationController)
 	MatchmakerViewController :: struct { using _: UI_NavigationController}
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MatchmakerViewController, objc_selector="initWithMatchRequest:", objc_name="initWithMatchRequest")
 	MatchmakerViewController_initWithMatchRequest :: proc(self: ^MatchmakerViewController, request: ^MatchRequest) -> id ---
 
@@ -153,7 +153,7 @@ MatchmakerViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MatchmakerViewControllerDelegate, objc_selector="matchmakerViewControllerWasCancelled:", objc_name="matchmakerViewControllerWasCancelled")
 	MatchmakerViewControllerDelegate_matchmakerViewControllerWasCancelled :: proc(self: ^MatchmakerViewControllerDelegate, viewController: ^MatchmakerViewController) ---
 

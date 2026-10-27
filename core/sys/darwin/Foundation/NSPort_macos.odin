@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSMessagePortNameServer", objc_superclass=PortNameServer)
 MessagePortNameServer :: struct { using _: PortNameServer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MessagePortNameServer, objc_selector="sharedInstance", objc_name="sharedInstance", objc_is_class_method=true)
 	MessagePortNameServer_sharedInstance :: proc() -> id ---
 
@@ -30,7 +30,7 @@ MessagePortNameServer_portForName :: proc {
 PortCoder :: struct { using _: Coder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PortCoder, objc_selector="isBycopy", objc_name="isBycopy")
 	PortCoder_isBycopy :: proc(self: ^PortCoder) -> bool ---
 
@@ -61,7 +61,7 @@ foreign lib {
 PortNameServer :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PortNameServer, objc_selector="systemDefaultPortNameServer", objc_name="systemDefaultPortNameServer", objc_is_class_method=true)
 	PortNameServer_systemDefaultPortNameServer :: proc() -> ^PortNameServer ---
 
@@ -89,7 +89,7 @@ PortNameServer_portForName :: proc {
 SocketPort :: struct { using _: Port}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SocketPort, objc_selector="init", objc_name="init")
 	SocketPort_init :: proc(self: ^SocketPort) -> instancetype ---
 
@@ -135,7 +135,7 @@ SocketPort_initWithProtocolFamily :: proc {
 SocketPortNameServer :: struct { using _: PortNameServer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SocketPortNameServer, objc_selector="sharedInstance", objc_name="sharedInstance", objc_is_class_method=true)
 	SocketPortNameServer_sharedInstance :: proc() -> id ---
 
@@ -182,7 +182,7 @@ SocketPortNameServer_registerPort :: proc {
 MachBootstrapServer :: struct { using _: PortNameServer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MachBootstrapServer, objc_selector="sharedInstance", objc_name="sharedInstance", objc_is_class_method=true)
 	MachBootstrapServer_sharedInstance :: proc() -> id ---
 

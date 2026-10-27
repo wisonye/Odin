@@ -3,7 +3,7 @@
 // https://github.com/odin-lang/Odin/issues/7482
 package test_issue_7482
 
-import "core:sort"
+#import "core:sort"
 
 apply :: proc(how: proc(a: []int), what: []int) {
 	how(what)

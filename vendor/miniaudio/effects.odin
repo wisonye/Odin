@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /*
 Delay
@@ -25,7 +25,7 @@ delay :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	delay_config_init :: proc(channels, sampleRate, delayInFrames: u32, decay: f32) -> delay_config ---
 
 	delay_init               :: proc(pConfig: ^delay_config, pAllocationCallbacks: ^allocation_callbacks, pDelay: ^delay) -> result ---
@@ -59,7 +59,7 @@ gainer :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	gainer_config_init :: proc(channels, smoothTimeInFrames: u32) -> gainer_config ---
 
 	gainer_get_heap_size      :: proc(pConfig: ^gainer_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -95,7 +95,7 @@ panner :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	panner_config_init :: proc(format: format, channels: u32) -> panner_config ---
 
 	panner_init               :: proc(pConfig: ^panner_config, pPanner: ^panner) -> result ---
@@ -123,7 +123,7 @@ fader :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	fader_config_init :: proc(format: format, channels, sampleRate: u32) -> fader_config ---
 
 	fader_init               :: proc(pConfig: ^fader_config, pFader: ^fader) -> result ---
@@ -188,7 +188,7 @@ spatializer_listener :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	spatializer_listener_config_init :: proc(channelsOut: u32) -> spatializer_listener_config ---
 
 	spatializer_listener_get_heap_size      :: proc(pConfig: ^spatializer_listener_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -229,7 +229,7 @@ spatializer_config :: struct {
 	coneOuterGain:                f32,
 	dopplerFactor:                f32,    /* Set to 0 to disable doppler effect. */
 	directionalAttenuationFactor: f32,    /* Set to 0 to disable directional attenuation. */
-	minSpatializationChannelGain: f32,    /* The minimal scaling factor to apply to channel gains when accounting for the direction of the sound relative to the listener. Must be in the range of 0..1. Smaller values means more aggressive directional panning, larger values means more subtle directional panning. */
+	minSpatializationChannelGain: f32,    /* The minimal scaling factor to apply to channel gains #if accounting for the direction of the sound relative to the listener. Must be in the range of 0..1. Smaller values means more aggressive directional panning, larger values means more subtle directional panning. */
 	gainSmoothTimeInFrames:       u32,    /* When the gain of a channel changes during spatialization, the transition will be linearly interpolated over this number of frames. */
 }
 
@@ -265,7 +265,7 @@ spatializer :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	spatializer_config_init :: proc(channelsIn, channelsOut: u32) -> spatializer_config ---
 
 	spatializer_get_heap_size                       :: proc(pConfig: ^spatializer_config, pHeapSizeInBytes: ^c.size_t) -> result ---

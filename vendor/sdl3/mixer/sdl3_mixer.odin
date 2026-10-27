@@ -1,13 +1,13 @@
 package sdl3_mixer
 
-import "core:c"
+#import "core:c"
 
-import SDL "vendor:sdl3"
+#import SDL "vendor:sdl3"
 
-when ODIN_OS == .Windows {
-	foreign import lib "SDL3_mixer.lib"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "SDL3_mixer.lib"
 } else {
-	foreign import lib "system:SDL3_mixer"
+	#foreign #import lib "system:SDL3_mixer"
 }
 
 Mixer :: struct {}
@@ -72,7 +72,7 @@ DURATION_UNKNOWN  :: -1
 DURATION_INFINITE :: -2
 
 @(default_calling_convention = "c", link_prefix = "MIX_", require_results)
-foreign lib {
+#foreign lib {
 	Version                    :: proc() -> c.int ---
 	Init                       :: proc() -> c.bool ---
 	Quit                       :: proc() ---

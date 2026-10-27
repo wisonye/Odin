@@ -3,10 +3,10 @@
 #+no-instrumentation
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-when !ODIN_TEST && !ODIN_NO_ENTRY_POINT {
-	when ODIN_OS == .Orca {
+#if !ODIN_TEST && !ODIN_NO_ENTRY_POINT {
+	#if ODIN_OS == .Orca {
 		@(linkage="strong", require, export)
 		oc_on_init :: proc "c" () {
 			context = default_context()
@@ -23,7 +23,7 @@ when !ODIN_TEST && !ODIN_NO_ENTRY_POINT {
 		_start :: proc "c" () {
 			context = default_context()
 
-			when ODIN_OS == .WASI {
+			#if ODIN_OS == .WASI {
 				_wasi_setup_args()
 			}
 

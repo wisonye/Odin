@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIDragAnimating")
 DragAnimating :: struct {
@@ -13,7 +13,7 @@ DragAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragAnimating, objc_selector="addAnimations:", objc_name="addAnimations")
 	DragAnimating_addAnimations :: proc(self: ^DragAnimating, animations: ^Objc_Block(proc "c" ())) ---
 
@@ -29,7 +29,7 @@ DragDropSession :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragDropSession, objc_selector="locationInView:", objc_name="locationInView")
 	DragDropSession_locationInView :: proc(self: ^DragDropSession, view: ^View) -> CG.Point ---
 
@@ -54,7 +54,7 @@ foreign lib {
 DragItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragItem, objc_selector="initWithItemProvider:", objc_name="initWithItemProvider")
 	DragItem_initWithItemProvider :: proc(self: ^DragItem, itemProvider: ^NS.ItemProvider) -> instancetype ---
 
@@ -91,7 +91,7 @@ DragPreview :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragPreview, objc_selector="initWithView:parameters:", objc_name="initWithView_parameters")
 	DragPreview_initWithView_parameters :: proc(self: ^DragPreview, view: ^View, parameters: ^DragPreviewParameters) -> instancetype ---
 
@@ -134,14 +134,14 @@ DragPreview_previewForURL :: proc {
 DragPreviewParameters :: struct { using _: PreviewParameters}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIDragPreviewTarget", objc_superclass=PreviewTarget)
 DragPreviewTarget :: struct { using _: PreviewTarget}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIDragSession")
@@ -151,7 +151,7 @@ DragSession :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DragSession, objc_selector="localContext", objc_name="localContext")
 	DragSession_localContext :: proc(self: ^DragSession) -> id ---
 

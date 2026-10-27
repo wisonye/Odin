@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSInputManager", objc_superclass=NS.Object)
 InputManager :: struct {
@@ -13,7 +13,7 @@ InputManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputManager, objc_selector="currentInputManager", objc_name="currentInputManager", objc_is_class_method=true)
 	InputManager_currentInputManager :: proc() -> ^InputManager ---
 
@@ -66,7 +66,7 @@ InputServer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputServer, objc_selector="initWithDelegate:name:", objc_name="initWithDelegate")
 	InputServer_initWithDelegate :: proc(self: ^InputServer, delegate: id, name: ^NS.String) -> instancetype ---
 }
@@ -76,7 +76,7 @@ foreign lib {
 InputServerMouseTracker :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputServerMouseTracker, objc_selector="mouseDownOnCharacterIndex:atCoordinate:withModifier:client:", objc_name="mouseDownOnCharacterIndex")
 	InputServerMouseTracker_mouseDownOnCharacterIndex :: proc(self: ^InputServerMouseTracker, index: NS.UInteger, point: CG.Point, flags: NS.UInteger, sender: id) -> bool ---
 
@@ -92,7 +92,7 @@ foreign lib {
 InputServiceProvider :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=InputServiceProvider, objc_selector="insertText:client:", objc_name="insertText")
 	InputServiceProvider_insertText :: proc(self: ^InputServiceProvider, string: id, sender: id) ---
 

@@ -70,14 +70,14 @@ _XOPEN_PATH_MAX                      :: 1024
 NOTE: for full portability, usage should look something like:
 
 	page_size: uint
-	when #defined(posix.PAGESIZE) {
+	#if #defined(posix.PAGESIZE) {
 		page_size = posix.PAGESIZE	
 	} else {
 		page_size = posix.sysconf(._PAGESIZE)
 	}
 */
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	// A definition of one of the symbolic constants in the following list shall be omitted from
 	// <limits.h> on specific implementations where the corresponding value is equal to or greater
 	// than the stated minimum, but is unspecified.
@@ -102,7 +102,7 @@ when ODIN_OS == .Darwin {
 	PAGE_SIZE                     :: 1 << 12
 	PTHREAD_DESTRUCTOR_ITERATIONS :: 4
 	PTHREAD_KEYS_MAX              :: 512
-	PTHREAD_STACK_MIN             :: 16384 when ODIN_ARCH == .arm64 else 8192
+	PTHREAD_STACK_MIN             :: 16384 #if ODIN_ARCH == .arm64 else 8192
 	// RTSIG_MAX                  :: sysconf(._RTSIG_MAX)
 	// SEM_NSEMS_MAX              :: sysconf(._SEM_NSEMS_MAX)
 	// SEM_VALUE_MAX              :: sysconf(._SEM_VALUE_MAX)
@@ -171,7 +171,7 @@ when ODIN_OS == .Darwin {
 	NL_TEXTMAX :: 2048
 	NZERO      :: 20
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 	// A definition of one of the symbolic constants in the following list shall be omitted from
 	// <limits.h> on specific implementations where the corresponding value is equal to or greater
 	// than the stated minimum, but is unspecified.
@@ -265,7 +265,7 @@ when ODIN_OS == .Darwin {
 	NL_TEXTMAX :: 2048
 	NZERO      :: 0
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	// A definition of one of the symbolic constants in the following list shall be omitted from
 	// <limits.h> on specific implementations where the corresponding value is equal to or greater
@@ -360,7 +360,7 @@ when ODIN_OS == .Darwin {
 	NL_TEXTMAX :: 2048
 	NZERO      :: 20
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	// A definition of one of the symbolic constants in the following list shall be omitted from
 	// <limits.h> on specific implementations where the corresponding value is equal to or greater
@@ -455,7 +455,7 @@ when ODIN_OS == .Darwin {
 	NL_TEXTMAX :: 255
 	NZERO      :: 20
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	// A definition of one of the symbolic constants in the following list shall be omitted from
 	// <limits.h> on specific implementations where the corresponding value is equal to or greater

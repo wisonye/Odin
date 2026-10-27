@@ -1,8 +1,8 @@
 package os
 
-import "base:runtime"
-import "core:strconv"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "core:strconv"
+#import "core:unicode/utf8"
 
 /*
 	`write_string` writes a string `s` to file `f`.

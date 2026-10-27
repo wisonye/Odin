@@ -1,13 +1,13 @@
 package benchmark_core_diff
 
-import "core:diff"
-import "core:fmt"
-import "core:log"
-import "core:math/rand"
-import "core:strings"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "core:diff"
+#import "core:fmt"
+#import "core:log"
+#import "core:math/rand"
+#import "core:strings"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
 // Each diff is timed this many times, and the fastest run is reported.
 RUNS :: 3
@@ -35,7 +35,7 @@ CODE_WORDS := [?]string{"if", "for", "x", "y", "return", "count", "}", "{", "\t"
 PROSE_WORDS := [?]string{
 	"the", "a", "of", "and", "to", "in", "is", "that", "it", "was", "for", "on", "are", "with", "as", "they",
 	"be", "at", "one", "have", "this", "from", "by", "hot", "word", "but", "what", "some", "we", "can", "out",
-	"other", "were", "all", "there", "when", "up", "use", "your", "how", "said", "an", "each", "she", "which",
+	"other", "were", "all", "there", "#if", "up", "use", "your", "how", "said", "an", "each", "she", "which",
 	"do", "their", "time", "if", "will", "way", "about", "many", "then", "them", "write", "would", "like", "so",
 }
 

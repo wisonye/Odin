@@ -1,13 +1,13 @@
 package cpp_gen
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:reflect"
-import "core:rexcode/isa/arm64"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:reflect"
+#import "core:rexcode/isa/arm64"
 
-import gen ".."
+#import gen ".."
 
 ISA_NAME :: "arm64"
 
@@ -472,7 +472,7 @@ main :: proc() {
 			struct PseudoAlias {
 				Mnemonic target;   // real instruction emitted
 				AliasSrc src[4];   // how to fill target's four operand slots
-				i16      lit;      // immediate when a src slot is AliasSrc_LIT
+				i16      lit;      // immediate #if a src slot is AliasSrc_LIT
 				u16      csr;      // unused on arm64
 				u8       nargs;    // operands the user supplies (ARG0..<ARGn)
 

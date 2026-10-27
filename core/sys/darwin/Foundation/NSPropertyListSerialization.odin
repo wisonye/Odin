@@ -5,7 +5,7 @@ package darwin_Foundation
 @(objc_class="NSPropertyListSerialization", objc_superclass=Object)
 PropertyListSerialization :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PropertyListSerialization, objc_selector="propertyList:isValidForFormat:", objc_name="propertyList", objc_is_class_method=true)
 	PropertyListSerialization_propertyList :: proc(plist: id, format: PropertyListFormat) -> bool ---
 

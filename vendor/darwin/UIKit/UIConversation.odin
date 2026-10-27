@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIConversationContext", objc_superclass=NS.Object)
 ConversationContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ConversationContext, objc_selector="threadIdentifier", objc_name="threadIdentifier")
 	ConversationContext_threadIdentifier :: proc(self: ^ConversationContext) -> ^NS.String ---
 
@@ -45,7 +45,7 @@ foreign lib {
 MailConversationContext :: struct { using _: ConversationContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MailConversationContext, objc_selector="responseSubject", objc_name="responseSubject")
 	MailConversationContext_responseSubject :: proc(self: ^MailConversationContext) -> ^NS.String ---
 
@@ -70,7 +70,7 @@ foreign lib {
 MessageConversationContext :: struct { using _: ConversationContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MessageConversationContext, objc_selector="isJunk", objc_name="isJunk")
 	MessageConversationContext_isJunk :: proc(self: ^MessageConversationContext) -> bool ---
 
@@ -83,7 +83,7 @@ foreign lib {
 ConversationEntry :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ConversationEntry, objc_selector="text", objc_name="text")
 	ConversationEntry_text :: proc(self: ^ConversationEntry) -> ^NS.String ---
 
@@ -126,7 +126,7 @@ foreign lib {
 MailConversationEntry :: struct { using _: ConversationEntry}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MailConversationEntry, objc_selector="kind", objc_name="kind")
 	MailConversationEntry_kind :: proc(self: ^MailConversationEntry) -> MailConversationEntryKind ---
 
@@ -145,7 +145,7 @@ foreign lib {
 MessageConversationEntry :: struct { using _: ConversationEntry}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MessageConversationEntry, objc_selector="dataKind", objc_name="dataKind")
 	MessageConversationEntry_dataKind :: proc(self: ^MessageConversationEntry) -> MessageConversationEntryDataKind ---
 

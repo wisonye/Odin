@@ -2,7 +2,7 @@
 // so converting it to a union holds that variant rather than nil
 package test_issue_omitted_field_union
 
-import "core:testing"
+#import "core:testing"
 
 Apply :: struct {
 	position:         [3]f64,

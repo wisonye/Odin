@@ -2,7 +2,7 @@
 // and #5569 https://github.com/odin-lang/Odin/issues/5569
 package test_issue_5105_5569
 
-import "core:sync"
+#import "core:sync"
 
 // A procedure call with a deferred procedure is not allowed where it may not be evaluated.
 // The associated deferred procedure would be called at the end of the scope regardless.

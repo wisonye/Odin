@@ -1,17 +1,17 @@
 #+build linux, windows, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
-import "core:c/libc"
+#import "core:c"
+#import "core:c/libc"
 
-when ODIN_OS == .Windows {
-	foreign import lib "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // stdlib.h - standard library definitions
@@ -64,7 +64,7 @@ free :: #force_inline proc "c" (ptr: $T) where intrinsics.type_is_pointer(T) || 
 	libc.free(rawptr(ptr))
 }
 
-foreign lib {
+#foreign lib {
 
 	/*
 	Uses the string argument to set environment variable values. 
@@ -92,9 +92,9 @@ div_t   :: libc.div_t
 ldiv_t  :: libc.ldiv_t
 lldiv_t :: libc.lldiv_t
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(private) LPUTENV :: "_putenv"
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 	@(private) LPUTENV :: "__putenv50"
 } else {
 	@(private) LPUTENV :: "putenv"

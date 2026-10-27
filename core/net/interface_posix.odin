@@ -20,10 +20,10 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:strings"
-import "core:sys/posix"
+#import "core:strings"
+#import "core:sys/posix"
 
-foreign import lib "system:System"
+#foreign #import lib "system:System"
 
 @(private)
 _enumerate_interfaces :: proc(allocator := context.allocator) -> (interfaces: []Network_Interface, err: Interfaces_Error) {
@@ -135,7 +135,7 @@ IF_Flag :: enum u32 {
 @(private)
 IF_Flags :: bit_set[IF_Flag; u32]
 
-when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 	@(private)
 	ifaddrs :: struct {
 		next:    ^ifaddrs,
@@ -146,7 +146,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 		dstaddr: ^posix.sockaddr,
 		data:    rawptr,
 	}
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 	@(private)
 	ifaddrs :: struct {
 		next:      ^ifaddrs,
@@ -161,7 +161,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .OpenBSD {
 }
 
 @(private)
-foreign lib {
+#foreign lib {
 	getifaddrs  :: proc(ifap: ^^ifaddrs) -> posix.result ---
 	freeifaddrs :: proc(ifp: ^ifaddrs) ---
 }

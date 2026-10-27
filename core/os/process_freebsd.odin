@@ -2,15 +2,15 @@
 #+build freebsd
 package os
 
-foreign import libc "system:c"
-foreign import dl "system:dl"
+#foreign #import libc "system:c"
+#foreign #import dl "system:dl"
 
-foreign libc {
+#foreign libc {
 	@(link_name="sysctlbyname")
 	_sysctlbyname :: proc(path: cstring, oldp: rawptr, oldlenp: rawptr, newp: rawptr, newlen: int) -> i32 ---
 }
 
-foreign dl {
+#foreign dl {
 	@(link_name="pthread_getthreadid_np")
 	pthread_getthreadid_np :: proc() -> i32 ---
 }

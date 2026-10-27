@@ -2,16 +2,16 @@
 #+build darwin
 package darwin_QuartzCore
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="CAMetalDisplayLink", objc_superclass=NS.Object)
 MetalDisplayLink :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetalDisplayLink, objc_selector="initWithMetalLayer:", objc_name="initWithMetalLayer")
 	MetalDisplayLink_initWithMetalLayer :: proc(self: ^MetalDisplayLink, layer: ^MetalLayer) -> instancetype ---
 
@@ -53,7 +53,7 @@ foreign lib {
 @(objc_class="CAMetalDisplayLinkDelegate")
 MetalDisplayLinkDelegate :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetalDisplayLinkDelegate, objc_selector="metalDisplayLink:needsUpdate:", objc_name="metalDisplayLink")
 	MetalDisplayLinkDelegate_metalDisplayLink :: proc(self: ^MetalDisplayLinkDelegate, link: ^MetalDisplayLink, update: ^MetalDisplayLinkUpdate) ---
 }
@@ -62,7 +62,7 @@ foreign lib {
 @(objc_class="CAMetalDisplayLinkUpdate", objc_superclass=NS.Object)
 MetalDisplayLinkUpdate :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetalDisplayLinkUpdate, objc_selector="drawable", objc_name="drawable")
 	MetalDisplayLinkUpdate_drawable :: proc(self: ^MetalDisplayLinkUpdate) -> ^MetalDrawable ---
 
@@ -80,7 +80,7 @@ MetalDrawable :: struct {
 	using _: MTLDrawable,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetalDrawable, objc_selector="texture", objc_name="texture")
 	MetalDrawable_texture :: proc(self: ^MetalDrawable) -> ^MTLTexture ---
 
@@ -92,7 +92,7 @@ foreign lib {
 @(objc_class="CAMetalLayer", objc_superclass=Layer)
 MetalLayer :: struct { using _: Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetalLayer, objc_selector="nextDrawable", objc_name="nextDrawable")
 	MetalLayer_nextDrawable :: proc(self: ^MetalLayer) -> ^MetalDrawable ---
 

@@ -22,7 +22,7 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "base:runtime"
+#import "base:runtime"
 
 /*
 	TUNEABLES - See also top of `dns.odin` for DNS configuration.
@@ -34,7 +34,7 @@ import "base:runtime"
 	When TCP_NODELAY is set, data will be sent out to the peer as quickly as possible, rather than being
 	coalesced into fewer network packets.
 
-	This makes the networking layer more eagerly send data when you ask it to,
+	This makes the networking layer more eagerly send data #if you ask it to,
 	which can reduce latency by up to 200ms.
 
 	This does mean that a lot of small writes will negatively effect throughput however,
@@ -43,7 +43,7 @@ import "base:runtime"
 	headers for each payload.
 
 	However, you can avoid this by buffering things up yourself if you wish to send a lot of
-	short data chunks, when TCP_NODELAY is enabled on that socket.
+	short data chunks, #if TCP_NODELAY is enabled on that socket.
 */
 
 ODIN_NET_TCP_NODELAY_DEFAULT :: #config(ODIN_NET_TCP_NODELAY_DEFAULT, true)
@@ -328,7 +328,7 @@ DNS_Record_TXT :: struct {
 
 /*
 	Domain names of other DNS servers that are associated with the domain name.
-	TODO(tetra): Expand on what these records are used for, and when you should use pay attention to these.
+	TODO(tetra): Expand on what these records are used for, and #if you should use pay attention to these.
 */
 DNS_Record_NS :: struct {
 	using base: DNS_Record_Base,
@@ -350,7 +350,7 @@ DNS_Record_MX :: struct {
 	Clients MUST attempt to contact the host with the lowest priority that they can reach.
 	If two hosts have the same priority, they should be contacted in the order according to their weight.
 	Hosts with larger weights should have a proportionally higher chance of being contacted by clients.
-	A weight of zero indicates a very low weight, or, when there is no choice (to reduce visual noise).
+	A weight of zero indicates a very low weight, or, #if there is no choice (to reduce visual noise).
 
 	The host may be "." to indicate that it is "decidedly not available" on this domain.
 */

@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIScene", objc_superclass=Responder)
 Scene :: struct { using _: Responder}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Scene, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	Scene_new :: proc() -> ^Scene ---
 
@@ -83,7 +83,7 @@ SceneDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneDelegate, objc_selector="scene:willConnectToSession:options:", objc_name="scene_willConnectToSession_options")
 	SceneDelegate_scene_willConnectToSession_options :: proc(self: ^SceneDelegate, scene: ^Scene, session: ^SceneSession, connectionOptions: ^SceneConnectionOptions) ---
 
@@ -133,7 +133,7 @@ SceneConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneConfiguration, objc_selector="configurationWithName:sessionRole:", objc_name="configurationWithName", objc_is_class_method=true)
 	SceneConfiguration_configurationWithName :: proc(name: ^NS.String, sessionRole: ^NS.String) -> instancetype ---
 
@@ -173,7 +173,7 @@ SceneActivationConditions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneActivationConditions, objc_selector="init", objc_name="init")
 	SceneActivationConditions_init :: proc(self: ^SceneActivationConditions) -> instancetype ---
 
@@ -198,7 +198,7 @@ foreign lib {
 SceneActivationRequestOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneActivationRequestOptions, objc_selector="requestingScene", objc_name="requestingScene")
 	SceneActivationRequestOptions_requestingScene :: proc(self: ^SceneActivationRequestOptions) -> ^Scene ---
 
@@ -217,7 +217,7 @@ foreign lib {
 SceneConnectionOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneConnectionOptions, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SceneConnectionOptions_new :: proc() -> ^SceneConnectionOptions ---
 
@@ -254,7 +254,7 @@ SceneDestructionCondition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneDestructionCondition, objc_selector="userInitiatedDismissal", objc_name="userInitiatedDismissal", objc_is_class_method=true)
 	SceneDestructionCondition_userInitiatedDismissal :: proc() -> instancetype ---
 
@@ -273,14 +273,14 @@ foreign lib {
 SceneDestructionRequestOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UISceneOpenExternalURLOptions", objc_superclass=NS.Object)
 SceneOpenExternalURLOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneOpenExternalURLOptions, objc_selector="universalLinksOnly", objc_name="universalLinksOnly")
 	SceneOpenExternalURLOptions_universalLinksOnly :: proc(self: ^SceneOpenExternalURLOptions) -> bool ---
 
@@ -299,7 +299,7 @@ foreign lib {
 SceneOpenURLOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneOpenURLOptions, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SceneOpenURLOptions_new :: proc() -> ^SceneOpenURLOptions ---
 
@@ -327,7 +327,7 @@ SceneSession :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneSession, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SceneSession_new :: proc() -> ^SceneSession ---
 
@@ -367,7 +367,7 @@ SceneSessionActivationRequest :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneSessionActivationRequest, objc_selector="request", objc_name="request", objc_is_class_method=true)
 	SceneSessionActivationRequest_request :: proc() -> instancetype ---
 
@@ -407,7 +407,7 @@ foreign lib {
 SceneSizeRestrictions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneSizeRestrictions, objc_selector="init", objc_name="init")
 	SceneSizeRestrictions_init :: proc(self: ^SceneSizeRestrictions) -> instancetype ---
 
@@ -438,7 +438,7 @@ foreign lib {
 SceneSystemProtectionManager :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneSystemProtectionManager, objc_selector="init", objc_name="init")
 	SceneSystemProtectionManager_init :: proc(self: ^SceneSystemProtectionManager) -> instancetype ---
 
@@ -454,7 +454,7 @@ foreign lib {
 SceneWindowingBehaviors :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneWindowingBehaviors, objc_selector="init", objc_name="init")
 	SceneWindowingBehaviors_init :: proc(self: ^SceneWindowingBehaviors) -> instancetype ---
 
@@ -479,7 +479,7 @@ foreign lib {
 SceneWindowingControlStyle :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SceneWindowingControlStyle, objc_selector="init", objc_name="init")
 	SceneWindowingControlStyle_init :: proc(self: ^SceneWindowingControlStyle) -> instancetype ---
 

@@ -4,10 +4,10 @@ Those are known these days to no longer be secure.
 */
 package uuid_legacy
 
-import "base:runtime"
-import "core:crypto/legacy/md5"
-import "core:crypto/legacy/sha1"
-import "core:encoding/uuid"
+#import "base:runtime"
+#import "core:crypto/legacy/md5"
+#import "core:crypto/legacy/sha1"
+#import "core:encoding/uuid"
 
 Identifier :: uuid.Identifier
 VERSION_BYTE_INDEX :: uuid.VERSION_BYTE_INDEX

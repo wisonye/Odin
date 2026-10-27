@@ -2,7 +2,7 @@
 #+build !js
 package filepath
 
-import "core:os"
+#import "core:os"
 
 // match states whether "name" matches the shell pattern
 // Pattern syntax is:

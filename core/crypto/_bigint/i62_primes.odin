@@ -22,9 +22,9 @@ package _bigint
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import subtle "core:crypto/_subtle"
-import "core:math/big"
-import "core:slice"
+#import subtle "core:crypto/_subtle"
+#import "core:math/big"
+#import "core:slice"
 
 // Perform trial divisions on a candidate prime.  We opt for the simple
 // route and "just" compute a series of trial divisions.

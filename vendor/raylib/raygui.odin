@@ -1,34 +1,34 @@
 package raylib
 
-import "core:c"
+#import "core:c"
 
 RAYGUI_SHARED :: #config(RAYGUI_SHARED, false)
 RAYGUI_WASM_LIB :: #config(RAYGUI_WASM_LIB, "wasm/libraygui.a")
 
-when ODIN_OS == .Windows {
-	foreign import lib {
-		"windows/rayguidll.lib" when RAYGUI_SHARED else "windows/raygui.lib",
+#if ODIN_OS == .Windows {
+	#foreign #import lib {
+		"windows/rayguidll.lib" #if RAYGUI_SHARED else "windows/raygui.lib",
 	}
-} else when ODIN_OS == .Linux  {
-	foreign import lib {
-		"linux/libraygui.so" when RAYGUI_SHARED else "linux/libraygui.a",
+} else #if ODIN_OS == .Linux  {
+	#foreign #import lib {
+		"linux/libraygui.so" #if RAYGUI_SHARED else "linux/libraygui.a",
 	}
-} else when ODIN_OS == .Darwin {
-	when ODIN_ARCH == .arm64 {
-		foreign import lib {
-			"macos/libraygui-arm64.dylib" when RAYGUI_SHARED else "macos/libraygui-arm64.a",
+} else #if ODIN_OS == .Darwin {
+	#if ODIN_ARCH == .arm64 {
+		#foreign #import lib {
+			"macos/libraygui-arm64.dylib" #if RAYGUI_SHARED else "macos/libraygui-arm64.a",
 		}
 	} else {
-		foreign import lib {
-			"macos/libraygui.dylib" when RAYGUI_SHARED else "macos/libraygui.a",
+		#foreign #import lib {
+			"macos/libraygui.dylib" #if RAYGUI_SHARED else "macos/libraygui.a",
 		}
 	}
-} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib {
+} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib {
 		RAYGUI_WASM_LIB,
 	}
 } else {
-	foreign import lib "system:raygui"
+	#foreign #import lib "system:raygui"
 }
 
 RAYGUI_VERSION :: "4.0"
@@ -62,7 +62,7 @@ GuiTextWrapMode :: enum c.int {
 
 // Gui controls
 GuiControl :: enum c.int {
-	// Default -> populates to all controls when set
+	// Default -> populates to all controls #if set
 	DEFAULT = 0,
 	// Basic controls
 	LABEL,          // Used also for: LABELBUTTON
@@ -209,9 +209,9 @@ SCROLLBAR_RIGHT_SIDE :: 1
 //----------------------------------------------------------------------------------
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	// WASM does not have foreign variable declarations.
-	when ODIN_ARCH != .wasm32 && ODIN_ARCH != .wasm64p32 {
+	#if ODIN_ARCH != .wasm32 && ODIN_ARCH != .wasm64p32 {
 		@(link_name="raylib_version") version: cstring
 	}
 	// Global gui state control functions
@@ -269,12 +269,12 @@ foreign lib {
 	// Basic controls set
 	
 	GuiLabel            :: proc(bounds: Rectangle, text: cstring) -> c.int ---                                // Label control, shows text
-	GuiButton           :: proc(bounds: Rectangle, text: cstring) -> bool ---                                 // Button control, returns true when clicked
-	GuiLabelButton      :: proc(bounds: Rectangle, text: cstring) -> bool ---                                 // Label button control, show true when clicked
-	GuiToggle           :: proc(bounds: Rectangle, text: cstring, active: ^bool) -> c.int ---                 // Toggle Button control, returns true when active
+	GuiButton           :: proc(bounds: Rectangle, text: cstring) -> bool ---                                 // Button control, returns true #if clicked
+	GuiLabelButton      :: proc(bounds: Rectangle, text: cstring) -> bool ---                                 // Label button control, show true #if clicked
+	GuiToggle           :: proc(bounds: Rectangle, text: cstring, active: ^bool) -> c.int ---                 // Toggle Button control, returns true #if active
 	GuiToggleGroup      :: proc(bounds: Rectangle, text: cstring, active: ^c.int) -> c.int ---                // Toggle Group control, returns active toggle index
 	GuiToggleSlider     :: proc(bounds: Rectangle, text: cstring, active: ^c.int) -> c.int ---
-	GuiCheckBox         :: proc(bounds: Rectangle, text: cstring, checked: ^bool) -> bool ---                 // Check Box control, returns true when active
+	GuiCheckBox         :: proc(bounds: Rectangle, text: cstring, checked: ^bool) -> bool ---                 // Check Box control, returns true #if active
 	GuiComboBox         :: proc(bounds: Rectangle, text: cstring, active: ^c.int) -> c.int ---                // Combo Box control, returns selected item index
 	
 	GuiDropdownBox      :: proc(bounds: Rectangle, text: cstring, active: ^c.int, editMode: bool) -> bool --- // Dropdown Box control, returns selected item

@@ -23,9 +23,9 @@ package rexcode_x86
 // Returns Result with counts and success status.
 // Unresolved labels are returned as relocations (no extern/internal distinction).
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:rexcode/isa"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:rexcode/isa"
 
 // -----------------------------------------------------------------------------
 // SECTION: 7.1 Constants
@@ -48,7 +48,7 @@ MAX_INST_SIZE :: 15  // Maximum x64 instruction length
 //   relocs        - Dynamic array; unresolved relocations are appended
 //   errors        - Dynamic array; encoding errors are appended
 //   resolve       - If true, resolve relocations and patch code in place
-//   base_address  - Base address for absolute relocations (when resolve=true)
+//   base_address  - Base address for absolute relocations (#if resolve=true)
 //
 // Returns:
 //   Result with code size and success status.
@@ -174,7 +174,7 @@ encode :: proc(
 
 			   Debug-only, so the release fast path is byte-for-byte what it was: this is a
 			   REGENERATION-TIME mistake, and it only has to be caught once by anyone running tests. */
-			when ODIN_DEBUG {
+			#if ODIN_DEBUG {
 				run := ENCODE_RUNS[inst.mnemonic]
 				if form_index < int(run.start) || form_index >= int(run.start) + int(run.count) {
 					panic("rexcode/x86: a baked enc_hint names a form outside its own mnemonic's run — mnemonic_builders.odin is stale relative to tables/x86.encode_*.bin. Regenerate it: odin run core/rexcode/isa/x86/tools/gen_mnemonic_builders.odin -file")
@@ -334,7 +334,7 @@ encode :: proc(
 				pos += 1
 			}
 
-			// Address size override (67h), when the CALLER asked for one. A form
+			// Address size override (67h), #if the CALLER asked for one. A form
 			// that requires a particular address size emits it below instead --
 			// this branch is inside the "any instruction flag is set" gate, and
 			// such a form needs the prefix whether or not the caller set a flag.
@@ -345,7 +345,7 @@ encode :: proc(
 		}
 
 		// A form whose ADDRESS size is fixed (JRCXZ/JECXZ/JCXZ -- one opcode, the
-		// mnemonic saying which counter register) carries the prefix when its size
+		// mnemonic saying which counter register) carries the prefix #if its size
 		// is not the mode's default. Outside the flags gate above because it is a
 		// property of the ENCODING, not of the caller's request; `addr_size` is
 		// .DEFAULT for all but three forms, so the test is one compare against a
@@ -549,7 +549,7 @@ encode :: proc(
 				if op != nil {
 					is_reg := op.kind == .REGISTER
 					is_mem := op.kind == .MEMORY
-					m := op.mem   // union bytes; only used when is_mem
+					m := op.mem   // union bytes; only used #if is_mem
 					rex |= bmask(is_reg && reg_needs_rex(op.reg))          & 0x41
 					rex |= bmask(is_mem && mem_has_base(m)  && m.base_ext) & 0x41
 					rex |= bmask(is_mem && mem_has_index(m) && m.index_ext) & 0x42
@@ -563,7 +563,7 @@ encode :: proc(
 			}
 
 			// SPL/BPL/SIL/DIL (has_spl, computed in the resolve pass) force an
-			// empty REX in long mode when no other REX bit is set.
+			// empty REX in long mode #if no other REX bit is set.
 			rex |= bmask(mode == ._64 && rex == 0 && has_spl) & 0x40
 
 			// 32-bit mode forbids the REX prefix entirely. If any operand
@@ -698,7 +698,7 @@ encode :: proc(
 								sib = (scale << 6) | (idx << 3) | base_sib
 
 								// mod / disp size, branchless. No base -> [disp32]
-								// (mod 00, size 4). Otherwise: no displacement when
+								// (mod 00, size 4). Otherwise: no displacement #if
 								// zero and not RBP-like; else disp8 if it fits, else
 								// disp32. (RBP-like base forces an explicit disp8.)
 								no_disp := has_base && is_zero && !(has_base && is_rbp)
@@ -892,7 +892,7 @@ encode :: proc(
 // SECTION: 7.7 Inline Helper Functions
 // -----------------------------------------------------------------------------
 
-// Branchless select mask: 0xFF when `b`, else 0x00. Used to OR-accumulate
+// Branchless select mask: 0xFF #if `b`, else 0x00. Used to OR-accumulate
 // REX/VEX/EVEX bit contributions without a per-condition branch
 // (`x |= bmask(cond) & bits`). Package-private so the recipe emitter shares it.
 @(private)
@@ -902,10 +902,10 @@ bmask :: #force_inline proc "contextless" (b: bool) -> u8 {
 
 // Check if instruction matches encoding (inlined for hot path).
 // `mode` lets default_64 entries match 32-bit operands in i386 and
-// filters out mode-restricted (mode_32_only) encodings when not in i386.
+// filters out mode-restricted (mode_32_only) encodings #if not in i386.
 encoding_matches_inline :: proc "contextless" (inst: ^Instruction, enc: ^Encoding, mode: Mode) -> bool {
 	// Mode gate: skip i386-only encodings (short-form INC/DEC at 0x40-0x4F)
-	// when not in Mode._32.
+	// #if not in Mode._32.
 	if enc.flags.mode_32_only && mode != ._32 {
 		return false
 	}
@@ -920,7 +920,7 @@ encoding_matches_inline :: proc "contextless" (inst: ^Instruction, enc: ^Encodin
 	}
 
 	// PUSH/POP FS/GS: the segment operand is fixed by the opcode (0F A0/A1 -> FS,
-	// 0F A8/A9 -> GS), so a form only matches when the user's segment agrees --
+	// 0F A8/A9 -> GS), so a form only matches #if the user's segment agrees --
 	// otherwise `push gs` would take the first {SREG} form (FS) and mis-encode.
 	if enc.ops[0] == .SREG && enc.enc[0] == .IMPL {
 		want: Register = (enc.opcode & 0x08) != 0 ? GS : FS
@@ -1002,8 +1002,8 @@ encoding_matches_inline :: proc "contextless" (inst: ^Instruction, enc: ^Encodin
 }
 
 // Check if a user operand equals the register/constant an implicit operand slot
-// stands for -- used when a caller supplies an implicit operand explicitly and
-// when re-encoding a decoded instruction (which materializes all operands).
+// stands for -- used #if a caller supplies an implicit operand explicitly and
+// #if re-encoding a decoded instruction (which materializes all operands).
 implicit_operand_matches :: #force_inline proc "contextless" (op: ^Operand, op_type: Operand_Type) -> bool {
 	#partial switch op_type {
 	case .CL_IMPL:   return op.kind == .REGISTER && op.reg == CL
@@ -1145,7 +1145,7 @@ imm_matches_inline :: #force_inline proc "contextless" (op: ^Operand, op_type: O
 // helpers let the caller size those buffers from the instruction slice: either
 // the plain size (caller manages its own memory) or by pre-sizing the caller's
 // own dynamic arrays directly. No new buffers are ever allocated; only the
-// caller's arrays are grown, and only when they are not already large enough.
+// caller's arrays are grown, and only #if they are not already large enough.
 // (The error array grows only on the failure path, so it is left out.)
 
 // Exact maximum number of code bytes encode() can emit for `instructions`
@@ -1162,7 +1162,7 @@ encode_max_relocation_count :: #force_inline proc "contextless" (instructions: [
 }
 
 // Pre-size the caller's encode output buffers so the encode hot path never
-// reallocates. `code` is the caller's dynamic []u8 (sliced as `code[:]` when
+// reallocates. `code` is the caller's dynamic []u8 (sliced as `code[:]` #if
 // calling encode); its LENGTH is grown to hold the worst case so the slice is a
 // valid emit target. `relocs` capacity is reserved on top of whatever it
 // already holds. Both are optional (nil to skip). Grows only the caller's own

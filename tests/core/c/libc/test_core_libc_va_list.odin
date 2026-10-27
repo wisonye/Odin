@@ -1,8 +1,8 @@
 package test_core_libc
 
-import "base:intrinsics"
-import "core:c/libc"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:c/libc"
+#import "core:testing"
 
 @(private="file")
 format :: proc "c" (buf: []u8, fmt: cstring, #c_vararg args: ..any) -> libc.int {

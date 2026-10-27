@@ -1,19 +1,19 @@
 #+build linux, windows, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
-	foreign import lib "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import lib "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // unistd.h - standard symbolic constants and types
 
-foreign lib {
+#foreign lib {
 	/*
 	Checks the file named by the pathname pointed to by the path argument for
 	accessibility according to the bit pattern contained in amode. 
@@ -114,7 +114,7 @@ foreign lib {
 	unlink :: proc(path: cstring) -> result ---
 }
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(private) LACCESS :: "_access"
 	@(private) LCHDIR  :: "_chdir"
 	@(private) LGETCWD :: "_getcwd"
@@ -144,7 +144,7 @@ Mode_Flags :: bit_set[Mode_Flag_Bits; c.int]
 #assert(_F_OK == 0)
 F_OK :: Mode_Flags{}
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	_F_OK :: 0
 	X_OK  :: 1
 	W_OK  :: 2

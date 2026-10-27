@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSEvent", objc_superclass=NS.Object)
 Event :: struct {
@@ -14,7 +14,7 @@ Event :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Event, objc_selector="charactersByApplyingModifiers:", objc_name="charactersByApplyingModifiers")
 	Event_charactersByApplyingModifiers :: proc(self: ^Event, modifiers: EventModifierFlags) -> ^NS.String ---
 

@@ -1,9 +1,9 @@
 #+build !netbsd
 package test_core_math_rand
 
-import "core:math"
-import "core:math/rand"
-import "core:testing"
+#import "core:math"
+#import "core:math/rand"
+#import "core:testing"
 
 Generator :: struct {
 	name:   string,

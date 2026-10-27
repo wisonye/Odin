@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIBarAppearance", objc_superclass=NS.Object)
 BarAppearance :: struct {
@@ -14,7 +14,7 @@ BarAppearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarAppearance, objc_selector="init", objc_name="init")
 	BarAppearance_init :: proc(self: ^BarAppearance) -> instancetype ---
 
@@ -87,7 +87,7 @@ BarButtonItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarButtonItem, objc_selector="init", objc_name="init")
 	BarButtonItem_init :: proc(self: ^BarButtonItem) -> instancetype ---
 
@@ -419,7 +419,7 @@ BarButtonItemAppearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarButtonItemAppearance, objc_selector="init", objc_name="init")
 	BarButtonItemAppearance_init :: proc(self: ^BarButtonItemAppearance) -> instancetype ---
 
@@ -457,7 +457,7 @@ BarButtonItemBadge :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarButtonItemBadge, objc_selector="badgeWithCount:", objc_name="badgeWithCount", objc_is_class_method=true)
 	BarButtonItemBadge_badgeWithCount :: proc(count: NS.UInteger) -> instancetype ---
 
@@ -500,7 +500,7 @@ BarButtonItemGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarButtonItemGroup, objc_selector="initWithBarButtonItems:representativeItem:", objc_name="initWithBarButtonItems")
 	BarButtonItemGroup_initWithBarButtonItems :: proc(self: ^BarButtonItemGroup, barButtonItems: ^NS.Array, representativeItem: ^BarButtonItem) -> instancetype ---
 
@@ -558,7 +558,7 @@ foreign lib {
 BarButtonItemStateAppearance :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarButtonItemStateAppearance, objc_selector="init", objc_name="init")
 	BarButtonItemStateAppearance_init :: proc(self: ^BarButtonItemStateAppearance) -> instancetype ---
 
@@ -599,7 +599,7 @@ BarItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarItem, objc_selector="init", objc_name="init")
 	BarItem_init :: proc(self: ^BarItem) -> instancetype ---
 
@@ -675,7 +675,7 @@ BarPositioning :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarPositioning, objc_selector="barPosition", objc_name="barPosition")
 	BarPositioning_barPosition :: proc(self: ^BarPositioning) -> BarPosition ---
 }
@@ -688,7 +688,7 @@ BarPositioningDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BarPositioningDelegate, objc_selector="positionForBar:", objc_name="positionForBar")
 	BarPositioningDelegate_positionForBar :: proc(self: ^BarPositioningDelegate, bar: ^BarPositioning) -> BarPosition ---
 }

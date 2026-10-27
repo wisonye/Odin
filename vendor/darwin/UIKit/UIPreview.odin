@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIPreviewAction", objc_superclass=NS.Object)
 PreviewAction :: struct {
@@ -14,7 +14,7 @@ PreviewAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewAction, objc_selector="actionWithTitle:style:handler:", objc_name="actionWithTitle", objc_is_class_method=true)
 	PreviewAction_actionWithTitle :: proc(title: ^NS.String, style: PreviewActionStyle, handler: ^Objc_Block(proc "c" ( action: ^PreviewAction, previewViewController: ^ViewController ))) -> instancetype ---
 
@@ -31,7 +31,7 @@ PreviewActionGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewActionGroup, objc_selector="actionGroupWithTitle:style:actions:", objc_name="actionGroupWithTitle", objc_is_class_method=true)
 	PreviewActionGroup_actionGroupWithTitle :: proc(title: ^NS.String, style: PreviewActionStyle, actions: ^NS.Array) -> instancetype ---
 }
@@ -44,7 +44,7 @@ PreviewActionItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewActionItem, objc_selector="title", objc_name="title")
 	PreviewActionItem_title :: proc(self: ^PreviewActionItem) -> ^NS.String ---
 }
@@ -54,7 +54,7 @@ foreign lib {
 PreviewInteraction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewInteraction, objc_selector="initWithView:", objc_name="initWithView")
 	PreviewInteraction_initWithView :: proc(self: ^PreviewInteraction, view: ^View) -> instancetype ---
 
@@ -85,7 +85,7 @@ PreviewInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewInteractionDelegate, objc_selector="previewInteraction:didUpdatePreviewTransition:ended:", objc_name="previewInteraction_didUpdatePreviewTransition_ended")
 	PreviewInteractionDelegate_previewInteraction_didUpdatePreviewTransition_ended :: proc(self: ^PreviewInteractionDelegate, previewInteraction: ^PreviewInteraction, transitionProgress: CG.Float, ended: bool) ---
 
@@ -107,7 +107,7 @@ PreviewParameters :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewParameters, objc_selector="init", objc_name="init")
 	PreviewParameters_init :: proc(self: ^PreviewParameters) -> instancetype ---
 
@@ -141,7 +141,7 @@ PreviewTarget :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PreviewTarget, objc_selector="initWithContainer:center:transform:", objc_name="initWithContainer_center_transform")
 	PreviewTarget_initWithContainer_center_transform :: proc(self: ^PreviewTarget, container: ^View, center: CG.Point, transform: CG.AffineTransform) -> instancetype ---
 

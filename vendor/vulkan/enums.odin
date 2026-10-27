@@ -1,6 +1,6 @@
 package vulkan
 
-import "core:c"
+#import "core:c"
 
 // Enums
 AccelerationStructureBuildTypeKHR :: enum c.int {

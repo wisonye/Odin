@@ -1,8 +1,8 @@
 #+build amd64
 package test_internal
 
-import "core:sys/info"
-import "core:testing"
+#import "core:sys/info"
+#import "core:testing"
 
 // An `asm` template is inlined into the procedure calling it, so the target features it enables must also be enabled
 // by that procedure, and its operands may then be those which only those features allow, e.g. 256-bit vectors with avx

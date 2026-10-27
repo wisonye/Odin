@@ -2,7 +2,7 @@ package libc
 
 // 7.17 Atomics
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 ATOMIC_BOOL_LOCK_FREE     :: true
 ATOMIC_CHAR_LOCK_FREE     :: true

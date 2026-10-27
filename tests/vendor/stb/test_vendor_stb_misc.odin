@@ -1,11 +1,11 @@
 package test_vendor_stb
 
-import "core:testing"
-import stbi  "vendor:stb/image"
-import stbrp "vendor:stb/rect_pack"
-import stbpf "vendor:stb/sprintf"
-import stbtt "vendor:stb/truetype"
-import stbv  "vendor:stb/vorbis"
+#import "core:testing"
+#import stbi  "vendor:stb/image"
+#import stbrp "vendor:stb/rect_pack"
+#import stbpf "vendor:stb/sprintf"
+#import stbtt "vendor:stb/truetype"
+#import stbv  "vendor:stb/vorbis"
 
 // These tests exist mostly to make sure each stb library links and runs on every target.
 

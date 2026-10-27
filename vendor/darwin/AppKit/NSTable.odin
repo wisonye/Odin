@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="NSTableCellView", objc_superclass=View)
 TableCellView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableCellView, objc_selector="objectValue", objc_name="objectValue")
 	TableCellView_objectValue :: proc(self: ^TableCellView) -> id ---
 
@@ -54,7 +54,7 @@ TableColumn :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableColumn, objc_selector="initWithIdentifier:", objc_name="initWithIdentifier")
 	TableColumn_initWithIdentifier :: proc(self: ^TableColumn, identifier: ^NS.String) -> instancetype ---
 
@@ -160,7 +160,7 @@ TableHeaderView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableHeaderView, objc_selector="headerRectOfColumn:", objc_name="headerRectOfColumn")
 	TableHeaderView_headerRectOfColumn :: proc(self: ^TableHeaderView, column: NS.Integer) -> NS.Rect ---
 
@@ -191,7 +191,7 @@ TableRowView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableRowView, objc_selector="drawBackgroundInRect:", objc_name="drawBackgroundInRect")
 	TableRowView_drawBackgroundInRect :: proc(self: ^TableRowView, dirtyRect: NS.Rect) ---
 
@@ -291,7 +291,7 @@ TableView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableView, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	TableView_initWithFrame :: proc(self: ^TableView, frameRect: NS.Rect) -> instancetype ---
 
@@ -778,7 +778,7 @@ TableViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDelegate, objc_selector="tableView:viewForTableColumn:row:", objc_name="tableView_viewForTableColumn_row")
 	TableViewDelegate_tableView_viewForTableColumn_row :: proc(self: ^TableViewDelegate, tableView: ^TableView, tableColumn: ^TableColumn, row: NS.Integer) -> ^View ---
 
@@ -881,7 +881,7 @@ TableViewDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDataSource, objc_selector="numberOfRowsInTableView:", objc_name="numberOfRowsInTableView")
 	TableViewDataSource_numberOfRowsInTableView :: proc(self: ^TableViewDataSource, tableView: ^TableView) -> NS.Integer ---
 
@@ -927,7 +927,7 @@ TableViewDiffableDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewDiffableDataSource, objc_selector="initWithTableView:cellProvider:", objc_name="initWithTableView")
 	TableViewDiffableDataSource_initWithTableView :: proc(self: ^TableViewDiffableDataSource, tableView: ^TableView, cellProvider: TableViewDiffableDataSourceCellProvider) -> instancetype ---
 
@@ -991,7 +991,7 @@ TableViewRowAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableViewRowAction, objc_selector="rowActionWithStyle:title:handler:", objc_name="rowActionWithStyle", objc_is_class_method=true)
 	TableViewRowAction_rowActionWithStyle :: proc(style: TableViewRowActionStyle, title: ^NS.String, handler: ^Objc_Block(proc "c" ( action: ^TableViewRowAction, row: NS.Integer ))) -> instancetype ---
 

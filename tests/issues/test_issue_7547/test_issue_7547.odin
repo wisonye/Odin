@@ -2,15 +2,15 @@
 #+build windows
 package test_issue_7547
 
-import runtime "base:runtime"
-import testing "core:testing"
-import filepath "core:path/filepath"
-import fmt "core:fmt"
-import slice "core:slice"
-import os "core:os"
-import win32 "core:sys/windows"
-import log "core:log"
-import time "core:time"
+#import runtime "base:runtime"
+#import testing "core:testing"
+#import filepath "core:path/filepath"
+#import fmt "core:fmt"
+#import slice "core:slice"
+#import os "core:os"
+#import win32 "core:sys/windows"
+#import log "core:log"
+#import time "core:time"
 
 @(test)
 test_issue_7547 :: proc(t: ^testing.T) {

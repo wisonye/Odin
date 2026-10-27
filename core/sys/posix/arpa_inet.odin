@@ -1,17 +1,17 @@
 #+build darwin, linux, freebsd, openbsd, netbsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // arpa/inet.h - definitions for internet operations
 
-foreign lib {
+#foreign lib {
 	// Use Odin's native big endian types `u32be` and `u16be` instead.
 	// htonl :: proc(c.uint32_t) -> c.uint32_t ---
 	// htons :: proc(c.uint16_t) -> c.uint16_t ---

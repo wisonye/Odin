@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKDecisionNode", objc_superclass=NS.Object)
 DecisionNode :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DecisionNode, objc_selector="createBranchWithValue:attribute:", objc_name="createBranchWithValue")
 	DecisionNode_createBranchWithValue :: proc(self: ^DecisionNode, value: ^NS.Number, attribute: ^NS.ObjectProtocol) -> instancetype ---
 
@@ -25,7 +25,7 @@ DecisionTree :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DecisionTree, objc_selector="initWithAttribute:", objc_name="initWithAttribute")
 	DecisionTree_initWithAttribute :: proc(self: ^DecisionTree, attribute: ^NS.ObjectProtocol) -> instancetype ---
 

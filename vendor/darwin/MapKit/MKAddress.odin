@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MKAddress", objc_superclass=NS.Object)
 Address :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Address, objc_selector="initWithFullAddress:shortAddress:", objc_name="initWithFullAddress")
 	Address_initWithFullAddress :: proc(self: ^Address, fullAddress: ^NS.String, shortAddress: ^NS.String) -> instancetype ---
 
@@ -32,7 +32,7 @@ AddressFilter :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AddressFilter, objc_selector="initIncludingOptions:", objc_name="initIncludingOptions")
 	AddressFilter_initIncludingOptions :: proc(self: ^AddressFilter, options: AddressFilterOptions) -> instancetype ---
 
@@ -56,7 +56,7 @@ foreign lib {
 @(objc_class="MKAddressRepresentations", objc_superclass=NS.Object)
 AddressRepresentations :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AddressRepresentations, objc_selector="init", objc_name="init")
 	AddressRepresentations_init :: proc(self: ^AddressRepresentations) -> instancetype ---
 

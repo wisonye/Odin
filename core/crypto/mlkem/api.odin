@@ -1,7 +1,7 @@
 package mlkem
 
-import "core:crypto"
-import "core:crypto/_mlkem"
+#import "core:crypto"
+#import "core:crypto/_mlkem"
 
 // Parameters are the supported ML-KEM parameter sets.
 Parameters :: enum {
@@ -257,7 +257,7 @@ decaps :: proc(dk: ^Decapsulation_Key, ciphertext, shared_secret: []byte) -> boo
 // Encapsulation_Key instance.
 @(require_results)
 params :: proc(k: ^$T) -> Parameters where (T == Encapsulation_Key || T == Decapsulation_Key) {
-	when T == Encapsulation_Key {
+	#if T == Encapsulation_Key {
 		return k_to_params(k.pke_ek.k)
 	} else {
 		return k_to_params(k.pke_dk.k)
@@ -268,7 +268,7 @@ params :: proc(k: ^$T) -> Parameters where (T == Encapsulation_Key || T == Decap
 // in bytes.
 @(require_results)
 key_size :: proc(k: ^$T) -> int where (T == Encapsulation_Key || T == Decapsulation_Key) {
-	when T == Encapsulation_Key {
+	#if T == Encapsulation_Key {
 		return ENCAPSULATION_KEY_SIZES[params(k)]
 	} else {
 		return DECAPSULATION_KEY_SEED_SIZE

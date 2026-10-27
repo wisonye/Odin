@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /*
 Slot Allocator
@@ -40,7 +40,7 @@ slot_allocator :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	slot_allocator_config_init :: proc(capacity: u32) -> slot_allocator_config ---
 
 	slot_allocator_get_heap_size     :: proc(pConfig: ^slot_allocator_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -108,10 +108,10 @@ job :: struct {
 				pDataBufferNode:   rawptr /*ma_resource_manager_data_buffer_node**/,
 				pFilePath:         cstring,
 				pFilePathW:        [^]c.wchar_t,
-				flags:             resource_manager_data_source_flags, /* Resource manager data source flags that were used when initializing the data buffer. */
-				pInitNotification: ^async_notification,       /* Signalled when the data buffer has been initialized and the format/channels/rate can be retrieved. */
-				pDoneNotification: ^async_notification,       /* Signalled when the data buffer has been fully decoded. Will be passed through to MA_JOB_TYPE_RESOURCE_MANAGER_PAGE_DATA_BUFFER_NODE when decoding. */
-				pInitFence:        ^fence,                    /* Released when initialization of the decoder is complete. */
+				flags:             resource_manager_data_source_flags, /* Resource manager data source flags that were used #if initializing the data buffer. */
+				pInitNotification: ^async_notification,       /* Signalled #if the data buffer has been initialized and the format/channels/rate can be retrieved. */
+				pDoneNotification: ^async_notification,       /* Signalled #if the data buffer has been fully decoded. Will be passed through to MA_JOB_TYPE_RESOURCE_MANAGER_PAGE_DATA_BUFFER_NODE #if decoding. */
+				pInitFence:        ^fence,                    /* Released #if initialization of the decoder is complete. */
 				pDoneFence:        ^fence,                    /* Released if initialization of the decoder fails. Passed through to PAGE_DATA_BUFFER_NODE untouched if init is successful. */
 			},
 			freeDataBufferNode: struct {
@@ -124,16 +124,16 @@ job :: struct {
 				pResourceManager:  rawptr /*ma_resource_manager**/,
 				pDataBufferNode:   rawptr /*ma_resource_manager_data_buffer_node**/,
 				pDecoder:          rawptr /*ma_decoder**/,
-				pDoneNotification: ^async_notification,       /* Signalled when the data buffer has been fully decoded. */
-				pDoneFence:        ^fence,                    /* Passed through from LOAD_DATA_BUFFER_NODE and released when the data buffer completes decoding or an error occurs. */
+				pDoneNotification: ^async_notification,       /* Signalled #if the data buffer has been fully decoded. */
+				pDoneFence:        ^fence,                    /* Passed through from LOAD_DATA_BUFFER_NODE and released #if the data buffer completes decoding or an error occurs. */
 			},
 
 			loadDataBuffer: struct {
 				pDataBuffer:             rawptr /*ma_resource_manager_data_buffer**/,
-				pInitNotification:       ^async_notification,       /* Signalled when the data buffer has been initialized and the format/channels/rate can be retrieved. */
-				pDoneNotification:       ^async_notification,       /* Signalled when the data buffer has been fully decoded. */
-				pInitFence:              ^fence,                    /* Released when the data buffer has been initialized and the format/channels/rate can be retrieved. */
-				pDoneFence:              ^fence,                    /* Released when the data buffer has been fully decoded. */
+				pInitNotification:       ^async_notification,       /* Signalled #if the data buffer has been initialized and the format/channels/rate can be retrieved. */
+				pDoneNotification:       ^async_notification,       /* Signalled #if the data buffer has been fully decoded. */
+				pInitFence:              ^fence,                    /* Released #if the data buffer has been initialized and the format/channels/rate can be retrieved. */
+				pDoneFence:              ^fence,                    /* Released #if the data buffer has been fully decoded. */
 				rangeBegInPCMFrames:     u64,
 				rangeEndInPCMFrames:     u64,
 				loopPointBegInPCMFrames: u64,
@@ -148,7 +148,7 @@ job :: struct {
 
 			loadDataStream: struct {
 				pDataStream:       rawptr /*ma_resource_manager_data_stream**/,
-				pFilePath:         cstring,               /* Allocated when the job is posted, freed by the job thread after loading. */
+				pFilePath:         cstring,               /* Allocated #if the job is posted, freed by the job thread after loading. */
 				pFilePathW:        [^]c.wchar_t,          /* ^ As above ^. Only used if pFilePath is NULL. */
 				initialSeekPoint:  u64,
 				pInitNotification: ^async_notification,   /* Signalled after the first two pages have been decoded and frames can be read from the stream. */
@@ -182,7 +182,7 @@ job :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	job_init    :: proc(code: u16) -> job ---
 	job_process :: proc(pJob: ^job) -> result ---
 }
@@ -212,10 +212,10 @@ job_queue :: struct {
 	capacity:  u32,                                          /* The maximum number of jobs that can fit in the queue at a time. Set by the config. */
 	head:      u64, /*atomic*/                               /* The first item in the list. Required for removing from the top of the list. */
 	tail:      u64, /*atomic*/                               /* The last item in the list. Required for appending to the end of the list. */
-	sem:       (struct {} when NO_THREADING else semaphore), /* Only used when MA_JOB_QUEUE_FLAG_NON_BLOCKING is unset. */
+	sem:       (struct {} #if NO_THREADING else semaphore), /* Only used #if MA_JOB_QUEUE_FLAG_NON_BLOCKING is unset. */
 	allocator: slot_allocator,
 	pJobs:     [^]job,
-	lock:      (struct {} when USE_EXPERIMENTAL_LOCK_FREE_JOB_QUEUE else spinlock),
+	lock:      (struct {} #if USE_EXPERIMENTAL_LOCK_FREE_JOB_QUEUE else spinlock),
 
 	/* Memory management. */
 	_pHeap:    rawptr,
@@ -223,7 +223,7 @@ job_queue :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	job_queue_config_init :: proc(flags: job_queue_flags, capacity: u32) -> job_queue_config ---
 
 	job_queue_get_heap_size     :: proc(pConfig: ^job_queue_config, pHeapSizeInBytes: ^c.size_t) -> result ---

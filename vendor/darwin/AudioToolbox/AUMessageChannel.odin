@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AudioToolbox
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AUMessageChannel")
 AUMessageChannel :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AUMessageChannel, objc_selector="callAudioUnit:", objc_name="callAudioUnit")
 	AUMessageChannel_callAudioUnit :: proc(self: ^AUMessageChannel, message: ^NS.Dictionary) -> ^NS.Dictionary ---
 

@@ -2,18 +2,18 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="NSHost", objc_superclass=Object)
 	Host :: struct { using _: Object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="NSHost")
 	Host :: struct { using _: intrinsics.objc_object}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Host, objc_selector="currentHost", objc_name="currentHost", objc_is_class_method=true)
 		Host_currentHost :: proc() -> instancetype ---
 

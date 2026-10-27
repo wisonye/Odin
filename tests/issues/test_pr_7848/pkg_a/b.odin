@@ -1,11 +1,11 @@
 package pkg_a
 
-@(require) import str "core:strings"
+@(require) #import str "core:strings"
 
 @(priority_index=2)
-foreign import tool_lib "system:tool_lib"
+#foreign #import tool_lib "system:tool_lib"
 
-foreign tool_lib {
+#foreign tool_lib {
 	tool_value :: proc "c" () -> i32 ---
 }
 
@@ -60,7 +60,7 @@ use_all :: proc() -> int {
 	if str.contains("ab", "a") {
 		c += 1
 	}
-	when FIVE == 6 {
+	#if FIVE == 6 {
 		c += 100
 	} else {
 		c += REPLACED + ADDED

@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIUserActivityRestoring")
 UserActivityRestoring :: struct {
@@ -12,7 +12,7 @@ UserActivityRestoring :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserActivityRestoring, objc_selector="restoreUserActivityState:", objc_name="restoreUserActivityState")
 	UserActivityRestoring_restoreUserActivityState :: proc(self: ^UserActivityRestoring, userActivity: ^NS.UserActivity) ---
 }
@@ -27,7 +27,7 @@ UserNotificationAction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationAction, objc_selector="init", objc_name="init")
 	UserNotificationAction_init :: proc(self: ^UserNotificationAction) -> instancetype ---
 
@@ -61,7 +61,7 @@ foreign lib {
 MutableUserNotificationAction :: struct { using _: UserNotificationAction}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableUserNotificationAction, objc_selector="identifier", objc_name="identifier")
 	MutableUserNotificationAction_identifier :: proc(self: ^MutableUserNotificationAction) -> ^NS.String ---
 
@@ -115,7 +115,7 @@ UserNotificationCategory :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationCategory, objc_selector="init", objc_name="init")
 	UserNotificationCategory_init :: proc(self: ^UserNotificationCategory) -> instancetype ---
 
@@ -134,7 +134,7 @@ foreign lib {
 MutableUserNotificationCategory :: struct { using _: UserNotificationCategory}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableUserNotificationCategory, objc_selector="setActions:forContext:", objc_name="setActions")
 	MutableUserNotificationCategory_setActions :: proc(self: ^MutableUserNotificationCategory, actions: ^NS.Array, _context: UserNotificationActionContext) ---
 
@@ -150,7 +150,7 @@ foreign lib {
 UserNotificationSettings :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserNotificationSettings, objc_selector="settingsForTypes:categories:", objc_name="settingsForTypes", objc_is_class_method=true)
 	UserNotificationSettings_settingsForTypes :: proc(types: UserNotificationType, categories: ^NS.Set) -> instancetype ---
 

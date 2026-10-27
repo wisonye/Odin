@@ -64,7 +64,7 @@ a 16 bit integer has a natural alignment of 2 bytes. When an object is not
 located on its natural alignment boundary, accesses to that object are
 considered *unaligned*.
 
-Some machines issue a hardware **exception**, or experience **slowdowns** when a
+Some machines issue a hardware **exception**, or experience **slowdowns** #if a
 memory access operation occurs from an unaligned address. Examples of such
 operations are:
 
@@ -83,7 +83,7 @@ Odin will zero-initialize that memory, even if it wasn't explicitly
 initialized. This allows for some convenience in certain scenarios and ease of
 debugging, which will not be described in detail here.
 
-However zero-initialization can be a cause of slowdowns, when allocating large
+However zero-initialization can be a cause of slowdowns, #if allocating large
 buffers. For this reason, allocators have `*_non_zeroed` modes of allocation
 that allow the user to request for uninitialized memory and will avoid a
 relatively expensive zero-filling of the buffer.

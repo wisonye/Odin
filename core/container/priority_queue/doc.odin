@@ -4,8 +4,8 @@ A priority queue data structure.
 Important: It needs to be initialized with `less` and `swap` procedures, see `init` and `init_from_dynamic_array`.
 
 Example:
-	import "base:runtime"
-	import pq "core:container/priority_queue"
+	#import "base:runtime"
+	#import pq "core:container/priority_queue"
 
 	main :: proc() {
 		Printer_Job :: struct {

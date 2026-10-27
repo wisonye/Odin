@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_MapKit
 
-import UI "vendor:darwin/UIKit"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="MKUserTrackingBarButtonItem", objc_superclass=UI.BarButtonItem)
 UserTrackingBarButtonItem :: struct { using _: UI.BarButtonItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserTrackingBarButtonItem, objc_selector="initWithMapView:", objc_name="initWithMapView")
 	UserTrackingBarButtonItem_initWithMapView :: proc(self: ^UserTrackingBarButtonItem, mapView: ^MapView) -> instancetype ---
 
@@ -24,7 +24,7 @@ foreign lib {
 UserTrackingButton :: struct { using _: UI.View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=UserTrackingButton, objc_selector="userTrackingButtonWithMapView:", objc_name="userTrackingButtonWithMapView", objc_is_class_method=true)
 	UserTrackingButton_userTrackingButtonWithMapView :: proc(mapView: ^MapView) -> instancetype ---
 

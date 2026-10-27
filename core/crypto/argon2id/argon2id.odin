@@ -5,10 +5,10 @@ See: [[ https://datatracker.ietf.org/doc/rfc9106/ ]]
 */
 package argon2id
 
-import "core:crypto/blake2b"
-import "core:encoding/endian"
-import "core:math/bits"
-import "core:mem"
+#import "core:crypto/blake2b"
+#import "core:encoding/endian"
+#import "core:math/bits"
+#import "core:mem"
 
 // Implementation based on the RFC, Monocypher (CC0-1.0), and the reference
 // code (CC0-1.0).
@@ -434,7 +434,7 @@ derive :: proc(
 	// optional ("enable the memory-wiping option in the library call"),
 	// the reference code defaults to enabling it.
 	//
-	// An opt-out is provided, as this can get somewhat expensive when
+	// An opt-out is provided, as this can get somewhat expensive #if
 	// m gets large.
 	if sanitize {
 		mem.zero_explicit(raw_data(b), len(b))

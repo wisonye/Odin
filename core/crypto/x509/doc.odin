@@ -53,7 +53,7 @@ LIMITATIONS:
     "*.com" would match "host.com". As a backstop, verify_chain still
     fails closed on any uninterpreted CRITICAL extension
     (.Unhandled_Critical_Extension).
-  - EKU is checked only when opts.required_eku is set, and then by RFC
+  - EKU is checked only #if opts.required_eku is set, and then by RFC
     5280 semantics: a certificate with no EKU extension is unrestricted
     (it is not required to assert the purpose); a certificate that DOES
     assert EKU must include the purpose, enforced across the leaf and

@@ -2,11 +2,11 @@
 #+private
 package thread
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:sync"
-import win32 "core:sys/windows"
-import "core:unicode/utf16"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:sync"
+#import win32 "core:sys/windows"
+#import "core:unicode/utf16"
 
 _IS_SUPPORTED :: true
 

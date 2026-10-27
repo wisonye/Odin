@@ -23,8 +23,8 @@
 
 package rexcode_x86_tests
 
-import x86 "../"
-import "core:fmt"
+#import x86 "../"
+#import "core:fmt"
 
 @(private="file")
 Case :: struct {

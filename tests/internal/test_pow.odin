@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:math"
-import "core:testing"
+#import "core:math"
+#import "core:testing"
 
 @test
 pow_test :: proc(t: ^testing.T) {

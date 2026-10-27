@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_CoreText
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="CTAdaptiveImageProviding")
 AdaptiveImageProviding :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AdaptiveImageProviding, objc_selector="imageForProposedSize:scaleFactor:imageOffset:imageSize:", objc_name="imageForProposedSize")
 	AdaptiveImageProviding_imageForProposedSize :: proc(self: ^AdaptiveImageProviding, proposedSize: CG.Size, scaleFactor: CG.Float, outImageOffset: ^CG.Point, outImageSize: ^CG.Size) -> CG.ImageRef ---
 }

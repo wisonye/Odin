@@ -11,16 +11,16 @@ package testing
 		blob1807:    Windows Win32 API rewrite.
 */
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
-import "core:os"
-import "core:sync"
-import "core:c/libc"
-import "core:strconv"
-import "core:terminal/ansi"
+#import "core:os"
+#import "core:sync"
+#import "core:c/libc"
+#import "core:strconv"
+#import "core:terminal/ansi"
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 
 @(private="file") stop_runner_flag: int
@@ -32,7 +32,7 @@ import win32 "core:sys/windows"
 @(private="file") stop_test_alert:  int
 
 
-when ODIN_ARCH == .i386 {
+#if ODIN_ARCH == .i386 {
 	// Thread-local storage is problematic on Windows i386
 	@(private="file")
 	local_test_index: int

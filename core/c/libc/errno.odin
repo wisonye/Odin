@@ -2,22 +2,22 @@ package libc
 
 // 7.5 Errors
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 // C11 standard only requires the definition of:
 //	EDOM,
 //	EILSEQ
 //	ERANGE
-when ODIN_OS == .Linux {
+#if ODIN_OS == .Linux {
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		@(link_name="__errno_location")
 		_get_errno :: proc() -> ^int ---
 	}
@@ -27,10 +27,10 @@ when ODIN_OS == .Linux {
 	ERANGE :: 34
 }
 
-when ODIN_OS == .FreeBSD {
+#if ODIN_OS == .FreeBSD {
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		@(link_name="__error")
 		_get_errno :: proc() -> ^int ---
 	}
@@ -40,10 +40,10 @@ when ODIN_OS == .FreeBSD {
 	ERANGE :: 34
 }
 
-when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
+#if ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		@(link_name="__errno")
 		_get_errno :: proc() -> ^int ---
 	}
@@ -53,10 +53,10 @@ when ODIN_OS == .OpenBSD || ODIN_OS == .NetBSD {
 	ERANGE :: 34
 }
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		@(link_name="_errno")
 		_get_errno :: proc() -> ^int ---
 	}
@@ -66,10 +66,10 @@ when ODIN_OS == .Windows {
 	ERANGE :: 34
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		@(link_name="__error")
 		_get_errno :: proc() -> ^int ---
 	}
@@ -80,7 +80,7 @@ when ODIN_OS == .Darwin {
 	ERANGE :: 34
 }
 
-when ODIN_OS == .JS {
+#if ODIN_OS == .JS {
 	_ :: libc
 	_get_errno :: proc "c" () -> ^int {
 		@(static) errno: int

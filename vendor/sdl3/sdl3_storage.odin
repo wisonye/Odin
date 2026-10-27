@@ -1,12 +1,12 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 StorageInterface :: struct {
 	/* The version of this interface */
 	version: Uint32,
 
-	/* Called when the storage is closed */
+	/* Called #if the storage is closed */
 	close: proc "c" (userdata: rawptr) -> bool,
 
 	/* Optional, returns whether the storage is currently ready for access */
@@ -49,7 +49,7 @@ Storage :: struct {}
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	OpenTitleStorage          :: proc(override: cstring, props: PropertiesID) -> ^Storage ---
 	OpenUserStorage           :: proc(org, app: cstring, props: PropertiesID) -> ^Storage ---
 	OpenFileStorage           :: proc(path: cstring) -> ^Storage ---
@@ -64,7 +64,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	ReadStorageFile           :: proc(storage: ^Storage, path: cstring, destination: rawptr, length: Uint64) -> bool ---
 	WriteStorageFile          :: proc(storage: ^Storage, path: cstring, source:      rawptr, length: Uint64) -> bool ---
 

@@ -1,9 +1,9 @@
 package spall
 
-import    "base:intrinsics"
+#import    "base:intrinsics"
 
-import "core:os"
-import "core:time"
+#import "core:os"
+#import "core:time"
 
 // File Format
 

@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIPickerView", objc_superclass=View)
 PickerView :: struct {
@@ -13,7 +13,7 @@ PickerView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PickerView, objc_selector="numberOfRowsInComponent:", objc_name="numberOfRowsInComponent")
 	PickerView_numberOfRowsInComponent :: proc(self: ^PickerView, component: NS.Integer) -> NS.Integer ---
 
@@ -65,7 +65,7 @@ PickerViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PickerViewDelegate, objc_selector="pickerView:widthForComponent:", objc_name="pickerView_widthForComponent")
 	PickerViewDelegate_pickerView_widthForComponent :: proc(self: ^PickerViewDelegate, pickerView: ^PickerView, component: NS.Integer) -> CG.Float ---
 
@@ -93,7 +93,7 @@ PickerViewDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PickerViewDataSource, objc_selector="numberOfComponentsInPickerView:", objc_name="numberOfComponentsInPickerView")
 	PickerViewDataSource_numberOfComponentsInPickerView :: proc(self: ^PickerViewDataSource, pickerView: ^PickerView) -> NS.Integer ---
 
@@ -109,7 +109,7 @@ PickerViewAccessibilityDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PickerViewAccessibilityDelegate, objc_selector="pickerView:accessibilityLabelForComponent:", objc_name="pickerView_accessibilityLabelForComponent")
 	PickerViewAccessibilityDelegate_pickerView_accessibilityLabelForComponent :: proc(self: ^PickerViewAccessibilityDelegate, pickerView: ^PickerView, component: NS.Integer) -> ^NS.String ---
 

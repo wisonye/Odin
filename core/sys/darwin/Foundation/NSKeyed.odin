@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import "base:intrinsics"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSKeyedArchiver", objc_superclass=Coder)
 KeyedArchiver :: struct { using _: Coder}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyedArchiver, objc_selector="initRequiringSecureCoding:", objc_name="initRequiringSecureCoding")
 	KeyedArchiver_initRequiringSecureCoding :: proc(self: ^KeyedArchiver, requiresSecureCoding: bool) -> instancetype ---
 
@@ -115,7 +115,7 @@ KeyedArchiverDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyedArchiverDelegate, objc_selector="archiver:willEncodeObject:", objc_name="archiver_willEncodeObject")
 	KeyedArchiverDelegate_archiver_willEncodeObject :: proc(self: ^KeyedArchiverDelegate, archiver: ^KeyedArchiver, object: id) -> id ---
 
@@ -136,7 +136,7 @@ foreign lib {
 @(objc_class="NSKeyedUnarchiver", objc_superclass=Coder)
 KeyedUnarchiver :: struct { using _: Coder}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyedUnarchiver, objc_selector="initForReadingFromData:error:", objc_name="initForReadingFromData_error")
 	KeyedUnarchiver_initForReadingFromData_error :: proc(self: ^KeyedUnarchiver, data: ^Data, error: ^^Error) -> instancetype ---
 
@@ -292,7 +292,7 @@ KeyedUnarchiverDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyedUnarchiverDelegate, objc_selector="unarchiver:cannotDecodeObjectOfClassName:originalClasses:", objc_name="unarchiver_cannotDecodeObjectOfClassName_originalClasses")
 	KeyedUnarchiverDelegate_unarchiver_cannotDecodeObjectOfClassName_originalClasses :: proc(self: ^KeyedUnarchiverDelegate, unarchiver: ^KeyedUnarchiver, name: ^String, classNames: ^Array) -> Class ---
 

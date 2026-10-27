@@ -1,7 +1,7 @@
 package container_dynamic_bit_array
 
-import "base:builtin"
-import "base:intrinsics"
+#import "base:builtin"
+#import "base:intrinsics"
 
 // Note that these constants are dependent on the backing being a u64.
 @(private="file")
@@ -110,7 +110,7 @@ Returns:
 @(private="file")
 iterate_internal :: proc (it: ^Bit_Array_Iterator, $ITERATE_SET_BITS: bool) -> (index: int, ok: bool) {
 	word := it.array.bits[it.word_idx] if builtin.len(it.array.bits) > it.word_idx else 0
-	when ! ITERATE_SET_BITS { word = ~word }
+	#if ! ITERATE_SET_BITS { word = ~word }
 
 	// If the word is empty or we have already gone over all the bits in it,
 	// b.bit_idx is greater than the index of any set bit in the word,
@@ -119,11 +119,11 @@ iterate_internal :: proc (it: ^Bit_Array_Iterator, $ITERATE_SET_BITS: bool) -> (
 		it.word_idx += 1
 		it.bit_idx = 0
 		word = it.array.bits[it.word_idx] if builtin.len(it.array.bits) > it.word_idx else 0
-		when ! ITERATE_SET_BITS { word = ~word }
+		#if ! ITERATE_SET_BITS { word = ~word }
 	}
 
 	// If we are iterating the set bits, reaching the end of the array means we have no more bits to check
-	when ITERATE_SET_BITS {
+	#if ITERATE_SET_BITS {
 		if it.word_idx >= builtin.len(it.array.bits) {
 			return 0, false
 		}
@@ -191,7 +191,7 @@ unsafe_get :: #force_inline proc(ba: ^Bit_Array, #any_int index: int) -> bool #n
 /*
 Sets the state of a bit in the `Bit_Array`.
 
-*Conditionally Allocates (Resizes backing data when `index > len(ba.bits)`)*
+*Conditionally Allocates (Resizes backing data #if `index > len(ba.bits)`)*
 
 Inputs:
 - ba: Pointer to the `Bit_Array`
@@ -241,7 +241,7 @@ unsafe_set :: proc(ba: ^Bit_Array, bit: int) #no_bounds_check {
 /*
 Unsets the state of a bit in the `Bit_Array`. (Convienence wrapper for `set`)
 
-*Conditionally Allocates (Resizes backing data when `index > len(ba.bits)`)*
+*Conditionally Allocates (Resizes backing data #if `index > len(ba.bits)`)*
 
 Inputs:
 - ba: Pointer to the `Bit_Array`
@@ -414,7 +414,7 @@ Inputs:
 destroy :: proc(ba: ^Bit_Array) {
 	if ba == nil { return }
 	delete(ba.bits)
-	if ba.free_pointer { // Only free if this `Bit_Array` was created using `create`, not when on the stack.
+	if ba.free_pointer { // Only free if this `Bit_Array` was created using `create`, not #if on the stack.
 		free(ba)
 	}
 }

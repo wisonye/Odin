@@ -15,8 +15,8 @@ package _sha3
     algorithm.
 */
 
-import "core:math/bits"
-import "core:crypto"
+#import "core:math/bits"
+#import "core:crypto"
 
 ROUNDS :: 24
 
@@ -80,7 +80,7 @@ keccak_permute :: proc "contextless" (st: ^[25]u64, starting_round: i32 = 0) {
 	t: u64 = ---
 	bc: [5]u64 = ---
 
-	when ODIN_ENDIAN != .Little {
+	#if ODIN_ENDIAN != .Little {
 		for i = 0; i < 25; i += 1 {
 			st[i] = bits.byte_swap(st[i])
 		}
@@ -121,7 +121,7 @@ keccak_permute :: proc "contextless" (st: ^[25]u64, starting_round: i32 = 0) {
 		st[0] ~= keccak_rndc[r]
 	}
 
-	when ODIN_ENDIAN != .Little {
+	#if ODIN_ENDIAN != .Little {
 		for i = 0; i < 25; i += 1 {
 			st[i] = bits.byte_swap(st[i])
 		}

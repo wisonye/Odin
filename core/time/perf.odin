@@ -1,7 +1,7 @@
 package time
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
 /*
 Type representing monotonic time, useful for measuring durations.
@@ -77,7 +77,7 @@ _tick_duration_end :: proc "contextless" (d: ^Duration, t: Tick) {
 	d^ = tick_since(t)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(private)
 	x86_has_invariant_tsc :: proc "contextless" () -> bool {
 		eax, _, _, _ := intrinsics.x86_cpuid(0x80_000_000, 0)
@@ -93,7 +93,7 @@ when ODIN_ARCH == .amd64 {
 	}
 }
 
-when ODIN_OS != .Darwin && ODIN_OS != .Linux && ODIN_OS != .FreeBSD {
+#if ODIN_OS != .Darwin && ODIN_OS != .Linux && ODIN_OS != .FreeBSD {
 	_get_tsc_frequency :: proc "contextless" () -> (u64, bool) {
 		return 0, false
 	}
@@ -108,9 +108,9 @@ TSC at a fixed frequency, independent of ACPI state, and CPU frequency.
 */
 @(require_results)
 has_invariant_tsc :: proc "contextless" () -> bool {
-	when ODIN_ARCH == .amd64 {
+	#if ODIN_ARCH == .amd64 {
 		return x86_has_invariant_tsc()
-	} else when ODIN_ARCH == .arm64 {
+	} else #if ODIN_ARCH == .arm64 {
 		return true
 	}
 

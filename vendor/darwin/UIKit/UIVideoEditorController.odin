@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIVideoEditorController", objc_superclass=NavigationController)
 VideoEditorController :: struct { using _: NavigationController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoEditorController, objc_selector="canEditVideoAtPath:", objc_name="canEditVideoAtPath", objc_is_class_method=true)
 	VideoEditorController_canEditVideoAtPath :: proc(videoPath: ^NS.String) -> bool ---
 
@@ -46,7 +46,7 @@ VideoEditorControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VideoEditorControllerDelegate, objc_selector="videoEditorController:didSaveEditedVideoToPath:", objc_name="videoEditorController_didSaveEditedVideoToPath")
 	VideoEditorControllerDelegate_videoEditorController_didSaveEditedVideoToPath :: proc(self: ^VideoEditorControllerDelegate, editor: ^VideoEditorController, editedVideoPath: ^NS.String) ---
 

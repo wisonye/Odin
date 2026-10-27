@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPrinter", objc_superclass=NS.Object)
 Printer :: struct {
@@ -13,7 +13,7 @@ Printer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Printer, objc_selector="printerWithName:", objc_name="printerWithName_", objc_is_class_method=true)
 	Printer_printerWithName_ :: proc(name: ^NS.String) -> ^Printer ---
 

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSThread", objc_superclass=Object)
 Thread :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Thread, objc_selector="detachNewThreadWithBlock:", objc_name="detachNewThreadWithBlock", objc_is_class_method=true)
 	Thread_detachNewThreadWithBlock :: proc(block: ^Objc_Block(proc "c" ())) ---
 

@@ -2,14 +2,14 @@
 #+private
 package runtime
 
-when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	@(link_name="malloc")   _unix_malloc   :: proc(size: int) -> rawptr ---
 	@(link_name="calloc")   _unix_calloc   :: proc(num, size: int) -> rawptr ---
 	@(link_name="free")     _unix_free     :: proc(ptr: rawptr) ---

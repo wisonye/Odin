@@ -2,8 +2,8 @@ package darwin
 
 // #define OS_WAIT_ON_ADDR_AVAILABILITY \
 // 	__API_AVAILABLE(macos(14.4), ios(17.4), tvos(17.4), watchos(10.4))
-when ODIN_OS == .Darwin {
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_OS == .Darwin {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		WAIT_ON_ADDRESS_AVAILABLE :: ODIN_MINIMUM_OS_VERSION >= 17_04_00
 		ULOCK_WAIT_2_AVAILABLE    :: ODIN_MINIMUM_OS_VERSION >= 14_00_00
 	} else {
@@ -16,7 +16,7 @@ when ODIN_OS == .Darwin {
 }
 
 os_sync_wait_on_address_flag :: enum u32 {
-	// This flag should be used when synchronizing among multiple processes by
+	// This flag should be used #if synchronizing among multiple processes by
 	// placing the @addr passed to os_sync_wait_on_address and its variants
 	// in a shared memory region.
 	//
@@ -24,7 +24,7 @@ os_sync_wait_on_address_flag :: enum u32 {
 	// flag along with the exact same @addr to os_sync_wake_by_address_any and
 	// its variants to correctly find and wake up blocked waiters on the @addr.
 	//
-	// This flag should not be used when synchronizing among multiple threads of
+	// This flag should not be used #if synchronizing among multiple threads of
 	// a single process. It allows the kernel to perform performance optimizations
 	// as the @addr is local to the calling process.
 	SHARED = 0,
@@ -33,7 +33,7 @@ os_sync_wait_on_address_flag :: enum u32 {
 os_sync_wait_on_address_flags :: distinct bit_set[os_sync_wait_on_address_flag; u32]
 
 os_sync_wake_by_address_flag :: enum u32 {
-	// This flag should be used when synchronizing among multiple processes by
+	// This flag should be used #if synchronizing among multiple processes by
 	// placing the @addr passed to os_sync_wake_by_address_any and its variants
 	// in a shared memory region.
 	//
@@ -41,7 +41,7 @@ os_sync_wake_by_address_flag :: enum u32 {
 	// flag along with the exact same @addr to os_sync_wait_on_address and
 	// its variants to correctly find and wake up blocked waiters on the @addr.
 	//
-	// This flag should not be used when synchronizing among multiple threads of
+	// This flag should not be used #if synchronizing among multiple threads of
 	// a single process. It allows the kernel to perform performance optimizations
 	// as the @addr is local the calling process.
 	SHARED = 0,
@@ -53,7 +53,7 @@ os_clockid :: enum u32 {
 	MACH_ABSOLUTE_TIME = 32,
 }
 
-foreign system {
+#foreign system {
 	// This function provides an atomic compare-and-wait functionality that
 	// can be used to implement other higher level synchronization primitives.
 	//

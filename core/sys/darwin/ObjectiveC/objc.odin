@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_ObjectiveC
 
-import "base:intrinsics"
-import "core:c"
+#import "base:intrinsics"
+#import "core:c"
 
-foreign import lib "system:objc"
+#foreign #import lib "system:objc"
 
 id    :: ^intrinsics.objc_object
 SEL   :: ^intrinsics.objc_selector
@@ -81,7 +81,7 @@ objc_AssociationPolicy :: enum c.uintptr_t {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	objc_getClass                 :: proc(name: cstring) -> Class ---
 	objc_getMetaClass             :: proc(name: cstring) -> id ---
 	objc_lookUpClass              :: proc(name: cstring) -> Class ---

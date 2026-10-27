@@ -9,9 +9,9 @@
 
 package mem_tlsf
 
-import "base:intrinsics"
-// import "base:sanitizer"
-import "base:runtime"
+#import "base:intrinsics"
+// #import "base:sanitizer"
+#import "base:runtime"
 
 // log2 of number of linear subdivisions of block sizes.
 // Larger values require more memory in the control structure.
@@ -19,11 +19,11 @@ import "base:runtime"
 TLSF_SL_INDEX_COUNT_LOG2 :: #config(TLSF_SL_INDEX_COUNT_LOG2, 5)
 
 // All allocation sizes and addresses are aligned to 4/8 bytes
-ALIGN_SIZE_LOG2 :: 3 when size_of(uintptr) == 8 else 2
+ALIGN_SIZE_LOG2 :: 3 #if size_of(uintptr) == 8 else 2
 
 // We can increase this to support larger allocation sizes,
 // at the expense of more overhead in the TLSF structure
-FL_INDEX_MAX :: 32 when size_of(uintptr) == 8 else 30
+FL_INDEX_MAX :: 32 #if size_of(uintptr) == 8 else 30
 #assert(FL_INDEX_MAX < 36)
 
 ALIGN_SIZE          :: 1 << ALIGN_SIZE_LOG2
@@ -193,7 +193,7 @@ alloc_bytes_non_zeroed :: proc(control: ^Allocator, size: uint, align: uint) -> 
 			/*
 			This implementation doesn't allow for out-of-band allocations to be passed through, as it's not designed to
 			track those. Nor is it able to signal those allocations then need to be freed on the backing allocator,
-			as opposed to regular allocations handled for you when you `destroy` the TLSF instance.
+			as opposed to regular allocations handled for you #if you `destroy` the TLSF instance.
 
 			So if we're asked for more than we're configured to grow by, we can fail with an OOM error early, without adding a new pool.
 			*/

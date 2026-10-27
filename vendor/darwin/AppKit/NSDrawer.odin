@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSDrawer", objc_superclass=Responder)
 Drawer :: struct {
@@ -14,7 +14,7 @@ Drawer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Drawer, objc_selector="initWithContentSize:preferredEdge:", objc_name="initWithContentSize")
 	Drawer_initWithContentSize :: proc(self: ^Drawer, contentSize: NS.Size, edge: NS.RectEdge) -> instancetype ---
 
@@ -117,7 +117,7 @@ DrawerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DrawerDelegate, objc_selector="drawerShouldOpen:", objc_name="drawerShouldOpen")
 	DrawerDelegate_drawerShouldOpen :: proc(self: ^DrawerDelegate, sender: ^Drawer) -> bool ---
 

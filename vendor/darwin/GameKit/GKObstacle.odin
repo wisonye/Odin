@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GKObstacle", objc_superclass=NS.Object)
 Obstacle :: struct { using _: NS.Object}
@@ -12,7 +12,7 @@ Obstacle :: struct { using _: NS.Object}
 @(objc_class="GKCircleObstacle", objc_superclass=Obstacle)
 CircleObstacle :: struct { using _: Obstacle}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CircleObstacle, objc_selector="obstacleWithRadius:", objc_name="obstacleWithRadius", objc_is_class_method=true)
 	CircleObstacle_obstacleWithRadius :: proc(radius: cffi.float) -> instancetype ---
 
@@ -36,7 +36,7 @@ foreign lib {
 @(objc_class="GKObstacleGraph", objc_superclass=Graph)
 ObstacleGraph :: struct { using _: Graph}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ObstacleGraph, objc_selector="graphWithObstacles:bufferRadius:", objc_name="graphWithObstacles_bufferRadius", objc_is_class_method=true)
 	ObstacleGraph_graphWithObstacles_bufferRadius :: proc(obstacles: ^NS.Array, bufferRadius: cffi.float) -> instancetype ---
 
@@ -110,7 +110,7 @@ PolygonObstacle :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PolygonObstacle, objc_selector="obstacleWithPoints:count:", objc_name="obstacleWithPoints", objc_is_class_method=true)
 	PolygonObstacle_obstacleWithPoints :: proc(points: ^^vector_float2, numPoints: cffi.size_t) -> instancetype ---
 
@@ -128,7 +128,7 @@ foreign lib {
 @(objc_class="GKSphereObstacle", objc_superclass=Obstacle)
 SphereObstacle :: struct { using _: Obstacle}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SphereObstacle, objc_selector="obstacleWithRadius:", objc_name="obstacleWithRadius", objc_is_class_method=true)
 	SphereObstacle_obstacleWithRadius :: proc(radius: cffi.float) -> instancetype ---
 

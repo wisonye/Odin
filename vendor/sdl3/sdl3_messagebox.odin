@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 MessageBoxFlags :: distinct bit_set[MessageBoxFlag; Uint32]
 MessageBoxFlag :: enum Uint32 {
@@ -13,8 +13,8 @@ MessageBoxFlag :: enum Uint32 {
 
 MessageBoxButtonFlags :: distinct bit_set[MessageBoxButtonFlag; Uint32]
 MessageBoxButtonFlag  :: enum Uint32 {
-	RETURNKEY_DEFAULT = 0, /**< Marks the default button when return is hit */
-	ESCAPEKEY_DEFAULT = 1, /**< Marks the default button when return is hit */
+	RETURNKEY_DEFAULT = 0, /**< Marks the default button #if return is hit */
+	ESCAPEKEY_DEFAULT = 1, /**< Marks the default button #if return is hit */
 }
 
 MessageBoxButtonData :: struct {
@@ -55,7 +55,7 @@ MessageBoxData :: struct {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	ShowMessageBox       :: proc(#by_ptr messageboxdata: MessageBoxData, buttonid: ^c.int) -> bool ---
 	ShowSimpleMessageBox :: proc(flags: MessageBoxFlags, title, message: cstring, window: ^Window) -> bool ---
 }

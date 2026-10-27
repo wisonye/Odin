@@ -1,14 +1,14 @@
 #+build windows
 package sys_windows
 
-foreign import netapi32 "system:Netapi32.lib"
+#foreign #import netapi32 "system:Netapi32.lib"
 
 @(default_calling_convention="system")
-foreign netapi32 {
+#foreign netapi32 {
 	NetUserAdd :: proc(
 		servername: wstring,
 		level:      DWORD,
-		user_info:  ^USER_INFO_1, // Perhaps make this a #raw_union with USER_INFO1..4 when we need the other levels.
+		user_info:  ^USER_INFO_1, // Perhaps make this a #raw_union with USER_INFO1..4 #if we need the other levels.
 		parm_err:   ^DWORD,
 	) -> NET_API_STATUS ---
 	NetUserDel :: proc(

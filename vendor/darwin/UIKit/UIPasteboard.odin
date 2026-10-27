@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIPasteboard", objc_superclass=NS.Object)
 Pasteboard :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Pasteboard, objc_selector="pasteboardWithName:create:", objc_name="pasteboardWithName", objc_is_class_method=true)
 	Pasteboard_pasteboardWithName :: proc(pasteboardName: ^NS.String, create: bool) -> ^Pasteboard ---
 

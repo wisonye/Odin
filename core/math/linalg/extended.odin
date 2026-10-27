@@ -1,12 +1,12 @@
 package linalg
 
-import "base:builtin"
-import "base:intrinsics"
-import "core:math"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "core:math"
 
 @(require_results)
 to_radians :: proc "contextless" (degrees: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = degrees[i] * RAD_PER_DEG
 		}
@@ -18,7 +18,7 @@ to_radians :: proc "contextless" (degrees: $T) -> (out: T) where IS_NUMERIC(ELEM
 
 @(require_results)
 to_degrees :: proc "contextless" (radians: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = radians[i] * DEG_PER_RAD
 		}
@@ -30,7 +30,7 @@ to_degrees :: proc "contextless" (radians: $T) -> (out: T) where IS_NUMERIC(ELEM
 
 @(require_results)
 min_double :: proc "contextless" (a, b: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = builtin.min(a[i], b[i])
 		}
@@ -42,12 +42,12 @@ min_double :: proc "contextless" (a, b: $T) -> (out: T) where IS_NUMERIC(ELEM_TY
 
 @(require_results)
 min_single :: proc "contextless" (a: $T) -> (out: ELEM_TYPE(T)) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		N :: len(T)
 
-		when N == 1 {
+		#if N == 1 {
 			out = a[0]
-		} else when N == 2 {
+		} else #if N == 2 {
 			out = builtin.min(a[0], a[1])
 		} else {
 			out = builtin.min(a[0], a[1])
@@ -70,7 +70,7 @@ min :: proc{min_single, min_double, min_triple}
 
 @(require_results)
 max_double :: proc "contextless" (a, b: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = builtin.max(a[i], b[i])
 		}
@@ -82,14 +82,14 @@ max_double :: proc "contextless" (a, b: $T) -> (out: T) where IS_NUMERIC(ELEM_TY
 
 @(require_results)
 max_single :: proc "contextless" (a: $T) -> (out: ELEM_TYPE(T)) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		N :: len(T)
 
-		when N == 1 {
+		#if N == 1 {
 			out = a[0]
-		} else when N == 2 {
+		} else #if N == 2 {
 			out = builtin.max(a[0], a[1])
-		} else when N == 3 {
+		} else #if N == 3 {
 			out = builtin.max(a[0], a[1], a[2])
 		}else {
 			out = builtin.max(a[0], a[1])
@@ -112,7 +112,7 @@ max :: proc{max_single, max_double, max_triple}
 
 @(require_results)
 abs :: proc "contextless" (a: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = auto_cast builtin.abs(a[i])
 		}
@@ -124,7 +124,7 @@ abs :: proc "contextless" (a: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
 
 @(require_results)
 sign :: proc "contextless" (a: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = #force_inline math.sign(a[i])
 		}
@@ -136,7 +136,7 @@ sign :: proc "contextless" (a: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
 
 @(require_results)
 clamp :: proc "contextless" (x, a, b: $T) -> (out: T) where IS_NUMERIC(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = builtin.clamp(x[i], a[i], b[i])
 		}
@@ -154,7 +154,7 @@ saturate :: proc "contextless" (x: $T) -> T where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 lerp :: proc "contextless" (a, b, t: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = a[i]*(1-t[i]) + b[i]*t[i]
 		}
@@ -165,7 +165,7 @@ lerp :: proc "contextless" (a, b, t: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)
 }
 @(require_results)
 mix :: proc "contextless" (a, b, t: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = a[i]*(1-t[i]) + b[i]*t[i]
 		}
@@ -182,7 +182,7 @@ unlerp :: proc "contextless" (a, b, x: $T) -> T where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 step :: proc "contextless" (e, x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = x[i] < e[i] ? 0.0 : 1.0
 		}
@@ -207,7 +207,7 @@ smootherstep :: proc "contextless" (e0, e1, x: $T) -> T where IS_FLOAT(ELEM_TYPE
 
 @(require_results)
 sqrt :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.sqrt(x[i])
 		}
@@ -219,7 +219,7 @@ sqrt :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 inverse_sqrt :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = 1.0/math.sqrt(x[i])
 		}
@@ -231,7 +231,7 @@ inverse_sqrt :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(
 
 @(require_results)
 cos :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.cos(x[i])
 		}
@@ -243,7 +243,7 @@ cos :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 sin :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.sin(x[i])
 		}
@@ -255,7 +255,7 @@ sin :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 tan :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.tan(x[i])
 		}
@@ -267,7 +267,7 @@ tan :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 acos :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.acos(x[i])
 		}
@@ -279,7 +279,7 @@ acos :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 asin :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.asin(x[i])
 		}
@@ -291,7 +291,7 @@ asin :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 atan :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.atan(x[i])
 		}
@@ -302,7 +302,7 @@ atan :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 }
 @(require_results)
 atan2 :: proc "contextless" (y, x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.atan2(y[i], x[i])
 		}
@@ -315,7 +315,7 @@ atan2 :: proc "contextless" (y, x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) 
 
 @(require_results)
 ln :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.ln(x[i])
 		}
@@ -328,7 +328,7 @@ ln :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 @(require_results)
 log2 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 	INVLN2 :: 1.4426950408889634073599246810018921374266459541529859341354494069
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = INVLN2 * math.ln(x[i])
 		}
@@ -341,7 +341,7 @@ log2 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 @(require_results)
 log10 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 	INVLN10 :: 0.4342944819032518276511289189166050822943970058036665661144537831
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = INVLN10 * math.ln(x[i])
 		}
@@ -353,7 +353,7 @@ log10 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 log :: proc "contextless" (x, b: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.ln(x[i]) / math.ln(cast(ELEM_TYPE(T))b[i])
 		}
@@ -365,7 +365,7 @@ log :: proc "contextless" (x, b: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 exp :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.exp(x[i])
 		}
@@ -377,7 +377,7 @@ exp :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 exp2 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.exp(LN2 * x[i])
 		}
@@ -389,7 +389,7 @@ exp2 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 exp10 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.exp(LN10 * x[i])
 		}
@@ -401,7 +401,7 @@ exp10 :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 pow :: proc "contextless" (x, e: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = math.pow(x[i], e[i])
 		}
@@ -424,7 +424,7 @@ floor :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
 
 @(require_results)
 round :: proc "contextless" (x: $T) -> (out: T) where IS_FLOAT(ELEM_TYPE(T)) {
-	when IS_ARRAY(T) {
+	#if IS_ARRAY(T) {
 		#no_bounds_check for i in 0..<len(T) {
 			out[i] = #force_inline math.round(x[i])
 		}
@@ -609,16 +609,16 @@ not :: proc "contextless" (x: $A/[$N]bool) -> (out: A) {
 
 @(require_results)
 _to_simd4 :: #force_inline proc "contextless" (a: $T) -> (out: #simd[4]ELEM_TYPE(T)) where IS_NUMERIC(ELEM_TYPE(T)) #no_bounds_check {
-	when IS_ARRAY(T) {
-		when len(T) == 1 {
+	#if IS_ARRAY(T) {
+		#if len(T) == 1 {
 			_a: [4]ELEM_TYPE(T)
 			_a.x = a.x
 			return transmute(#simd[4]ELEM_TYPE(T))_a
-		} else when len(T) == 2 {
+		} else #if len(T) == 2 {
 			_a: [4]ELEM_TYPE(T)
 			_a.xy = a
 			return transmute(#simd[4]ELEM_TYPE(T))_a
-		} else when len(T) == 3 {
+		} else #if len(T) == 3 {
 			_a: [4]ELEM_TYPE(T)
 			_a.xyz = a
 			return transmute(#simd[4]ELEM_TYPE(T))_a
@@ -634,12 +634,12 @@ _to_simd4 :: #force_inline proc "contextless" (a: $T) -> (out: #simd[4]ELEM_TYPE
 
 @(require_results)
 _from_simd4 :: #force_inline proc "contextless" ($T: typeid, a: $V/#simd[4]$E) -> T where IS_NUMERIC(ELEM_TYPE(T)) #no_bounds_check {
-	when IS_ARRAY(T) {
-		when len(T) == 1 {
+	#if IS_ARRAY(T) {
+		#if len(T) == 1 {
 			return (transmute([4]ELEM_TYPE(T))a).x
-		} else when len(T) == 2 {
+		} else #if len(T) == 2 {
 			return (transmute([4]ELEM_TYPE(T))a).xy
-		} else when len(T) == 3 {
+		} else #if len(T) == 3 {
 			return (transmute([4]ELEM_TYPE(T))a).xyz
 		} else {
 			return transmute([4]ELEM_TYPE(T))a

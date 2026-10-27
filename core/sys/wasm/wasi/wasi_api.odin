@@ -1,7 +1,7 @@
 #+build wasm32
 package sys_wasi
 
-foreign import wasi "wasi_snapshot_preview1"
+#foreign #import wasi "wasi_snapshot_preview1"
 
 DIRCOOKIE_START :: u64(0)
 size_t :: uint
@@ -970,7 +970,7 @@ prestat_t :: struct {
 }
 
 @(default_calling_convention="contextless")
-foreign wasi {
+#foreign wasi {
 	/**
 	 * Read command-line argument data.
 	 * The size of the array should match that returned by `args_sizes_get`
@@ -1286,9 +1286,9 @@ foreign wasi {
 
 	/**
 	 * Write high-quality random data into a buffer.
-	 * This function blocks when the implementation is unable to immediately
+	 * This function blocks #if the implementation is unable to immediately
 	 * provide sufficient high-quality random data.
-	 * This function may execute slowly, so when large mounts of random data are
+	 * This function may execute slowly, so #if large mounts of random data are
 	 * required, it's advisable to use this function to seed a pseudo-random
 	 * number generator, rather than to provide the random data directly.
 	 */
@@ -1677,7 +1677,7 @@ sock_send :: proc "contextless" (
 
 
 @(default_calling_convention="contextless")
-foreign wasi {
+#foreign wasi {
 	@(link_name="args_sizes_get")
 	wasi_args_sizes_get :: proc(
 		retptr0: ^size_t,

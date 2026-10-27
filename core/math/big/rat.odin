@@ -1,8 +1,8 @@
 package math_big
 
-import "base:builtin"
-import "base:intrinsics"
-import "core:math"
+#import "base:builtin"
+#import "base:intrinsics"
+#import "core:math"
 
 Rat :: struct {
 	a, b: Int,
@@ -347,11 +347,11 @@ rat_to_f64 :: proc(z: ^Rat, allocator := context.allocator) -> (f: f64, exact: b
 
 internal_rat_to_float :: proc($T: typeid, z: ^Rat, allocator := context.allocator) -> (f: T, exact: bool, err: Error)  where intrinsics.type_is_float(T) {
 	FSIZE :: 8*size_of(T)
-	when FSIZE == 16 {
+	#if FSIZE == 16 {
 		MSIZE :: 10
-	} else when FSIZE == 32 {
+	} else #if FSIZE == 32 {
 		MSIZE :: 23
-	} else when FSIZE == 64 {
+	} else #if FSIZE == 64 {
 		MSIZE :: 52
 	} else {
 		#panic("unsupported float type")

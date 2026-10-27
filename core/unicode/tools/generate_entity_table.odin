@@ -1,12 +1,12 @@
 package xml_tools
 
-import      "core:encoding/xml"
-import      "core:os"
-import path "core:path/filepath"
-import      "core:strings"
-import      "core:strconv"
-import      "core:slice"
-import      "core:fmt"
+#import      "core:encoding/xml"
+#import      "core:os"
+#import path "core:path/filepath"
+#import      "core:strings"
+#import      "core:strconv"
+#import      "core:slice"
+#import      "core:fmt"
 
 GENERATED :: `/*
 	------ GENERATED ------ DO NOT EDIT ------ GENERATED ------ DO NOT EDIT ------ GENERATED ------
@@ -289,7 +289,7 @@ named_xml_entity_to_rune :: proc(name: string) -> (decoded: [2]rune, rune_count:
 	fmt.wprintln(w, GENERATED)
 
 	fmt.println()
-	when ODIN_DEBUG {
+	#if ODIN_DEBUG {
 		fmt.println(strings.to_string(generated_buf))
 		fmt.println()
 	}

@@ -1,8 +1,8 @@
 package os
 
-import "base:runtime"
-import "core:strings"
-import "core:time"
+#import "base:runtime"
+#import "core:strings"
+#import "core:time"
 
 Fstat_Callback :: proc(f: ^File, allocator: runtime.Allocator) -> (File_Info, Error)
 

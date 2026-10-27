@@ -1,13 +1,13 @@
 package test_core_crypto
 
-import "core:bytes"
-import "core:encoding/hex"
-import "core:testing"
+#import "core:bytes"
+#import "core:encoding/hex"
+#import "core:testing"
 
-import "core:crypto"
-import "core:crypto/ecdsa"
-import "core:crypto/ed25519"
-import "core:crypto/hash"
+#import "core:crypto"
+#import "core:crypto/ecdsa"
+#import "core:crypto/ed25519"
+#import "core:crypto/hash"
 
 @(test)
 test_ecdsa :: proc(t: ^testing.T) {
@@ -196,8 +196,8 @@ test_ecdsa :: proc(t: ^testing.T) {
 			x,
 		)
 
-		// But when possible, we also add entropy by default.
-		when crypto.HAS_RAND_BYTES {
+		// But #if possible, we also add entropy by default.
+		#if crypto.HAS_RAND_BYTES {
 			ok = ecdsa.sign_raw(&priv_key, v.hash, msg_bytes, sig)
 			x = string(hex.encode(sig[:], context.temp_allocator))
 			testing.expectf(
@@ -227,7 +227,7 @@ test_ecdsa :: proc(t: ^testing.T) {
 	}
 
 	// ASN.1 tests requires entorpy.
-	when crypto.HAS_RAND_BYTES == false {
+	#if crypto.HAS_RAND_BYTES == false {
 		return
 	}
 	msg_str : string : "Feed the Fire. Let the Last Cinders Burn."

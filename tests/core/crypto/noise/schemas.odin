@@ -1,10 +1,10 @@
 package test_noise
 
-import "core:encoding/json"
-import "core:log"
-import "core:os"
+#import "core:encoding/json"
+#import "core:log"
+#import "core:os"
 
-import "../common"
+#import "../common"
 
 Message :: struct {
 	payload:    common.Hex_Bytes `json:"payload"`,

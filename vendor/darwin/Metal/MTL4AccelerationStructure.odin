@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MTL4AccelerationStructureDescriptor", objc_superclass=AccelerationStructureDescriptor)
 MTL4AccelerationStructureDescriptor :: struct { using _: AccelerationStructureDescriptor}
@@ -12,7 +12,7 @@ MTL4AccelerationStructureDescriptor :: struct { using _: AccelerationStructureDe
 @(objc_class="MTL4AccelerationStructureBoundingBoxGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureBoundingBoxGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureBoundingBoxGeometryDescriptor, objc_selector="boundingBoxBuffer", objc_name="boundingBoxBuffer")
 	MTL4AccelerationStructureBoundingBoxGeometryDescriptor_boundingBoxBuffer :: proc(self: ^MTL4AccelerationStructureBoundingBoxGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -36,7 +36,7 @@ foreign lib {
 @(objc_class="MTL4AccelerationStructureCurveGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureCurveGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureCurveGeometryDescriptor, objc_selector="controlPointBuffer", objc_name="controlPointBuffer")
 	MTL4AccelerationStructureCurveGeometryDescriptor_controlPointBuffer :: proc(self: ^MTL4AccelerationStructureCurveGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -129,7 +129,7 @@ MTL4AccelerationStructureGeometryDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureGeometryDescriptor, objc_selector="intersectionFunctionTableOffset", objc_name="intersectionFunctionTableOffset")
 	MTL4AccelerationStructureGeometryDescriptor_intersectionFunctionTableOffset :: proc(self: ^MTL4AccelerationStructureGeometryDescriptor) -> NS.UInteger ---
 
@@ -177,7 +177,7 @@ foreign lib {
 @(objc_class="MTL4AccelerationStructureMotionBoundingBoxGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureMotionBoundingBoxGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureMotionBoundingBoxGeometryDescriptor, objc_selector="boundingBoxBuffers", objc_name="boundingBoxBuffers")
 	MTL4AccelerationStructureMotionBoundingBoxGeometryDescriptor_boundingBoxBuffers :: proc(self: ^MTL4AccelerationStructureMotionBoundingBoxGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -201,7 +201,7 @@ foreign lib {
 @(objc_class="MTL4AccelerationStructureMotionCurveGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureMotionCurveGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureMotionCurveGeometryDescriptor, objc_selector="controlPointBuffers", objc_name="controlPointBuffers")
 	MTL4AccelerationStructureMotionCurveGeometryDescriptor_controlPointBuffers :: proc(self: ^MTL4AccelerationStructureMotionCurveGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -291,7 +291,7 @@ foreign lib {
 @(objc_class="MTL4AccelerationStructureMotionTriangleGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureMotionTriangleGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureMotionTriangleGeometryDescriptor, objc_selector="vertexBuffers", objc_name="vertexBuffers")
 	MTL4AccelerationStructureMotionTriangleGeometryDescriptor_vertexBuffers :: proc(self: ^MTL4AccelerationStructureMotionTriangleGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -345,7 +345,7 @@ foreign lib {
 @(objc_class="MTL4AccelerationStructureTriangleGeometryDescriptor", objc_superclass=MTL4AccelerationStructureGeometryDescriptor)
 MTL4AccelerationStructureTriangleGeometryDescriptor :: struct { using _: MTL4AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4AccelerationStructureTriangleGeometryDescriptor, objc_selector="vertexBuffer", objc_name="vertexBuffer")
 	MTL4AccelerationStructureTriangleGeometryDescriptor_vertexBuffer :: proc(self: ^MTL4AccelerationStructureTriangleGeometryDescriptor) -> MTL4BufferRange ---
 
@@ -399,7 +399,7 @@ foreign lib {
 @(objc_class="MTL4InstanceAccelerationStructureDescriptor", objc_superclass=MTL4AccelerationStructureDescriptor)
 MTL4InstanceAccelerationStructureDescriptor :: struct { using _: MTL4AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4InstanceAccelerationStructureDescriptor, objc_selector="instanceDescriptorBuffer", objc_name="instanceDescriptorBuffer")
 	MTL4InstanceAccelerationStructureDescriptor_instanceDescriptorBuffer :: proc(self: ^MTL4InstanceAccelerationStructureDescriptor) -> MTL4BufferRange ---
 
@@ -459,7 +459,7 @@ foreign lib {
 @(objc_class="MTL4IndirectInstanceAccelerationStructureDescriptor", objc_superclass=MTL4AccelerationStructureDescriptor)
 MTL4IndirectInstanceAccelerationStructureDescriptor :: struct { using _: MTL4AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4IndirectInstanceAccelerationStructureDescriptor, objc_selector="instanceDescriptorBuffer", objc_name="instanceDescriptorBuffer")
 	MTL4IndirectInstanceAccelerationStructureDescriptor_instanceDescriptorBuffer :: proc(self: ^MTL4IndirectInstanceAccelerationStructureDescriptor) -> MTL4BufferRange ---
 
@@ -531,7 +531,7 @@ foreign lib {
 @(objc_class="MTL4PrimitiveAccelerationStructureDescriptor", objc_superclass=MTL4AccelerationStructureDescriptor)
 MTL4PrimitiveAccelerationStructureDescriptor :: struct { using _: MTL4AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4PrimitiveAccelerationStructureDescriptor, objc_selector="geometryDescriptors", objc_name="geometryDescriptors")
 	MTL4PrimitiveAccelerationStructureDescriptor_geometryDescriptors :: proc(self: ^MTL4PrimitiveAccelerationStructureDescriptor) -> ^NS.Array ---
 

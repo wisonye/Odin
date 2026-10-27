@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_IOKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import darwin "core:sys/darwin"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import darwin "core:sys/darwin"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -15,7 +15,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:IOKit.framework",
 }
 
@@ -273,7 +273,7 @@ IOMediaAttributeMask_ReservedMask :: transmute(IOMediaAttributeMask)u32(0xffffff
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="kIOMainPortDefault")
 	kMainPortDefault: darwin.mach_port_t
 

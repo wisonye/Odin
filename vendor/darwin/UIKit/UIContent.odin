@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIContentConfiguration")
 ContentConfiguration :: struct {
@@ -14,7 +14,7 @@ ContentConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentConfiguration, objc_selector="makeContentView", objc_name="makeContentView")
 	ContentConfiguration_makeContentView :: proc(self: ^ContentConfiguration) -> ^View ---
 
@@ -30,7 +30,7 @@ ContentContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentContainer, objc_selector="preferredContentSizeDidChangeForChildContentContainer:", objc_name="preferredContentSizeDidChangeForChildContentContainer")
 	ContentContainer_preferredContentSizeDidChangeForChildContentContainer :: proc(self: ^ContentContainer, container: ^ContentContainer) ---
 
@@ -58,7 +58,7 @@ ContentSizeCategoryAdjusting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentSizeCategoryAdjusting, objc_selector="adjustsFontForContentSizeCategory", objc_name="adjustsFontForContentSizeCategory")
 	ContentSizeCategoryAdjusting_adjustsFontForContentSizeCategory :: proc(self: ^ContentSizeCategoryAdjusting) -> bool ---
 
@@ -75,7 +75,7 @@ ContentUnavailableConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableConfiguration, objc_selector="emptyConfiguration", objc_name="emptyConfiguration", objc_is_class_method=true)
 	ContentUnavailableConfiguration_emptyConfiguration :: proc() -> instancetype ---
 
@@ -205,7 +205,7 @@ ContentUnavailableConfigurationState :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableConfigurationState, objc_selector="initWithTraitCollection:", objc_name="initWithTraitCollection")
 	ContentUnavailableConfigurationState_initWithTraitCollection :: proc(self: ^ContentUnavailableConfigurationState, traitCollection: ^TraitCollection) -> instancetype ---
 
@@ -240,7 +240,7 @@ ContentUnavailableButtonProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableButtonProperties, objc_selector="primaryAction", objc_name="primaryAction")
 	ContentUnavailableButtonProperties_primaryAction :: proc(self: ^ContentUnavailableButtonProperties) -> ^Action ---
 
@@ -275,7 +275,7 @@ ContentUnavailableImageProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableImageProperties, objc_selector="preferredSymbolConfiguration", objc_name="preferredSymbolConfiguration")
 	ContentUnavailableImageProperties_preferredSymbolConfiguration :: proc(self: ^ContentUnavailableImageProperties) -> ^ImageSymbolConfiguration ---
 
@@ -316,7 +316,7 @@ ContentUnavailableTextProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableTextProperties, objc_selector="font", objc_name="font")
 	ContentUnavailableTextProperties_font :: proc(self: ^ContentUnavailableTextProperties) -> ^Font ---
 
@@ -368,7 +368,7 @@ ContentUnavailableView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentUnavailableView, objc_selector="initWithConfiguration:", objc_name="initWithConfiguration")
 	ContentUnavailableView_initWithConfiguration :: proc(self: ^ContentUnavailableView, configuration: ^ContentUnavailableConfiguration) -> instancetype ---
 
@@ -405,7 +405,7 @@ ContentView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentView, objc_selector="supportsConfiguration:", objc_name="supportsConfiguration")
 	ContentView_supportsConfiguration :: proc(self: ^ContentView, configuration: ^ContentConfiguration) -> bool ---
 
@@ -425,7 +425,7 @@ ListContentConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ListContentConfiguration, objc_selector="cellConfiguration", objc_name="cellConfiguration", objc_is_class_method=true)
 	ListContentConfiguration_cellConfiguration :: proc() -> instancetype ---
 
@@ -571,7 +571,7 @@ ListContentImageProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ListContentImageProperties, objc_selector="resolvedTintColorForTintColor:", objc_name="resolvedTintColorForTintColor")
 	ListContentImageProperties_resolvedTintColorForTintColor :: proc(self: ^ListContentImageProperties, tintColor: ^Color) -> ^Color ---
 
@@ -648,7 +648,7 @@ ListContentTextProperties :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ListContentTextProperties, objc_selector="resolvedColor", objc_name="resolvedColor")
 	ListContentTextProperties_resolvedColor :: proc(self: ^ListContentTextProperties) -> ^Color ---
 
@@ -733,7 +733,7 @@ ListContentView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ListContentView, objc_selector="initWithConfiguration:", objc_name="initWithConfiguration")
 	ListContentView_initWithConfiguration :: proc(self: ^ListContentView, configuration: ^ListContentConfiguration) -> instancetype ---
 

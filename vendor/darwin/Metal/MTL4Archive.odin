@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTL4Archive")
 MTL4Archive :: struct {
@@ -11,7 +11,7 @@ MTL4Archive :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4Archive, objc_selector="newComputePipelineStateWithDescriptor:error:", objc_name="newComputePipelineStateWithDescriptor_error")
 	MTL4Archive_newComputePipelineStateWithDescriptor_error :: proc(self: ^MTL4Archive, descriptor: ^MTL4ComputePipelineDescriptor, error: ^^NS.Error) -> ^ComputePipelineState ---
 

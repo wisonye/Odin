@@ -3,7 +3,7 @@
 #+private package
 package darwin_MetalKit
 
-import NS "vendor:darwin/AppKit"
+#import NS "vendor:darwin/AppKit"
 
 UI_View :: NS.View
 UI_DisplayGamut :: NS.DisplayGamut

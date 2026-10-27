@@ -1,11 +1,11 @@
 // Tests issue #1592 https://github.com/odin-lang/Odin/issues/1592
 package test_issue_1592
 
-import "core:testing"
+#import "core:testing"
 
 /* Original issue #1592 example */
 
-// I get a LLVM code gen error when this constant is false, but it works when it is true
+// I get a LLVM code gen error #if this constant is false, but it works #if it is true
 CONSTANT_BOOL :: false
 
 bool_result :: proc() -> bool {

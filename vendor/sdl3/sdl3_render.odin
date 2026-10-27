@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 
 SOFTWARE_RENDERER :: "software"
@@ -40,7 +40,7 @@ Texture :: struct {
 	w:        c.int,        /**< The width of the texture, read-only. */
 	h:        c.int,        /**< The height of the texture, read-only. */
 
-	refcount: c.int,        /**< Application reference count, used when freeing texture */
+	refcount: c.int,        /**< Application reference count, used #if freeing texture */
 }
 
 PROP_RENDERER_CREATE_NAME_STRING                                :: "SDL.renderer.create.name"
@@ -152,7 +152,7 @@ RENDERER_VSYNC_ADAPTIVE :: -1
 DEBUG_TEXT_FONT_CHARACTER_SIZE :: 8
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetNumRenderDrivers              :: proc() -> c.int ---
 	GetRenderDriver                  :: proc(index: c.int) -> cstring ---
 	CreateRenderer                   :: proc(window: ^Window, name: cstring) -> ^Renderer ---
@@ -178,7 +178,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	CreateWindowAndRenderer          :: proc(title: cstring, width, height: c.int, window_flags: WindowFlags, window: ^^Window, renderer: ^^Renderer) -> bool ---
 	GetRenderOutputSize              :: proc(renderer: ^Renderer, w, h: ^c.int) -> bool ---
 	GetCurrentRenderOutputSize       :: proc(renderer: ^Renderer, w, h: ^c.int) -> bool ---
@@ -259,20 +259,20 @@ foreign lib {
 
 
 GPURenderStateCreateInfo :: struct {
-	fragment_shader:      ^GPUShader,                   /**< The fragment shader to use when this render state is active */
-	num_sampler_bindings: Sint32,                       /**< The number of additional fragment samplers to bind when this render state is active */
-	sampler_bindings:     [^]GPUTextureSamplerBinding,  /**< Additional fragment samplers to bind when this render state is active */
-	num_storage_textures: Sint32,                       /**< The number of storage textures to bind when this render state is active */
-	storage_textures:     [^]^GPUTexture,               /**< Storage textures to bind when this render state is active */
-	num_storage_buffers:  Sint32,                       /**< The number of storage buffers to bind when this render state is active */
-	storage_buffers:      [^]^GPUBuffer,                /**< Storage buffers to bind when this render state is active */
+	fragment_shader:      ^GPUShader,                   /**< The fragment shader to use #if this render state is active */
+	num_sampler_bindings: Sint32,                       /**< The number of additional fragment samplers to bind #if this render state is active */
+	sampler_bindings:     [^]GPUTextureSamplerBinding,  /**< Additional fragment samplers to bind #if this render state is active */
+	num_storage_textures: Sint32,                       /**< The number of storage textures to bind #if this render state is active */
+	storage_textures:     [^]^GPUTexture,               /**< Storage textures to bind #if this render state is active */
+	num_storage_buffers:  Sint32,                       /**< The number of storage buffers to bind #if this render state is active */
+	storage_buffers:      [^]^GPUBuffer,                /**< Storage buffers to bind #if this render state is active */
 	props:                PropertiesID,                 /**< A properties ID for extensions. Should be 0 if no extensions are needed. */
 }
 
 GPURenderState :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	CreateGPURenderState              :: proc(renderer: ^Renderer, #by_ptr createinfo: GPURenderStateCreateInfo) -> ^GPURenderState ---
 	SetGPURenderStateFragmentUniforms :: proc(state: ^GPURenderState, slot_index: Uint32, data: rawptr, length: Uint32) -> bool ---
 	SetGPURenderState                 :: proc(renderer: ^Renderer, state: ^GPURenderState) -> bool ---

@@ -3,7 +3,7 @@
 #+private package
 package darwin_MapKit
 
-import UI "vendor:darwin/UIKit"
+#import UI "vendor:darwin/UIKit"
 
 UI_Control :: UI.Control
 UI_EdgeInsets :: UI.EdgeInsets

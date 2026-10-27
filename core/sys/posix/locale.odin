@@ -1,7 +1,7 @@
 #+build windows, linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c/libc"
+#import "core:c/libc"
 
 localeconv      :: libc.localeconv
 setlocale       :: libc.setlocale

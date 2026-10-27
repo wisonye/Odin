@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSSearchField", objc_superclass=TextField)
 SearchField :: struct { using _: TextField}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchField, objc_selector="searchTextBounds", objc_name="searchTextBounds")
 	SearchField_searchTextBounds :: proc(self: ^SearchField) -> NS.Rect ---
 
@@ -85,7 +85,7 @@ SearchFieldDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchFieldDelegate, objc_selector="searchFieldDidStartSearching:", objc_name="searchFieldDidStartSearching")
 	SearchFieldDelegate_searchFieldDidStartSearching :: proc(self: ^SearchFieldDelegate, sender: ^SearchField) ---
 
@@ -98,7 +98,7 @@ foreign lib {
 SearchFieldCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchFieldCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	SearchFieldCell_initTextCell :: proc(self: ^SearchFieldCell, string: ^NS.String) -> instancetype ---
 

@@ -2,11 +2,11 @@
 // This package supports the format described in [[ RFC 4180; https://tools.ietf.org/html/rfc4180.html ]]
 package encoding_csv
 
-import "core:bufio"
-import "core:bytes"
-import "core:io"
-import "core:strings"
-import "core:unicode/utf8"
+#import "core:bufio"
+#import "core:bytes"
+#import "core:io"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 // Reader is a data structure used for reading records from a CSV-encoded file
 //
@@ -34,7 +34,7 @@ Reader :: struct {
 	// If lazy_quotes is true, a quote may appear in an unquoted field and a non-doubled quote may appear in a quoted field
 	lazy_quotes: bool,
 
-	// multiline_fields, when set to true, will treat a field starting with a " as a multiline string
+	// multiline_fields, #if set to true, will treat a field starting with a " as a multiline string
 	// therefore, instead of reading until the next \n, it'll read until the next "
 	multiline_fields: bool,
 

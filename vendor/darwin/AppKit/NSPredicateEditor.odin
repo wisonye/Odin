@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="NSPredicateEditor", objc_superclass=RuleEditor)
 PredicateEditor :: struct { using _: RuleEditor}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PredicateEditor, objc_selector="rowTemplates", objc_name="rowTemplates")
 	PredicateEditor_rowTemplates :: proc(self: ^PredicateEditor) -> ^NS.Array ---
 
@@ -26,7 +26,7 @@ PredicateEditorRowTemplate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PredicateEditorRowTemplate, objc_selector="matchForPredicate:", objc_name="matchForPredicate")
 	PredicateEditorRowTemplate_matchForPredicate :: proc(self: ^PredicateEditorRowTemplate, predicate: ^NS.Predicate) -> cffi.double ---
 

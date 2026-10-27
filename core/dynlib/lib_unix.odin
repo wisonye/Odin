@@ -2,12 +2,12 @@
 #+private
 package dynlib
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:strings"
-import "core:sys/posix"
+#import "core:strings"
+#import "core:sys/posix"
 
-_LIBRARY_FILE_EXTENSION :: "dylib" when ODIN_OS == .Darwin else "so"
+_LIBRARY_FILE_EXTENSION :: "dylib" #if ODIN_OS == .Darwin else "so"
 
 _load_library :: proc(path: string, global_symbols: bool, allocator: runtime.Allocator) -> (Library, bool) {
 	flags := posix.RTLD_Flags{.NOW}

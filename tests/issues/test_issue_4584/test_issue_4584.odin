@@ -1,11 +1,11 @@
 // Tests issue #4584 https://github.com/odin-lang/Odin/issues/4584
 package test_issue_4584
 
-import "core:testing"
-import "core:log"
-import "core:math/linalg"
-import glm "core:math/linalg/glsl"
-import hlm "core:math/linalg/hlsl"
+#import "core:testing"
+#import "core:log"
+#import "core:math/linalg"
+#import glm "core:math/linalg/glsl"
+#import hlm "core:math/linalg/hlsl"
 
 @test
 test_adjugate_2x2 :: proc(t: ^testing.T) {

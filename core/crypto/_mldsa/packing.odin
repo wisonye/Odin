@@ -1,7 +1,7 @@
 package _mldsa
 
-import "base:intrinsics"
-import "core:crypto"
+#import "base:intrinsics"
+#import "core:crypto"
 
 @(require_results)
 pack_pk :: proc "contextless" (pk_bytes: []byte, pub_key: ^Public_Key) -> bool {

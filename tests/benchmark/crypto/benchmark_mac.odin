@@ -1,13 +1,13 @@
 package benchmark_core_crypto
 
-import "base:runtime"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "base:runtime"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
-import "core:crypto/hmac"
-import "core:crypto/kmac"
-import "core:crypto/poly1305"
+#import "core:crypto/hmac"
+#import "core:crypto/kmac"
+#import "core:crypto/poly1305"
 
 @(private = "file")
 ITERS :: 10000

@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UICommand", objc_superclass=MenuElement)
 Command :: struct {
@@ -11,7 +11,7 @@ Command :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Command, objc_selector="commandWithTitle:image:action:propertyList:", objc_name="commandWithTitle_image_action_propertyList", objc_is_class_method=true)
 	Command_commandWithTitle_image_action_propertyList :: proc(title: ^NS.String, image: ^Image, action: SEL, propertyList: id) -> instancetype ---
 
@@ -82,7 +82,7 @@ CommandAlternate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandAlternate, objc_selector="alternateWithTitle:action:modifierFlags:", objc_name="alternateWithTitle", objc_is_class_method=true)
 	CommandAlternate_alternateWithTitle :: proc(title: ^NS.String, action: SEL, modifierFlags: KeyModifierFlags) -> instancetype ---
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLLinkedFunctions", objc_superclass=NS.Object)
 LinkedFunctions :: struct {
@@ -10,7 +10,7 @@ LinkedFunctions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LinkedFunctions, objc_selector="linkedFunctions", objc_name="linkedFunctions", objc_is_class_method=true)
 	LinkedFunctions_linkedFunctions :: proc() -> ^LinkedFunctions ---
 

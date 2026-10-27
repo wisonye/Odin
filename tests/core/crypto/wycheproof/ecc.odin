@@ -1,19 +1,19 @@
 package test_wycheproof
 
-import "core:encoding/hex"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:slice"
-import "core:strings"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
 
-import "core:crypto/hash"
-import "core:crypto/ecdh"
-import "core:crypto/ecdsa"
-import "core:crypto/ed25519"
+#import "core:crypto/hash"
+#import "core:crypto/ecdh"
+#import "core:crypto/ecdsa"
+#import "core:crypto/ed25519"
 
-import "../common"
+#import "../common"
 
 @(test)
 test_eddsa_ed25519 :: proc(t: ^testing.T) {

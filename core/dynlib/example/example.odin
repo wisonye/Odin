@@ -1,7 +1,7 @@
 package example
 
-import "core:dynlib"
-import "core:fmt"
+#import "core:dynlib"
+#import "core:fmt"
 
 Symbols :: struct {
 	// `foo_` is prefixed, so we look for the symbol `foo_add`.

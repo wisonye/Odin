@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MKUserLocation", objc_superclass=NS.Object)
 UserLocation :: struct {
@@ -12,7 +12,7 @@ UserLocation :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UserLocation, objc_selector="isUpdating", objc_name="isUpdating")
 	UserLocation_isUpdating :: proc(self: ^UserLocation) -> bool ---
 

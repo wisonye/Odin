@@ -1,14 +1,14 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:bytes"
-import "core:encoding/hex"
-import "core:strings"
-import "core:testing"
+#import "base:runtime"
+#import "core:bytes"
+#import "core:encoding/hex"
+#import "core:strings"
+#import "core:testing"
 
-import "core:crypto/blake2b"
-import "core:crypto/blake2s"
-import "core:crypto/hash"
+#import "core:crypto/blake2b"
+#import "core:crypto/blake2s"
+#import "core:crypto/hash"
 
 @(test)
 test_hash :: proc(t: ^testing.T) {

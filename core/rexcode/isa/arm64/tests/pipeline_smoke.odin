@@ -8,10 +8,10 @@ package rexcode_arm64_tests
 // shifted/extended register packing, split immediates (B/J/BR-PG), and
 // label inference for every branch flavour.
 
-import "core:fmt"
-import "core:os"
-import a "../"
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import a "../"
+#import "core:rexcode/isa"
 
 @(private="file") rpasses   := 0
 @(private="file") rfailures := 0

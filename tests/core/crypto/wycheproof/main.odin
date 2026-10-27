@@ -1,7 +1,7 @@
 package test_wycheproof
 
-import "core:log"
-import "core:testing"
+#import "core:log"
+#import "core:testing"
 
 // Covered:
 // - crypto/aegis

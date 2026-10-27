@@ -1,7 +1,7 @@
 package test_strlib
 
-import "core:text/match"
-import "core:testing"
+#import "core:text/match"
+#import "core:testing"
 
 // find correct byte offsets 
 @test

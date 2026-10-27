@@ -2,9 +2,9 @@
 
 package windows_xaudio2
 
-import "core:math"
+#import "core:math"
 
-foreign import xa2 "system:xaudio2.lib"
+#foreign #import xa2 "system:xaudio2.lib"
 
 /**************************************************************************
  *
@@ -15,7 +15,7 @@ foreign import xa2 "system:xaudio2.lib"
  **************************************************************************/
 
 @(default_calling_convention="system")
-foreign xa2 {
+#foreign xa2 {
 	CreateAudioVolumeMeter :: proc(ppApo: ^^IUnknown) -> HRESULT ---
 	CreateAudioReverb      :: proc(ppApo: ^^IUnknown) -> HRESULT ---
 }
@@ -48,7 +48,7 @@ VOLUMEMETER_LEVELS :: struct #packed {
  *
  * When using mono input, delay filters associated with the right channel are not executed.
  * In this case, parameters such as PositionRight and PositionMatrixRight have no effect.
- * This also means the reverb uses less CPU when hosted in a mono submix.
+ * This also means the reverb uses less CPU #if hosted in a mono submix.
  *
  **************************************************************************/
 
@@ -67,9 +67,9 @@ REVERB_PARAMETERS :: struct #packed {
 	SideDelay:        byte,       // 7.1: [0, 5] in ms, all other: not used, but still validated
 	// Indexed parameters
 	PositionLeft:        byte,    // [0, 30] no units
-	PositionRight:       byte,    // [0, 30] no units, ignored when configured to mono
+	PositionRight:       byte,    // [0, 30] no units, ignored #if configured to mono
 	PositionMatrixLeft:  byte,    // [0, 30] no units
-	PositionMatrixRight: byte,    // [0, 30] no units, ignored when configured to mono
+	PositionMatrixRight: byte,    // [0, 30] no units, ignored #if configured to mono
 	EarlyDiffusion:      byte,    // [0, 15] no units
 	LateDiffusion:       byte,    // [0, 15] no units
 	LowEQGain:           byte,    // [0, 12] no units

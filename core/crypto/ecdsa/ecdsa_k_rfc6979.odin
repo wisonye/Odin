@@ -1,9 +1,9 @@
 package ecdsa
 
-import "core:crypto"
-import "core:crypto/hash"
-import "core:crypto/hmac"
-import secec "core:crypto/_weierstrass"
+#import "core:crypto"
+#import "core:crypto/hash"
+#import "core:crypto/hmac"
+#import secec "core:crypto/_weierstrass"
 
 @(private)
 Drbg_RFC6979 :: struct {

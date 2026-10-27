@@ -1,9 +1,9 @@
 package webgl
 
-foreign import "webgl"
+#foreign #import "webgl"
 
-import glm "core:math/linalg/glsl"
-import "base:runtime"
+#import glm "core:math/linalg/glsl"
+#import "base:runtime"
 
 Enum :: distinct u32
 
@@ -35,7 +35,7 @@ ActiveInfo :: struct {
 DEFAULT_CONTEXT_ATTRIBUTES :: ContextAttributes{}
 
 @(default_calling_convention="contextless")
-foreign webgl {
+#foreign webgl {
 	// CreateCurrentContextById must be called before `GetCurrentContextAttributes` if the user wants to
 	// set specific attributes, otherwise the default attributes will be set for the WebGL context
 	CreateCurrentContextById :: proc(name: string, attributes: ContextAttributes) -> bool ---
@@ -184,28 +184,28 @@ foreign webgl {
 }
 
 Uniform1fv :: proc "contextless" (location: i32, v: []f32) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform1fv")
 		_Uniform1fv :: proc "contextless" (location: i32, count: int, value: [^]f32) ---
 	}
 	_Uniform1fv(location, len(v), &v[0])
 }
 Uniform2fv :: proc "contextless" (location: i32, v: []glm.vec2) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform2fv")
 		_Uniform2fv :: proc "contextless" (location: i32, count: int, value: [^]f32) ---
 	}
 	_Uniform2fv(location, len(v), &v[0].x)
 }
 Uniform3fv :: proc "contextless" (location: i32, v: []glm.vec3) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform3fv")
 		_Uniform3fv :: proc "contextless" (location: i32, count: int, value: [^]f32) ---
 	}
 	_Uniform3fv(location, len(v), &v[0].x)
 }
 Uniform4fv :: proc "contextless" (location: i32, v: []glm.vec4) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform4fv")
 		_Uniform4fv :: proc "contextless" (location: i32, count: int, value: [^]f32) ---
 	}
@@ -213,28 +213,28 @@ Uniform4fv :: proc "contextless" (location: i32, v: []glm.vec4) {
 }
 
 Uniform1iv :: proc "contextless" (location: i32, v: []i32) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform1iv")
 		_Uniform1iv :: proc "contextless" (location: i32, count: int, value: [^]i32) ---
 	}
 	_Uniform1iv(location, len(v), &v[0])
 }
 Uniform2iv :: proc "contextless" (location: i32, v: []glm.ivec2) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform2iv")
 		_Uniform2iv :: proc "contextless" (location: i32, count: int, value: [^]i32) ---
 	}
 	_Uniform2iv(location, len(v), &v[0].x)
 }
 Uniform3iv :: proc "contextless" (location: i32, v: []glm.ivec3) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform3iv")
 		_Uniform3iv :: proc "contextless" (location: i32, count: int, value: [^]i32) ---
 	}
 	_Uniform3iv(location, len(v), &v[0].x)
 }
 Uniform4iv :: proc "contextless" (location: i32, v: []glm.ivec4) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="Uniform4iv")
 		_Uniform4iv :: proc "contextless" (location: i32, count: int, value: [^]i32) ---
 	}
@@ -247,7 +247,7 @@ VertexAttrib3fv :: proc "contextless" (index: i32, v: glm.vec3){ VertexAttrib3f(
 VertexAttrib4fv :: proc "contextless" (index: i32, v: glm.vec4){ VertexAttrib4f(index, v.x, v.y, v.z, v.w) }
 
 UniformMatrix2fv :: proc "contextless" (location: i32, m: glm.mat2) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="UniformMatrix2fv")
 		_UniformMatrix2fv :: proc "contextless" (location: i32, value: [^]f32) ---
 	}
@@ -255,7 +255,7 @@ UniformMatrix2fv :: proc "contextless" (location: i32, m: glm.mat2) {
 	_UniformMatrix2fv(location, &value[0])
 }
 UniformMatrix3fv :: proc "contextless" (location: i32, m: glm.mat3) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="UniformMatrix3fv")
 		_UniformMatrix3fv :: proc "contextless" (location: i32, value: [^]f32) ---
 	}
@@ -263,7 +263,7 @@ UniformMatrix3fv :: proc "contextless" (location: i32, m: glm.mat3) {
 	_UniformMatrix3fv(location, &value[0])
 }
 UniformMatrix4fv :: proc "contextless" (location: i32, m: glm.mat4) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="UniformMatrix4fv")
 		_UniformMatrix4fv :: proc "contextless" (location: i32, value: [^]f32) ---
 	}
@@ -271,7 +271,7 @@ UniformMatrix4fv :: proc "contextless" (location: i32, m: glm.mat4) {
 	_UniformMatrix4fv(location, &value[0])
 }
 GetShaderiv :: proc "contextless" (shader: Shader, pname: Enum) -> (p: i32) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetShaderiv")
 		_GetShaderiv :: proc "contextless" (shader: Shader, pname: Enum, p: ^i32) ---
 	}
@@ -280,7 +280,7 @@ GetShaderiv :: proc "contextless" (shader: Shader, pname: Enum) -> (p: i32) {
 }
 
 GetActiveAttribBuf :: proc "contextless" (program: Program, index: u32, name_buf: []byte) -> (info: ActiveInfo) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetActiveAttrib")
 		_GetActiveAttrib :: proc "contextless" (shader: Program, index: u32, size: ^int, type: ^Enum, name_buf: []byte, name_len: ^int) ---
 	}
@@ -291,7 +291,7 @@ GetActiveAttribBuf :: proc "contextless" (program: Program, index: u32, name_buf
 }
 
 GetActiveAttribAlloc :: proc(program: Program, index: u32, allocator: runtime.Allocator, loc := #caller_location) -> (info: ActiveInfo) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetActiveAttrib")
 		_GetActiveAttrib :: proc "contextless" (shader: Program, index: u32, size: ^int, type: ^Enum, name_buf: []byte, name_len: ^int) ---
 	}
@@ -317,7 +317,7 @@ GetActiveAttrib :: proc {
 }
 
 GetActiveUniformBuf :: proc "contextless" (program: Program, index: u32, name_buf: []byte) -> (info: ActiveInfo) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetActiveUniform")
 		_GetActiveUniform :: proc "contextless" (shader: Program, index: u32, size: ^int, type: ^Enum, name_buf: []byte, name_len: ^int) ---
 	}
@@ -328,7 +328,7 @@ GetActiveUniformBuf :: proc "contextless" (program: Program, index: u32, name_bu
 }
 
 GetActiveUniformAlloc :: proc(program: Program, index: u32, allocator: runtime.Allocator, loc := #caller_location) -> (info: ActiveInfo) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetActiveUniform")
 		_GetActiveUniform :: proc "contextless" (shader: Program, index: u32, size: ^int, type: ^Enum, name_buf: []byte, name_len: ^int) ---
 	}
@@ -354,7 +354,7 @@ GetActiveUniform :: proc {
 }
 
 GetProgramInfoLog :: proc "contextless" (program: Program, buf: []byte) -> string {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetProgramInfoLog")
 		_GetProgramInfoLog :: proc "contextless" (program: Program, buf: []byte, length: ^int) ---
 	}
@@ -365,7 +365,7 @@ GetProgramInfoLog :: proc "contextless" (program: Program, buf: []byte) -> strin
 }
 
 GetShaderInfoLog :: proc "contextless" (shader: Shader, buf: []byte) -> string {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetShaderInfoLog")
 		_GetShaderInfoLog :: proc "contextless" (shader: Shader, buf: []byte, length: ^int) ---
 	}
@@ -376,7 +376,7 @@ GetShaderInfoLog :: proc "contextless" (shader: Shader, buf: []byte) -> string {
 }
 
 IterateSupportedExtensions :: proc(index: ^int, buf: []byte) -> (string, bool) {
-	foreign webgl {
+	#foreign webgl {
 		@(link_name="GetSupportedExtensionFromIndex")
 		_GetSupportedExtensionFromIndex :: proc "contextless" (index: int, buf: []byte, length: ^int) -> bool ---
 	}

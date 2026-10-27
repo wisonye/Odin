@@ -2,19 +2,19 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
-import AT "vendor:darwin/AudioToolbox"
-import CM "vendor:darwin/CoreMedia"
-import CG "core:sys/darwin/CoreGraphics"
-import CA "vendor:darwin/QuartzCore"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import AT "vendor:darwin/AudioToolbox"
+#import CM "vendor:darwin/CoreMedia"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="AVCaptureAudioChannel", objc_superclass=NS.Object)
 CaptureAudioChannel :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAudioChannel, objc_selector="init", objc_name="init")
 	CaptureAudioChannel_init :: proc(self: ^CaptureAudioChannel) -> instancetype ---
 
@@ -48,7 +48,7 @@ CaptureAudioChannelInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureAudioDataOutput", objc_superclass=CaptureOutput)
 CaptureAudioDataOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAudioDataOutput, objc_selector="init", objc_name="init")
 	CaptureAudioDataOutput_init :: proc(self: ^CaptureAudioDataOutput) -> instancetype ---
 
@@ -91,7 +91,7 @@ CaptureAudioDataOutputSampleBufferDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAudioDataOutputSampleBufferDelegate, objc_selector="captureOutput:didOutputSampleBuffer:fromConnection:", objc_name="captureOutput")
 	CaptureAudioDataOutputSampleBufferDelegate_captureOutput :: proc(self: ^CaptureAudioDataOutputSampleBufferDelegate, output: ^CaptureOutput, sampleBuffer: CM.SampleBufferRef, connection: ^CaptureConnection) ---
 }
@@ -100,7 +100,7 @@ foreign lib {
 @(objc_class="AVCaptureAudioFileOutput", objc_superclass=CaptureFileOutput)
 CaptureAudioFileOutput :: struct { using _: CaptureFileOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAudioFileOutput, objc_selector="init", objc_name="init")
 	CaptureAudioFileOutput_init :: proc(self: ^CaptureAudioFileOutput) -> instancetype ---
 
@@ -134,7 +134,7 @@ CaptureAudioFileOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureAudioPreviewOutput", objc_superclass=CaptureOutput)
 CaptureAudioPreviewOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAudioPreviewOutput, objc_selector="init", objc_name="init")
 	CaptureAudioPreviewOutput_init :: proc(self: ^CaptureAudioPreviewOutput) -> instancetype ---
 
@@ -162,7 +162,7 @@ CaptureAudioPreviewOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureBracketedStillImageSettings", objc_superclass=NS.Object)
 CaptureBracketedStillImageSettings :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureBracketedStillImageSettings, objc_selector="init", objc_name="init")
 	CaptureBracketedStillImageSettings_init :: proc(self: ^CaptureBracketedStillImageSettings) -> instancetype ---
 
@@ -174,7 +174,7 @@ foreign lib {
 @(objc_class="AVCaptureAutoExposureBracketedStillImageSettings", objc_superclass=CaptureBracketedStillImageSettings)
 CaptureAutoExposureBracketedStillImageSettings :: struct { using _: CaptureBracketedStillImageSettings}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureAutoExposureBracketedStillImageSettings, objc_selector="autoExposureSettingsWithExposureTargetBias:", objc_name="autoExposureSettingsWithExposureTargetBias", objc_is_class_method=true)
 	CaptureAutoExposureBracketedStillImageSettings_autoExposureSettingsWithExposureTargetBias :: proc(exposureTargetBias: cffi.float) -> instancetype ---
 
@@ -186,7 +186,7 @@ foreign lib {
 @(objc_class="AVCaptureManualExposureBracketedStillImageSettings", objc_superclass=CaptureBracketedStillImageSettings)
 CaptureManualExposureBracketedStillImageSettings :: struct { using _: CaptureBracketedStillImageSettings}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureManualExposureBracketedStillImageSettings, objc_selector="manualExposureSettingsWithExposureDuration:ISO:", objc_name="manualExposureSettingsWithExposureDuration", objc_is_class_method=true)
 	CaptureManualExposureBracketedStillImageSettings_manualExposureSettingsWithExposureDuration :: proc(duration: CM.Time, ISO: cffi.float) -> instancetype ---
 
@@ -201,7 +201,7 @@ foreign lib {
 @(objc_class="AVCaptureConnection", objc_superclass=NS.Object)
 CaptureConnection :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureConnection, objc_selector="init", objc_name="init")
 	CaptureConnection_init :: proc(self: ^CaptureConnection) -> instancetype ---
 
@@ -349,7 +349,7 @@ CaptureConnectionInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureControl", objc_superclass=NS.Object)
 CaptureControl :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureControl, objc_selector="init", objc_name="init")
 	CaptureControl_init :: proc(self: ^CaptureControl) -> instancetype ---
 
@@ -367,7 +367,7 @@ foreign lib {
 @(objc_class="AVCaptureIndexPicker", objc_superclass=CaptureControl)
 CaptureIndexPicker :: struct { using _: CaptureControl}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureIndexPicker, objc_selector="initWithLocalizedTitle:symbolName:numberOfIndexes:", objc_name="initWithLocalizedTitle_symbolName_numberOfIndexes")
 	CaptureIndexPicker_initWithLocalizedTitle_symbolName_numberOfIndexes :: proc(self: ^CaptureIndexPicker, localizedTitle: ^NS.String, symbolName: ^NS.String, numberOfIndexes: NS.Integer) -> instancetype ---
 
@@ -418,7 +418,7 @@ CaptureIndexPicker_initWithLocalizedTitle :: proc {
 @(objc_class="AVCaptureSlider", objc_superclass=CaptureControl)
 CaptureSlider :: struct { using _: CaptureControl}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSlider, objc_selector="initWithLocalizedTitle:symbolName:minValue:maxValue:", objc_name="initWithLocalizedTitle_symbolName_minValue_maxValue")
 	CaptureSlider_initWithLocalizedTitle_symbolName_minValue_maxValue :: proc(self: ^CaptureSlider, localizedTitle: ^NS.String, symbolName: ^NS.String, minValue: cffi.float, maxValue: cffi.float) -> instancetype ---
 
@@ -475,7 +475,7 @@ CaptureSlider_initWithLocalizedTitle :: proc {
 @(objc_class="AVCaptureSystemExposureBiasSlider", objc_superclass=CaptureControl)
 CaptureSystemExposureBiasSlider :: struct { using _: CaptureControl}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSystemExposureBiasSlider, objc_selector="initWithDevice:", objc_name="initWithDevice_")
 	CaptureSystemExposureBiasSlider_initWithDevice_ :: proc(self: ^CaptureSystemExposureBiasSlider, device: ^CaptureDevice) -> instancetype ---
 
@@ -495,7 +495,7 @@ CaptureSystemExposureBiasSlider_initWithDevice :: proc {
 @(objc_class="AVCaptureSystemZoomSlider", objc_superclass=CaptureControl)
 CaptureSystemZoomSlider :: struct { using _: CaptureControl}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSystemZoomSlider, objc_selector="initWithDevice:", objc_name="initWithDevice_")
 	CaptureSystemZoomSlider_initWithDevice_ :: proc(self: ^CaptureSystemZoomSlider, device: ^CaptureDevice) -> instancetype ---
 
@@ -515,7 +515,7 @@ CaptureSystemZoomSlider_initWithDevice :: proc {
 @(objc_class="AVCaptureDataOutputSynchronizer", objc_superclass=NS.Object)
 CaptureDataOutputSynchronizer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDataOutputSynchronizer, objc_selector="init", objc_name="init")
 	CaptureDataOutputSynchronizer_init :: proc(self: ^CaptureDataOutputSynchronizer) -> instancetype ---
 
@@ -545,7 +545,7 @@ CaptureDataOutputSynchronizerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDataOutputSynchronizerDelegate, objc_selector="dataOutputSynchronizer:didOutputSynchronizedDataCollection:", objc_name="dataOutputSynchronizer")
 	CaptureDataOutputSynchronizerDelegate_dataOutputSynchronizer :: proc(self: ^CaptureDataOutputSynchronizerDelegate, synchronizer: ^CaptureDataOutputSynchronizer, synchronizedDataCollection: ^CaptureSynchronizedDataCollection) ---
 }
@@ -558,7 +558,7 @@ CaptureDataOutputSynchronizerInternal :: struct { using _: intrinsics.objc_objec
 @(objc_class="AVCaptureDepthDataOutput", objc_superclass=CaptureOutput)
 CaptureDepthDataOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDepthDataOutput, objc_selector="init", objc_name="init")
 	CaptureDepthDataOutput_init :: proc(self: ^CaptureDepthDataOutput) -> instancetype ---
 
@@ -594,7 +594,7 @@ CaptureDepthDataOutputDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDepthDataOutputDelegate, objc_selector="depthDataOutput:didOutputDepthData:timestamp:connection:", objc_name="depthDataOutput_didOutputDepthData_timestamp_connection")
 	CaptureDepthDataOutputDelegate_depthDataOutput_didOutputDepthData_timestamp_connection :: proc(self: ^CaptureDepthDataOutputDelegate, output: ^CaptureDepthDataOutput, depthData: ^DepthData, timestamp: CM.Time, connection: ^CaptureConnection) ---
 
@@ -618,7 +618,7 @@ CaptureDepthDataOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeskViewApplication", objc_superclass=NS.Object)
 CaptureDeskViewApplication :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeskViewApplication, objc_selector="presentWithCompletionHandler:", objc_name="presentWithCompletionHandler")
 	CaptureDeskViewApplication_presentWithCompletionHandler :: proc(self: ^CaptureDeskViewApplication, completionHandler: ^Objc_Block(proc "c" ( error: ^NS.Error ))) ---
 
@@ -630,7 +630,7 @@ foreign lib {
 @(objc_class="AVCaptureDeskViewApplicationLaunchConfiguration", objc_superclass=NS.Object)
 CaptureDeskViewApplicationLaunchConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeskViewApplicationLaunchConfiguration, objc_selector="mainWindowFrame", objc_name="mainWindowFrame")
 	CaptureDeskViewApplicationLaunchConfiguration_mainWindowFrame :: proc(self: ^CaptureDeskViewApplicationLaunchConfiguration) -> CG.Rect ---
 
@@ -648,7 +648,7 @@ foreign lib {
 @(objc_class="AVCaptureDevice", objc_superclass=NS.Object)
 CaptureDevice :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDevice, objc_selector="init", objc_name="init")
 	CaptureDevice_init :: proc(self: ^CaptureDevice) -> instancetype ---
 
@@ -1312,7 +1312,7 @@ CaptureDeviceInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeviceDiscoverySession", objc_superclass=NS.Object)
 CaptureDeviceDiscoverySession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeviceDiscoverySession, objc_selector="init", objc_name="init")
 	CaptureDeviceDiscoverySession_init :: proc(self: ^CaptureDeviceDiscoverySession) -> instancetype ---
 
@@ -1333,7 +1333,7 @@ foreign lib {
 @(objc_class="AVCaptureDeviceFormat", objc_superclass=NS.Object)
 CaptureDeviceFormat :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeviceFormat, objc_selector="init", objc_name="init")
 	CaptureDeviceFormat_init :: proc(self: ^CaptureDeviceFormat) -> instancetype ---
 
@@ -1529,7 +1529,7 @@ CaptureDeviceFormatInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeviceInput", objc_superclass=CaptureInput)
 CaptureDeviceInput :: struct { using _: CaptureInput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeviceInput, objc_selector="deviceInputWithDevice:error:", objc_name="deviceInputWithDevice_error", objc_is_class_method=true)
 	CaptureDeviceInput_deviceInputWithDevice_error :: proc(device: ^CaptureDevice, outError: ^^NS.Error) -> instancetype ---
 
@@ -1644,7 +1644,7 @@ CaptureDeviceInputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeviceInputSource", objc_superclass=NS.Object)
 CaptureDeviceInputSource :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeviceInputSource, objc_selector="init", objc_name="init")
 	CaptureDeviceInputSource_init :: proc(self: ^CaptureDeviceInputSource) -> instancetype ---
 
@@ -1666,7 +1666,7 @@ CaptureDeviceInputSourceInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeviceRotationCoordinator", objc_superclass=NS.Object)
 CaptureDeviceRotationCoordinator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeviceRotationCoordinator, objc_selector="init", objc_name="init")
 	CaptureDeviceRotationCoordinator_init :: proc(self: ^CaptureDeviceRotationCoordinator) -> instancetype ---
 
@@ -1693,7 +1693,7 @@ foreign lib {
 @(objc_class="AVCaptureExternalDisplayConfiguration", objc_superclass=NS.Object)
 CaptureExternalDisplayConfiguration :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureExternalDisplayConfiguration, objc_selector="shouldMatchFrameRate", objc_name="shouldMatchFrameRate")
 	CaptureExternalDisplayConfiguration_shouldMatchFrameRate :: proc(self: ^CaptureExternalDisplayConfiguration) -> bool ---
 
@@ -1717,7 +1717,7 @@ foreign lib {
 @(objc_class="AVCaptureExternalDisplayConfigurator", objc_superclass=NS.Object)
 CaptureExternalDisplayConfigurator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureExternalDisplayConfigurator, objc_selector="init", objc_name="init")
 	CaptureExternalDisplayConfigurator_init :: proc(self: ^CaptureExternalDisplayConfigurator) -> instancetype ---
 
@@ -1756,7 +1756,7 @@ foreign lib {
 @(objc_class="AVCaptureFileOutput", objc_superclass=CaptureOutput)
 CaptureFileOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureFileOutput, objc_selector="startRecordingToOutputFileURL:recordingDelegate:", objc_name="startRecordingToOutputFileURL")
 	CaptureFileOutput_startRecordingToOutputFileURL :: proc(self: ^CaptureFileOutput, outputFileURL: ^NS.URL, delegate: ^CaptureFileOutputRecordingDelegate) ---
 
@@ -1816,7 +1816,7 @@ CaptureFileOutputDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureFileOutputDelegate, objc_selector="captureOutputShouldProvideSampleAccurateRecordingStart:", objc_name="captureOutputShouldProvideSampleAccurateRecordingStart")
 	CaptureFileOutputDelegate_captureOutputShouldProvideSampleAccurateRecordingStart :: proc(self: ^CaptureFileOutputDelegate, output: ^CaptureOutput) -> bool ---
 
@@ -1835,7 +1835,7 @@ CaptureFileOutputRecordingDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureFileOutputRecordingDelegate, objc_selector="captureOutput:didStartRecordingToOutputFileAtURL:fromConnections:", objc_name="captureOutput_didStartRecordingToOutputFileAtURL_fromConnections")
 	CaptureFileOutputRecordingDelegate_captureOutput_didStartRecordingToOutputFileAtURL_fromConnections :: proc(self: ^CaptureFileOutputRecordingDelegate, output: ^CaptureFileOutput, fileURL: ^NS.URL, connections: ^NS.Array) ---
 
@@ -1859,7 +1859,7 @@ foreign lib {
 @(objc_class="AVCaptureFraming", objc_superclass=NS.Object)
 CaptureFraming :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureFraming, objc_selector="init", objc_name="init")
 	CaptureFraming_init :: proc(self: ^CaptureFraming) -> instancetype ---
 
@@ -1877,7 +1877,7 @@ foreign lib {
 @(objc_class="AVCaptureInput", objc_superclass=NS.Object)
 CaptureInput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureInput, objc_selector="init", objc_name="init")
 	CaptureInput_init :: proc(self: ^CaptureInput) -> instancetype ---
 
@@ -1896,7 +1896,7 @@ CaptureInputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureInputPort", objc_superclass=NS.Object)
 CaptureInputPort :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureInputPort, objc_selector="init", objc_name="init")
 	CaptureInputPort_init :: proc(self: ^CaptureInputPort) -> instancetype ---
 
@@ -1936,7 +1936,7 @@ CaptureInputPortInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureMetadataInput", objc_superclass=CaptureInput)
 CaptureMetadataInput :: struct { using _: CaptureInput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureMetadataInput, objc_selector="metadataInputWithFormatDescription:clock:", objc_name="metadataInputWithFormatDescription", objc_is_class_method=true)
 	CaptureMetadataInput_metadataInputWithFormatDescription :: proc(desc: CM.MetadataFormatDescriptionRef, clock: CM.ClockRef) -> instancetype ---
 
@@ -1964,7 +1964,7 @@ CaptureMetadataInputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureMetadataOutput", objc_superclass=CaptureOutput)
 CaptureMetadataOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureMetadataOutput, objc_selector="init", objc_name="init")
 	CaptureMetadataOutput_init :: proc(self: ^CaptureMetadataOutput) -> instancetype ---
 
@@ -2010,7 +2010,7 @@ CaptureMetadataOutputObjectsDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureMetadataOutputObjectsDelegate, objc_selector="captureOutput:didOutputMetadataObjects:fromConnection:", objc_name="captureOutput")
 	CaptureMetadataOutputObjectsDelegate_captureOutput :: proc(self: ^CaptureMetadataOutputObjectsDelegate, output: ^CaptureOutput, metadataObjects: ^NS.Array, connection: ^CaptureConnection) ---
 }
@@ -2019,7 +2019,7 @@ foreign lib {
 @(objc_class="AVCaptureMovieFileOutput", objc_superclass=CaptureFileOutput)
 CaptureMovieFileOutput :: struct { using _: CaptureFileOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureMovieFileOutput, objc_selector="init", objc_name="init")
 	CaptureMovieFileOutput_init :: proc(self: ^CaptureMovieFileOutput) -> instancetype ---
 
@@ -2089,7 +2089,7 @@ CaptureMovieFileOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureOutput", objc_superclass=NS.Object)
 CaptureOutput :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureOutput, objc_selector="init", objc_name="init")
 	CaptureOutput_init :: proc(self: ^CaptureOutput) -> instancetype ---
 
@@ -2129,7 +2129,7 @@ CaptureOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCapturePhoto", objc_superclass=NS.Object)
 CapturePhoto :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhoto, objc_selector="init", objc_name="init")
 	CapturePhoto_init :: proc(self: ^CapturePhoto) -> instancetype ---
 
@@ -2217,7 +2217,7 @@ CapturePhotoInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCapturePhotoBracketSettings", objc_superclass=CapturePhotoSettings)
 CapturePhotoBracketSettings :: struct { using _: CapturePhotoSettings}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoBracketSettings, objc_selector="photoBracketSettingsWithRawPixelFormatType:processedFormat:bracketedSettings:", objc_name="photoBracketSettingsWithRawPixelFormatType_processedFormat_bracketedSettings", objc_is_class_method=true)
 	CapturePhotoBracketSettings_photoBracketSettingsWithRawPixelFormatType_processedFormat_bracketedSettings :: proc(rawPixelFormatType: CF.OSType, processedFormat: ^NS.Dictionary, bracketedSettings: ^NS.Array) -> instancetype ---
 
@@ -2253,7 +2253,7 @@ CapturePhotoCaptureDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoCaptureDelegate, objc_selector="captureOutput:willBeginCaptureForResolvedSettings:", objc_name="captureOutput_willBeginCaptureForResolvedSettings")
 	CapturePhotoCaptureDelegate_captureOutput_willBeginCaptureForResolvedSettings :: proc(self: ^CapturePhotoCaptureDelegate, output: ^CapturePhotoOutput, resolvedSettings: ^CaptureResolvedPhotoSettings) ---
 
@@ -2292,7 +2292,7 @@ CapturePhotoFileDataRepresentationCustomizer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoFileDataRepresentationCustomizer, objc_selector="replacementMetadataForPhoto:", objc_name="replacementMetadataForPhoto")
 	CapturePhotoFileDataRepresentationCustomizer_replacementMetadataForPhoto :: proc(self: ^CapturePhotoFileDataRepresentationCustomizer, photo: ^CapturePhoto) -> ^NS.Dictionary ---
 
@@ -2316,7 +2316,7 @@ foreign lib {
 @(objc_class="AVCapturePhotoOutput", objc_superclass=CaptureOutput)
 CapturePhotoOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoOutput, objc_selector="init", objc_name="init")
 	CapturePhotoOutput_init :: proc(self: ^CapturePhotoOutput) -> instancetype ---
 
@@ -2593,7 +2593,7 @@ CapturePhotoOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCapturePhotoOutputReadinessCoordinator", objc_superclass=NS.Object)
 CapturePhotoOutputReadinessCoordinator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoOutputReadinessCoordinator, objc_selector="init", objc_name="init")
 	CapturePhotoOutputReadinessCoordinator_init :: proc(self: ^CapturePhotoOutputReadinessCoordinator) -> instancetype ---
 
@@ -2626,7 +2626,7 @@ CapturePhotoOutputReadinessCoordinatorDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoOutputReadinessCoordinatorDelegate, objc_selector="readinessCoordinator:captureReadinessDidChange:", objc_name="readinessCoordinator")
 	CapturePhotoOutputReadinessCoordinatorDelegate_readinessCoordinator :: proc(self: ^CapturePhotoOutputReadinessCoordinatorDelegate, coordinator: ^CapturePhotoOutputReadinessCoordinator, captureReadiness: CapturePhotoOutputCaptureReadiness) ---
 }
@@ -2638,7 +2638,7 @@ CapturePhotoSettings :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CapturePhotoSettings, objc_selector="photoSettings", objc_name="photoSettings", objc_is_class_method=true)
 	CapturePhotoSettings_photoSettings :: proc() -> instancetype ---
 
@@ -2879,7 +2879,7 @@ CapturePhotoSettingsInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureDeferredPhotoProxy", objc_superclass=CapturePhoto)
 CaptureDeferredPhotoProxy :: struct { using _: CapturePhoto}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureDeferredPhotoProxy, objc_selector="init", objc_name="init")
 	CaptureDeferredPhotoProxy_init :: proc(self: ^CaptureDeferredPhotoProxy) -> instancetype ---
 
@@ -2891,7 +2891,7 @@ foreign lib {
 @(objc_class="AVCaptureReactionEffectState", objc_superclass=NS.Object)
 CaptureReactionEffectState :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureReactionEffectState, objc_selector="reactionType", objc_name="reactionType")
 	CaptureReactionEffectState_reactionType :: proc(self: ^CaptureReactionEffectState) -> ^NS.String ---
 
@@ -2906,7 +2906,7 @@ foreign lib {
 @(objc_class="AVCaptureResolvedPhotoSettings", objc_superclass=NS.Object)
 CaptureResolvedPhotoSettings :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureResolvedPhotoSettings, objc_selector="init", objc_name="init")
 	CaptureResolvedPhotoSettings_init :: proc(self: ^CaptureResolvedPhotoSettings) -> instancetype ---
 
@@ -2979,14 +2979,14 @@ CaptureResolvedPhotoSettingsInternal :: struct { using _: intrinsics.objc_object
 @(objc_class="AVCaptureScreenInput", objc_superclass=CaptureInput)
 CaptureScreenInput :: struct { using _: CaptureInput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureScreenInput, objc_selector="init", objc_name="init")
 	CaptureScreenInput_init :: proc(self: ^CaptureScreenInput) -> instancetype ---
 
 	@(objc_type=CaptureScreenInput, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	CaptureScreenInput_new :: proc() -> ^CaptureScreenInput ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=CaptureScreenInput, objc_selector="initWithDisplayID:", objc_name="initWithDisplayID")
 		CaptureScreenInput_initWithDisplayID :: proc(self: ^CaptureScreenInput, displayID: CG.DirectDisplayID) -> instancetype ---
 	}
@@ -3036,7 +3036,7 @@ CaptureScreenInputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureSession", objc_superclass=NS.Object)
 CaptureSession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSession, objc_selector="canSetSessionPreset:", objc_name="canSetSessionPreset")
 	CaptureSession_canSetSessionPreset :: proc(self: ^CaptureSession, preset: ^NS.String) -> bool ---
 
@@ -3214,7 +3214,7 @@ CaptureSessionControlsDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSessionControlsDelegate, objc_selector="sessionControlsDidBecomeActive:", objc_name="sessionControlsDidBecomeActive")
 	CaptureSessionControlsDelegate_sessionControlsDidBecomeActive :: proc(self: ^CaptureSessionControlsDelegate, session: ^CaptureSession) ---
 
@@ -3235,7 +3235,7 @@ CaptureSessionDeferredStartDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSessionDeferredStartDelegate, objc_selector="sessionWillRunDeferredStart:", objc_name="sessionWillRunDeferredStart")
 	CaptureSessionDeferredStartDelegate_sessionWillRunDeferredStart :: proc(self: ^CaptureSessionDeferredStartDelegate, session: ^CaptureSession) ---
 
@@ -3247,7 +3247,7 @@ foreign lib {
 @(objc_class="AVCaptureMultiCamSession", objc_superclass=CaptureSession)
 CaptureMultiCamSession :: struct { using _: CaptureSession}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureMultiCamSession, objc_selector="isMultiCamSupported", objc_name="isMultiCamSupported", objc_is_class_method=true)
 	CaptureMultiCamSession_isMultiCamSupported :: proc() -> bool ---
 
@@ -3262,7 +3262,7 @@ foreign lib {
 @(objc_class="AVCaptureSmartFramingMonitor", objc_superclass=NS.Object)
 CaptureSmartFramingMonitor :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSmartFramingMonitor, objc_selector="init", objc_name="init")
 	CaptureSmartFramingMonitor_init :: proc(self: ^CaptureSmartFramingMonitor) -> instancetype ---
 
@@ -3304,7 +3304,7 @@ CaptureSmartFramingMonitor_startMonitoringWithError :: #force_inline proc "c" (s
 @(objc_class="AVCaptureSpatialAudioMetadataSampleGenerator", objc_superclass=NS.Object)
 CaptureSpatialAudioMetadataSampleGenerator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSpatialAudioMetadataSampleGenerator, objc_selector="analyzeAudioSample:", objc_name="analyzeAudioSample")
 	CaptureSpatialAudioMetadataSampleGenerator_analyzeAudioSample :: proc(self: ^CaptureSpatialAudioMetadataSampleGenerator, sbuf: CM.SampleBufferRef) -> CF.OSStatus ---
 
@@ -3322,7 +3322,7 @@ foreign lib {
 @(objc_class="AVCaptureStillImageOutput", objc_superclass=CaptureOutput)
 CaptureStillImageOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureStillImageOutput, objc_selector="init", objc_name="init")
 	CaptureStillImageOutput_init :: proc(self: ^CaptureStillImageOutput) -> instancetype ---
 
@@ -3404,7 +3404,7 @@ CaptureStillImageOutputInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureSynchronizedData", objc_superclass=NS.Object)
 CaptureSynchronizedData :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSynchronizedData, objc_selector="init", objc_name="init")
 	CaptureSynchronizedData_init :: proc(self: ^CaptureSynchronizedData) -> instancetype ---
 
@@ -3426,7 +3426,7 @@ CaptureSynchronizedDataCollection :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSynchronizedDataCollection, objc_selector="init", objc_name="init")
 	CaptureSynchronizedDataCollection_init :: proc(self: ^CaptureSynchronizedDataCollection) -> instancetype ---
 
@@ -3451,7 +3451,7 @@ CaptureSynchronizedDataCollectionInternal :: struct { using _: intrinsics.objc_o
 @(objc_class="AVCaptureSynchronizedDepthData", objc_superclass=CaptureSynchronizedData)
 CaptureSynchronizedDepthData :: struct { using _: CaptureSynchronizedData}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSynchronizedDepthData, objc_selector="depthData", objc_name="depthData")
 	CaptureSynchronizedDepthData_depthData :: proc(self: ^CaptureSynchronizedDepthData) -> ^DepthData ---
 
@@ -3470,7 +3470,7 @@ CaptureSynchronizedDepthDataInternal :: struct { using _: intrinsics.objc_object
 @(objc_class="AVCaptureSynchronizedMetadataObjectData", objc_superclass=CaptureSynchronizedData)
 CaptureSynchronizedMetadataObjectData :: struct { using _: CaptureSynchronizedData}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSynchronizedMetadataObjectData, objc_selector="metadataObjects", objc_name="metadataObjects")
 	CaptureSynchronizedMetadataObjectData_metadataObjects :: proc(self: ^CaptureSynchronizedMetadataObjectData) -> ^NS.Array ---
 }
@@ -3483,7 +3483,7 @@ CaptureSynchronizedMetadataObjectDataInternal :: struct { using _: intrinsics.ob
 @(objc_class="AVCaptureSynchronizedSampleBufferData", objc_superclass=CaptureSynchronizedData)
 CaptureSynchronizedSampleBufferData :: struct { using _: CaptureSynchronizedData}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSynchronizedSampleBufferData, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	CaptureSynchronizedSampleBufferData_sampleBuffer :: proc(self: ^CaptureSynchronizedSampleBufferData) -> CM.SampleBufferRef ---
 
@@ -3502,7 +3502,7 @@ CaptureSynchronizedSampleBufferDataInternal :: struct { using _: intrinsics.objc
 @(objc_class="AVCaptureSystemPressureState", objc_superclass=NS.Object)
 CaptureSystemPressureState :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureSystemPressureState, objc_selector="init", objc_name="init")
 	CaptureSystemPressureState_init :: proc(self: ^CaptureSystemPressureState) -> instancetype ---
 
@@ -3524,7 +3524,7 @@ CaptureSystemPressureStateInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptureTimecodeGenerator", objc_superclass=NS.Object)
 CaptureTimecodeGenerator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureTimecodeGenerator, objc_selector="setDelegate:queue:", objc_name="setDelegate")
 	CaptureTimecodeGenerator_setDelegate :: proc(self: ^CaptureTimecodeGenerator, delegate: ^CaptureTimecodeGeneratorDelegate, callbackQueue: CF.dispatch_queue_t) ---
 
@@ -3578,7 +3578,7 @@ CaptureTimecodeGeneratorDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureTimecodeGeneratorDelegate, objc_selector="timecodeGenerator:didReceiveUpdate:fromSource:", objc_name="timecodeGenerator_didReceiveUpdate_fromSource")
 	CaptureTimecodeGeneratorDelegate_timecodeGenerator_didReceiveUpdate_fromSource :: proc(self: ^CaptureTimecodeGeneratorDelegate, generator: ^CaptureTimecodeGenerator, timecode: CaptureTimecode, source: ^CaptureTimecodeSource) ---
 
@@ -3605,7 +3605,7 @@ CaptureTimecodeSource :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureTimecodeSource, objc_selector="displayName", objc_name="displayName")
 	CaptureTimecodeSource_displayName :: proc(self: ^CaptureTimecodeSource) -> ^NS.String ---
 
@@ -3620,7 +3620,7 @@ foreign lib {
 @(objc_class="AVCaptureVideoDataOutput", objc_superclass=CaptureOutput)
 CaptureVideoDataOutput :: struct { using _: CaptureOutput}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureVideoDataOutput, objc_selector="init", objc_name="init")
 	CaptureVideoDataOutput_init :: proc(self: ^CaptureVideoDataOutput) -> instancetype ---
 
@@ -3722,7 +3722,7 @@ CaptureVideoDataOutputSampleBufferDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureVideoDataOutputSampleBufferDelegate, objc_selector="captureOutput:didOutputSampleBuffer:fromConnection:", objc_name="captureOutput_didOutputSampleBuffer_fromConnection")
 	CaptureVideoDataOutputSampleBufferDelegate_captureOutput_didOutputSampleBuffer_fromConnection :: proc(self: ^CaptureVideoDataOutputSampleBufferDelegate, output: ^CaptureOutput, sampleBuffer: CM.SampleBufferRef, connection: ^CaptureConnection) ---
 
@@ -3734,7 +3734,7 @@ foreign lib {
 @(objc_class="AVCaptureVideoPreviewLayer", objc_superclass=CA.Layer)
 CaptureVideoPreviewLayer :: struct { using _: CA.Layer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptureVideoPreviewLayer, objc_selector="layerWithSession:", objc_name="layerWithSession", objc_is_class_method=true)
 	CaptureVideoPreviewLayer_layerWithSession :: proc(session: ^CaptureSession) -> instancetype ---
 

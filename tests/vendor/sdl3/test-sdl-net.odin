@@ -1,9 +1,9 @@
 package test_vendor_sdl3
 
-import "core:log"
-import "core:testing"
-import SDL "vendor:sdl3"
-import NET "vendor:sdl3/net"
+#import "core:log"
+#import "core:testing"
+#import SDL "vendor:sdl3"
+#import NET "vendor:sdl3/net"
 
 // Links `vendor:sdl3/net` and prints its version as a line `VERSION SDL3_net <version>`. On Windows it must be the version the
 // bindings were written for. It also sends a datagram to itself over the loopback interface.
@@ -13,7 +13,7 @@ test_sdl_net :: proc(t: ^testing.T) {
 	linked := NET.Version()
 	major, minor, micro := SDL.VERSIONNUM_MAJOR(linked), SDL.VERSIONNUM_MINOR(linked), SDL.VERSIONNUM_MICRO(linked)
 	log.infof("VERSION SDL3_net %v.%v.%v", major, minor, micro)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		dll      := [3]int{int(major), int(minor), int(micro)}
 		bindings := [3]int{NET.MAJOR_VERSION, NET.MINOR_VERSION, NET.MICRO_VERSION}
 		testing.expectf(t, dll == bindings, "the SDL3_net DLL is %v but the bindings are for %v", dll, bindings)

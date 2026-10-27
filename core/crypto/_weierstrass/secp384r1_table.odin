@@ -4,9 +4,9 @@ package _weierstrass
 	------ GENERATED ------ DO NOT EDIT ------ GENERATED ------ DO NOT EDIT ------ GENERATED ------
 */
 
-import "core:crypto"
+#import "core:crypto"
 
-when crypto.COMPACT_IMPLS == false {
+#if crypto.COMPACT_IMPLS == false {
 	@(private,rodata)
 	Gen_Multiply_Table_p384r1_hi := [48][15]Affine_Point_p384r1 {
 		{

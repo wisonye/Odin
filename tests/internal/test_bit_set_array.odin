@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:fmt"
-import "core:testing"
+#import "core:fmt"
+#import "core:testing"
 
 // Regression tests for `bit_set` types backed by an array of integers, e.g. `bit_set[E; [4]u64]`.
 // The interesting cases are the set relations (`<`, `<=`, `>`, `>=`) with their subset/superset
@@ -190,7 +190,7 @@ bit_set_array_formatting :: proc(t: ^testing.T) {
 
 @(test)
 bit_set_complement_of_bits_outside_the_set :: proc(t: ^testing.T) {
-	// `~x` complements within the set: bits of `x` which no element names are cleared, both when it
+	// `~x` complements within the set: bits of `x` which no element names are cleared, both #if it
 	// is folded at compile time and in the generated code.
 	Gap_E :: enum u8 { A = 0, C = 2 }
 	Gap   :: bit_set[Gap_E; u8]

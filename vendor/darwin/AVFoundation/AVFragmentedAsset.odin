@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVFragmentedAsset", objc_superclass=URLAsset)
 FragmentedAsset :: struct {
@@ -12,7 +12,7 @@ FragmentedAsset :: struct {
 	using _: FragmentMinding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FragmentedAsset, objc_selector="fragmentedAssetWithURL:options:", objc_name="fragmentedAssetWithURL", objc_is_class_method=true)
 	FragmentedAsset_fragmentedAssetWithURL :: proc(_URL: ^NS.URL, options: ^NS.Dictionary) -> instancetype ---
 
@@ -46,7 +46,7 @@ FragmentedAssetInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVFragmentedAssetMinder", objc_superclass=NS.Object)
 FragmentedAssetMinder :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FragmentedAssetMinder, objc_selector="fragmentedAssetMinderWithAsset:mindingInterval:", objc_name="fragmentedAssetMinderWithAsset", objc_is_class_method=true)
 	FragmentedAssetMinder_fragmentedAssetMinderWithAsset :: proc(asset: ^Asset, mindingInterval: NS.TimeInterval) -> instancetype ---
 

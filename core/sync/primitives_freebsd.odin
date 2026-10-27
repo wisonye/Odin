@@ -2,11 +2,11 @@
 #+private
 package sync
 
-import "core:c"
+#import "core:c"
 
-foreign import dl "system:dl"
+#foreign #import dl "system:dl"
 
-foreign dl {
+#foreign dl {
 	pthread_getthreadid_np :: proc "c" () -> c.int ---
 }
 

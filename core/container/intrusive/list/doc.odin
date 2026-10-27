@@ -19,8 +19,8 @@ Here is a full example.
 Example:
 	package test
 	
-	import "core:fmt"
-	import "core:container/intrusive/list"
+	#import "core:fmt"
+	#import "core:container/intrusive/list"
 	
 	main :: proc() {
 	    l: list.List

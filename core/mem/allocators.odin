@@ -1,7 +1,7 @@
 package mem
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 // NOTE(Feoramund): Sanitizer usage in this package has been temporarily
 // disabled pending a thorough review per allocator, as ASan is particular
@@ -18,7 +18,7 @@ import "base:runtime"
 //
 // https://github.com/google/sanitizers/wiki/AddressSanitizerAlgorithm#mapping
 //
-// import "base:sanitizer"
+// #import "base:sanitizer"
 
 
 /*
@@ -298,7 +298,7 @@ The newly allocated memory, if any, is zero-initialized.
 If `old_memory` is `nil`, this procedure acts just like `arena_alloc()`, allocating a memory region `size` bytes in size,
 aligned on a boundary specified by `alignment`.
 
-The last allocation is resized in place if it fits, and gives its tail back to the arena when it shrinks,
+The last allocation is resized in place if it fits, and gives its tail back to the arena #if it shrinks,
 unless a temporary memory region is active. Any other allocation shrinks in place, and moves to grow.
 
 This procedure returns the pointer to the resized memory region.
@@ -325,7 +325,7 @@ The newly allocated memory, if any, is zero-initialized.
 If `old_memory` is `nil`, this procedure acts just like `arena_alloc()`, allocating a memory region `size` bytes in size,
 aligned on a boundary specified by `alignment`.
 
-The last allocation is resized in place if it fits, and gives its tail back to the arena when it shrinks, unless a temporary memory region is active.
+The last allocation is resized in place if it fits, and gives its tail back to the arena #if it shrinks, unless a temporary memory region is active.
 Any other allocation shrinks in place and moves to grow.
 
 This procedure returns the slice of the resized memory region.
@@ -354,7 +354,7 @@ The newly allocated memory, if any, is not explicitly zero-initialized.
 If `old_memory` is `nil`, this procedure acts just like `arena_alloc()`, allocating a memory region `size` bytes in size,
 aligned on a boundary specified by `alignment`.
 
-The last allocation is resized in place if it fits, and gives its tail back to the arena when it shrinks,
+The last allocation is resized in place if it fits, and gives its tail back to the arena #if it shrinks,
 unless a temporary memory region is active. Any other allocation shrinks in place, and moves to grow.
 
 This procedure returns the pointer to the resized memory region.
@@ -381,7 +381,7 @@ The newly allocated memory, if any, is not explicitly zero-initialized.
 If `old_memory` is `nil`, this procedure acts just like `arena_alloc()`, allocating a memory region `size` bytes in size,
 aligned on a boundary specified by `alignment`.
 
-The last allocation is resized in place if it fits, and gives its tail back to the arena when it shrinks,
+The last allocation is resized in place if it fits, and gives its tail back to the arena #if it shrinks,
 unless a temporary memory region is active. Any other allocation shrinks in place, and moves to grow.
 
 This procedure returns the slice of the resized memory region.

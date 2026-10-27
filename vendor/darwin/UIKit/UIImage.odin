@@ -2,10 +2,10 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIImage", objc_superclass=NS.Object)
 Image :: struct {
@@ -14,7 +14,7 @@ Image :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Image, objc_selector="systemImageNamed:", objc_name="systemImageNamed_", objc_is_class_method=true)
 	Image_systemImageNamed_ :: proc(name: ^NS.String) -> ^Image ---
 
@@ -338,7 +338,7 @@ ImageConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageConfiguration, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	ImageConfiguration_new :: proc() -> ^ImageConfiguration ---
 
@@ -372,7 +372,7 @@ foreign lib {
 ImageConfigurationProtocol :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIImageAsset", objc_superclass=NS.Object)
@@ -382,7 +382,7 @@ ImageAsset :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageAsset, objc_selector="init", objc_name="init")
 	ImageAsset_init :: proc(self: ^ImageAsset) -> instancetype ---
 
@@ -422,7 +422,7 @@ ImagePickerController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImagePickerController, objc_selector="isSourceTypeAvailable:", objc_name="isSourceTypeAvailable", objc_is_class_method=true)
 	ImagePickerController_isSourceTypeAvailable :: proc(sourceType: ImagePickerControllerSourceType) -> bool ---
 
@@ -546,7 +546,7 @@ ImagePickerControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImagePickerControllerDelegate, objc_selector="imagePickerController:didFinishPickingImage:editingInfo:", objc_name="imagePickerController_didFinishPickingImage_editingInfo")
 	ImagePickerControllerDelegate_imagePickerController_didFinishPickingImage_editingInfo :: proc(self: ^ImagePickerControllerDelegate, picker: ^ImagePickerController, image: ^Image, editingInfo: ^NS.Dictionary) ---
 
@@ -568,7 +568,7 @@ ImagePickerControllerDelegate_imagePickerController :: proc {
 ImageReader :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageReader, objc_selector="readerWithConfiguration:", objc_name="readerWithConfiguration", objc_is_class_method=true)
 	ImageReader_readerWithConfiguration :: proc(configuration: ^ImageReaderConfiguration) -> instancetype ---
 
@@ -611,7 +611,7 @@ ImageReaderConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageReaderConfiguration, objc_selector="prefersHighDynamicRange", objc_name="prefersHighDynamicRange")
 	ImageReaderConfiguration_prefersHighDynamicRange :: proc(self: ^ImageReaderConfiguration) -> bool ---
 
@@ -642,7 +642,7 @@ foreign lib {
 ImageSymbolConfiguration :: struct { using _: ImageConfiguration}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageSymbolConfiguration, objc_selector="configurationWithScale:", objc_name="configurationWithScale", objc_is_class_method=true)
 	ImageSymbolConfiguration_configurationWithScale :: proc(scale: ImageSymbolScale) -> instancetype ---
 
@@ -731,7 +731,7 @@ ImageSymbolConfiguration_configurationWithFont :: proc {
 ImageView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImageView, objc_selector="initWithImage:", objc_name="initWithImage_")
 	ImageView_initWithImage_ :: proc(self: ^ImageView, image: ^Image) -> instancetype ---
 

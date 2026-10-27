@@ -20,7 +20,7 @@ _subborrow_u32 :: #force_inline proc "c" (c_in: u8, a: u32, b: u32, out: ^u32) -
 	return x
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(require_results)
 	_addcarry_u64 :: #force_inline proc "c" (c_in: u8, a: u64, b: u64, out: ^u64) -> u8 {
 		x, y := llvm_addcarry_u64(c_in, a, b)
@@ -42,7 +42,7 @@ when ODIN_ARCH == .amd64 {
 }
 
 @(private, default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.addcarry.32")
 	llvm_addcarry_u32  :: proc(a: u8, b: u32, c: u32) -> (u8, u32) ---
 	@(link_name="llvm.x86.subborrow.32")

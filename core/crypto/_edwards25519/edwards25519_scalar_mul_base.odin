@@ -1,12 +1,12 @@
 package _edwards25519
 
-import "core:crypto"
-import field "core:crypto/_fiat/field_curve25519"
-import scalar "core:crypto/_fiat/field_scalar25519"
-import subtle "core:crypto/_subtle"
+#import "core:crypto"
+#import field "core:crypto/_fiat/field_curve25519"
+#import scalar "core:crypto/_fiat/field_scalar25519"
+#import subtle "core:crypto/_subtle"
 
 ge_scalarmult_basepoint :: proc "contextless" (ge: ^Group_Element, sc: ^Scalar) {
-	when crypto.COMPACT_IMPLS == true {
+	#if crypto.COMPACT_IMPLS == true {
 		ge_scalarmult(ge, &GE_BASEPOINT, sc)
 	} else {
 		tmp_sc: scalar.Non_Montgomery_Domain_Field_Element
@@ -32,7 +32,7 @@ ge_scalarmult_basepoint :: proc "contextless" (ge: ^Group_Element, sc: ^Scalar) 
 	}
 }
 
-when crypto.COMPACT_IMPLS == false {
+#if crypto.COMPACT_IMPLS == false {
 	@(private="file",rodata)
 	TWO_TIMES_Z2 := field.Loose_Field_Element{2, 0, 0, 0, 0}
 

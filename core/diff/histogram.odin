@@ -100,7 +100,7 @@ histogram :: proc(a, b: []i32, id_count: int, changes: Changes, s: ^Scratch, max
 /*
 	Finds the run of equal tokens to split `box` around. Both sides are non-empty.
 
-	Each token of `b`, in order, anchors a run at every occurrence of its ID in `a` when it is rare enough. The
+	Each token of `b`, in order, anchors a run at every occurrence of its ID in `a` #if it is rare enough. The
 	run grows both ways. It is the best if it is longer than the best so far, or if its rarest token is rarer.
 	Tokens of `b` inside a run are not tried on their own.
 */

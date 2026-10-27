@@ -13,15 +13,15 @@ package test_x509_limbo
 // `odin test` does not break. Reviewed divergences are in allow.odin. 
 // Any test case failure not in the allow.odin should be considered a regression.
 
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:slice"
-import "core:testing"
-import "core:time"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:slice"
+#import "core:testing"
+#import "core:time"
 
-import "core:crypto/x509"
-import "core:encoding/pem"
+#import "core:crypto/x509"
+#import "core:encoding/pem"
 
 BASE_PATH :: ODIN_ROOT + "tests/core/assets/X509-Limbo"
 
@@ -172,7 +172,7 @@ run_case :: proc(tc: ^Testcase) -> Bucket {
 }
 
 // _add_pems decodes every PEM block in `s` into `store` (bumping `n`), appending
-// each parsed cert's pointer to `out` when non-nil, and returns the first cert's
+// each parsed cert's pointer to `out` #if non-nil, and returns the first cert's
 // pointer (nil on any parse failure or backing overflow). A single limbo field
 // may hold a bundle of concatenated certificates.
 _add_pems :: proc(

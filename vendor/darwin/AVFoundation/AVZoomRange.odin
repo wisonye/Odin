@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVZoomRange", objc_superclass=NS.Object)
 ZoomRange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomRange, objc_selector="init", objc_name="init")
 	ZoomRange_init :: proc(self: ^ZoomRange) -> instancetype ---
 

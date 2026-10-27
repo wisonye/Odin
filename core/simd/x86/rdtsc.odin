@@ -14,7 +14,7 @@ __rdtscp :: #force_inline proc "c" (aux: ^u32) -> u64 {
 }
 
 @(private, default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.rdtsc")
 	rdtsc  :: proc() -> u64 ---
 	@(link_name="llvm.x86.rdtscp")

@@ -1,7 +1,7 @@
 package _sha3
 
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 init_cshake :: proc "contextless" (ctx: ^Context, n, s: []byte, sec_strength: int) {
 	ctx.mdlen = sec_strength / 8

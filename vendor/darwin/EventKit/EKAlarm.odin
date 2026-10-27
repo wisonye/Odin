@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_EventKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="EKAlarm", objc_superclass=Object)
 Alarm :: struct {
@@ -10,7 +10,7 @@ Alarm :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Alarm, objc_selector="alarmWithAbsoluteDate:", objc_name="alarmWithAbsoluteDate", objc_is_class_method=true)
 	Alarm_alarmWithAbsoluteDate :: proc(date: ^NS.Date) -> ^Alarm ---
 

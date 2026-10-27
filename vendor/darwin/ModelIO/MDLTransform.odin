@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="MDLTransform", objc_superclass=NS.Object)
 Transform :: struct {
@@ -13,7 +13,7 @@ Transform :: struct {
 	using _: TransformComponent,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Transform, objc_selector="init", objc_name="init")
 	Transform_init :: proc(self: ^Transform) -> instancetype ---
 
@@ -135,7 +135,7 @@ TransformComponent :: struct {
 	using _: Component,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformComponent, objc_selector="setLocalTransform:forTime:", objc_name="setLocalTransform_forTime")
 	TransformComponent_setLocalTransform_forTime :: proc(self: ^TransformComponent, transform: matrix[4,4]f32, time: NS.TimeInterval) ---
 
@@ -185,7 +185,7 @@ TransformMatrixOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformMatrixOp, objc_selector="name", objc_name="name")
 	TransformMatrixOp_name :: proc(self: ^TransformMatrixOp) -> ^NS.String ---
 
@@ -197,7 +197,7 @@ foreign lib {
 @(objc_class="MDLTransformOp")
 TransformOp :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformOp, objc_selector="float4x4AtTime:", objc_name="float4x4AtTime")
 	TransformOp_float4x4AtTime :: proc(self: ^TransformOp, time: NS.TimeInterval) -> matrix[4,4]f32 ---
 
@@ -218,7 +218,7 @@ TransformOrientOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformOrientOp, objc_selector="name", objc_name="name")
 	TransformOrientOp_name :: proc(self: ^TransformOrientOp) -> ^NS.String ---
 
@@ -233,7 +233,7 @@ TransformRotateOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformRotateOp, objc_selector="name", objc_name="name")
 	TransformRotateOp_name :: proc(self: ^TransformRotateOp) -> ^NS.String ---
 
@@ -248,7 +248,7 @@ TransformRotateXOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformRotateXOp, objc_selector="name", objc_name="name")
 	TransformRotateXOp_name :: proc(self: ^TransformRotateXOp) -> ^NS.String ---
 
@@ -263,7 +263,7 @@ TransformRotateYOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformRotateYOp, objc_selector="name", objc_name="name")
 	TransformRotateYOp_name :: proc(self: ^TransformRotateYOp) -> ^NS.String ---
 
@@ -278,7 +278,7 @@ TransformRotateZOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformRotateZOp, objc_selector="name", objc_name="name")
 	TransformRotateZOp_name :: proc(self: ^TransformRotateZOp) -> ^NS.String ---
 
@@ -293,7 +293,7 @@ TransformScaleOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformScaleOp, objc_selector="name", objc_name="name")
 	TransformScaleOp_name :: proc(self: ^TransformScaleOp) -> ^NS.String ---
 
@@ -309,7 +309,7 @@ TransformStack :: struct {
 	using _: TransformComponent,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformStack, objc_selector="init", objc_name="init")
 	TransformStack_init :: proc(self: ^TransformStack) -> id ---
 
@@ -363,7 +363,7 @@ TransformTranslateOp :: struct {
 	using _: TransformOp,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TransformTranslateOp, objc_selector="name", objc_name="name")
 	TransformTranslateOp_name :: proc(self: ^TransformTranslateOp) -> ^NS.String ---
 

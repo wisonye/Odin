@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 ALPHA_OPAQUE            :: 255
 ALPHA_OPAQUE_FLOAT      :: 1.0
@@ -281,14 +281,14 @@ PixelFormat :: enum c.int {
         /* SDL_DEFINE_PIXELFOURCC('M', 'J', 'P', 'G') */
 
 	/* Aliases for RGBA byte arrays of color data, for the current platform */
-	RGBA32 = RGBA8888 when BYTEORDER == BIG_ENDIAN else ABGR8888,
-	ARGB32 = ARGB8888 when BYTEORDER == BIG_ENDIAN else BGRA8888,
-	BGRA32 = BGRA8888 when BYTEORDER == BIG_ENDIAN else ARGB8888,
-	ABGR32 = ABGR8888 when BYTEORDER == BIG_ENDIAN else RGBA8888,
-	RGBX32 = RGBX8888 when BYTEORDER == BIG_ENDIAN else XBGR8888,
-	XRGB32 = XRGB8888 when BYTEORDER == BIG_ENDIAN else BGRX8888,
-	BGRX32 = BGRX8888 when BYTEORDER == BIG_ENDIAN else XRGB8888,
-	XBGR32 = XBGR8888 when BYTEORDER == BIG_ENDIAN else RGBX8888,
+	RGBA32 = RGBA8888 #if BYTEORDER == BIG_ENDIAN else ABGR8888,
+	ARGB32 = ARGB8888 #if BYTEORDER == BIG_ENDIAN else BGRA8888,
+	BGRA32 = BGRA8888 #if BYTEORDER == BIG_ENDIAN else ARGB8888,
+	ABGR32 = ABGR8888 #if BYTEORDER == BIG_ENDIAN else RGBA8888,
+	RGBX32 = RGBX8888 #if BYTEORDER == BIG_ENDIAN else XBGR8888,
+	XRGB32 = XRGB8888 #if BYTEORDER == BIG_ENDIAN else BGRX8888,
+	BGRX32 = BGRX8888 #if BYTEORDER == BIG_ENDIAN else XRGB8888,
+	XBGR32 = XBGR8888 #if BYTEORDER == BIG_ENDIAN else RGBX8888,
 }
 
 ColorType :: enum c.int {
@@ -551,7 +551,7 @@ PixelFormatDetails :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetPixelFormatName     :: proc(format: PixelFormat) -> cstring ---
 	GetMasksForPixelFormat :: proc(format: PixelFormat, bpp: ^c.int, Rmask, Gmask, Bmask, Amask: ^Uint32) -> bool ---
 	GetPixelFormatForMasks :: proc(bpp: c.int, Rmask, Gmask, Bmask, Amask: Uint32) -> PixelFormat ---

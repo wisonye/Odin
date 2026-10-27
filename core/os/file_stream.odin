@@ -1,8 +1,8 @@
 package os
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:io"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:io"
 
 // A subset of the io.Stream_Mode with added File specific modes
 File_Stream_Mode :: enum {

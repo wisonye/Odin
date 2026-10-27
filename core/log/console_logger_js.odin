@@ -1,9 +1,9 @@
 #+build js
 package log
 
-import "core:fmt"
-import "core:strings"
-import "core:time"
+#import "core:fmt"
+#import "core:strings"
+#import "core:time"
 
 Level_Headers := [?]string{
 	 0..<10 = "[DEBUG] --- ",
@@ -47,7 +47,7 @@ console_logger_proc :: proc(logger_data: rawptr, level: Level, text: string, opt
 		fmt.sbprint(&buf, Level_Headers[level])
 	}
 
-	when time.IS_SUPPORTED {
+	#if time.IS_SUPPORTED {
 		do_time_header(options, &buf, time.now())
 	}
 
@@ -64,7 +64,7 @@ console_logger_proc :: proc(logger_data: rawptr, level: Level, text: string, opt
 }
 
 do_time_header :: proc(opts: Options, buf: ^strings.Builder, t: time.Time) {
-	when time.IS_SUPPORTED {
+	#if time.IS_SUPPORTED {
 		if Full_Timestamp_Opts & opts != nil {
 			fmt.sbprint(buf, "[")
 			y, m, d := time.date(t)

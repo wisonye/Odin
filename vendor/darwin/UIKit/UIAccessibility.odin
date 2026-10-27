@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIAccessibilityContainerDataTable")
 AccessibilityContainerDataTable :: struct {
@@ -13,7 +13,7 @@ AccessibilityContainerDataTable :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityContainerDataTable, objc_selector="accessibilityDataTableCellElementForRow:column:", objc_name="accessibilityDataTableCellElementForRow")
 	AccessibilityContainerDataTable_accessibilityDataTableCellElementForRow :: proc(self: ^AccessibilityContainerDataTable, row: NS.UInteger, column: NS.UInteger) -> ^AccessibilityContainerDataTableCell ---
 
@@ -38,7 +38,7 @@ AccessibilityContainerDataTableCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityContainerDataTableCell, objc_selector="accessibilityRowRange", objc_name="accessibilityRowRange")
 	AccessibilityContainerDataTableCell_accessibilityRowRange :: proc(self: ^AccessibilityContainerDataTableCell) -> NS._NSRange ---
 
@@ -54,7 +54,7 @@ AccessibilityContentSizeCategoryImageAdjusting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityContentSizeCategoryImageAdjusting, objc_selector="adjustsImageSizeForAccessibilityContentSizeCategory", objc_name="adjustsImageSizeForAccessibilityContentSizeCategory")
 	AccessibilityContentSizeCategoryImageAdjusting_adjustsImageSizeForAccessibilityContentSizeCategory :: proc(self: ^AccessibilityContentSizeCategoryImageAdjusting) -> bool ---
 
@@ -67,7 +67,7 @@ foreign lib {
 AccessibilityCustomAction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomAction, objc_selector="initWithName:target:selector:", objc_name="initWithName_target_selector")
 	AccessibilityCustomAction_initWithName_target_selector :: proc(self: ^AccessibilityCustomAction, name: ^NS.String, target: id, selector: SEL) -> instancetype ---
 
@@ -156,7 +156,7 @@ AccessibilityCustomAction_initWithAttributedName :: proc {
 AccessibilityCustomRotor :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotor, objc_selector="initWithName:itemSearchBlock:", objc_name="initWithName")
 	AccessibilityCustomRotor_initWithName :: proc(self: ^AccessibilityCustomRotor, name: ^NS.String, itemSearchBlock: AccessibilityCustomRotorSearch) -> instancetype ---
 
@@ -193,7 +193,7 @@ foreign lib {
 AccessibilityCustomRotorItemResult :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotorItemResult, objc_selector="initWithTargetElement:targetRange:", objc_name="initWithTargetElement")
 	AccessibilityCustomRotorItemResult_initWithTargetElement :: proc(self: ^AccessibilityCustomRotorItemResult, targetElement: ^NS.ObjectProtocol, targetRange: ^TextRange) -> instancetype ---
 
@@ -215,7 +215,7 @@ foreign lib {
 AccessibilityCustomRotorSearchPredicate :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityCustomRotorSearchPredicate, objc_selector="currentItem", objc_name="currentItem")
 	AccessibilityCustomRotorSearchPredicate_currentItem :: proc(self: ^AccessibilityCustomRotorSearchPredicate) -> ^AccessibilityCustomRotorItemResult ---
 
@@ -237,7 +237,7 @@ AccessibilityElement :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityElement, objc_selector="initWithAccessibilityContainer:", objc_name="initWithAccessibilityContainer")
 	AccessibilityElement_initWithAccessibilityContainer :: proc(self: ^AccessibilityElement, container: id) -> instancetype ---
 
@@ -298,7 +298,7 @@ AccessibilityIdentification :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityIdentification, objc_selector="accessibilityIdentifier", objc_name="accessibilityIdentifier")
 	AccessibilityIdentification_accessibilityIdentifier :: proc(self: ^AccessibilityIdentification) -> ^NS.String ---
 
@@ -311,7 +311,7 @@ foreign lib {
 AccessibilityLocationDescriptor :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityLocationDescriptor, objc_selector="init", objc_name="init")
 	AccessibilityLocationDescriptor_init :: proc(self: ^AccessibilityLocationDescriptor) -> instancetype ---
 
@@ -351,7 +351,7 @@ AccessibilityLocationDescriptor_initWithName :: proc {
 AccessibilityReadingContent :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccessibilityReadingContent, objc_selector="accessibilityLineNumberForPoint:", objc_name="accessibilityLineNumberForPoint")
 	AccessibilityReadingContent_accessibilityLineNumberForPoint :: proc(self: ^AccessibilityReadingContent, point: CG.Point) -> NS.Integer ---
 

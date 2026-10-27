@@ -1,8 +1,8 @@
 package mem
 
-import "base:runtime"
+#import "base:runtime"
 
-//NOTE(bill, 2019-12-31): These are defined in `package runtime` as they are used in the `context`. This is to prevent an import definition cycle.
+//NOTE(bill, 2019-12-31): These are defined in `package runtime` as they are used in the `context`. This is to prevent an #import definition cycle.
 
 /*
 A request to allocator procedure.
@@ -259,8 +259,8 @@ On platforms where we were able to query a configurable size, we use that value 
 See `query_page_size_init()`
 */
 PAGE_SIZE: int =
-	64 * 1024 when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 else
-	16 * 1024 when ODIN_OS == .Darwin && ODIN_ARCH == .arm64 else
+	64 * 1024 #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 else
+	16 * 1024 #if ODIN_OS == .Darwin && ODIN_ARCH == .arm64 else
 	4 * 1024
 
 /*
@@ -282,7 +282,7 @@ If the `size` parameter is `0`, the operation is a no-op.
 
 **Errors**:
 - `None`: If no error occurred.
-- `Out_Of_Memory`: Occurs when the allocator runs out of space in any of its
+- `Out_Of_Memory`: Occurs #if the allocator runs out of space in any of its
 	backing buffers, the backing allocator has ran out of space, or an operating
 	system failure occurred.
 - `Invalid_Argument`: If the supplied `size` is negative, alignment is not a
@@ -316,7 +316,7 @@ by `alignment` using the allocator specified by `allocator`.
 
 **Errors**:
 - `None`: If no error occurred.
-- `Out_Of_Memory`: Occurs when the allocator runs out of space in any of its
+- `Out_Of_Memory`: Occurs #if the allocator runs out of space in any of its
 	backing buffers, the backing allocator has ran out of space, or an operating
 	system failure occurred.
 - `Invalid_Argument`: If the supplied `size` is negative, alignment is not a
@@ -350,7 +350,7 @@ does not explicitly zero-initialize allocated memory region.
 
 **Errors**:
 - `None`: If no error occurred.
-- `Out_Of_Memory`: Occurs when the allocator runs out of space in any of its
+- `Out_Of_Memory`: Occurs #if the allocator runs out of space in any of its
 	backing buffers, the backing allocator has ran out of space, or an operating
 	system failure occurred.
 - `Invalid_Argument`: If the supplied `size` is negative, alignment is not a
@@ -984,7 +984,7 @@ make_dynamic_array_len_cap :: proc(
 Create a map with no initial allocation.
 
 This procedure creates a map of type `T` with no initial allocation, which will
-use the allocator specified by `allocator` as its backing allocator when it
+use the allocator specified by `allocator` as its backing allocator #if it
 allocates.
 */
 @(require_results)

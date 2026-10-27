@@ -2,9 +2,9 @@
 
 package rexcode_ppc_tests
 
-import "core:fmt"
-import "core:os"
-import p ".."
+#import "core:fmt"
+#import "core:os"
+#import p ".."
 
 ok_count, fail_count: int
 

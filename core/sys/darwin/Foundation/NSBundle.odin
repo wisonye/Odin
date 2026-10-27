@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSBundle", objc_superclass=Object)
 Bundle :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Bundle, objc_selector="bundleWithPath:", objc_name="bundleWithPath", objc_is_class_method=true)
 	Bundle_bundleWithPath :: proc(path: ^String) -> instancetype ---
 
@@ -259,7 +259,7 @@ BundleResourceRequest :: struct {
 	using _: ProgressReporting,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BundleResourceRequest, objc_selector="init", objc_name="init")
 	BundleResourceRequest_init :: proc(self: ^BundleResourceRequest) -> instancetype ---
 

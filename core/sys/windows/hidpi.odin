@@ -179,9 +179,9 @@ HIDP_STATUS_NOT_IMPLEMENTED         : NTSTATUS : -1072627680 //0xC0110020
 HIDP_STATUS_NOT_BUTTON_ARRAY        : NTSTATUS : -1072627679 //0xC0110021
 HIDP_STATUS_I8242_TRANS_UNKNOWN :: HIDP_STATUS_I8042_TRANS_UNKNOWN
 
-foreign import hid "system:hid.lib"
+#foreign #import hid "system:hid.lib"
 @(default_calling_convention="system")
-foreign hid {
+#foreign hid {
 	HidP_GetCaps                :: proc(PreparsedData: PHIDP_PREPARSED_DATA, Capabilities: PHIDP_CAPS) -> NTSTATUS ---
 	HidP_GetButtonCaps          :: proc(ReportType: HIDP_REPORT_TYPE, ButtonCaps: PHIDP_BUTTON_CAPS, ButtonCapsLength: PUSHORT, PreparsedData: PHIDP_PREPARSED_DATA) -> NTSTATUS ---
 	HidP_GetValueCaps           :: proc(ReportType: HIDP_REPORT_TYPE, ValueCaps: PHIDP_VALUE_CAPS, ValueCapsLength: PUSHORT, PreparsedData: PHIDP_PREPARSED_DATA) -> NTSTATUS ---

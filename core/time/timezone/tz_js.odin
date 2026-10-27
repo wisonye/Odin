@@ -2,7 +2,7 @@
 #+private
 package timezone
 
-import "core:time/datetime"
+#import "core:time/datetime"
 
 local_tz_name :: proc(allocator := context.allocator) -> (name: string, success: bool) {
 	return

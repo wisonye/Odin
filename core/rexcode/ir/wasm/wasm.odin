@@ -28,7 +28,7 @@
 // and the unit of work (an `ir.Module` of functions->blocks->operations).
 package rexcode_wasm
 
-import "core:rexcode/ir"
+#import "core:rexcode/ir"
 
 // =============================================================================
 // SECTION: Re-exported shared vocabulary (the IR naming contract, ir_design §4)

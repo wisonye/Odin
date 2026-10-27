@@ -1,9 +1,9 @@
 // A selection of cryptography algorithms and useful helper routines.
 package crypto
 
-import "base:intrinsics"
-import "base:runtime"
-import subtle "core:crypto/_subtle"
+#import "base:intrinsics"
+#import "base:runtime"
+#import subtle "core:crypto/_subtle"
 
 // Omit large precomputed tables, trading off performance for size.
 COMPACT_IMPLS: bool : #config(ODIN_CRYPTO_COMPACT, false)

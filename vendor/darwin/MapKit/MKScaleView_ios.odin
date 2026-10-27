@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_MapKit
 
-import UI "vendor:darwin/UIKit"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="MKScaleView", objc_superclass=UI.View)
 ScaleView :: struct { using _: UI.View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScaleView, objc_selector="scaleViewWithMapView:", objc_name="scaleViewWithMapView", objc_is_class_method=true)
 	ScaleView_scaleViewWithMapView :: proc(mapView: ^MapView) -> instancetype ---
 

@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import "base:intrinsics"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSNumber", objc_superclass=Value)
 Number :: struct { using _: Value}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Number, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	Number_initWithCoder :: proc(self: ^Number, coder: ^Coder) -> instancetype ---
 
@@ -167,7 +167,7 @@ foreign lib {
 @(objc_class="NSDecimalNumber", objc_superclass=Number)
 DecimalNumber :: struct { using _: Number}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DecimalNumber, objc_selector="initWithMantissa:exponent:isNegative:", objc_name="initWithMantissa")
 	DecimalNumber_initWithMantissa :: proc(self: ^DecimalNumber, mantissa: cffi.ulonglong, exponent: cffi.short, flag: bool) -> instancetype ---
 
@@ -322,7 +322,7 @@ DecimalNumber_decimalNumberByMultiplyingByPowerOf10 :: proc {
 @(objc_class="NSDecimalNumberBehaviors")
 DecimalNumberBehaviors :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DecimalNumberBehaviors, objc_selector="roundingMode", objc_name="roundingMode")
 	DecimalNumberBehaviors_roundingMode :: proc(self: ^DecimalNumberBehaviors) -> RoundingMode ---
 
@@ -341,7 +341,7 @@ DecimalNumberHandler :: struct {
 	using _: Coding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DecimalNumberHandler, objc_selector="initWithRoundingMode:scale:raiseOnExactness:raiseOnOverflow:raiseOnUnderflow:raiseOnDivideByZero:", objc_name="initWithRoundingMode")
 	DecimalNumberHandler_initWithRoundingMode :: proc(self: ^DecimalNumberHandler, roundingMode: RoundingMode, scale: cffi.short, exact: bool, overflow: bool, underflow: bool, divideByZero: bool) -> instancetype ---
 
@@ -356,7 +356,7 @@ foreign lib {
 @(objc_class="NSNumberFormatter", objc_superclass=Formatter)
 NumberFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NumberFormatter, objc_selector="getObjectValue:forString:range:error:", objc_name="getObjectValue_error")
 	NumberFormatter_getObjectValue_error :: proc(self: ^NumberFormatter, obj: ^id, string: ^String, rangep: ^_NSRange, error: ^^Error) -> bool ---
 
@@ -723,7 +723,7 @@ foreign lib {
 	@(objc_type=NumberFormatter, objc_selector="setPartialStringValidationEnabled:", objc_name="setPartialStringValidationEnabled")
 	NumberFormatter_setPartialStringValidationEnabled :: proc(self: ^NumberFormatter, partialStringValidationEnabled: bool) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=NumberFormatter, objc_selector="hasThousandSeparators", objc_name="hasThousandSeparators")
 		NumberFormatter_hasThousandSeparators :: proc(self: ^NumberFormatter) -> bool ---
 

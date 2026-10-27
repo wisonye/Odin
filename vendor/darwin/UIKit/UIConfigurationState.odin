@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIConfigurationState")
 ConfigurationState :: struct {
@@ -14,7 +14,7 @@ ConfigurationState :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ConfigurationState, objc_selector="initWithTraitCollection:", objc_name="initWithTraitCollection")
 	ConfigurationState_initWithTraitCollection :: proc(self: ^ConfigurationState, traitCollection: ^TraitCollection) -> instancetype ---
 

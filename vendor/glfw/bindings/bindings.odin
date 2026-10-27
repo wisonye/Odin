@@ -1,36 +1,36 @@
 package glfw_bindings
 
-import "core:c"
-import vk "vendor:vulkan"
+#import "core:c"
+#import vk "vendor:vulkan"
 
 GLFW_SHARED :: #config(GLFW_SHARED, ODIN_OS != .Windows && ODIN_OS != .Darwin)
 
-when ODIN_OS == .Windows {
-	when GLFW_SHARED {
-		foreign import glfw {
+#if ODIN_OS == .Windows {
+	#if GLFW_SHARED {
+		#foreign #import glfw {
 			"../lib/glfw3dll.lib",
 			"system:user32.lib", 
 			"system:gdi32.lib", 
 			"system:shell32.lib",
 		}
 	} else {
-		foreign import glfw {
+		#foreign #import glfw {
 			"../lib/glfw3_mt.lib",
 			"system:user32.lib",
 			"system:gdi32.lib",
 			"system:shell32.lib",
 		}
 	}
-} else when ODIN_OS == .Darwin {
-	when GLFW_SHARED {
-		foreign import glfw {
+} else #if ODIN_OS == .Darwin {
+	#if GLFW_SHARED {
+		#foreign #import glfw {
 			"system:glfw",
 			"system:Cocoa.framework",
 			"system:IOKit.framework",
 			"system:OpenGL.framework",
 		}
 	} else {
-		foreign import glfw { 
+		#foreign #import glfw { 
 			"../lib/darwin/libglfw3.a",
 			"system:Cocoa.framework",
 			"system:IOKit.framework",
@@ -38,16 +38,16 @@ when ODIN_OS == .Windows {
 		}
 	}
 } else {
-	when GLFW_SHARED {
-		foreign import glfw "system:glfw"
+	#if GLFW_SHARED {
+		#foreign #import glfw "system:glfw"
 	} else {
 		@(private)
 		LIBGLFW3 :: "../lib/libglfw3.a"
-		when !#exists(LIBGLFW3) {
+		#if !#exists(LIBGLFW3) {
 			#panic("Could not find the static glfw library, add it at \"" + ODIN_ROOT + "vendor/glfw/lib/\"`")
 		}
 
-		foreign import glfw { LIBGLFW3 }
+		#foreign #import glfw { LIBGLFW3 }
 	}
 }
 
@@ -55,7 +55,7 @@ when ODIN_OS == .Windows {
 
 /*** Functions ***/
 @(default_calling_convention="c", link_prefix="glfw")
-foreign glfw {
+#foreign glfw {
 	Init      :: proc() -> b32 ---
 	Terminate :: proc() ---
 	
@@ -212,9 +212,9 @@ foreign glfw {
 	// Functions added in 3.4, Linux links against system glfw so we define these as weak to be able
 	// to check at runtime if they are available.
 
-	@(linkage="strong" when ODIN_OS == .Windows else "weak")
+	@(linkage="strong" #if ODIN_OS == .Windows else "weak")
 	GetPlatform       :: proc() -> c.int ---
-	@(linkage="strong" when ODIN_OS == .Windows else "weak")
+	@(linkage="strong" #if ODIN_OS == .Windows else "weak")
 	PlatformSupported :: proc(platform: c.int) -> b32 ---
 }
 

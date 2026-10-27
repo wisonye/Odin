@@ -19,12 +19,12 @@ package main
 //
 // Run:  cd isa/mos65816 && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:reflect"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:reflect"
+#import "core:strings"
 
-import m ".."
+#import m ".."
 
 mnemonic_str :: proc(mn: m.Mnemonic) -> string {
 	s, ok := reflect.enum_name_from_value(mn)

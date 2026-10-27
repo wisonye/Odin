@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLCommandBuffer")
 CommandBuffer :: struct {
@@ -13,7 +13,7 @@ CommandBuffer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandBuffer, objc_selector="enqueue", objc_name="enqueue")
 	CommandBuffer_enqueue :: proc(self: ^CommandBuffer) ---
 
@@ -139,7 +139,7 @@ CommandBufferDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandBufferDescriptor, objc_selector="retainedReferences", objc_name="retainedReferences")
 	CommandBufferDescriptor_retainedReferences :: proc(self: ^CommandBufferDescriptor) -> bool ---
 
@@ -166,7 +166,7 @@ CommandBufferEncoderInfo :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandBufferEncoderInfo, objc_selector="label", objc_name="label")
 	CommandBufferEncoderInfo_label :: proc(self: ^CommandBufferEncoderInfo) -> ^NS.String ---
 
@@ -184,7 +184,7 @@ CommandEncoder :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandEncoder, objc_selector="endEncoding", objc_name="endEncoding")
 	CommandEncoder_endEncoding :: proc(self: ^CommandEncoder) ---
 
@@ -217,7 +217,7 @@ BlitCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BlitCommandEncoder, objc_selector="synchronizeResource:", objc_name="synchronizeResource")
 	BlitCommandEncoder_synchronizeResource :: proc(self: ^BlitCommandEncoder, resource: ^Resource) ---
 
@@ -334,7 +334,7 @@ ComputeCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputeCommandEncoder, objc_selector="setComputePipelineState:", objc_name="setComputePipelineState")
 	ComputeCommandEncoder_setComputePipelineState :: proc(self: ^ComputeCommandEncoder, state: ^ComputePipelineState) ---
 
@@ -545,7 +545,7 @@ ParallelRenderCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ParallelRenderCommandEncoder, objc_selector="renderCommandEncoder", objc_name="renderCommandEncoder")
 	ParallelRenderCommandEncoder_renderCommandEncoder :: proc(self: ^ParallelRenderCommandEncoder) -> ^RenderCommandEncoder ---
 
@@ -575,7 +575,7 @@ RenderCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RenderCommandEncoder, objc_selector="setRenderPipelineState:", objc_name="setRenderPipelineState")
 	RenderCommandEncoder_setRenderPipelineState :: proc(self: ^RenderCommandEncoder, pipelineState: ^RenderPipelineState) ---
 
@@ -1194,7 +1194,7 @@ CommandQueue :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandQueue, objc_selector="commandBuffer", objc_name="commandBuffer")
 	CommandQueue_commandBuffer :: proc(self: ^CommandQueue) -> ^CommandBuffer ---
 
@@ -1236,7 +1236,7 @@ CommandQueueDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CommandQueueDescriptor, objc_selector="maxCommandBufferCount", objc_name="maxCommandBufferCount")
 	CommandQueueDescriptor_maxCommandBufferCount :: proc(self: ^CommandQueueDescriptor) -> NS.UInteger ---
 

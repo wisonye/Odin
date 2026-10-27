@@ -1,9 +1,9 @@
 package field_scalarp384r1
 
-import "core:crypto"
-import subtle "core:crypto/_subtle"
-import "core:encoding/endian"
-import "core:math/bits"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
+#import "core:encoding/endian"
+#import "core:math/bits"
 
 @(private, rodata)
 TWO_256 := Montgomery_Domain_Field_Element{

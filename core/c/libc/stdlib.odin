@@ -2,23 +2,23 @@ package libc
 
 // 7.22 General utilities
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
 
 @(require)
-import "base:runtime"
+#import "base:runtime"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	RAND_MAX :: 0x7fff
 
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		___mb_cur_max_func :: proc() -> int ---
 	}
 
@@ -27,13 +27,13 @@ when ODIN_OS == .Windows {
 	}
 }
 
-when ODIN_OS == .Linux {
+#if ODIN_OS == .Linux {
 	RAND_MAX :: 0x7fffffff
 
 	// GLIBC and MUSL only
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		__ctype_get_mb_cur_max :: proc() -> size_t ---
 	}
 
@@ -42,12 +42,12 @@ when ODIN_OS == .Linux {
 	}
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
 	RAND_MAX :: 0x7fffffff
 
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		___mb_cur_max :: proc() -> int ---
 	}
 
@@ -56,12 +56,12 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
 	}
 }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	RAND_MAX :: 0x7fffffff
 
 	@(private="file")
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		__mb_cur_max: size_t
 	}
 
@@ -85,7 +85,7 @@ ldiv_t  :: struct { quot, rem: long, }
 lldiv_t :: struct { quot, rem: longlong, }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.22.1 Numeric conversion functions
 	atof          :: proc(nptr: cstring) -> double ---
 	atoi          :: proc(nptr: cstring) -> int ---
@@ -142,17 +142,17 @@ foreign libc {
 
 
 aligned_alloc :: #force_inline proc "c" (alignment, size: size_t) -> rawptr {
-	when ODIN_OS == .Windows {
-		foreign libc {
+	#if ODIN_OS == .Windows {
+		#foreign libc {
 			_aligned_malloc :: proc(size, alignment: size_t) -> rawptr ---
 		}
 		return _aligned_malloc(size=size, alignment=alignment)
-	} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
 		context = runtime.default_context()
 		data, _ := runtime.mem_alloc_bytes(auto_cast size, auto_cast alignment)
 		return raw_data(data)
 	} else {
-		foreign libc {
+		#foreign libc {
 			aligned_alloc :: proc(alignment, size: size_t) -> rawptr ---
 		}
 		return aligned_alloc(alignment=alignment, size=size)
@@ -161,12 +161,12 @@ aligned_alloc :: #force_inline proc "c" (alignment, size: size_t) -> rawptr {
 
 
 aligned_free :: #force_inline proc "c" (ptr: rawptr) {
-	when ODIN_OS == .Windows {
-		foreign libc {
+	#if ODIN_OS == .Windows {
+		#foreign libc {
 			_aligned_free :: proc(ptr: rawptr) ---
 		}
 		_aligned_free(ptr)
-	} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
 		context = runtime.default_context()
 		runtime.mem_free(ptr)
 	} else {

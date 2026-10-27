@@ -5,7 +5,7 @@ package darwin_GameController
 @(objc_class="GCEventViewController", objc_superclass=UI_ViewController)
 EventViewController :: struct { using _: UI_ViewController}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=EventViewController, objc_selector="controllerUserInteractionEnabled", objc_name="controllerUserInteractionEnabled")
 	EventViewController_controllerUserInteractionEnabled :: proc(self: ^EventViewController) -> bool ---
 

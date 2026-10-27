@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSComboBox", objc_superclass=TextField)
 ComboBox :: struct { using _: TextField}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboBox, objc_selector="reloadData", objc_name="reloadData")
 	ComboBox_reloadData :: proc(self: ^ComboBox) ---
 
@@ -131,7 +131,7 @@ ComboBoxDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboBoxDelegate, objc_selector="comboBoxWillPopUp:", objc_name="comboBoxWillPopUp")
 	ComboBoxDelegate_comboBoxWillPopUp :: proc(self: ^ComboBoxDelegate, notification: ^NS.Notification) ---
 
@@ -153,7 +153,7 @@ ComboBoxDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboBoxDataSource, objc_selector="numberOfItemsInComboBox:", objc_name="numberOfItemsInComboBox")
 	ComboBoxDataSource_numberOfItemsInComboBox :: proc(self: ^ComboBoxDataSource, comboBox: ^ComboBox) -> NS.Integer ---
 
@@ -172,7 +172,7 @@ foreign lib {
 ComboBoxCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboBoxCell, objc_selector="reloadData", objc_name="reloadData")
 	ComboBoxCell_reloadData :: proc(self: ^ComboBoxCell) ---
 
@@ -290,7 +290,7 @@ ComboBoxCellDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboBoxCellDataSource, objc_selector="numberOfItemsInComboBoxCell:", objc_name="numberOfItemsInComboBoxCell")
 	ComboBoxCellDataSource_numberOfItemsInComboBoxCell :: proc(self: ^ComboBoxCellDataSource, comboBoxCell: ^ComboBoxCell) -> NS.Integer ---
 
@@ -309,7 +309,7 @@ foreign lib {
 ComboButton :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ComboButton, objc_selector="comboButtonWithTitle:menu:target:action:", objc_name="comboButtonWithTitle_menu_target_action", objc_is_class_method=true)
 	ComboButton_comboButtonWithTitle_menu_target_action :: proc(title: ^NS.String, menu: ^Menu, target: id, action: SEL) -> instancetype ---
 

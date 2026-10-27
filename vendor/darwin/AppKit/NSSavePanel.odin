@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSSavePanel", objc_superclass=Panel)
 SavePanel :: struct { using _: Panel}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SavePanel, objc_selector="savePanel", objc_name="savePanel", objc_is_class_method=true)
 	SavePanel_savePanel :: proc() -> ^SavePanel ---
 
@@ -196,7 +196,7 @@ OpenSavePanelDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenSavePanelDelegate, objc_selector="panel:shouldEnableURL:", objc_name="panel_shouldEnableURL")
 	OpenSavePanelDelegate_panel_shouldEnableURL :: proc(self: ^OpenSavePanelDelegate, sender: id, url: ^NS.URL) -> bool ---
 
@@ -236,7 +236,7 @@ OpenSavePanelDelegate_panel_validateURL :: #force_inline proc "c" (self: ^OpenSa
 OpenPanel :: struct { using _: SavePanel}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OpenPanel, objc_selector="openPanel", objc_name="openPanel", objc_is_class_method=true)
 	OpenPanel_openPanel :: proc() -> ^OpenPanel ---
 

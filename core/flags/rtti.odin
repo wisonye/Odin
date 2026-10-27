@@ -1,6 +1,6 @@
 package flags
 
-import "base:runtime"
+#import "base:runtime"
 
 /*
 Handle setting custom data types.

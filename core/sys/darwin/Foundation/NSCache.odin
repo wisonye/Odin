@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSCache", objc_superclass=Object)
 Cache :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Cache, objc_selector="objectForKey:", objc_name="objectForKey")
 	Cache_objectForKey :: proc(self: ^Cache, key: id) -> id ---
 
@@ -69,7 +69,7 @@ CacheDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CacheDelegate, objc_selector="cache:willEvictObject:", objc_name="cache")
 	CacheDelegate_cache :: proc(self: ^CacheDelegate, cache: ^Cache, obj: id) ---
 }

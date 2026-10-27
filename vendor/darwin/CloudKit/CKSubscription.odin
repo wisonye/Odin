@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKSubscription", objc_superclass=NS.Object)
 Subscription :: struct {
@@ -11,7 +11,7 @@ Subscription :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Subscription, objc_selector="init", objc_name="init")
 	Subscription_init :: proc(self: ^Subscription) -> instancetype ---
 

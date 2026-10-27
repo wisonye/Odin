@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIFeedbackGenerator", objc_superclass=NS.Object)
 FeedbackGenerator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FeedbackGenerator, objc_selector="feedbackGeneratorForView:", objc_name="feedbackGeneratorForView", objc_is_class_method=true)
 	FeedbackGenerator_feedbackGeneratorForView :: proc(view: ^View) -> instancetype ---
 
@@ -25,7 +25,7 @@ foreign lib {
 CanvasFeedbackGenerator :: struct { using _: FeedbackGenerator}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CanvasFeedbackGenerator, objc_selector="alignmentOccurredAtLocation:", objc_name="alignmentOccurredAtLocation")
 	CanvasFeedbackGenerator_alignmentOccurredAtLocation :: proc(self: ^CanvasFeedbackGenerator, location: CG.Point) ---
 
@@ -38,7 +38,7 @@ foreign lib {
 ImpactFeedbackGenerator :: struct { using _: FeedbackGenerator}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ImpactFeedbackGenerator, objc_selector="feedbackGeneratorWithStyle:forView:", objc_name="feedbackGeneratorWithStyle", objc_is_class_method=true)
 	ImpactFeedbackGenerator_feedbackGeneratorWithStyle :: proc(style: ImpactFeedbackStyle, view: ^View) -> instancetype ---
 
@@ -69,7 +69,7 @@ ImpactFeedbackGenerator_impactOccurredWithIntensity :: proc {
 NotificationFeedbackGenerator :: struct { using _: FeedbackGenerator}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NotificationFeedbackGenerator, objc_selector="notificationOccurred:", objc_name="notificationOccurred_")
 	NotificationFeedbackGenerator_notificationOccurred_ :: proc(self: ^NotificationFeedbackGenerator, notificationType: NotificationFeedbackType) ---
 
@@ -88,7 +88,7 @@ NotificationFeedbackGenerator_notificationOccurred :: proc {
 SelectionFeedbackGenerator :: struct { using _: FeedbackGenerator}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SelectionFeedbackGenerator, objc_selector="selectionChanged", objc_name="selectionChanged")
 	SelectionFeedbackGenerator_selectionChanged :: proc(self: ^SelectionFeedbackGenerator) ---
 

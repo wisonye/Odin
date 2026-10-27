@@ -1,18 +1,18 @@
 package benchmark_core_crypto
 
-import "base:runtime"
-import "core:encoding/hex"
-import "core:mem"
-import "core:log"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "base:runtime"
+#import "core:encoding/hex"
+#import "core:mem"
+#import "core:log"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
-import "core:crypto"
-import "core:crypto/ecdh"
-import "core:crypto/ecdsa"
-import "core:crypto/ed25519"
-import "core:crypto/hash"
+#import "core:crypto"
+#import "core:crypto/ecdh"
+#import "core:crypto/ecdsa"
+#import "core:crypto/ed25519"
+#import "core:crypto/hash"
 
 @(private = "file")
 ECDH_ITERS :: 10000

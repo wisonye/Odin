@@ -2,7 +2,7 @@
 package spall
 
 // Package is `#+no-instrumentation`, safe to use.
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 MAX_RW :: 1<<30
 

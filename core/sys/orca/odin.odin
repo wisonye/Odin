@@ -2,7 +2,7 @@ package orca
 
 // File contains Odin specific helpers.
 
-import "base:runtime"
+#import "base:runtime"
 
 create_odin_logger :: proc(lowest := runtime.Logger_Level.Debug, ident := "") -> runtime.Logger {
 	return runtime.Logger{odin_logger_proc, nil, lowest, {}}

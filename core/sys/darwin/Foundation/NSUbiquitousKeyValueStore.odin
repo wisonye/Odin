@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSUbiquitousKeyValueStore", objc_superclass=Object)
 UbiquitousKeyValueStore :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UbiquitousKeyValueStore, objc_selector="objectForKey:", objc_name="objectForKey")
 	UbiquitousKeyValueStore_objectForKey :: proc(self: ^UbiquitousKeyValueStore, aKey: ^String) -> id ---
 

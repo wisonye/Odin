@@ -11,7 +11,7 @@ Set :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Set, objc_selector="member:", objc_name="member")
 	Set_member :: proc(self: ^Set, object: id) -> id ---
 
@@ -169,7 +169,7 @@ Set_removeObserver :: proc {
 @(objc_class="NSMutableSet", objc_superclass=Set)
 MutableSet :: struct { using _: Set}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableSet, objc_selector="addObject:", objc_name="addObject")
 	MutableSet_addObject :: proc(self: ^MutableSet, object: id) ---
 
@@ -214,7 +214,7 @@ foreign lib {
 @(objc_class="NSCountedSet", objc_superclass=MutableSet)
 CountedSet :: struct { using _: MutableSet}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CountedSet, objc_selector="initWithCapacity:", objc_name="initWithCapacity")
 	CountedSet_initWithCapacity :: proc(self: ^CountedSet, numItems: UInteger) -> instancetype ---
 

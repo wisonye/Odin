@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(private="file")
 slice_equal :: proc(a, b: []int) -> bool {
@@ -102,7 +102,7 @@ test_fixed_capacity_dynamic_array_constant_slice :: proc(t: ^testing.T) {
 }
 
 // AddressSanitizer on Windows ends the process on the bounds check trap before the test runner can catch it.
-when !(ODIN_OS == .Windows && .Address in ODIN_SANITIZER_FLAGS) {
+#if !(ODIN_OS == .Windows && .Address in ODIN_SANITIZER_FLAGS) {
 	@(test)
 	test_fixed_capacity_dynamic_array_constant_slice_out_of_range :: proc(t: ^testing.T) {
 		array: [dynamic; 4]int

@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 Cursor :: struct {}
@@ -46,7 +46,7 @@ MouseWheelDirection :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetMouseFocus         :: proc() -> ^Window ---
 	GetMouseState         :: proc(x, y: ^c.int) -> u32 ---
 	GetGlobalMouseState   :: proc(x, y: ^c.int) -> u32 ---

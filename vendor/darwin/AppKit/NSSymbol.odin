@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="NSSymbolContentTransition", objc_superclass=NS.Object)
 SymbolContentTransition :: struct {
@@ -13,7 +13,7 @@ SymbolContentTransition :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolContentTransition, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SymbolContentTransition_new :: proc() -> ^SymbolContentTransition ---
 
@@ -26,7 +26,7 @@ foreign lib {
 SymbolAutomaticContentTransition :: struct { using _: SymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolAutomaticContentTransition, objc_selector="transition", objc_name="transition", objc_is_class_method=true)
 	SymbolAutomaticContentTransition_transition :: proc() -> instancetype ---
 }
@@ -36,14 +36,14 @@ foreign lib {
 SymbolMagicReplaceContentTransition :: struct { using _: SymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSSymbolReplaceContentTransition", objc_superclass=SymbolContentTransition)
 SymbolReplaceContentTransition :: struct { using _: SymbolContentTransition}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolReplaceContentTransition, objc_selector="transition", objc_name="transition", objc_is_class_method=true)
 	SymbolReplaceContentTransition_transition :: proc() -> instancetype ---
 
@@ -75,7 +75,7 @@ SymbolEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolEffect, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SymbolEffect_new :: proc() -> ^SymbolEffect ---
 
@@ -92,7 +92,7 @@ SymbolEffectOptions :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolEffectOptions, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SymbolEffectOptions_new :: proc() -> ^SymbolEffectOptions ---
 
@@ -142,7 +142,7 @@ SymbolEffectOptionsRepeatBehavior :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolEffectOptionsRepeatBehavior, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	SymbolEffectOptionsRepeatBehavior_new :: proc() -> ^SymbolEffectOptionsRepeatBehavior ---
 
@@ -176,7 +176,7 @@ SymbolEffectOptionsRepeatBehavior_behaviorPeriodicWithCount :: proc {
 SymbolAppearEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolAppearEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolAppearEffect_effect :: proc() -> instancetype ---
 
@@ -198,7 +198,7 @@ foreign lib {
 SymbolBounceEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolBounceEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolBounceEffect_effect :: proc() -> instancetype ---
 
@@ -220,7 +220,7 @@ foreign lib {
 SymbolBreatheEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolBreatheEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolBreatheEffect_effect :: proc() -> instancetype ---
 
@@ -242,7 +242,7 @@ foreign lib {
 SymbolDisappearEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolDisappearEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolDisappearEffect_effect :: proc() -> instancetype ---
 
@@ -264,7 +264,7 @@ foreign lib {
 SymbolDrawOffEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolDrawOffEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolDrawOffEffect_effect :: proc() -> instancetype ---
 
@@ -289,7 +289,7 @@ foreign lib {
 SymbolDrawOnEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolDrawOnEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolDrawOnEffect_effect :: proc() -> instancetype ---
 
@@ -308,7 +308,7 @@ foreign lib {
 SymbolPulseEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolPulseEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolPulseEffect_effect :: proc() -> instancetype ---
 
@@ -324,7 +324,7 @@ foreign lib {
 SymbolRotateEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolRotateEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolRotateEffect_effect :: proc() -> instancetype ---
 
@@ -346,7 +346,7 @@ foreign lib {
 SymbolScaleEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolScaleEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolScaleEffect_effect :: proc() -> instancetype ---
 
@@ -368,7 +368,7 @@ foreign lib {
 SymbolVariableColorEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolVariableColorEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolVariableColorEffect_effect :: proc() -> instancetype ---
 
@@ -396,7 +396,7 @@ foreign lib {
 SymbolWiggleEffect :: struct { using _: SymbolEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SymbolWiggleEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	SymbolWiggleEffect_effect :: proc() -> instancetype ---
 

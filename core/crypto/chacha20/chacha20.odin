@@ -7,9 +7,9 @@ See:
 */
 package chacha20
 
-import "core:bytes"
-import "core:crypto"
-import "core:crypto/_chacha20"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:crypto/_chacha20"
 
 // KEY_SIZE is the (X)ChaCha20 key size in bytes.
 KEY_SIZE :: _chacha20.KEY_SIZE

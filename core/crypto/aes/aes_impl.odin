@@ -1,8 +1,8 @@
 package aes
 
-import "core:crypto"
-import "core:crypto/_aes/ct64"
-import "core:reflect"
+#import "core:crypto"
+#import "core:crypto/_aes/ct64"
+#import "core:reflect"
 
 zero_explicit :: crypto.zero_explicit
 

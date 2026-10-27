@@ -2,16 +2,16 @@ package libc
 
 // 7.13 Nonlocal jumps
 
-when ODIN_OS == .Windows {
-	foreign import libc "system:libucrt.lib"
-} else when ODIN_OS == .Darwin {
-	foreign import libc "system:System"
+#if ODIN_OS == .Windows {
+	#foreign #import libc "system:libucrt.lib"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import libc "system:System"
 } else {
-	foreign import libc "system:c"
+	#foreign #import libc "system:c"
 }
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		// 7.13.1 Save calling environment
 		//
 		// NOTE(dweiler): C11 requires setjmp be a macro, which means it won't
@@ -36,7 +36,7 @@ when ODIN_OS == .Windows {
 	}
 } else {
 	@(default_calling_convention="c")
-	foreign libc {
+	#foreign libc {
 		// 7.13.1 Save calling environment
 		@(link_name=LSETJMP)
 		setjmp :: proc(env: ^jmp_buf) -> int ---
@@ -44,7 +44,7 @@ when ODIN_OS == .Windows {
 }
 
 @(default_calling_convention="c")
-foreign libc {
+#foreign libc {
 	// 7.13.2 Restore calling environment
 	@(link_name=LLONGJMP)
 	longjmp :: proc(env: ^jmp_buf, val: int) -> ! ---
@@ -62,7 +62,7 @@ foreign libc {
 // relevant platforms.
 jmp_buf :: struct #align(16) { _: [4096]char, }
 
-when ODIN_OS == .NetBSD {
+#if ODIN_OS == .NetBSD {
 	@(private) LSETJMP  :: "__setjmp14"
 	@(private) LLONGJMP :: "__longjmp14"
 } else {

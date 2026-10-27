@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 attr_list_access_mode_t :: enum c.int {
 	FILE_ORDER,   /**< Order they appear in the file */
@@ -8,7 +8,7 @@ attr_list_access_mode_t :: enum c.int {
 }
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Query how many parts are in the file. */
 	get_count :: proc (ctxt: const_context_t, count: ^c.int) -> result_t ---
 
@@ -131,7 +131,7 @@ foreign lib {
 	 *
 	 * This only validates that all the offsets are valid.
 	 *
-	 * return EXR_ERR_INCOMPLETE_CHUNK_TABLE when incomplete, EXR_ERR_SUCCESS
+	 * return EXR_ERR_INCOMPLETE_CHUNK_TABLE #if incomplete, EXR_ERR_SUCCESS
 	 * if it appears ok, or another error if otherwise problematic
 	 */
 	validate_chunk_table :: proc(ctxt: context_t, part_index: c.int) -> result_t ---
@@ -154,42 +154,42 @@ foreign lib {
 
 	/** @brief Retrieve the zip compression level used for the specified part.
 	 *
-	 * This only applies when the compression method involves using zip
+	 * This only applies #if the compression method involves using zip
 	 * compression (zip, zips, some modes of DWAA/DWAB).
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so will be at the default value when just
+	 * lifetime of the context, so will be at the default value #if just
 	 * reading a file.
 	 */
 	get_zip_compression_level :: proc(ctxt: const_context_t, part_index: c.int, level: ^c.int) -> result_t ---
 
 	/** @brief Set the zip compression method used for the specified part.
 	 *
-	 * This only applies when the compression method involves using zip
+	 * This only applies #if the compression method involves using zip
 	 * compression (zip, zips, some modes of DWAA/DWAB).
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so this value will be ignored when
+	 * lifetime of the context, so this value will be ignored #if
 	 * reading a file.
 	 */
 	set_zip_compression_level :: proc(ctxt: context_t, part_index: c.int, level: c.int) -> result_t ---
 
 	/** @brief Retrieve the dwa compression level used for the specified part.
 	 *
-	 * This only applies when the compression method is DWAA/DWAB.
+	 * This only applies #if the compression method is DWAA/DWAB.
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so will be at the default value when just
+	 * lifetime of the context, so will be at the default value #if just
 	 * reading a file.
 	 */
 	get_dwa_compression_level :: proc(ctxt: const_context_t, part_index: c.int, level: ^f32) -> result_t ---
 
 	/** @brief Set the dwa compression method used for the specified part.
 	 *
-	 * This only applies when the compression method is DWAA/DWAB.
+	 * This only applies #if the compression method is DWAA/DWAB.
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so this value will be ignored when
+	 * lifetime of the context, so this value will be ignored #if
 	 * reading a file.
 	 */
 	set_dwa_compression_level :: proc(ctxt: context_t, part_index: c.int, level: f32) -> result_t ---
@@ -197,40 +197,40 @@ foreign lib {
 	/** @brief Retrieve the lossy HTJ2K compression quality used for the specified
 	 * part.
 	 *
-	 * This only applies when the compression method is LJ2K.
+	 * This only applies #if the compression method is LJ2K.
 	 *
 	 * This value is NOT persisted in the file, and only exists for the lifetime of
-	 * the context, so will be at the default value when just reading a file.
+	 * the context, so will be at the default value #if just reading a file.
 	 */
 	get_lossy_htj2k_quality :: proc(ctxt: const_context_t, part_index: c.int, level: ^f32) -> result_t ---
 
 	/** @brief Set the lossy HTJ2K compression quality for the specified part.
 	 *
-	 * This only applies when the compression method is LJ2K.
+	 * This only applies #if the compression method is LJ2K.
 	 *
 	 * This value is NOT persisted in the file, and only exists for the lifetime of
-	 * the context, so this value will be ignored when reading a file.
+	 * the context, so this value will be ignored #if reading a file.
 	 */
 	set_lossy_htj2k_quality :: proc(ctxt: context_t, part_index: c.int, level: f32) -> result_t ---
 
 	/** @brief Retrieve the zstd compression level used for the specified part.
 	 *
-	 * This only applies when the compression method is zstd. Valid levels
+	 * This only applies #if the compression method is zstd. Valid levels
 	 * are 1 through 22; the default is 5.
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so will be at the default value when just
+	 * lifetime of the context, so will be at the default value #if just
 	 * reading a file.
 	 */
 	get_zstd_compression_level :: proc(ctxt: const_context_t, part_index: c.int, level: ^i32) -> result_t ---
 
 	/** @brief Set the zstd compression level for the specified part.
 	 *
-	 * This only applies when the compression method is zstd. `level` must
+	 * This only applies #if the compression method is zstd. `level` must
 	 * be between 1 and 22 inclusive (libzstd range).
 	 *
 	 * This value is NOT persisted in the file, and only exists for the
-	 * lifetime of the context, so this value will be ignored when
+	 * lifetime of the context, so this value will be ignored #if
 	 * reading a file.
 	 */
 	set_zstd_compression_level :: proc(ctxt: context_t, part_index: c.int, level: c.int) -> result_t ---
@@ -277,7 +277,7 @@ foreign lib {
 
 	/** Declare an attribute within the specified part.
 	 *
-	 * Only valid when a file is opened for write.
+	 * Only valid #if a file is opened for write.
 	 */
 	attr_declare_by_type :: proc(
 		ctxt:       context_t,
@@ -288,7 +288,7 @@ foreign lib {
 
 	/** @brief Declare an attribute within the specified part.
 	 *
-	 * Only valid when a file is opened for write.
+	 * Only valid #if a file is opened for write.
 	 */
 	attr_declare :: proc(
 		ctxt:       context_t,
@@ -346,7 +346,7 @@ foreign lib {
 	 * If an attribute in the source part has not been yet set in the
 	 * destination part, the item will be copied over.
 	 *
-	 * For example, when you add a part, the storage type and name
+	 * For example, #if you add a part, the storage type and name
 	 * attributes are required arguments to the definition of a new part,
 	 * but channels has not yet been assigned. So by calling this with an
 	 * input file as the source, you can copy the channel definitions (and
@@ -687,7 +687,7 @@ foreign lib {
 	 * Must provide @p size.
 	 *
 	 * \p out must be a ``^cstring`` array large enough to hold
-	 * the string pointers for the string vector when provided.
+	 * the string pointers for the string vector #if provided.
 	 */
 	attr_get_string_vector :: proc(
 		ctxt:       const_context_t,

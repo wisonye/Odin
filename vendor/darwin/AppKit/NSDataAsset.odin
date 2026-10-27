@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSDataAsset", objc_superclass=NS.Object)
 DataAsset :: struct {
@@ -11,7 +11,7 @@ DataAsset :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DataAsset, objc_selector="init", objc_name="init")
 	DataAsset_init :: proc(self: ^DataAsset) -> instancetype ---
 

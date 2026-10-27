@@ -2,16 +2,16 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="UIPageControl", objc_superclass=Control)
 PageControl :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControl, objc_selector="indicatorImageForPage:", objc_name="indicatorImageForPage")
 	PageControl_indicatorImageForPage :: proc(self: ^PageControl, page: NS.Integer) -> ^Image ---
 
@@ -111,7 +111,7 @@ foreign lib {
 PageControlProgress :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControlProgress, objc_selector="delegate", objc_name="delegate")
 	PageControlProgress_delegate :: proc(self: ^PageControlProgress) -> ^PageControlProgressDelegate ---
 
@@ -136,7 +136,7 @@ PageControlProgressDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControlProgressDelegate, objc_selector="pageControlProgress:initialProgressForPage:", objc_name="pageControlProgress")
 	PageControlProgressDelegate_pageControlProgress :: proc(self: ^PageControlProgressDelegate, progress: ^PageControlProgress, page: NS.Integer) -> cffi.float ---
 
@@ -149,7 +149,7 @@ foreign lib {
 PageControlTimerProgress :: struct { using _: PageControlProgress}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControlTimerProgress, objc_selector="initWithPreferredDuration:", objc_name="initWithPreferredDuration")
 	PageControlTimerProgress_initWithPreferredDuration :: proc(self: ^PageControlTimerProgress, preferredDuration: NS.TimeInterval) -> instancetype ---
 
@@ -201,7 +201,7 @@ PageControlTimerProgressDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageControlTimerProgressDelegate, objc_selector="pageControlTimerProgressDidChange:", objc_name="pageControlTimerProgressDidChange")
 	PageControlTimerProgressDelegate_pageControlTimerProgressDidChange :: proc(self: ^PageControlTimerProgressDelegate, progress: ^PageControlTimerProgress) ---
 
@@ -214,7 +214,7 @@ foreign lib {
 PageViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageViewController, objc_selector="initWithTransitionStyle:navigationOrientation:options:", objc_name="initWithTransitionStyle")
 	PageViewController_initWithTransitionStyle :: proc(self: ^PageViewController, style: PageViewControllerTransitionStyle, navigationOrientation: PageViewControllerNavigationOrientation, options: ^NS.Dictionary) -> instancetype ---
 
@@ -266,7 +266,7 @@ PageViewControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageViewControllerDelegate, objc_selector="pageViewController:willTransitionToViewControllers:", objc_name="pageViewController_willTransitionToViewControllers")
 	PageViewControllerDelegate_pageViewController_willTransitionToViewControllers :: proc(self: ^PageViewControllerDelegate, pageViewController: ^PageViewController, pendingViewControllers: ^NS.Array) ---
 
@@ -298,7 +298,7 @@ PageViewControllerDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PageViewControllerDataSource, objc_selector="pageViewController:viewControllerBeforeViewController:", objc_name="pageViewController_viewControllerBeforeViewController")
 	PageViewControllerDataSource_pageViewController_viewControllerBeforeViewController :: proc(self: ^PageViewControllerDataSource, pageViewController: ^PageViewController, viewController: ^ViewController) -> ^ViewController ---
 

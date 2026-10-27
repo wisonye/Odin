@@ -22,11 +22,11 @@ package main
 //
 // Run:  cd isa/ppc && odin run tools/dump_verify_input.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
-import p ".."
+#import p ".."
 
 main :: proc() {
 	fmt.println("Dumping PowerPC verification manifest...")

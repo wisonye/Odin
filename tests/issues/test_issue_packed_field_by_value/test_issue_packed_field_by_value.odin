@@ -1,7 +1,7 @@
 // A value within a packed struct, passed to a procedure by reference, is passed by an address as aligned as its type
 package test_issue_packed_field_by_value
 
-import "core:testing"
+#import "core:testing"
 
 Packed_Field_S :: struct { x: union { int, string }, y: u128 }
 Packed_Field_P :: struct #packed { pad: u8, s: Packed_Field_S, arr: [2]Packed_Field_S }

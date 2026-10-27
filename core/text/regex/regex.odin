@@ -8,12 +8,12 @@ package regex
 		Feoramund: Initial implementation.
 */
 
-import "base:runtime"
-import "core:text/regex/common"
-import "core:text/regex/compiler"
-import "core:text/regex/optimizer"
-import "core:text/regex/parser"
-import "core:text/regex/virtual_machine"
+#import "base:runtime"
+#import "core:text/regex/common"
+#import "core:text/regex/compiler"
+#import "core:text/regex/optimizer"
+#import "core:text/regex/parser"
+#import "core:text/regex/virtual_machine"
 
 Flag           :: common.Flag
 Flags          :: common.Flags

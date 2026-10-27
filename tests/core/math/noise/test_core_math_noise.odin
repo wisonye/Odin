@@ -1,7 +1,7 @@
 package test_core_math_noise
 
-import "core:testing"
-import "core:math/noise"
+#import "core:testing"
+#import "core:math/noise"
 
 Test_Vector :: struct {
 	seed:      i64,

@@ -6,7 +6,7 @@ package darwin_Foundation
 ProtocolChecker :: struct { using _: Proxy}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ProtocolChecker, objc_selector="protocol", objc_name="protocol")
 	ProtocolChecker_protocol :: proc(self: ^ProtocolChecker) -> ^Protocol ---
 

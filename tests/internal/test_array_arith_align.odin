@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // tests alignment of array arithmetic going through implicit vector casts
 

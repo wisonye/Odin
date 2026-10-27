@@ -1,14 +1,14 @@
 package diff
 
-import "core:io"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "core:io"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 /*
 	Emphasis highlights the changed part of changed lines. It works on blocks: the deleted lines of a change
 	and the inserted lines after them. A block with only one side has nothing to compare.
 
-	- `.Prefix_Suffix` pairs the lines of a block in order when both sides have as many. It highlights what
+	- `.Prefix_Suffix` pairs the lines of a block in order #if both sides have as many. It highlights what
 	  lies between their common prefix and suffix.
 	- `.Words` diffs the words of the deleted text against those of the inserted text. It highlights the
 	  changed words, even across lines.
@@ -84,7 +84,7 @@ words_scratch_size :: proc "contextless" (n, m: int) -> int {
 
 /*
 	Sets up the block starting at `line`: the first line of the iterator's `.Delete` edit. Leaves it
-	inactive when there is nothing to compare it with.
+	inactive #if there is nothing to compare it with.
 */
 @(private, require_results)
 emphasis_block_make :: proc(it: ^Unified_Iterator, line: Unified_Line, emphasis: Emphasis, scratch: []byte, loc := #caller_location) -> (block: Emphasis_Block) {

@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:c"
-import "core:sys/posix"
+#import "core:c"
+#import "core:sys/posix"
 
 _posix_absolute_path :: proc(fd: posix.FD, name: string, allocator: runtime.Allocator) -> (path: cstring, err: Error) {
 	// NOTE(Feoramund): The situation isn't ideal, but this was the best way I

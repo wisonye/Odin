@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSLevelIndicator", objc_superclass=Control)
 LevelIndicator :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LevelIndicator, objc_selector="tickMarkValueAtIndex:", objc_name="tickMarkValueAtIndex")
 	LevelIndicator_tickMarkValueAtIndex :: proc(self: ^LevelIndicator, index: NS.Integer) -> cffi.double ---
 
@@ -118,7 +118,7 @@ foreign lib {
 LevelIndicatorCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=LevelIndicatorCell, objc_selector="initWithLevelIndicatorStyle:", objc_name="initWithLevelIndicatorStyle")
 	LevelIndicatorCell_initWithLevelIndicatorStyle :: proc(self: ^LevelIndicatorCell, levelIndicatorStyle: LevelIndicatorStyle) -> instancetype ---
 

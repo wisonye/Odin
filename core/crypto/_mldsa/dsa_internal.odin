@@ -1,7 +1,7 @@
 package _mldsa
 
-import "core:crypto"
-import "core:crypto/shake"
+#import "core:crypto"
+#import "core:crypto/shake"
 
 // This implementation is derived from the PQ-CRYSTALS reference
 // implementation [[ https://github.com/pq-crystals/dilithium ]],

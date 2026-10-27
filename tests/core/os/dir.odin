@@ -1,10 +1,10 @@
 package tests_core_os
 
-import "core:os"
-import "core:log"
-import "core:slice"
-import "core:testing"
-import "core:strings"
+#import "core:os"
+#import "core:log"
+#import "core:slice"
+#import "core:testing"
+#import "core:strings"
 
 @(test)
 test_read_dir :: proc(t: ^testing.T) {

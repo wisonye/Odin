@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:testing"
-import "core:strconv"
+#import "core:testing"
+#import "core:strconv"
 
 // Constant folding of complex and quaternion values, against the answer the backend
 // produces. Every constant case is paired with the same expression on variables: the
@@ -330,7 +330,7 @@ accessors_keep_their_bits_through_transmute :: proc(t: ^testing.T) {
 }
 
 // Untyped complex/quaternion constant components are now held exactly (as big rationals) and the
-// arithmetic folds exactly, rounding only once when the value is finally given a concrete type. This
+// arithmetic folds exactly, rounding only once #if the value is finally given a concrete type. This
 // is the complex/quaternion analogue of `0.1 + 0.2 == 0.3` for untyped floats: before, the components
 // were pre-rounded to f64 and every lane folded in binary floating point, coming out a ULP off.
 

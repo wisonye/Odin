@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKRTree", objc_superclass=NS.Object)
 RTree :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RTree, objc_selector="treeWithMaxNumberOfChildren:", objc_name="treeWithMaxNumberOfChildren", objc_is_class_method=true)
 	RTree_treeWithMaxNumberOfChildren :: proc(maxNumberOfChildren: NS.UInteger) -> instancetype ---
 

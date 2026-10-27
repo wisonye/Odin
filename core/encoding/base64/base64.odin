@@ -17,9 +17,9 @@ canonical unpadded input.
 */
 package encoding_base64
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:io"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:io"
 
 @(rodata)
 ENC_TABLE := [64]byte {
@@ -192,7 +192,7 @@ encode_into :: proc(w: io.Writer, data: []byte, ENC_TBL := ENC_TABLE, options :=
 @(private)
 encode_impl :: proc(dst: $T, data: []byte, ENC_TBL := ENC_TABLE, options := Encode_Options{}) -> ([]byte, io.Error) where T == io.Writer || T == []byte {
 	length := len(data)
-	when T == []byte {
+	#if T == []byte {
 		out_length := encoded_len(data, options)
 		if len(dst) < out_length {
 			return nil, io.Error.Short_Buffer
@@ -247,18 +247,18 @@ encode_impl :: proc(dst: $T, data: []byte, ENC_TBL := ENC_TABLE, options := Enco
 					buf[3] = c2 == -1 ? PADDING : ENC_TBL[block & 63]
 				}
 			}
-			when T == []byte {
+			#if T == []byte {
 				buf = buf[write:]
 			}
 		}
-		when T == io.Writer {
+		#if T == io.Writer {
 			if _, err := io.write_full(dst, buf[:write]); err != nil {
 				return nil, err
 			}
 		}
 	}
 
-	when T == io.Writer {
+	#if T == io.Writer {
 		return nil, nil
 	} else {
 		return dst[:out_length], nil
@@ -466,7 +466,7 @@ decode_into :: proc(w: io.Writer, data: string, DEC_TBL := DEC_TABLE, options :=
 @(private)
 decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte, Error) where T == io.Writer || T == []byte {
 	dst_cursor: int
-	when T == []byte {
+	#if T == []byte {
 		if len(dst) < info.out_length {
 			return nil, io.Error.Short_Buffer
 		}
@@ -511,7 +511,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 			b1 = (c1 << 4) | (c2 >> 2)
 			b2 = (c2 << 6) | c3
 
-			when T == []byte {
+			#if T == []byte {
 				dst[dst_cursor+0] = byte(b0)
 				dst[dst_cursor+1] = byte(b1)
 				dst[dst_cursor+2] = byte(b2)
@@ -523,7 +523,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 			}
 		}
 
-		when T == io.Writer {
+		#if T == io.Writer {
 			if _, err := io.write_full(dst, buf[:]); err != .None {
 				return nil, err
 			}
@@ -533,7 +533,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 
 	rest_in := len(data) - i
 	if rest_in > 0 {
-		when T == io.Writer {
+		#if T == io.Writer {
 			rest_out: int
 		}
 
@@ -560,7 +560,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 			b0 = (c0 << 2) | (c1 >> 4)
 			b1 = (c1 << 4) | (c2 >> 2)
 
-			when T == []byte {
+			#if T == []byte {
 				switch rest_in {
 				case 1:
 					// Last quantum is malformed:  "Q==="
@@ -589,7 +589,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 			}
 		}
 
-		when T == io.Writer {
+		#if T == io.Writer {
 			if _, err := io.write_full(dst, buf[:rest_out]); err != .None {
 				return nil, err
 			}
@@ -599,7 +599,7 @@ decode_impl :: proc(dst: $T, info: Decode_Info, DEC_TBL := DEC_TABLE) -> ([]byte
 
 	assert(dst_cursor == info.out_length)
 
-	when T == io.Writer {
+	#if T == io.Writer {
 		return nil, nil
 	} else {
 		return dst[:dst_cursor], nil

@@ -2,11 +2,11 @@
 #+build darwin:default
 package darwin_DiskArbitration
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import IO "core:sys/darwin/IOKit"
-import darwin "core:sys/darwin"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import IO "core:sys/darwin/IOKit"
+#import darwin "core:sys/darwin"
 
 
 
@@ -18,7 +18,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:DiskArbitration.framework",
 }
 
@@ -49,7 +49,7 @@ kDiskEjectOptionDefault   :: 0
 kDiskClaimOptionDefault   :: 0
 kDiskOptionDefault        :: 0
 
-foreign lib {
+#foreign lib {
 	@(link_name="kDADiskDescriptionVolumeKindKey") kDiskDescriptionVolumeKindKey: CF.StringRef
 	@(link_name="kDADiskDescriptionVolumeMountableKey") kDiskDescriptionVolumeMountableKey: CF.StringRef
 	@(link_name="kDADiskDescriptionVolumeNameKey") kDiskDescriptionVolumeNameKey: CF.StringRef
@@ -99,7 +99,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="DASessionGetTypeID")
 	SessionGetTypeID :: proc() -> CF.TypeID ---
 

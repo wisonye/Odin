@@ -1,13 +1,13 @@
 package benchmark_core_text_regex
 
-import "core:fmt"
-import "core:log"
-import "core:math/rand"
-import "core:mem"
-import "core:testing"
-import "core:text/regex"
-import "core:time"
-import "core:unicode/utf8"
+#import "core:fmt"
+#import "core:log"
+#import "core:math/rand"
+#import "core:mem"
+#import "core:testing"
+#import "core:text/regex"
+#import "core:time"
+#import "core:unicode/utf8"
 
 randomize_ascii :: proc(data: []u8) {
 	for i in 0..<len(data) {

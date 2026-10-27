@@ -1,11 +1,11 @@
 package core_flags_example
 
-import "base:runtime"
-import "core:flags"
-import "core:fmt"
-import "core:net"
-import "core:os"
-import "core:time/datetime"
+#import "base:runtime"
+#import "core:flags"
+#import "core:fmt"
+#import "core:net"
+#import "core:os"
+#import "core:time/datetime"
 
 
 Fixed_Point1_1 :: struct {

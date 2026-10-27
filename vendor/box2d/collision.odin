@@ -235,7 +235,7 @@ ManifoldPoint :: struct {
 	// the warm starting impulse, the sub-step delta impulse, and the restitution impulse.
 	totalNormalImpulse: f32,
 
-	// Relative normal velocity pre-solve. Negative when approaching. This is only computed if hit
+	// Relative normal velocity pre-solve. Negative #if approaching. This is only computed if hit
 	// events are enabled. It may be computed otherwise as a side effect of SIMD bundling, but that
 	// is not guaranteed.
 	normalVelocity: f32,
@@ -358,7 +358,7 @@ ShapeCastInput :: struct {
 	// The maximum fraction of the translation to consider, typically 1
 	maxFraction: f32,
 
-	// Allow shape cast to encroach when initially touching. This only works if the radius is
+	// Allow shape cast to encroach #if initially touching. This only works if the radius is
 	// greater than zero.
 	canEncroach: bool,
 }

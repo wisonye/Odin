@@ -6,7 +6,7 @@ package darwin_Foundation
 CalendarDate :: struct { using _: Date}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CalendarDate, objc_selector="calendarDate", objc_name="calendarDate", objc_is_class_method=true)
 	CalendarDate_calendarDate :: proc() -> id ---
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCGearShifterElement", objc_superclass=NS.Object)
 GearShifterElement :: struct {
@@ -10,7 +10,7 @@ GearShifterElement :: struct {
 	using _: PhysicalInputElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GearShifterElement, objc_selector="patternInput", objc_name="patternInput")
 	GearShifterElement_patternInput :: proc(self: ^GearShifterElement) -> ^SwitchPositionInput ---
 

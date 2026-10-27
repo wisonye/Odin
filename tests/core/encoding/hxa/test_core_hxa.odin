@@ -1,12 +1,12 @@
 package test_core_hxa
 
-import "core:encoding/hxa"
-import "core:fmt"
-import "core:testing"
+#import "core:encoding/hxa"
+#import "core:fmt"
+#import "core:testing"
 
 TEAPOT_PATH :: ODIN_ROOT + "tests/core/assets/HXA/teapot.hxa"
 
-import "core:os"
+#import "core:os"
 
 @test
 test_read :: proc(t: ^testing.T) {

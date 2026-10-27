@@ -1,10 +1,10 @@
 package log
 
-import "base:runtime"
-import "core:fmt"
+#import "base:runtime"
+#import "core:fmt"
 
 
-//These are defined in package `base:runtime` as they are used in the `context`. This is to prevent an import definition cycle.
+//These are defined in package `base:runtime` as they are used in the `context`. This is to prevent an #import definition cycle.
 
 /*
 	Logger_Level :: enum {
@@ -20,7 +20,7 @@ Level :: runtime.Logger_Level
 /*
 Specifies additional data present in the log output.
 
-Defined in `package runtime` as it is used in the `context`. This is to prevent an import definition cycle.
+Defined in `package runtime` as it is used in the `context`. This is to prevent an #import definition cycle.
 
 	Option :: enum {
 		// The log level, e.g. "[DEBUG] ---"
@@ -46,7 +46,7 @@ Option :: runtime.Logger_Option
 /*
 Specifies additional data present in the log output.
 
-Defined in `package runtime` as it is used in the `context`. This is to prevent an import definition cycle.
+Defined in `package runtime` as it is used in the `context`. This is to prevent an #import definition cycle.
 
 	Options :: bit_set[Option];
 */
@@ -106,7 +106,7 @@ Location_File_Opts :: Options{
 /*
 Implementation of the logger.
 
-Defined in `package runtime` as it is used in the `context`. This is to prevent an import definition cycle.
+Defined in `package runtime` as it is used in the `context`. This is to prevent an #import definition cycle.
 
 	Logger_Proc :: #type proc(data: rawptr, level: Level, text: string, options: Options, location := #caller_location);
 
@@ -116,7 +116,7 @@ Logger_Proc :: runtime.Logger_Proc
 /*
 Data backing the logger.
 
-Defined in `package runtime` as it is used in the `context`. This is to prevent an import definition cycle.
+Defined in `package runtime` as it is used in the `context`. This is to prevent an #import definition cycle.
 
 	Logger :: struct {
 		// Implementation
@@ -134,7 +134,7 @@ Logger :: runtime.Logger
 /*
 Do nothing.
 
-Defined in `package runtime` as it is used in the `context`. This is to prevent an import definition cycle.
+Defined in `package runtime` as it is used in the `context`. This is to prevent an #import definition cycle.
 */
 nil_logger_proc :: runtime.default_logger_proc
 
@@ -214,7 +214,7 @@ Log a message at the `Debug` level.
 
 Inputs:
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 debug :: proc(args: ..any, sep := " ", location := #caller_location) {
@@ -226,7 +226,7 @@ Log a message at the `Info` level.
 
 Inputs:
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 info  :: proc(args: ..any, sep := " ", location := #caller_location) {
@@ -238,7 +238,7 @@ Log a message at the `Warn` level.
 
 Inputs:
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 warn  :: proc(args: ..any, sep := " ", location := #caller_location) {
@@ -250,7 +250,7 @@ Log a message at the `Error` level.
 
 Inputs:
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 error :: proc(args: ..any, sep := " ", location := #caller_location) {
@@ -262,7 +262,7 @@ Log a message at the `Fatal` level.
 
 Inputs:
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 fatal :: proc(args: ..any, sep := " ", location := #caller_location) {
@@ -301,7 +301,7 @@ Can be disabled using `ODIN_DISABLE_ASSERT`.
 
 Inputs:
 - `condition`: A boolean to check
-- `message`: Message to log when condition is false (a default is provided)
+- `message`: Message to log #if condition is false (a default is provided)
 - `loc`: Location of the caller (default is #caller_location)
 */
 @(disabled=ODIN_DISABLE_ASSERT)
@@ -327,7 +327,7 @@ Can be disabled using `ODIN_DISABLE_ASSERT`.
 
 Inputs:
 - `condition`: A boolean to check
-- `fmt_str`: A format string to use when condition is false, e.g. `"a: %v, b: %v"
+- `fmt_str`: A format string to use #if condition is false, e.g. `"a: %v, b: %v"
 - `args`: Arguments for the format string
 - `loc`: Location of the caller (default is #caller_location)
 */
@@ -359,7 +359,7 @@ Unlike `assert` this procedure cannot be disabled with `ODIN_DISABLE_ASSERT` and
 
 Inputs:
 - `condition`: A boolean to check
-- `message`: Message to log when condition is false (a default is provided)
+- `message`: Message to log #if condition is false (a default is provided)
 - `loc`: Location of the caller (default is #caller_location)
 */
 ensure :: proc(condition: bool, message := #caller_expression(condition), loc := #caller_location) {
@@ -384,7 +384,7 @@ Unlike `assertf` this procedure cannot be disabled with `ODIN_DISABLE_ASSERT` an
 
 Inputs:
 - `condition`: A boolean to check
-- `fmt_str`: A format string to use when condition is false, e.g. `"a: %v, b: %v"
+- `fmt_str`: A format string to use #if condition is false, e.g. `"a: %v, b: %v"
 - `args`: Arguments for the format string
 - `loc`: Location of the caller (default is #caller_location)
 */
@@ -411,7 +411,7 @@ Log a message at the desired level.
 Inputs:
 - `level`: The level of the message
 - `args`: values to be concatenated into the output
-- `sep`: separator to use when concatenating (default is `" "`)
+- `sep`: separator to use #if concatenating (default is `" "`)
 - `location`: Location of the caller (default is #caller_location)
 */
 log :: proc(level: Level, args: ..any, sep := " ", location := #caller_location) {

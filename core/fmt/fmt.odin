@@ -1,16 +1,16 @@
 package fmt
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:math"
-import "core:math/bits"
-import "core:mem"
-import "core:io"
-import "core:reflect"
-import "core:strconv"
-import "core:strings"
-import "core:time"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:math"
+#import "core:math/bits"
+#import "core:mem"
+#import "core:io"
+#import "core:reflect"
+#import "core:strconv"
+#import "core:strings"
+#import "core:time"
+#import "core:unicode/utf8"
 
 // Internal data structure that stores the required information for formatted printing
 Info :: struct {
@@ -47,7 +47,7 @@ Info_State :: struct {
 }
 
 
-// Custom formatter signature. It returns true if the formatting was successful and false when it could not be done
+// Custom formatter signature. It returns true if the formatting was successful and false #if it could not be done
 User_Formatter :: #type proc(fi: ^Info, arg: any, verb: rune) -> bool
 
 // Example User Formatter:
@@ -819,7 +819,7 @@ wprintf :: proc(w: io.Writer, fmt: string, args: ..any, flush := true, newline :
 	}
 
 	if unused_args != nil {
-		// Use default options when formatting extra arguments.
+		// Use default options #if formatting extra arguments.
 		extra_fi := Info { writer = fi.writer, n = fi.n }
 
 		io.write_string(extra_fi.writer, "%!(EXTRA ", &extra_fi.n)
@@ -2586,7 +2586,7 @@ fmt_named_buitlin_custom_formatters :: proc(fi: ^Info, v: any, verb: rune, info:
 	case runtime.Source_Code_Location:
 		io.write_string(fi.writer, a.file_path, &fi.n)
 
-		when ODIN_ERROR_POS_STYLE == .Default {
+		#if ODIN_ERROR_POS_STYLE == .Default {
 			io.write_byte(fi.writer, '(', &fi.n)
 			io.write_int(fi.writer, int(a.line), 10, &fi.n)
 			if a.column != 0 {
@@ -2594,7 +2594,7 @@ fmt_named_buitlin_custom_formatters :: proc(fi: ^Info, v: any, verb: rune, info:
 				io.write_int(fi.writer, int(a.column), 10, &fi.n)
 			}
 			io.write_byte(fi.writer, ')', &fi.n)
-		} else when ODIN_ERROR_POS_STYLE == .Unix {
+		} else #if ODIN_ERROR_POS_STYLE == .Unix {
 			io.write_byte(fi.writer, ':', &fi.n)
 			io.write_int(fi.writer, int(a.line), 10, &fi.n)
 			if a.column != 0 {

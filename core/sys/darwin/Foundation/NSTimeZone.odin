@@ -9,7 +9,7 @@ TimeZone :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TimeZone, objc_selector="secondsFromGMTForDate:", objc_name="secondsFromGMTForDate")
 	TimeZone_secondsFromGMTForDate :: proc(self: ^TimeZone, aDate: ^Date) -> Integer ---
 

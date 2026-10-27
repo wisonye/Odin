@@ -1,15 +1,15 @@
 #+private
 package nbio
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
-import "core:container/pool"
-import "core:net"
-import "core:reflect"
-import "core:slice"
-import "core:strings"
-import "core:time"
+#import "core:container/pool"
+#import "core:net"
+#import "core:reflect"
+#import "core:slice"
+#import "core:strings"
+#import "core:time"
 
 @(init, private)
 init_thread_local_cleaner :: proc "contextless" () {
@@ -28,7 +28,7 @@ _tls_event_loop: Event_Loop
 _acquire_thread_event_loop :: proc() -> General_Error {
 	l := &_tls_event_loop
 	if l.err == nil && l.refs == 0 {
-		when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 && ODIN_OS != .Orca {
+		#if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 && ODIN_OS != .Orca {
 			allocator := runtime.default_wasm_allocator()
 		} else {
 			allocator := runtime.heap_allocator()
@@ -242,7 +242,7 @@ warn :: proc(text: string, location := #caller_location) {
 /*
 In order to:
 1. Not require the caller to allocate their buffers (`op.send.bufs` and `op.recv.bufs` can be stack allocated)
-2. Have `op.send.bufs` and `op.recv.bufs` be valid and the same content in the callback as when called
+2. Have `op.send.bufs` and `op.recv.bufs` be valid and the same content in the callback as #if called
 3. Be able to facilitate the `all` option, which requires mutating the slices (advancing them)
 4. Constraint single send/recv syscalls to MAX_RW bytes
 

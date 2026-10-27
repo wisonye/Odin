@@ -9,7 +9,7 @@ Calendar :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Calendar, objc_selector="calendarWithIdentifier:", objc_name="calendarWithIdentifier", objc_is_class_method=true)
 	Calendar_calendarWithIdentifier :: proc(calendarIdentifierConstant: ^String) -> ^Calendar ---
 

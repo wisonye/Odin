@@ -1,12 +1,12 @@
 package sdl3
 
-import "base:intrinsics"
-import "core:c"
+#import "base:intrinsics"
+#import "core:c"
 
 SpinLock :: distinct c.int
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(require_results)
 	@(synchronizes=.Acquire)
 	TryLockSpinlock :: proc(lock: ^SpinLock) -> bool ---
@@ -30,7 +30,7 @@ AtomicInt :: distinct c.int
 AtomicU32 :: distinct Uint32
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	CompareAndSwapAtomicInt :: proc(a: ^AtomicInt, oldval, newval: c.int) -> bool ---
 	SetAtomicInt            :: proc(a: ^AtomicInt, v: c.int) -> int ---
 	GetAtomicInt            :: proc(a: ^AtomicInt) -> int ---

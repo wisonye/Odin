@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSDiffableDataSourceSnapshot", objc_superclass=NS.Object)
 DiffableDataSourceSnapshot :: struct {
@@ -11,7 +11,7 @@ DiffableDataSourceSnapshot :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DiffableDataSourceSnapshot, objc_selector="numberOfItemsInSection:", objc_name="numberOfItemsInSection")
 	DiffableDataSourceSnapshot_numberOfItemsInSection :: proc(self: ^DiffableDataSourceSnapshot, sectionIdentifier: id) -> NS.Integer ---
 

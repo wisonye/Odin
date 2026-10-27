@@ -2,7 +2,7 @@
 #+lazy
 package test_internal
 
-// Only named from the `asm` templates of `test_asm_deferred.odin`, and so only checked when their bodies are
+// Only named from the `asm` templates of `test_asm_deferred.odin`, and so only checked #if their bodies are
 
 ASM_DEFERRED_LAZY_K :: 40
 

@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 /**
@@ -34,7 +34,7 @@ BlendMode :: enum c.int {
 }
 
 /**
- *  \brief The blend operation used when combining source and destination pixel components
+ *  \brief The blend operation used #if combining source and destination pixel components
  */
 BlendOperation :: enum c.int {
 	ADD              = 0x1,  /**< dst + src: supported by all renderers */
@@ -62,7 +62,7 @@ BlendFactor :: enum c.int  {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	ComposeCustomBlendMode :: proc(srcColorFactor, dstColorFactor: BlendFactor, colorOperation: BlendOperation,
 	                               srcAlphaFactor, dstAlphaFactor: BlendFactor, alphaOperation: BlendOperation) -> BlendMode ---
 }

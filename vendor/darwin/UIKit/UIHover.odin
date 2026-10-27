@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CA "vendor:darwin/QuartzCore"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="UIHoverAutomaticEffect", objc_superclass=NS.Object)
 HoverAutomaticEffect :: struct {
@@ -13,7 +13,7 @@ HoverAutomaticEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverAutomaticEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	HoverAutomaticEffect_effect :: proc() -> instancetype ---
 
@@ -33,14 +33,14 @@ HoverEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIHoverEffectLayer", objc_superclass=CA.Layer)
 HoverEffectLayer :: struct { using _: CA.Layer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverEffectLayer, objc_selector="initWithContainerView:style:", objc_name="initWithContainerView")
 	HoverEffectLayer_initWithContainerView :: proc(self: ^HoverEffectLayer, containerView: ^View, style: ^HoverStyle) -> instancetype ---
 
@@ -65,7 +65,7 @@ HoverHighlightEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverHighlightEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	HoverHighlightEffect_effect :: proc() -> instancetype ---
 
@@ -84,7 +84,7 @@ HoverLiftEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverLiftEffect, objc_selector="effect", objc_name="effect", objc_is_class_method=true)
 	HoverLiftEffect_effect :: proc() -> instancetype ---
 
@@ -103,7 +103,7 @@ HoverStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=HoverStyle, objc_selector="styleWithEffect:shape:", objc_name="styleWithEffect", objc_is_class_method=true)
 	HoverStyle_styleWithEffect :: proc(effect: ^HoverEffect, shape: ^Shape) -> instancetype ---
 
@@ -146,7 +146,7 @@ PointerStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerStyle, objc_selector="styleWithEffect:shape:", objc_name="styleWithEffect", objc_is_class_method=true)
 	PointerStyle_styleWithEffect :: proc(effect: ^PointerEffect, shape: ^PointerShape) -> instancetype ---
 

@@ -1,8 +1,8 @@
 package sysinfo
 
-import "base:runtime"
-import "core:strings"
-import "core:strconv"
+#import "base:runtime"
+#import "core:strings"
+#import "core:strconv"
 
 #assert(
 	ODIN_ARCH == .amd64   || ODIN_ARCH == .i386      || \
@@ -17,7 +17,7 @@ Retrieves the number of physical and logical CPU cores
 Returns:
 - physical: The number of physical cores
 - logical:  The number of logical cores
-- ok:       `true` when we could retrieve the CPU information, `false` otherwise
+- ok:       `true` #if we could retrieve the CPU information, `false` otherwise
 */
 cpu_core_count :: proc "contextless" () -> (physical: int, logical: int, ok: bool) {
 	return _cpu_core_count()
@@ -57,7 +57,7 @@ Returns:
 - free_ram:   Free RAM reported by the operating system, in bytes
 - total_swap: Total SWAP reported by the operating system, in bytes
 - free_swap:  Free SWAP reported by the operating system, in bytes
-- ok:         `true` when we could retrieve RAM statistics, `false` otherwise
+- ok:         `true` #if we could retrieve RAM statistics, `false` otherwise
 */
 ram_stats :: proc "contextless" () -> (total_ram, free_ram, total_swap, free_swap: i64, ok: bool) {
 	return _ram_stats()
@@ -76,7 +76,7 @@ Inputs:
 
 Returns:
 - res:        An `OS_Version` struct
-- ok:         `true` when we could retrieve OS version information, `false` otherwise
+- ok:         `true` #if we could retrieve OS version information, `false` otherwise
 */
 os_version :: proc(allocator: runtime.Allocator, loc := #caller_location) -> (res: OS_Version, ok: bool) {
 	return _os_version(allocator = allocator, loc = loc)
@@ -140,7 +140,7 @@ Returns:
 	ok:     `true` if this was a success and we should continue, `false` otherwise
 */
 iterate_gpus :: proc(it: ^GPU_Iterator, minimum_vram := i64(256 * 1024 * 1024)) -> (gpu: GPU, index: int, ok: bool) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		return _iterate_gpus(it, minimum_vram)
 	} else {
 		// Not implemented on another OS, yet

@@ -1,10 +1,10 @@
 package test_internal
 
-import "core:log"
-import "base:intrinsics"
-import "base:runtime"
-import "core:math/rand"
-import "core:testing"
+#import "core:log"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:math/rand"
+#import "core:testing"
 
 ENTRY_COUNTS := []int{11, 101, 1_001, 10_001, 100_001, 1_000_001}
 

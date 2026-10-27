@@ -2,10 +2,10 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CA "vendor:darwin/QuartzCore"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CA "vendor:darwin/QuartzCore"
 
 @(objc_class="NSCollectionLayoutAnchor", objc_superclass=NS.Object)
 NSCollectionLayoutAnchor :: struct {
@@ -14,7 +14,7 @@ NSCollectionLayoutAnchor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutAnchor, objc_selector="layoutAnchorWithEdges:", objc_name="layoutAnchorWithEdges_", objc_is_class_method=true)
 	NSCollectionLayoutAnchor_layoutAnchorWithEdges_ :: proc(edges: NSDirectionalRectEdge) -> instancetype ---
 
@@ -51,7 +51,7 @@ NSCollectionLayoutContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutContainer, objc_selector="contentSize", objc_name="contentSize")
 	NSCollectionLayoutContainer_contentSize :: proc(self: ^NSCollectionLayoutContainer) -> CG.Size ---
 
@@ -73,7 +73,7 @@ NSCollectionLayoutDimension :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutDimension, objc_selector="fractionalWidthDimension:", objc_name="fractionalWidthDimension", objc_is_class_method=true)
 	NSCollectionLayoutDimension_fractionalWidthDimension :: proc(fractionalWidth: CG.Float) -> instancetype ---
 
@@ -122,7 +122,7 @@ NSCollectionLayoutEdgeSpacing :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutEdgeSpacing, objc_selector="spacingForLeading:top:trailing:bottom:", objc_name="spacingForLeading", objc_is_class_method=true)
 	NSCollectionLayoutEdgeSpacing_spacingForLeading :: proc(leading: ^NSCollectionLayoutSpacing, top: ^NSCollectionLayoutSpacing, trailing: ^NSCollectionLayoutSpacing, bottom: ^NSCollectionLayoutSpacing) -> instancetype ---
 
@@ -153,7 +153,7 @@ NSCollectionLayoutEnvironment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutEnvironment, objc_selector="container", objc_name="container")
 	NSCollectionLayoutEnvironment_container :: proc(self: ^NSCollectionLayoutEnvironment) -> ^NSCollectionLayoutContainer ---
 
@@ -169,7 +169,7 @@ NSCollectionLayoutGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutGroup, objc_selector="horizontalGroupWithLayoutSize:repeatingSubitem:count:", objc_name="horizontalGroupWithLayoutSize_repeatingSubitem_count", objc_is_class_method=true)
 	NSCollectionLayoutGroup_horizontalGroupWithLayoutSize_repeatingSubitem_count :: proc(layoutSize: ^NSCollectionLayoutSize, subitem: ^NSCollectionLayoutItem, count: NS.Integer) -> instancetype ---
 
@@ -224,7 +224,7 @@ NSCollectionLayoutGroupCustomItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutGroupCustomItem, objc_selector="customItemWithFrame:", objc_name="customItemWithFrame_", objc_is_class_method=true)
 	NSCollectionLayoutGroupCustomItem_customItemWithFrame_ :: proc(frame: CG.Rect) -> instancetype ---
 
@@ -258,7 +258,7 @@ NSCollectionLayoutItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutItem, objc_selector="itemWithLayoutSize:", objc_name="itemWithLayoutSize_", objc_is_class_method=true)
 	NSCollectionLayoutItem_itemWithLayoutSize_ :: proc(layoutSize: ^NSCollectionLayoutSize) -> instancetype ---
 
@@ -304,7 +304,7 @@ NSCollectionLayoutBoundarySupplementaryItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutBoundarySupplementaryItem, objc_selector="boundarySupplementaryItemWithLayoutSize:elementKind:alignment:", objc_name="boundarySupplementaryItemWithLayoutSize_elementKind_alignment", objc_is_class_method=true)
 	NSCollectionLayoutBoundarySupplementaryItem_boundarySupplementaryItemWithLayoutSize_elementKind_alignment :: proc(layoutSize: ^NSCollectionLayoutSize, elementKind: ^NS.String, alignment: NSRectAlignment) -> instancetype ---
 
@@ -350,7 +350,7 @@ NSCollectionLayoutDecorationItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutDecorationItem, objc_selector="backgroundDecorationItemWithElementKind:", objc_name="backgroundDecorationItemWithElementKind", objc_is_class_method=true)
 	NSCollectionLayoutDecorationItem_backgroundDecorationItemWithElementKind :: proc(elementKind: ^NS.String) -> instancetype ---
 
@@ -378,7 +378,7 @@ NSCollectionLayoutSupplementaryItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutSupplementaryItem, objc_selector="supplementaryItemWithLayoutSize:elementKind:containerAnchor:", objc_name="supplementaryItemWithLayoutSize_elementKind_containerAnchor", objc_is_class_method=true)
 	NSCollectionLayoutSupplementaryItem_supplementaryItemWithLayoutSize_elementKind_containerAnchor :: proc(layoutSize: ^NSCollectionLayoutSize, elementKind: ^NS.String, containerAnchor: ^NSCollectionLayoutAnchor) -> instancetype ---
 
@@ -421,7 +421,7 @@ NSCollectionLayoutSection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutSection, objc_selector="sectionWithGroup:", objc_name="sectionWithGroup", objc_is_class_method=true)
 	NSCollectionLayoutSection_sectionWithGroup :: proc(group: ^NSCollectionLayoutGroup) -> instancetype ---
 
@@ -500,7 +500,7 @@ NSCollectionLayoutSize :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutSize, objc_selector="sizeWithWidthDimension:heightDimension:", objc_name="sizeWithWidthDimension", objc_is_class_method=true)
 	NSCollectionLayoutSize_sizeWithWidthDimension :: proc(width: ^NSCollectionLayoutDimension, height: ^NSCollectionLayoutDimension) -> instancetype ---
 
@@ -525,7 +525,7 @@ NSCollectionLayoutSpacing :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutSpacing, objc_selector="flexibleSpacing:", objc_name="flexibleSpacing", objc_is_class_method=true)
 	NSCollectionLayoutSpacing_flexibleSpacing :: proc(flexibleSpacing: CG.Float) -> instancetype ---
 
@@ -557,7 +557,7 @@ NSCollectionLayoutVisibleItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSCollectionLayoutVisibleItem, objc_selector="alpha", objc_name="alpha")
 	NSCollectionLayoutVisibleItem_alpha :: proc(self: ^NSCollectionLayoutVisibleItem) -> CG.Float ---
 

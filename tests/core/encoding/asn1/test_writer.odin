@@ -1,9 +1,9 @@
 package test_core_asn1
 
-import "core:bytes"
-import "core:encoding/asn1"
-import "core:testing"
-import "core:time"
+#import "core:bytes"
+#import "core:encoding/asn1"
+#import "core:testing"
+#import "core:time"
 
 @(private = "file")
 _marshal :: proc(t: ^testing.T, v: asn1.Value) -> []byte {

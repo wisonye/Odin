@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UITab", objc_superclass=NS.Object)
 Tab :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Tab, objc_selector="initWithTitle:image:identifier:viewControllerProvider:", objc_name="initWithTitle")
 	Tab_initWithTitle :: proc(self: ^Tab, title: ^NS.String, image: ^Image, identifier: ^NS.String, viewControllerProvider: ^Objc_Block(proc "c" ( _0: ^Tab ) -> ^ViewController)) -> instancetype ---
 
@@ -104,7 +104,7 @@ foreign lib {
 SearchTab :: struct { using _: Tab}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchTab, objc_selector="initWithViewControllerProvider:", objc_name="initWithViewControllerProvider")
 	SearchTab_initWithViewControllerProvider :: proc(self: ^SearchTab, viewControllerProvider: ^Objc_Block(proc "c" ( _0: ^Tab ) -> ^ViewController)) -> instancetype ---
 
@@ -120,7 +120,7 @@ foreign lib {
 TabAccessory :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabAccessory, objc_selector="initWithContentView:", objc_name="initWithContentView")
 	TabAccessory_initWithContentView :: proc(self: ^TabAccessory, contentView: ^View) -> instancetype ---
 
@@ -139,7 +139,7 @@ foreign lib {
 TabBar :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBar, objc_selector="setItems:animated:", objc_name="setItems_animated")
 	TabBar_setItems_animated :: proc(self: ^TabBar, items: ^NS.Array, animated: bool) ---
 
@@ -275,7 +275,7 @@ TabBarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarDelegate, objc_selector="tabBar:didSelectItem:", objc_name="tabBar_didSelectItem")
 	TabBarDelegate_tabBar_didSelectItem :: proc(self: ^TabBarDelegate, tabBar: ^TabBar, item: ^TabBarItem) ---
 
@@ -297,7 +297,7 @@ foreign lib {
 TabBarAppearance :: struct { using _: BarAppearance}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarAppearance, objc_selector="stackedLayoutAppearance", objc_name="stackedLayoutAppearance")
 	TabBarAppearance_stackedLayoutAppearance :: proc(self: ^TabBarAppearance) -> ^TabBarItemAppearance ---
 
@@ -356,7 +356,7 @@ TabBarController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarController, objc_selector="setTabs:animated:", objc_name="setTabs_animated")
 	TabBarController_setTabs_animated :: proc(self: ^TabBarController, tabs: ^NS.Array, animated: bool) ---
 
@@ -498,7 +498,7 @@ TabBarControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarControllerDelegate, objc_selector="tabBarController:shouldSelectTab:", objc_name="tabBarController_shouldSelectTab")
 	TabBarControllerDelegate_tabBarController_shouldSelectTab :: proc(self: ^TabBarControllerDelegate, tabBarController: ^TabBarController, tab: ^Tab) -> bool ---
 
@@ -559,7 +559,7 @@ foreign lib {
 TabBarControllerSidebar :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarControllerSidebar, objc_selector="scrollToTarget:animated:", objc_name="scrollToTarget")
 	TabBarControllerSidebar_scrollToTarget :: proc(self: ^TabBarControllerSidebar, target: ^TabSidebarScrollTarget, animated: bool) ---
 
@@ -623,7 +623,7 @@ TabBarControllerSidebarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarControllerSidebarDelegate, objc_selector="tabBarController:sidebarVisibilityWillChange:animator:", objc_name="tabBarController_sidebarVisibilityWillChange_animator")
 	TabBarControllerSidebarDelegate_tabBarController_sidebarVisibilityWillChange_animator :: proc(self: ^TabBarControllerSidebarDelegate, tabBarController: ^TabBarController, sidebar: ^TabBarControllerSidebar, animator: ^TabBarControllerSidebarAnimating) ---
 
@@ -669,7 +669,7 @@ TabBarControllerSidebarAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarControllerSidebarAnimating, objc_selector="addAnimations:", objc_name="addAnimations")
 	TabBarControllerSidebarAnimating_addAnimations :: proc(self: ^TabBarControllerSidebarAnimating, animations: ^Objc_Block(proc "c" ())) ---
 
@@ -682,7 +682,7 @@ foreign lib {
 TabBarItem :: struct { using _: BarItem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarItem, objc_selector="init", objc_name="init")
 	TabBarItem_init :: proc(self: ^TabBarItem) -> instancetype ---
 
@@ -765,7 +765,7 @@ TabBarItemAppearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarItemAppearance, objc_selector="init", objc_name="init")
 	TabBarItemAppearance_init :: proc(self: ^TabBarItemAppearance) -> instancetype ---
 
@@ -799,7 +799,7 @@ foreign lib {
 TabBarItemStateAppearance :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabBarItemStateAppearance, objc_selector="init", objc_name="init")
 	TabBarItemStateAppearance_init :: proc(self: ^TabBarItemStateAppearance) -> instancetype ---
 
@@ -854,7 +854,7 @@ foreign lib {
 TabGroup :: struct { using _: Tab}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabGroup, objc_selector="tabForIdentifier:", objc_name="tabForIdentifier")
 	TabGroup_tabForIdentifier :: proc(self: ^TabGroup, identifier: ^NS.String) -> ^Tab ---
 
@@ -927,7 +927,7 @@ TabSidebarItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabSidebarItem, objc_selector="defaultContentConfiguration", objc_name="defaultContentConfiguration")
 	TabSidebarItem_defaultContentConfiguration :: proc(self: ^TabSidebarItem) -> ^ListContentConfiguration ---
 
@@ -976,7 +976,7 @@ foreign lib {
 TabSidebarItemRequest :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabSidebarItemRequest, objc_selector="init", objc_name="init")
 	TabSidebarItemRequest_init :: proc(self: ^TabSidebarItemRequest) -> instancetype ---
 
@@ -995,7 +995,7 @@ foreign lib {
 TabSidebarScrollTarget :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TabSidebarScrollTarget, objc_selector="targetForHeader", objc_name="targetForHeader", objc_is_class_method=true)
 	TabSidebarScrollTarget_targetForHeader :: proc() -> instancetype ---
 

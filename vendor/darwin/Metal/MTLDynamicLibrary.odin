@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLDynamicLibrary")
 DynamicLibrary :: struct { using _: intrinsics.objc_object}
@@ -15,7 +15,7 @@ DynamicLibraryProtocol :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicLibraryProtocol, objc_selector="serializeToURL:error:", objc_name="serializeToURL_error")
 	DynamicLibraryProtocol_serializeToURL_error :: proc(self: ^DynamicLibraryProtocol, url: ^NS.URL, error: ^^NS.Error) -> bool ---
 

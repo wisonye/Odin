@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 RendererFlag :: enum u32 {
@@ -78,7 +78,7 @@ Renderer :: struct {}
 Texture :: struct {}
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumRenderDrivers          :: proc() -> c.int ---
 	GetRenderDriverInfo          :: proc(index: c.int, info: ^RendererInfo) -> c.int ---
 	CreateWindowAndRenderer      :: proc(width, height: c.int, window_flags: WindowFlags, window: ^^Window, renderer: ^^Renderer) -> c.int ---

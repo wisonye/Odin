@@ -1,10 +1,10 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:time"
-// import "core:sys/wasm/wasi"
+#import "core:time"
+// #import "core:sys/wasm/wasi"
 
 _get_uid :: proc() -> int {
 	return 0

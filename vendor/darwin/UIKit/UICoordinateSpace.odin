@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UICoordinateSpace")
 CoordinateSpace :: struct {
@@ -13,7 +13,7 @@ CoordinateSpace :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CoordinateSpace, objc_selector="convertPoint:toCoordinateSpace:", objc_name="convertPoint_toCoordinateSpace")
 	CoordinateSpace_convertPoint_toCoordinateSpace :: proc(self: ^CoordinateSpace, point: CG.Point, coordinateSpace: ^CoordinateSpace) -> CG.Point ---
 

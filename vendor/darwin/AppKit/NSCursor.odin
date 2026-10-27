@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSCursor", objc_superclass=NS.Object)
 Cursor :: struct {
@@ -12,7 +12,7 @@ Cursor :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Cursor, objc_selector="initWithImage:hotSpot:", objc_name="initWithImage_hotSpot")
 	Cursor_initWithImage_hotSpot :: proc(self: ^Cursor, newImage: ^Image, point: CG.Point) -> instancetype ---
 

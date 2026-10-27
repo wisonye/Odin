@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSEnumerator", objc_superclass=Object)
 Enumerator :: struct {
@@ -10,7 +10,7 @@ Enumerator :: struct {
 	using _: FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Enumerator, objc_selector="nextObject", objc_name="nextObject")
 	Enumerator_nextObject :: proc(self: ^Enumerator) -> id ---
 
@@ -22,7 +22,7 @@ foreign lib {
 @(objc_class="NSDirectoryEnumerator", objc_superclass=Enumerator)
 DirectoryEnumerator :: struct { using _: Enumerator}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DirectoryEnumerator, objc_selector="skipDescendents", objc_name="skipDescendents")
 	DirectoryEnumerator_skipDescendents :: proc(self: ^DirectoryEnumerator) ---
 
@@ -46,7 +46,7 @@ foreign lib {
 @(objc_class="NSFastEnumeration")
 FastEnumeration :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FastEnumeration, objc_selector="countByEnumeratingWithState:objects:count:", objc_name="countByEnumeratingWithState")
 	FastEnumeration_countByEnumeratingWithState :: proc(self: ^FastEnumeration, state: ^FastEnumerationState, buffer: ^id, len: UInteger) -> UInteger ---
 }

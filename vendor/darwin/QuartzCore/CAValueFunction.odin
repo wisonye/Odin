@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_QuartzCore
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CAValueFunction", objc_superclass=NS.Object)
 ValueFunction :: struct {
@@ -10,7 +10,7 @@ ValueFunction :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ValueFunction, objc_selector="functionWithName:", objc_name="functionWithName", objc_is_class_method=true)
 	ValueFunction_functionWithName :: proc(name: ^NS.String) -> instancetype ---
 

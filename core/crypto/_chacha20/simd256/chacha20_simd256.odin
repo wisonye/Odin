@@ -1,11 +1,11 @@
 #+build amd64
 package chacha20_simd256
 
-import "base:intrinsics"
-import "core:crypto/_chacha20"
-import chacha_simd128 "core:crypto/_chacha20/simd128"
-import "core:simd"
-import "core:sys/info"
+#import "base:intrinsics"
+#import "core:crypto/_chacha20"
+#import chacha_simd128 "core:crypto/_chacha20/simd128"
+#import "core:simd"
+#import "core:sys/info"
 
 // This is loosely based on Ted Krovetz's public domain C intrinsic
 // implementations.  While written using `core:simd`, this is currently

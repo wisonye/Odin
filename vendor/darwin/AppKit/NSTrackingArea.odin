@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSTrackingArea", objc_superclass=NS.Object)
 TrackingArea :: struct {
@@ -12,7 +12,7 @@ TrackingArea :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TrackingArea, objc_selector="initWithRect:options:owner:userInfo:", objc_name="initWithRect")
 	TrackingArea_initWithRect :: proc(self: ^TrackingArea, rect: NS.Rect, options: TrackingAreaOptions, owner: id, userInfo: ^NS.Dictionary) -> instancetype ---
 

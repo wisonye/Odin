@@ -1,8 +1,8 @@
 // The atomic memory ordering warnings, each next to a case which must stay quiet
 package test_issues
 
-import "base:intrinsics"
-import "core:sync"
+#import "base:intrinsics"
+#import "core:sync"
 
 // A release store which only relaxed loads read
 release_flag: u32

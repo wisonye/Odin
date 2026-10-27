@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPopUpButton", objc_superclass=Button)
 PopUpButton :: struct { using _: Button}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopUpButton, objc_selector="popUpButtonWithMenu:target:action:", objc_name="popUpButtonWithMenu", objc_is_class_method=true)
 	PopUpButton_popUpButtonWithMenu :: proc(menu: ^Menu, target: id, action: SEL) -> instancetype ---
 
@@ -159,7 +159,7 @@ PopUpButtonCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PopUpButtonCell, objc_selector="initTextCell:pullsDown:", objc_name="initTextCell")
 	PopUpButtonCell_initTextCell :: proc(self: ^PopUpButtonCell, stringValue: ^NS.String, pullDown: bool) -> instancetype ---
 

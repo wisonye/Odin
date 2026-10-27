@@ -11,8 +11,8 @@ package i18n
 	List of contributors:
 		Jeroen van Rijn: Initial implementation.
 */
-import "core:encoding/xml"
-import "core:strings"
+#import "core:encoding/xml"
+#import "core:strings"
 
 TS_XML_Options := xml.Options{
 	flags = {

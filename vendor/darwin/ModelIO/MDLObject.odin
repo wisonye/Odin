@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MDLObject", objc_superclass=NS.Object)
 Object :: struct {
@@ -11,7 +11,7 @@ Object :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Object, objc_selector="setComponent:forProtocol:", objc_name="setComponent")
 	Object_setComponent :: proc(self: ^Object, component: ^Component, protocol: ^Protocol) ---
 
@@ -88,7 +88,7 @@ ObjectContainerComponent :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ObjectContainerComponent, objc_selector="addObject:", objc_name="addObject")
 	ObjectContainerComponent_addObject :: proc(self: ^ObjectContainerComponent, object: ^Object) ---
 

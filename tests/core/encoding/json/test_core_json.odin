@@ -1,15 +1,15 @@
 package test_core_json
 
-import "core:encoding/json"
-import "core:fmt"
-import "core:math"
-import "core:math/rand"
-import "core:mem"
-import "core:strings"
-import "core:testing"
-import "core:unicode/utf8"
-import "core:mem/virtual"
-import "base:runtime"
+#import "core:encoding/json"
+#import "core:fmt"
+#import "core:math"
+#import "core:math/rand"
+#import "core:mem"
+#import "core:strings"
+#import "core:testing"
+#import "core:unicode/utf8"
+#import "core:mem/virtual"
+#import "base:runtime"
 
 @test
 parse_json :: proc(t: ^testing.T) {
@@ -638,7 +638,7 @@ unmarshal_skip_validation :: proc(t: ^testing.T) {
 	for c in cases {
 		n: Named
 		err := json.unmarshal_string(c.src, &n, c.spec)
-		testing.expectf(t, err == json.Unmarshal_Data_Error.Invalid_Data, "%q: expected Invalid_Data when validating, got %v", c.src, err)
+		testing.expectf(t, err == json.Unmarshal_Data_Error.Invalid_Data, "%q: expected Invalid_Data #if validating, got %v", c.src, err)
 		err = json.unmarshal_string(c.src, &n, c.spec, flags = {.Skip_Validation})
 		testing.expectf(t, err == c.err, "%q: expected %v with .Skip_Validation, got %v", c.src, c.err, err)
 	}
@@ -841,7 +841,7 @@ marshal_floats :: proc(t: ^testing.T) {
 	}
 
 	// The shortest text that reads back as the same value: fixed notation for 1e-6 <= |x| < 1e21,
-	// with ".0" when it would otherwise read as an integer, and exponent notation outside it.
+	// with ".0" #if it would otherwise read as an integer, and exponent notation outside it.
 	F64_Case :: struct { v: f64, s: string }
 	for c in ([]F64_Case{
 		{0, "0.0"}, {math.copy_sign(f64(0), -1), "-0.0"}, {1, "1.0"}, {-1.5, "-1.5"}, {0.1, "0.1"},
@@ -949,7 +949,7 @@ marshal_floats_round_trip :: proc(t: ^testing.T) {
 
 @(test)
 parse_integers_out_of_range :: proc(t: ^testing.T) {
-	// An integer outside i64 wraps to 64 bits in a `Value`, the same as when it is unmarshalled
+	// An integer outside i64 wraps to 64 bits in a `Value`, the same as #if it is unmarshalled
 	// into an `i64`. Past i128 only the digits that fit in an i128 are read.
 	Case :: struct {
 		text:     string,

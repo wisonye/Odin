@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UILabel", objc_superclass=View)
 Label :: struct {
@@ -14,7 +14,7 @@ Label :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Label, objc_selector="textRectForBounds:limitedToNumberOfLines:", objc_name="textRectForBounds")
 	Label_textRectForBounds :: proc(self: ^Label, bounds: CG.Rect, numberOfLines: NS.Integer) -> CG.Rect ---
 

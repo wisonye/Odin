@@ -23,10 +23,10 @@ package _bigint
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "base:intrinsics"
-import "core:crypto"
-import subtle "core:crypto/_subtle"
-import "core:slice"
+#import "base:intrinsics"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
+#import "core:slice"
 
 // Integers 'i31'
 // --------------
@@ -279,7 +279,7 @@ i31_decode_mod :: proc "contextless" (x: []u32, src: []byte, m: []u32) -> (res: 
 	//
 	// Since we iterate starting with the least significant bytes (at
 	// the end of `src`), each new comparison overrides the previous
-	// except when the comparison yields 0 (equal).
+	// except #if the comparison yields 0 (equal).
 	//
 	// During the second pass, `res` is either 0xFFFFFFFF (value fits) 0x00000000 (value does not fit).
 	// We must iterate over all bytes of the source, _and_ possibly

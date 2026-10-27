@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // A union constant is built as an anonymous packed struct, which is fine everywhere that adopts the
 // value's own type -- a global takes it verbatim. A phi cannot: its incoming values must have the

@@ -1,30 +1,30 @@
 // Bindings for [[ stb_truetype.h ; https://github.com/nothings/stb/blob/master/stb_truetype.h ]].
 package stb_truetype
 
-import c "core:c"
-import stbrp "vendor:stb/rect_pack"
+#import c "core:c"
+#import stbrp "vendor:stb/rect_pack"
 
 @(private)
 LIB :: (
-	     "../lib/stb_truetype.lib"      when ODIN_OS == .Windows
-	else "../lib/stb_truetype.a"        when ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
-	else "../lib/darwin/stb_truetype.a" when ODIN_OS == .Darwin
-	else "../lib/stb_truetype_wasm.o"   when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	     "../lib/stb_truetype.lib"      #if ODIN_OS == .Windows
+	else "../lib/stb_truetype.a"        #if ODIN_OS == .Linux || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD
+	else "../lib/darwin/stb_truetype.a" #if ODIN_OS == .Darwin
+	else "../lib/stb_truetype_wasm.o"   #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
 	else ""
 )
 
-when LIB != "" {
-	when !#exists(LIB) {
+#if LIB != "" {
+	#if !#exists(LIB) {
 		#panic("Could not find the compiled STB libraries, they can be compiled by running `\"" + ODIN_ROOT + "vendor/stb/src/build_stb.sh\"`")
 	}
 }
 
-when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import stbtt "../lib/stb_truetype_wasm.o"
-} else when LIB != "" {
-	foreign import stbtt { LIB }
+#if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import stbtt "../lib/stb_truetype_wasm.o"
+} else #if LIB != "" {
+	#foreign #import stbtt { LIB }
 } else {
-	foreign import stbtt "system:stb_truetype"
+	#foreign #import stbtt "system:stb_truetype"
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ aligned_quad :: struct {
 
 // bindings
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// if return is positive, the first unused row of the bitmap
 	// if return is negative, returns the negative of the number of characters that fit
 	// if return is 0, no characters fit and no rows were used
@@ -128,7 +128,7 @@ POINT_SIZE :: #force_inline proc(x: $T) -> T { return -x } // @NOTE: this was a 
 
 // bindings
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// Initializes a packing context stored in the passed-in stbtt_pack_context.
 	// Future calls using this context will pack characters into the bitmap passed
 	// in here: a 1-channel bitmap that is width * height. stride_in_bytes is
@@ -240,7 +240,7 @@ fontinfo :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// Given an offset into the file that defines a font, this function builds
 	// the necessary cached info for the rest of the system. You must allocate
 	// the stbtt_fontinfo yourself, and stbtt_InitFont will fill it out. You don't
@@ -268,7 +268,7 @@ foreign stbtt {
 // CHARACTER TO GLYPH-INDEX CONVERSION
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// If you're going to perform multiple operations on the same character
 	// and you want a speed-up, call this function with the character you're
 	// going to process, then use glyph-based functions instead of the
@@ -283,7 +283,7 @@ foreign stbtt {
 //
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// computes a scale factor to produce a font whose "height" is 'pixels' tall.
 	// Height is measured as the distance from the highest ascender to the lowest
 	// descender; in other words, it's equivalent to calling stbtt_GetFontVMetrics
@@ -338,7 +338,7 @@ kerningentry :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// Retrieves a complete list of all of the kerning pairs provided by the font
 	// stbtt_GetKerningTable never writes more than table_length entries and returns how many entries it did write.
 	// The table will be sorted by (a.glyph1 == b.glyph1)?(a.glyph2 < b.glyph2):(a.glyph1 < b.glyph1)
@@ -368,7 +368,7 @@ vertex :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// returns true if nothing is drawn for this glyph
 	IsGlyphEmpty :: proc(info: ^fontinfo, glyph_index: c.int) -> b32 ---
 
@@ -406,7 +406,7 @@ _bitmap :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// frees the bitmap allocated below
 	FreeBitmap :: proc(bitmap: [^]byte, userdata: rawptr) ---
 
@@ -478,7 +478,7 @@ foreign stbtt {
 //
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {
+#foreign stbtt {
 	// frees the SDF bitmap allocated below
 	FreeSDF :: proc(bitmap: [^]byte, userdata: rawptr) ---
 	
@@ -491,7 +491,7 @@ foreign stbtt {
 	//        padding           --  extra "pixels" around the character which are filled with the distance to the character (not 0),
 	//                                 which allows effects like bit outlines
 	//        onedge_value      --  value 0-255 to test the SDF against to reconstruct the character (i.e. the isocontour of the character)
-	//        pixel_dist_scale  --  what value the SDF should increase by when moving one SDF "pixel" away from the edge (on the 0..255 scale)
+	//        pixel_dist_scale  --  what value the SDF should increase by #if moving one SDF "pixel" away from the edge (on the 0..255 scale)
 	//                                 if positive, > onedge_value is inside; if negative, < onedge_value is inside
 	//        width,height      --  output height & width of the SDF bitmap (including padding)
 	//        xoff,yoff         --  output origin of the character
@@ -563,7 +563,7 @@ MACSTYLE_UNDERSCORE   :: 4
 MACSTYLE_NONE         :: 8   // <= not same as 0, this makes us check the bitfield is 0
 
 @(default_calling_convention="c", link_prefix="stbtt_")
-foreign stbtt {	
+#foreign stbtt {	
 	// returns the offset (not index) of the font that matches, or -1 if none
 	//   if you use STBTT_MACSTYLE_DONTCARE, use a font name like "Arial Bold".
 	//   if you use any other flag, use a font name like "Arial"; this checks

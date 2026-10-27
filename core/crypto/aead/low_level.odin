@@ -1,11 +1,11 @@
 package aead
 
-import "core:crypto/aegis"
-import "core:crypto/aes"
-import "core:crypto/chacha20"
-import "core:crypto/chacha20poly1305"
-import "core:crypto/deoxysii"
-import "core:reflect"
+#import "core:crypto/aegis"
+#import "core:crypto/aes"
+#import "core:crypto/chacha20"
+#import "core:crypto/chacha20poly1305"
+#import "core:crypto/deoxysii"
+#import "core:reflect"
 
 // Implementation is an AEAD implementation.  Most callers will not need
 // to use this as the package will automatically select the most performant

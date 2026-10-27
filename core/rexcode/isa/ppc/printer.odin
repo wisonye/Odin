@@ -2,12 +2,12 @@
 
 package rexcode_ppc
 
-import "core:strings"
-import "core:fmt"
-import "core:io"
-import "core:os"
-import "core:reflect"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:fmt"
+#import "core:io"
+#import "core:os"
+#import "core:reflect"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC PRINTER
@@ -383,7 +383,7 @@ write_operand :: proc(
 	case .RELATIVE:
 		// op.relative holds a signed byte offset relative to this instruction
 		// (post-decode) or an absolute label target if a label_defs roundtrip
-		// has resolved it. Prefer label form when we can match the target.
+		// has resolved it. Prefer label form #if we can match the target.
 		target := u32(i32(inst_offset) + i32(op.relative))
 		if isa.label_display_at(display, target) {
 			isa.label_display_write(display, sb, target, opts.label_prefix)

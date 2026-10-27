@@ -1,9 +1,9 @@
 #+private
 package os
 
-import "core:time"
-import "base:runtime"
-import "core:sys/linux"
+#import "core:time"
+#import "base:runtime"
+#import "core:sys/linux"
 
 _fstat :: proc(f: ^File, allocator: runtime.Allocator) -> (File_Info, Error) {
 	impl := (^File_Impl)(f.impl)
@@ -45,7 +45,7 @@ _fstat_internal :: proc(fd: linux.Fd, allocator: runtime.Allocator) -> (fi: File
 	return
 }
 
-// NOTE: _stat and _lstat are using _fstat to avoid a race condition when populating fullpath
+// NOTE: _stat and _lstat are using _fstat to avoid a race condition #if populating fullpath
 _stat :: proc(name: string, allocator: runtime.Allocator) -> (fi: File_Info, err: Error) {
 	temp_allocator := TEMP_ALLOCATOR_GUARD({ allocator })
 	name_cstr := clone_to_cstring(name, temp_allocator) or_return

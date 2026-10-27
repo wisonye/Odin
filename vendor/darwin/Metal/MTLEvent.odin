@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="MTLEvent")
 Event :: struct {
@@ -13,7 +13,7 @@ Event :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Event, objc_selector="device", objc_name="device")
 	Event_device :: proc(self: ^Event) -> ^Device ---
 
@@ -31,7 +31,7 @@ SharedEvent :: struct {
 	using _: Event,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SharedEvent, objc_selector="notifyListener:atValue:block:", objc_name="notifyListener")
 	SharedEvent_notifyListener :: proc(self: ^SharedEvent, listener: ^SharedEventListener, value: cffi.uint64_t, block: SharedEventNotificationBlock) ---
 
@@ -55,7 +55,7 @@ SharedEventHandle :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SharedEventHandle, objc_selector="label", objc_name="label")
 	SharedEventHandle_label :: proc(self: ^SharedEventHandle) -> ^NS.String ---
 }
@@ -64,7 +64,7 @@ foreign lib {
 @(objc_class="MTLSharedEventListener", objc_superclass=NS.Object)
 SharedEventListener :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SharedEventListener, objc_selector="init", objc_name="init")
 	SharedEventListener_init :: proc(self: ^SharedEventListener) -> instancetype ---
 

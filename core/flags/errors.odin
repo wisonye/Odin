@@ -1,8 +1,8 @@
 package flags
 
-import "base:runtime"
-import "core:net"
-import "core:os"
+#import "base:runtime"
+#import "core:net"
+#import "core:os"
 
 Parse_Error_Reason :: enum {
 	None,

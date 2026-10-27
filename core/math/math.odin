@@ -1,8 +1,8 @@
 // Typical trignometric and other basic math routines.
 package math
 
-import "base:intrinsics"
-import "base:builtin"
+#import "base:intrinsics"
+#import "base:builtin"
 _ :: intrinsics
 
 Float_Class :: enum {
@@ -402,7 +402,7 @@ remap :: proc "contextless" (old_value, old_min, old_max, new_min, new_max: $T) 
 		return new_range / 2
 	}
 
-	when intrinsics.type_is_integer(T) {
+	#if intrinsics.type_is_integer(T) {
 		return (((old_value - old_min)) * new_range) / old_range + new_min
 	} else {
 		return ((old_value - old_min) / old_range) * new_range + new_min
@@ -1309,7 +1309,7 @@ binomial :: proc "contextless" (n, k: int) -> int {
 
 @(require_results)
 factorial :: proc "contextless" (n: int) -> int {
-	when size_of(int) == size_of(i64) {
+	#if size_of(int) == size_of(i64) {
 		@(static, rodata) table := [21]int{
 			1,
 			1,
@@ -2452,13 +2452,13 @@ count_digits_of_base :: proc "contextless" (value: $T, $base: int) -> (digits: i
 	#assert(base >= 2, "base must be 2 or greater.")
 
 	value := value
-	when !intrinsics.type_is_unsigned(T) {
+	#if !intrinsics.type_is_unsigned(T) {
 		value = abs(value)
 	}
 
-	when base == 2 {
+	#if base == 2 {
 		digits = max(1, 8 * size_of(T) - int(intrinsics.count_leading_zeros(value)))
-	} else when intrinsics.count_ones(base) == 1 {
+	} else #if intrinsics.count_ones(base) == 1 {
 		free_bits := 8 * size_of(T) - int(intrinsics.count_leading_zeros(value))
 		digits, free_bits = divmod(free_bits, intrinsics.constant_log2(base))
 		if free_bits > 0 {

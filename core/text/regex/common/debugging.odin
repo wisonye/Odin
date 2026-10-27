@@ -8,8 +8,8 @@ package regex_common
 		Feoramund: Initial implementation.
 */
 
-import "core:io"
-import "core:strings"
+#import "core:io"
+#import "core:strings"
 
 write_padded_hex :: proc(w: io.Writer, #any_int n, zeroes: int) {
 	sb := strings.builder_make()

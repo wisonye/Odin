@@ -1,16 +1,16 @@
 package test_core_flags
 
-import            "base:runtime"
-import            "core:bytes"
-import            "core:flags"
-import            "core:fmt"
-@(require) import "core:log"
-import            "core:math"
-@(require) import "core:net"
-import            "core:os"
-import            "core:strings"
-import            "core:testing"
-import            "core:time/datetime"
+#import            "base:runtime"
+#import            "core:bytes"
+#import            "core:flags"
+#import            "core:fmt"
+@(require) #import "core:log"
+#import            "core:math"
+@(require) #import "core:net"
+#import            "core:os"
+#import            "core:strings"
+#import            "core:testing"
+#import            "core:time/datetime"
 
 Custom_Data :: struct {
 	a: int,
@@ -1365,7 +1365,7 @@ test_distinct_types :: proc(t: ^testing.T) {
 
 @(test)
 test_datetime :: proc(t: ^testing.T) {
-	when flags.IMPORTING_TIME {
+	#if flags.IMPORTING_TIME {
 		W :: struct {
 			t: datetime.DateTime,
 		}
@@ -1387,7 +1387,7 @@ test_datetime :: proc(t: ^testing.T) {
 
 @(test)
 test_net :: proc(t: ^testing.T) {
-	when flags.IMPORTING_NET {
+	#if flags.IMPORTING_NET {
 		W :: struct {
 			addr: net.Host_Or_Endpoint,
 		}

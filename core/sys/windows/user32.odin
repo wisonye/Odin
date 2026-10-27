@@ -1,11 +1,11 @@
 #+build windows
 package sys_windows
 
-import "base:intrinsics"
-foreign import user32 "system:User32.lib"
+#import "base:intrinsics"
+#foreign #import user32 "system:User32.lib"
 
 @(default_calling_convention="system")
-foreign user32 {
+#foreign user32 {
 	GetClassInfoW   :: proc(hInstance: HINSTANCE, lpClassName: LPCWSTR, lpWndClass: ^WNDCLASSW) -> BOOL ---
 	GetClassInfoExW :: proc(hInstance: HINSTANCE, lpszClass: LPCWSTR, lpwcx: ^WNDCLASSEXW) -> BOOL ---
 
@@ -207,7 +207,7 @@ foreign user32 {
 	SetCursorPos :: proc(X, Y: INT) -> BOOL ---
 	GetCursor    :: proc() -> HCURSOR ---
 	SetCursor    :: proc(hCursor: HCURSOR) -> HCURSOR ---
-	when !intrinsics.is_package_imported("raylib") {
+	#if !intrinsics.is_package_imported("raylib") {
 		ShowCursor :: proc(bShow: BOOL) -> INT ---
 	}
 
@@ -384,16 +384,16 @@ CreateWindowW :: #force_inline proc "system" (
 	)
 }
 
-when ODIN_ARCH == .amd64 {
+#if ODIN_ARCH == .amd64 {
 	@(default_calling_convention="system")
-	foreign user32 {
+	#foreign user32 {
 		GetClassLongPtrW :: proc(hWnd: HWND, nIndex: INT) -> ULONG_PTR ---
 		SetClassLongPtrW :: proc(hWnd: HWND, nIndex: INT, dwNewLong: LONG_PTR) -> ULONG_PTR ---
 
 		GetWindowLongPtrW :: proc(hWnd: HWND, nIndex: INT) -> LONG_PTR ---
 		SetWindowLongPtrW :: proc(hWnd: HWND, nIndex: INT, dwNewLong: LONG_PTR) -> LONG_PTR ---
 	}
-} else when ODIN_ARCH == .i386 {
+} else #if ODIN_ARCH == .i386 {
 	GetClassLongPtrW :: GetClassLongW
 	SetClassLongPtrW :: SetClassLongW
 

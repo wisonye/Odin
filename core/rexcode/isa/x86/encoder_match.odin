@@ -2,7 +2,7 @@
 
 package rexcode_x86
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // =============================================================================
 // SECTION: 7.y Form-match memoization cache (long mode)
@@ -87,7 +87,7 @@ op_match_code :: #force_inline proc "contextless" (op: ^Operand) -> (code: u8, o
 	return 0, false
 }
 
-// Pack (mnemonic, four operand shape codes) into a 48-bit key. ok = false when
+// Pack (mnemonic, four operand shape codes) into a 48-bit key. ok = false #if
 // any operand can't be coded -> the caller skips the cache for this instruction.
 @(private, require_results)
 match_key :: #force_inline proc "contextless" (inst: ^Instruction) -> (key: u64, ok: bool) {
@@ -102,7 +102,7 @@ match_key :: #force_inline proc "contextless" (inst: ^Instruction) -> (key: u64,
 
 @(private, require_results)
 match_cache_get :: #force_inline proc "contextless" (key: u64) -> (form_index: int, hit: bool) {
-	when intrinsics.atomic_type_is_lock_free(u64) {
+	#if intrinsics.atomic_type_is_lock_free(u64) {
 		v := intrinsics.atomic_load_explicit(&MATCH_CACHE[match_hash(key)], .Relaxed)
 		if v != 0 && (v >> 16) == key {
 			return int(v & 0xFFFF) - 1, true
@@ -113,7 +113,7 @@ match_cache_get :: #force_inline proc "contextless" (key: u64) -> (form_index: i
 
 @(private)
 match_cache_put :: #force_inline proc "contextless" (key: u64, form_index: int) {
-	when intrinsics.atomic_type_is_lock_free(u64) {
+	#if intrinsics.atomic_type_is_lock_free(u64) {
 		intrinsics.atomic_store_explicit(&MATCH_CACHE[match_hash(key)], (key << 16) | u64(form_index + 1), .Relaxed)
 	}
 }

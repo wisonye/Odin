@@ -1,6 +1,6 @@
 package container_intrusive_list
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // An intrusive doubly-linked list
 //
@@ -272,8 +272,8 @@ Retrieves the next element in a list and advances the iterator.
 
 Example:
 
-	import "core:fmt"
-	import "core:container/intrusive/list"
+	#import "core:fmt"
+	#import "core:container/intrusive/list"
 
 	iterate_next_example :: proc() {
 		l: list.List
@@ -322,8 +322,8 @@ Retrieves the previous element in a list and recede the iterator.
 
 Example:
 
-	import "core:fmt"
-	import "core:container/intrusive/list"
+	#import "core:fmt"
+	#import "core:container/intrusive/list"
 
 	iterate_prev_example :: proc() {
 		l: list.List

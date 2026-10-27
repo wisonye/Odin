@@ -1,8 +1,8 @@
 #+build i386, amd64
 package simd_x86
 
-import "base:intrinsics"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:simd"
 
 @(require_results, enable_target_feature="sse3")
 _mm_addsub_ps :: #force_inline proc "c" (a, b: __m128) -> __m128 {
@@ -50,7 +50,7 @@ _mm_moveldup_ps :: #force_inline proc "c" (a: __m128) -> __m128 {
 }
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name = "llvm.x86.sse3.addsub.ps")
 	addsubps :: proc(a, b: __m128) -> __m128 ---
 	@(link_name = "llvm.x86.sse3.addsub.pd")

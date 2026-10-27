@@ -5,10 +5,10 @@ See: [[ https://www.rfc-editor.org/rfc/rfc2898 ]]
 */
 package pbkdf2
 
-import "core:crypto"
-import "core:crypto/hash"
-import "core:crypto/hmac"
-import "core:encoding/endian"
+#import "core:crypto"
+#import "core:crypto/hash"
+#import "core:crypto/hmac"
+#import "core:encoding/endian"
 
 // derive invokes PBKDF2-HMAC with the specified hash algorithm, password,
 // salt, iteration count, and outputs the derived key to dst.

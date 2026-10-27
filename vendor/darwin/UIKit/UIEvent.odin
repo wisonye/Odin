@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="UIEvent", objc_superclass=NS.Object)
 Event :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Event, objc_selector="touchesForWindow:", objc_name="touchesForWindow")
 	Event_touchesForWindow :: proc(self: ^Event, window: ^Window) -> ^NS.Set ---
 
@@ -52,7 +52,7 @@ EventAttribution :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EventAttribution, objc_selector="initWithSourceIdentifier:destinationURL:sourceDescription:purchaser:", objc_name="initWithSourceIdentifier")
 	EventAttribution_initWithSourceIdentifier :: proc(self: ^EventAttribution, sourceIdentifier: cffi.uint8_t, destinationURL: ^NS.URL, sourceDescription: ^NS.String, purchaser: ^NS.String) -> instancetype ---
 
@@ -83,14 +83,14 @@ foreign lib {
 EventAttributionView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIPressesEvent", objc_superclass=Event)
 PressesEvent :: struct { using _: Event}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PressesEvent, objc_selector="pressesForGestureRecognizer:", objc_name="pressesForGestureRecognizer")
 	PressesEvent_pressesForGestureRecognizer :: proc(self: ^PressesEvent, gesture: ^GestureRecognizer) -> ^NS.Set ---
 

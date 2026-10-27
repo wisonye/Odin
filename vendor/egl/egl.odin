@@ -219,9 +219,9 @@ Platform :: enum u32 {
 	SURFACELESS_MESA = 0x31DD,
 }
 
-foreign import egl "system:EGL"
+#foreign #import egl "system:EGL"
 @(default_calling_convention="c", link_prefix="egl")
-foreign egl {
+#foreign egl {
 	CopyBuffers         :: proc(display: Display, surface: Surface, target: NativePixmapType) -> Boolean ---
 	GetDisplay          :: proc(display: NativeDisplayType) -> Display ---
 	GetCurrentDisplay   :: proc() -> Display ---

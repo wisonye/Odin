@@ -9,14 +9,14 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:log"
-import "core:reflect"
-import "core:sync"
-import "core:sync/chan"
-import "core:time"
-import "core:mem"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:log"
+#import "core:reflect"
+#import "core:sync"
+#import "core:sync/chan"
+#import "core:time"
+#import "core:mem"
 
 _ :: reflect // alias reflect to nothing to force visibility for -vet
 _ :: mem     // in case TRACKING_MEMORY is not enabled
@@ -73,7 +73,7 @@ fail :: proc(t: ^T, loc := #caller_location) {
 // fail_now will cause a test to immediately fail and abort, much in the same
 // way a failed assertion or panic call will stop a thread.
 //
-// It is for when you absolutely need a test to fail without calling any of its
+// It is for #if you absolutely need a test to fail without calling any of its
 // deferred statements. It will be cleaner than a regular assert or panic,
 // as the test runner will know to expect the signal this procedure will raise.
 fail_now :: proc(t: ^T, msg := "", loc := #caller_location) -> ! {
@@ -90,7 +90,7 @@ failed :: proc(t: ^T) -> bool {
 	return t.error_count != 0
 }
 
-// cleanup registers a procedure and user_data, which will be called when the test, and all its subtests, complete.
+// cleanup registers a procedure and user_data, which will be called #if the test, and all its subtests, complete.
 // Cleanup procedures will be called in LIFO (last added, first called) order.
 //
 // Each procedure will use a copy of the context at the time of registering,
@@ -99,7 +99,7 @@ failed :: proc(t: ^T) -> bool {
 // run with greater privilege in the test runner's main thread.
 //
 // That means that any cleanup procedure absolutely must not fail in the same way,
-// or it will take down the entire test runner with it. This is for when you
+// or it will take down the entire test runner with it. This is for #if you
 // need something to run no matter what, if a test failed.
 //
 // For almost every usual case, `defer` should be preferable and sufficient.
@@ -136,7 +136,7 @@ expect_value :: proc(t: ^T, value, expected: $T, loc := #caller_location, value_
 Memory_Verifier_Proc :: #type proc(t: ^T, ta: ^mem.Tracking_Allocator)
 
 expect_leaks :: proc(t: ^T, client_test: proc(t: ^T), verifier: Memory_Verifier_Proc) {
-	when TRACKING_MEMORY {
+	#if TRACKING_MEMORY {
 		client_test(t)
 		ta := (^mem.Tracking_Allocator)(context.allocator.data)
 

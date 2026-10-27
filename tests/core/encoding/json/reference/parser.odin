@@ -1,9 +1,9 @@
 package encoding_json_reference
 
-import "core:mem"
-import "core:unicode/utf8"
-import "core:unicode/utf16"
-import "core:strconv"
+#import "core:mem"
+#import "core:unicode/utf8"
+#import "core:unicode/utf16"
+#import "core:strconv"
 
 Parser :: struct {
 	tok:            Tokenizer,

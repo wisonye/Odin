@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIMenu", objc_superclass=MenuElement)
 Menu :: struct { using _: MenuElement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Menu, objc_selector="menuWithChildren:", objc_name="menuWithChildren", objc_is_class_method=true)
 	Menu_menuWithChildren :: proc(children: ^NS.Array) -> ^Menu ---
 
@@ -68,7 +68,7 @@ Menu_menuWithTitle :: proc {
 MenuBuilder :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuBuilder, objc_selector="menuForIdentifier:", objc_name="menuForIdentifier")
 	MenuBuilder_menuForIdentifier :: proc(self: ^MenuBuilder, identifier: ^NS.String) -> ^Menu ---
 
@@ -153,7 +153,7 @@ MenuBuilder_replaceMenuForIdentifier :: proc {
 MenuController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuController, objc_selector="setMenuVisible:", objc_name="setMenuVisible_")
 	MenuController_setMenuVisible_ :: proc(self: ^MenuController, menuVisible: bool) ---
 
@@ -212,7 +212,7 @@ MenuDisplayPreferences :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuDisplayPreferences, objc_selector="maximumNumberOfTitleLines", objc_name="maximumNumberOfTitleLines")
 	MenuDisplayPreferences_maximumNumberOfTitleLines :: proc(self: ^MenuDisplayPreferences) -> NS.Integer ---
 
@@ -229,7 +229,7 @@ MenuElement :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuElement, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	MenuElement_initWithCoder :: proc(self: ^MenuElement, coder: ^NS.Coder) -> instancetype ---
 
@@ -257,7 +257,7 @@ foreign lib {
 DeferredMenuElement :: struct { using _: MenuElement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DeferredMenuElement, objc_selector="elementWithProvider:", objc_name="elementWithProvider", objc_is_class_method=true)
 	DeferredMenuElement_elementWithProvider :: proc(elementProvider: ^Objc_Block(proc "c" ( completion: ^Objc_Block(proc "c" ( elements: ^NS.Array )) ))) -> instancetype ---
 
@@ -276,7 +276,7 @@ foreign lib {
 DeferredMenuElementProvider :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DeferredMenuElementProvider, objc_selector="providerWithElementProvider:", objc_name="providerWithElementProvider", objc_is_class_method=true)
 	DeferredMenuElementProvider_providerWithElementProvider :: proc(elementProvider: ^Objc_Block(proc "c" ( completion: ^Objc_Block(proc "c" ( elements: ^NS.Array )) ))) -> instancetype ---
 
@@ -292,7 +292,7 @@ foreign lib {
 MenuItem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuItem, objc_selector="initWithTitle:action:", objc_name="initWithTitle")
 	MenuItem_initWithTitle :: proc(self: ^MenuItem, title: ^NS.String, action: SEL) -> instancetype ---
 
@@ -317,7 +317,7 @@ MenuLeaf :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuLeaf, objc_selector="performWithSender:target:", objc_name="performWithSender")
 	MenuLeaf_performWithSender :: proc(self: ^MenuLeaf, sender: id, target: id) ---
 
@@ -375,7 +375,7 @@ foreign lib {
 MenuSystem :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuSystem, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	MenuSystem_new :: proc() -> ^MenuSystem ---
 
@@ -400,7 +400,7 @@ foreign lib {
 MainMenuSystem :: struct { using _: MenuSystem}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MainMenuSystem, objc_selector="setBuildConfiguration:buildHandler:", objc_name="setBuildConfiguration")
 	MainMenuSystem_setBuildConfiguration :: proc(self: ^MainMenuSystem, configuration: ^MainMenuSystemConfiguration, buildHandler: ^Objc_Block(proc "c" ( builder: ^MenuBuilder ))) ---
 
@@ -422,7 +422,7 @@ MainMenuSystemConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MainMenuSystemConfiguration, objc_selector="newScenePreference", objc_name="newScenePreference")
 	MainMenuSystemConfiguration_newScenePreference :: proc(self: ^MainMenuSystemConfiguration) -> MenuSystemElementGroupPreference ---
 
@@ -480,7 +480,7 @@ foreign lib {
 MenuSystemFindElementGroupConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MenuSystemFindElementGroupConfiguration, objc_selector="init", objc_name="init")
 	MenuSystemFindElementGroupConfiguration_init :: proc(self: ^MenuSystemFindElementGroupConfiguration) -> instancetype ---
 

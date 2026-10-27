@@ -22,9 +22,9 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:bytes"
-import "core:crypto"
-import "core:crypto/hash"
+#import "core:bytes"
+#import "core:crypto"
+#import "core:crypto/hash"
 
 // PKCS1_HASH_OIDS maps common hash algorithms to the OIDs for
 // use with PKCS#1 signatures.

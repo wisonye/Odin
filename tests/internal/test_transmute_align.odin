@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 transmute_array_like_to_simd_and_u128 :: proc(t: ^testing.T) {

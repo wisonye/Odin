@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIAction", objc_superclass=MenuElement)
 Action :: struct {
@@ -13,7 +13,7 @@ Action :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Action, objc_selector="actionWithHandler:", objc_name="actionWithHandler", objc_is_class_method=true)
 	Action_actionWithHandler :: proc(handler: ActionHandler) -> instancetype ---
 
@@ -71,7 +71,7 @@ foreign lib {
 ActionSheet :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActionSheet, objc_selector="initWithTitle:delegate:cancelButtonTitle:destructiveButtonTitle:otherButtonTitles:", objc_name="initWithTitle")
 	ActionSheet_initWithTitle :: proc(self: ^ActionSheet, title: ^NS.String, delegate: ^ActionSheetDelegate, cancelButtonTitle: ^NS.String, destructiveButtonTitle: ^NS.String, otherButtonTitles: ^NS.String) -> instancetype ---
 
@@ -147,7 +147,7 @@ ActionSheetDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ActionSheetDelegate, objc_selector="actionSheet:clickedButtonAtIndex:", objc_name="actionSheet_clickedButtonAtIndex")
 	ActionSheetDelegate_actionSheet_clickedButtonAtIndex :: proc(self: ^ActionSheetDelegate, actionSheet: ^ActionSheet, buttonIndex: NS.Integer) ---
 

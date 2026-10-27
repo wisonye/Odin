@@ -1,7 +1,7 @@
 package wgpu_glfw_glue
 
-import "vendor:glfw"
-import "vendor:wgpu"
+#import "vendor:glfw"
+#import "vendor:wgpu"
 
 GetSurface :: proc(instance: wgpu.Instance, window: glfw.WindowHandle) -> wgpu.Surface {
 	if glfw.GetPlatform != nil {

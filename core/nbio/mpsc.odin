@@ -1,9 +1,9 @@
 #+private
 package nbio
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sync"
+#import "core:sync"
 
 Multi_Producer_Single_Consumer :: struct {
 	count:  int,

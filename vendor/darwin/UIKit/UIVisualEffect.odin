@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIVisualEffect", objc_superclass=NS.Object)
 VisualEffect :: struct {
@@ -13,7 +13,7 @@ VisualEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIVisualEffectView", objc_superclass=View)
@@ -23,7 +23,7 @@ VisualEffectView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VisualEffectView, objc_selector="initWithEffect:", objc_name="initWithEffect")
 	VisualEffectView_initWithEffect :: proc(self: ^VisualEffectView, effect: ^VisualEffect) -> instancetype ---
 
@@ -45,7 +45,7 @@ foreign lib {
 BlurEffect :: struct { using _: VisualEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=BlurEffect, objc_selector="effectWithStyle:", objc_name="effectWithStyle", objc_is_class_method=true)
 	BlurEffect_effectWithStyle :: proc(style: BlurEffectStyle) -> ^BlurEffect ---
 }
@@ -55,7 +55,7 @@ foreign lib {
 GlassContainerEffect :: struct { using _: VisualEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlassContainerEffect, objc_selector="spacing", objc_name="spacing")
 	GlassContainerEffect_spacing :: proc(self: ^GlassContainerEffect) -> CG.Float ---
 
@@ -68,7 +68,7 @@ foreign lib {
 GlassEffect :: struct { using _: VisualEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlassEffect, objc_selector="effectWithStyle:", objc_name="effectWithStyle", objc_is_class_method=true)
 	GlassEffect_effectWithStyle :: proc(style: GlassEffectStyle) -> ^GlassEffect ---
 
@@ -90,7 +90,7 @@ foreign lib {
 VibrancyEffect :: struct { using _: VisualEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VibrancyEffect, objc_selector="effectForBlurEffect:", objc_name="effectForBlurEffect_", objc_is_class_method=true)
 	VibrancyEffect_effectForBlurEffect_ :: proc(blurEffect: ^BlurEffect) -> ^VibrancyEffect ---
 

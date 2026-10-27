@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CM "vendor:darwin/CoreMedia"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CM "vendor:darwin/CoreMedia"
 
 @(objc_class="AVMetadataFaceObject", objc_superclass=MetadataObject)
 MetadataFaceObject :: struct {
@@ -13,7 +13,7 @@ MetadataFaceObject :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataFaceObject, objc_selector="faceID", objc_name="faceID")
 	MetadataFaceObject_faceID :: proc(self: ^MetadataFaceObject) -> NS.Integer ---
 
@@ -38,7 +38,7 @@ MetadataFaceObjectInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVMetadataGroup", objc_superclass=NS.Object)
 MetadataGroup :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataGroup, objc_selector="items", objc_name="items")
 	MetadataGroup_items :: proc(self: ^MetadataGroup) -> ^NS.Array ---
 
@@ -57,7 +57,7 @@ DateRangeMetadataGroup :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateRangeMetadataGroup, objc_selector="initWithItems:startDate:endDate:", objc_name="initWithItems")
 	DateRangeMetadataGroup_initWithItems :: proc(self: ^DateRangeMetadataGroup, items: ^NS.Array, startDate: ^NS.Date, endDate: ^NS.Date) -> instancetype ---
 
@@ -75,7 +75,7 @@ foreign lib {
 @(objc_class="AVMutableDateRangeMetadataGroup", objc_superclass=DateRangeMetadataGroup)
 MutableDateRangeMetadataGroup :: struct { using _: DateRangeMetadataGroup}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableDateRangeMetadataGroup, objc_selector="startDate", objc_name="startDate")
 	MutableDateRangeMetadataGroup_startDate :: proc(self: ^MutableDateRangeMetadataGroup) -> ^NS.Date ---
 
@@ -107,7 +107,7 @@ TimedMetadataGroup :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TimedMetadataGroup, objc_selector="initWithItems:timeRange:", objc_name="initWithItems")
 	TimedMetadataGroup_initWithItems :: proc(self: ^TimedMetadataGroup, items: ^NS.Array, timeRange: CM.TimeRange) -> instancetype ---
 
@@ -128,7 +128,7 @@ foreign lib {
 @(objc_class="AVMutableTimedMetadataGroup", objc_superclass=TimedMetadataGroup)
 MutableTimedMetadataGroup :: struct { using _: TimedMetadataGroup}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableTimedMetadataGroup, objc_selector="timeRange", objc_name="timeRange")
 	MutableTimedMetadataGroup_timeRange :: proc(self: ^MutableTimedMetadataGroup) -> CM.TimeRange ---
 
@@ -155,7 +155,7 @@ MetadataItem :: struct {
 	using _: NS.MutableCopying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataItem, objc_selector="identifier", objc_name="identifier")
 	MetadataItem_identifier :: proc(self: ^MetadataItem) -> ^NS.String ---
 
@@ -262,7 +262,7 @@ MetadataItem_statusOfValueForKey :: #force_inline proc "c" (self: ^MetadataItem,
 @(objc_class="AVMutableMetadataItem", objc_superclass=MetadataItem)
 MutableMetadataItem :: struct { using _: MetadataItem}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableMetadataItem, objc_selector="metadataItem", objc_name="metadataItem", objc_is_class_method=true)
 	MutableMetadataItem_metadataItem :: proc() -> ^MutableMetadataItem ---
 
@@ -345,7 +345,7 @@ MutableMetadataItemInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVMetadataItemFilter", objc_superclass=NS.Object)
 MetadataItemFilter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataItemFilter, objc_selector="metadataItemFilterForSharing", objc_name="metadataItemFilterForSharing", objc_is_class_method=true)
 	MetadataItemFilter_metadataItemFilterForSharing :: proc() -> ^MetadataItemFilter ---
 }
@@ -358,7 +358,7 @@ MetadataItemFilterInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVMetadataItemValueRequest", objc_superclass=NS.Object)
 MetadataItemValueRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataItemValueRequest, objc_selector="respondWithValue:", objc_name="respondWithValue")
 	MetadataItemValueRequest_respondWithValue :: proc(self: ^MetadataItemValueRequest, value: ^id) ---
 
@@ -381,7 +381,7 @@ MetadataMachineReadableCodeObjectInternal :: struct { using _: intrinsics.objc_o
 @(objc_class="AVMetadataObject", objc_superclass=NS.Object)
 MetadataObject :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataObject, objc_selector="init", objc_name="init")
 	MetadataObject_init :: proc(self: ^MetadataObject) -> instancetype ---
 
@@ -424,7 +424,7 @@ MetadataBodyObject :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataBodyObject, objc_selector="bodyID", objc_name="bodyID")
 	MetadataBodyObject_bodyID :: proc(self: ^MetadataBodyObject) -> NS.Integer ---
 }
@@ -478,7 +478,7 @@ MetadataSalientObject :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MetadataSalientObject, objc_selector="objectID", objc_name="objectID")
 	MetadataSalientObject_objectID :: proc(self: ^MetadataSalientObject) -> NS.Integer ---
 }

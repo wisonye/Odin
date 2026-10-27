@@ -1,7 +1,7 @@
 package container_handle_map
 
-import "base:builtin"
-import "base:intrinsics"
+#import "base:builtin"
+#import "base:intrinsics"
 
 Static_Handle_Map :: struct($N: uint, $T: typeid, $Handle_Type: typeid)
 	where
@@ -95,7 +95,7 @@ static_remove :: proc "contextless" (m: ^$H/Static_Handle_Map($N, $T, $Handle_Ty
 	return false
 }
 
-// Returns true when the handle `h` is valid relating to the handle map.
+// Returns true #if the handle `h` is valid relating to the handle map.
 @(require_results)
 static_is_valid :: proc "contextless" (m: $H/Static_Handle_Map($N, $T, $Handle_Type), h: Handle_Type) -> bool {
 	return h.idx > 0 && u32(h.idx) < m.used_len && m.items[h.idx].handle == h

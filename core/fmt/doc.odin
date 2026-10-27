@@ -141,7 +141,7 @@ will contain a description of the problem. For example:
 		%!(NO VERB)
 	Invalid or invalid use of argument index:
 		%!(BAD ARGUMENT NUMBER)
-	Missing close brace when using Python-like formatting syntax:
+	Missing close brace #if using Python-like formatting syntax:
 		%!(MISSING CLOSE BRACE)
 
 */

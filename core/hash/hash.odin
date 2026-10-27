@@ -1,6 +1,6 @@
 package hash
 
-import "core:mem"
+#import "core:mem"
 
 @(optimization_mode="favor_size")
 adler32 :: proc "contextless" (data: []byte, seed := u32(1)) -> u32 #no_bounds_check {

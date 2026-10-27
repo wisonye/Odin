@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIAccelerometer", objc_superclass=NS.Object)
 Accelerometer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Accelerometer, objc_selector="sharedAccelerometer", objc_name="sharedAccelerometer", objc_is_class_method=true)
 	Accelerometer_sharedAccelerometer :: proc() -> ^Accelerometer ---
 
@@ -34,7 +34,7 @@ AccelerometerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerometerDelegate, objc_selector="accelerometer:didAccelerate:", objc_name="accelerometer")
 	AccelerometerDelegate_accelerometer :: proc(self: ^AccelerometerDelegate, accelerometer: ^Accelerometer, acceleration: ^Acceleration) ---
 }

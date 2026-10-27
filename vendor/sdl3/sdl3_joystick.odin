@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 
 Joystick :: struct {}
@@ -34,7 +34,7 @@ JOYSTICK_AXIS_MIN :: -32768
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	@(synchronizes=.Acquire)
 	LockJoysticks                  :: proc() ---
 	@(synchronizes=.Release)
@@ -87,14 +87,14 @@ VirtualJoystickDesc :: struct {
 	sensors:   [^]VirtualJoystickSensorDesc   `fmt:"v,nsensors"`,     /**< A pointer to an array of sensor descriptions, required if `nsensors` is > 0 */
 
 	userdata:          rawptr,                                                                                   /**< User data pointer passed to callbacks */
-	Update:            proc "c" (userdata: rawptr),                                                              /**< Called when the joystick state should be updated */
-	SetPlayerIndex:    proc "c" (userdata: rawptr, player_index: c.int),                                         /**< Called when the player index is set */
+	Update:            proc "c" (userdata: rawptr),                                                              /**< Called #if the joystick state should be updated */
+	SetPlayerIndex:    proc "c" (userdata: rawptr, player_index: c.int),                                         /**< Called #if the player index is set */
 	Rumble:            proc "c" (userdata: rawptr, low_frequency_rumble, high_frequency_rumble: Uint16) -> bool, /**< Implements SDL_RumbleJoystick() */
 	RumbleTriggers:    proc "c" (userdata: rawptr, left_rumble, right_rumble: Uint16) -> bool,                   /**< Implements SDL_RumbleJoystickTriggers() */
 	SetLED:            proc "c" (userdata: rawptr, red, green, blue: Uint8) -> bool,                             /**< Implements SDL_SetJoystickLED() */
 	SendEffect:        proc "c" (userdata: rawptr, data: rawptr, size: c.int) -> bool,                           /**< Implements SDL_SendJoystickEffect() */
 	SetSensorsEnabled: proc "c" (userdata: rawptr, enabled: bool) -> bool,                                       /**< Implements SDL_SetGamepadSensorEnabled() */
-	Cleanup:           proc "c" (userdata: rawptr),                                                              /**< Cleans up the userdata when the joystick is detached */
+	Cleanup:           proc "c" (userdata: rawptr),                                                              /**< Cleans up the userdata #if the joystick is detached */
 }
 
 #assert(
@@ -121,7 +121,7 @@ HAT_LEFTUP    :: HAT_LEFT|HAT_UP
 HAT_LEFTDOWN  :: HAT_LEFT|HAT_DOWN
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	AttachVirtualJoystick         :: proc(#by_ptr desc: VirtualJoystickDesc) -> JoystickID ---
 	DetachVirtualJoystick         :: proc(instance_id: JoystickID) -> bool ---
 	IsJoystickVirtual             :: proc(instance_id: JoystickID) -> bool ---

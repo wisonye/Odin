@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSValidatedUserInterfaceItem")
 ValidatedUserInterfaceItem :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ValidatedUserInterfaceItem, objc_selector="action", objc_name="action")
 	ValidatedUserInterfaceItem_action :: proc(self: ^ValidatedUserInterfaceItem) -> SEL ---
 

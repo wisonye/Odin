@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 SWSURFACE       :: 0           /**< Just here for compatibility */
@@ -44,7 +44,7 @@ Surface :: struct {
 	/** info for fast blit mapping to other surfaces */
 	blitmap: ^BlitMap,           /**< Private */
 
-	/** Reference count -- used when freeing surface */
+	/** Reference count -- used #if freeing surface */
 	refcount: c.int,             /**< Read-mostly */
 }
 
@@ -72,7 +72,7 @@ BlitScaled  :: UpperBlitScaled
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	CreateRGBSurface                  :: proc(flags: u32, width, height, depth: c.int, Rmask, Gmask, Bmask, Amask: u32) -> ^Surface ---
 	CreateRGBSurfaceWithFormat        :: proc(flags: u32, width, height, depth: c.int, format: u32) -> ^Surface ---
 	CreateRGBSurfaceFrom              :: proc(pixels: rawptr, width, height, depth, pitch: c.int, Rmask, Gmask, Bmask, Amask: u32) -> ^Surface ---

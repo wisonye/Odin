@@ -1,16 +1,16 @@
 #+private
 package nbio
 
-import "core:net"
-import "core:sys/posix"
-import "core:sys/freebsd"
+#import "core:net"
+#import "core:sys/posix"
+#import "core:sys/freebsd"
 
-foreign import lib "system:c"
+#foreign #import lib "system:c"
 
 // TODO: rewrite freebsd implementation to use `sys/freebsd` instead of `sys/posix`.
 
 posix_sendfile :: proc(fd: Handle, s: TCP_Socket, offset, nbytes: int) -> (sent: int, ok := true) {
-	foreign lib {
+	#foreign lib {
 		@(link_name="sendfile")
 		_posix_sendfile :: proc (fd, s: posix.FD, offset: posix.off_t, nbytes: uint, hdtr: rawptr, sbytes: ^posix.off_t, flags: i32) -> posix.result ---
 	}

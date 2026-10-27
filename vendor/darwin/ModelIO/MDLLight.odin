@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_ModelIO
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
 
 @(objc_class="MDLLight", objc_superclass=Object)
 Light :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Light, objc_selector="irradianceAtPoint:", objc_name="irradianceAtPoint_")
 	Light_irradianceAtPoint_ :: proc(self: ^Light, point: ^vector_float3) -> CG.ColorRef ---
 
@@ -42,7 +42,7 @@ Light_irradianceAtPoint :: proc {
 @(objc_class="MDLLightProbe", objc_superclass=Light)
 LightProbe :: struct { using _: Light}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LightProbe, objc_selector="initWithReflectiveTexture:irradianceTexture:", objc_name="initWithReflectiveTexture")
 	LightProbe_initWithReflectiveTexture :: proc(self: ^LightProbe, reflectiveTexture: ^Texture, irradianceTexture: ^Texture) -> instancetype ---
 
@@ -72,7 +72,7 @@ LightProbeIrradianceDataSource :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LightProbeIrradianceDataSource, objc_selector="sphericalHarmonicsCoefficientsAtPosition:", objc_name="sphericalHarmonicsCoefficientsAtPosition")
 	LightProbeIrradianceDataSource_sphericalHarmonicsCoefficientsAtPosition :: proc(self: ^LightProbeIrradianceDataSource, position: ^vector_float3) -> ^NS.Data ---
 
@@ -93,7 +93,7 @@ foreign lib {
 @(objc_class="MDLPhysicallyPlausibleLight", objc_superclass=Light)
 PhysicallyPlausibleLight :: struct { using _: Light}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicallyPlausibleLight, objc_selector="setColorByTemperature:", objc_name="setColorByTemperature")
 	PhysicallyPlausibleLight_setColorByTemperature :: proc(self: ^PhysicallyPlausibleLight, temperature: cffi.float) ---
 
@@ -138,7 +138,7 @@ foreign lib {
 @(objc_class="MDLAreaLight", objc_superclass=PhysicallyPlausibleLight)
 AreaLight :: struct { using _: PhysicallyPlausibleLight}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AreaLight, objc_selector="areaRadius", objc_name="areaRadius")
 	AreaLight_areaRadius :: proc(self: ^AreaLight) -> cffi.float ---
 
@@ -162,7 +162,7 @@ foreign lib {
 @(objc_class="MDLPhotometricLight", objc_superclass=PhysicallyPlausibleLight)
 PhotometricLight :: struct { using _: PhysicallyPlausibleLight}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhotometricLight, objc_selector="initWithIESProfile:", objc_name="initWithIESProfile")
 	PhotometricLight_initWithIESProfile :: proc(self: ^PhotometricLight, _URL: ^NS.URL) -> instancetype ---
 

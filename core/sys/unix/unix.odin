@@ -1,6 +1,6 @@
 package unix
 
-import "core:c"
+#import "core:c"
 
 timespec :: struct {
 	secs:  i64,

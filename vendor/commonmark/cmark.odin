@@ -1,25 +1,25 @@
 package vendor_commonmark
 
-import "core:c"
-import "base:runtime"
+#import "core:c"
+#import "base:runtime"
 
 COMMONMARK_SHARED :: #config(COMMONMARK_SHARED, false)
 BINDING_VERSION :: Version_Info{major = 0, minor = 31, patch = 2}
 
-when COMMONMARK_SHARED {
+#if COMMONMARK_SHARED {
 	#panic("Shared linking for vendor:commonmark is not supported yet")
 }
 
-when ODIN_OS == .Windows {
-	foreign import lib {
+#if ODIN_OS == .Windows {
+	#foreign #import lib {
 		"cmark_static.lib",
 	}
-} else when ODIN_OS == .Linux {
-	foreign import lib "system:cmark"
-} else when ODIN_OS == .Darwin {
-	foreign import lib "system:cmark"
+} else #if ODIN_OS == .Linux {
+	#foreign #import lib "system:cmark"
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib "system:cmark"
 } else {
-	foreign import lib "system:cmark"
+	#foreign #import lib "system:cmark"
 }
 
 Option :: enum c.int {
@@ -97,14 +97,14 @@ Version_Info :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	version        :: proc() -> (res: Version_Info) ---
 	version_string :: proc() -> (res: cstring) ---
 }
 
 // Simple API
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Convert 'text' (assumed to be a UTF-8 encoded string with length `len`) from CommonMark Markdown to HTML
 	// returning a null-terminated, UTF-8-encoded string. It is the caller's responsibility
 	// to free the returned buffer.
@@ -116,7 +116,7 @@ markdown_to_html_from_string :: proc(text: string, options: Options) -> (html: s
 }
 
 // Custom allocator - Defines the memory allocation functions to be used by CMark
-// when parsing and allocating a document tree
+// #if parsing and allocating a document tree
 Allocator :: struct {
 	calloc:  proc "c" (num: c.size_t, size: c.size_t)  -> rawptr,
 	realloc: proc "c" (ptr: rawptr, new_size: c.size_t) -> rawptr,
@@ -124,7 +124,7 @@ Allocator :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Returns a pointer to the default memory allocator.
 	get_default_mem_allocator :: proc() -> (mem: ^Allocator) ---
 }
@@ -207,7 +207,7 @@ Custom :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Returns `true` if `node` is a block node.
 	node_is_block :: proc(node: ^Node) -> (is_block: c.bool) ---
 
@@ -259,11 +259,11 @@ Event_Type :: enum c.int {
 }
 
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Creates a new iterator starting at 'root'.  The current node and event
 	// type are undefined until `iter_next` is called for the first time.
 	// The memory allocated for the iterator should be released using
-	// 'iter_free' when it is no longer needed.
+	// 'iter_free' #if it is no longer needed.
 	iter_new :: proc(root: ^Node) -> (iter: ^Iter) ---
 
 	// Frees the memory allocated for an iterator.
@@ -289,7 +289,7 @@ foreign lib {
 
 // Accessors
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Returns the user data of `node`.
 	node_get_user_data :: proc(node: ^Node) -> (user_data: rawptr) ---
 
@@ -394,7 +394,7 @@ foreign lib {
 
 // Tree Manipulation
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Unlinks a `node`, removing it from the tree, but not freeing its memory.
 	// (Use `node_free` for that.)
 	node_unlink :: proc(node: ^Node) ---
@@ -425,7 +425,7 @@ foreign lib {
 Parser :: distinct rawptr
 
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Creates a new parser object.
 	parser_new :: proc(options: Options) -> (parser: ^Parser) ---
 
@@ -448,12 +448,12 @@ foreign lib {
 
 	// Parse a CommonMark document in 'buffer' of length 'len'.
 	// Returns a pointer to a tree of nodes. The memory allocated for
-	// the node tree should be released using 'node_free' when it is no longer needed.
+	// the node tree should be released using 'node_free' #if it is no longer needed.
 	parse_document :: proc(buffer: [^]byte, len: c.size_t, options: Options) -> (root: ^Node) ---
 
 	// Parse a CommonMark document in file 'f', returning a pointer to a tree of nodes.
 	// The memory allocated for the node tree should be released using 'node_free'
-	// when it is no longer needed.
+	// #if it is no longer needed.
 	//
 	// Called `parse_from_libc_file` so as not to confuse with Odin's file handling.
 
@@ -470,7 +470,7 @@ parse_document_from_string :: proc "c" (s: string, options: Options) -> (root: ^
 
 // Rendering
 @(default_calling_convention="c", link_prefix="cmark_")
-foreign lib {
+#foreign lib {
 	// Render a `node` tree as XML.
 	// It is the caller's responsibilityto free the returned buffer.
 	render_xml :: proc(root: ^Node, options: Options) -> (xml: cstring) ---

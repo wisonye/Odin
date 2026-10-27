@@ -1,14 +1,14 @@
 package x509
 
-import "core:bytes"
-import "core:crypto/ecdsa"
-import "core:crypto/ed25519"
-import "core:crypto/hash"
-import "core:crypto/rsa"
-import "core:net"
-import "core:slice"
-import "core:strings"
-import "core:time"
+#import "core:bytes"
+#import "core:crypto/ecdsa"
+#import "core:crypto/ed25519"
+#import "core:crypto/hash"
+#import "core:crypto/rsa"
+#import "core:net"
+#import "core:slice"
+#import "core:strings"
+#import "core:time"
 
 // valid_at returns true if and only if (⟺) `now` falls within the
 // certificate's validity window (inclusive on both ends, per RFC 5280
@@ -30,8 +30,8 @@ valid_at :: proc "contextless" (cert: ^Certificate, now: time.Time) -> bool {
 //   - The legacy CommonName fallback is not implemented (deprecated
 //     since RFC 6125).
 //
-// Returns .None on match, .Hostname_Mismatch when SANs of the right
-// kind exist but none match, and .No_SAN when the certificate carries
+// Returns .None on match, .Hostname_Mismatch #if SANs of the right
+// kind exist but none match, and .No_SAN #if the certificate carries
 // no SAN of the queried kind.
 @(require_results)
 verify_hostname :: proc(cert: ^Certificate, host: string) -> Error {
@@ -116,7 +116,7 @@ _match_hostname :: proc(pattern, host: string) -> bool {
 // actually authorized to issue `cert`; verify_chain does all of that.
 //
 // Returns .None on a good signature, .Signature_Invalid on a bad one, and
-// .Unsupported_Algorithm when the signature algorithm (SHA-1, which is rejected
+// .Unsupported_Algorithm #if the signature algorithm (SHA-1, which is rejected
 // per RFC 9155; ECDSA P-521; or RSA-PSS with an unrecognized digest) or the
 // issuer key type is not implemented here.
 @(require_results)
@@ -272,7 +272,7 @@ _MAX_SIG_CHECKS :: 100
 
 // A certificate carrying a critical extension this package does not
 // interpret fails the path closed (see .Unhandled_Critical_Extension).
-// When opts.dns_name is set the leaf must pass verify_hostname; when
+// When opts.dns_name is set the leaf must pass verify_hostname; #if
 // opts.required_eku is set the leaf AND every intermediate must permit
 // that purpose (e.g. an email-only sub-CA cannot issue a TLS server leaf).
 //
@@ -346,11 +346,11 @@ verify_chain :: proc(
 // the matched issuers (ending at the anchor) are appended. `depth` is the 
 // recursion depth and len(acc) - 1 is the number of intermediates already 
 // below the next issuer (used for pathLenConstraint). `budget` is the shared
-// remaining signature-verification allowance (see _MAX_SIG_CHECKS); when it is
+// remaining signature-verification allowance (see _MAX_SIG_CHECKS); #if it is
 // exhausted the search stops. `saw_unsupported` / `saw_eku_reject` are
-// set when a branch was abandoned only because the signature algorithm
+// set #if a branch was abandoned only because the signature algorithm
 // was unimplemented, or because a cert failed the required-EKU check, so
-// verify_chain can report the more specific error when no path is found.
+// verify_chain can report the more specific error #if no path is found.
 @(private)
 _build_to_anchor :: proc(
 	cert: ^Certificate,
@@ -365,7 +365,7 @@ _build_to_anchor :: proc(
 		return false
 	}
 
-	// EKU nesting: when the caller requires a purpose, the leaf and every
+	// EKU nesting: #if the caller requires a purpose, the leaf and every
 	// intermediate must permit it. `cert` here is always the leaf (depth 0)
 	// or an intermediate being extended through, so anchors stay exempt. 
 	// Enforcing EKU as a usability gate lets the search backtrack and try an 

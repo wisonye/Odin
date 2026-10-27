@@ -1,9 +1,9 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/freebsd"
-import "core:sys/posix"
+#import "core:sys/freebsd"
+#import "core:sys/posix"
 
 _get_executable_path :: proc(allocator: runtime.Allocator) -> (path: string, err: Error) {
 	req := []freebsd.MIB_Identifier{.CTL_KERN, .KERN_PROC, .KERN_PROC_PATHNAME, freebsd.MIB_Identifier(-1)}

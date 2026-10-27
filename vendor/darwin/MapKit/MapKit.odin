@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_MapKit
 
-import "base:intrinsics"
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -16,7 +16,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:MapKit.framework",
 }
 
@@ -27,7 +27,7 @@ CNPostalAddress :: NS.Object
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="MKErrorDomain")
 	ErrorDomain: ^NS.String
 
@@ -494,7 +494,7 @@ AnnotationViewCollisionMode :: enum cffi.long {
 	None      = 2,
 }
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	MapFeatureType :: enum cffi.long {
 		PointOfInterest = 0,
 		Territory       = 1,
@@ -530,7 +530,7 @@ PinAnnotationColor :: enum cffi.ulong {
 	Purple = 2,
 }
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	MapFeatureOption :: enum cffi.long {
 		OptionPointsOfInterest = 0,
 		OptionTerritories      = 1,
@@ -544,7 +544,7 @@ LookAroundBadgePosition :: enum cffi.long {
 	BottomTrailing = 2,
 }
 
-when ODIN_PLATFORM_SUBTARGET_IOS {
+#if ODIN_PLATFORM_SUBTARGET_IOS {
 	MapFeatureOptions :: bit_set[MapFeatureOption; cffi.long]
 
 	ScaleViewAlignment :: enum cffi.long {

@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCAxisElement")
 AxisElement :: struct {
@@ -12,7 +12,7 @@ AxisElement :: struct {
 	using _: PhysicalInputElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AxisElement, objc_selector="absoluteInput", objc_name="absoluteInput")
 	AxisElement_absoluteInput :: proc(self: ^AxisElement) -> ^AxisInput ---
 
@@ -34,7 +34,7 @@ AxisInput :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AxisInput, objc_selector="valueDidChangeHandler", objc_name="valueDidChangeHandler")
 	AxisInput_valueDidChangeHandler :: proc(self: ^AxisInput) -> ^Objc_Block(proc "c" ()) ---
 

@@ -1,8 +1,8 @@
 package encoding_csv
 
-import "core:io"
-import "core:strings"
-import "core:unicode/utf8"
+#import "core:io"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 // Writer is a data structure used for writing records using a CSV-encoding.
 Writer :: struct {

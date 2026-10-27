@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIFieldBehavior", objc_superclass=DynamicBehavior)
 FieldBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=FieldBehavior, objc_selector="init", objc_name="init")
 	FieldBehavior_init :: proc(self: ^FieldBehavior) -> instancetype ---
 

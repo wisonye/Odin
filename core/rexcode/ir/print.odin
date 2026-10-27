@@ -13,8 +13,8 @@ package rexcode_ir
 // helpers for hex/decimal. Kept independent of isa.print so the two siblings do
 // not couple; the `Token_Kind` set adds the IR-only categories.
 
-import "core:strings"
-import "core:reflect"
+#import "core:strings"
+#import "core:reflect"
 
 Token_Kind :: enum u8 {
 	WHITESPACE,

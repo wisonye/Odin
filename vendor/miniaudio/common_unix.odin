@@ -1,8 +1,8 @@
 #+build !windows
 package miniaudio
 
-import "core:sys/posix"
-import "core:c"
+#import "core:sys/posix"
+#import "core:c"
 
 thread :: posix.pthread_t
 mutex :: posix.pthread_mutex_t

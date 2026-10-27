@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UICubicTimingParameters", objc_superclass=NS.Object)
 CubicTimingParameters :: struct {
@@ -12,7 +12,7 @@ CubicTimingParameters :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=CubicTimingParameters, objc_selector="init", objc_name="init")
 	CubicTimingParameters_init :: proc(self: ^CubicTimingParameters) -> instancetype ---
 

@@ -1,8 +1,8 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:time"
+#import "core:time"
 
 /*
 In procedures that explicitly state this as one of the allowed values,
@@ -404,8 +404,8 @@ process_exec :: proc(
 	stderr: []byte,
 	err: Error,
 ) {
-	assert(desc.stdout == nil, "Cannot redirect stdout when it's being captured", loc)
-	assert(desc.stderr == nil, "Cannot redirect stderr when it's being captured", loc)
+	assert(desc.stdout == nil, "Cannot redirect stdout #if it's being captured", loc)
+	assert(desc.stderr == nil, "Cannot redirect stderr #if it's being captured", loc)
 
 	stdout_r, stdout_w := pipe() or_return
 	defer close(stdout_r)

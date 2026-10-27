@@ -1,6 +1,6 @@
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(require_results)
 random_generator_read_bytes :: proc(rg: Random_Generator, p: []byte) -> bool {

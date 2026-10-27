@@ -1,10 +1,10 @@
 package test_vendor_sdl2
 
-import "core:log"
-import "core:os"
-import "core:testing"
-import SDL "vendor:sdl2"
-import TTF "vendor:sdl2/ttf"
+#import "core:log"
+#import "core:os"
+#import "core:testing"
+#import SDL "vendor:sdl2"
+#import TTF "vendor:sdl2/ttf"
 
 // Links `vendor:sdl2/ttf` and prints its version as a line `VERSION SDL2_ttf <version>`. On Windows it must be the version the
 // bindings were written for, and it renders some text with a system font, which only needs the SDL2_ttf DLL: FreeType is built into it.
@@ -13,7 +13,7 @@ import TTF "vendor:sdl2/ttf"
 test_sdl_ttf :: proc(t: ^testing.T) {
 	linked := TTF.Linked_Version()
 	log.infof("VERSION SDL2_ttf %v.%v.%v", linked.major, linked.minor, linked.patch)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		dll      := [3]int{int(linked.major), int(linked.minor), int(linked.patch)}
 		bindings := [3]int{TTF.MAJOR_VERSION, TTF.MINOR_VERSION, TTF.PATCHLEVEL}
 		testing.expectf(t, dll == bindings, "the SDL2_ttf DLL is %v but the bindings are for %v", dll, bindings)

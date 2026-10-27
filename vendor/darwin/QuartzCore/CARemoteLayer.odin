@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_QuartzCore
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import darwin "core:sys/darwin"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import darwin "core:sys/darwin"
 
 @(objc_class="CARemoteLayerClient", objc_superclass=NS.Object)
 RemoteLayerClient :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RemoteLayerClient, objc_selector="initWithServerPort:", objc_name="initWithServerPort")
 	RemoteLayerClient_initWithServerPort :: proc(self: ^RemoteLayerClient, port: darwin.mach_port_t) -> instancetype ---
 
@@ -30,7 +30,7 @@ foreign lib {
 @(objc_class="CARemoteLayerServer", objc_superclass=NS.Object)
 RemoteLayerServer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RemoteLayerServer, objc_selector="sharedServer", objc_name="sharedServer", objc_is_class_method=true)
 	RemoteLayerServer_sharedServer :: proc() -> ^RemoteLayerServer ---
 

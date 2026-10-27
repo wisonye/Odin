@@ -1,6 +1,6 @@
 package strings
 
-import "base:runtime"
+#import "base:runtime"
 
 // Custom string entry struct
 Intern_Entry :: struct {

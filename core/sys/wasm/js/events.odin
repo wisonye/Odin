@@ -1,7 +1,7 @@
 #+build js wasm32, js wasm64p32
 package wasm_js_interface
 
-foreign import dom_lib "odin_dom"
+#foreign #import dom_lib "odin_dom"
 
 Event_Kind :: enum u32 {
 	Invalid,
@@ -329,7 +329,7 @@ Event :: struct {
 }
 
 @(default_calling_convention="contextless")
-foreign dom_lib {
+#foreign dom_lib {
 	event_stop_propagation           :: proc() ---
 	event_stop_immediate_propagation :: proc() ---
 	event_prevent_default            :: proc() ---
@@ -338,7 +338,7 @@ foreign dom_lib {
 
 add_event_listener :: proc(id: string, kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="add_event_listener")
 		_add_event_listener :: proc(id: string, name: string, name_code: Event_Kind, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -348,7 +348,7 @@ add_event_listener :: proc(id: string, kind: Event_Kind, user_data: rawptr, call
 
 remove_event_listener :: proc(id: string, kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="remove_event_listener")
 		_remove_event_listener :: proc(id: string, name: string, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -357,7 +357,7 @@ remove_event_listener :: proc(id: string, kind: Event_Kind, user_data: rawptr, c
 
 add_window_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="add_window_event_listener")
 		_add_window_event_listener :: proc(name: string, name_code: Event_Kind, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -366,7 +366,7 @@ add_window_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callback:
 
 remove_window_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="remove_window_event_listener")
 		_remove_window_event_listener :: proc(name: string, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -375,7 +375,7 @@ remove_window_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callba
 
 add_document_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="add_document_event_listener")
 		_add_document_event_listener :: proc(name: string, name_code: Event_Kind, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -384,7 +384,7 @@ add_document_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callbac
 
 remove_document_event_listener :: proc(kind: Event_Kind, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="remove_document_event_listener")
 		_remove_document_event_listener :: proc(name: string, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -408,7 +408,7 @@ remove_event_listener_from_event :: proc(e: Event) -> bool {
 
 add_custom_event_listener :: proc(id: string, name: string, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="add_event_listener")
 		_add_event_listener :: proc(id: string, name: string, name_code: Event_Kind, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -416,7 +416,7 @@ add_custom_event_listener :: proc(id: string, name: string, user_data: rawptr, c
 }
 remove_custom_event_listener :: proc(id: string, name: string, user_data: rawptr, callback: proc(e: Event), use_capture := false) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="remove_event_listener")
 		_remove_event_listener :: proc(id: string, name: string, user_data: rawptr, callback: proc "odin" (Event), use_capture: bool) -> bool ---
 	}
@@ -425,7 +425,7 @@ remove_custom_event_listener :: proc(id: string, name: string, user_data: rawptr
 
 get_gamepad_state :: proc "contextless" (index: int, s: ^Gamepad_State) -> bool {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		@(link_name="get_gamepad_state")
 		_get_gamepad_state :: proc(index: int, s: ^Gamepad_State) -> bool ---
 	}
@@ -447,7 +447,7 @@ get_gamepad_state :: proc "contextless" (index: int, s: ^Gamepad_State) -> bool 
 @(export, link_name="odin_dom_do_event_callback")
 do_event_callback :: proc(user_data: rawptr, callback: proc(e: Event)) {
 	@(default_calling_convention="contextless")
-	foreign dom_lib {
+	#foreign dom_lib {
 		init_event_raw :: proc(e: ^Event) ---
 	}
 

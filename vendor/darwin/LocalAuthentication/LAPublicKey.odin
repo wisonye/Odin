@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
-import Sec "core:sys/darwin/Security"
+#import NS "core:sys/darwin/Foundation"
+#import Sec "core:sys/darwin/Security"
 
 @(objc_class="LAPublicKey", objc_superclass=NS.Object)
 PublicKey :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PublicKey, objc_selector="exportBytesWithCompletion:", objc_name="exportBytesWithCompletion")
 	PublicKey_exportBytesWithCompletion :: proc(self: ^PublicKey, handler: ^Objc_Block(proc "c" ( _0: ^NS.Data, _1: ^NS.Error ))) ---
 

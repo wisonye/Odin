@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIStateRestoring")
 StateRestoring :: struct {
@@ -12,7 +12,7 @@ StateRestoring :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=StateRestoring, objc_selector="encodeRestorableStateWithCoder:", objc_name="encodeRestorableStateWithCoder")
 	StateRestoring_encodeRestorableStateWithCoder :: proc(self: ^StateRestoring, coder: ^NS.Coder) ---
 

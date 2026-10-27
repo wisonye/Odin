@@ -1,7 +1,7 @@
 #+build amd64
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // Regression coverage for label definitions inside inline-asm templates on amd64.
 @(test)

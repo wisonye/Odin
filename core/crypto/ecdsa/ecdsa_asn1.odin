@@ -1,7 +1,7 @@
 package ecdsa
 
-import "core:encoding/asn1"
-import secec "core:crypto/_weierstrass"
+#import "core:encoding/asn1"
+#import secec "core:crypto/_weierstrass"
 
 // ASN.1 ECDSA signatures are `SEQUENCE { r INTEGER, s INTEGER }`. These thin
 // wrappers over core:encoding/asn1 generate/parse that structure the DER
@@ -9,9 +9,9 @@ import secec "core:crypto/_weierstrass"
 
 @(private, require_results)
 generate_asn1_sig :: proc(r, s: ^$T, allocator := context.allocator) -> []byte {
-	when T == secec.Scalar_p256r1 {
+	#if T == secec.Scalar_p256r1 {
 		SC_SZ :: secec.SC_SIZE_P256R1
-	} else when T == secec.Scalar_p384r1 {
+	} else #if T == secec.Scalar_p384r1 {
 		SC_SZ :: secec.SC_SIZE_P384R1
 	} else {
 		#panic("crypto/ecdsa: invalid curve")

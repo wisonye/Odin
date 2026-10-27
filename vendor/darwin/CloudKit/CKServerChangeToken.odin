@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKServerChangeToken", objc_superclass=NS.Object)
 ServerChangeToken :: struct {
@@ -11,7 +11,7 @@ ServerChangeToken :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ServerChangeToken, objc_selector="init", objc_name="init")
 	ServerChangeToken_init :: proc(self: ^ServerChangeToken) -> instancetype ---
 

@@ -40,11 +40,11 @@ package main
 // its forms, so nothing else is skipped; should an unmappable operand type
 // ever appear, the form is skipped and reported.
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import rsp "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import rsp "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 

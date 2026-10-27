@@ -2,8 +2,8 @@
 
 package rexcode_arm32_tests
 
-import "core:fmt"
-import a "../"
+#import "core:fmt"
+#import a "../"
 
 // =============================================================================
 // AArch32 ENCODING_TABLE sweep
@@ -19,7 +19,7 @@ import a "../"
 //     bits. Implies the dispatch index is missing a bucket for this form.
 //   * Wrong-entry decode: bucket has the entry but a different entry's mask
 //     happens to also match.
-//   * Pack/unpack asymmetry: decoder returns operands that, when re-encoded,
+//   * Pack/unpack asymmetry: decoder returns operands that, #if re-encoded,
 //     produce a different bit pattern (off-by-one in a field shift, wrong
 //     sign handling, etc.).
 

@@ -1,9 +1,9 @@
 // Tests "core:reflect/reflect".
 package test_core_reflect
 
-import "base:intrinsics"
-import "core:reflect"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:reflect"
+#import "core:testing"
 
 @test
 test_as_u64 :: proc(t: ^testing.T) {

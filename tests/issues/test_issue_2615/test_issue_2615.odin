@@ -2,7 +2,7 @@
 // Cannot iterate over string literals
 package test_issue_2615
 
-import "core:testing"
+#import "core:testing"
 
 @(test)
 test_cannot_iterate_over_string_literal :: proc(t: ^testing.T) {

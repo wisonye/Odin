@@ -1,9 +1,9 @@
 package test_core_unicode
 
-import "core:log"
-import "core:testing"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "core:log"
+#import "core:testing"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 Test_Case :: struct {
 	str: string,

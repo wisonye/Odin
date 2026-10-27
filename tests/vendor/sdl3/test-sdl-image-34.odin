@@ -1,9 +1,9 @@
 package test_vendor_sdl3
 
-import "core:log"
-import "core:testing"
-import SDL "vendor:sdl3"
-import IMG "vendor:sdl3/image"
+#import "core:log"
+#import "core:testing"
+#import SDL "vendor:sdl3"
+#import IMG "vendor:sdl3/image"
 
 // The formats that SDL3_image has been able to write since 3.4: the same round trip as test-sdl-image.odin, in a file of its own so that
 // a system library older than that fails only this test, because it lacks the functions to link, and not test-sdl-image.odin. On Windows
@@ -71,7 +71,7 @@ test_sdl_image_34 :: proc(t: ^testing.T) {
 	}
 	log.infof("SDL3_image formats since 3.4 %v", working[:])
 
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		testing.expectf(t, len(working) == len(Format34), "SDL3_image could only write and read %v of all %v formats, its DLLs are missing or the wrong version", working[:], len(Format34))
 	} else {
 		testing.expect(t, len(working) > 0, "SDL3_image works with no format at all")

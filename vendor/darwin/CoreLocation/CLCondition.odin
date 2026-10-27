@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_CoreLocation
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CLCondition", objc_superclass=NS.Object)
 Condition :: struct {
@@ -11,7 +11,7 @@ Condition :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Condition, objc_selector="init", objc_name="init")
 	Condition_init :: proc(self: ^Condition) -> instancetype ---
 
@@ -26,7 +26,7 @@ CircularGeographicCondition :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CircularGeographicCondition, objc_selector="initWithCenter:radius:", objc_name="initWithCenter")
 	CircularGeographicCondition_initWithCenter :: proc(self: ^CircularGeographicCondition, center: LocationCoordinate2D, radius: LocationDistance) -> instancetype ---
 

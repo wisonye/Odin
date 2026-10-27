@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLLibrary")
 Library :: struct {
@@ -11,7 +11,7 @@ Library :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Library, objc_selector="newFunctionWithName:", objc_name="newFunctionWithName_")
 	Library_newFunctionWithName_ :: proc(self: ^Library, functionName: ^NS.String) -> ^Function ---
 
@@ -104,7 +104,7 @@ CompileOptions :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompileOptions, objc_selector="preprocessorMacros", objc_name="preprocessorMacros")
 	CompileOptions_preprocessorMacros :: proc(self: ^CompileOptions) -> ^NS.Dictionary ---
 

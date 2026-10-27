@@ -17,8 +17,8 @@ package math_big
 		- Also look at extracting and splatting several digits at once.
 */
 
-import "base:runtime"
-import "core:os"
+#import "base:runtime"
+#import "core:os"
 
 /*
 	We might add functions to read and write byte-encoded Ints from/to files, using `int_to_bytes_*` functions.

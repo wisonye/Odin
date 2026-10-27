@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSIgnoreMisspelledWords")
 IgnoreMisspelledWords :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=IgnoreMisspelledWords, objc_selector="ignoreSpelling:", objc_name="ignoreSpelling")
 	IgnoreMisspelledWords_ignoreSpelling :: proc(self: ^IgnoreMisspelledWords, sender: id) ---
 }

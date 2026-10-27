@@ -12,11 +12,11 @@ package test_core_asn1
 //   - the output is well-formed DER (a read_any walk consumes it exactly);
 //   - leaf values survive a marshal -> read round-trip.
 
-import "core:bytes"
-import "core:encoding/asn1"
-import "core:math/rand"
-import "core:testing"
-import "core:time"
+#import "core:bytes"
+#import "core:encoding/asn1"
+#import "core:math/rand"
+#import "core:testing"
+#import "core:time"
 
 WRITER_FUZZ_ITERS :: 2048
 WRITER_FUZZ_DEPTH :: 6

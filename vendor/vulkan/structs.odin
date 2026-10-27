@@ -1,14 +1,14 @@
 package vulkan
 
-import "core:c"
+#import "core:c"
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 _ :: win32
 
-import "vendor:x11/xlib"
+#import "vendor:x11/xlib"
 _ :: xlib
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	HINSTANCE           :: win32.HINSTANCE
 	HWND                :: win32.HWND
 	HMONITOR            :: win32.HMONITOR
@@ -33,7 +33,7 @@ when ODIN_OS == .Windows {
 	}
 }
 
-when xlib.IS_SUPPORTED {
+#if xlib.IS_SUPPORTED {
 	XlibDisplay  :: xlib.Display
 	XlibWindow   :: xlib.Window
 	XlibVisualID :: xlib.VisualID

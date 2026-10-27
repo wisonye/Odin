@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_ModelIO
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MDLCamera", objc_superclass=Object)
 Camera :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Camera, objc_selector="frameBoundingBox:setNearAndFar:", objc_name="frameBoundingBox")
 	Camera_frameBoundingBox :: proc(self: ^Camera, boundingBox: AxisAlignedBoundingBox, setNearAndFar: bool) ---
 
@@ -172,7 +172,7 @@ Camera_lookAt :: proc {
 @(objc_class="MDLStereoscopicCamera", objc_superclass=Camera)
 StereoscopicCamera :: struct { using _: Camera}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=StereoscopicCamera, objc_selector="interPupillaryDistance", objc_name="interPupillaryDistance")
 	StereoscopicCamera_interPupillaryDistance :: proc(self: ^StereoscopicCamera) -> cffi.float ---
 

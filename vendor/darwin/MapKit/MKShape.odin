@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
 
 @(objc_class="MKShape", objc_superclass=NS.Object)
 Shape :: struct {
@@ -12,7 +12,7 @@ Shape :: struct {
 	using _: Annotation,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Shape, objc_selector="title", objc_name="title")
 	Shape_title :: proc(self: ^Shape) -> ^NS.String ---
 
@@ -30,7 +30,7 @@ foreign lib {
 @(objc_class="MKMultiPoint", objc_superclass=Shape)
 MultiPoint :: struct { using _: Shape}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MultiPoint, objc_selector="points", objc_name="points")
 	MultiPoint_points :: proc(self: ^MultiPoint) -> ^MapPoint ---
 
@@ -51,7 +51,7 @@ foreign lib {
 @(objc_class="MKPointAnnotation", objc_superclass=Shape)
 PointAnnotation :: struct { using _: Shape}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PointAnnotation, objc_selector="init", objc_name="init")
 	PointAnnotation_init :: proc(self: ^PointAnnotation) -> instancetype ---
 

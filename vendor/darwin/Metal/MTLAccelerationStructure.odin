@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="MTLAccelerationStructure")
 AccelerationStructure :: struct {
@@ -12,7 +12,7 @@ AccelerationStructure :: struct {
 	using _: Resource,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructure, objc_selector="size", objc_name="size")
 	AccelerationStructure_size :: proc(self: ^AccelerationStructure) -> NS.UInteger ---
 
@@ -27,7 +27,7 @@ AccelerationStructureDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureDescriptor, objc_selector="usage", objc_name="usage")
 	AccelerationStructureDescriptor_usage :: proc(self: ^AccelerationStructureDescriptor) -> AccelerationStructureUsage ---
 
@@ -39,7 +39,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructureBoundingBoxGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureBoundingBoxGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureBoundingBoxGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureBoundingBoxGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -75,7 +75,7 @@ AccelerationStructureCommandEncoder :: struct {
 	using _: CommandEncoder,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureCommandEncoder, objc_selector="buildAccelerationStructure:descriptor:scratchBuffer:scratchBufferOffset:", objc_name="buildAccelerationStructure")
 	AccelerationStructureCommandEncoder_buildAccelerationStructure :: proc(self: ^AccelerationStructureCommandEncoder, accelerationStructure: ^AccelerationStructure, descriptor: ^AccelerationStructureDescriptor, scratchBuffer: ^Buffer, scratchBufferOffset: NS.UInteger) ---
 
@@ -152,7 +152,7 @@ AccelerationStructureCommandEncoder_useResources :: proc {
 @(objc_class="MTLAccelerationStructureCurveGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureCurveGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureCurveGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureCurveGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -266,7 +266,7 @@ AccelerationStructureGeometryDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureGeometryDescriptor, objc_selector="intersectionFunctionTableOffset", objc_name="intersectionFunctionTableOffset")
 	AccelerationStructureGeometryDescriptor_intersectionFunctionTableOffset :: proc(self: ^AccelerationStructureGeometryDescriptor) -> NS.UInteger ---
 
@@ -320,7 +320,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureMotionBoundingBoxGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureMotionBoundingBoxGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureMotionBoundingBoxGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -347,7 +347,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructureMotionCurveGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureMotionCurveGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureMotionCurveGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureMotionCurveGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -446,7 +446,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructureMotionTriangleGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureMotionTriangleGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureMotionTriangleGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureMotionTriangleGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -518,7 +518,7 @@ AccelerationStructurePassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructurePassDescriptor, objc_selector="accelerationStructurePassDescriptor", objc_name="accelerationStructurePassDescriptor", objc_is_class_method=true)
 	AccelerationStructurePassDescriptor_accelerationStructurePassDescriptor :: proc() -> ^AccelerationStructurePassDescriptor ---
 
@@ -533,7 +533,7 @@ AccelerationStructurePassSampleBufferAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructurePassSampleBufferAttachmentDescriptor, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	AccelerationStructurePassSampleBufferAttachmentDescriptor_sampleBuffer :: proc(self: ^AccelerationStructurePassSampleBufferAttachmentDescriptor) -> ^CounterSampleBuffer ---
 
@@ -557,7 +557,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray", objc_superclass=NS.Object)
 AccelerationStructurePassSampleBufferAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructurePassSampleBufferAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	AccelerationStructurePassSampleBufferAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^AccelerationStructurePassSampleBufferAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^AccelerationStructurePassSampleBufferAttachmentDescriptor ---
 
@@ -569,7 +569,7 @@ foreign lib {
 @(objc_class="MTLAccelerationStructureTriangleGeometryDescriptor", objc_superclass=AccelerationStructureGeometryDescriptor)
 AccelerationStructureTriangleGeometryDescriptor :: struct { using _: AccelerationStructureGeometryDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AccelerationStructureTriangleGeometryDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	AccelerationStructureTriangleGeometryDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -644,7 +644,7 @@ foreign lib {
 @(objc_class="MTLInstanceAccelerationStructureDescriptor", objc_superclass=AccelerationStructureDescriptor)
 InstanceAccelerationStructureDescriptor :: struct { using _: AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=InstanceAccelerationStructureDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	InstanceAccelerationStructureDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -725,7 +725,7 @@ foreign lib {
 @(objc_class="MTLIndirectInstanceAccelerationStructureDescriptor", objc_superclass=AccelerationStructureDescriptor)
 IndirectInstanceAccelerationStructureDescriptor :: struct { using _: AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=IndirectInstanceAccelerationStructureDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	IndirectInstanceAccelerationStructureDescriptor_descriptor :: proc() -> instancetype ---
 
@@ -824,7 +824,7 @@ foreign lib {
 @(objc_class="MTLPrimitiveAccelerationStructureDescriptor", objc_superclass=AccelerationStructureDescriptor)
 PrimitiveAccelerationStructureDescriptor :: struct { using _: AccelerationStructureDescriptor}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PrimitiveAccelerationStructureDescriptor, objc_selector="descriptor", objc_name="descriptor", objc_is_class_method=true)
 	PrimitiveAccelerationStructureDescriptor_descriptor :: proc() -> instancetype ---
 

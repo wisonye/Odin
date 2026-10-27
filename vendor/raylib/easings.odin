@@ -1,6 +1,6 @@
 package raylib
 
-import "core:math"
+#import "core:math"
 
 EaseLinearNone  :: proc(t, b, c, d: f32) -> f32 { return (c*t/d + b) }
 EaseLinearIn    :: proc(t, b, c, d: f32) -> f32 { return (c*t/d + b) }

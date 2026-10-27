@@ -1,19 +1,19 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // string.h - string operations
 
 // NOTE: most of the symbols in this header are not useful in Odin and have been left out.
 
-foreign lib {
+#foreign lib {
 	/*
 	Map the error number to a locale-dependent error message string and put it in the buffer.
 

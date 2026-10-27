@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MTLComputePassDescriptor", objc_superclass=NS.Object)
 ComputePassDescriptor :: struct {
@@ -11,7 +11,7 @@ ComputePassDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePassDescriptor, objc_selector="computePassDescriptor", objc_name="computePassDescriptor", objc_is_class_method=true)
 	ComputePassDescriptor_computePassDescriptor :: proc() -> ^ComputePassDescriptor ---
 
@@ -32,7 +32,7 @@ ComputePassSampleBufferAttachmentDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePassSampleBufferAttachmentDescriptor, objc_selector="sampleBuffer", objc_name="sampleBuffer")
 	ComputePassSampleBufferAttachmentDescriptor_sampleBuffer :: proc(self: ^ComputePassSampleBufferAttachmentDescriptor) -> ^CounterSampleBuffer ---
 
@@ -56,7 +56,7 @@ foreign lib {
 @(objc_class="MTLComputePassSampleBufferAttachmentDescriptorArray", objc_superclass=NS.Object)
 ComputePassSampleBufferAttachmentDescriptorArray :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePassSampleBufferAttachmentDescriptorArray, objc_selector="objectAtIndexedSubscript:", objc_name="objectAtIndexedSubscript")
 	ComputePassSampleBufferAttachmentDescriptorArray_objectAtIndexedSubscript :: proc(self: ^ComputePassSampleBufferAttachmentDescriptorArray, attachmentIndex: NS.UInteger) -> ^ComputePassSampleBufferAttachmentDescriptor ---
 
@@ -72,7 +72,7 @@ ComputePipelineState :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePipelineState, objc_selector="functionHandleWithName:", objc_name="functionHandleWithName")
 	ComputePipelineState_functionHandleWithName :: proc(self: ^ComputePipelineState, name: ^NS.String) -> ^FunctionHandle ---
 
@@ -150,7 +150,7 @@ ComputePipelineDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePipelineDescriptor, objc_selector="reset", objc_name="reset")
 	ComputePipelineDescriptor_reset :: proc(self: ^ComputePipelineDescriptor) ---
 
@@ -246,7 +246,7 @@ foreign lib {
 @(objc_class="MTLComputePipelineReflection", objc_superclass=NS.Object)
 ComputePipelineReflection :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ComputePipelineReflection, objc_selector="bindings", objc_name="bindings")
 	ComputePipelineReflection_bindings :: proc(self: ^ComputePipelineReflection) -> ^NS.Array ---
 

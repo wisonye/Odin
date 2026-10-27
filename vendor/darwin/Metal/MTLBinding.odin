@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLBinding")
 Binding :: struct {
@@ -11,7 +11,7 @@ Binding :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Binding, objc_selector="name", objc_name="name")
 	Binding_name :: proc(self: ^Binding) -> ^NS.String ---
 
@@ -38,7 +38,7 @@ ObjectPayloadBinding :: struct {
 	using _: Binding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ObjectPayloadBinding, objc_selector="objectPayloadAlignment", objc_name="objectPayloadAlignment")
 	ObjectPayloadBinding_objectPayloadAlignment :: proc(self: ^ObjectPayloadBinding) -> NS.UInteger ---
 
@@ -53,7 +53,7 @@ ThreadgroupBinding :: struct {
 	using _: Binding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ThreadgroupBinding, objc_selector="threadgroupMemoryAlignment", objc_name="threadgroupMemoryAlignment")
 	ThreadgroupBinding_threadgroupMemoryAlignment :: proc(self: ^ThreadgroupBinding) -> NS.UInteger ---
 

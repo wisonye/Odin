@@ -1,6 +1,6 @@
 package nbio
 
-import "core:net"
+#import "core:net"
 
 Network_Error  :: net.Network_Error
 Accept_Error   :: net.Accept_Error

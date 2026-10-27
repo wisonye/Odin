@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSAlignmentFeedbackFilter", objc_superclass=NS.Object)
 AlignmentFeedbackFilter :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AlignmentFeedbackFilter, objc_selector="updateWithEvent:", objc_name="updateWithEvent")
 	AlignmentFeedbackFilter_updateWithEvent :: proc(self: ^AlignmentFeedbackFilter, event: ^Event) ---
 
@@ -41,4 +41,4 @@ AlignmentFeedbackToken :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}

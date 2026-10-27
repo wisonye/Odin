@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSLocale", objc_superclass=Object)
 Locale :: struct {
@@ -11,7 +11,7 @@ Locale :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Locale, objc_selector="objectForKey:", objc_name="objectForKey")
 	Locale_objectForKey :: proc(self: ^Locale, key: ^String) -> id ---
 

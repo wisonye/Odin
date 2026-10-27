@@ -1,6 +1,6 @@
 package math_linalg_glsl
 
-import "core:math"
+#import "core:math"
 
 @(require_results) cos_f32         :: proc "c" (x: f32) -> f32 { return math.cos(x) }
 @(require_results) sin_f32         :: proc "c" (x: f32) -> f32 { return math.sin(x) }

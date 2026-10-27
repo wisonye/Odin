@@ -1,7 +1,7 @@
 package test_core_json_differential
 
-import "core:encoding/json"
-import ref "../reference"
+#import "core:encoding/json"
+#import ref "../reference"
 
 // The types the fuzzer unmarshals into. Between them they reach every branch of
 // `unmarshal_value`, `unmarshal_object`, `unmarshal_array` and the `assign_*` helpers.
@@ -70,7 +70,7 @@ Raw :: struct #raw_union {
 	f: f32,
 }
 
-// Unmarshalling into a union never clears the previous variant, so when a key repeats with a
+// Unmarshalling into a union never clears the previous variant, so #if a key repeats with a
 // struct value, fields the second value leaves out keep the old bytes. Struct variants therefore
 // must not place a non-pointer field over another variant's pointer: it would hold an address,
 // and the two packages allocate at different addresses. Here `s` overlays the `string` variant.

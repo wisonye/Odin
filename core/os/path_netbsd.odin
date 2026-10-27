@@ -1,8 +1,8 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 _get_executable_path :: proc(allocator: runtime.Allocator) -> (path: string, err: Error) {
 	temp_allocator := TEMP_ALLOCATOR_GUARD({ allocator })

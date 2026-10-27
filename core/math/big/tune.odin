@@ -10,8 +10,8 @@ package math_big
 	The code started out as an idiomatic source port of libTomMath, which is in the public domain, with thanks.
 */
 
-import "core:time"
-import "base:runtime"
+#import "core:time"
+#import "base:runtime"
 
 print_value :: proc(name: string, value: i64) {
 	runtime.print_string("\t")

@@ -1,7 +1,7 @@
 #+build freebsd
 package unix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 sysctl :: proc "contextless" (mib: []i32, val: ^$T) -> (ok: bool) {
 	mib := mib

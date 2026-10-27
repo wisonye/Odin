@@ -2,7 +2,7 @@
 // Based on d3dcommon.h
 package d3d_common
 
-import "core:sys/windows"
+#import "core:sys/windows"
 
 IID             :: windows.IID
 SIZE_T          :: windows.SIZE_T

@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLMotionKeyframeData", objc_superclass=NS.Object)
 MotionKeyframeData :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MotionKeyframeData, objc_selector="data", objc_name="data", objc_is_class_method=true)
 	MotionKeyframeData_data :: proc() -> instancetype ---
 

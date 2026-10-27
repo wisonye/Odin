@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSOutlineView", objc_superclass=TableView)
 OutlineView :: struct {
@@ -13,7 +13,7 @@ OutlineView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OutlineView, objc_selector="isExpandable:", objc_name="isExpandable")
 	OutlineView_isExpandable :: proc(self: ^OutlineView, item: id) -> bool ---
 
@@ -170,7 +170,7 @@ OutlineViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OutlineViewDelegate, objc_selector="outlineView:viewForTableColumn:item:", objc_name="outlineView_viewForTableColumn_item")
 	OutlineViewDelegate_outlineView_viewForTableColumn_item :: proc(self: ^OutlineViewDelegate, outlineView: ^OutlineView, tableColumn: ^TableColumn, item: id) -> ^View ---
 
@@ -297,7 +297,7 @@ OutlineViewDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=OutlineViewDataSource, objc_selector="outlineView:numberOfChildrenOfItem:", objc_name="outlineView_numberOfChildrenOfItem")
 	OutlineViewDataSource_outlineView_numberOfChildrenOfItem :: proc(self: ^OutlineViewDataSource, outlineView: ^OutlineView, item: id) -> NS.Integer ---
 

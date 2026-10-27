@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="GCButtonElement")
 ButtonElement :: struct {
@@ -10,7 +10,7 @@ ButtonElement :: struct {
 	using _: PhysicalInputElement,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ButtonElement, objc_selector="pressedInput", objc_name="pressedInput")
 	ButtonElement_pressedInput :: proc(self: ^ButtonElement) -> ^id ---
 

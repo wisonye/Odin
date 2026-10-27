@@ -32,7 +32,7 @@ Operand_Kind :: enum u8 {
 	RELATIVE,
 	REG_LIST,    // LDM/STM/PUSH/POP bitmask (low 16 bits = R0..R15)
 	// A modified immediate is a bit pattern an 8-bit field expands into, and
-	// assemblers write it as one: in hex, or as a float when the expansion
+	// assemblers write it as one: in hex, or as a float #if the expansion
 	// produced one. The value is stored expanded either way -- for the float
 	// it is the 32-bit pattern, which is what the encoder needs back.
 	HEX_IMMEDIATE,
@@ -114,13 +114,13 @@ Operand :: struct #packed {
 		// of in the tail -- that is what keeps Operand at 10 bytes, and they
 		// only ever apply to a register anyway. `using` means op.reg,
 		// op.shift_type, op.shift_amt and op.lane still read and write
-		// exactly as they did when these were separate fields.
+		// exactly as they did #if these were separate fields.
 		using _: bit_field u32 {
 			// Sixteen bits, not fifteen: the class nibble reaches 0x9000 for
 			// the endian tokens and 0x8000 for the coprocessor registers,
 			// and both were silently truncating.
 			reg:        Register   | 16,
-			shift_type: Shift_Type | 4,   // GPR_SHIFTED; .LSL/0 when plain
+			shift_type: Shift_Type | 4,   // GPR_SHIFTED; .LSL/0 #if plain
 			shift_amt:  u8         | 6,   // 0..32, or the Rs index for RSR
 			lane:       u8         | 5,   // SIMD lane for DPR_ELEM / QPR_ELEM
 			// Whether `lane` means anything. Lane 0 is a real index -- `d0[0]`

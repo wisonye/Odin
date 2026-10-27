@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKTurnBasedEventHandler", objc_superclass=NS.Object)
 TurnBasedEventHandler :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedEventHandler, objc_selector="sharedTurnBasedEventHandler", objc_name="sharedTurnBasedEventHandler", objc_is_class_method=true)
 	TurnBasedEventHandler_sharedTurnBasedEventHandler :: proc() -> ^TurnBasedEventHandler ---
 
@@ -23,7 +23,7 @@ foreign lib {
 @(objc_class="GKTurnBasedEventHandlerDelegate")
 TurnBasedEventHandlerDelegate :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedEventHandlerDelegate, objc_selector="handleInviteFromGameCenter:", objc_name="handleInviteFromGameCenter")
 	TurnBasedEventHandlerDelegate_handleInviteFromGameCenter :: proc(self: ^TurnBasedEventHandlerDelegate, playersToInvite: ^NS.Array) ---
 
@@ -49,7 +49,7 @@ TurnBasedEventHandlerDelegate_handleTurnEventForMatch :: proc {
 @(objc_class="GKTurnBasedEventListener")
 TurnBasedEventListener :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedEventListener, objc_selector="player:didRequestMatchWithOtherPlayers:", objc_name="player_didRequestMatchWithOtherPlayers")
 	TurnBasedEventListener_player_didRequestMatchWithOtherPlayers :: proc(self: ^TurnBasedEventListener, player: ^Player, playersToInvite: ^NS.Array) ---
 
@@ -79,7 +79,7 @@ foreign lib {
 @(objc_class="GKTurnBasedExchange", objc_superclass=NS.Object)
 TurnBasedExchange :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedExchange, objc_selector="cancelWithLocalizableMessageKey:arguments:completionHandler:", objc_name="cancelWithLocalizableMessageKey")
 	TurnBasedExchange_cancelWithLocalizableMessageKey :: proc(self: ^TurnBasedExchange, key: ^NS.String, arguments: ^NS.Array, completionHandler: ^Objc_Block(proc "c" ( error: ^NS.Error ))) ---
 
@@ -121,7 +121,7 @@ foreign lib {
 @(objc_class="GKTurnBasedExchangeReply", objc_superclass=NS.Object)
 TurnBasedExchangeReply :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedExchangeReply, objc_selector="recipient", objc_name="recipient")
 	TurnBasedExchangeReply_recipient :: proc(self: ^TurnBasedExchangeReply) -> ^TurnBasedParticipant ---
 
@@ -139,7 +139,7 @@ foreign lib {
 @(objc_class="GKTurnBasedMatch", objc_superclass=NS.Object)
 TurnBasedMatch :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedMatch, objc_selector="setLocalizableMessageWithKey:arguments:", objc_name="setLocalizableMessageWithKey")
 	TurnBasedMatch_setLocalizableMessageWithKey :: proc(self: ^TurnBasedMatch, key: ^NS.String, arguments: ^NS.Array) ---
 
@@ -255,18 +255,18 @@ TurnBasedMatch_participantQuitInTurnWithOutcome :: proc {
 }
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="GKTurnBasedMatchmakerViewController", objc_superclass=UI_ViewController)
 	TurnBasedMatchmakerViewController :: struct {
 		using _: UI_ViewController,
 		using _: ViewController,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="GKTurnBasedMatchmakerViewController", objc_superclass=UI_NavigationController)
 	TurnBasedMatchmakerViewController :: struct { using _: UI_NavigationController}
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedMatchmakerViewController, objc_selector="turnBasedMatchmakerDelegate", objc_name="turnBasedMatchmakerDelegate")
 	TurnBasedMatchmakerViewController_turnBasedMatchmakerDelegate :: proc(self: ^TurnBasedMatchmakerViewController) -> ^TurnBasedMatchmakerViewControllerDelegate ---
 
@@ -296,7 +296,7 @@ TurnBasedMatchmakerViewControllerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedMatchmakerViewControllerDelegate, objc_selector="turnBasedMatchmakerViewControllerWasCancelled:", objc_name="turnBasedMatchmakerViewControllerWasCancelled")
 	TurnBasedMatchmakerViewControllerDelegate_turnBasedMatchmakerViewControllerWasCancelled :: proc(self: ^TurnBasedMatchmakerViewControllerDelegate, viewController: ^TurnBasedMatchmakerViewController) ---
 
@@ -314,7 +314,7 @@ foreign lib {
 @(objc_class="GKTurnBasedParticipant", objc_superclass=NS.Object)
 TurnBasedParticipant :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TurnBasedParticipant, objc_selector="player", objc_name="player")
 	TurnBasedParticipant_player :: proc(self: ^TurnBasedParticipant) -> ^Player ---
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSItemProvider", objc_superclass=Object)
 ItemProvider :: struct {
@@ -10,7 +10,7 @@ ItemProvider :: struct {
 	using _: Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProvider, objc_selector="init", objc_name="init")
 	ItemProvider_init :: proc(self: ^ItemProvider) -> instancetype ---
 
@@ -91,7 +91,7 @@ ItemProviderReading :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProviderReading, objc_selector="objectWithItemProviderData:typeIdentifier:error:", objc_name="objectWithItemProviderData_error", objc_is_class_method=true)
 	ItemProviderReading_objectWithItemProviderData_error :: proc(data: ^Data, typeIdentifier: ^String, outError: ^^Error) -> instancetype ---
 
@@ -115,7 +115,7 @@ ItemProviderWriting :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ItemProviderWriting, objc_selector="itemProviderVisibilityForRepresentationWithTypeIdentifier:", objc_name="itemProviderVisibilityForRepresentationWithTypeIdentifierStatic", objc_is_class_method=true)
 	ItemProviderWriting_itemProviderVisibilityForRepresentationWithTypeIdentifierStatic :: proc(typeIdentifier: ^String) -> ItemProviderRepresentationVisibility ---
 

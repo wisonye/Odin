@@ -1,9 +1,9 @@
 package os
 
-import "base:runtime"
-import "core:slice"
-import "core:strings"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "core:slice"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 
 Path_Separator        :: _Path_Separator        // OS-Specific
@@ -81,7 +81,7 @@ make_directory :: proc(name: string, perm := Permissions_Default_Directory) -> E
 mkdir_all :: make_directory_all
 
 /*
-Make a new directory, creating new intervening directories when needed.
+Make a new directory, creating new intervening directories #if needed.
 
 If `path` is relative, it will be relative to the process's current working directory.
 */
@@ -170,7 +170,7 @@ clean_path :: proc(path: string, allocator: runtime.Allocator) -> (cleaned: stri
 	temp_allocator := TEMP_ALLOCATOR_GUARD({ allocator })
 
 	// The extra byte is to simplify appending path elements by letting the
-	// loop to end each with a separator. We'll trim the last one when we're done.
+	// loop to end each with a separator. We'll trim the last one #if we're done.
 	buffer := make([]u8, len(path) + 1, temp_allocator) or_return
 
 	// This is the only point where Windows and POSIX differ, as Windows has
@@ -188,7 +188,7 @@ clean_path :: proc(path: string, allocator: runtime.Allocator) -> (cleaned: stri
 				// Skip duplicate path separators and current directory references.
 			case "..":
 				if !rooted && buffer_i == head {
-					// Only allow accessing further parent directories when the path is relative.
+					// Only allow accessing further parent directories #if the path is relative.
 					buffer[buffer_i] = '.'
 					buffer[buffer_i+1] = '.'
 					buffer[buffer_i+2] = _Path_Separator
@@ -282,7 +282,7 @@ get_relative_path :: proc(base, target: string, allocator: runtime.Allocator) ->
 	if strings.has_prefix(base, "..") && (len(base) == 2 || _is_path_separator(base[2])) {
 		// We could do the work for the user of getting absolute paths for both
 		// arguments, but that could make something costly (repeatedly
-		// normalizing paths) convenient, when it would be better for the user
+		// normalizing paths) convenient, #if it would be better for the user
 		// to store already-finalized paths and operate on those instead.
 		return "", .Invalid_Path
 	}
@@ -406,7 +406,7 @@ Gets the name of a file from a path.
 
 The stem of a file is such that `stem(path)` + `ext(path)` = `base(path)`.
 
-Only the last dot is considered when splitting the file extension.
+Only the last dot is considered #if splitting the file extension.
 See `short_stem`.
 
 e.g.
@@ -467,7 +467,7 @@ Gets the file extension from a path, including the dot.
 
 The file extension is such that `stem_path(path)` + `ext(path)` = `base(path)`.
 
-Only the last dot is considered when splitting the file extension.
+Only the last dot is considered #if splitting the file extension.
 See `long_ext`.
 
 e.g.
@@ -791,7 +791,7 @@ glob :: proc(pattern: string, allocator := context.allocator) -> (matches: []str
 		Everything else will be "".
 */
 volume_name :: proc(path: string) -> string {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		return path[:_volume_name_len(path)]
 	} else {
 		return ""
@@ -811,7 +811,7 @@ scan_chunk :: proc(pattern: string) -> (star: bool, chunk, rest: string) {
 	scan_loop: for i = 0; i < len(pattern); i += 1 {
 		switch pattern[i] {
 		case '\\':
-			when ODIN_OS != .Windows {
+			#if ODIN_OS != .Windows {
 				if i+1 < len(pattern) {
 					i += 1
 				}
@@ -889,7 +889,7 @@ match_chunk :: proc(chunk, s: string) -> (rest: string, ok: bool, err: Error) {
 			chunk = chunk[1:]
 
 		case '\\':
-			when ODIN_OS != .Windows {
+			#if ODIN_OS != .Windows {
 				chunk = chunk[1:]
 				if len(chunk) == 0 {
 					err = .Pattern_Syntax_Error
@@ -977,7 +977,7 @@ _glob :: proc(dir, pattern: string, matches: ^[dynamic]string, allocator := cont
 
 @(private)
 has_meta :: proc(path: string) -> bool {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		CHARS :: `*?[`
 	} else {
 		CHARS :: `*?[\`
@@ -987,7 +987,7 @@ has_meta :: proc(path: string) -> bool {
 
 @(private)
 clean_glob_path :: proc(path: string, temp_buf: []byte) -> (int, string) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		vol_len := _volume_name_len(path)
 		switch {
 		case path == "":

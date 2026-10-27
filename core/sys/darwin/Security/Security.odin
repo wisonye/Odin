@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_Security
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import darwin "core:sys/darwin"
-import posix "core:sys/posix"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import darwin "core:sys/darwin"
+#import posix "core:sys/posix"
 
 _ :: darwin
 _ :: posix
@@ -19,7 +19,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:Security.framework",
 }
 
@@ -34,8 +34,8 @@ xpc_object_t :: distinct rawptr // TODO: Move XPC to its own framework instead o
 
 
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kSecPropertyKeyType")
 		kSecPropertyKeyType: CF.StringRef
 
@@ -571,7 +571,7 @@ foreign lib {
 	@(link_name="kSecAttrAccessGroupToken")
 	kSecAttrAccessGroupToken: CF.StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kSecACLAuthorizationAny")
 		kSecACLAuthorizationAny: CF.StringRef
 
@@ -930,7 +930,7 @@ foreign lib {
 	@(link_name="kSecPolicyAppleIPsec")
 	kSecPolicyAppleIPsec: CF.StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kSecPolicyAppleiChat")
 		kSecPolicyAppleiChat: CF.StringRef
 	}
@@ -995,7 +995,7 @@ foreign lib {
 	@(link_name="kSecPolicyTeamIdentifier")
 	kSecPolicyTeamIdentifier: CF.StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kSecPolicyKU_DigitalSignature")
 		kSecPolicyKU_DigitalSignature: CF.StringRef
 
@@ -1093,7 +1093,7 @@ foreign lib {
 	@(link_name="kSecSharedPassword")
 	kSecSharedPassword: CF.StringRef
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="kSecOIDADC_CERT_POLICY")
 		kSecOIDADC_CERT_POLICY: CF.StringRef
 
@@ -1797,7 +1797,7 @@ foreign lib {
 		kSecInputIsRaw: CF.StringRef
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		SecKeyRawSign :: proc(key: SecKeyRef, padding: SecPadding, dataToSign: ^cffi.uint8_t, dataToSignLen: cffi.size_t, sig: ^cffi.uint8_t, sigLen: ^cffi.size_t) -> CF.OSStatus ---
 
 		SecKeyRawVerify :: proc(key: SecKeyRef, padding: SecPadding, signedData: ^cffi.uint8_t, signedDataLen: cffi.size_t, sig: ^cffi.uint8_t, sigLen: cffi.size_t) -> CF.OSStatus ---
@@ -1827,9 +1827,9 @@ foreign lib {
 
 	SecCertificateCopyKey :: proc(certificate: SecCertificateRef) -> SecKeyRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecCertificateCopyPublicKey :: proc(certificate: SecCertificateRef, key: ^SecKeyRef) -> CF.OSStatus ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		SecCertificateCopyPublicKey :: proc(certificate: SecCertificateRef) -> SecKeyRef ---
 	}
 
@@ -1839,13 +1839,13 @@ foreign lib {
 
 	SecCertificateCopyNotValidAfterDate :: proc(certificate: SecCertificateRef) -> CF.DateRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecCertificateCopySerialNumber :: proc(certificate: SecCertificateRef, error: ^CF.ErrorRef) -> CF.DataRef ---
-	} else when ODIN_PLATFORM_SUBTARGET_IOS {
+	} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 		SecCertificateCopySerialNumber :: proc(certificate: SecCertificateRef) -> CF.DataRef ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecCertificateCreateFromData :: proc(data: ^cssm_data, type: CSSM_CERT_TYPE, encoding: CSSM_CERT_ENCODING, certificate: ^SecCertificateRef) -> CF.OSStatus ---
 
 		SecCertificateAddToKeychain :: proc(certificate: SecCertificateRef, keychain: SecKeychainRef) -> CF.OSStatus ---
@@ -1885,7 +1885,7 @@ foreign lib {
 
 	SecIdentityCreate :: proc(allocator: CF.AllocatorRef, certificate: SecCertificateRef, privateKey: SecKeyRef) -> SecIdentityRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecIdentityCreateWithCertificate :: proc(keychainOrArray: CF.TypeRef, certificateRef: SecCertificateRef, identityRef: ^SecIdentityRef) -> CF.OSStatus ---
 	}
 
@@ -1893,7 +1893,7 @@ foreign lib {
 
 	SecIdentityCopyPrivateKey :: proc(identityRef: SecIdentityRef, privateKeyRef: ^SecKeyRef) -> CF.OSStatus ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecIdentityCopyPreference :: proc(name: CF.StringRef, keyUsage: CSSM_KEYUSE, validIssuers: CF.ArrayRef, identity: ^SecIdentityRef) -> CF.OSStatus ---
 
 		SecIdentityCopyPreferred :: proc(name: CF.StringRef, keyUsage: CF.ArrayRef, validIssuers: CF.ArrayRef) -> SecIdentityRef ---
@@ -1919,7 +1919,7 @@ foreign lib {
 
 	SecItemDelete :: proc(query: CF.DictionaryRef) -> CF.OSStatus ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecAccessGetTypeID :: proc() -> CF.TypeID ---
 
 		SecAccessCreate :: proc(descriptor: CF.StringRef, trustedlist: CF.ArrayRef, accessRef: ^SecAccessRef) -> CF.OSStatus ---
@@ -1941,7 +1941,7 @@ foreign lib {
 
 	SecKeyGetTypeID :: proc() -> CF.TypeID ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecKeyCreatePair :: proc(keychainRef: SecKeychainRef, algorithm: CSSM_ALGORITHMS, keySizeInBits: cffi.uint, contextHandle: CSSM_CC_HANDLE, publicKeyUsage: CSSM_KEYUSE, publicKeyAttr: cffi.uint, privateKeyUsage: CSSM_KEYUSE, privateKeyAttr: cffi.uint, initialAccess: SecAccessRef, publicKey: ^SecKeyRef, privateKey: ^SecKeyRef) -> CF.OSStatus ---
 
 		SecKeyGenerate :: proc(keychainRef: SecKeychainRef, algorithm: CSSM_ALGORITHMS, keySizeInBits: cffi.uint, contextHandle: CSSM_CC_HANDLE, keyUsage: CSSM_KEYUSE, keyAttr: cffi.uint, initialAccess: SecAccessRef, keyRef: ^SecKeyRef) -> CF.OSStatus ---
@@ -2003,7 +2003,7 @@ foreign lib {
 
 	SecPolicyCreateWithProperties :: proc(policyIdentifier: CF.TypeRef, properties: CF.DictionaryRef) -> SecPolicyRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecPolicyCreateWithOID :: proc(policyOID: CF.TypeRef) -> SecPolicyRef ---
 
 		SecPolicyGetOID :: proc(policyRef: SecPolicyRef, oid: ^cssm_data) -> CF.OSStatus ---
@@ -2019,7 +2019,7 @@ foreign lib {
 
 	SecRandomCopyBytes :: proc(rnd: SecRandomRef, count: cffi.size_t, bytes: rawptr) -> cffi.int ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecKeychainGetTypeID :: proc() -> CF.TypeID ---
 
 		SecKeychainGetVersion :: proc(returnVers: ^CF.UInt32) -> CF.OSStatus ---
@@ -2157,7 +2157,7 @@ foreign lib {
 
 	SecTrustCopyCertificateChain :: proc(trust: SecTrustRef) -> CF.ArrayRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		SecTrustSetOptions :: proc(trustRef: SecTrustRef, options: SecTrustOptionFlags) -> CF.OSStatus ---
 
 		SecTrustSetParameters :: proc(trustRef: SecTrustRef, action: CSSM_TP_ACTION, actionData: CF.DataRef) -> CF.OSStatus ---
@@ -2181,7 +2181,7 @@ foreign lib {
 
 	SecCreateSharedWebCredentialPassword :: proc() -> CF.StringRef ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		AuthorizationCreate :: proc(rights: ^AuthorizationRights, environment: ^AuthorizationEnvironment, flags: AuthorizationFlags, authorization: ^AuthorizationRef) -> CF.OSStatus ---
 
 		AuthorizationFree :: proc(authorization: AuthorizationRef, flags: AuthorizationFlags) -> CF.OSStatus ---
@@ -2452,7 +2452,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	errSecSuccess                             :: 0
 	errSecUnimplemented                       :: -4
 	errSecDiskFull                            :: -34
@@ -2837,7 +2837,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	errSecCertificateIsCA                     :: -67902
 	errSecCertificateDuplicateExtension       :: -67903
 	errSecMissingQualifiedCertStatement       :: -67904
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	errSecSuccess                            :: 0
 	errSecUnimplemented                      :: -4
 	errSecDiskFull                           :: -34
@@ -3223,7 +3223,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	errSecCertificateDuplicateExtension      :: -67903
 	errSecMissingQualifiedCertStatement      :: -67904
 }
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	kSecSubjectItemAttr                       :: 1937072746
 	kSecIssuerItemAttr                        :: 1769173877
 	kSecSerialNumberItemAttr                  :: 1936614002
@@ -3263,14 +3263,14 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	kSecKeyWrap                               :: 25
 	kSecKeyUnwrap                             :: 26
 }
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	kSecRevocationOCSPMethod                  :: 1
 	kSecRevocationCRLMethod                   :: 2
 	kSecRevocationPreferCRL                   :: 4
 	kSecRevocationRequirePositiveResponse     :: 8
 	kSecRevocationNetworkAccessDisabled       :: 16
 	kSecRevocationUseAnyAvailableMethod       :: 3
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	kSecRevocationOCSPMethod                 :: 1
 	kSecRevocationCRLMethod                  :: 2
 	kSecRevocationPreferCRL                  :: 4
@@ -3278,7 +3278,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	kSecRevocationNetworkAccessDisabled      :: 16
 	kSecRevocationUseAnyAvailableMethod      :: 3
 }
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	kSecUnlockStateStatus                     :: 1
 	kSecReadPermStatus                        :: 2
 	kSecWritePermStatus                       :: 4
@@ -3430,7 +3430,7 @@ SecTrustedApplicationRef :: distinct ^__SecTrustedApplication
 SecAccessRef :: distinct ^__SecAccess
 SecACLRef :: distinct ^__SecACL
 SecPasswordRef :: distinct ^__SecPassword
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	CSSM_INTPTR :: distinct cffi.intptr_t
 	CSSM_SIZE :: distinct cffi.size_t
 	SecAsn1Item :: distinct cssm_data
@@ -3795,7 +3795,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 SecKeyAlgorithm :: distinct CF.StringRef
 SecKeyKeyExchangeParameter :: distinct CF.StringRef
 SecRandomRef :: distinct ^__SecRandom
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	CE_OtherName :: distinct __CE_OtherName
 	CE_GeneralName :: distinct __CE_GeneralName
 	CE_GeneralNames :: distinct __CE_GeneralNames
@@ -3842,11 +3842,11 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 SecTrustRef :: distinct ^__SecTrust
 SecTrustCallback :: ^Objc_Block(proc "c" ( trustRef: SecTrustRef, trustResult: SecTrustResultType ))
 SecTrustWithErrorCallback :: ^Objc_Block(proc "c" ( trustRef: SecTrustRef, result: cffi.bool, error: CF.ErrorRef ))
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SecTrustUserSetting :: distinct SecTrustResultType
 }
 SSLCipherSuite :: distinct cffi.uint16_t
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	AuthorizationRef :: distinct ^AuthorizationOpaqueRef
 	AuthorizationString :: distinct cstring
 	AuthorizationRights :: distinct AuthorizationItemSet
@@ -3922,7 +3922,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	SecTransformCreateFP :: proc "c" ( name: CF.StringRef, newTransform: SecTransformRef, ref: SecTransformImplementationRef ) -> SecTransformInstanceBlock
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	CSSM_X509EXT_DATA_FORMAT :: enum cffi.uint {
 		ENCODED = 0,
 		PARSED  = 1,
@@ -4005,7 +4005,7 @@ SecAccessControlCreateFlag :: enum cffi.ulong {
 
 SecAccessControlCreateFlags :: bit_set[SecAccessControlCreateFlag; cffi.ulong]
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SecCredentialType :: enum cffi.uint {
 		Default = 0,
 		WithUI  = 1,
@@ -4027,7 +4027,7 @@ SecPadding :: enum cffi.uint {
 	PKCS1SHA512 = 32774,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SecKeySizes :: enum cffi.uint {
 		DefaultKeySize = 0,
 		_3DES192       = 192,
@@ -4051,7 +4051,7 @@ SecKeyOperationType :: enum cffi.long {
 	KeyExchange = 4,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	cssm_appledl_open_parameters_mask :: enum cffi.uint {
 		kCSSM_APPLEDL_MASK_MODE = 1,
 	}
@@ -4194,7 +4194,7 @@ SecTrustResultType :: enum cffi.uint {
 	OtherError              = 7,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	SecTrustOptionFlag :: enum cffi.uint {
 		AllowExpired       = 0,
 		LeafIsCA           = 1,
@@ -4278,7 +4278,7 @@ SSLProtocol :: enum cffi.int {
 	SSLProtocolAll          = 6,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	AuthorizationFlag :: enum cffi.uint {
 		InteractionAllowed = 0,
 		ExtendRights       = 1,
@@ -4534,7 +4534,7 @@ SecKeychainAttributeInfo :: struct #align (8) {
 	format: ^CF.UInt32,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	cssm_data :: struct #align (8) {
 		Length: cffi.size_t,
 		Data:   ^cffi.uint8_t,
@@ -5266,7 +5266,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 
 __SecRandom :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	__CE_OtherName :: struct #align (8) {
 		typeId: cssm_data,
 		value:  cssm_data,
@@ -5562,7 +5562,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 
 __SecTrust :: struct {}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	AuthorizationOpaqueRef :: struct {}
 
 	AuthorizationItem :: struct #align (8) {

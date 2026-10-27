@@ -20,11 +20,11 @@ should be easy to write utilities that process assets to preform tasks like: gen
 normals, light-maps, tangent spaces, Error detection, GPU optimization, LOD generation,
 and UV mapping.
 
-- Why store images in the format when there are so many good image formats already?  
+- Why store images in the format #if there are so many good image formats already?  
 Yes there are, but only for 2D RGB/RGBA images. A lot of computer graphics rendering rely
 on 1D, 3D, cube, multilayer, multi channel, floating point bitmap buffers. There almost no
 formats for this kind of data. Also 3D files that reference separate image files rely on
-file paths, and this often creates issues when the assets are moved. By including the
+file paths, and this often creates issues #if the assets are moved. By including the
 texture data in the files directly the assets become self contained.
 
 - Why doesn't the format support <insert whatever>?  

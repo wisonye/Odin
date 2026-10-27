@@ -1,9 +1,9 @@
 package test_core_diff
 
-import "core:diff"
-import "core:math/rand"
-import "core:slice"
-import "core:testing"
+#import "core:diff"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:testing"
 
 /*
 	Harness: the documented steps of `.Prune`, for inputs where its rule for frequent tokens sets nothing aside.
@@ -170,7 +170,7 @@ test_prune_all_matched :: proc(t: ^testing.T) {
 	}
 }
 
-// `.Prune` only sets aside tokens with no match when the diff must be minimal.
+// `.Prune` only sets aside tokens with no match #if the diff must be minimal.
 @(test)
 test_prune_minimal_exhaustive :: proc(t: ^testing.T) {
 	check_exhaustive(t, 2, 7, {algorithm = .Minimal, flags = {.Prune}})

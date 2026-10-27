@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSProgressIndicator", objc_superclass=View)
 ProgressIndicator :: struct {
@@ -12,7 +12,7 @@ ProgressIndicator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ProgressIndicator, objc_selector="incrementBy:", objc_name="incrementBy")
 	ProgressIndicator_incrementBy :: proc(self: ^ProgressIndicator, delta: cffi.double) ---
 

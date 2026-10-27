@@ -2,7 +2,7 @@
 
 package rexcode_ppc_vle
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC VLE Encoding Types
@@ -10,7 +10,7 @@ import "core:rexcode/isa"
 //
 // VLE is variable-length (16-bit or 32-bit instructions). The Encoding.bits
 // field holds either:
-//   - 16-bit instruction in the low 16 bits (high 16 bits = 0) when
+//   - 16-bit instruction in the low 16 bits (high 16 bits = 0) #if
 //     flags.short = true
 //   - 32-bit instruction in the full word otherwise
 //

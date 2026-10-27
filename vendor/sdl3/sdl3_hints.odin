@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 HINT_ALLOW_ALT_TAB_WHILE_GRABBED             :: "SDL_ALLOW_ALT_TAB_WHILE_GRABBED"
 HINT_ANDROID_AAUDIO_INPUT_PRESET             :: "SDL_ANDROID_AAUDIO_INPUT_PRESET"
@@ -278,13 +278,13 @@ HintPriority :: enum c.int {
 HintCallback :: #type proc "c" (userdata: rawptr, name: cstring, oldValue, newValue: cstring)
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetHint             :: proc(name: cstring) -> cstring ---
 	GetHintBoolean      :: proc(name: cstring, default_value: bool) -> bool ---
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetHintWithPriority :: proc(name: cstring, value: cstring, priority: HintPriority) -> bool ---
 	SetHint             :: proc(name: cstring, value: cstring) -> bool ---
 	ResetHint           :: proc(name: cstring) -> bool ---

@@ -1,10 +1,10 @@
 package rexcode_wasm
 
-import "base:runtime"
-import "core:fmt"
-import "core:io"
-import "core:os"
-import "core:strings"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:io"
+#import "core:os"
+#import "core:strings"
 
 // =============================================================================
 // WebAssembly TEXT (WAT) PRINTER
@@ -47,7 +47,7 @@ import "core:strings"
 // marks `call` targets `symbolic` (which would print `$3`); that flag is
 // cleared per-instruction so references always resolve. Names from the "name"
 // custom section are attached to *definitions* as `$name` (or kept as an index
-// comment when the text would not be a legal WAT identifier).
+// comment #if the text would not be a legal WAT identifier).
 //
 // Coverage: TYPE, IMPORT (all four kinds), FUNCTION/CODE, TABLE, MEMORY,
 // GLOBAL, EXPORT, START, ELEMENT (active table-0 funcref form), DATA.
@@ -190,7 +190,7 @@ wat_write_imports :: proc(sb: ^strings.Builder, m: Module, unit: string) -> Pars
 		fld := rd_name(&r) or_return
 		kb  := rd_byte(&r) or_return
 
-		fmt.sbprintf(sb, "%s(import %q %q (", unit, mod, fld)
+		fmt.sbprintf(sb, "%s(#import %q %q (", unit, mod, fld)
 		defer strings.write_string(sb, "))\n")
 
 		switch External_Kind(kb) {

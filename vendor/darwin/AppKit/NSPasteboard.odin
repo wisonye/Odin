@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSPasteboard", objc_superclass=NS.Object)
 Pasteboard :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Pasteboard, objc_selector="pasteboardWithName:", objc_name="pasteboardWithName", objc_is_class_method=true)
 	Pasteboard_pasteboardWithName :: proc(name: ^NS.String) -> ^Pasteboard ---
 
@@ -128,7 +128,7 @@ PasteboardItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteboardItem, objc_selector="availableTypeFromArray:", objc_name="availableTypeFromArray")
 	PasteboardItem_availableTypeFromArray :: proc(self: ^PasteboardItem, types: ^NS.Array) -> ^NS.String ---
 
@@ -174,7 +174,7 @@ PasteboardItemDataProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteboardItemDataProvider, objc_selector="pasteboard:item:provideDataForType:", objc_name="pasteboard")
 	PasteboardItemDataProvider_pasteboard :: proc(self: ^PasteboardItemDataProvider, pasteboard: ^Pasteboard, item: ^PasteboardItem, type: ^NS.String) ---
 
@@ -190,7 +190,7 @@ PasteboardReading :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteboardReading, objc_selector="readableTypesForPasteboard:", objc_name="readableTypesForPasteboard", objc_is_class_method=true)
 	PasteboardReading_readableTypesForPasteboard :: proc(pasteboard: ^Pasteboard) -> ^NS.Array ---
 
@@ -209,7 +209,7 @@ PasteboardTypeOwner :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteboardTypeOwner, objc_selector="pasteboard:provideDataForType:", objc_name="pasteboard")
 	PasteboardTypeOwner_pasteboard :: proc(self: ^PasteboardTypeOwner, sender: ^Pasteboard, type: ^NS.String) ---
 
@@ -225,7 +225,7 @@ PasteboardWriting :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PasteboardWriting, objc_selector="writableTypesForPasteboard:", objc_name="writableTypesForPasteboard")
 	PasteboardWriting_writableTypesForPasteboard :: proc(self: ^PasteboardWriting, pasteboard: ^Pasteboard) -> ^NS.Array ---
 

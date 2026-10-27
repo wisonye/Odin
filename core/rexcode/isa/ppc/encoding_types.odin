@@ -2,7 +2,7 @@
 
 package rexcode_ppc
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC ENCODING FUNDAMENTALS
@@ -267,7 +267,7 @@ Operand_Encoding :: enum u8 {
 	// (R: bit 20 + IMM18: bits 0-17 of the prefix word) appended above the
 	// suffix's 16-bit field.
 	PFX_IMM34_SI,     // signed 34-bit immediate, prefix R=0 (PLI, PADDI)
-	PFX_IMM34_REL,    // 34-bit pc-relative when prefix R=1
+	PFX_IMM34_REL,    // 34-bit pc-relative #if prefix R=1
 	PFX_OFFSET_BASE,  // prefixed memory operand: 34-bit signed offset + RA
 
 	// ---- Miscellaneous fields ----

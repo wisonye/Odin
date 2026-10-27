@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSText", objc_superclass=View)
 Text :: struct {
@@ -14,7 +14,7 @@ Text :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Text, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	Text_initWithFrame :: proc(self: ^Text, frameRect: NS.Rect) -> instancetype ---
 
@@ -252,7 +252,7 @@ TextDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextDelegate, objc_selector="textShouldBeginEditing:", objc_name="textShouldBeginEditing")
 	TextDelegate_textShouldBeginEditing :: proc(self: ^TextDelegate, textObject: ^Text) -> bool ---
 
@@ -277,7 +277,7 @@ TextAlternatives :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAlternatives, objc_selector="initWithPrimaryString:alternativeStrings:", objc_name="initWithPrimaryString")
 	TextAlternatives_initWithPrimaryString :: proc(self: ^TextAlternatives, primaryString: ^NS.String, alternativeStrings: ^NS.Array) -> instancetype ---
 
@@ -300,7 +300,7 @@ TextAttachment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAttachment, objc_selector="initWithData:ofType:", objc_name="initWithData")
 	TextAttachment_initWithData :: proc(self: ^TextAttachment, contentData: ^NS.Data, uti: ^NS.String) -> instancetype ---
 
@@ -373,7 +373,7 @@ TextAttachmentCell :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSTextAttachmentCell")
@@ -383,7 +383,7 @@ TextAttachmentCellProtocol :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAttachmentCellProtocol, objc_selector="drawWithFrame:inView:", objc_name="drawWithFrame_inView")
 	TextAttachmentCellProtocol_drawWithFrame_inView :: proc(self: ^TextAttachmentCellProtocol, cellFrame: NS.Rect, controlView: ^View) ---
 
@@ -445,7 +445,7 @@ TextAttachmentContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAttachmentContainer, objc_selector="imageForBounds:textContainer:characterIndex:", objc_name="imageForBounds")
 	TextAttachmentContainer_imageForBounds :: proc(self: ^TextAttachmentContainer, imageBounds: CG.Rect, textContainer: ^TextContainer, charIndex: NS.UInteger) -> ^Image ---
 
@@ -461,7 +461,7 @@ TextAttachmentLayout :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAttachmentLayout, objc_selector="imageForBounds:attributes:location:textContainer:", objc_name="imageForBounds")
 	TextAttachmentLayout_imageForBounds :: proc(self: ^TextAttachmentLayout, bounds: CG.Rect, attributes: ^NS.Dictionary, location: ^TextLocation, textContainer: ^TextContainer) -> ^Image ---
 
@@ -477,7 +477,7 @@ foreign lib {
 TextAttachmentViewProvider :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextAttachmentViewProvider, objc_selector="initWithTextAttachment:parentView:textLayoutManager:location:", objc_name="initWithTextAttachment")
 	TextAttachmentViewProvider_initWithTextAttachment :: proc(self: ^TextAttachmentViewProvider, textAttachment: ^TextAttachment, parentView: ^View, textLayoutManager: ^TextLayoutManager, location: ^TextLocation) -> instancetype ---
 
@@ -524,7 +524,7 @@ TextBlock :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextBlock, objc_selector="init", objc_name="init")
 	TextBlock_init :: proc(self: ^TextBlock) -> instancetype ---
 
@@ -610,7 +610,7 @@ TextCheckingClient :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextCheckingClient, objc_selector="annotatedSubstringForProposedRange:actualRange:", objc_name="annotatedSubstringForProposedRange")
 	TextCheckingClient_annotatedSubstringForProposedRange :: proc(self: ^TextCheckingClient, range: NS._NSRange, actualRange: ^NS._NSRange) -> ^NS.AttributedString ---
 
@@ -641,7 +641,7 @@ foreign lib {
 TextCheckingController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextCheckingController, objc_selector="initWithClient:", objc_name="initWithClient")
 	TextCheckingController_initWithClient :: proc(self: ^TextCheckingController, client: ^TextCheckingClient) -> instancetype ---
 
@@ -714,7 +714,7 @@ TextContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContainer, objc_selector="initWithSize:", objc_name="initWithSize")
 	TextContainer_initWithSize :: proc(self: ^TextContainer, size: CG.Size) -> instancetype ---
 
@@ -814,7 +814,7 @@ TextContainer_lineFragmentRectForProposedRect :: proc {
 TextContent :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContent, objc_selector="contentType", objc_name="contentType")
 	TextContent_contentType :: proc(self: ^TextContent) -> ^NS.String ---
 
@@ -831,7 +831,7 @@ TextContentManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContentManager, objc_selector="init", objc_name="init")
 	TextContentManager_init :: proc(self: ^TextContentManager) -> instancetype ---
 
@@ -895,7 +895,7 @@ TextContentManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContentManagerDelegate, objc_selector="textContentManager:textElementAtLocation:", objc_name="textContentManager_textElementAtLocation")
 	TextContentManagerDelegate_textContentManager_textElementAtLocation :: proc(self: ^TextContentManagerDelegate, textContentManager: ^TextContentManager, location: ^TextLocation) -> ^TextElement ---
 
@@ -917,7 +917,7 @@ TextContentStorage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContentStorage, objc_selector="attributedStringForTextElement:", objc_name="attributedStringForTextElement")
 	TextContentStorage_attributedStringForTextElement :: proc(self: ^TextContentStorage, textElement: ^TextElement) -> ^NS.AttributedString ---
 
@@ -960,7 +960,7 @@ TextContentStorageDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextContentStorageDelegate, objc_selector="textContentStorage:textParagraphWithRange:", objc_name="textContentStorage")
 	TextContentStorageDelegate_textContentStorage :: proc(self: ^TextContentStorageDelegate, textContentStorage: ^TextContentStorage, range: NS._NSRange) -> ^TextParagraph ---
 }
@@ -970,7 +970,7 @@ foreign lib {
 TextElement :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextElement, objc_selector="initWithTextContentManager:", objc_name="initWithTextContentManager")
 	TextElement_initWithTextContentManager :: proc(self: ^TextElement, textContentManager: ^TextContentManager) -> instancetype ---
 
@@ -1004,7 +1004,7 @@ TextElementProvider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextElementProvider, objc_selector="enumerateTextElementsFromLocation:options:usingBlock:", objc_name="enumerateTextElementsFromLocation")
 	TextElementProvider_enumerateTextElementsFromLocation :: proc(self: ^TextElementProvider, textLocation: ^TextLocation, options: TextContentManagerEnumerationOptions, block: ^Objc_Block(proc "c" ( element: ^TextElement ) -> bool)) -> ^TextLocation ---
 
@@ -1037,7 +1037,7 @@ TextField :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextField, objc_selector="selectText:", objc_name="selectText")
 	TextField_selectText :: proc(self: ^TextField, sender: id) ---
 
@@ -1227,7 +1227,7 @@ TextFieldDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFieldDelegate, objc_selector="textField:textView:candidatesForSelectedRange:", objc_name="textField_textView_candidatesForSelectedRange")
 	TextFieldDelegate_textField_textView_candidatesForSelectedRange :: proc(self: ^TextFieldDelegate, textField: ^TextField, textView: ^TextView, selectedRange: NS._NSRange) -> ^NS.Array ---
 
@@ -1250,14 +1250,14 @@ TextFieldDelegate_textField :: proc {
 SecureTextField :: struct { using _: TextField}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="NSSecureTextFieldCell", objc_superclass=TextFieldCell)
 SecureTextFieldCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SecureTextFieldCell, objc_selector="echosBullets", objc_name="echosBullets")
 	SecureTextFieldCell_echosBullets :: proc(self: ^SecureTextFieldCell) -> bool ---
 
@@ -1270,7 +1270,7 @@ foreign lib {
 TextFieldCell :: struct { using _: ActionCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFieldCell, objc_selector="initTextCell:", objc_name="initTextCell")
 	TextFieldCell_initTextCell :: proc(self: ^TextFieldCell, string: ^NS.String) -> instancetype ---
 
@@ -1337,7 +1337,7 @@ TextFinder :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFinder, objc_selector="init", objc_name="init")
 	TextFinder_init :: proc(self: ^TextFinder) -> instancetype ---
 
@@ -1401,7 +1401,7 @@ TextFinderBarContainer :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFinderBarContainer, objc_selector="findBarViewDidChangeHeight", objc_name="findBarViewDidChangeHeight")
 	TextFinderBarContainer_findBarViewDidChangeHeight :: proc(self: ^TextFinderBarContainer) ---
 
@@ -1429,7 +1429,7 @@ TextFinderClient :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextFinderClient, objc_selector="stringAtIndex:effectiveRange:endsWithSearchBoundary:", objc_name="stringAtIndex")
 	TextFinderClient_stringAtIndex :: proc(self: ^TextFinderClient, characterIndex: NS.UInteger, outRange: ^NS._NSRange, outFlag: ^bool) -> ^NS.String ---
 
@@ -1487,7 +1487,7 @@ foreign lib {
 TextInput :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInput, objc_selector="insertText:", objc_name="insertText")
 	TextInput_insertText :: proc(self: ^TextInput, string: id) ---
 
@@ -1530,7 +1530,7 @@ foreign lib {
 TextInputClient :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputClient, objc_selector="insertText:replacementRange:", objc_name="insertText")
 	TextInputClient_insertText :: proc(self: ^TextInputClient, string: id, replacementRange: NS._NSRange) ---
 
@@ -1600,7 +1600,7 @@ foreign lib {
 TextInputContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputContext, objc_selector="initWithClient:", objc_name="initWithClient")
 	TextInputContext_initWithClient :: proc(self: ^TextInputContext, client: ^TextInputClient) -> instancetype ---
 
@@ -1670,7 +1670,7 @@ foreign lib {
 TextInputTraits :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInputTraits, objc_selector="autocorrectionType", objc_name="autocorrectionType")
 	TextInputTraits_autocorrectionType :: proc(self: ^TextInputTraits) -> TextInputTraitType ---
 
@@ -1761,7 +1761,7 @@ foreign lib {
 TextInsertionIndicator :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextInsertionIndicator, objc_selector="displayMode", objc_name="displayMode")
 	TextInsertionIndicator_displayMode :: proc(self: ^TextInsertionIndicator) -> TextInsertionIndicatorDisplayMode ---
 
@@ -1795,7 +1795,7 @@ TextLayoutFragment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLayoutFragment, objc_selector="initWithTextElement:range:", objc_name="initWithTextElement")
 	TextLayoutFragment_initWithTextElement :: proc(self: ^TextLayoutFragment, textElement: ^TextElement, rangeInElement: ^TextRange) -> instancetype ---
 
@@ -1872,7 +1872,7 @@ TextLayoutManager :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLayoutManager, objc_selector="init", objc_name="init")
 	TextLayoutManager_init :: proc(self: ^TextLayoutManager) -> instancetype ---
 
@@ -2014,7 +2014,7 @@ TextLayoutManagerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLayoutManagerDelegate, objc_selector="textLayoutManager:textLayoutFragmentForLocation:inTextElement:", objc_name="textLayoutManager_textLayoutFragmentForLocation_inTextElement")
 	TextLayoutManagerDelegate_textLayoutManager_textLayoutFragmentForLocation_inTextElement :: proc(self: ^TextLayoutManagerDelegate, textLayoutManager: ^TextLayoutManager, location: ^TextLocation, textElement: ^TextElement) -> ^TextLayoutFragment ---
 
@@ -2037,7 +2037,7 @@ TextLayoutManagerDelegate_textLayoutManager :: proc {
 TextLayoutOrientationProvider :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLayoutOrientationProvider, objc_selector="layoutOrientation", objc_name="layoutOrientation")
 	TextLayoutOrientationProvider_layoutOrientation :: proc(self: ^TextLayoutOrientationProvider) -> TextLayoutOrientation ---
 }
@@ -2050,7 +2050,7 @@ TextLineFragment :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLineFragment, objc_selector="initWithAttributedString:range:", objc_name="initWithAttributedString")
 	TextLineFragment_initWithAttributedString :: proc(self: ^TextLineFragment, attributedString: ^NS.AttributedString, range: NS._NSRange) -> instancetype ---
 
@@ -2097,7 +2097,7 @@ TextList :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextList, objc_selector="initWithMarkerFormat:options:startingItemNumber:", objc_name="initWithMarkerFormat_options_startingItemNumber")
 	TextList_initWithMarkerFormat_options_startingItemNumber :: proc(self: ^TextList, markerFormat: ^NS.String, options: TextListOptions, startingItemNumber: NS.Integer) -> instancetype ---
 
@@ -2140,7 +2140,7 @@ TextList_initWithMarkerFormat :: proc {
 TextListElement :: struct { using _: TextParagraph}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextListElement, objc_selector="initWithParentElement:textList:contents:markerAttributes:childElements:", objc_name="initWithParentElement")
 	TextListElement_initWithParentElement :: proc(self: ^TextListElement, parent: ^TextListElement, textList: ^TextList, contents: ^NS.AttributedString, markerAttributes: ^NS.Dictionary, children: ^NS.Array) -> instancetype ---
 
@@ -2180,7 +2180,7 @@ TextLocation :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextLocation, objc_selector="compare:", objc_name="compare")
 	TextLocation_compare :: proc(self: ^TextLocation, location: ^TextLocation) -> NS.ComparisonResult ---
 }
@@ -2190,7 +2190,7 @@ foreign lib {
 TextParagraph :: struct { using _: TextElement}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextParagraph, objc_selector="initWithAttributedString:", objc_name="initWithAttributedString")
 	TextParagraph_initWithAttributedString :: proc(self: ^TextParagraph, attributedString: ^NS.AttributedString) -> instancetype ---
 
@@ -2209,7 +2209,7 @@ foreign lib {
 TextPreview :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextPreview, objc_selector="initWithSnapshotImage:presentationFrame:candidateRects:", objc_name="initWithSnapshotImage_presentationFrame_candidateRects")
 	TextPreview_initWithSnapshotImage_presentationFrame_candidateRects :: proc(self: ^TextPreview, snapshotImage: CG.ImageRef, presentationFrame: NS.Rect, candidateRects: ^NS.Array) -> instancetype ---
 
@@ -2240,7 +2240,7 @@ TextPreview_initWithSnapshotImage :: proc {
 TextRange :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextRange, objc_selector="initWithLocation:endLocation:", objc_name="initWithLocation_endLocation")
 	TextRange_initWithLocation_endLocation :: proc(self: ^TextRange, location: ^TextLocation, endLocation: ^TextLocation) -> instancetype ---
 
@@ -2295,7 +2295,7 @@ TextSelection :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelection, objc_selector="initWithRanges:affinity:granularity:", objc_name="initWithRanges")
 	TextSelection_initWithRanges :: proc(self: ^TextSelection, textRanges: ^NS.Array, affinity: TextSelectionAffinity, granularity: TextSelectionGranularity) -> instancetype ---
 
@@ -2359,7 +2359,7 @@ TextSelectionDataSource :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionDataSource, objc_selector="enumerateSubstringsFromLocation:options:usingBlock:", objc_name="enumerateSubstringsFromLocation")
 	TextSelectionDataSource_enumerateSubstringsFromLocation :: proc(self: ^TextSelectionDataSource, location: ^TextLocation, options: NS.StringEnumerationOptions, block: ^Objc_Block(proc "c" ( substring: ^NS.String, substringRange: ^TextRange, enclosingRange: ^TextRange, stop: ^bool ))) ---
 
@@ -2396,7 +2396,7 @@ foreign lib {
 TextSelectionNavigation :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextSelectionNavigation, objc_selector="initWithDataSource:", objc_name="initWithDataSource")
 	TextSelectionNavigation_initWithDataSource :: proc(self: ^TextSelectionNavigation, dataSource: ^TextSelectionDataSource) -> instancetype ---
 
@@ -2457,7 +2457,7 @@ TextStorage :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextStorage, objc_selector="addLayoutManager:", objc_name="addLayoutManager")
 	TextStorage_addLayoutManager :: proc(self: ^TextStorage, aLayoutManager: ^LayoutManager) ---
 
@@ -2548,7 +2548,7 @@ TextStorageDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextStorageDelegate, objc_selector="textStorage:willProcessEditing:range:changeInLength:", objc_name="textStorage_willProcessEditing_range_changeInLength")
 	TextStorageDelegate_textStorage_willProcessEditing_range_changeInLength :: proc(self: ^TextStorageDelegate, textStorage: ^TextStorage, editedMask: TextStorageEditActions, editedRange: NS._NSRange, delta: NS.Integer) ---
 
@@ -2564,7 +2564,7 @@ TextStorageObserving :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextStorageObserving, objc_selector="processEditingForTextStorage:edited:range:changeInLength:invalidatedRange:", objc_name="processEditingForTextStorage")
 	TextStorageObserving_processEditingForTextStorage :: proc(self: ^TextStorageObserving, textStorage: ^TextStorage, editMask: TextStorageEditActions, newCharRange: NS._NSRange, delta: NS.Integer, invalidatedCharRange: NS._NSRange) ---
 
@@ -2588,7 +2588,7 @@ TextTab :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextTab, objc_selector="columnTerminatorsForLocale:", objc_name="columnTerminatorsForLocale", objc_is_class_method=true)
 	TextTab_columnTerminatorsForLocale :: proc(aLocale: ^NS.Locale) -> ^NS.CharacterSet ---
 
@@ -2616,7 +2616,7 @@ foreign lib {
 TextTable :: struct { using _: TextBlock}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextTable, objc_selector="rectForBlock:layoutAtPoint:inRect:textContainer:characterRange:", objc_name="rectForBlock")
 	TextTable_rectForBlock :: proc(self: ^TextTable, block: ^TextTableBlock, startingPoint: CG.Point, rect: NS.Rect, textContainer: ^TextContainer, charRange: NS._NSRange) -> NS.Rect ---
 
@@ -2656,7 +2656,7 @@ foreign lib {
 TextTableBlock :: struct { using _: TextBlock}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextTableBlock, objc_selector="initWithTable:startingRow:rowSpan:startingColumn:columnSpan:", objc_name="initWithTable")
 	TextTableBlock_initWithTable :: proc(self: ^TextTableBlock, table: ^TextTable, row: NS.Integer, rowSpan: NS.Integer, col: NS.Integer, colSpan: NS.Integer) -> instancetype ---
 
@@ -2693,7 +2693,7 @@ TextView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextView, objc_selector="initWithFrame:textContainer:", objc_name="initWithFrame_textContainer")
 	TextView_initWithFrame_textContainer :: proc(self: ^TextView, frameRect: NS.Rect, container: ^TextContainer) -> instancetype ---
 
@@ -3438,7 +3438,7 @@ TextViewDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextViewDelegate, objc_selector="textView:clickedOnLink:atIndex:", objc_name="textView_clickedOnLink_atIndex")
 	TextViewDelegate_textView_clickedOnLink_atIndex :: proc(self: ^TextViewDelegate, textView: ^TextView, link: id, charIndex: NS.UInteger) -> bool ---
 
@@ -3547,7 +3547,7 @@ foreign lib {
 TextViewportLayoutController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextViewportLayoutController, objc_selector="initWithTextLayoutManager:", objc_name="initWithTextLayoutManager")
 	TextViewportLayoutController_initWithTextLayoutManager :: proc(self: ^TextViewportLayoutController, textLayoutManager: ^TextLayoutManager) -> instancetype ---
 
@@ -3590,7 +3590,7 @@ TextViewportLayoutControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TextViewportLayoutControllerDelegate, objc_selector="viewportBoundsForTextViewportLayoutController:", objc_name="viewportBoundsForTextViewportLayoutController")
 	TextViewportLayoutControllerDelegate_viewportBoundsForTextViewportLayoutController :: proc(self: ^TextViewportLayoutControllerDelegate, textViewportLayoutController: ^TextViewportLayoutController) -> CG.Rect ---
 
@@ -3609,7 +3609,7 @@ foreign lib {
 PathComponentCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PathComponentCell, objc_selector="image", objc_name="image")
 	PathComponentCell_image :: proc(self: ^PathComponentCell) -> ^Image ---
 
@@ -3628,7 +3628,7 @@ foreign lib {
 TableHeaderCell :: struct { using _: TextFieldCell}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TableHeaderCell, objc_selector="drawSortIndicatorWithFrame:inView:ascending:priority:", objc_name="drawSortIndicatorWithFrame")
 	TableHeaderCell_drawSortIndicatorWithFrame :: proc(self: ^TableHeaderCell, cellFrame: NS.Rect, controlView: ^View, ascending: bool, priority: NS.Integer) ---
 

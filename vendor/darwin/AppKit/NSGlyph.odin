@@ -2,15 +2,15 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="NSGlyphGenerator", objc_superclass=NS.Object)
 GlyphGenerator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlyphGenerator, objc_selector="generateGlyphsForGlyphStorage:desiredNumberOfCharacters:glyphIndex:characterIndex:", objc_name="generateGlyphsForGlyphStorage")
 	GlyphGenerator_generateGlyphsForGlyphStorage :: proc(self: ^GlyphGenerator, glyphStorage: ^GlyphStorage, nChars: NS.UInteger, glyphIndex: ^NS.UInteger, charIndex: ^NS.UInteger) ---
 
@@ -27,7 +27,7 @@ GlyphInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlyphInfo, objc_selector="glyphInfoWithCGGlyph:forFont:baseString:", objc_name="glyphInfoWithCGGlyph", objc_is_class_method=true)
 	GlyphInfo_glyphInfoWithCGGlyph :: proc(glyph: CG.Glyph, font: ^Font, string: ^NS.String) -> ^GlyphInfo ---
 
@@ -61,7 +61,7 @@ foreign lib {
 GlyphStorage :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GlyphStorage, objc_selector="insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:", objc_name="insertGlyphs")
 	GlyphStorage_insertGlyphs :: proc(self: ^GlyphStorage, glyphs: ^Glyph, length: NS.UInteger, glyphIndex: NS.UInteger, charIndex: NS.UInteger) ---
 

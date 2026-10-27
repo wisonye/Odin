@@ -1,7 +1,7 @@
 #+private
 package _mlkem
 
-import "core:encoding/endian"
+#import "core:encoding/endian"
 
 unchecked_get_u24le :: #force_inline proc "contextless" (b: []byte) -> u32 #no_bounds_check {
 	r := u32(b[0])

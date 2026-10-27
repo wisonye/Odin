@@ -9,7 +9,7 @@ Date :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Date, objc_selector="init", objc_name="init")
 	Date_init :: proc(self: ^Date) -> instancetype ---
 
@@ -91,7 +91,7 @@ foreign lib {
 	@(objc_type=Date, objc_selector="now", objc_name="now", objc_is_class_method=true)
 	Date_now :: proc() -> ^Date ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=Date, objc_selector="dateWithNaturalLanguageString:locale:", objc_name="dateWithNaturalLanguageString_locale", objc_is_class_method=true)
 		Date_dateWithNaturalLanguageString_locale :: proc(string: ^String, locale: id) -> id ---
 
@@ -114,7 +114,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=Date, objc_name="dateWithNaturalLanguageString", objc_is_class_method=true)
 	Date_dateWithNaturalLanguageString :: proc {
 		Date_dateWithNaturalLanguageString_locale,
@@ -130,7 +130,7 @@ DateComponents :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateComponents, objc_selector="week", objc_name="week")
 	DateComponents_week :: proc(self: ^DateComponents) -> Integer ---
 
@@ -271,7 +271,7 @@ foreign lib {
 @(objc_class="NSDateComponentsFormatter", objc_superclass=Formatter)
 DateComponentsFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateComponentsFormatter, objc_selector="stringForObjectValue:", objc_name="stringForObjectValue")
 	DateComponentsFormatter_stringForObjectValue :: proc(self: ^DateComponentsFormatter, obj: id) -> ^String ---
 
@@ -361,7 +361,7 @@ foreign lib {
 @(objc_class="NSDateFormatter", objc_superclass=Formatter)
 DateFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateFormatter, objc_selector="getObjectValue:forString:range:error:", objc_name="getObjectValue_error")
 	DateFormatter_getObjectValue_error :: proc(self: ^DateFormatter, obj: ^id, string: ^String, rangep: ^_NSRange, error: ^^Error) -> bool ---
 
@@ -590,7 +590,7 @@ foreign lib {
 	@(objc_type=DateFormatter, objc_selector="setDoesRelativeDateFormatting:", objc_name="setDoesRelativeDateFormatting")
 	DateFormatter_setDoesRelativeDateFormatting :: proc(self: ^DateFormatter, doesRelativeDateFormatting: bool) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=DateFormatter, objc_selector="initWithDateFormat:allowNaturalLanguage:", objc_name="initWithDateFormat")
 		DateFormatter_initWithDateFormat :: proc(self: ^DateFormatter, format: ^String, flag: bool) -> id ---
 
@@ -616,7 +616,7 @@ DateInterval :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateInterval, objc_selector="init", objc_name="init")
 	DateInterval_init :: proc(self: ^DateInterval) -> instancetype ---
 
@@ -666,7 +666,7 @@ DateInterval_initWithStartDate :: proc {
 @(objc_class="NSDateIntervalFormatter", objc_superclass=Formatter)
 DateIntervalFormatter :: struct { using _: Formatter}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DateIntervalFormatter, objc_selector="stringFromDate:toDate:", objc_name="stringFromDate")
 	DateIntervalFormatter_stringFromDate :: proc(self: ^DateIntervalFormatter, fromDate: ^Date, toDate: ^Date) -> ^String ---
 

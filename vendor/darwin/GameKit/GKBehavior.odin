@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKBehavior", objc_superclass=NS.Object)
 Behavior :: struct {
@@ -12,7 +12,7 @@ Behavior :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Behavior, objc_selector="behaviorWithGoal:weight:", objc_name="behaviorWithGoal", objc_is_class_method=true)
 	Behavior_behaviorWithGoal :: proc(goal: ^Goal, weight: cffi.float) -> instancetype ---
 
@@ -62,7 +62,7 @@ Behavior_behaviorWithGoals :: proc {
 @(objc_class="GKCompositeBehavior", objc_superclass=Behavior)
 CompositeBehavior :: struct { using _: Behavior}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CompositeBehavior, objc_selector="behaviorWithBehaviors:", objc_name="behaviorWithBehaviors_", objc_is_class_method=true)
 	CompositeBehavior_behaviorWithBehaviors_ :: proc(behaviors: ^NS.Array) -> instancetype ---
 

@@ -1,21 +1,21 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .Linux || ODIN_OS == .OpenBSD {
-	foreign import lib "system:pthread"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .Linux || ODIN_OS == .OpenBSD {
+	#foreign #import lib "system:pthread"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // pthread.h - threads
 
 // NOTE: mutexes, rwlock, condition variables, once and barriers are left out in favour of `core:sync`.
 
-foreign lib {
+#foreign lib {
 	/*
 	Initializes a thread attributes object.
 
@@ -184,7 +184,7 @@ foreign lib {
 
 
 	/*
-	Indicate that storage for the thread can be reclaimed when the thread terminates.
+	Indicate that storage for the thread can be reclaimed #if the thread terminates.
 
 	[[ More; https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_detach.html ]]
 	*/
@@ -370,7 +370,7 @@ Cancel_Type :: enum c.int {
 	ASYNCHRONOUS = PTHREAD_CANCEL_ASYNCHRONOUS,
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	PTHREAD_CANCEL_ASYNCHRONOUS :: 0x00
 	PTHREAD_CANCEL_DEFERRED     :: 0x02
@@ -426,7 +426,7 @@ when ODIN_OS == .Darwin {
 		_:              [4]c.char,
 	}
 
-} else when ODIN_OS == .FreeBSD {
+} else #if ODIN_OS == .FreeBSD {
 
 	PTHREAD_CANCEL_ASYNCHRONOUS :: 0x02
 	PTHREAD_CANCEL_DEFERRED     :: 0x00
@@ -472,7 +472,7 @@ when ODIN_OS == .Darwin {
 		sched_priority: c.int,     /* [PSX] process or thread execution scheduling priority */
 	}
 
-} else when ODIN_OS == .NetBSD {
+} else #if ODIN_OS == .NetBSD {
 
 	PTHREAD_CANCEL_ASYNCHRONOUS :: 1
 	PTHREAD_CANCEL_DEFERRED     :: 0
@@ -520,7 +520,7 @@ when ODIN_OS == .Darwin {
 		sched_priority: c.int,     /* [PSX] process or thread execution scheduling priority */
 	}
 
-} else when ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .OpenBSD {
 
 	PTHREAD_CANCEL_ASYNCHRONOUS :: 2
 	PTHREAD_CANCEL_DEFERRED     :: 0
@@ -556,7 +556,7 @@ when ODIN_OS == .Darwin {
 		sched_priority: c.int,     /* [PSX] process or thread execution scheduling priority */
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	PTHREAD_CANCEL_DEFERRED     :: 0
 	PTHREAD_CANCEL_ASYNCHRONOUS :: 1
@@ -584,7 +584,7 @@ when ODIN_OS == .Darwin {
 
 	pthread_t :: distinct c.ulong
 
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		@(private)
 		__SIZEOF_PTHREAD_ATTR_T :: 64
 	} else {

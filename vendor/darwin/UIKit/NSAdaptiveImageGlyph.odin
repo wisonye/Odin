@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CT "core:sys/darwin/CoreText"
-import NS "core:sys/darwin/Foundation"
+#import CT "core:sys/darwin/CoreText"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSAdaptiveImageGlyph", objc_superclass=NS.Object)
 NSAdaptiveImageGlyph :: struct {
@@ -14,7 +14,7 @@ NSAdaptiveImageGlyph :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=NSAdaptiveImageGlyph, objc_selector="initWithImageContent:", objc_name="initWithImageContent")
 	NSAdaptiveImageGlyph_initWithImageContent :: proc(self: ^NSAdaptiveImageGlyph, imageContent: ^NS.Data) -> instancetype ---
 

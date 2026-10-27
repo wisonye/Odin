@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 /** Can be bit-wise or'ed into the decode_flags in the decode pipeline.
  *
@@ -86,7 +86,7 @@ encode_pipeline_t :: struct {
 	/** Differing from the allocation size, the number of actual bytes */
 	packed_bytes: u64,
 
-	/** Used when re-using the same encode pipeline struct to know if
+	/** Used #if re-using the same encode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough
 	 *
 	 * If `NULL`, will be allocated during the run of the pipeline.
@@ -128,7 +128,7 @@ encode_pipeline_t :: struct {
 
 	/** The compressed buffer, only needed for compressed files.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -148,10 +148,10 @@ encode_pipeline_t :: struct {
 	 */
 	compressed_bytes: c.size_t,
 
-	/** Used when re-using the same encode pipeline struct to know if
+	/** Used #if re-using the same encode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -162,7 +162,7 @@ encode_pipeline_t :: struct {
 
 	/** A scratch buffer for intermediate results.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -171,10 +171,10 @@ encode_pipeline_t :: struct {
 	 */
 	scratch_buffer_1: rawptr,
 
-	/** Used when re-using the same encode pipeline struct to know if
+	/** Used #if re-using the same encode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -185,7 +185,7 @@ encode_pipeline_t :: struct {
 
 	/** Some compression routines may need a second scratch buffer.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -194,7 +194,7 @@ encode_pipeline_t :: struct {
 	 */
 	scratch_buffer_2: rawptr,
 
-	/** Used when re-using the same encode pipeline struct to know if
+	/** Used #if re-using the same encode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 */
 	scratch_alloc_size_2: c.size_t,
@@ -228,7 +228,7 @@ encode_pipeline_t :: struct {
 	 */
 	compress_fn: proc "c" (pipeline: ^encode_pipeline_t) -> result_t,
 
-	/** This routine is used when waiting for other threads to finish
+	/** This routine is used #if waiting for other threads to finish
 	 * writing previous chunks such that this thread can write this
 	 * chunk. This is used for parts which have a specified chunk
 	 * ordering (increasing/decreasing y) and the chunks can not be
@@ -256,7 +256,7 @@ encode_pipeline_t :: struct {
 	write_fn: proc "c" (pipeline: ^encode_pipeline_t) -> result_t,
 
 	/** Small stash of channel info values. This is faster than calling
-	 * malloc when the channel count in the part is small (RGBAZ),
+	 * malloc #if the channel count in the part is small (RGBAZ),
 	 * which is super common, however if there are a large number of
 	 * channels, it will allocate space for that, so do not rely on
 	 * this being used.
@@ -271,7 +271,7 @@ ENCODE_PIPELINE_INITIALIZER :: encode_pipeline_t{ pipe_size = size_of(encode_pip
 
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** Initialize the encoding pipeline structure with the channel info
 	 * for the specified part based on the chunk to be written.
 	 *

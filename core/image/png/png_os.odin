@@ -1,7 +1,7 @@
 #+build !js
 package png
 
-import "core:os"
+#import "core:os"
 
 load :: proc{load_from_file, load_from_bytes, load_from_context}
 

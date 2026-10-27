@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -16,7 +16,7 @@ MAX_NODE_BUS_COUNT :: 254
 /* Used internally by miniaudio for memory management. Must never exceed MA_MAX_NODE_BUS_COUNT. */
 MAX_NODE_LOCAL_BUS_COUNT :: 2
 
-/* Use this when the bus count is determined by the node instance rather than the vtable. */
+/* Use this #if the bus count is determined by the node instance rather than the vtable. */
 NODE_BUS_COUNT_UNKNOWN :: 255
 
 /* For some internal memory management of ma_node_graph. */
@@ -61,7 +61,7 @@ node_vtable :: struct {
 
 	/*
 	A callback for retrieving the number of input frames that are required to output the
-	specified number of output frames. You would only want to implement this when the node performs
+	specified number of output frames. You would only want to implement this #if the node performs
 	resampling. This is optional, even for nodes that perform resampling, but it does offer a
 	small reduction in latency as it allows miniaudio to calculate the exact number of input frames
 	to read at a time instead of having to estimate.
@@ -115,7 +115,7 @@ node_output_bus :: struct {
 	/* Mutable via multiple threads. Must be used atomically. The weird ordering here is for packing reasons. */
 	inputNodeInputBusIndex: u8,                             /* The index of the input bus on the input. Required for detaching. Will only be used in the spinlock so does not need to be atomic. */
 	flags:                  node_output_bus_flags, /*atomic*/                 /* Some state flags for tracking the read state of the output buffer. A combination of MA_NODE_OUTPUT_BUS_FLAG_*. */
-	refCount:               u32, /*atomic*/                 /* Reference count for some thread-safety when detaching. */
+	refCount:               u32, /*atomic*/                 /* Reference count for some thread-safety #if detaching. */
 	isAttached:             b32, /*atomic*/                 /* This is used to prevent iteration of nodes that are in the middle of being detached. Used for thread safety. */
 	lock:                   spinlock, /*atomic*/            /* Unfortunate lock, but significantly simplifies the implementation. Required for thread-safe attaching and detaching. */
 	volume:                 f32, /*atomic*/                 /* Linear. */
@@ -131,7 +131,7 @@ another. An input bus is essentially just a linked list of output buses.
 node_input_bus :: struct {
 	/* Mutable via multiple threads. */
 	head:        node_output_bus,             /* Dummy head node for simplifying some lock-free thread-safety stuff. */
-	nextCounter: u32, /*atomic*/              /* This is used to determine whether or not the input bus is finding the next node in the list. Used for thread safety when detaching output buses. */
+	nextCounter: u32, /*atomic*/              /* This is used to determine whether or not the input bus is finding the next node in the list. Used for thread safety #if detaching output buses. */
 	lock:        spinlock, /*atomic*/         /* Unfortunate lock, but significantly simplifies the implementation. Required for thread-safe attaching and detaching. */
 
 	/* Set once at startup. */
@@ -168,7 +168,7 @@ node_base :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	node_config_init :: proc() -> node_config ---
 
 	node_get_heap_size           :: proc(pNodeGraph: ^node_graph, pConfig: ^node_config, pHeapSizeInBytes: ^c.size_t) -> result ---
@@ -206,7 +206,7 @@ node_graph :: struct {
 	base:                 node_base,       /* The node graph itself is a node so it can be connected as an input to different node graph. This has zero inputs and calls ma_node_graph_read_pcm_frames() to generate it's output. */
 	endpoint:             node_base,       /* Special node that all nodes eventually connect to. Data is read from this node in ma_node_graph_read_pcm_frames(). */
 
-	pProcessingCache:               [^]f32, /* This will be allocated when processingSizeInFrames is non-zero. This is needed because ma_node_graph_read_pcm_frames() can be called with a variable number of frames, and we may need to do some buffering in situations where the caller requests a frame count that's not a multiple of processingSizeInFrames. */
+	pProcessingCache:               [^]f32, /* This will be allocated #if processingSizeInFrames is non-zero. This is needed because ma_node_graph_read_pcm_frames() can be called with a variable number of frames, and we may need to do some buffering in situations where the caller requests a frame count that's not a multiple of processingSizeInFrames. */
 	processingCacheFramesRemaining: u32,
 	processingSizeInFrames:         u32,
 
@@ -218,7 +218,7 @@ node_graph :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	node_graph_config_init :: proc(channels: u32) -> node_graph_config ---
 
 	node_graph_init                          :: proc(pConfig: ^node_graph_config, pAllocationCallbacks: ^allocation_callbacks, pNodeGraph: ^node_graph) -> result ---
@@ -245,7 +245,7 @@ data_source_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	data_source_node_config_init :: proc(pDataSource: ^data_source) -> data_source_node_config ---
 
 	data_source_node_init        :: proc(pNodeGraph: ^node_graph, pConfig: ^data_source_node_config, pAllocationCallbacks: ^allocation_callbacks, pDataSourceNode: ^data_source_node) -> result ---
@@ -267,7 +267,7 @@ splitter_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	splitter_node_config_init :: proc(channels: u32) -> splitter_node_config ---
 
 	splitter_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^splitter_node_config, pAllocationCallbacks: ^allocation_callbacks, pSplitterNode: ^splitter_node) -> result ---
@@ -289,7 +289,7 @@ biquad_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	biquad_node_config_init :: proc(channels: u32, b0, b1, b2, a0, a1, a2: f32) -> biquad_node_config ---
 
 	biquad_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^biquad_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^biquad_node) -> result ---
@@ -312,7 +312,7 @@ lpf_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	lpf_node_config_init :: proc(channels, sampleRate: u32, cutoffFrequency: f64, order: u32) -> lpf_node_config ---
 
 	lpf_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^lpf_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^lpf_node) -> result ---
@@ -335,7 +335,7 @@ hpf_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	hpf_node_config_init :: proc(channels, sampleRate: u32, cutoffFrequency: f64, order: u32) -> hpf_node_config ---
 
 	hpf_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^hpf_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^hpf_node) -> result ---
@@ -358,7 +358,7 @@ bpf_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	bpf_node_config_init :: proc(channels, sampleRate: u32, cutoffFrequency: f64, order: u32) -> bpf_node_config ---
 
 	bpf_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^bpf_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^bpf_node) -> result ---
@@ -381,7 +381,7 @@ notch_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	notch_node_config_init :: proc(channels, sampleRate: u32, q, frequency: f64) -> notch_node_config ---
 
 	notch_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^notch_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^notch_node) -> result ---
@@ -404,7 +404,7 @@ peak_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	peak_node_config_init :: proc(channels, sampleRate: u32, gainDB, q, frequency: f64) -> peak_node_config ---
 
 	peak_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^peak_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^peak_node) -> result ---
@@ -427,7 +427,7 @@ loshelf_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	loshelf_node_config_init :: proc(channels, sampleRate: u32, gainDB, q, frequency: f64) -> loshelf_node_config ---
 
 	loshelf_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^loshelf_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^loshelf_node) -> result ---
@@ -450,7 +450,7 @@ hishelf_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	hishelf_node_config_init :: proc(channels, sampleRate: u32, gainDB, q, frequency: f64) -> hishelf_node_config ---
 
 	hishelf_node_init   :: proc(pNodeGraph: ^node_graph, pConfig: ^hishelf_node_config, pAllocationCallbacks: ^allocation_callbacks, pNode: ^hishelf_node) -> result ---
@@ -473,7 +473,7 @@ delay_node :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	delay_node_config_init :: proc(channels, sampleRate, delayInFrames: u32, decay: f32) -> delay_node_config ---
 
 	delay_node_init      :: proc(pNodeGraph: ^node_graph, pConfig: ^delay_node_config, pAllocationCallbacks: ^allocation_callbacks, pDelayNode: ^delay_node) -> result ---

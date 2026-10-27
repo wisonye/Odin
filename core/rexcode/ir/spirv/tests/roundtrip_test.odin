@@ -7,10 +7,10 @@
 // id mapping, or section layout shows up as a word mismatch.
 package rexcode_spirv_tests
 
-import "core:fmt"
-import "core:os"
-import "core:slice"
-import spirv ".."
+#import "core:fmt"
+#import "core:os"
+#import "core:slice"
+#import spirv ".."
 
 ok_count:   int
 fail_count: int

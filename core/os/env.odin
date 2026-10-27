@@ -1,7 +1,7 @@
 package os
 
-import "base:runtime"
-import "core:strings"
+#import "base:runtime"
+#import "core:strings"
 
 // `get_env` retrieves the value of the environment variable named by the key
 // It returns the value, which will be empty if the variable is not present
@@ -78,7 +78,7 @@ replace_environment_placeholders :: proc(path: string, allocator: runtime.Alloca
 	for len(path) > 0 {
 		switch path[0] {
 		case '%': // Windows
-			when ODIN_OS == .Windows {
+			#if ODIN_OS == .Windows {
 				for r, i in path[1:] {
 					if r == '%' {
 						env_key := path[1:i+1]
@@ -92,7 +92,7 @@ replace_environment_placeholders :: proc(path: string, allocator: runtime.Alloca
 			}
 
 		case '$': // Posix
-			when ODIN_OS != .Windows {
+			#if ODIN_OS != .Windows {
 				env_key := ""
 				dollar_loop: for r, i in path[1:] {
 					switch r {

@@ -1,10 +1,10 @@
 package bufio
 
-import "base:runtime"
-import "base:intrinsics"
-import "core:io"
-import "core:bytes"
-import "core:unicode/utf8"
+#import "base:runtime"
+#import "base:intrinsics"
+#import "core:io"
+#import "core:bytes"
+#import "core:unicode/utf8"
 
 // Extra errors returns by scanning procedures
 Scanner_Extra_Error :: enum i32 {

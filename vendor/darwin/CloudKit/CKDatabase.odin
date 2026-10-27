@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKDatabase", objc_superclass=NS.Object)
 Database :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Database, objc_selector="init", objc_name="init")
 	Database_init :: proc(self: ^Database) -> instancetype ---
 
@@ -61,7 +61,7 @@ foreign lib {
 @(objc_class="CKDatabaseNotification", objc_superclass=Notification)
 DatabaseNotification :: struct { using _: Notification}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DatabaseNotification, objc_selector="databaseScope", objc_name="databaseScope")
 	DatabaseNotification_databaseScope :: proc(self: ^DatabaseNotification) -> DatabaseScope ---
 }
@@ -70,7 +70,7 @@ foreign lib {
 @(objc_class="CKDatabaseOperation", objc_superclass=Operation)
 DatabaseOperation :: struct { using _: Operation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DatabaseOperation, objc_selector="database", objc_name="database")
 	DatabaseOperation_database :: proc(self: ^DatabaseOperation) -> ^Database ---
 
@@ -86,7 +86,7 @@ DatabaseSubscription :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DatabaseSubscription, objc_selector="init", objc_name="init")
 	DatabaseSubscription_init :: proc(self: ^DatabaseSubscription) -> instancetype ---
 
@@ -110,7 +110,7 @@ foreign lib {
 @(objc_class="CKFetchDatabaseChangesOperation", objc_superclass=DatabaseOperation)
 FetchDatabaseChangesOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchDatabaseChangesOperation, objc_selector="init", objc_name="init")
 	FetchDatabaseChangesOperation_init :: proc(self: ^FetchDatabaseChangesOperation) -> instancetype ---
 
@@ -176,7 +176,7 @@ foreign lib {
 @(objc_class="CKFetchRecordChangesOperation", objc_superclass=DatabaseOperation)
 FetchRecordChangesOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordChangesOperation, objc_selector="init", objc_name="init")
 	FetchRecordChangesOperation_init :: proc(self: ^FetchRecordChangesOperation) -> instancetype ---
 
@@ -233,7 +233,7 @@ foreign lib {
 @(objc_class="CKFetchRecordZonesOperation", objc_superclass=DatabaseOperation)
 FetchRecordZonesOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordZonesOperation, objc_selector="fetchAllRecordZonesOperation", objc_name="fetchAllRecordZonesOperation", objc_is_class_method=true)
 	FetchRecordZonesOperation_fetchAllRecordZonesOperation :: proc() -> instancetype ---
 
@@ -266,7 +266,7 @@ foreign lib {
 @(objc_class="CKFetchRecordsOperation", objc_superclass=DatabaseOperation)
 FetchRecordsOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchRecordsOperation, objc_selector="init", objc_name="init")
 	FetchRecordsOperation_init :: proc(self: ^FetchRecordsOperation) -> instancetype ---
 
@@ -311,7 +311,7 @@ foreign lib {
 @(objc_class="CKFetchSubscriptionsOperation", objc_superclass=DatabaseOperation)
 FetchSubscriptionsOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchSubscriptionsOperation, objc_selector="fetchAllSubscriptionsOperation", objc_name="fetchAllSubscriptionsOperation", objc_is_class_method=true)
 	FetchSubscriptionsOperation_fetchAllSubscriptionsOperation :: proc() -> instancetype ---
 
@@ -344,7 +344,7 @@ foreign lib {
 @(objc_class="CKFetchWebAuthTokenOperation", objc_superclass=DatabaseOperation)
 FetchWebAuthTokenOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FetchWebAuthTokenOperation, objc_selector="init", objc_name="init")
 	FetchWebAuthTokenOperation_init :: proc(self: ^FetchWebAuthTokenOperation) -> instancetype ---
 
@@ -368,7 +368,7 @@ foreign lib {
 @(objc_class="CKModifyRecordZonesOperation", objc_superclass=DatabaseOperation)
 ModifyRecordZonesOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ModifyRecordZonesOperation, objc_selector="init", objc_name="init")
 	ModifyRecordZonesOperation_init :: proc(self: ^ModifyRecordZonesOperation) -> instancetype ---
 
@@ -410,7 +410,7 @@ foreign lib {
 @(objc_class="CKModifyRecordsOperation", objc_superclass=DatabaseOperation)
 ModifyRecordsOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ModifyRecordsOperation, objc_selector="init", objc_name="init")
 	ModifyRecordsOperation_init :: proc(self: ^ModifyRecordsOperation) -> instancetype ---
 
@@ -482,7 +482,7 @@ foreign lib {
 @(objc_class="CKModifySubscriptionsOperation", objc_superclass=DatabaseOperation)
 ModifySubscriptionsOperation :: struct { using _: DatabaseOperation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ModifySubscriptionsOperation, objc_selector="init", objc_name="init")
 	ModifySubscriptionsOperation_init :: proc(self: ^ModifySubscriptionsOperation) -> instancetype ---
 

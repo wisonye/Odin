@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSParagraphStyle", objc_superclass=NS.Object)
 ParagraphStyle :: struct {
@@ -15,7 +15,7 @@ ParagraphStyle :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ParagraphStyle, objc_selector="defaultWritingDirectionForLanguage:", objc_name="defaultWritingDirectionForLanguage", objc_is_class_method=true)
 	ParagraphStyle_defaultWritingDirectionForLanguage :: proc(languageName: ^NS.String) -> WritingDirection ---
 
@@ -94,7 +94,7 @@ foreign lib {
 MutableParagraphStyle :: struct { using _: ParagraphStyle}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableParagraphStyle, objc_selector="addTabStop:", objc_name="addTabStop")
 	MutableParagraphStyle_addTabStop :: proc(self: ^MutableParagraphStyle, anObject: ^TextTab) ---
 

@@ -1,7 +1,7 @@
 #+build arm64,arm32
 package simd_arm
 
-import "core:simd"
+#import "core:simd"
 
 // Bitwise Select.
 //
@@ -80,7 +80,7 @@ vbslq_p64 :: #force_inline proc "c" (a: poly64x2_t, b: poly64x2_t, c: poly64x2_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vcombine_p8)
 @(require_results, enable_target_feature = "neon")
 vcombine_p8 :: #force_inline proc "c" (low, high: poly8x8_t) -> poly8x16_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(low, high, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
 	} else {
 		low := simd.shuffle(low, low, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -95,7 +95,7 @@ vcombine_p8 :: #force_inline proc "c" (low, high: poly8x8_t) -> poly8x16_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vcombine_p16)
 @(require_results, enable_target_feature = "neon")
 vcombine_p16 :: #force_inline proc "c" (low, high: poly16x4_t) -> poly16x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(low, high, 0, 1, 2, 3, 4, 5, 6, 7)
 	} else {
 		low := simd.shuffle(low, low, 3, 2, 1, 0)
@@ -110,7 +110,7 @@ vcombine_p16 :: #force_inline proc "c" (low, high: poly16x4_t) -> poly16x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vcombine_p64)
 @(require_results, enable_target_feature = "neon")
 vcombine_p64 :: #force_inline proc "c" (low, high: poly64x1_t) -> poly64x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(low, high, 0, 1)
 	} else {
 		c := simd.shuffle(low, high, 0, 1)
@@ -123,7 +123,7 @@ vcombine_p64 :: #force_inline proc "c" (low, high: poly64x1_t) -> poly64x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vset_lane_p8)
 @(require_results, enable_target_feature = "neon")
 vset_lane_p8 :: #force_inline proc "c" (a: poly8_t, v: poly8x8_t, $LANE: int32_t) -> poly8x8_t where 0 <= LANE, LANE < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.replace(v, LANE, a)
 	} else {
 		v := simd.shuffle(v, v, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -137,7 +137,7 @@ vset_lane_p8 :: #force_inline proc "c" (a: poly8_t, v: poly8x8_t, $LANE: int32_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vset_lane_p16)
 @(require_results, enable_target_feature = "neon")
 vset_lane_p16 :: #force_inline proc "c" (a: poly16_t, v: poly16x4_t, $LANE: int32_t) -> poly16x4_t where 0 <= LANE, LANE < 4 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.replace(v, LANE, a)
 	} else {
 		v := simd.shuffle(v, v, 3, 2, 1, 0)
@@ -159,7 +159,7 @@ vset_lane_p64 :: #force_inline proc "c" (a: poly64_t, v: poly64x1_t, $LANE: int3
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_p8)
 @(require_results, enable_target_feature = "neon")
 vget_lane_p8 :: #force_inline proc "c" (v: poly8x8_t, $LANE: int32_t) -> poly8_t where 0 <= LANE, LANE < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.extract(v, LANE)
 	} else {
 		v := simd.shuffle(v, v, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -172,7 +172,7 @@ vget_lane_p8 :: #force_inline proc "c" (v: poly8x8_t, $LANE: int32_t) -> poly8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_lane_p16)
 @(require_results, enable_target_feature = "neon")
 vget_lane_p16 :: #force_inline proc "c" (v: poly16x4_t, $LANE: int32_t) -> poly16_t where 0 <= LANE, LANE < 4 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.extract(v, LANE)
 	} else {
 		v := simd.shuffle(v, v, 3, 2, 1, 0)
@@ -193,7 +193,7 @@ vget_lane_p64 :: #force_inline proc "c" (v: poly64x1_t, $LANE: int32_t) -> poly6
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsetq_lane_p8)
 @(require_results, enable_target_feature = "neon")
 vsetq_lane_p8 :: #force_inline proc "c" (a: poly8_t, v: poly8x16_t, $LANE: int32_t) -> poly8x16_t where 0 <= LANE, LANE < 16 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.replace(v, LANE, a)
 	} else {
 		v := simd.shuffle(v, v, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -207,7 +207,7 @@ vsetq_lane_p8 :: #force_inline proc "c" (a: poly8_t, v: poly8x16_t, $LANE: int32
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsetq_lane_p16)
 @(require_results, enable_target_feature = "neon")
 vsetq_lane_p16 :: #force_inline proc "c" (a: poly16_t, v: poly16x8_t, $LANE: int32_t) -> poly16x8_t where 0 <= LANE, LANE < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.replace(v, LANE, a)
 	} else {
 		v := simd.shuffle(v, v, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -221,7 +221,7 @@ vsetq_lane_p16 :: #force_inline proc "c" (a: poly16_t, v: poly16x8_t, $LANE: int
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsetq_lane_p64)
 @(require_results, enable_target_feature = "neon")
 vsetq_lane_p64 :: #force_inline proc "c" (a: poly64_t, v: poly64x2_t, $LANE: int32_t) -> poly64x2_t where 0 <= LANE, LANE < 2 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.replace(v, LANE, a)
 	} else {
 		v := simd.shuffle(v, v, 1, 0)
@@ -235,7 +235,7 @@ vsetq_lane_p64 :: #force_inline proc "c" (a: poly64_t, v: poly64x2_t, $LANE: int
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_p8)
 @(require_results, enable_target_feature = "neon")
 vgetq_lane_p8 :: #force_inline proc "c" (v: poly8x16_t, $LANE: int32_t) -> poly8_t where 0 <= LANE, LANE < 16 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.extract(v, LANE)
 	} else {
 		v := simd.shuffle(v, v, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -248,7 +248,7 @@ vgetq_lane_p8 :: #force_inline proc "c" (v: poly8x16_t, $LANE: int32_t) -> poly8
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_p16)
 @(require_results, enable_target_feature = "neon")
 vgetq_lane_p16 :: #force_inline proc "c" (v: poly16x8_t, $LANE: int32_t) -> poly16_t where 0 <= LANE, LANE < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.extract(v, LANE)
 	} else {
 		v := simd.shuffle(v, v, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -261,7 +261,7 @@ vgetq_lane_p16 :: #force_inline proc "c" (v: poly16x8_t, $LANE: int32_t) -> poly
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vgetq_lane_p64)
 @(require_results, enable_target_feature = "neon")
 vgetq_lane_p64 :: #force_inline proc "c" (v: poly64x2_t, $LANE: int32_t) -> poly64_t where 0 <= LANE, LANE < 2 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.extract(v, LANE)
 	} else {
 		v := simd.shuffle(v, v, 1, 0)
@@ -274,7 +274,7 @@ vgetq_lane_p64 :: #force_inline proc "c" (v: poly64x2_t, $LANE: int32_t) -> poly
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_low_p8)
 @(require_results, enable_target_feature = "neon")
 vget_low_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 0, 1, 2, 3, 4, 5, 6, 7)
 	} else {
 		a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -288,7 +288,7 @@ vget_low_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_low_p16)
 @(require_results, enable_target_feature = "neon")
 vget_low_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x4_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 0, 1, 2, 3)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -302,7 +302,7 @@ vget_low_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x4_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_low_p64)
 @(require_results, enable_target_feature = "neon")
 vget_low_p64 :: #force_inline proc "c" (a: poly64x2_t) -> poly64x1_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return transmute(poly64x1_t)simd.extract(a, 0)
 	} else {
 		a := simd.shuffle(a, a, 1, 0)
@@ -315,7 +315,7 @@ vget_low_p64 :: #force_inline proc "c" (a: poly64x2_t) -> poly64x1_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_high_p8)
 @(require_results, enable_target_feature = "neon")
 vget_high_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 8, 9, 10, 11, 12, 13, 14, 15)
 	} else {
 		a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -329,7 +329,7 @@ vget_high_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_high_p16)
 @(require_results, enable_target_feature = "neon")
 vget_high_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x4_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 4, 5, 6, 7)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -343,7 +343,7 @@ vget_high_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x4_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vget_high_p64)
 @(require_results, enable_target_feature = "neon")
 vget_high_p64 :: #force_inline proc "c" (a: poly64x2_t) -> poly64x1_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return transmute(poly64x1_t)simd.extract(a, 1)
 	} else {
 		a := simd.shuffle(a, a, 1, 0)
@@ -436,7 +436,7 @@ vmull_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly16x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl1_p8)
 @(require_results, enable_target_feature = "neon")
 vtbl1_p8 :: #force_inline proc "c" (t: poly8x8_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return vqtbl1_p8(vcombine_p8(t, poly8x8_t{}), idx)
 	} else {
 		return transmute(poly8x8_t)_vtbl1(transmute(int8x8_t)t, transmute(int8x8_t)idx)
@@ -448,7 +448,7 @@ vtbl1_p8 :: #force_inline proc "c" (t: poly8x8_t, idx: uint8x8_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl2_p8)
 @(require_results, enable_target_feature = "neon")
 vtbl2_p8 :: #force_inline proc "c" (t: poly8x8x2_t, idx: poly8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return vqtbl1_p8(vcombine_p8(t.x, t.y), idx)
 	} else {
 		return transmute(poly8x8_t)_vtbl2(
@@ -464,7 +464,7 @@ vtbl2_p8 :: #force_inline proc "c" (t: poly8x8x2_t, idx: poly8x8_t) -> poly8x8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl3_p8)
 @(require_results, enable_target_feature = "neon")
 vtbl3_p8 :: #force_inline proc "c" (t: poly8x8x3_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		v := poly8x16x2_t {
 			vcombine_p8(t.x, t.y),
 			vcombine_p8(t.z, poly8x8_t{}),
@@ -485,7 +485,7 @@ vtbl3_p8 :: #force_inline proc "c" (t: poly8x8x3_t, idx: uint8x8_t) -> poly8x8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbl4_p8)
 @(require_results, enable_target_feature = "neon")
 vtbl4_p8 :: #force_inline proc "c" (t: poly8x8x4_t, idx: poly8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		v := poly8x16x2_t {
 			vcombine_p8(t.x, t.y),
 			vcombine_p8(t.z, t.w),
@@ -507,7 +507,7 @@ vtbl4_p8 :: #force_inline proc "c" (t: poly8x8x4_t, idx: poly8x8_t) -> poly8x8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx1_p8)
 @(require_results, enable_target_feature = "neon")
 vtbx1_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return simd.select(
 			simd.lanes_lt(idx, uint8x8_t(8)),
 			vqtbx1_p8(v, vcombine_p8(t, poly8x8_t{}), idx),
@@ -527,7 +527,7 @@ vtbx1_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8_t, idx: uint8x8_t) 
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx2_p8)
 @(require_results, enable_target_feature = "neon")
 vtbx2_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8x2_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return simd.select(
 			simd.lanes_lt(idx, uint8x8_t(16)),
 			vqtbx1_p8(v, vcombine_p8(t.x, t.y), idx),
@@ -548,7 +548,7 @@ vtbx2_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8x2_t, idx: uint8x8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx3_p8)
 @(require_results, enable_target_feature = "neon")
 vtbx3_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8x3_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		x := poly8x16x2_t {
 			vcombine_p8(t.x, t.y),
 			vcombine_p8(t.z, poly8x8_t{}),
@@ -574,7 +574,7 @@ vtbx3_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8x3_t, idx: uint8x8_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtbx4_p8)
 @(require_results, enable_target_feature = "neon")
 vtbx4_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x8x4_t, idx: uint8x8_t) -> poly8x8_t {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		x := poly8x16x2_t {
 			vcombine_p8(t.x, t.y),
 			vcombine_p8(t.z, t.w),
@@ -635,7 +635,7 @@ vmvnq_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsli_n_p8)
 @(require_results, enable_target_feature = "neon")
 vsli_n_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t where 0 <= N, N < 8 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly8x8_t)_vsli_n_s8(
 			transmute(int8x8_t)a,
 			transmute(int8x8_t)b,
@@ -655,7 +655,7 @@ vsli_n_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t 
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsli_n_p16)
 @(require_results, enable_target_feature = "neon")
 vsli_n_p16 :: #force_inline proc "c" (a, b: poly16x4_t, $N: int32_t) -> poly16x4_t where 0 <= N, N < 16 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly16x4_t)_vsli_n_s16(
 			transmute(int16x4_t)a,
 			transmute(int16x4_t)b,
@@ -675,7 +675,7 @@ vsli_n_p16 :: #force_inline proc "c" (a, b: poly16x4_t, $N: int32_t) -> poly16x4
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsli_n_p64)
 @(require_results, enable_target_feature = "neon")
 vsli_n_p64 :: #force_inline proc "c" (a, b: poly64x1_t, $N: int32_t) -> poly64x1_t where 0 <= N, N < 64 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly64x1_t)_vsli_n_s64(
 			transmute(int64x1_t)a,
 			transmute(int64x1_t)b,
@@ -695,7 +695,7 @@ vsli_n_p64 :: #force_inline proc "c" (a, b: poly64x1_t, $N: int32_t) -> poly64x1
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsliq_n_p8)
 @(require_results, enable_target_feature = "neon")
 vsliq_n_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16_t where 0 <= N, N < 8 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly8x16_t)_vsliq_n_s8(
 			transmute(int8x16_t)a,
 			transmute(int8x16_t)b,
@@ -715,7 +715,7 @@ vsliq_n_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsliq_n_p16)
 @(require_results, enable_target_feature = "neon")
 vsliq_n_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x8_t where 0 <= N, N < 16 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly16x8_t)_vsliq_n_s16(
 			transmute(int16x8_t)a,
 			transmute(int16x8_t)b,
@@ -735,7 +735,7 @@ vsliq_n_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsliq_n_p64)
 @(require_results, enable_target_feature = "neon")
 vsliq_n_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x2_t where 0 <= N, N < 64 {
-	when ODIN_ARCH == .arm64 {
+	#if ODIN_ARCH == .arm64 {
 		return transmute(poly64x2_t)_vsliq_n_s64(
 			transmute(int64x2_t)a,
 			transmute(int64x2_t)b,
@@ -755,8 +755,8 @@ vsliq_n_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsri_n_p8)
 @(require_results, enable_target_feature = "neon")
 vsri_n_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t where 1 <= N, N <= 8 {
-	when ODIN_ARCH == .arm64 {
-		when N == 8 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 8 {
 			return a
 		} else {
 			M :: max(poly8_t) >> poly8_t(N) ~ max(poly8_t)
@@ -779,8 +779,8 @@ vsri_n_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t 
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsri_n_p16)
 @(require_results, enable_target_feature = "neon")
 vsri_n_p16 :: #force_inline proc "c" (a, b: poly16x4_t, $N: int32_t) -> poly16x4_t where 1 <= N, N <= 16 {
-	when ODIN_ARCH == .arm64 {
-		when N == 16 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 16 {
 			return a
 		} else {
 			M :: max(poly16_t) >> poly16_t(N) ~ max(poly16_t)
@@ -803,8 +803,8 @@ vsri_n_p16 :: #force_inline proc "c" (a, b: poly16x4_t, $N: int32_t) -> poly16x4
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsri_n_p64)
 @(require_results, enable_target_feature = "neon")
 vsri_n_p64 :: #force_inline proc "c" (a, b: poly64x1_t, $N: int32_t) -> poly64x1_t where 1 <= N, N <= 64 {
-	when ODIN_ARCH == .arm64 {
-		when N == 64 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 64 {
 			return a
 		} else {
 			M :: max(poly64_t) >> poly64_t(N) ~ max(poly64_t)
@@ -827,8 +827,8 @@ vsri_n_p64 :: #force_inline proc "c" (a, b: poly64x1_t, $N: int32_t) -> poly64x1
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsriq_n_p8)
 @(require_results, enable_target_feature = "neon")
 vsriq_n_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16_t where 1 <= N, N <= 8 {
-	when ODIN_ARCH == .arm64 {
-		when N == 8 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 8 {
 			return a
 		} else {
 			M :: max(poly8_t) >> poly8_t(N) ~ max(poly8_t)
@@ -851,8 +851,8 @@ vsriq_n_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsriq_n_p16)
 @(require_results, enable_target_feature = "neon")
 vsriq_n_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x8_t where 1 <= N, N <= 16 {
-	when ODIN_ARCH == .arm64 {
-		when N == 16 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 16 {
 			return a
 		} else {
 			M :: max(poly16_t) >> poly16_t(N) ~ max(poly16_t)
@@ -875,8 +875,8 @@ vsriq_n_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vsriq_n_p64)
 @(require_results, enable_target_feature = "neon")
 vsriq_n_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x2_t where 1 <= N, N <= 64 {
-	when ODIN_ARCH == .arm64 {
-		when N == 64 {
+	#if ODIN_ARCH == .arm64 {
+		#if N == 64 {
 			return a
 		} else {
 			M :: max(poly64_t) >> poly64_t(N) ~ max(poly64_t)
@@ -899,7 +899,7 @@ vsriq_n_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vext_p8)
 @(require_results, enable_target_feature = "neon")
 vext_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t where 0 <= N, N < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(
 			a,
 			b,
@@ -936,7 +936,7 @@ vext_p8 :: #force_inline proc "c" (a, b: poly8x8_t, $N: int32_t) -> poly8x8_t wh
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vext_p16)
 @(require_results, enable_target_feature = "neon")
 vext_p16 :: #force_inline proc "c" (a, b: poly16x4_t, $N: int32_t) -> poly16x4_t where 0 <= N, N < 4 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(
 			a,
 			b,
@@ -973,7 +973,7 @@ vext_p64 :: #force_inline proc "c" (a, b: poly64x1_t, $N: int32_t) -> poly64x1_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vextq_p8)
 @(require_results, enable_target_feature = "neon")
 vextq_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16_t where 0 <= N, N < 16 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(
 			a,
 			b,
@@ -1026,7 +1026,7 @@ vextq_p8 :: #force_inline proc "c" (a, b: poly8x16_t, $N: int32_t) -> poly8x16_t
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vextq_p16)
 @(require_results, enable_target_feature = "neon")
 vextq_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x8_t where 0 <= N, N < 8 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(
 			a,
 			b,
@@ -1063,7 +1063,7 @@ vextq_p16 :: #force_inline proc "c" (a, b: poly16x8_t, $N: int32_t) -> poly16x8_
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vextq_p64)
 @(require_results, enable_target_feature = "neon")
 vextq_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x2_t where 0 <= N, N < 2 {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(
 			a,
 			b,
@@ -1088,7 +1088,7 @@ vextq_p64 :: #force_inline proc "c" (a, b: poly64x2_t, $N: int32_t) -> poly64x2_
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip_p8)
 @(require_results, enable_target_feature = "neon")
 vzip_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 8, 1, 9, 2, 10, 3, 11)
 		d := simd.shuffle(a, b, 4, 12, 5, 13, 6, 14, 7, 15)
 		return poly8x8x2_t {c, d}
@@ -1108,7 +1108,7 @@ vzip_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip_p16)
 @(require_results, enable_target_feature = "neon")
 vzip_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 4, 1, 5)
 		d := simd.shuffle(a, b, 2, 6, 3, 7)
 		return poly16x4x2_t {c, d}
@@ -1128,7 +1128,7 @@ vzip_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzipq_p8)
 @(require_results, enable_target_feature = "neon")
 vzipq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 16, 1, 17, 2, 18, 3, 19, 4, 20, 5, 21, 6, 22, 7, 23)
 		d := simd.shuffle(a, b, 8, 24, 9, 25, 10, 26, 11, 27, 12, 28, 13, 29, 14, 30, 15, 31)
 		return poly8x16x2_t {c, d}
@@ -1148,7 +1148,7 @@ vzipq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzipq_p16)
 @(require_results, enable_target_feature = "neon")
 vzipq_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 8, 1, 9, 2, 10, 3, 11)
 		d := simd.shuffle(a, b, 4, 12, 5, 13, 6, 14, 7, 15)
 		return poly16x8x2_t {c, d}
@@ -1168,7 +1168,7 @@ vzipq_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp_p8)
 @(require_results, enable_target_feature = "neon")
 vuzp_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14)
 		d := simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15)
 		return poly8x8x2_t {c, d}
@@ -1188,7 +1188,7 @@ vuzp_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp_p16)
 @(require_results, enable_target_feature = "neon")
 vuzp_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 2, 4, 6)
 		d := simd.shuffle(a, b, 1, 3, 5, 7)
 		return poly16x4x2_t {c, d}
@@ -1208,7 +1208,7 @@ vuzp_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzpq_p8)
 @(require_results, enable_target_feature = "neon")
 vuzpq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30)
 		d := simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)
 		return poly8x16x2_t {c, d}
@@ -1228,7 +1228,7 @@ vuzpq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzpq_p16)
 @(require_results, enable_target_feature = "neon")
 vuzpq_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14)
 		d := simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15)
 		return poly16x8x2_t {c, d}
@@ -1248,7 +1248,7 @@ vuzpq_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev16_p8)
 @(require_results, enable_target_feature = "neon")
 vrev16_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 1, 0, 3, 2, 5, 4, 7, 6)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1262,7 +1262,7 @@ vrev16_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev16q_p8)
 @(require_results, enable_target_feature = "neon")
 vrev16q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 1, 0, 3, 2, 5, 4, 7, 6, 9, 8, 11, 10, 13, 12, 15, 14)
 	} else {
 		a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1276,7 +1276,7 @@ vrev16q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev32_p8)
 @(require_results, enable_target_feature = "neon")
 vrev32_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 3, 2, 1, 0, 7, 6, 5, 4)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1290,7 +1290,7 @@ vrev32_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev32_p16)
 @(require_results, enable_target_feature = "neon")
 vrev32_p16 :: #force_inline proc "c" (a: poly16x4_t) -> poly16x4_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 1, 0, 3, 2)
 	} else {
 		a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -1304,7 +1304,7 @@ vrev32_p16 :: #force_inline proc "c" (a: poly16x4_t) -> poly16x4_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev32q_p8)
 @(require_results, enable_target_feature = "neon")
 vrev32q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 3, 2, 1, 0, 7, 6, 5, 4, 11, 10, 9, 8, 15, 14, 13, 12)
 	} else {
 		a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1318,7 +1318,7 @@ vrev32q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev32q_p16)
 @(require_results, enable_target_feature = "neon")
 vrev32q_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 1, 0, 3, 2, 5, 4, 7, 6)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1332,7 +1332,7 @@ vrev32q_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev64_p8)
 @(require_results, enable_target_feature = "neon")
 vrev64_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1346,7 +1346,7 @@ vrev64_p8 :: #force_inline proc "c" (a: poly8x8_t) -> poly8x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev64_p16)
 @(require_results, enable_target_feature = "neon")
 vrev64_p16 :: #force_inline proc "c" (a: poly16x4_t) -> poly16x4_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 3, 2, 1, 0)
 	} else {
 		a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -1360,7 +1360,7 @@ vrev64_p16 :: #force_inline proc "c" (a: poly16x4_t) -> poly16x4_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev64q_p8)
 @(require_results, enable_target_feature = "neon")
 vrev64q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0, 15, 14, 13, 12, 11, 10, 9, 8)
 	} else {
 		a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1374,7 +1374,7 @@ vrev64q_p8 :: #force_inline proc "c" (a: poly8x16_t) -> poly8x16_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vrev64q_p16)
 @(require_results, enable_target_feature = "neon")
 vrev64q_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x8_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		return simd.shuffle(a, a, 3, 2, 1, 0, 7, 6, 5, 4)
 	} else {
 		a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1388,7 +1388,7 @@ vrev64q_p16 :: #force_inline proc "c" (a: poly16x8_t) -> poly16x8_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn_p8)
 @(require_results, enable_target_feature = "neon")
 vtrn_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 8, 2, 10, 4, 12, 6, 14)
 		d := simd.shuffle(a, b, 1, 9, 3, 11, 5, 13, 7, 15)
 		return poly8x8x2_t {c, d}
@@ -1408,7 +1408,7 @@ vtrn_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn_p16)
 @(require_results, enable_target_feature = "neon")
 vtrn_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 4, 2, 6)
 		d := simd.shuffle(a, b, 1, 5, 3, 7)
 		return poly16x4x2_t {c, d}
@@ -1428,7 +1428,7 @@ vtrn_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrnq_p8)
 @(require_results, enable_target_feature = "neon")
 vtrnq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 16, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30)
 		d := simd.shuffle(a, b, 1, 17, 3, 19, 5, 21, 7, 23, 9, 25, 11, 27, 13, 29, 15, 31)
 		return poly8x16x2_t {c, d}
@@ -1448,7 +1448,7 @@ vtrnq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16x2_t {
 // [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrnq_p16)
 @(require_results, enable_target_feature = "neon")
 vtrnq_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8x2_t {
-	when ODIN_ENDIAN == .Little {
+	#if ODIN_ENDIAN == .Little {
 		c := simd.shuffle(a, b, 0, 8, 2, 10, 4, 12, 6, 14)
 		d := simd.shuffle(a, b, 1, 9, 3, 11, 5, 13, 7, 15)
 		return poly16x8x2_t {c, d}
@@ -1479,7 +1479,7 @@ vceqq_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> uint8x16_t {
 	return simd.lanes_eq(a, b)
 }
 
-when ODIN_ARCH == .arm64 {
+#if ODIN_ARCH == .arm64 {
 	// Polynomial multiply long
 	//
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vmull_high_p8)
@@ -1511,7 +1511,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl1_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl1_p8 :: #force_inline proc "c" (t: poly8x16_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbl1(transmute(int8x16_t)t, idx)
 		} else {
 			t := simd.shuffle(t, t, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1526,7 +1526,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl1q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl1q_p8 :: #force_inline proc "c" (t: poly8x16_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbl1q(transmute(int8x16_t)t, idx)
 		} else {
 			t := simd.shuffle(t, t, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1541,7 +1541,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl2_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl2_p8 :: #force_inline proc "c" (t: poly8x16x2_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbl2(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1567,7 +1567,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl2q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl2q_p8 :: #force_inline proc "c" (t: poly8x16x2_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbl2q(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1593,7 +1593,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl3_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl3_p8 :: #force_inline proc "c" (t: poly8x16x3_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbl3(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1622,7 +1622,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl3q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl3q_p8 :: #force_inline proc "c" (t: poly8x16x3_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbl3q(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1651,7 +1651,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl4_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl4_p8 :: #force_inline proc "c" (t: poly8x16x4_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbl4(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1683,7 +1683,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbl4q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbl4q_p8 :: #force_inline proc "c" (t: poly8x16x4_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbl4q(
 				transmute(int8x16_t)t.x,
 				transmute(int8x16_t)t.y,
@@ -1715,7 +1715,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx1_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx1_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x16_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbx1(
 				transmute(int8x8_t)v,
 				transmute(int8x16_t)t,
@@ -1739,7 +1739,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx1q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx1q_p8 :: #force_inline proc "c" (v: poly8x16_t, t: poly8x16_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbx1q(
 				transmute(int8x16_t)v,
 				transmute(int8x16_t)t,
@@ -1763,7 +1763,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx2_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx2_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x16x2_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbx2(
 				transmute(int8x8_t)v,
 				transmute(int8x16_t)t.x,
@@ -1792,7 +1792,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx2q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx2q_p8 :: #force_inline proc "c" (v: poly8x16_t, t: poly8x16x2_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbx2q(
 				transmute(int8x16_t)v,
 				transmute(int8x16_t)t.x,
@@ -1821,7 +1821,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx3_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx3_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x16x3_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbx3(
 				transmute(int8x8_t)v,
 				transmute(int8x16_t)t.x,
@@ -1853,7 +1853,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx3q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx3q_p8 :: #force_inline proc "c" (v: poly8x16_t, t: poly8x16x3_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbx3q(
 				transmute(int8x16_t)v,
 				transmute(int8x16_t)t.x,
@@ -1885,7 +1885,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx4_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx4_p8 :: #force_inline proc "c" (v: poly8x8_t, t: poly8x16x4_t, idx: uint8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x8_t)_vqtbx4(
 				transmute(int8x8_t)v,
 				transmute(int8x16_t)t.x,
@@ -1920,7 +1920,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vqtbx4q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vqtbx4q_p8 :: #force_inline proc "c" (v: poly8x16_t, t: poly8x16x4_t, idx: uint8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return transmute(poly8x16_t)_vqtbx4q(
 				transmute(int8x16_t)v,
 				transmute(int8x16_t)t.x,
@@ -1955,7 +1955,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip1_p8)
 	@(require_results, enable_target_feature = "neon")
 	vzip1_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 8, 1, 9, 2, 10, 3, 11)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -1970,7 +1970,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip1_p16)
 	@(require_results, enable_target_feature = "neon")
 	vzip1_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 4, 1, 5)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -1985,7 +1985,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip1q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vzip1q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 16, 1, 17, 2, 18, 3, 19, 4, 20, 5, 21, 6, 22, 7, 23)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2000,7 +2000,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip1q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vzip1q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 8, 1, 9, 2, 10, 3, 11)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2015,7 +2015,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip1q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vzip1q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2030,7 +2030,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip2_p8)
 	@(require_results, enable_target_feature = "neon")
 	vzip2_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 4, 12, 5, 13, 6, 14, 7, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2045,7 +2045,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip2_p16)
 	@(require_results, enable_target_feature = "neon")
 	vzip2_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 2, 6, 3, 7)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -2060,7 +2060,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip2q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vzip2q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 8, 24, 9, 25, 10, 26, 11, 27, 12, 28, 13, 29, 14, 30, 15, 31)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2075,7 +2075,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip2q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vzip2q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 4, 12, 5, 13, 6, 14, 7, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2090,7 +2090,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vzip2q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vzip2q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2105,7 +2105,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp1_p8)
 	@(require_results, enable_target_feature = "neon")
 	vuzp1_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2120,7 +2120,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp1_p16)
 	@(require_results, enable_target_feature = "neon")
 	vuzp1_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2, 4, 6)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -2135,7 +2135,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp1q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vuzp1q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2150,7 +2150,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp1q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vuzp1q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2, 4, 6, 8, 10, 12, 14)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2165,7 +2165,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp1q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vuzp1q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2180,7 +2180,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp2_p8)
 	@(require_results, enable_target_feature = "neon")
 	vuzp2_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2195,7 +2195,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp2_p16)
 	@(require_results, enable_target_feature = "neon")
 	vuzp2_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3, 5, 7)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -2210,7 +2210,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp2q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vuzp2q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2225,7 +2225,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp2q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vuzp2q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3, 5, 7, 9, 11, 13, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2240,7 +2240,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vuzp2q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vuzp2q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2271,7 +2271,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn1_p8)
 	@(require_results, enable_target_feature = "neon")
 	vtrn1_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 8, 2, 10, 4, 12, 6, 14)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2286,7 +2286,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn1_p16)
 	@(require_results, enable_target_feature = "neon")
 	vtrn1_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 4, 2, 6)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -2301,7 +2301,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn1q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vtrn1q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 16, 2, 18, 4, 20, 6, 22, 8, 24, 10, 26, 12, 28, 14, 30)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2316,7 +2316,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn1q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vtrn1q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 8, 2, 10, 4, 12, 6, 14)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2331,7 +2331,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn1q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vtrn1q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 0, 2)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2346,7 +2346,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn2_p8)
 	@(require_results, enable_target_feature = "neon")
 	vtrn2_p8 :: #force_inline proc "c" (a, b: poly8x8_t) -> poly8x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 9, 3, 11, 5, 13, 7, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2361,7 +2361,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn2_p16)
 	@(require_results, enable_target_feature = "neon")
 	vtrn2_p16 :: #force_inline proc "c" (a, b: poly16x4_t) -> poly16x4_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 5, 3, 7)
 		} else {
 			a := simd.shuffle(a, a, 3, 2, 1, 0)
@@ -2376,7 +2376,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn2q_p8)
 	@(require_results, enable_target_feature = "neon")
 	vtrn2q_p8 :: #force_inline proc "c" (a, b: poly8x16_t) -> poly8x16_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 17, 3, 19, 5, 21, 7, 23, 9, 25, 11, 27, 13, 29, 15, 31)
 		} else {
 			a := simd.shuffle(a, a, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2391,7 +2391,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn2q_p16)
 	@(require_results, enable_target_feature = "neon")
 	vtrn2q_p16 :: #force_inline proc "c" (a, b: poly16x8_t) -> poly16x8_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 9, 3, 11, 5, 13, 7, 15)
 		} else {
 			a := simd.shuffle(a, a, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -2406,7 +2406,7 @@ when ODIN_ARCH == .arm64 {
 	// [Arm's documentation](https://developer.arm.com/architectures/instruction-sets/intrinsics/vtrn2q_p64)
 	@(require_results, enable_target_feature = "neon")
 	vtrn2q_p64 :: #force_inline proc "c" (a, b: poly64x2_t) -> poly64x2_t {
-		when ODIN_ENDIAN == .Little {
+		#if ODIN_ENDIAN == .Little {
 			return simd.shuffle(a, b, 1, 3)
 		} else {
 			a := simd.shuffle(a, a, 1, 0)
@@ -2533,18 +2533,18 @@ when ODIN_ARCH == .arm64 {
 }
 
 @(private, default_calling_convention = "none")
-foreign _ {
-	@(link_name = "llvm.aarch64.neon.pmul.v8i8" when ODIN_ARCH == .arm64 else "llvm.arm.neon.vmulp.v8i8")
+#foreign _ {
+	@(link_name = "llvm.aarch64.neon.pmul.v8i8" #if ODIN_ARCH == .arm64 else "llvm.arm.neon.vmulp.v8i8")
 	_vmul_p8 :: proc(a, b: poly8x8_t) -> poly8x8_t ---
-	@(link_name = "llvm.aarch64.neon.pmul.v16i8" when ODIN_ARCH == .arm64 else "llvm.arm.neon.vmulp.v16i8")
+	@(link_name = "llvm.aarch64.neon.pmul.v16i8" #if ODIN_ARCH == .arm64 else "llvm.arm.neon.vmulp.v16i8")
 	_vmulq_p8 :: proc(a, b: poly8x16_t) -> poly8x16_t ---
-	@(link_name = "llvm.aarch64.neon.pmull.v8i16" when ODIN_ARCH == .arm64 else "llvm.arm.neon.vmullp.v8i16")
+	@(link_name = "llvm.aarch64.neon.pmull.v8i16" #if ODIN_ARCH == .arm64 else "llvm.arm.neon.vmullp.v8i16")
 	_vmull_p8 :: proc(a, b: poly8x8_t) -> poly16x8_t ---
 }
 
-when ODIN_ARCH == .arm64 {
+#if ODIN_ARCH == .arm64 {
 	@(private, default_calling_convention = "none")
-	foreign _ {
+	#foreign _ {
 		@(link_name = "llvm.aarch64.neon.pmull64")
 		_vmull_p64 :: proc(a, b: poly64_t) -> int8x16_t ---
 	}

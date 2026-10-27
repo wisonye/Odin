@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="AVContentKey", objc_superclass=NS.Object)
 ContentKey :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKey, objc_selector="revoke", objc_name="revoke")
 	ContentKey_revoke :: proc(self: ^ContentKey) ---
 
@@ -24,7 +24,7 @@ foreign lib {
 @(objc_class="AVContentKeyRecipient")
 ContentKeyRecipient :: struct { using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeyRecipient, objc_selector="contentKeySession:didProvideContentKey:", objc_name="contentKeySession")
 	ContentKeyRecipient_contentKeySession :: proc(self: ^ContentKeyRecipient, contentKeySession: ^ContentKeySession, contentKey: ^ContentKey) ---
 
@@ -36,7 +36,7 @@ foreign lib {
 @(objc_class="AVContentKeyRequest", objc_superclass=NS.Object)
 ContentKeyRequest :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeyRequest, objc_selector="makeStreamingContentKeyRequestDataForApp:contentIdentifier:options:completionHandler:", objc_name="makeStreamingContentKeyRequestDataForApp")
 	ContentKeyRequest_makeStreamingContentKeyRequestDataForApp :: proc(self: ^ContentKeyRequest, appIdentifier: ^NS.Data, contentIdentifier: ^NS.Data, options: ^NS.Dictionary, handler: ^Objc_Block(proc "c" ( contentKeyRequestData: ^NS.Data, error: ^NS.Error ))) ---
 
@@ -103,7 +103,7 @@ ContentKeyRequestInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVPersistableContentKeyRequest", objc_superclass=ContentKeyRequest)
 PersistableContentKeyRequest :: struct { using _: ContentKeyRequest}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PersistableContentKeyRequest, objc_selector="persistableContentKeyFromKeyVendorResponse:options:error:", objc_name="persistableContentKeyFromKeyVendorResponse_error")
 	PersistableContentKeyRequest_persistableContentKeyFromKeyVendorResponse_error :: proc(self: ^PersistableContentKeyRequest, keyVendorResponse: ^NS.Data, options: ^NS.Dictionary, outError: ^^NS.Error) -> ^NS.Data ---
 }
@@ -121,7 +121,7 @@ PersistableContentKeyRequest_persistableContentKeyFromKeyVendorResponse :: #forc
 @(objc_class="AVContentKeyResponse", objc_superclass=NS.Object)
 ContentKeyResponse :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeyResponse, objc_selector="contentKeyResponseWithFairPlayStreamingKeyResponseData:", objc_name="contentKeyResponseWithFairPlayStreamingKeyResponseData", objc_is_class_method=true)
 	ContentKeyResponse_contentKeyResponseWithFairPlayStreamingKeyResponseData :: proc(keyResponseData: ^NS.Data) -> instancetype ---
 
@@ -140,7 +140,7 @@ ContentKeyResponseInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVContentKeySession", objc_superclass=NS.Object)
 ContentKeySession :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeySession, objc_selector="init", objc_name="init")
 	ContentKeySession_init :: proc(self: ^ContentKeySession) -> instancetype ---
 
@@ -226,7 +226,7 @@ ContentKeySessionDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeySessionDelegate, objc_selector="contentKeySession:didProvideContentKeyRequest:", objc_name="contentKeySession_didProvideContentKeyRequest")
 	ContentKeySessionDelegate_contentKeySession_didProvideContentKeyRequest :: proc(self: ^ContentKeySessionDelegate, session: ^ContentKeySession, keyRequest: ^ContentKeyRequest) ---
 
@@ -269,7 +269,7 @@ ContentKeySessionInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVContentKeySpecifier", objc_superclass=NS.Object)
 ContentKeySpecifier :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ContentKeySpecifier, objc_selector="contentKeySpecifierForKeySystem:identifier:options:", objc_name="contentKeySpecifierForKeySystem", objc_is_class_method=true)
 	ContentKeySpecifier_contentKeySpecifierForKeySystem :: proc(keySystem: ^NS.String, contentKeyIdentifier: id, options: ^NS.Dictionary) -> instancetype ---
 

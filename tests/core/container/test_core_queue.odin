@@ -1,8 +1,8 @@
 package test_core_container
 
-import "base:runtime"
-import "core:container/queue"
-import "core:testing"
+#import "base:runtime"
+#import "core:container/queue"
+#import "core:testing"
 
 @test
 test_queue :: proc(t: ^testing.T) {

@@ -1,10 +1,10 @@
 package _edwards25519
 
-import field "core:crypto/_fiat/field_scalar25519"
+#import field "core:crypto/_fiat/field_scalar25519"
 
 Scalar :: field.Montgomery_Domain_Field_Element
 
-// WARNING: This is non-canonical and only to be used when checking if
+// WARNING: This is non-canonical and only to be used #if checking if
 // a group element is on the prime-order subgroup.
 @(private, rodata)
 SC_ELL := field.Non_Montgomery_Domain_Field_Element {

@@ -20,14 +20,14 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:mem"
-import "core:os"
-import "core:strings"
-import "core:sync"
+#import "core:mem"
+#import "core:os"
+#import "core:strings"
+#import "core:sync"
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
 /*
 	Replaces environment placeholders in `dns_configuration`. Only necessary on Windows.

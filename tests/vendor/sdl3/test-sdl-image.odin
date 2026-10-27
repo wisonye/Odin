@@ -1,9 +1,9 @@
 package test_vendor_sdl3
 
-import "core:log"
-import "core:testing"
-import SDL "vendor:sdl3"
-import IMG "vendor:sdl3/image"
+#import "core:log"
+#import "core:testing"
+#import SDL "vendor:sdl3"
+#import IMG "vendor:sdl3/image"
 
 // Links `vendor:sdl3/image` and prints its version as a line `VERSION SDL3_image <version>`. On Windows it must be the version the
 // bindings were written for. It also writes a surface to memory in the formats that SDL3_image has been able to write since 3.2, and
@@ -37,7 +37,7 @@ test_sdl_image :: proc(t: ^testing.T) {
 	linked := IMG.Version()
 	major, minor, micro := SDL.VERSIONNUM_MAJOR(linked), SDL.VERSIONNUM_MINOR(linked), SDL.VERSIONNUM_MICRO(linked)
 	log.infof("VERSION SDL3_image %v.%v.%v", major, minor, micro)
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		dll      := [3]int{int(major), int(minor), int(micro)}
 		bindings := [3]int{IMG.MAJOR_VERSION, IMG.MINOR_VERSION, IMG.PATCHLEVEL}
 		testing.expectf(t, dll == bindings, "the SDL3_image DLL is %v but the bindings are for %v", dll, bindings)
@@ -75,7 +75,7 @@ test_sdl_image :: proc(t: ^testing.T) {
 	log.infof("SDL3_image formats %v", working[:])
 
 	// the DLLs of the optional formats are next to the test on Windows, so everything must work
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		testing.expectf(t, len(working) == len(Format), "SDL3_image could only write and read %v of all %v formats, its DLLs are missing or the wrong version", working[:], len(Format))
 	} else {
 		testing.expect(t, len(working) > 0, "SDL3_image works with no format at all")

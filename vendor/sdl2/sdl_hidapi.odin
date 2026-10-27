@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 // An opaque handle to a HID device, which HID_open and HID_open_path return.
@@ -32,14 +32,14 @@ hid_device_info :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	// Initialize the HIDAPI library, returns 0 on success.
 	hid_init :: proc() -> c.int ---
 
 	// Finalize the HIDAPI library, returns 0 on success.
 	hid_exit :: proc() -> c.int ---
 
-	// Check to see if devices may have been added or removed. Returns a counter that changes when devices change.
+	// Check to see if devices may have been added or removed. Returns a counter that changes #if devices change.
 	hid_device_change_count :: proc() -> u32 ---
 
 	// Enumerate the HID Devices matching a vendor and product id, or all of them with zeros. Free the result with hid_free_enumeration.

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sched.h - execution scheduling
 
-foreign lib {
+#foreign lib {
 	/*
 	Returns the minimum for the given scheduling policy.
 
@@ -82,20 +82,20 @@ Sched_Policy :: enum c.int {
 	OTHER    = SCHED_OTHER,
 }
 
-when ODIN_OS == .Darwin {
+#if ODIN_OS == .Darwin {
 
 	SCHED_FIFO     :: 4
 	SCHED_RR       :: 2
 	// SCHED_SPORADIC :: 3 NOTE: not a thing on freebsd, netbsd and probably others, leaving it out
 	SCHED_OTHER    :: 1
 
-} else when ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .FreeBSD || ODIN_OS == .OpenBSD {
 
 	SCHED_FIFO     :: 1
 	SCHED_RR       :: 3
 	SCHED_OTHER    :: 2
 
-} else when ODIN_OS == .NetBSD || ODIN_OS == .Linux {
+} else #if ODIN_OS == .NetBSD || ODIN_OS == .Linux {
 
 	SCHED_OTHER    :: 0
 	SCHED_FIFO     :: 1

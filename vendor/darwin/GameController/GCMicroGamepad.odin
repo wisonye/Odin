@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameController
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GCMicroGamepad", objc_superclass=PhysicalInputProfile)
 MicroGamepad :: struct { using _: PhysicalInputProfile}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MicroGamepad, objc_selector="saveSnapshot", objc_name="saveSnapshot")
 	MicroGamepad_saveSnapshot :: proc(self: ^MicroGamepad) -> ^MicroGamepadSnapshot ---
 
@@ -52,7 +52,7 @@ foreign lib {
 @(objc_class="GCMicroGamepadSnapshot", objc_superclass=MicroGamepad)
 MicroGamepadSnapshot :: struct { using _: MicroGamepad}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MicroGamepadSnapshot, objc_selector="initWithSnapshotData:", objc_name="initWithSnapshotData")
 	MicroGamepadSnapshot_initWithSnapshotData :: proc(self: ^MicroGamepadSnapshot, data: ^NS.Data) -> instancetype ---
 

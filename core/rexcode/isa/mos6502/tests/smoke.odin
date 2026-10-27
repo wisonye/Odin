@@ -8,9 +8,9 @@ package rexcode_mos6502_tests
 //
 // Run with: odin run mos6502/tests
 
-import "core:fmt"
-import "core:os"
-import m "../"
+#import "core:fmt"
+#import "core:os"
+#import m "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

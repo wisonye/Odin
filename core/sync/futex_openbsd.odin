@@ -2,8 +2,8 @@
 #+build openbsd
 package sync
 
-import "core:c"
-import "core:time"
+#import "core:c"
+#import "core:time"
 
 FUTEX_WAIT :: 1
 FUTEX_WAKE :: 2
@@ -19,9 +19,9 @@ ETIMEDOUT :: 60
 ECANCELED :: 88
 
 
-foreign import libc "system:c"
+#foreign #import libc "system:c"
 
-foreign libc {
+#foreign libc {
 	@(link_name="futex")
 	_unix_futex :: proc "c" (f: ^Futex, op: c.int, val: u32, timeout: rawptr) -> c.int ---
 

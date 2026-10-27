@@ -2,7 +2,7 @@
 
 package rexcode_rsp
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // N64 RSP encoding fundamentals

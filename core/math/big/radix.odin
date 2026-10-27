@@ -15,7 +15,7 @@ package math_big
 		- Also look at extracting and splatting several digits at once.
 */
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	This version of `itoa` allocates on behalf of the caller. The caller must free the string.
@@ -120,7 +120,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 		return 0, .Buffer_Overflow
 	}
 	/*
-		Fast path for when `Int` == 0 or the entire `Int` fits in a single radix digit.
+		Fast path for #if `Int` == 0 or the entire `Int` fits in a single radix digit.
 	*/
 	z, _ := is_zero(a)
 	if z || (a.used == 1 && a.digit[0] < DIGIT(radix)) {
@@ -148,7 +148,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 	}
 
 	/*
-		Fast path for when `Int` fits within a `_WORD`.
+		Fast path for #if `Int` fits within a `_WORD`.
 	*/
 	if a.used == 1 || a.used == 2 {
 		if zero_terminate {
@@ -226,7 +226,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 	//               If we optimize `itoa` further, this needs to be evaluated.
 	itoa_method := _itoa_raw_full
 
-	when ODIN_OPTIMIZATION_MODE >= .Size {
+	#if ODIN_OPTIMIZATION_MODE >= .Size {
 		if count >= 32768 {
 			itoa_method = _itoa_raw_old
 		}

@@ -20,8 +20,8 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:reflect"
-import "core:sys/posix"
+#import "core:reflect"
+#import "core:sys/posix"
 
 _last_platform_error :: proc() -> i32 {
 	return i32(posix.errno())

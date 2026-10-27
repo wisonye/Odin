@@ -13,20 +13,20 @@ Example:
 
 	package main
 
-	import "core:log"
+	#import "core:log"
 
 	main :: proc() {
 		context.logger = log.create_console_logger()
 		log.info("Hello World!")
 	}
 
-However when the application gets more involved you might want to try a more complex setup.
+However #if the application gets more involved you might want to try a more complex setup.
 Example:
 
 	package main
 
-	import "core:log"
-	import "core:os"
+	#import "core:log"
+	#import "core:os"
 
 	main :: proc() {
 		handle, err := os.open("logs.txt", os.O_RDWR | os.O_APPEND | os.O_CREATE, 0o666)
@@ -52,7 +52,7 @@ Example:
 
 	package main
 
-	import "core:log"
+	#import "core:log"
 
 	main :: proc() {
 		context.logger = log.create_console_logger()

@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import "base:intrinsics"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSNetService", objc_superclass=Object)
 NetService :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NetService, objc_selector="initWithDomain:type:name:port:", objc_name="initWithDomain_type_name_port")
 	NetService_initWithDomain_type_name_port :: proc(self: ^NetService, domain: ^String, type: ^String, name: ^String, port: cffi.int) -> instancetype ---
 
@@ -103,7 +103,7 @@ NetServiceDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NetServiceDelegate, objc_selector="netServiceWillPublish:", objc_name="netServiceWillPublish")
 	NetServiceDelegate_netServiceWillPublish :: proc(self: ^NetServiceDelegate, sender: ^NetService) ---
 
@@ -136,7 +136,7 @@ foreign lib {
 @(objc_class="NSNetServiceBrowser", objc_superclass=Object)
 NetServiceBrowser :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NetServiceBrowser, objc_selector="init", objc_name="init")
 	NetServiceBrowser_init :: proc(self: ^NetServiceBrowser) -> instancetype ---
 
@@ -178,7 +178,7 @@ NetServiceBrowserDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NetServiceBrowserDelegate, objc_selector="netServiceBrowserWillSearch:", objc_name="netServiceBrowserWillSearch")
 	NetServiceBrowserDelegate_netServiceBrowserWillSearch :: proc(self: ^NetServiceBrowserDelegate, browser: ^NetServiceBrowser) ---
 

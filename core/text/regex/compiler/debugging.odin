@@ -8,10 +8,10 @@ package regex_compiler
 		Feoramund: Initial implementation.
 */
 
-import "base:intrinsics"
-import "core:io"
-import "core:text/regex/common"
-import "core:text/regex/virtual_machine"
+#import "base:intrinsics"
+#import "core:io"
+#import "core:text/regex/common"
+#import "core:text/regex/virtual_machine"
 
 get_jump_targets :: proc(code: []Opcode) -> (jump_targets: map[int]int) {
 	iter := virtual_machine.Opcode_Iterator{ code, 0 }

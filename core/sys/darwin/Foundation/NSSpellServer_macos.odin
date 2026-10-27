@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSSpellServer", objc_superclass=Object)
 SpellServer :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpellServer, objc_selector="registerLanguage:byVendor:", objc_name="registerLanguage")
 	SpellServer_registerLanguage :: proc(self: ^SpellServer, language: ^String, vendor: ^String) -> bool ---
 
@@ -33,7 +33,7 @@ SpellServerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SpellServerDelegate, objc_selector="spellServer:findMisspelledWordInString:language:wordCount:countOnly:", objc_name="spellServer_findMisspelledWordInString_language_wordCount_countOnly")
 	SpellServerDelegate_spellServer_findMisspelledWordInString_language_wordCount_countOnly :: proc(self: ^SpellServerDelegate, sender: ^SpellServer, stringToCheck: ^String, language: ^String, wordCount: ^Integer, countOnly: bool) -> _NSRange ---
 

@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UINib", objc_superclass=NS.Object)
 Nib :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Nib, objc_selector="nibWithNibName:bundle:", objc_name="nibWithNibName", objc_is_class_method=true)
 	Nib_nibWithNibName :: proc(name: ^NS.String, bundleOrNil: ^NS.Bundle) -> ^Nib ---
 

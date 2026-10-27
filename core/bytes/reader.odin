@@ -1,7 +1,7 @@
 package bytes
 
-import "core:io"
-import "core:unicode/utf8"
+#import "core:io"
+#import "core:unicode/utf8"
 
 Reader :: struct {
 	s:         []byte, // read-only buffer

@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_GameController
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import UI "vendor:darwin/UIKit"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import UI "vendor:darwin/UIKit"
 
 @(objc_class="GCVirtualController", objc_superclass=NS.Object)
 VirtualController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualController, objc_selector="virtualControllerWithConfiguration:", objc_name="virtualControllerWithConfiguration", objc_is_class_method=true)
 	VirtualController_virtualControllerWithConfiguration :: proc(configuration: ^VirtualControllerConfiguration) -> ^VirtualController ---
 
@@ -47,7 +47,7 @@ foreign lib {
 VirtualControllerConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualControllerConfiguration, objc_selector="elements", objc_name="elements")
 	VirtualControllerConfiguration_elements :: proc(self: ^VirtualControllerConfiguration) -> ^NS.Set ---
 
@@ -66,7 +66,7 @@ foreign lib {
 VirtualControllerElementConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=VirtualControllerElementConfiguration, objc_selector="isHidden", objc_name="isHidden")
 	VirtualControllerElementConfiguration_isHidden :: proc(self: ^VirtualControllerElementConfiguration) -> bool ---
 

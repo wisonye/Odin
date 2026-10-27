@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="AVMIDIPlayer", objc_superclass=NS.Object)
 MIDIPlayer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MIDIPlayer, objc_selector="initWithContentsOfURL:soundBankURL:error:", objc_name="initWithContentsOfURL_error")
 	MIDIPlayer_initWithContentsOfURL_error :: proc(self: ^MIDIPlayer, inURL: ^NS.URL, bankURL: ^NS.URL, outError: ^^NS.Error) -> instancetype ---
 

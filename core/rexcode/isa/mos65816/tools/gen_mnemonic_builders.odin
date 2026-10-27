@@ -35,11 +35,11 @@ package main
 // Run with: odin run tools/gen_mnemonic_builders.odin -file
 // Output:   mnemonic_builders.odin (written to cwd; move to package root)
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import m816 "../"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import m816 "../"
 
 GEN_ATTRIB :: "// rexcode  ·  Brendan Punsky (dotbmp@github), original author\n\n"
 
@@ -342,7 +342,7 @@ generate_emit_proc :: proc(sb: ^strings.Builder, entry: Proc_Entry, mnemonic_str
 	strings.write_string(sb, ")) }\n")
 }
 
-// inst_<mnem> / emit_<mnem> overload group (or a single alias when 1 entry).
+// inst_<mnem> / emit_<mnem> overload group (or a single alias #if 1 entry).
 write_overload_group :: proc(
 	sb: ^strings.Builder, prefix, mnemonic_lower: string,
 	procs: [dynamic]Proc_Entry, pad: int, emit: bool,

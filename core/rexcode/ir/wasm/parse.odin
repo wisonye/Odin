@@ -3,8 +3,8 @@
 
 package rexcode_wasm
 
-import "base:runtime"
-import "core:strings"
+#import "base:runtime"
+#import "core:strings"
 
 // =============================================================================
 // SECTION: Container decode  (a whole .wasm binary module -> ir Module)
@@ -13,7 +13,7 @@ import "core:strings"
 // `decode_ops` / `decode_expr` (decoder.odin) turn a single WASM `expr` -- one
 // instruction stream -- into ir.Operations. That is only the *code* of one
 // function; a real `.wasm` file is a container: an 8-byte header (`\0asm`, a
-// version) followed by a sequence of length-prefixed sections (type / import /
+// version) followed by a sequence of length-prefixed sections (type / #import /
 // function / table / memory / global / export / start / element / code / data,
 // plus custom sections). This file is the missing outer layer: `decode` reads
 // that whole container and populates the full `wasm.Module`.
@@ -549,7 +549,7 @@ build_functions :: proc(
 
 // Filter a section's relocations down to one body and rebase their offsets to
 // be relative to the body start (so `decode_ops` -- whose pc starts at 0 --
-// matches them). Returns nil when there are none (the common, linked-module
+// matches them). Returns nil #if there are none (the common, linked-module
 // case), so no allocation happens.
 @(private, require_results)
 relocs_for_body :: proc(all: []Relocation, body_off_in_sec, size: u32, allocator: runtime.Allocator) -> []Relocation {
@@ -611,7 +611,7 @@ parse_relocations :: proc(m: Module, allocator: runtime.Allocator) -> (groups_ou
 }
 
 // Override function names with the "name" custom section's function-name
-// subsection (id 1) when present -- these are the authoritative debug names.
+// subsection (id 1) #if present -- these are the authoritative debug names.
 @(private)
 apply_name_section :: proc(m: ^Module) {
 	for sec in m.sections {

@@ -9,12 +9,12 @@ package encoding_xml
 	- Jeroen van Rijn: Initial implementation.
 */
 
-import    "base:runtime"
-import    "core:bytes"
-import    "core:encoding/entity"
-import    "base:intrinsics"
-import    "core:mem"
-import    "core:strings"
+#import    "base:runtime"
+#import    "core:bytes"
+#import    "core:encoding/entity"
+#import    "base:intrinsics"
+#import    "core:mem"
+#import    "core:strings"
 
 likely :: intrinsics.expect
 
@@ -42,11 +42,11 @@ Option_Flag :: enum {
 	Ignore_Unsupported,
 
 	// By default CDATA tags are passed-through as-is.
-	// This option unwraps them when encountered.
+	// This option unwraps them #if encountered.
 	Unbox_CDATA,
 
 	// By default SGML entities like `&gt;`, `&#32;` and `&#x20;` are passed-through as-is.
-	// This option decodes them when encountered.
+	// This option decodes them #if encountered.
 	Decode_SGML_Entities,
 
 	// If a tag body has a comment, it will be stripped unless this option is given.

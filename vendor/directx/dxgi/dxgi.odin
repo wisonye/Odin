@@ -1,13 +1,13 @@
 // Bindings for [[ DXGI ; https://learn.microsoft.com/en-us/windows/win32/api/dxgi/ ]].
 package directx_dxgi
 
-foreign import dxgi {
+#foreign #import dxgi {
 	"system:dxgi.lib",
 	"system:user32.lib",
 	"system:gdi32.lib",
 }
 
-import win32 "core:sys/windows"
+#import win32 "core:sys/windows"
 
 LUID                :: win32.LUID
 IID                 :: win32.GUID
@@ -35,14 +35,14 @@ IUnknown_VTable :: win32.IUnknown_VTable
 LPUNKNOWN       :: win32.LPUNKNOWN
 
 @(default_calling_convention="system")
-foreign dxgi {
+#foreign dxgi {
 	CreateDXGIFactory            :: proc(riid: ^IID, ppFactory: ^rawptr) -> HRESULT ---
 	CreateDXGIFactory1           :: proc(riid: ^IID, ppFactory: ^rawptr) -> HRESULT ---
 	CreateDXGIFactory2           :: proc(Flags: CREATE_FACTORY, riid: ^IID, ppFactory: ^rawptr) -> HRESULT ---
 }
 
 @(default_calling_convention="system", link_prefix="DXGI")
-foreign dxgi {
+#foreign dxgi {
 	GetDebugInterface1           :: proc(Flags: u32, riid: ^IID, pDebug: ^rawptr) -> HRESULT ---
 	DeclareAdapterRemovalSupport :: proc() -> HRESULT ---
 }

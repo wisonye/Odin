@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVTextStyleRule", objc_superclass=NS.Object)
 TextStyleRule :: struct {
@@ -11,7 +11,7 @@ TextStyleRule :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextStyleRule, objc_selector="init", objc_name="init")
 	TextStyleRule_init :: proc(self: ^TextStyleRule) -> instancetype ---
 

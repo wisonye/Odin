@@ -1,6 +1,6 @@
 package strconv
 
-import "decimal"
+#import "decimal"
 
 Decimal_Slice :: struct {
 	digits:        []byte,
@@ -44,7 +44,7 @@ Example:
 - A byte slice containing the formatted string
 */
 generic_ftoa :: proc(buf: []byte, val: f64, fmt: byte, precision, bit_size: int) -> []byte {
-	when FAST_FLOAT {
+	#if FAST_FLOAT {
 		if bit_size == 64 {
 			if res, ok := _ftoa_fast(buf, val, fmt, precision); ok {
 				return res
@@ -196,7 +196,7 @@ format_digits :: proc(buf: []byte, shortest: bool, neg: bool, digs: Decimal_Slic
 	case 'f', 'F':
 		add_byte(&b, '-' if neg else '+')
 
-		// integer, padded with zeros when needed
+		// integer, padded with zeros #if needed
 		if digs.decimal_point > 0 {
 			m := min(digs.count, digs.decimal_point)
 			b.n += copy(buf[b.n:], digs.digits[0:m])

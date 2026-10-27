@@ -2,7 +2,7 @@
 #+build darwin:default
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSConnectionDelegate")
 ConnectionDelegate :: struct {
@@ -11,7 +11,7 @@ ConnectionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ConnectionDelegate, objc_selector="makeNewConnection:sender:", objc_name="makeNewConnection")
 	ConnectionDelegate_makeNewConnection :: proc(self: ^ConnectionDelegate, conn: ^Connection, ancestor: ^Connection) -> bool ---
 

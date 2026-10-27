@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import MTL "vendor:darwin/Metal"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import MTL "vendor:darwin/Metal"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLFXSpatialScaler")
 SpatialScaler :: struct {
@@ -12,7 +12,7 @@ SpatialScaler :: struct {
 	using _: SpatialScalerBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpatialScaler, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	SpatialScaler_encodeToCommandBuffer :: proc(self: ^SpatialScaler, commandBuffer: ^MTL.CommandBuffer) ---
 }
@@ -24,7 +24,7 @@ SpatialScalerDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpatialScalerDescriptor, objc_selector="newSpatialScalerWithDevice:", objc_name="newSpatialScalerWithDevice_")
 	SpatialScalerDescriptor_newSpatialScalerWithDevice_ :: proc(self: ^SpatialScalerDescriptor, device: ^MTL.Device) -> ^SpatialScaler ---
 
@@ -95,7 +95,7 @@ SpatialScalerBase :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpatialScalerBase, objc_selector="colorTextureUsage", objc_name="colorTextureUsage")
 	SpatialScalerBase_colorTextureUsage :: proc(self: ^SpatialScalerBase) -> MTL.TextureUsage ---
 

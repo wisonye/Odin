@@ -1,10 +1,10 @@
 package timezone
 
-import    "base:intrinsics"
-import    "core:slice"
-import    "core:strings"
-import    "core:strconv"
-import    "core:time/datetime"
+#import    "base:intrinsics"
+#import    "core:slice"
+#import    "core:strings"
+#import    "core:strconv"
+#import    "core:time/datetime"
 
 // Implementing RFC8536 [https://datatracker.ietf.org/doc/html/rfc8536]
 

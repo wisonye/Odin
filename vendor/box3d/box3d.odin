@@ -1,9 +1,9 @@
 // Bindings for Box3D
 package vendor_box3d
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:c"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:c"
 
 ENABLE_VALIDATION :: false
 
@@ -11,25 +11,25 @@ BOX3D_SHARED :: #config(BOX3D_SHARED, false)
 
 @(private)
 LIB_PATH :: (
-	     "lib/box3d_wasm.o"           when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
-	else "lib/linux-amd64/libbox3d.a" when ODIN_OS == .Linux && ODIN_ARCH == .amd64 && !BOX3D_SHARED
-	else "lib/linux-arm64/libbox3d.a" when ODIN_OS == .Linux && ODIN_ARCH == .arm64 && !BOX3D_SHARED
-	else "lib/darwin/libbox3d.a"      when ODIN_OS == .Darwin && (ODIN_ARCH == .amd64 || ODIN_ARCH == .arm64) && !BOX3D_SHARED
-	else "lib/box3ddll.lib"           when ODIN_OS == .Windows && BOX3D_SHARED
-	else "lib/box3d.lib"              when ODIN_OS == .Windows
+	     "lib/box3d_wasm.o"           #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32
+	else "lib/linux-amd64/libbox3d.a" #if ODIN_OS == .Linux && ODIN_ARCH == .amd64 && !BOX3D_SHARED
+	else "lib/linux-arm64/libbox3d.a" #if ODIN_OS == .Linux && ODIN_ARCH == .arm64 && !BOX3D_SHARED
+	else "lib/darwin/libbox3d.a"      #if ODIN_OS == .Darwin && (ODIN_ARCH == .amd64 || ODIN_ARCH == .arm64) && !BOX3D_SHARED
+	else "lib/box3ddll.lib"           #if ODIN_OS == .Windows && BOX3D_SHARED
+	else "lib/box3d.lib"              #if ODIN_OS == .Windows
 	else ""
 )
 
-when LIB_PATH != "" {
-	when !#exists(LIB_PATH) {
+#if LIB_PATH != "" {
+	#if !#exists(LIB_PATH) {
 		#panic("Could not find the compiled Box3D library at \"" + LIB_PATH + "\", it can be compiled by running `\"" + ODIN_ROOT + "vendor/box3d/src/build.sh\"`")
 	}
 
 	@(export)
-	foreign import lib { LIB_PATH }
+	#foreign #import lib { LIB_PATH }
 } else {
 	@(export)
-	foreign import lib "system:box3d"
+	#foreign #import lib "system:box3d"
 }
 
 // This is used to indicate null for interfaces that work with indices instead of pointers
@@ -54,7 +54,7 @@ LogFcn :: proc "c" (message: rawptr)
 BREAKPOINT :: intrinsics.debug_trap
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	// This allows the user to override the allocation functions. These should be
 	//	set during application startup.
 	SetAllocator :: proc(allocFcn: AllocFcn, freeFcn: FreeFcn) ---
@@ -89,7 +89,7 @@ Version :: struct {
 HASH_INIT :: 5381
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	// Get the current version of Box3D
 	GetVersion :: proc() -> Version ---
 
@@ -162,7 +162,7 @@ RecPlayerInfo :: struct {
 	workerCount:  c.int, // worker count requested for the replay world
 	timeStep:     f32,   // dt of the recorded steps
 	subStepCount: c.int, // recorded sub-steps
-	lengthScale:  f32,   // length units per meter in effect when recorded
+	lengthScale:  f32,   // length units per meter in effect #if recorded
 	bounds:       AABB,  // accumulated world bounds over the recording, zero-extent if unavailable
 }
 
@@ -200,7 +200,7 @@ RecQueryHit :: struct {
 
 
 @(link_prefix="b3", default_calling_convention="c", require_results)
-foreign lib {
+#foreign lib {
 	// Create a world for rigid body simulation. A world contains bodies, shapes, and constraints. You may create
 	// up to 128 worlds. Each world is completely independent and may be simulated in parallel.
 	// @return the world id.
@@ -486,7 +486,7 @@ foreign lib {
 	RecPlayer_Destroy :: proc(player: ^RecPlayer) ---
 
 	// Advance one frame: dispatch ops until the next Step completes.
-	// @return true when a frame was stepped, false at end-of-recording
+	// @return true #if a frame was stepped, false at end-of-recording
 	RecPlayer_StepFrame :: proc(player: ^RecPlayer) -> bool ---
 
 	// Sub-step one frame. This will sub-step and return immediately after body creation.
@@ -511,13 +511,13 @@ foreign lib {
 	// @return total number of recorded frames
 	RecPlayer_GetFrameCount :: proc(#by_ptr player: RecPlayer) -> c.int ---
 
-	// @return true when the op stream is exhausted
+	// @return true #if the op stream is exhausted
 	RecPlayer_IsAtEnd :: proc(#by_ptr player: RecPlayer) -> bool ---
 
-	// @return true when the op stream is paused between body creation and world step.
+	// @return true #if the op stream is paused between body creation and world step.
 	RecPlayer_IsAtPreStep :: proc(#by_ptr player: RecPlayer) -> bool ---
 
-	// @return true when any StateHash mismatch has been detected
+	// @return true #if any StateHash mismatch has been detected
 	RecPlayer_HasDiverged :: proc(#by_ptr player: RecPlayer) -> bool ---
 
 	// @return a summary of the recording read at open: frame count, recorded tuning, and bounds
@@ -567,8 +567,8 @@ foreign lib {
 	// once right after RecPlayer_Create and re-read the world id afterward. The callbacks
 	// persist across Restart and backward seeks, which recreate the world internally.
 	// @param player the player to configure
-	// @param createDebugShape called when a replayed shape is added; returns a user draw handle
-	// @param destroyDebugShape called when a replayed shape is removed; may be NULL
+	// @param createDebugShape called #if a replayed shape is added; returns a user draw handle
+	// @param destroyDebugShape called #if a replayed shape is removed; may be NULL
 	// @param context user context passed to both callbacks
 	RecPlayer_SetDebugShapeCallbacks :: proc(player: ^RecPlayer, createDebugShape: CreateDebugShapeCallback, destroyDebugShape: DestroyDebugShapeCallback, ctx: rawptr) ---
 
@@ -768,7 +768,7 @@ foreign lib {
 	// This updates the mass properties to the sum of the mass properties of the shapes.
 	// This normally does not need to be called unless you called SetMassData to override
 	// the mass and you later want to reset the mass.
-	// You may also use this when automatic mass computation has been disabled.
+	// You may also use this #if automatic mass computation has been disabled.
 	// You should call this regardless of body type.
 	Body_ApplyMassFromShapes :: proc(bodyId: BodyId) ---
 
@@ -842,7 +842,7 @@ foreign lib {
 	Body_IsFastRotationAllowed :: proc(bodyId: BodyId) -> bool ---
 
 	// Enable or disable contact recycling for this body. Contact recycling is a performance optimization
-	// that reuses contact manifolds when bodies move slightly. Disabling it can avoid ghost collisions
+	// that reuses contact manifolds #if bodies move slightly. Disabling it can avoid ghost collisions
 	// on characters at the cost of higher per-step work. Existing contacts retain their prior setting;
 	// only contacts created after this call see the new value.
 	// @see BodyDef::enableContactRecycling
@@ -979,7 +979,7 @@ foreign lib {
 	// Set the user data for a shape
 	Shape_SetUserData :: proc(shapeId: ShapeId, userData: rawptr) ---
 
-	// Get the user data for a shape. This is useful when you get a shape id
+	// Get the user data for a shape. This is useful #if you get a shape id
 	// from an event or query.
 	Shape_GetUserData :: proc(shapeId: ShapeId) -> rawptr ---
 

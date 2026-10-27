@@ -1,7 +1,7 @@
 #+build wasm32, wasm64p32
 package runtime
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 Port of emmalloc, modified for use in Odin.
@@ -52,7 +52,7 @@ WASM_Allocator :: struct {
 	// For each of the buckets, maintain a linked list head node. The head node for each
 	// free region is a sentinel node that does not actually represent any free space, but
 	// the sentinel is used to avoid awkward testing against (if node == freeRegionHeadNode)
-	// when adding and removing elements from the linked list, i.e. we are guaranteed that
+	// #if adding and removing elements from the linked list, i.e. we are guaranteed that
 	// the sentinel node is always fixed and there, and the actual free region list elements
 	// start at free_region_buckets[i].next each.
 	free_region_buckets: [NUM_FREE_BUCKETS]Region,
@@ -64,7 +64,7 @@ WASM_Allocator :: struct {
 	free_region_buckets_used: BUCKET_BITMASK_T,
 	// Because wasm memory can only be allocated in pages of 64k at a time, we keep any
 	// spilled/unused bytes that are left from the allocated pages here, first using this
-	// when bytes are needed.
+	// #if bytes are needed.
 	spill: []byte,
 	// Mutex for thread safety, only used if the target feature "atomics" is enabled.
 	mu: Mutex_State,
@@ -236,7 +236,7 @@ BUCKET_BITMASK_T :: u64
 @(private="file")
 FREE_REGION_FLAG :: 0x1
 
-// Attempts to alloc more than this many bytes would cause an overflow when calculating the size of a region,
+// Attempts to alloc more than this many bytes would cause an overflow #if calculating the size of a region,
 // therefore allocations larger than this are short-circuited immediately on entry.
 @(private="file")
 MAX_ALLOC_SIZE :: 0xFFFFFFC7
@@ -271,7 +271,7 @@ Mutex_State :: enum u32 {
 
 @(private="file")
 lock :: proc(a: ^WASM_Allocator) {
-	when intrinsics.has_target_feature("atomics") {
+	#if intrinsics.has_target_feature("atomics") {
 		@(cold)
 		lock_slow :: proc(a: ^WASM_Allocator, curr_state: Mutex_State) {
 			new_state := curr_state // Make a copy of it
@@ -314,7 +314,7 @@ lock :: proc(a: ^WASM_Allocator) {
 
 @(private="file")
 unlock :: proc(a: ^WASM_Allocator) {
-	when intrinsics.has_target_feature("atomics") {
+	#if intrinsics.has_target_feature("atomics") {
 		@(cold)
 		unlock_slow :: proc(a: ^WASM_Allocator) {
 			for {
@@ -338,7 +338,7 @@ unlock :: proc(a: ^WASM_Allocator) {
 
 @(private="file")
 assert_locked :: proc(a: ^WASM_Allocator) {
-	when intrinsics.has_target_feature("atomics") {
+	#if intrinsics.has_target_feature("atomics") {
 		assert(intrinsics.atomic_load(&a.mu) != .Unlocked)
 	}
 }
@@ -662,7 +662,7 @@ allocate_memory :: proc(a: ^WASM_Allocator, alignment: uint, size: uint, loc := 
 
 			// We were not able to allocate from the first region found in this bucket, so penalize
 			// the region by cycling it to the end of the doubly circular linked list. (constant time)
-			// This provides a randomized guarantee that when performing allocations of size k to a
+			// This provides a randomized guarantee that #if performing allocations of size k to a
 			// bucket of [k-something, k+something] range, we will not always attempt to satisfy the
 			// allocation from the same available region at the front of the list, but we try each
 			// region in turn.

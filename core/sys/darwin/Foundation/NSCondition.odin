@@ -8,7 +8,7 @@ Condition :: struct {
 	using _: Locking,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Condition, objc_selector="wait", objc_name="wait")
 	Condition_wait :: proc(self: ^Condition) ---
 
@@ -35,7 +35,7 @@ ConditionLock :: struct {
 	using _: Locking,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ConditionLock, objc_selector="initWithCondition:", objc_name="initWithCondition")
 	ConditionLock_initWithCondition :: proc(self: ^ConditionLock, condition: Integer) -> instancetype ---
 

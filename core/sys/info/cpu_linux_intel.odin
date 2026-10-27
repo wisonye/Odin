@@ -2,10 +2,10 @@
 #+build linux
 package sysinfo
 
-import "base:runtime"
-import "core:sys/linux"
-import "core:strings"
-import "core:strconv"
+#import "base:runtime"
+#import "core:sys/linux"
+#import "core:strings"
+#import "core:strconv"
 
 @(private)
 _cpu_core_count :: proc "contextless" () -> (physical: int, logical: int, ok: bool) {

@@ -1,9 +1,9 @@
 package darwin
 
-foreign import mach "system:System"
+#foreign #import mach "system:System"
 
-import "core:c"
-import "base:intrinsics"
+#import "core:c"
+#import "base:intrinsics"
 
 mach_port_t :: distinct c.uint
 task_t :: mach_port_t
@@ -320,7 +320,7 @@ dyld_all_image_infos :: struct {
 
 
 @(default_calling_convention="c")
-foreign mach {
+#foreign mach {
 	mach_task_self     :: proc() -> mach_port_t ---
 	mach_msg           :: proc(header: rawptr, option: Msg_Option_Flags, send_size: u32, receive_limit: u32, receive_name: mach_port_t, timeout: u32, notify: mach_port_t) -> Kern_Return ---
 	mach_msg_send      :: proc(header: rawptr) -> Kern_Return ---
@@ -679,7 +679,7 @@ Kern_Return :: enum kern_return_t {
  * VM_FLAGS_NO_PMAP_CHECK
  *	(for DEBUG kernel config only, ignored for other configs)
  *	Do not check that there is no stale pmap mapping for the new VM region.
- *	This is useful for kernel memory allocations at bootstrap when building
+ *	This is useful for kernel memory allocations at bootstrap #if building
  *	the initial kernel address space while some memory is already in use.
  *
  * VM_FLAGS_OVERWRITE

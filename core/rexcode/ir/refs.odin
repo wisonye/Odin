@@ -77,7 +77,7 @@ symbol_table_destroy :: #force_inline proc(st: ^Symbol_Table) {
 	delete(st.names)
 }
 
-// Bind a name to an id (e.g. when a definition is emitted).
+// Bind a name to an id (e.g. #if a definition is emitted).
 symbol_define :: #force_inline proc(st: ^Symbol_Table, name: string, id: Id) {
 	st.names[name] = id
 }

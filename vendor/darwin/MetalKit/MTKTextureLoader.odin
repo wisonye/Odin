@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_MetalKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import MTL "vendor:darwin/Metal"
-import MDL "vendor:darwin/ModelIO"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import MTL "vendor:darwin/Metal"
+#import MDL "vendor:darwin/ModelIO"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTKTextureLoader", objc_superclass=NS.Object)
 TextureLoader :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=TextureLoader, objc_selector="init", objc_name="init")
 	TextureLoader_init :: proc(self: ^TextureLoader) -> instancetype ---
 
@@ -23,12 +23,12 @@ foreign lib {
 	@(objc_type=TextureLoader, objc_selector="newTextureWithName:scaleFactor:bundle:options:completionHandler:", objc_name="newTextureWithName_scaleFactor_bundle_options_completionHandler")
 	TextureLoader_newTextureWithName_scaleFactor_bundle_options_completionHandler :: proc(self: ^TextureLoader, name: ^NS.String, scaleFactor: CG.Float, bundle: ^NS.Bundle, options: ^NS.Dictionary, completionHandler: TextureLoaderCallback) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=TextureLoader, objc_selector="newTextureWithName:scaleFactor:displayGamut:bundle:options:completionHandler:", objc_name="newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler")
 		TextureLoader_newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler :: proc(self: ^TextureLoader, name: ^NS.String, scaleFactor: CG.Float, displayGamut: UI_DisplayGamut, bundle: ^NS.Bundle, options: ^NS.Dictionary, completionHandler: TextureLoaderCallback) ---
 	}
 
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=TextureLoader, objc_selector="newTexturesWithNames:scaleFactor:bundle:options:completionHandler:", objc_name="newTexturesWithNames")
 		TextureLoader_newTexturesWithNames :: proc(self: ^TextureLoader, names: ^NS.Array, scaleFactor: CG.Float, bundle: ^NS.Bundle, options: ^NS.Dictionary, completionHandler: TextureLoaderArrayCallback) ---
 	}
@@ -36,7 +36,7 @@ foreign lib {
 	@(objc_type=TextureLoader, objc_selector="newTexturesWithContentsOfURLs:options:completionHandler:", objc_name="newTexturesWithContentsOfURLs_options_completionHandler")
 	TextureLoader_newTexturesWithContentsOfURLs_options_completionHandler :: proc(self: ^TextureLoader, URLs: ^NS.Array, options: ^NS.Dictionary, completionHandler: TextureLoaderArrayCallback) ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=TextureLoader, objc_selector="newTexturesWithNames:scaleFactor:bundle:options:completionHandler:", objc_name="newTexturesWithNames_scaleFactor_bundle_options_completionHandler")
 		TextureLoader_newTexturesWithNames_scaleFactor_bundle_options_completionHandler :: proc(self: ^TextureLoader, names: ^NS.Array, scaleFactor: CG.Float, bundle: ^NS.Bundle, options: ^NS.Dictionary, completionHandler: TextureLoaderArrayCallback) ---
 
@@ -71,7 +71,7 @@ foreign lib {
 	@(objc_type=TextureLoader, objc_selector="newTextureWithName:scaleFactor:bundle:options:error:", objc_name="newTextureWithName_scaleFactor_bundle_options_error")
 	TextureLoader_newTextureWithName_scaleFactor_bundle_options_error :: proc(self: ^TextureLoader, name: ^NS.String, scaleFactor: CG.Float, bundle: ^NS.Bundle, options: ^NS.Dictionary, error: ^^NS.Error) -> ^MTL.Texture ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=TextureLoader, objc_selector="newTextureWithName:scaleFactor:displayGamut:bundle:options:error:", objc_name="newTextureWithName_scaleFactor_displayGamut_bundle_options_error")
 		TextureLoader_newTextureWithName_scaleFactor_displayGamut_bundle_options_error :: proc(self: ^TextureLoader, name: ^NS.String, scaleFactor: CG.Float, displayGamut: UI_DisplayGamut, bundle: ^NS.Bundle, options: ^NS.Dictionary, error: ^^NS.Error) -> ^MTL.Texture ---
 	}
@@ -82,7 +82,7 @@ foreign lib {
 
 
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=TextureLoader, objc_name="newTexturesWithNames")
 	TextureLoader_newTexturesWithNames :: proc {
 		TextureLoader_newTexturesWithNames_scaleFactor_bundle_options_completionHandler,
@@ -120,7 +120,7 @@ TextureLoader_newTextureWithMDLTexture :: proc {
 	TextureLoader_newTextureWithMDLTexture_options,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_type=TextureLoader, objc_name="newTextureWithName")
 	TextureLoader_newTextureWithName :: proc {
 		TextureLoader_newTextureWithName_scaleFactor_bundle_options_completionHandler,
@@ -128,7 +128,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 		TextureLoader_newTextureWithName_scaleFactor_bundle_options,
 		TextureLoader_newTextureWithName_scaleFactor_displayGamut_bundle_options,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_type=TextureLoader, objc_name="newTextureWithName")
 	TextureLoader_newTextureWithName :: proc {
 		TextureLoader_newTextureWithName_scaleFactor_bundle_options_completionHandler,
@@ -175,7 +175,7 @@ TextureLoader_newTextureWithName_scaleFactor_bundle_options :: #force_inline pro
 	return
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 
 	@(objc_type=TextureLoader, objc_name="newTextureWithName_scaleFactor_displayGamut_bundle_options")
 	TextureLoader_newTextureWithName_scaleFactor_displayGamut_bundle_options :: #force_inline proc "c" (self: ^TextureLoader, name: ^NS.String, scaleFactor: CG.Float, displayGamut: UI_DisplayGamut, bundle: ^NS.Bundle, options: ^NS.Dictionary) -> (res: ^MTL.Texture, err: ^NS.Error) {

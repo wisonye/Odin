@@ -1,7 +1,7 @@
 #+private
 package diff
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 /*
 	Interning gives every token of `a`, then `b`, a dense ID in order of first appearance. The algorithms then

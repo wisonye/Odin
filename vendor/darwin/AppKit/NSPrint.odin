@@ -2,9 +2,9 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSPrintInfo", objc_superclass=NS.Object)
 PrintInfo :: struct {
@@ -14,7 +14,7 @@ PrintInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintInfo, objc_selector="initWithDictionary:", objc_name="initWithDictionary")
 	PrintInfo_initWithDictionary :: proc(self: ^PrintInfo, attributes: ^NS.Dictionary) -> instancetype ---
 
@@ -168,7 +168,7 @@ foreign lib {
 PrintOperation :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintOperation, objc_selector="printOperationWithView:printInfo:", objc_name="printOperationWithView_printInfo", objc_is_class_method=true)
 	PrintOperation_printOperationWithView_printInfo :: proc(view: ^View, printInfo: ^PrintInfo) -> ^PrintOperation ---
 
@@ -327,7 +327,7 @@ PrintOperation_printOperationWithView :: proc {
 PrintPanel :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintPanel, objc_selector="printPanel", objc_name="printPanel", objc_is_class_method=true)
 	PrintPanel_printPanel :: proc() -> ^PrintPanel ---
 
@@ -397,7 +397,7 @@ foreign lib {
 PrintPanelAccessorizing :: struct { using _: intrinsics.objc_object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PrintPanelAccessorizing, objc_selector="localizedSummaryItems", objc_name="localizedSummaryItems")
 	PrintPanelAccessorizing_localizedSummaryItems :: proc(self: ^PrintPanelAccessorizing) -> ^NS.Array ---
 

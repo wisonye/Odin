@@ -1,10 +1,10 @@
 #+build !js
 package math
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(default_calling_convention="none", private="file")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.sin.f16", require_results)
 	_sin_f16 :: proc(θ: f16) -> f16 ---
 	@(link_name="llvm.sin.f32", require_results)

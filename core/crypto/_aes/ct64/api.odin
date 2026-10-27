@@ -1,6 +1,6 @@
 package aes_ct64
 
-import "core:crypto"
+#import "core:crypto"
 
 STRIDE :: 4
 

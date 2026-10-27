@@ -1,8 +1,8 @@
 // Conversions to and from `string` representations of other data types like integers and booleans.
 package strconv
 
-import "core:unicode/utf8"
-import "decimal"
+#import "core:unicode/utf8"
+#import "decimal"
 /*
 Parses a boolean value from the input string
 
@@ -49,7 +49,7 @@ _digit_value :: proc(r: rune) -> int {
 @(private)
 overflow_limits :: #force_inline proc "contextless" ($T: typeid, base: int, neg: bool) -> (cut, lim: T) {
 	limits :: #force_inline proc "contextless" ($B: int, neg: bool) -> (cut, lim: T) {
-		when min(T) < 0 {
+		#if min(T) < 0 {
 			if neg {
 				return min(T)/T(B), -(min(T)%T(B))
 			}
@@ -64,7 +64,7 @@ overflow_limits :: #force_inline proc "contextless" ($T: typeid, base: int, neg:
 	case 16: return limits(16, neg)
 	}
 	b := T(base)
-	when min(T) < 0 {
+	#if min(T) < 0 {
 		if b <= 0 {
 			return // Every digit is `>= b`, so the limits are never used.
 		}
@@ -89,8 +89,8 @@ Parses an integer value from the input string in the given base, without a prefi
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_i64_of_base_example :: proc() {
 		n, ok := strconv.parse_i64_of_base("-1234e3", 10)
 		fmt.println(n, ok)
@@ -168,8 +168,8 @@ Parses an integer value from the input string in base 10, unless there's a prefi
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_i64_maybe_prefixed_example :: proc() {
 		n, ok := strconv.parse_i64_maybe_prefixed("1234")
 		fmt.println(n,ok)
@@ -263,8 +263,8 @@ Parses an unsigned 64-bit integer value from the input string without a prefix, 
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_u64_of_base_example :: proc() {
 		n, ok := strconv.parse_u64_of_base("1234e3", 10)
 		fmt.println(n,ok)
@@ -331,8 +331,8 @@ Parses an unsigned 64-bit integer value from the input string, using the specifi
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_u64_maybe_prefixed_example :: proc() {
 		n, ok := strconv.parse_u64_maybe_prefixed("1234")
 		fmt.println(n,ok)
@@ -412,8 +412,8 @@ Parses a signed integer value from the input string, using the specified base or
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_int_example :: proc() {
 		n, ok := strconv.parse_int("1234") // without prefix, inferred base 10
 		fmt.println(n,ok)
@@ -457,8 +457,8 @@ Parses an unsigned integer value from the input string, using the specified base
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_uint_example :: proc() {
 		n, ok := strconv.parse_uint("1234") // without prefix, inferred base 10
 		fmt.println(n,ok)
@@ -501,8 +501,8 @@ Parses an integer value from a string in the given base, without any prefix
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_i128_of_base_example :: proc() {
 		n, ok := strconv.parse_i128_of_base("-1234eeee", 10)
 		fmt.println(n,ok)
@@ -578,8 +578,8 @@ Parses an integer value from a string in base 10, unless there's a prefix
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_i128_maybe_prefixed_example :: proc() {
 		n, ok := strconv.parse_i128_maybe_prefixed("1234")
 		fmt.println(n, ok)
@@ -672,8 +672,8 @@ Parses an unsigned integer value from a string in the given base, without any pr
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_u128_of_base_example :: proc() {
 		n, ok := strconv.parse_u128_of_base("1234eeee", 10)
 		fmt.println(n, ok)
@@ -737,8 +737,8 @@ Parses an unsigned integer value from a string in base 10, unless there's a pref
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_u128_maybe_prefixed_example :: proc() {
 		n, ok := strconv.parse_u128_maybe_prefixed("1234")
 		fmt.println(n, ok)
@@ -826,8 +826,8 @@ Parses a 32-bit floating point number from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_f32_example :: proc() {
 		n, ok := strconv.parse_f32("1234eee")
 		fmt.printfln("%.3f %v", n, ok)
@@ -863,8 +863,8 @@ Parses a 64-bit floating point number from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_f64_example :: proc() {
 		n, ok := strconv.parse_f64("1234eee")
 		fmt.printfln("%.3f %v", n, ok)
@@ -899,8 +899,8 @@ Parses a 32-bit floating point number from a string and returns the parsed numbe
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_f32_prefix_example :: proc() {
 		n, _, ok := strconv.parse_f32_prefix("1234eee")
 		fmt.printfln("%.3f %v", n, ok)
@@ -931,8 +931,8 @@ Parses a 64-bit floating point number from a string and returns the parsed numbe
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_f64_prefix_example :: proc() {
 		n, _, ok := strconv.parse_f64_prefix("12.34eee")
 		fmt.printfln("%.3f %v", n, ok)
@@ -1024,7 +1024,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 		i := 2
 		// Read 8 hex digits at a time, then 4 digits at a time (like "0h3c00" or groups
 		// between `_` separators), then single digits and `_` separators.
-		when FAST_FLOAT {
+		#if FAST_FLOAT {
 			for i+8 <= len(str) {
 				v := read8_to_u64(str, i)
 				if !is_eight_hex_digits(v) {
@@ -1036,7 +1036,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 			}
 		}
 		for i < len(str) {
-			when FAST_FLOAT {
+			#if FAST_FLOAT {
 				if i+4 <= len(str) {
 					// Four digits: pad them with "0000" and use the 8-digit code.
 					v := u64(read4_to_u32(str, i)) | 0x3030_3030 << 32
@@ -1083,7 +1083,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 
 	@(cold)
 	parse_slow :: proc($F: typeid, str: string, info: ^Float_Info) -> (value: F, ok: bool) {
-		when F == f64 { Bits :: u64 } else { Bits :: u32 }
+		#if F == f64 { Bits :: u64 } else { Bits :: u32 }
 		d: decimal.Decimal
 		decimal.set(&d, str)
 		b, overflow := decimal_to_float_bits(&d, info)
@@ -1094,7 +1094,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 		return parse_0h(T, str)
 	}
 
-	when T == f64 {
+	#if T == f64 {
 		Bits :: u64
 		info := &_f64_info
 	} else {
@@ -1146,7 +1146,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 		case:
 			break clinger_fast_path
 		}
-		when T == f32 {
+		#if T == f32 {
 			// Every f32 midpoint is an f64 value, so rounding to f64 cannot
 			// move the result past a midpoint. The conversion to f32 is then
 			// correct, unless the f64 result is exactly a midpoint.
@@ -1161,7 +1161,7 @@ parse_float_prefix_generic :: proc($T: typeid, str: string) -> (value: T, nr: in
 	}
 
 	// Eisel-Lemire's fast float algorithm
-	when FAST_FLOAT {
+	#if FAST_FLOAT {
 		fast_float: {
 			b := fast_float_compute_float(T, exp, mantissa)
 			if trunc && b != fast_float_compute_float(T, exp, mantissa+1) {
@@ -1187,8 +1187,8 @@ Parses a 128-bit complex number from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_complex128_example :: proc() {
 		n: int
 		c, ok := strconv.parse_complex128("3+1i", &n)
@@ -1240,8 +1240,8 @@ Parses a 64-bit complex number from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_complex64_example :: proc() {
 		n: int
 		c, ok := strconv.parse_complex64("3+1i", &n)
@@ -1274,8 +1274,8 @@ Parses a 32-bit complex number from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_complex32_example :: proc() {
 		n: int
 		c, ok := strconv.parse_complex32("3+1i", &n)
@@ -1308,8 +1308,8 @@ Parses a 256-bit quaternion from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_quaternion256_example :: proc() {
 		n: int
 		q, ok := strconv.parse_quaternion256("1+2i+3j+4k", &n)
@@ -1388,8 +1388,8 @@ Parses a 128-bit quaternion from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_quaternion128_example :: proc() {
 		n: int
 		q, ok := strconv.parse_quaternion128("1+2i+3j+4k", &n)
@@ -1422,8 +1422,8 @@ Parses a 64-bit quaternion from a string
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	parse_quaternion64_example :: proc() {
 		n: int
 		q, ok := strconv.parse_quaternion64("1+2i+3j+4k", &n)
@@ -1456,8 +1456,8 @@ Writes a boolean value as a string to the given buffer
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	write_bool_example :: proc() {
 		buf: [6]byte
 		result := strconv.write_bool(buf[:], true)
@@ -1490,8 +1490,8 @@ Writes an unsigned integer value as a string to the given buffer with the specif
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	write_uint_example :: proc() {
 		buf: [4]byte
 		result := strconv.write_uint(buf[:], 42, 16)
@@ -1518,8 +1518,8 @@ Writes a signed integer value as a string to the given buffer with the specified
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	write_int_example :: proc() {
 		buf: [4]byte
 		result := strconv.write_int(buf[:], -42, 10)
@@ -1557,8 +1557,8 @@ Writes a float64 value as a string to the given buffer with the specified format
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	write_float_example :: proc() {
 		buf: [8]byte
 		result := strconv.write_float(buf[:], 3.14159, 'f', 2, 64)
@@ -1593,8 +1593,8 @@ Writes a quoted string representation of the input string to a given byte slice 
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	quote_example :: proc() {
 		buf: [20]byte
 		result := strconv.quote(buf[:], "hello")
@@ -1654,8 +1654,8 @@ Writes a quoted rune representation of the input rune to a given byte slice and 
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	quote_rune_example :: proc() {
 		buf: [4]byte
 		result := strconv.quote_rune(buf[:], 'A')
@@ -1733,8 +1733,8 @@ Unquotes a single character from the input string, considering the given quote c
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	unquote_char_example :: proc() {
 		src:="\'The\' raven"
 		r, multiple_bytes, tail_string, success  := strconv.unquote_char(src,'\'')
@@ -1858,8 +1858,8 @@ WARNING: This procedure gives unexpected results if the quotes are not the first
 
 Example:
 
-	import "core:fmt"
-	import "core:strconv"
+	#import "core:fmt"
+	#import "core:strconv"
 	unquote_string_example :: proc() {
 		src:="\"The raven Huginn is black.\""
 		s, allocated, ok := strconv.unquote_string(src)

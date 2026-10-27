@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSExtensionContext", objc_superclass=Object)
 ExtensionContext :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtensionContext, objc_selector="completeRequestReturningItems:completionHandler:", objc_name="completeRequestReturningItems")
 	ExtensionContext_completeRequestReturningItems :: proc(self: ^ExtensionContext, items: ^Array, completionHandler: ^Objc_Block(proc "c" ( expired: bool ))) ---
 
@@ -29,7 +29,7 @@ ExtensionItem :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtensionItem, objc_selector="attributedTitle", objc_name="attributedTitle")
 	ExtensionItem_attributedTitle :: proc(self: ^ExtensionItem) -> ^AttributedString ---
 
@@ -62,7 +62,7 @@ ExtensionRequestHandling :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ExtensionRequestHandling, objc_selector="beginRequestWithExtensionContext:", objc_name="beginRequestWithExtensionContext")
 	ExtensionRequestHandling_beginRequestWithExtensionContext :: proc(self: ^ExtensionRequestHandling, _context: ^ExtensionContext) ---
 }

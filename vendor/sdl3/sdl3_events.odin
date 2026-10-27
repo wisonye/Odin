@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 EventType :: enum Uint32 {
 	FIRST     = 0,     /**< Unused (do not remove) */
@@ -647,7 +647,7 @@ EventFilter :: proc "c" (userdata: rawptr, event: ^Event) -> bool
 
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	PumpEvents          :: proc() ---
 	PeepEvents          :: proc(events: [^]Event, numevents: c.int, action: EventAction, minType, maxType: EventType) -> int ---
 	HasEvent            :: proc(type: EventType) -> bool ---

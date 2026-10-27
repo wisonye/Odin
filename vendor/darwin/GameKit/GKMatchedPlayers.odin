@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="GKMatchedPlayers", objc_superclass=NS.Object)
 MatchedPlayers :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MatchedPlayers, objc_selector="properties", objc_name="properties")
 	MatchedPlayers_properties :: proc(self: ^MatchedPlayers) -> ^MatchProperties ---
 

@@ -3,7 +3,7 @@
 // should not cause the compiler to hang.
 package test_issue_6419
 
-import "core:testing"
+#import "core:testing"
 
 // The proc that triggered the hang: polymorphic pointer param + default proc() {} params
 undo_push :: proc(data: ^$T, undo_proc := proc() {}, redo_proc := proc() {}) {}

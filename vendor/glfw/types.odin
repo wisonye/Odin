@@ -1,7 +1,7 @@
 // Bindings for [[ GLFW ; https://www.glfw.org ]]
 package glfw
 
-import glfw "bindings"
+#import glfw "bindings"
 
 WindowHandle  :: glfw.WindowHandle
 MonitorHandle :: glfw.MonitorHandle

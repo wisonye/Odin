@@ -9,8 +9,8 @@ package testing
 		Feoramund:   Total rewrite.
 */
 
-import "base:runtime"
-import "core:log"
+#import "base:runtime"
+#import "core:log"
 
 @(private, thread_local)
 local_test_expected_failures: struct {

@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIDynamicAnimator", objc_superclass=NS.Object)
 DynamicAnimator :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicAnimator, objc_selector="initWithReferenceView:", objc_name="initWithReferenceView")
 	DynamicAnimator_initWithReferenceView :: proc(self: ^DynamicAnimator, view: ^View) -> instancetype ---
 
@@ -68,7 +68,7 @@ DynamicAnimatorDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicAnimatorDelegate, objc_selector="dynamicAnimatorWillResume:", objc_name="dynamicAnimatorWillResume")
 	DynamicAnimatorDelegate_dynamicAnimatorWillResume :: proc(self: ^DynamicAnimatorDelegate, animator: ^DynamicAnimator) ---
 
@@ -81,7 +81,7 @@ foreign lib {
 DynamicBehavior :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicBehavior, objc_selector="addChildBehavior:", objc_name="addChildBehavior")
 	DynamicBehavior_addChildBehavior :: proc(self: ^DynamicBehavior, behavior: ^DynamicBehavior) ---
 
@@ -109,7 +109,7 @@ foreign lib {
 AttachmentBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AttachmentBehavior, objc_selector="initWithItem:attachedToAnchor:", objc_name="initWithItem_attachedToAnchor")
 	AttachmentBehavior_initWithItem_attachedToAnchor :: proc(self: ^AttachmentBehavior, item: ^DynamicItem, point: CG.Point) -> instancetype ---
 
@@ -199,7 +199,7 @@ AttachmentBehavior_slidingAttachmentWithItem :: proc {
 GravityBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GravityBehavior, objc_selector="initWithItems:", objc_name="initWithItems")
 	GravityBehavior_initWithItems :: proc(self: ^GravityBehavior, items: ^NS.Array) -> instancetype ---
 
@@ -245,7 +245,7 @@ GravityBehavior_setAngle :: proc {
 PushBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PushBehavior, objc_selector="initWithItems:mode:", objc_name="initWithItems")
 	PushBehavior_initWithItems :: proc(self: ^PushBehavior, items: ^NS.Array, mode: PushBehaviorMode) -> instancetype ---
 
@@ -306,7 +306,7 @@ PushBehavior_setAngle :: proc {
 SnapBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SnapBehavior, objc_selector="initWithItem:snapToPoint:", objc_name="initWithItem")
 	SnapBehavior_initWithItem :: proc(self: ^SnapBehavior, item: ^DynamicItem, point: CG.Point) -> instancetype ---
 
@@ -331,7 +331,7 @@ DynamicItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicItem, objc_selector="center", objc_name="center")
 	DynamicItem_center :: proc(self: ^DynamicItem) -> CG.Point ---
 
@@ -359,7 +359,7 @@ foreign lib {
 DynamicItemBehavior :: struct { using _: DynamicBehavior}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicItemBehavior, objc_selector="initWithItems:", objc_name="initWithItems")
 	DynamicItemBehavior_initWithItems :: proc(self: ^DynamicItemBehavior, items: ^NS.Array) -> instancetype ---
 
@@ -441,7 +441,7 @@ DynamicItemGroup :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DynamicItemGroup, objc_selector="initWithItems:", objc_name="initWithItems")
 	DynamicItemGroup_initWithItems :: proc(self: ^DynamicItemGroup, items: ^NS.Array) -> instancetype ---
 

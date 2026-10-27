@@ -2,11 +2,11 @@
 #+build darwin
 package darwin_QuartzCore
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CG "core:sys/darwin/CoreGraphics"
-import CF "core:sys/darwin/CoreFoundation"
-import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CF "core:sys/darwin/CoreFoundation"
+#import cffi "core:c"
 
 @(objc_class="CAAnimation", objc_superclass=NS.Object)
 Animation :: struct {
@@ -17,7 +17,7 @@ Animation :: struct {
 	using _: Action,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Animation, objc_selector="animation", objc_name="animation", objc_is_class_method=true)
 	Animation_animation :: proc() -> instancetype ---
 
@@ -59,7 +59,7 @@ AnimationDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimationDelegate, objc_selector="animationDidStart:", objc_name="animationDidStart")
 	AnimationDelegate_animationDidStart :: proc(self: ^AnimationDelegate, anim: ^Animation) ---
 
@@ -71,7 +71,7 @@ foreign lib {
 @(objc_class="CAAnimationGroup", objc_superclass=Animation)
 AnimationGroup :: struct { using _: Animation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AnimationGroup, objc_selector="animations", objc_name="animations")
 	AnimationGroup_animations :: proc(self: ^AnimationGroup) -> ^NS.Array ---
 
@@ -83,7 +83,7 @@ foreign lib {
 @(objc_class="CAPropertyAnimation", objc_superclass=Animation)
 PropertyAnimation :: struct { using _: Animation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PropertyAnimation, objc_selector="animationWithKeyPath:", objc_name="animationWithKeyPath", objc_is_class_method=true)
 	PropertyAnimation_animationWithKeyPath :: proc(path: ^NS.String) -> instancetype ---
 
@@ -116,7 +116,7 @@ foreign lib {
 @(objc_class="CABasicAnimation", objc_superclass=PropertyAnimation)
 BasicAnimation :: struct { using _: PropertyAnimation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BasicAnimation, objc_selector="fromValue", objc_name="fromValue")
 	BasicAnimation_fromValue :: proc(self: ^BasicAnimation) -> id ---
 
@@ -140,7 +140,7 @@ foreign lib {
 @(objc_class="CAKeyframeAnimation", objc_superclass=PropertyAnimation)
 KeyframeAnimation :: struct { using _: PropertyAnimation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=KeyframeAnimation, objc_selector="values", objc_name="values")
 	KeyframeAnimation_values :: proc(self: ^KeyframeAnimation) -> ^NS.Array ---
 
@@ -200,7 +200,7 @@ foreign lib {
 @(objc_class="CASpringAnimation", objc_superclass=BasicAnimation)
 SpringAnimation :: struct { using _: BasicAnimation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpringAnimation, objc_selector="initWithPerceptualDuration:bounce:", objc_name="initWithPerceptualDuration")
 	SpringAnimation_initWithPerceptualDuration :: proc(self: ^SpringAnimation, perceptualDuration: CF.TimeInterval, bounce: CG.Float) -> instancetype ---
 
@@ -248,7 +248,7 @@ foreign lib {
 @(objc_class="CATransition", objc_superclass=Animation)
 Transition :: struct { using _: Animation}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Transition, objc_selector="type", objc_name="type")
 	Transition_type :: proc(self: ^Transition) -> ^NS.String ---
 

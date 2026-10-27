@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="NSScrollEdgeEffectStyle", objc_superclass=NS.Object)
 ScrollEdgeEffectStyle :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollEdgeEffectStyle, objc_selector="init", objc_name="init")
 	ScrollEdgeEffectStyle_init :: proc(self: ^ScrollEdgeEffectStyle) -> instancetype ---
 
@@ -34,7 +34,7 @@ ScrollView :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ScrollView, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	ScrollView_initWithFrame :: proc(self: ^ScrollView, frameRect: NS.Rect) -> instancetype ---
 

@@ -3,7 +3,7 @@
 package sys_llvm
 
 @(default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	// not supported on wasm
 	@(link_name="llvm.returnaddress")
 	return_address :: proc(#const level: u32 = 0) -> rawptr ---
@@ -28,7 +28,7 @@ foreign _ {
 	stack_restore :: proc(ptr: rawptr) ---
 
 	// the result is pointer sized
-	when size_of(rawptr) == 4 {
+	#if size_of(rawptr) == 4 {
 		@(link_name="llvm.get.dynamic.area.offset.i32")
 		get_dynamic_area_offset_i32 :: proc() -> i32 ---
 	} else {
@@ -57,7 +57,7 @@ Prefetch_Cache :: enum i32 {
 
 
 @(default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.prefetch.p0")
 	prefetch :: proc(address: rawptr, #const rw: Prefetch_Read_Write, #const locality: Prefetch_Locality, #const cache: Prefetch_Cache) ---
 }
@@ -65,7 +65,7 @@ foreign _ {
 
 
 @(default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.readcyclecounter")
 	read_cycle_counter :: proc() -> u64 ---
 

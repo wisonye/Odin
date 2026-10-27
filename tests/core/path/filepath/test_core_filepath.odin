@@ -1,13 +1,13 @@
 // Tests "path.odin" in "core:path/filepath".
 package test_core_filepath
 
-import "core:fmt"
-import "core:path/filepath"
-import "core:testing"
+#import "core:fmt"
+#import "core:path/filepath"
+#import "core:testing"
 
 @(test)
 test_split_list :: proc(t: ^testing.T) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		test_split_list_windows(t)
 	} else {
 		test_split_list_unix(t)
@@ -136,7 +136,7 @@ test_stem :: proc(t: ^testing.T) {
 
 @(test)
 test_dir :: proc(t: ^testing.T) {
-	when ODIN_OS == .Windows {
+	#if ODIN_OS == .Windows {
 		@static dirs := [][2]string{
 			{"../bin/css",   "..\\bin"},
 			{"W:/Odin/odin", "W:\\Odin"},

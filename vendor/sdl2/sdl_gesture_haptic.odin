@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 // Gesture
@@ -15,7 +15,7 @@ when ODIN_OS == .Windows {
 GestureID :: distinct i64
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	RecordGesture          :: proc(touchId: ^TouchID)                 -> c.int ---
 	SaveAllDollarTemplates :: proc(dst: ^RWops)                       -> c.int ---
 	SaveDollarTemplate     :: proc(gestureId: GestureID, dst: ^RWops) -> c.int ---
@@ -147,11 +147,11 @@ HapticCondition :: struct {
 	interval: u16,       /**< How soon it can be triggered again after button. */
 
 	/* Condition */
-	right_sat:   [3]u16, /**< Level when joystick is to the positive side; max 0xFFFF. */
-	left_sat:    [3]u16, /**< Level when joystick is to the negative side; max 0xFFFF. */
+	right_sat:   [3]u16, /**< Level #if joystick is to the positive side; max 0xFFFF. */
+	left_sat:    [3]u16, /**< Level #if joystick is to the negative side; max 0xFFFF. */
 	right_coeff: [3]i16, /**< How fast to increase the force towards the positive side. */
 	left_coeff:  [3]i16, /**< How fast to increase the force towards the negative side. */
-	deadband:    [3]u16, /**< Size of the dead zone; max 0xFFFF: whole axis-range when 0-centered. */
+	deadband:    [3]u16, /**< Size of the dead zone; max 0xFFFF: whole axis-range #if 0-centered. */
 	center:      [3]i16, /**< Position of the dead zone. */
 }
 
@@ -231,7 +231,7 @@ HapticEffect :: struct #raw_union {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	NumHaptics              :: proc() -> c.int ---
 	HapticName              :: proc(device_index: c.int) -> cstring ---
 	HapticOpen              :: proc(device_index: c.int) -> ^Haptic ---

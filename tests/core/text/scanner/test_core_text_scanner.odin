@@ -1,9 +1,9 @@
 package test_core_text_scanner
 
-import "base:runtime"
-import "core:fmt"
-import "core:testing"
-import "core:text/scanner"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:testing"
+#import "core:text/scanner"
 
 Test_Context :: struct {
 	t: ^testing.T,

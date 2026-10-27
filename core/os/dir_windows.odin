@@ -1,9 +1,9 @@
 #+private
 package os
 
-import "base:runtime"
-import "core:time"
-import win32 "core:sys/windows"
+#import "base:runtime"
+#import "core:time"
+#import win32 "core:sys/windows"
 
 @(private="file")
 find_data_to_file_info :: proc(base_path: string, d: ^win32.WIN32_FIND_DATAW, allocator: runtime.Allocator) -> (fi: File_Info, err: Error) {

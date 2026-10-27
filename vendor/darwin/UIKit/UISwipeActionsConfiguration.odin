@@ -2,13 +2,13 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UISwipeActionsConfiguration", objc_superclass=NS.Object)
 SwipeActionsConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SwipeActionsConfiguration, objc_selector="configurationWithActions:", objc_name="configurationWithActions", objc_is_class_method=true)
 	SwipeActionsConfiguration_configurationWithActions :: proc(actions: ^NS.Array) -> instancetype ---
 

@@ -6,10 +6,10 @@ package thread
 	Made available under Odin's license.
 */
 
-import "base:intrinsics"
-import "core:sync"
-import "core:mem"
-import "core:container/queue"
+#import "base:intrinsics"
+#import "core:sync"
+#import "core:mem"
+#import "core:container/queue"
 
 Task_Proc :: #type proc(task: Task)
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSUnit", objc_superclass=Object)
 Unit :: struct {
@@ -11,7 +11,7 @@ Unit :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Unit, objc_selector="init", objc_name="init")
 	Unit_init :: proc(self: ^Unit) -> instancetype ---
 
@@ -32,7 +32,7 @@ UnitAcceleration :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitAcceleration, objc_selector="metersPerSecondSquared", objc_name="metersPerSecondSquared", objc_is_class_method=true)
 	UnitAcceleration_metersPerSecondSquared :: proc() -> ^UnitAcceleration ---
 
@@ -47,7 +47,7 @@ UnitAngle :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitAngle, objc_selector="degrees", objc_name="degrees", objc_is_class_method=true)
 	UnitAngle_degrees :: proc() -> ^UnitAngle ---
 
@@ -74,7 +74,7 @@ UnitArea :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitArea, objc_selector="squareMegameters", objc_name="squareMegameters", objc_is_class_method=true)
 	UnitArea_squareMegameters :: proc() -> ^UnitArea ---
 
@@ -125,7 +125,7 @@ UnitConcentrationMass :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitConcentrationMass, objc_selector="millimolesPerLiterWithGramsPerMole:", objc_name="millimolesPerLiterWithGramsPerMole", objc_is_class_method=true)
 	UnitConcentrationMass_millimolesPerLiterWithGramsPerMole :: proc(gramsPerMole: cffi.double) -> ^UnitConcentrationMass ---
 
@@ -140,7 +140,7 @@ foreign lib {
 @(objc_class="NSUnitConverter", objc_superclass=Object)
 UnitConverter :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitConverter, objc_selector="baseUnitValueFromValue:", objc_name="baseUnitValueFromValue")
 	UnitConverter_baseUnitValueFromValue :: proc(self: ^UnitConverter, value: cffi.double) -> cffi.double ---
 
@@ -155,7 +155,7 @@ UnitConverterLinear :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitConverterLinear, objc_selector="initWithCoefficient:", objc_name="initWithCoefficient_")
 	UnitConverterLinear_initWithCoefficient_ :: proc(self: ^UnitConverterLinear, coefficient: cffi.double) -> instancetype ---
 
@@ -184,7 +184,7 @@ UnitDispersion :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitDispersion, objc_selector="partsPerMillion", objc_name="partsPerMillion", objc_is_class_method=true)
 	UnitDispersion_partsPerMillion :: proc() -> ^UnitDispersion ---
 }
@@ -196,7 +196,7 @@ UnitDuration :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitDuration, objc_selector="hours", objc_name="hours", objc_is_class_method=true)
 	UnitDuration_hours :: proc() -> ^UnitDuration ---
 
@@ -226,7 +226,7 @@ UnitElectricCharge :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitElectricCharge, objc_selector="coulombs", objc_name="coulombs", objc_is_class_method=true)
 	UnitElectricCharge_coulombs :: proc() -> ^UnitElectricCharge ---
 
@@ -253,7 +253,7 @@ UnitElectricCurrent :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitElectricCurrent, objc_selector="megaamperes", objc_name="megaamperes", objc_is_class_method=true)
 	UnitElectricCurrent_megaamperes :: proc() -> ^UnitElectricCurrent ---
 
@@ -277,7 +277,7 @@ UnitElectricPotentialDifference :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitElectricPotentialDifference, objc_selector="megavolts", objc_name="megavolts", objc_is_class_method=true)
 	UnitElectricPotentialDifference_megavolts :: proc() -> ^UnitElectricPotentialDifference ---
 
@@ -301,7 +301,7 @@ UnitElectricResistance :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitElectricResistance, objc_selector="megaohms", objc_name="megaohms", objc_is_class_method=true)
 	UnitElectricResistance_megaohms :: proc() -> ^UnitElectricResistance ---
 
@@ -325,7 +325,7 @@ UnitEnergy :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitEnergy, objc_selector="kilojoules", objc_name="kilojoules", objc_is_class_method=true)
 	UnitEnergy_kilojoules :: proc() -> ^UnitEnergy ---
 
@@ -349,7 +349,7 @@ UnitFrequency :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitFrequency, objc_selector="terahertz", objc_name="terahertz", objc_is_class_method=true)
 	UnitFrequency_terahertz :: proc() -> ^UnitFrequency ---
 
@@ -385,7 +385,7 @@ UnitFuelEfficiency :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitFuelEfficiency, objc_selector="litersPer100Kilometers", objc_name="litersPer100Kilometers", objc_is_class_method=true)
 	UnitFuelEfficiency_litersPer100Kilometers :: proc() -> ^UnitFuelEfficiency ---
 
@@ -403,7 +403,7 @@ UnitIlluminance :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitIlluminance, objc_selector="lux", objc_name="lux", objc_is_class_method=true)
 	UnitIlluminance_lux :: proc() -> ^UnitIlluminance ---
 }
@@ -415,7 +415,7 @@ UnitInformationStorage :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitInformationStorage, objc_selector="bytes", objc_name="bytes", objc_is_class_method=true)
 	UnitInformationStorage_bytes :: proc() -> ^UnitInformationStorage ---
 
@@ -529,7 +529,7 @@ UnitLength :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitLength, objc_selector="megameters", objc_name="megameters", objc_is_class_method=true)
 	UnitLength_megameters :: proc() -> ^UnitLength ---
 
@@ -604,7 +604,7 @@ UnitMass :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitMass, objc_selector="kilograms", objc_name="kilograms", objc_is_class_method=true)
 	UnitMass_kilograms :: proc() -> ^UnitMass ---
 
@@ -661,7 +661,7 @@ UnitPower :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitPower, objc_selector="terawatts", objc_name="terawatts", objc_is_class_method=true)
 	UnitPower_terawatts :: proc() -> ^UnitPower ---
 
@@ -703,7 +703,7 @@ UnitPressure :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitPressure, objc_selector="newtonsPerMetersSquared", objc_name="newtonsPerMetersSquared", objc_is_class_method=true)
 	UnitPressure_newtonsPerMetersSquared :: proc() -> ^UnitPressure ---
 
@@ -742,7 +742,7 @@ UnitSpeed :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitSpeed, objc_selector="metersPerSecond", objc_name="metersPerSecond", objc_is_class_method=true)
 	UnitSpeed_metersPerSecond :: proc() -> ^UnitSpeed ---
 
@@ -763,7 +763,7 @@ UnitTemperature :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitTemperature, objc_selector="kelvin", objc_name="kelvin", objc_is_class_method=true)
 	UnitTemperature_kelvin :: proc() -> ^UnitTemperature ---
 
@@ -781,7 +781,7 @@ UnitVolume :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UnitVolume, objc_selector="megaliters", objc_name="megaliters", objc_is_class_method=true)
 	UnitVolume_megaliters :: proc() -> ^UnitVolume ---
 
@@ -883,7 +883,7 @@ Dimension :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Dimension, objc_selector="initWithSymbol:converter:", objc_name="initWithSymbol")
 	Dimension_initWithSymbol :: proc(self: ^Dimension, symbol: ^String, converter: ^UnitConverter) -> instancetype ---
 

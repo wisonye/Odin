@@ -22,9 +22,9 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:crypto/hash"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:crypto/hash"
 
 // encrypt_oaep returns true if and only if (⟺) it successfully
 // encrypts the plaintext with OAEP parameterized by label, hash_algo,

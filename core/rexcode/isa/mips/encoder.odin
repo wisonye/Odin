@@ -624,7 +624,7 @@ read_u32 :: #force_inline proc "contextless" (
 
 // In-place 32-bit byte-swap of `code`. Length must be a multiple of 4.
 // Useful for switching a freshly-encoded buffer from native to wire endian
-// when the consumer wants a single endian-conversion sweep after encoding.
+// #if the consumer wants a single endian-conversion sweep after encoding.
 swap_bytes_u32_inplace :: proc(code: []u8) {
 	n := len(code) / 4
 	for i in 0..<n {

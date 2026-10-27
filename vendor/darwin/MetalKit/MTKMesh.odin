@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_MetalKit
 
-import MTL "vendor:darwin/Metal"
-import MDL "vendor:darwin/ModelIO"
-import NS "core:sys/darwin/Foundation"
+#import MTL "vendor:darwin/Metal"
+#import MDL "vendor:darwin/ModelIO"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTKMesh", objc_superclass=NS.Object)
 Mesh :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Mesh, objc_selector="init", objc_name="init")
 	Mesh_init :: proc(self: ^Mesh) -> instancetype ---
 
@@ -61,7 +61,7 @@ MeshBuffer :: struct {
 	using _: MDL.Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBuffer, objc_selector="init", objc_name="init")
 	MeshBuffer_init :: proc(self: ^MeshBuffer) -> instancetype ---
 
@@ -91,7 +91,7 @@ MeshBufferAllocator :: struct {
 	using _: MDL.MeshBufferAllocator,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MeshBufferAllocator, objc_selector="init", objc_name="init")
 	MeshBufferAllocator_init :: proc(self: ^MeshBufferAllocator) -> instancetype ---
 

@@ -3,7 +3,7 @@
 
 package rexcode_wasm
 
-import "core:math/bits"
+#import "core:math/bits"
 
 // =============================================================================
 // SECTION: Encoder  (Module -> WASM instruction byte stream)

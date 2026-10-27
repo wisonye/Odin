@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKSession", objc_superclass=NS.Object)
 Session :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Session, objc_selector="initWithSessionID:displayName:sessionMode:", objc_name="initWithSessionID")
 	Session_initWithSessionID :: proc(self: ^Session, sessionID: ^NS.String, name: ^NS.String, mode: SessionMode) -> id ---
 
@@ -104,7 +104,7 @@ SessionDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SessionDelegate, objc_selector="session:peer:didChangeState:", objc_name="session_peer_didChangeState")
 	SessionDelegate_session_peer_didChangeState :: proc(self: ^SessionDelegate, session: ^Session, peerID: ^NS.String, state: PeerConnectionState) ---
 

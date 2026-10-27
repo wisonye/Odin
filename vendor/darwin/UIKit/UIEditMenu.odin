@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIEditMenuConfiguration", objc_superclass=NS.Object)
 EditMenuConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EditMenuConfiguration, objc_selector="configurationWithIdentifier:sourcePoint:", objc_name="configurationWithIdentifier", objc_is_class_method=true)
 	EditMenuConfiguration_configurationWithIdentifier :: proc(identifier: ^NS.Copying, sourcePoint: CG.Point) -> instancetype ---
 
@@ -41,7 +41,7 @@ EditMenuInteraction :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EditMenuInteraction, objc_selector="initWithDelegate:", objc_name="initWithDelegate")
 	EditMenuInteraction_initWithDelegate :: proc(self: ^EditMenuInteraction, delegate: ^EditMenuInteractionDelegate) -> instancetype ---
 
@@ -78,7 +78,7 @@ EditMenuInteractionDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EditMenuInteractionDelegate, objc_selector="editMenuInteraction:menuForConfiguration:suggestedActions:", objc_name="editMenuInteraction_menuForConfiguration_suggestedActions")
 	EditMenuInteractionDelegate_editMenuInteraction_menuForConfiguration_suggestedActions :: proc(self: ^EditMenuInteractionDelegate, interaction: ^EditMenuInteraction, configuration: ^EditMenuConfiguration, suggestedActions: ^NS.Array) -> ^Menu ---
 
@@ -100,7 +100,7 @@ EditMenuInteractionAnimating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=EditMenuInteractionAnimating, objc_selector="addAnimations:", objc_name="addAnimations")
 	EditMenuInteractionAnimating_addAnimations :: proc(self: ^EditMenuInteractionAnimating, animations: ^Objc_Block(proc "c" ())) ---
 

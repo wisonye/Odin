@@ -2,14 +2,14 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIGraphicsImageRenderer", objc_superclass=GraphicsRenderer)
 GraphicsImageRenderer :: struct { using _: GraphicsRenderer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsImageRenderer, objc_selector="initWithSize:", objc_name="initWithSize_")
 	GraphicsImageRenderer_initWithSize_ :: proc(self: ^GraphicsImageRenderer, size: CG.Size) -> instancetype ---
 
@@ -40,7 +40,7 @@ GraphicsImageRenderer_initWithSize :: proc {
 GraphicsImageRendererContext :: struct { using _: GraphicsRendererContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsImageRendererContext, objc_selector="currentImage", objc_name="currentImage")
 	GraphicsImageRendererContext_currentImage :: proc(self: ^GraphicsImageRendererContext) -> ^Image ---
 }
@@ -50,7 +50,7 @@ foreign lib {
 GraphicsImageRendererFormat :: struct { using _: GraphicsRendererFormat}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsImageRendererFormat, objc_selector="formatForTraitCollection:", objc_name="formatForTraitCollection", objc_is_class_method=true)
 	GraphicsImageRendererFormat_formatForTraitCollection :: proc(traitCollection: ^TraitCollection) -> instancetype ---
 
@@ -87,7 +87,7 @@ foreign lib {
 GraphicsPDFRenderer :: struct { using _: GraphicsRenderer}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsPDFRenderer, objc_selector="initWithBounds:format:", objc_name="initWithBounds")
 	GraphicsPDFRenderer_initWithBounds :: proc(self: ^GraphicsPDFRenderer, bounds: CG.Rect, format: ^GraphicsPDFRendererFormat) -> instancetype ---
 
@@ -112,7 +112,7 @@ GraphicsPDFRenderer_writePDFToURL :: #force_inline proc "c" (self: ^GraphicsPDFR
 GraphicsPDFRendererContext :: struct { using _: GraphicsRendererContext}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsPDFRendererContext, objc_selector="beginPage", objc_name="beginPage")
 	GraphicsPDFRendererContext_beginPage :: proc(self: ^GraphicsPDFRendererContext) ---
 
@@ -137,7 +137,7 @@ foreign lib {
 GraphicsPDFRendererFormat :: struct { using _: GraphicsRendererFormat}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsPDFRendererFormat, objc_selector="documentInfo", objc_name="documentInfo")
 	GraphicsPDFRendererFormat_documentInfo :: proc(self: ^GraphicsPDFRendererFormat) -> ^NS.Dictionary ---
 
@@ -150,7 +150,7 @@ foreign lib {
 GraphicsRenderer :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsRenderer, objc_selector="initWithBounds:", objc_name="initWithBounds_")
 	GraphicsRenderer_initWithBounds_ :: proc(self: ^GraphicsRenderer, bounds: CG.Rect) -> instancetype ---
 
@@ -196,7 +196,7 @@ GraphicsRenderer_runDrawingActions :: #force_inline proc "c" (self: ^GraphicsRen
 GraphicsRendererContext :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsRendererContext, objc_selector="fillRect:", objc_name="fillRect_")
 	GraphicsRendererContext_fillRect_ :: proc(self: ^GraphicsRendererContext, rect: CG.Rect) ---
 
@@ -239,7 +239,7 @@ GraphicsRendererFormat :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GraphicsRendererFormat, objc_selector="defaultFormat", objc_name="defaultFormat", objc_is_class_method=true)
 	GraphicsRendererFormat_defaultFormat :: proc() -> instancetype ---
 

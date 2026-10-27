@@ -1,17 +1,17 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:bytes"
-import "core:sys/darwin"
-import "core:sys/posix"
-import "core:sys/unix"
-import "core:time"
+#import "core:bytes"
+#import "core:sys/darwin"
+#import "core:sys/posix"
+#import "core:sys/unix"
+#import "core:time"
 
-foreign import libsystem "system:System"
+#foreign #import libsystem "system:System"
 
-foreign libsystem {
+#foreign libsystem {
 	sysctl :: proc "c" (
 		name: [^]i32, namelen: u32,
 		oldp: rawptr, oldlenp: ^uint,

@@ -1,10 +1,10 @@
 package test_encoding_base64
 
-import "base:intrinsics"
-import "core:encoding/base64"
-import "core:io"
-import "core:strings"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:encoding/base64"
+#import "core:io"
+#import "core:strings"
+#import "core:testing"
 
 Test :: struct {
 	vector: string,

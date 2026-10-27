@@ -1,6 +1,6 @@
 package flags
 
-import "core:time"
+#import "core:time"
 
 // Set to true to compile with support for core named types disabled, as a
 // fallback in the event your platform does not support one of the types, or

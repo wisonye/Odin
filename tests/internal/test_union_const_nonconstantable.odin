@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // A union constant must be byte-identical to the same value built at run time,
 // whatever the variant.  These unions are not `is_type_union_constantable`, so

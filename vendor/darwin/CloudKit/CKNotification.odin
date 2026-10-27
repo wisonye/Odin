@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_CloudKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="CKNotification", objc_superclass=NS.Object)
 Notification :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Notification, objc_selector="init", objc_name="init")
 	Notification_init :: proc(self: ^Notification) -> instancetype ---
 
@@ -94,7 +94,7 @@ NotificationInfo :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=NotificationInfo, objc_selector="alertBody", objc_name="alertBody")
 	NotificationInfo_alertBody :: proc(self: ^NotificationInfo) -> ^NS.String ---
 

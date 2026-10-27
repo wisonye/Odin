@@ -5,7 +5,7 @@ package darwin_MapKit
 @(objc_class="MKZoomControl", objc_superclass=UI_View)
 ZoomControl :: struct { using _: UI_View}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ZoomControl, objc_selector="zoomControlWithMapView:", objc_name="zoomControlWithMapView", objc_is_class_method=true)
 	ZoomControl_zoomControlWithMapView :: proc(mapView: ^MapView) -> instancetype ---
 

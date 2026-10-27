@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
-import "base:intrinsics"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="NSFileAccessIntent", objc_superclass=Object)
 FileAccessIntent :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileAccessIntent, objc_selector="readingIntentWithURL:options:", objc_name="readingIntentWithURL", objc_is_class_method=true)
 	FileAccessIntent_readingIntentWithURL :: proc(url: ^URL, options: FileCoordinatorReadingOptions) -> instancetype ---
 
@@ -23,7 +23,7 @@ foreign lib {
 @(objc_class="NSFileCoordinator", objc_superclass=Object)
 FileCoordinator :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileCoordinator, objc_selector="addFilePresenter:", objc_name="addFilePresenter", objc_is_class_method=true)
 	FileCoordinator_addFilePresenter :: proc(filePresenter: ^FilePresenter) ---
 
@@ -94,7 +94,7 @@ FileHandle :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileHandle, objc_selector="initWithFileDescriptor:closeOnDealloc:", objc_name="initWithFileDescriptor_closeOnDealloc")
 	FileHandle_initWithFileDescriptor_closeOnDealloc :: proc(self: ^FileHandle, fd: cffi.int, closeopt: bool) -> instancetype ---
 
@@ -318,7 +318,7 @@ FileHandle_fileHandleForUpdatingURL :: #force_inline proc "c" (url: ^URL) -> (re
 @(objc_class="NSFileManager", objc_superclass=Object)
 FileManager :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileManager, objc_selector="mountedVolumeURLsIncludingResourceValuesForKeys:options:", objc_name="mountedVolumeURLsIncludingResourceValuesForKeys")
 	FileManager_mountedVolumeURLsIncludingResourceValuesForKeys :: proc(self: ^FileManager, propertyKeys: ^Array, options: VolumeEnumerationOptions) -> ^Array ---
 
@@ -418,7 +418,7 @@ foreign lib {
 	@(objc_type=FileManager, objc_selector="createDirectoryAtPath:attributes:", objc_name="createDirectoryAtPath_attributes")
 	FileManager_createDirectoryAtPath_attributes :: proc(self: ^FileManager, path: ^String, attributes: ^Dictionary) -> bool ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=FileManager, objc_selector="linkPath:toPath:handler:", objc_name="linkPath")
 		FileManager_linkPath :: proc(self: ^FileManager, src: ^String, dest: ^String, handler: id) -> bool ---
 
@@ -751,7 +751,7 @@ FileManagerDelegate :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileManagerDelegate, objc_selector="fileManager:shouldCopyItemAtPath:toPath:", objc_name="fileManager_shouldCopyItemAtPath_toPath")
 	FileManagerDelegate_fileManager_shouldCopyItemAtPath_toPath :: proc(self: ^FileManagerDelegate, fileManager: ^FileManager, srcPath: ^String, dstPath: ^String) -> bool ---
 
@@ -808,7 +808,7 @@ FilePresenter :: struct {
 	using _: ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FilePresenter, objc_selector="relinquishPresentedItemToReader:", objc_name="relinquishPresentedItemToReader")
 	FilePresenter_relinquishPresentedItemToReader :: proc(self: ^FilePresenter, reader: ^Objc_Block(proc "c" ( reacquirer: ^Objc_Block(proc "c" ()) ))) ---
 
@@ -880,7 +880,7 @@ foreign lib {
 @(objc_class="NSFileProviderService", objc_superclass=Object)
 FileProviderService :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileProviderService, objc_selector="getFileProviderConnectionWithCompletionHandler:", objc_name="getFileProviderConnectionWithCompletionHandler")
 	FileProviderService_getFileProviderConnectionWithCompletionHandler :: proc(self: ^FileProviderService, completionHandler: ^Objc_Block(proc "c" ( connection: ^XPCConnection, error: ^Error ))) ---
 
@@ -896,7 +896,7 @@ FileSecurity :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileSecurity, objc_selector="initWithCoder:", objc_name="initWithCoder")
 	FileSecurity_initWithCoder :: proc(self: ^FileSecurity, coder: ^Coder) -> instancetype ---
 }
@@ -905,7 +905,7 @@ foreign lib {
 @(objc_class="NSFileVersion", objc_superclass=Object)
 FileVersion :: struct { using _: Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileVersion, objc_selector="currentVersionOfItemAtURL:", objc_name="currentVersionOfItemAtURL", objc_is_class_method=true)
 	FileVersion_currentVersionOfItemAtURL :: proc(url: ^URL) -> ^FileVersion ---
 
@@ -1010,7 +1010,7 @@ FileWrapper :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FileWrapper, objc_selector="initWithURL:options:error:", objc_name="initWithURL_error")
 	FileWrapper_initWithURL_error :: proc(self: ^FileWrapper, url: ^URL, options: FileWrapperReadingOptions, outError: ^^Error) -> instancetype ---
 
@@ -1089,7 +1089,7 @@ foreign lib {
 	@(objc_type=FileWrapper, objc_selector="symbolicLinkDestinationURL", objc_name="symbolicLinkDestinationURL")
 	FileWrapper_symbolicLinkDestinationURL :: proc(self: ^FileWrapper) -> ^URL ---
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(objc_type=FileWrapper, objc_selector="initWithPath:", objc_name="initWithPath")
 		FileWrapper_initWithPath :: proc(self: ^FileWrapper, path: ^String) -> id ---
 

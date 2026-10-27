@@ -2,11 +2,11 @@
 
 package rexcode_mips
 
-import "core:strings"
-import "core:reflect"
-import "core:os"
-import "core:io"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:os"
+#import "core:io"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MIPS PRINTER
@@ -19,7 +19,7 @@ import "core:rexcode/isa"
 //
 // Architecture-independent scaffolding (Token types, Print_Options sink
 // table, hex/decimal number formatting) lives in `isa/print.odin` and is
-// re-exported below so consumers only ever import `mips`. The seven sink
+// re-exported below so consumers only ever #import `mips`. The seven sink
 // families (sbprint / print / aprint / tprint / bprint / fprint / wprint
 // + their `ln` variants) mirror the x86 contract exactly.
 

@@ -2,7 +2,7 @@
 #+build darwin
 package darwin_Foundation
 
-import cffi "core:c"
+#import cffi "core:c"
 
 @(objc_class="NSUUID", objc_superclass=Object)
 UUID :: struct {
@@ -11,7 +11,7 @@ UUID :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=UUID, objc_selector="UUID", objc_name="UUID", objc_is_class_method=true)
 	UUID_UUID :: proc() -> instancetype ---
 

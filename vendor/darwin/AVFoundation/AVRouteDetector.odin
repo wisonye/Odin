@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVRouteDetector", objc_superclass=NS.Object)
 RouteDetector :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RouteDetector, objc_selector="isRouteDetectionEnabled", objc_name="isRouteDetectionEnabled")
 	RouteDetector_isRouteDetectionEnabled :: proc(self: ^RouteDetector) -> bool ---
 

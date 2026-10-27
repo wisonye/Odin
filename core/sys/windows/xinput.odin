@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import "system:xinput.lib"
+#foreign #import "system:xinput.lib"
 
 // Device types available in XINPUT_CAPABILITIES
 // Correspond to XINPUT_DEVTYPE_...
@@ -198,7 +198,7 @@ XINPUT_KEYSTROKE :: struct {
 
 // XInput APIs
 @(default_calling_convention = "system")
-foreign xinput {
+#foreign xinput {
 	XInputGetState                  :: proc(user: XUSER, pState: ^XINPUT_STATE) -> System_Error ---
 	XInputSetState                  :: proc(user: XUSER, pVibration: ^XINPUT_VIBRATION) -> System_Error ---
 	XInputGetCapabilities           :: proc(user: XUSER, dwFlags: XINPUT_FLAG, pCapabilities: ^XINPUT_CAPABILITIES) -> System_Error ---

@@ -2,7 +2,7 @@
 
 package rexcode_ppc
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // PowerPC DECODER

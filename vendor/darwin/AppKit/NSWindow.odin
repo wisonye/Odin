@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
 
 @(objc_class="NSWindow", objc_superclass=Responder)
 Window :: struct {
@@ -20,7 +20,7 @@ Window :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Window, objc_selector="frameRectForContentRect:styleMask:", objc_name="frameRectForContentRect_styleMask", objc_is_class_method=true)
 	Window_frameRectForContentRect_styleMask :: proc(cRect: NS.Rect, style: WindowStyleMask) -> NS.Rect ---
 
@@ -1110,7 +1110,7 @@ WindowDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowDelegate, objc_selector="windowShouldClose:", objc_name="windowShouldClose")
 	WindowDelegate_windowShouldClose :: proc(self: ^WindowDelegate, sender: ^Window) -> bool ---
 
@@ -1285,7 +1285,7 @@ WindowController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowController, objc_selector="initWithWindow:", objc_name="initWithWindow")
 	WindowController_initWithWindow :: proc(self: ^WindowController, window: ^Window) -> instancetype ---
 
@@ -1400,7 +1400,7 @@ WindowRestoration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowRestoration, objc_selector="restoreWindowWithIdentifier:state:completionHandler:", objc_name="restoreWindowWithIdentifier", objc_is_class_method=true)
 	WindowRestoration_restoreWindowWithIdentifier :: proc(identifier: ^NS.String, state: ^NS.Coder, completionHandler: ^Objc_Block(proc "c" ( _0: ^Window, _1: ^NS.Error ))) ---
 }
@@ -1410,7 +1410,7 @@ foreign lib {
 WindowTab :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowTab, objc_selector="title", objc_name="title")
 	WindowTab_title :: proc(self: ^WindowTab) -> ^NS.String ---
 
@@ -1441,7 +1441,7 @@ foreign lib {
 WindowTabGroup :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=WindowTabGroup, objc_selector="addWindow:", objc_name="addWindow")
 	WindowTabGroup_addWindow :: proc(self: ^WindowTabGroup, window: ^Window) ---
 

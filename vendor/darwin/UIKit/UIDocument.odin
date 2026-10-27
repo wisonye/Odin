@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import "base:intrinsics"
 
 @(objc_class="UIDocument", objc_superclass=NS.Object)
 Document :: struct {
@@ -14,7 +14,7 @@ Document :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Document, objc_selector="initWithFileURL:", objc_name="initWithFileURL")
 	Document_initWithFileURL :: proc(self: ^Document, url: ^NS.URL) -> instancetype ---
 
@@ -177,7 +177,7 @@ Document_readFromURL :: #force_inline proc "c" (self: ^Document, url: ^NS.URL) -
 DocumentBrowserAction :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentBrowserAction, objc_selector="init", objc_name="init")
 	DocumentBrowserAction_init :: proc(self: ^DocumentBrowserAction) -> instancetype ---
 
@@ -220,7 +220,7 @@ DocumentBrowserTransitionController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentBrowserTransitionController, objc_selector="init", objc_name="init")
 	DocumentBrowserTransitionController_init :: proc(self: ^DocumentBrowserTransitionController) -> instancetype ---
 
@@ -245,7 +245,7 @@ DocumentBrowserViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentBrowserViewController, objc_selector="initForOpeningFilesWithContentTypes:", objc_name="initForOpeningFilesWithContentTypes")
 	DocumentBrowserViewController_initForOpeningFilesWithContentTypes :: proc(self: ^DocumentBrowserViewController, allowedContentTypes: ^NS.Array) -> instancetype ---
 
@@ -351,7 +351,7 @@ DocumentBrowserViewControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentBrowserViewControllerDelegate, objc_selector="documentBrowser:didPickDocumentURLs:", objc_name="documentBrowser_didPickDocumentURLs")
 	DocumentBrowserViewControllerDelegate_documentBrowser_didPickDocumentURLs :: proc(self: ^DocumentBrowserViewControllerDelegate, controller: ^DocumentBrowserViewController, documentURLs: ^NS.Array) ---
 
@@ -382,7 +382,7 @@ DocumentInteractionController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentInteractionController, objc_selector="interactionControllerWithURL:", objc_name="interactionControllerWithURL", objc_is_class_method=true)
 	DocumentInteractionController_interactionControllerWithURL :: proc(url: ^NS.URL) -> ^DocumentInteractionController ---
 
@@ -452,7 +452,7 @@ DocumentInteractionControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentInteractionControllerDelegate, objc_selector="documentInteractionControllerViewControllerForPreview:", objc_name="documentInteractionControllerViewControllerForPreview")
 	DocumentInteractionControllerDelegate_documentInteractionControllerViewControllerForPreview :: proc(self: ^DocumentInteractionControllerDelegate, controller: ^DocumentInteractionController) -> ^ViewController ---
 
@@ -501,7 +501,7 @@ DocumentMenuDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentMenuDelegate, objc_selector="documentMenu:didPickDocumentPicker:", objc_name="documentMenu")
 	DocumentMenuDelegate_documentMenu :: proc(self: ^DocumentMenuDelegate, documentMenu: ^DocumentMenuViewController, documentPicker: ^DocumentPickerViewController) ---
 
@@ -514,7 +514,7 @@ foreign lib {
 DocumentMenuViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentMenuViewController, objc_selector="initWithDocumentTypes:inMode:", objc_name="initWithDocumentTypes")
 	DocumentMenuViewController_initWithDocumentTypes :: proc(self: ^DocumentMenuViewController, allowedUTIs: ^NS.Array, mode: DocumentPickerMode) -> instancetype ---
 
@@ -542,7 +542,7 @@ DocumentPickerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentPickerDelegate, objc_selector="documentPicker:didPickDocumentsAtURLs:", objc_name="documentPicker_didPickDocumentsAtURLs")
 	DocumentPickerDelegate_documentPicker_didPickDocumentsAtURLs :: proc(self: ^DocumentPickerDelegate, controller: ^DocumentPickerViewController, urls: ^NS.Array) ---
 
@@ -564,7 +564,7 @@ DocumentPickerDelegate_documentPicker :: proc {
 DocumentPickerExtensionViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentPickerExtensionViewController, objc_selector="dismissGrantingAccessToURL:", objc_name="dismissGrantingAccessToURL")
 	DocumentPickerExtensionViewController_dismissGrantingAccessToURL :: proc(self: ^DocumentPickerExtensionViewController, url: ^NS.URL) ---
 
@@ -592,7 +592,7 @@ foreign lib {
 DocumentPickerViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentPickerViewController, objc_selector="initWithDocumentTypes:inMode:", objc_name="initWithDocumentTypes")
 	DocumentPickerViewController_initWithDocumentTypes :: proc(self: ^DocumentPickerViewController, allowedUTIs: ^NS.Array, mode: DocumentPickerMode) -> instancetype ---
 
@@ -662,7 +662,7 @@ DocumentPickerViewController_initForExportingURLs :: proc {
 DocumentProperties :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentProperties, objc_selector="init", objc_name="init")
 	DocumentProperties_init :: proc(self: ^DocumentProperties) -> instancetype ---
 
@@ -705,7 +705,7 @@ foreign lib {
 DocumentViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentViewController, objc_selector="initWithDocument:", objc_name="initWithDocument")
 	DocumentViewController_initWithDocument :: proc(self: ^DocumentViewController, document: ^Document) -> instancetype ---
 
@@ -739,7 +739,7 @@ foreign lib {
 DocumentViewControllerLaunchOptions :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DocumentViewControllerLaunchOptions, objc_selector="createDocumentActionWithIntent:", objc_name="createDocumentActionWithIntent", objc_is_class_method=true)
 	DocumentViewControllerLaunchOptions_createDocumentActionWithIntent :: proc(intent: ^NS.String) -> ^Action ---
 
@@ -797,7 +797,7 @@ foreign lib {
 ManagedDocument :: struct { using _: Document}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ManagedDocument, objc_selector="configurePersistentStoreCoordinatorForURL:ofType:modelConfiguration:storeOptions:error:", objc_name="configurePersistentStoreCoordinatorForURL_error")
 	ManagedDocument_configurePersistentStoreCoordinatorForURL_error :: proc(self: ^ManagedDocument, storeURL: ^NS.URL, fileType: ^NS.String, configuration: ^NS.String, storeOptions: ^NS.Dictionary, error: ^^NS.Error) -> bool ---
 

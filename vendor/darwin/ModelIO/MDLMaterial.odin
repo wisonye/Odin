@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_ModelIO
 
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="MDLMaterial", objc_superclass=NS.Object)
 Material :: struct {
@@ -13,7 +13,7 @@ Material :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Material, objc_selector="initWithName:scatteringFunction:", objc_name="initWithName")
 	Material_initWithName :: proc(self: ^Material, name: ^NS.String, scatteringFunction: ^ScatteringFunction) -> instancetype ---
 
@@ -80,7 +80,7 @@ MaterialProperty :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MaterialProperty, objc_selector="init", objc_name="init")
 	MaterialProperty_init :: proc(self: ^MaterialProperty) -> instancetype ---
 
@@ -218,7 +218,7 @@ MaterialPropertyConnection :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MaterialPropertyConnection, objc_selector="init", objc_name="init")
 	MaterialPropertyConnection_init :: proc(self: ^MaterialPropertyConnection) -> instancetype ---
 
@@ -236,7 +236,7 @@ foreign lib {
 @(objc_class="MDLMaterialPropertyGraph", objc_superclass=MaterialPropertyNode)
 MaterialPropertyGraph :: struct { using _: MaterialPropertyNode}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MaterialPropertyGraph, objc_selector="init", objc_name="init")
 	MaterialPropertyGraph_init :: proc(self: ^MaterialPropertyGraph) -> instancetype ---
 
@@ -260,7 +260,7 @@ MaterialPropertyNode :: struct {
 	using _: Named,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MaterialPropertyNode, objc_selector="init", objc_name="init")
 	MaterialPropertyNode_init :: proc(self: ^MaterialPropertyNode) -> instancetype ---
 

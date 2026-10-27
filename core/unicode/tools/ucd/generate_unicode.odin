@@ -1,11 +1,11 @@
 package ucd
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:mem"
-import "core:io"
-import "core:log"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:mem"
+#import "core:io"
+#import "core:log"
 
 // Table 2-3. Types of Code Points
 // Table 4-4. General_Category Values page 229
@@ -251,7 +251,7 @@ main :: proc() {
 
 	fmt.wprintfln(writer, "%s", Range_Type)
 
-	//List of the general categories to skip when generating the code for
+	//List of the general categories to skip #if generating the code for
 	//core/unicode/generated.txt.
 	to_exclude := [?]General_Category{
 		.Cc, // Control, a C0 or C1 control code

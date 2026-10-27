@@ -1,9 +1,9 @@
 package ecdsa
 
-import "base:runtime"
-import "core:crypto"
-import "core:crypto/hash"
-import secec "core:crypto/_weierstrass"
+#import "base:runtime"
+#import "core:crypto"
+#import "core:crypto/hash"
+#import secec "core:crypto/_weierstrass"
 
 // sign_asn1 returns the signature by priv_key over msg hased using hash_algo
 // using the signing procedure as specified in SEC 1, Version 2.0, Section
@@ -85,12 +85,12 @@ sign_raw :: proc(priv_key: ^Private_Key, hash_algo: hash.Algorithm, msg, sig: []
 
 @(private)
 sign_internal :: proc(priv_key, sig_r, sig_s: ^$T, hash_algo: hash.Algorithm, msg: []byte, deterministic: bool) {
-	when T == secec.Scalar_p256r1 {
+	#if T == secec.Scalar_p256r1 {
 		SC_SZ :: secec.SC_SIZE_P256R1
 		FE_SZ :: secec.FE_SIZE_P256R1
 		MIN_DRBG_HASH :: hash.Algorithm.SHA256
 		r_pt: secec.Point_p256r1 = ---
-	} else when T == secec.Scalar_p384r1 {
+	} else #if T == secec.Scalar_p384r1 {
 		SC_SZ :: secec.SC_SIZE_P384R1
 		FE_SZ :: secec.FE_SIZE_P384R1
 		MIN_DRBG_HASH :: hash.Algorithm.SHA384

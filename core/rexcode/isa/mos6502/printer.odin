@@ -2,11 +2,11 @@
 
 package rexcode_mos6502
 
-import "core:strings"
-import "core:reflect"
-import "core:os"
-import "core:io"
-import "core:rexcode/isa"
+#import "core:strings"
+#import "core:reflect"
+#import "core:os"
+#import "core:io"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // MOS 6502 PRINTER
@@ -290,7 +290,7 @@ write_operand :: proc(
 		if isa.label_display_at(display, target) {
 			isa.label_display_write(display, sb, target, opts.label_prefix)
 		} else {
-			// Fall back to absolute hex when the target isn't a known label.
+			// Fall back to absolute hex #if the target isn't a known label.
 			// Use the operand size to decide width: size=1 -> $XX, size=2 -> $XXXX.
 			write_hex_value(sb, u64(target), op.size)
 		}

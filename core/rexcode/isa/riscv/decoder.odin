@@ -2,7 +2,7 @@
 
 package rexcode_riscv
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // RISC-V DECODER
@@ -16,7 +16,7 @@ import "core:rexcode/isa"
 //     of `(word & e.mask) == e.bits`.
 //
 //   * XLEN filter: the decoder takes an XLEN parameter (.RV32 / .RV64);
-//     entries flagged `rv32_only` are skipped when decoding RV64, and
+//     entries flagged `rv32_only` are skipped #if decoding RV64, and
 //     vice versa.
 //
 //   * Scattered immediates: B-type and J-type targets are reconstructed
@@ -166,7 +166,7 @@ decode_one_inline :: #force_inline proc "contextless" (
 }
 
 // Shared with the encoder: an rv32_only / rv64_only form is only selectable
-// when the target XLEN matches.
+// #if the target XLEN matches.
 @(private)
 xlen_accepts :: #force_inline proc "contextless" (xlen: XLEN, f: Encoding_Flags) -> bool {
 	if f.rv32_only && xlen != .RV32 { return false }

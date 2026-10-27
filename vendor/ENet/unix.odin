@@ -4,7 +4,7 @@ package ENet
 // When we implement the appropriate bindings for Unix, the section separated
 // by `{` and `}` here can be removed in favor of using the bindings.
 // {
-import "core:c"
+#import "core:c"
 
 @(private="file") FD_SETSIZE :: 1024
 

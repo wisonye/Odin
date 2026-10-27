@@ -1,7 +1,7 @@
 #+build windows
 package sys_windows
 
-foreign import "system:Dbghelp.lib"
+#foreign #import "system:Dbghelp.lib"
 
 RVA :: DWORD
 
@@ -106,7 +106,7 @@ MINIDUMP_CALLBACK_INPUT :: struct {
 	},
 }
 
-_MINIDUMP_ARM64_PAD :: ULONG when ODIN_ARCH == .arm64 else struct {}
+_MINIDUMP_ARM64_PAD :: ULONG #if ODIN_ARCH == .arm64 else struct {}
 
 MINIDUMP_THREAD_CALLBACK :: struct {
 	ThreadId:      ULONG,
@@ -320,7 +320,7 @@ SYMOPT_LOAD_LINES     :: 0x00000010
 SYMOPT_DEFERRED_LOADS :: 0x00000004
 
 @(default_calling_convention = "system")
-foreign Dbghelp {
+#foreign Dbghelp {
 	MiniDumpWriteDump :: proc(
 		hProcess:        HANDLE,
 		ProcessId:       DWORD,

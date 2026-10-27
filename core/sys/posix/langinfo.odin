@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // langinfo.h - language information constants
 
-foreign lib {
+#foreign lib {
 	/*
 	Return a pointer to a string containing information relevant to the particular language or
 	cultural area defined in the current locale.
@@ -143,7 +143,7 @@ nl_item :: enum nl_item_t {
 	CRNCYSTR    = CRNCYSTR,
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD {
 
 	// NOTE: declared with `_t` so we can enumerate the real `nl_info`.
 	nl_item_t :: distinct c.int
@@ -212,7 +212,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD {
 
 	CRNCYSTR :: 56
 
-} else when ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+} else #if ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	// NOTE: declared with `_t` so we can enumerate the real `nl_info`.
 	nl_item_t :: distinct c.int
@@ -281,7 +281,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD {
 
 	CRNCYSTR :: 50	
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	// NOTE: declared with `_t` so we can enumerate the real `nl_info`.
 	nl_item_t :: distinct c.int

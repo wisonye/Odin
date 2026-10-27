@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
-import Sec "core:sys/darwin/Security"
+#import NS "core:sys/darwin/Foundation"
+#import Sec "core:sys/darwin/Security"
 
 @(objc_class="LAPrivateKey", objc_superclass=NS.Object)
 PrivateKey :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PrivateKey, objc_selector="signData:secKeyAlgorithm:completion:", objc_name="signData")
 	PrivateKey_signData :: proc(self: ^PrivateKey, data: ^NS.Data, algorithm: Sec.SecKeyAlgorithm, handler: ^Objc_Block(proc "c" ( _0: ^NS.Data, _1: ^NS.Error ))) ---
 

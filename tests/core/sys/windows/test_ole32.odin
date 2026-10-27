@@ -1,9 +1,9 @@
 #+build windows
 package test_core_sys_windows
 
-import "base:intrinsics"
-import win32 "core:sys/windows"
-import "core:testing"
+#import "base:intrinsics"
+#import win32 "core:sys/windows"
+#import "core:testing"
 
 @(test)
 string_from_clsid :: proc(t: ^testing.T) {

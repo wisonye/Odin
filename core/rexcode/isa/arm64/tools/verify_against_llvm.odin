@@ -21,9 +21,9 @@ package main
 //
 // Run:  cd isa/arm64 && odin run tools/verify_against_llvm.odin -file
 
-import "core:fmt"
-import "core:os"
-import "core:strings"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
 
 // Lookup table: normalized base name of our mnemonic.
 // Our enum names like SVE_BSL, FMOV_X_D, MOV_V_ALIAS get stripped of suffix
@@ -66,7 +66,7 @@ strip_suffix :: proc(name: string, suffixes: ..string) -> string {
 	return name
 }
 
-// Known LLVM-prints-alias-when-our-canonical-applies pairs.
+// Known LLVM-prints-alias-#if-our-canonical-applies pairs.
 // Returns true if our mnemonic and llvm mnemonic refer to the same instruction.
 is_known_alias :: proc(ours, llvm: string) -> bool {
 	// "lslv" -> "lsl", "lsrv" -> "lsr", "asrv" -> "asr", "rorv" -> "ror"
@@ -120,7 +120,7 @@ is_known_alias :: proc(ours, llvm: string) -> bool {
 		{"sxtw",  "sbfx"}, {"sxtb", "sbfx"}, {"sxth", "sbfx"},
 		{"lsl",   "ubfx"}, {"lsr",  "ubfx"},   // LSL_IMM 53000000 bare bits = UBFX form
 		{"asr",   "sbfx"},                     // ASR_IMM bare bits = SBFX form
-		// AT/DC/IC/TLBI canonical "alias" decoder, LLVM prints raw msr when
+		// AT/DC/IC/TLBI canonical "alias" decoder, LLVM prints raw msr #if
 		// it doesn't recognize the system encoding number.
 		{"at",    "msr"}, {"dc", "msr"}, {"ic", "msr"}, {"tlbi", "msr"}, {"sys", "msr"},
 		// SVE predicate logical aliases: ANDS Pd,Pg/Z,Pn,Pn -> MOVS Pd,Pg/Z,Pn;

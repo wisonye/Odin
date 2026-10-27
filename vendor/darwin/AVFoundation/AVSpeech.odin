@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_AVFoundation
 
-import NS "core:sys/darwin/Foundation"
-import AT "vendor:darwin/AudioToolbox"
-import cffi "core:c"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import AT "vendor:darwin/AudioToolbox"
+#import cffi "core:c"
+#import "base:intrinsics"
 
 @(objc_class="AVSpeechSynthesisMarker", objc_superclass=NS.Object)
 SpeechSynthesisMarker :: struct {
@@ -14,7 +14,7 @@ SpeechSynthesisMarker :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesisMarker, objc_selector="initWithMarkerType:forTextRange:atByteSampleOffset:", objc_name="initWithMarkerType")
 	SpeechSynthesisMarker_initWithMarkerType :: proc(self: ^SpeechSynthesisMarker, type: SpeechSynthesisMarkerMark, range: NS._NSRange, byteSampleOffset: NS.UInteger) -> instancetype ---
 
@@ -68,7 +68,7 @@ foreign lib {
 @(objc_class="AVSpeechSynthesisProviderAudioUnit", objc_superclass=AT.AUAudioUnit)
 SpeechSynthesisProviderAudioUnit :: struct { using _: AT.AUAudioUnit}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesisProviderAudioUnit, objc_selector="synthesizeSpeechRequest:", objc_name="synthesizeSpeechRequest")
 	SpeechSynthesisProviderAudioUnit_synthesizeSpeechRequest :: proc(self: ^SpeechSynthesisProviderAudioUnit, speechRequest: ^SpeechSynthesisProviderRequest) ---
 
@@ -96,7 +96,7 @@ SpeechSynthesisProviderRequest :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesisProviderRequest, objc_selector="initWithSSMLRepresentation:voice:", objc_name="initWithSSMLRepresentation")
 	SpeechSynthesisProviderRequest_initWithSSMLRepresentation :: proc(self: ^SpeechSynthesisProviderRequest, text: ^NS.String, voice: ^SpeechSynthesisProviderVoice) -> instancetype ---
 
@@ -121,7 +121,7 @@ SpeechSynthesisProviderVoice :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesisProviderVoice, objc_selector="initWithName:identifier:primaryLanguages:supportedLanguages:", objc_name="initWithName")
 	SpeechSynthesisProviderVoice_initWithName :: proc(self: ^SpeechSynthesisProviderVoice, name: ^NS.String, identifier: ^NS.String, primaryLanguages: ^NS.Array, supportedLanguages: ^NS.Array) -> instancetype ---
 
@@ -178,7 +178,7 @@ SpeechSynthesisVoice :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesisVoice, objc_selector="speechVoices", objc_name="speechVoices", objc_is_class_method=true)
 	SpeechSynthesisVoice_speechVoices :: proc() -> ^NS.Array ---
 
@@ -217,7 +217,7 @@ foreign lib {
 @(objc_class="AVSpeechSynthesizer", objc_superclass=NS.Object)
 SpeechSynthesizer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesizer, objc_selector="speakUtterance:", objc_name="speakUtterance")
 	SpeechSynthesizer_speakUtterance :: proc(self: ^SpeechSynthesizer, utterance: ^SpeechUtterance) ---
 
@@ -288,7 +288,7 @@ SpeechSynthesizerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechSynthesizerDelegate, objc_selector="speechSynthesizer:didStartSpeechUtterance:", objc_name="speechSynthesizer_didStartSpeechUtterance")
 	SpeechSynthesizerDelegate_speechSynthesizer_didStartSpeechUtterance :: proc(self: ^SpeechSynthesizerDelegate, synthesizer: ^SpeechSynthesizer, utterance: ^SpeechUtterance) ---
 
@@ -319,7 +319,7 @@ SpeechUtterance :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=SpeechUtterance, objc_selector="speechUtteranceWithString:", objc_name="speechUtteranceWithString", objc_is_class_method=true)
 	SpeechUtterance_speechUtteranceWithString :: proc(string: ^NS.String) -> instancetype ---
 

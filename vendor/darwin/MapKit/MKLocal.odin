@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MKLocalPointsOfInterestRequest", objc_superclass=NS.Object)
 LocalPointsOfInterestRequest :: struct {
@@ -12,7 +12,7 @@ LocalPointsOfInterestRequest :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalPointsOfInterestRequest, objc_selector="init", objc_name="init")
 	LocalPointsOfInterestRequest_init :: proc(self: ^LocalPointsOfInterestRequest) -> instancetype ---
 
@@ -42,7 +42,7 @@ foreign lib {
 @(objc_class="MKLocalSearch", objc_superclass=NS.Object)
 LocalSearch :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearch, objc_selector="initWithRequest:", objc_name="initWithRequest")
 	LocalSearch_initWithRequest :: proc(self: ^LocalSearch, request: ^LocalSearchRequest) -> instancetype ---
 
@@ -63,7 +63,7 @@ foreign lib {
 @(objc_class="MKLocalSearchCompleter", objc_superclass=NS.Object)
 LocalSearchCompleter :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearchCompleter, objc_selector="cancel", objc_name="cancel")
 	LocalSearchCompleter_cancel :: proc(self: ^LocalSearchCompleter) ---
 
@@ -129,7 +129,7 @@ LocalSearchCompleterDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearchCompleterDelegate, objc_selector="completerDidUpdateResults:", objc_name="completerDidUpdateResults")
 	LocalSearchCompleterDelegate_completerDidUpdateResults :: proc(self: ^LocalSearchCompleterDelegate, completer: ^LocalSearchCompleter) ---
 
@@ -141,7 +141,7 @@ foreign lib {
 @(objc_class="MKLocalSearchCompletion", objc_superclass=NS.Object)
 LocalSearchCompletion :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearchCompletion, objc_selector="title", objc_name="title")
 	LocalSearchCompletion_title :: proc(self: ^LocalSearchCompletion) -> ^NS.String ---
 
@@ -162,7 +162,7 @@ LocalSearchRequest :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearchRequest, objc_selector="init", objc_name="init")
 	LocalSearchRequest_init :: proc(self: ^LocalSearchRequest) -> instancetype ---
 
@@ -224,7 +224,7 @@ LocalSearchRequest_initWithNaturalLanguageQuery :: proc {
 @(objc_class="MKLocalSearchResponse", objc_superclass=NS.Object)
 LocalSearchResponse :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalSearchResponse, objc_selector="mapItems", objc_name="mapItems")
 	LocalSearchResponse_mapItems :: proc(self: ^LocalSearchResponse) -> ^NS.Array ---
 

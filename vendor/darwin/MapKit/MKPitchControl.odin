@@ -5,7 +5,7 @@ package darwin_MapKit
 @(objc_class="MKPitchControl", objc_superclass=UI_View)
 PitchControl :: struct { using _: UI_View}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PitchControl, objc_selector="pitchControlWithMapView:", objc_name="pitchControlWithMapView", objc_is_class_method=true)
 	PitchControl_pitchControlWithMapView :: proc(mapView: ^MapView) -> instancetype ---
 

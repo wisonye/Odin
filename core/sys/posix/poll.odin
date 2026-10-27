@@ -1,19 +1,19 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // poll.h - definitions for the poll() function
 
-foreign lib {
+#foreign lib {
 	/*
 	For each pointer in fds, poll() shall examine the given descriptor for the events.
 	poll will identify on which descriptors writes or reads can be done.
@@ -25,7 +25,7 @@ foreign lib {
 	poll :: proc(fds: [^]pollfd, nfds: nfds_t, timeout: c.int) -> c.int ---
 }
 
-when ODIN_OS == .Linux {
+#if ODIN_OS == .Linux {
 	nfds_t :: c.ulong
 } else {
 	nfds_t :: c.uint
@@ -57,7 +57,7 @@ Poll_Event_Bits :: enum c.short {
 }
 Poll_Event :: bit_set[Poll_Event_Bits; c.short]
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	pollfd :: struct {
 		fd:      FD,         /* [PSX] the following descriptor being polled */
@@ -78,7 +78,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 	POLLNVAL   :: 0x0020
 
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	pollfd :: struct {
 		fd:      FD,         /* [PSX] the following descriptor being polled */

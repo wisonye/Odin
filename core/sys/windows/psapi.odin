@@ -1,10 +1,10 @@
 #+build windows
 package sys_windows
 
-foreign import psapi "system:Psapi.lib"
+#foreign #import psapi "system:Psapi.lib"
 
 @(default_calling_convention = "system")
-foreign psapi {
+#foreign psapi {
 	EnumProcessModules :: proc(hProcess: HANDLE, lphModule: ^HMODULE, cb: DWORD, lpcbNeeded: LPDWORD) -> BOOL ---
 
 	GetProcessMemoryInfo :: proc(hProcess: HANDLE, ppsmemCounters: PPROCESS_MEMORY_COUNTERS, cb: DWORD) -> BOOL ---

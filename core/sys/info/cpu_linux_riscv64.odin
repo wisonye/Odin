@@ -2,11 +2,11 @@
 #+build linux
 package sysinfo
 
-import "base:intrinsics"
-import "base:runtime"
-import "core:sys/linux"
-import "core:strconv"
-import "core:strings"
+#import "base:intrinsics"
+#import "base:runtime"
+#import "core:sys/linux"
+#import "core:strconv"
+#import "core:strings"
 
 @(init, private)
 _init_cpu_features :: proc "contextless" () {

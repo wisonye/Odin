@@ -22,10 +22,10 @@ package rsa
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-import "core:bytes"
-import "core:crypto"
-import subtle "core:crypto/_subtle"
-import "core:encoding/endian"
+#import "core:bytes"
+#import "core:crypto"
+#import subtle "core:crypto/_subtle"
+#import "core:encoding/endian"
 
 // Minimum size for a RSA modulus (in bits).
 //
@@ -436,7 +436,7 @@ public_key_clear :: proc "contextless" (pub_key: ^Public_Key) {
 // size returns the size of the key's public modulus in bytes.
 // All ciphertexts and signatures will also be this size.
 size :: proc "contextless" (key: ^$T) -> int where T == Private_Key || T == Private_Key {
-	when T == Private_Key {
+	#if T == Private_Key {
 		return private_key_size(key)
 	} else {
 		return public_key_size(key)

@@ -7,11 +7,11 @@
 
 package test_core_sync
 
-import "base:intrinsics"
-import "core:sync"
-import "core:testing"
-import "core:thread"
-import "core:time"
+#import "base:intrinsics"
+#import "core:sync"
+#import "core:testing"
+#import "core:thread"
+#import "core:time"
 
 FAIL_TIME        :: 1 * time.Second
 SLEEP_TIME       :: 1 * time.Millisecond
@@ -537,7 +537,7 @@ test_ticket_mutex :: proc(t: ^testing.T) {
 
 @test
 test_benaphore :: proc(t: ^testing.T) {
-	when ODIN_ARCH == .riscv64 {
+	#if ODIN_ARCH == .riscv64 {
 		// NOTE(Jeroen): Regularly times out on the simulated RISC-V CI runners,
 		//               so we're skipping the test there.
 		return

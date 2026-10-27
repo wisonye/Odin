@@ -1,7 +1,7 @@
 #+private
 package os
 
-import "core:sys/linux"
+#import "core:sys/linux"
 
 _Platform_Error :: linux.Errno
 

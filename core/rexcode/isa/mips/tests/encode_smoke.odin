@@ -8,9 +8,9 @@ package rexcode_mips_tests
 // little-endian byte ordering for console targets, and a few
 // out-of-range failure modes.
 
-import "core:fmt"
-import "core:os"
-import mips "../"
+#import "core:fmt"
+#import "core:os"
+#import mips "../"
 
 @(private="file") epasses   := 0
 @(private="file") efailures := 0

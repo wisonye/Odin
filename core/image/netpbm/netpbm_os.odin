@@ -1,7 +1,7 @@
 #+build !js
 package netpbm
 
-import "core:os"
+#import "core:os"
 
 load :: proc {
 	load_from_file,

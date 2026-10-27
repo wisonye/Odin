@@ -2,7 +2,7 @@
 // if the literal's value was not a constant.
 package test_issue_global_address_of_literal
 
-import "core:testing"
+#import "core:testing"
 
 Holder     :: struct { target: ^int }
 Outer      :: struct { inner: ^Inner }

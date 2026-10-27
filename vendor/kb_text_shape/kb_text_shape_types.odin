@@ -1,19 +1,19 @@
 package vendor_kb_text_shape
 
-import "core:c"
+#import "core:c"
 
 #assert(size_of(b8)  == size_of(bool))
 #assert(size_of(b32) == size_of(u32))
 #assert(size_of(b32) == size_of(c.int))
 
 un :: distinct (
-	uint when (size_of(uintptr) == size_of(uint)) else
-	u32  when size_of(uintptr) == 4 else
+	uint #if (size_of(uintptr) == size_of(uint)) else
+	u32  #if size_of(uintptr) == 4 else
 	u64
 )
 // sn :: distinct (
-//	int when (size_of(uintptr) == size_of(int)) else
-//	i32  when size_of(uintptr) == 4 else
+//	int #if (size_of(uintptr) == size_of(int)) else
+//	i32  #if size_of(uintptr) == 4 else
 //	i64
 // )
 
@@ -1142,7 +1142,7 @@ break_flag :: enum u32 {
 	WORD = 3,
 	// By default, you are not allowed to break a line.
 	// Soft line breaks allow for line breaking, but do not require it.
-	// This is useful for when you are doing line wrapping.
+	// This is useful for #if you are doing line wrapping.
 	LINE_SOFT = 4,
 	// Hard line breaks are required. They signal the end of a paragraph.
 	// (In Unicode, there is no meaningful distinction between a line and a paragraph.
@@ -1606,7 +1606,7 @@ word_break_class :: enum u8 {
 // SCRIPT_DONT_KNOW and let the library figure it out.
 // While SCRIPT_DONT_KNOW may look appealing, it is worth noting that we can only infer
 // the _script_, and not the language, of the text you pass in.
-// This means that you might miss out on language-specific features when you use it.
+// This means that you might miss out on language-specific features #if you use it.
 shaper :: enum u32 {
 	DEFAULT,
 	ARABIC,
@@ -2333,7 +2333,7 @@ font_info2_2 :: struct {
 	using FontInfo2_1: font_info2_1,
 
 	// For now, this is just OS2.sCapHeight.
-	// If/when this is zero, we might consider trying to communicate a useful height instead of simply passing the zero along.
+	// If/#if this is zero, we might consider trying to communicate a useful height instead of simply passing the zero along.
 	CapitalHeight: i16,
 }
 
@@ -2560,7 +2560,7 @@ glyph :: struct {
 }
 
 shape_codepoint :: struct {
-	Font:   ^font, // Only set when (.GRAPHEME in BreakFlags)
+	Font:   ^font, // Only set #if (.GRAPHEME in BreakFlags)
 
 	FeatureOverrides: [^]feature_override `fmt:"v,FeatureOverrideCount"`,
 	FeatureOverrideCount: c.int,
@@ -2569,9 +2569,9 @@ shape_codepoint :: struct {
 	UserId:    c.int,
 
 	BreakFlags:         break_flags,
-	Script:             script,    // Only set when (BreakFlags & KBTS_BREAK_FLAG_SCRIPT) != 0.
-	Direction:          direction, // Only set when (BreakFlags & KBTS_BREAK_FLAG_DIRECTION) != 0.
-	ParagraphDirection: direction, // Only set when (BreakFlags & KBTS_BREAK_FLAG_PARAGRAPH_DIRECTION) != 0.
+	Script:             script,    // Only set #if (BreakFlags & KBTS_BREAK_FLAG_SCRIPT) != 0.
+	Direction:          direction, // Only set #if (BreakFlags & KBTS_BREAK_FLAG_DIRECTION) != 0.
+	ParagraphDirection: direction, // Only set #if (BreakFlags & KBTS_BREAK_FLAG_PARAGRAPH_DIRECTION) != 0.
 }
 
 // Set `Size` to size_of(shape_codepoint2) before passing one to ShapeGetShapeCodepoint2.
@@ -2579,7 +2579,7 @@ shape_codepoint2 :: struct {
 	Size:    c.int,
 	Padding0: c.int,
 
-	Font:            ^font, // Only set when (.GRAPHEME in BreakFlags)
+	Font:            ^font, // Only set #if (.GRAPHEME in BreakFlags)
 	VariationVector: [^]f32,
 
 	FeatureOverrides: [^]feature_override `fmt:"v,FeatureOverrideCount"`,
@@ -2589,9 +2589,9 @@ shape_codepoint2 :: struct {
 	UserId:    c.int,
 
 	BreakFlags:         break_flags,
-	Script:             script,    // Only set when (BreakFlags & KBTS_BREAK_FLAG_SCRIPT) != 0.
-	Direction:          direction, // Only set when (BreakFlags & KBTS_BREAK_FLAG_DIRECTION) != 0.
-	ParagraphDirection: direction, // Only set when (BreakFlags & KBTS_BREAK_FLAG_PARAGRAPH_DIRECTION) != 0.
+	Script:             script,    // Only set #if (BreakFlags & KBTS_BREAK_FLAG_SCRIPT) != 0.
+	Direction:          direction, // Only set #if (BreakFlags & KBTS_BREAK_FLAG_DIRECTION) != 0.
+	ParagraphDirection: direction, // Only set #if (BreakFlags & KBTS_BREAK_FLAG_PARAGRAPH_DIRECTION) != 0.
 }
 
 // The library's own record of an input codepoint; not part of the API.

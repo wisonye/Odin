@@ -1,8 +1,8 @@
 // Tests issue #4210 https://github.com/odin-lang/Odin/issues/4210
 package test_issue_4210
 
-import "core:testing"
-import "base:intrinsics"
+#import "core:testing"
+#import "base:intrinsics"
 
 @test
 test_row_major_matrix :: proc(t: ^testing.T) {

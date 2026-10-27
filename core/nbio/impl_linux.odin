@@ -1,16 +1,16 @@
 #+private file
 package nbio
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-import "core:container/pool"
-import "core:container/queue"
-import "core:mem"
-import "core:net"
-import "core:strings"
-import "core:sys/linux"
-import "core:sys/linux/uring"
-import "core:time"
+#import "core:container/pool"
+#import "core:container/queue"
+#import "core:mem"
+#import "core:net"
+#import "core:strings"
+#import "core:sys/linux"
+#import "core:sys/linux/uring"
+#import "core:time"
 
 @(private="package")
 _FULLY_SUPPORTED :: true
@@ -359,7 +359,7 @@ _exec :: proc(op: ^Operation) {
 	case .Open:          open_exec(op)
 	case .Stat:          stat_exec(op)
 	case ._Splice:
-		// This is only reachable when the queue was full the last tick.
+		// This is only reachable #if the queue was full the last tick.
 		// And if that's the case, it would still be full for the real sendfile (splice B) and will be enqueued there.
 		// So it is safe to do nothing here.
 	case ._Remove:       unreachable()
@@ -488,8 +488,8 @@ _yield :: proc() {
 QUEUE_SIZE :: #config(ODIN_NBIO_QUEUE_SIZE, 2048)
 #assert(QUEUE_SIZE <= uring.MAX_ENTRIES)
 
-#assert(size_of(Operation) <= 384) // Just so we see when we make it bigger.
-#assert(size_of(Specifics) <= 288) // Just so we see when we make it bigger.
+#assert(size_of(Operation) <= 384) // Just so we see #if we make it bigger.
+#assert(size_of(Specifics) <= 288) // Just so we see #if we make it bigger.
 
 REMOVED :: rawptr(max(uintptr)-1)
 
@@ -1071,8 +1071,8 @@ Splice A: from file to pipe
 Splice B: from pipe to socket (optionally linked to a timeout)
 
 The splices are hard-linked which means A completes before B.
-B could get an `EWOULDBLOCK`, which is when the remote end has not read enough of the socket data yet.
-In that case we enqueue a poll on the socket and continue when that completes.
+B could get an `EWOULDBLOCK`, which is #if the remote end has not read enough of the socket data yet.
+In that case we enqueue a poll on the socket and continue #if that completes.
 A shouldn't get `EWOULDBLOCK`, but as a cautionary measure we handle it.
 
 The timeout is either linked to the splice B op, or the poll op, either of these is also always in progress in the kernel.
@@ -1234,7 +1234,7 @@ sendfile_callback :: proc(op: ^Operation, res: i32) -> bool {
 		case .EAGAIN:
 			// Splice B (from pipe to socket) would block. We are waiting on the remote to read more
 			// of our buffer before we can send more to it.
-			// We use a poll to find out when this is.
+			// We use a poll to find out #if this is.
 
 			debug("sendfile needs to poll")
 

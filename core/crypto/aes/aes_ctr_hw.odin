@@ -1,12 +1,12 @@
 #+build amd64,arm64,arm32
 package aes
 
-import "base:intrinsics"
-import "core:crypto/_aes"
-import aes_hw "core:crypto/_aes/hw"
-import "core:encoding/endian"
-import "core:math/bits"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto/_aes"
+#import aes_hw "core:crypto/_aes/hw"
+#import "core:encoding/endian"
+#import "core:math/bits"
+#import "core:simd"
 
 @(private)
 CTR_STRIDE_HW :: 4

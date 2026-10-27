@@ -1,8 +1,8 @@
 package test_crypto_common
 
-import "core:bytes"
-import "core:encoding/base64"
-import "core:encoding/hex"
+#import "core:bytes"
+#import "core:encoding/base64"
+#import "core:encoding/hex"
 
 // Common helpers for cryptography tests.
 

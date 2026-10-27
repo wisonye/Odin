@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 /** Can be bit-wise or'ed into the decode_flags in the decode pipeline.
  *
@@ -90,7 +90,7 @@ decode_pipeline_t :: struct {
 	 */
 	user_line_end_ignore: i32,
 
-	/** How many bytes were actually decoded when items compressed */
+	/** How many bytes were actually decoded #if items compressed */
 	bytes_decompressed: u64,
 
 	/** Can be used by the user to pass custom context data through
@@ -108,7 +108,7 @@ decode_pipeline_t :: struct {
 	 */
 	packed_buffer: rawptr,
 
-	/** Used when re-using the same decode pipeline struct to know if
+	/** Used #if re-using the same decode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 */
 	packed_alloc_size: c.size_t,
@@ -117,7 +117,7 @@ decode_pipeline_t :: struct {
 	 * info), but still packed into storage order, only needed for
 	 * compressed files.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -126,7 +126,7 @@ decode_pipeline_t :: struct {
 	 */
 	unpacked_buffer: rawptr,
 
-	/** Used when re-using the same decode pipeline struct to know if
+	/** Used #if re-using the same decode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 */
 	unpacked_alloc_size: c.size_t,
@@ -150,7 +150,7 @@ decode_pipeline_t :: struct {
 
 	/** A scratch buffer of unpacked_size for intermediate results.
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -159,14 +159,14 @@ decode_pipeline_t :: struct {
 	 */
 	scratch_buffer_1: rawptr,
 
-	/** Used when re-using the same decode pipeline struct to know if
+	/** Used #if re-using the same decode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 */
 	scratch_alloc_size_1: c.size_t,
 
 	/** Some decompression routines may need a second scratch buffer (zlib).
 	 *
-	 * If `NULL`, will be allocated during the run of the pipeline when
+	 * If `NULL`, will be allocated during the run of the pipeline #if
 	 * needed.
 	 *
 	 * If the caller wishes to take control of the buffer, simple
@@ -175,7 +175,7 @@ decode_pipeline_t :: struct {
 	 */
 	scratch_buffer_2: rawptr,
 
-	/** Used when re-using the same decode pipeline struct to know if
+	/** Used #if re-using the same decode pipeline struct to know if
 	 * chunk is changed size whether current buffer is large enough.
 	 */
 	scratch_alloc_size_2: c.size_t,
@@ -195,7 +195,7 @@ decode_pipeline_t :: struct {
 	/** Function chosen to read chunk data from the context.
 	 *
 	 * Initialized to a default generic read routine, may be updated
-	 * based on channel information when
+	 * based on channel information #if
 	 * exr_decoding_choose_default_routines() is called. This is done such that
 	 * if the file is uncompressed and the output channel data is
 	 * planar and the same type, the read function can read straight
@@ -242,14 +242,14 @@ decode_pipeline_t :: struct {
 	unpack_and_convert_fn: proc "c" (pipeline: ^decode_pipeline_t) -> result_t,
 
 	/** Small stash of channel info values. This is faster than calling
-	 * malloc when the channel count in the part is small (RGBAZ),
+	 * malloc #if the channel count in the part is small (RGBAZ),
 	 * which is super common, however if there are a large number of
 	 * channels, it will allocate space for that, so do not rely on
 	 * this being used.
 	 */
 	_quick_chan_store: [5]coding_channel_info_t,
 
-	/** Set when the sample count table has been decompressed. */
+	/** Set #if the sample count table has been decompressed. */
 	sample_count_valid: c.int,
 
 	/** Some compression methods (using external libraries) require additional
@@ -279,7 +279,7 @@ DECODE_PIPELINE_INITIALIZER :: decode_pipeline_t{ pipe_size = size_of(decode_pip
 
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** Initialize the decoding pipeline structure with the channel info
 	 * for the specified part, and the first block to be read.
 	 *

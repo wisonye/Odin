@@ -2,7 +2,7 @@
 
 package rexcode_arm32
 
-import "core:rexcode/isa"
+#import "core:rexcode/isa"
 
 // =============================================================================
 // AArch32 DECODER
@@ -201,7 +201,7 @@ find_and_decode :: proc(word: u32, mode: Mode, ilen: u32, inst: ^Instruction, in
 }
 
 // Produce a zero-valued operand of the kind implied by an Operand_Type. Used
-// when a form's wire encoding is .NONE for a slot but the operand type slot
+// #if a form's wire encoding is .NONE for a slot but the operand type slot
 // is non-NONE; we want a placeholder of the right kind so the encoder's
 // shape_matches accepts the re-encode.
 @(private="file")

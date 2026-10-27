@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 #assert(size_of(c.int) == size_of(b32))
 
@@ -29,7 +29,7 @@ stream_error_func_ptr_t :: proc "c" (ctxt: const_context_t, code: result_t, fmt:
  *
  *  Because a file can be read from using many threads at once, it is
  *  difficult to store an error message for later retrieval. As such,
- *  when a file is constructed, a callback function can be provided
+ *  #if a file is constructed, a callback function can be provided
  *  which delivers an error message for the calling application to
  *  handle. This will then be delivered on the same thread causing the
  *  error.
@@ -39,7 +39,7 @@ error_handler_cb_t :: proc "c" (ctxt: const_context_t, code: result_t, msg: cstr
 /** Destroy custom stream function pointer
  *
  *  Generic callback to clean up user data for custom streams.
- *  This is called when the file is closed and expected not to
+ *  This is called #if the file is closed and expected not to
  *  error.
  *
  *  @param failed Indicates the write operation failed, the
@@ -104,7 +104,7 @@ read_func_ptr_t :: proc "c" (
  *  A file should be expected to be accessed in the following pattern:
  *  - upon open, the header and part information attributes is constructed.
  *
- *  - when the write_header routine is called, the header becomes immutable
+ *  - #if the write_header routine is called, the header becomes immutable
  *    and is written to the file. This computes the space to store the chunk
  *    offsets, but does not yet write the values.
  *
@@ -198,9 +198,9 @@ context_initializer_t :: struct {
 
 	/** @brief Custom size query routine.
 	 *
-	 * Used to provide validation when reading header values. If this
+	 * Used to provide validation #if reading header values. If this
 	 * is not provided, but a custom read routine is provided, this
-	 * will disable some of the validation checks when parsing the
+	 * will disable some of the validation checks #if parsing the
 	 * image header.
 	 *
 	 * Expected to be `NULL` for a write-only operation, but is ignored
@@ -330,7 +330,7 @@ default_write_mode_t :: enum c.int {
 
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Check the magic number of the file and report
 	 * `EXR_ERR_SUCCESS` if the file appears to be a valid file (or at least
 	 * has the correct magic number and can be read).
@@ -395,7 +395,7 @@ foreign lib {
 	 *
 	 * 5. Within each part, multiple threads can be encoding and writing
 	 * data concurrently. For some EXR part definitions, this may be able
-	 * to write data concurrently when it can predict the chunk sizes, or
+	 * to write data concurrently #if it can predict the chunk sizes, or
 	 * data is allowed to be padded. For others, it may need to
 	 * temporarily cache chunks until the data is received to flush in
 	 * order. The concurrency around this is handled by the library

@@ -8,9 +8,9 @@ package rexcode_riscv_tests
 //
 // Run with: odin run riscv/tests
 
-import "core:fmt"
-import "core:os"
-import rv "../"
+#import "core:fmt"
+#import "core:os"
+#import rv "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

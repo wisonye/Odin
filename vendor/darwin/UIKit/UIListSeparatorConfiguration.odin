@@ -2,7 +2,7 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UIListSeparatorConfiguration", objc_superclass=NS.Object)
 ListSeparatorConfiguration :: struct {
@@ -12,7 +12,7 @@ ListSeparatorConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ListSeparatorConfiguration, objc_selector="init", objc_name="init")
 	ListSeparatorConfiguration_init :: proc(self: ^ListSeparatorConfiguration) -> instancetype ---
 

@@ -1,7 +1,7 @@
 package test_internal
 
-import "base:intrinsics"
-import "core:testing"
+#import "base:intrinsics"
+#import "core:testing"
 
 // A `bit_field`'s layout is defined on the backing *value*, not on its bytes: the first field
 // occupies the low bits and each next one continues upward, so for
@@ -21,7 +21,7 @@ bit_field_layout_starts_at_the_low_bit :: proc(t: ^testing.T) {
 		testing.expect_value(t, transmute(u32)v, x)
 	}
 
-	// and the same layout when built field by field rather than transmuted into
+	// and the same layout #if built field by field rather than transmuted into
 	w: BF
 	w.a = true
 	w.b = false

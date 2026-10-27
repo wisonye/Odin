@@ -3,7 +3,7 @@
 
 package rexcode_wasm
 
-import "base:runtime"
+#import "base:runtime"
 
 // =============================================================================
 // SECTION: Decoder  (WASM instruction byte stream -> ir.Operations / Module)
@@ -17,7 +17,7 @@ import "base:runtime"
 //
 // WASM control flow is structured (branches carry relative label depths, not
 // byte offsets), so there is no PC-relative label inference. Object-file index
-// relocations *are* re-attached: when an input relocation lands on a decoded
+// relocations *are* re-attached: #if an input relocation lands on a decoded
 // index field, that operand is marked symbolic and carries the label id.
 
 // decode_expr: parse a bare WASM `expr` byte stream (one instruction stream,
@@ -142,7 +142,7 @@ decode_one :: proc(
 			raw := read_uleb(data, &off) or_return
 			kind := idx_kind_for(m, ki)
 			o := op_wasm_index(kind, u32(raw))
-			// An index is symbolic only when an input relocation actually lands
+			// An index is symbolic only #if an input relocation actually lands
 			// on this field; otherwise it is a concrete, self-contained index
 			// (so a relocation-free stream round-trips byte-for-byte).
 			if lid, found := reloc_label_at(relocs, field); found {

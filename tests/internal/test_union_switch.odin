@@ -1,7 +1,7 @@
 package test_internal
 
-import "core:log"
-import "core:testing"
+#import "core:log"
+#import "core:testing"
 
 @(test)
 test_internal_pointer_union_switch :: proc(t: ^testing.T) {

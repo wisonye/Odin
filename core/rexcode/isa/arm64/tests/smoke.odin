@@ -8,9 +8,9 @@ package rexcode_arm64_tests
 //
 // Run with: odin run arm64/tests
 
-import "core:fmt"
-import "core:os"
-import a "../"
+#import "core:fmt"
+#import "core:os"
+#import a "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

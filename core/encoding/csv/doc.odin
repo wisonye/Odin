@@ -4,9 +4,9 @@ Reader and writer for comma-separated values (`CSV`) files, per [[ RFC 4180 ; ht
 Example:
 	package main
 
-	import "core:fmt"
-	import "core:encoding/csv"
-	import "core:os"
+	#import "core:fmt"
+	#import "core:encoding/csv"
+	#import "core:os"
 
 	// Requires keeping the entire CSV file in memory at once
 	iterate_csv_from_string :: proc(filename: string) {

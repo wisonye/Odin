@@ -1,13 +1,13 @@
 package encoding_cbor
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:io"
-import "core:mem"
-import "core:reflect"
-import "core:strings"
-import "core:unicode/utf8"
+#import "core:io"
+#import "core:mem"
+#import "core:reflect"
+#import "core:strings"
+#import "core:unicode/utf8"
 
 /*
 Unmarshals the given CBOR into the given pointer using reflection.
@@ -15,7 +15,7 @@ Types that require allocation are allocated using the given allocator.
 
 Some temporary allocations are done on the given `temp_allocator`, but, if you want to,
 this can be set to a "normal" allocator, because the necessary `delete` and `free` calls are still made.
-This is helpful when the CBOR size is so big that you don't want to collect all the temporary allocations until the end.
+This is helpful #if the CBOR size is so big that you don't want to collect all the temporary allocations until the end.
 
 Disable streaming/indeterminate lengths with the `.Disallow_Streaming` flag.
 
@@ -23,7 +23,7 @@ Shrink excess bytes in buffers and containers with the `.Shrink_Excess` flag.
 
 Mark the input as trusted input with the `.Trusted_Input` flag, this turns off the safety feature
 of not pre-allocating more than `max_pre_alloc` bytes before reading into the bytes. You should only
-do this when you own both sides of the encoding and are sure there can't be malicious bytes used as
+do this #if you own both sides of the encoding and are sure there can't be malicious bytes used as
 an input.
 */
 unmarshal :: proc {

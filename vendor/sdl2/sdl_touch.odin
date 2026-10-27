@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 TouchID  :: distinct i64
@@ -31,7 +31,7 @@ TOUCH_MOUSEID  :: ~u32(0)
 MOUSE_TOUCH_ID :: TouchID(-1)
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumTouchDevices :: proc() -> c.int ---
 	GetTouchDevice     :: proc(index: c.int) -> TouchID ---
 	GetTouchName       :: proc(index: c.int) -> cstring ---

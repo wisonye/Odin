@@ -1,14 +1,14 @@
 // Bindings for [[ libz ; https://zlib.net ]] ZLIB compression library.
 package vendor_zlib
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
-	foreign import zlib "libz.lib"
-} else when ODIN_OS == .Linux {
-	foreign import zlib "system:z"
+#if ODIN_OS == .Windows {
+	#foreign #import zlib "libz.lib"
+} else #if ODIN_OS == .Linux {
+	#foreign #import zlib "system:z"
 } else {
-	foreign import zlib "system:z"
+	#foreign #import zlib "system:z"
 }
 
 VERSION         :: "1.3.2"
@@ -133,7 +133,7 @@ NULL                 :: 0 // for initializing zalloc, zfree, opaque
 version              :: Version // for compatibility with versions < 1.0.2
 
 @(default_calling_convention="c")
-foreign zlib {
+#foreign zlib {
 	// becase zlib.zlibVersion would be silly to write
 	@(link_prefix="zlib")
 	Version              :: proc() -> cstring ---
@@ -227,7 +227,7 @@ foreign zlib {
 // of the stream structure like zlib.h does
 @(private)
 @(default_calling_convention="c")
-foreign zlib {
+#foreign zlib {
 	deflateInit_         :: proc(strm: z_streamp, level: c.int, version: cstring, stream_size: c.int) -> c.int ---
 	inflateInit_         :: proc(strm: z_streamp, version: cstring, stream_size: c.int) -> c.int ---
 	deflateInit2_        :: proc(strm: z_streamp, level, method, windowBits, memLevel, strategy: c.int, version: cstring, stream_size: c.int) -> c.int ---

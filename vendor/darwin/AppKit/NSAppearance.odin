@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSAppearance", objc_superclass=NS.Object)
 Appearance :: struct {
@@ -12,7 +12,7 @@ Appearance :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Appearance, objc_selector="performAsCurrentDrawingAppearance:", objc_name="performAsCurrentDrawingAppearance")
 	Appearance_performAsCurrentDrawingAppearance :: proc(self: ^Appearance, block: ^Objc_Block(proc "c" ())) ---
 
@@ -52,7 +52,7 @@ AppearanceCustomization :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=AppearanceCustomization, objc_selector="appearance", objc_name="appearance")
 	AppearanceCustomization_appearance :: proc(self: ^AppearanceCustomization) -> ^Appearance ---
 

@@ -1,7 +1,7 @@
 package rand
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
 /*
 The state for a PCG64 RXS-M-XS pseudorandom generator.

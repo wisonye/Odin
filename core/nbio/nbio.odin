@@ -1,11 +1,11 @@
 package nbio
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-import "core:container/pool"
-import "core:net"
-import "core:time"
+#import "core:container/pool"
+#import "core:net"
+#import "core:time"
 
 /*
 If the package is fully supported on the current target. If it is not it will compile but work
@@ -304,7 +304,7 @@ Inputs:
 - path: path to the file, if not absolute: relative from `dir`
 - dir:  directory that `path` is relative from (if it is relative), defaults to the current working directory
 - mode: open mode, defaults to read-only
-- perm: permissions to use when creating a file, defaults to read+write for everybody
+- perm: permissions to use #if creating a file, defaults to read+write for everybody
 - l:    event loop to associate the file with, defaults to the current thread's
 
 Returns:
@@ -319,8 +319,8 @@ Association_Error :: enum {
 	None,
 	// The given file/handle/socket was not opened in a mode that it can be made non-blocking afterwards.
 	//
-	// On Windows, this can happen when a file is not opened with the `FILE_FLAG_OVERLAPPED` flag.
-	// If using `core:os`, that is set when you specify the `O_NONBLOCK` flag.
+	// On Windows, this can happen #if a file is not opened with the `FILE_FLAG_OVERLAPPED` flag.
+	// If using `core:os`, that is set #if you specify the `O_NONBLOCK` flag.
 	// There is no way to add that after the fact.
 	Not_Possible_To_Associate,
 	// The given handle is not a valid handle.
@@ -337,8 +337,8 @@ Consider using this package's `open` or `open_sync` directly instead.
 The handle returned is for convenience, it is actually still the same handle as given.
 Thus you should not close the given handle.
 
-On Windows, this can error when a file is not opened with the `FILE_FLAG_OVERLAPPED` flag.
-If using `core:os`, that is set when you specify the `O_NONBLOCK` flag.
+On Windows, this can error #if a file is not opened with the `FILE_FLAG_OVERLAPPED` flag.
+If using `core:os`, that is set #if you specify the `O_NONBLOCK` flag.
 There is no way to add that after the fact.
 */
 associate_handle :: proc(handle: uintptr, l: ^Event_Loop = nil, loc := #caller_location) -> (Handle, Association_Error) {

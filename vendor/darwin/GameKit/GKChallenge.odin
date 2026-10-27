@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_GameKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="GKChallenge", objc_superclass=NS.Object)
 Challenge :: struct {
@@ -12,7 +12,7 @@ Challenge :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Challenge, objc_selector="loadReceivedChallengesWithCompletionHandler:", objc_name="loadReceivedChallengesWithCompletionHandler", objc_is_class_method=true)
 	Challenge_loadReceivedChallengesWithCompletionHandler :: proc(completionHandler: ^Objc_Block(proc "c" ( challenges: ^NS.Array, error: ^NS.Error ))) ---
 
@@ -48,7 +48,7 @@ foreign lib {
 @(objc_class="GKChallengeDefinition", objc_superclass=NS.Object)
 ChallengeDefinition :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengeDefinition, objc_selector="loadImageWithCompletionHandler:", objc_name="loadImageWithCompletionHandler")
 	ChallengeDefinition_loadImageWithCompletionHandler :: proc(self: ^ChallengeDefinition, completionHandler: ^Objc_Block(proc "c" ( image: ^UI_Image, error: ^NS.Error ))) ---
 
@@ -87,7 +87,7 @@ foreign lib {
 @(objc_class="GKChallengeEventHandler", objc_superclass=NS.Object)
 ChallengeEventHandler :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengeEventHandler, objc_selector="challengeEventHandler", objc_name="challengeEventHandler", objc_is_class_method=true)
 	ChallengeEventHandler_challengeEventHandler :: proc() -> ^ChallengeEventHandler ---
 
@@ -105,7 +105,7 @@ ChallengeEventHandlerDelegate :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengeEventHandlerDelegate, objc_selector="localPlayerDidSelectChallenge:", objc_name="localPlayerDidSelectChallenge")
 	ChallengeEventHandlerDelegate_localPlayerDidSelectChallenge :: proc(self: ^ChallengeEventHandlerDelegate, challenge: ^Challenge) ---
 
@@ -135,7 +135,7 @@ ChallengeListener :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=ChallengeListener, objc_selector="player:wantsToPlayChallenge:", objc_name="player_wantsToPlayChallenge")
 	ChallengeListener_player_wantsToPlayChallenge :: proc(self: ^ChallengeListener, player: ^Player, challenge: ^Challenge) ---
 

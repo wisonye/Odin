@@ -2,8 +2,8 @@
 #+build darwin
 package darwin_Metal
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="MTLCounter")
 Counter :: struct {
@@ -11,7 +11,7 @@ Counter :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Counter, objc_selector="name", objc_name="name")
 	Counter_name :: proc(self: ^Counter) -> ^NS.String ---
 }
@@ -23,7 +23,7 @@ CounterSampleBuffer :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CounterSampleBuffer, objc_selector="resolveCounterRange:", objc_name="resolveCounterRange")
 	CounterSampleBuffer_resolveCounterRange :: proc(self: ^CounterSampleBuffer, range: NS._NSRange) -> ^NS.Data ---
 
@@ -44,7 +44,7 @@ CounterSampleBufferDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CounterSampleBufferDescriptor, objc_selector="counterSet", objc_name="counterSet")
 	CounterSampleBufferDescriptor_counterSet :: proc(self: ^CounterSampleBufferDescriptor) -> ^CounterSet ---
 
@@ -77,7 +77,7 @@ CounterSet :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CounterSet, objc_selector="name", objc_name="name")
 	CounterSet_name :: proc(self: ^CounterSet) -> ^NS.String ---
 

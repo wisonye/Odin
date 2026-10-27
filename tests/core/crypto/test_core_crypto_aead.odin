@@ -1,12 +1,12 @@
 package test_core_crypto
 
-import "base:runtime"
-import "core:crypto/aes"
-import "core:crypto/aegis"
-import "core:crypto/aead"
-import "core:crypto/deoxysii"
-import "core:encoding/hex"
-import "core:testing"
+#import "base:runtime"
+#import "core:crypto/aes"
+#import "core:crypto/aegis"
+#import "core:crypto/aead"
+#import "core:crypto/deoxysii"
+#import "core:encoding/hex"
+#import "core:testing"
 
 @(test)
 test_aead :: proc(t: ^testing.T) {

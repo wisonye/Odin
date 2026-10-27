@@ -2,9 +2,9 @@
 #+no-instrumentation
 package runtime
 
-@require foreign import "system:int64.lib"
+@require #foreign #import "system:int64.lib"
 
-foreign import kernel32 "system:Kernel32.lib"
+#foreign #import kernel32 "system:Kernel32.lib"
 
 windows_trap_array_bounds :: proc "contextless" () -> ! {
 	DWORD :: u32
@@ -12,10 +12,10 @@ windows_trap_array_bounds :: proc "contextless" () -> ! {
 
 	EXCEPTION_ARRAY_BOUNDS_EXCEEDED :: 0xC000008C
 
-	foreign kernel32 {
+	#foreign kernel32 {
 		RaiseException :: proc "system" (dwExceptionCode, dwExceptionFlags, nNumberOfArguments: DWORD, lpArguments: ^ULONG_PTR) -> ! ---
 	}
-	when ODIN_CODEPAGE_MAGIC {
+	#if ODIN_CODEPAGE_MAGIC {
 		SetConsoleOutputCP(old_console_codepage)
 	}
 	RaiseException(EXCEPTION_ARRAY_BOUNDS_EXCEEDED, 0, 0, nil)

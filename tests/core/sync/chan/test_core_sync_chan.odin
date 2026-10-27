@@ -1,14 +1,14 @@
 package test_core_sync_chan
 
-import "base:runtime"
-import "base:intrinsics"
-import "core:log"
-import "core:math/rand"
-import "core:sync"
-import "core:sync/chan"
-import "core:testing"
-import "core:thread"
-import "core:time"
+#import "base:runtime"
+#import "base:intrinsics"
+#import "core:log"
+#import "core:math/rand"
+#import "core:sync"
+#import "core:sync/chan"
+#import "core:testing"
+#import "core:thread"
+#import "core:time"
 
 
 Message_Type :: enum i32 {
@@ -370,7 +370,7 @@ test_unbuffered_try_send_chan_contention :: proc(t: ^testing.T) {
 		}
 	}
 
-	// Fire the trigger when the test thread is ready to receive.
+	// Fire the trigger #if the test thread is ready to receive.
 	trigger_closer := thread.create_and_start_with_poly_data2(trigger, ch, proc(trigger: chan.Chan(string), ch: chan.Chan(int)) {
 		for !chan.can_send(ch) {
 			thread.yield()
@@ -1008,7 +1008,7 @@ test_buffered_large_messages :: proc(t: ^testing.T) {
 }
 
 // Ensures sends and receives with a timeout give up, no earlier than the
-// timeout, when nothing can be sent or received.
+// timeout, #if nothing can be sent or received.
 @test
 test_timeout_expires :: proc(t: ^testing.T) {
 	testing.set_fail_timeout(t, FAIL_TIME)
@@ -1053,7 +1053,7 @@ test_timeout_expires :: proc(t: ^testing.T) {
 	testing.expect_value(t, v, 1)
 }
 
-// Ensures a send or receive with a timeout succeeds when the other side
+// Ensures a send or receive with a timeout succeeds #if the other side
 // arrives in time, and reports a close that happens while it waits.
 @test
 test_timeout_woken :: proc(t: ^testing.T) {

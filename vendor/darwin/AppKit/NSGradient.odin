@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSGradient", objc_superclass=NS.Object)
 Gradient :: struct {
@@ -13,7 +13,7 @@ Gradient :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Gradient, objc_selector="initWithStartingColor:endingColor:", objc_name="initWithStartingColor")
 	Gradient_initWithStartingColor :: proc(self: ^Gradient, startingColor: ^Color, endingColor: ^Color) -> instancetype ---
 

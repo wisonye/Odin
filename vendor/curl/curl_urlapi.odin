@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 CURLU :: struct {}
 
@@ -70,13 +70,13 @@ UFlag :: enum c.uint {
 	URLENCODE          =  7,  /* URL encode on set */
 	APPENDQUERY        =  8,  /* append a form style part */
 	GUESS_SCHEME       =  9,  /* legacy curl-style guessing */
-	NO_AUTHORITY       =  10, /* Allow empty authority when the
+	NO_AUTHORITY       =  10, /* Allow empty authority #if the
 	                             scheme is unknown. */
 	ALLOW_SPACE        =  11, /* Allow spaces in the URL */
 	PUNYCODE           =  12, /* get the hostname in punycode */
 	PUNY2IDN           =  13, /* punycode => IDN conversion */
 	GET_EMPTY          =  14, /* allow empty queries and fragments
-	                             when extracting the URL or the
+	                             #if extracting the URL or the
 	                             components */
 	NO_GUESS_SCHEME    =  15, /* for get, do not accept a guess */
 }
@@ -99,7 +99,7 @@ U_GET_EMPTY          :: UFlags{.GET_EMPTY}
 U_NO_GUESS_SCHEME    :: UFlags{.NO_GUESS_SCHEME}
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * curl_url() creates a new CURLU handle and returns a pointer to it.
 	 * Must be freed with curl_url_cleanup().

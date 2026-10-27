@@ -2,7 +2,7 @@
 #+build !js
 package encoding_xml
 
-import "core:os"
+#import "core:os"
 
 // Load an XML file
 load_from_file :: proc(filename: string, options := DEFAULT_OPTIONS, error_handler := default_error_handler, allocator := context.allocator) -> (doc: ^Document, err: Error) {

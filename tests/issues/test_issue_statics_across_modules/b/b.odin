@@ -1,6 +1,6 @@
 package b
 
-import "../a"
+#import "../a"
 
 call :: proc() -> [3]int {
 	h := a.H

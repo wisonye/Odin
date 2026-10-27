@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 MouseID :: distinct Uint32
 
@@ -63,7 +63,7 @@ BUTTON_X2MASK :: MouseButtonFlags{.X2}
 MouseMotionTransformCallback :: #type proc "c" (userdata: rawptr, timestamp: Uint64, window: ^Window, mouseID: MouseID, x, y: ^f32)
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	HasMouse                   :: proc() -> bool ---
 	GetMice                    :: proc(count: ^c.int) -> [^]MouseID ---
 	GetMouseNameForID          :: proc(instance_id: MouseID) -> cstring ---

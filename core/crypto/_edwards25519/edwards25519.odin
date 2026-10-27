@@ -11,8 +11,8 @@ See:
 - https://www.hyperelliptic.org/EFD/g1p/auto-twisted-extended-1.html
 */
 
-import "core:crypto"
-import field "core:crypto/_fiat/field_curve25519"
+#import "core:crypto"
+#import field "core:crypto/_fiat/field_curve25519"
 
 zero_explicit :: crypto.zero_explicit
 

@@ -8,9 +8,9 @@ package rexcode_mips_tests
 //
 // Run with: odin run mips/tests
 
-import "core:fmt"
-import "core:os"
-import mips "../"
+#import "core:fmt"
+#import "core:os"
+#import mips "../"
 
 @(private="file") passes := 0
 @(private="file") failures := 0

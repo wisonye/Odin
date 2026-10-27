@@ -2,14 +2,14 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="NSDockTile", objc_superclass=NS.Object)
 DockTile :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DockTile, objc_selector="display", objc_name="display")
 	DockTile_display :: proc(self: ^DockTile) ---
 
@@ -46,7 +46,7 @@ DockTilePlugIn :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=DockTilePlugIn, objc_selector="setDockTile:", objc_name="setDockTile")
 	DockTilePlugIn_setDockTile :: proc(self: ^DockTilePlugIn, dockTile: ^DockTile) ---
 

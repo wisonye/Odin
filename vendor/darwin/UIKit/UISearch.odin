@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UISearchBar", objc_superclass=View)
 SearchBar :: struct {
@@ -15,7 +15,7 @@ SearchBar :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchBar, objc_selector="init", objc_name="init")
 	SearchBar_init :: proc(self: ^SearchBar) -> instancetype ---
 
@@ -244,7 +244,7 @@ SearchBarDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchBarDelegate, objc_selector="searchBarShouldBeginEditing:", objc_name="searchBarShouldBeginEditing")
 	SearchBarDelegate_searchBarShouldBeginEditing :: proc(self: ^SearchBarDelegate, searchBar: ^SearchBar) -> bool ---
 
@@ -295,7 +295,7 @@ SearchBarDelegate_searchBar :: proc {
 SearchContainerViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchContainerViewController, objc_selector="initWithSearchController:", objc_name="initWithSearchController")
 	SearchContainerViewController_initWithSearchController :: proc(self: ^SearchContainerViewController, searchController: ^SearchController) -> instancetype ---
 
@@ -312,7 +312,7 @@ SearchController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchController, objc_selector="initWithSearchResultsController:", objc_name="initWithSearchResultsController")
 	SearchController_initWithSearchResultsController :: proc(self: ^SearchController, searchResultsController: ^ViewController) -> instancetype ---
 
@@ -424,7 +424,7 @@ SearchControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchControllerDelegate, objc_selector="willPresentSearchController:", objc_name="willPresentSearchController")
 	SearchControllerDelegate_willPresentSearchController :: proc(self: ^SearchControllerDelegate, searchController: ^SearchController) ---
 
@@ -455,7 +455,7 @@ SearchDisplayDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchDisplayDelegate, objc_selector="searchDisplayControllerWillBeginSearch:", objc_name="searchDisplayControllerWillBeginSearch")
 	SearchDisplayDelegate_searchDisplayControllerWillBeginSearch :: proc(self: ^SearchDisplayDelegate, controller: ^SearchDisplayController) ---
 
@@ -498,7 +498,7 @@ foreign lib {
 SearchDisplayController :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchDisplayController, objc_selector="initWithSearchBar:contentsController:", objc_name="initWithSearchBar")
 	SearchDisplayController_initWithSearchBar :: proc(self: ^SearchDisplayController, searchBar: ^SearchBar, viewController: ^ViewController) -> instancetype ---
 
@@ -568,7 +568,7 @@ SearchResultsUpdating :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchResultsUpdating, objc_selector="updateSearchResultsForSearchController:", objc_name="updateSearchResultsForSearchController_")
 	SearchResultsUpdating_updateSearchResultsForSearchController_ :: proc(self: ^SearchResultsUpdating, searchController: ^SearchController) ---
 
@@ -590,7 +590,7 @@ SearchSuggestion :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchSuggestion, objc_selector="localizedSuggestion", objc_name="localizedSuggestion")
 	SearchSuggestion_localizedSuggestion :: proc(self: ^SearchSuggestion) -> ^NS.String ---
 
@@ -618,7 +618,7 @@ SearchSuggestionItem :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchSuggestionItem, objc_selector="suggestionWithLocalizedSuggestion:", objc_name="suggestionWithLocalizedSuggestion_", objc_is_class_method=true)
 	SearchSuggestionItem_suggestionWithLocalizedSuggestion_ :: proc(suggestion: ^NS.String) -> instancetype ---
 
@@ -707,7 +707,7 @@ SearchSuggestionItem_initWithLocalizedAttributedSuggestion :: proc {
 SearchToken :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SearchToken, objc_selector="init", objc_name="init")
 	SearchToken_init :: proc(self: ^SearchToken) -> instancetype ---
 

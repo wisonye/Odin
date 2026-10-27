@@ -1,17 +1,17 @@
 package test_wycheproof
 
-import "core:encoding/hex"
-import "core:log"
-import "core:mem"
-import "core:os"
-import "core:slice"
-import "core:strings"
-import "core:testing"
+#import "core:encoding/hex"
+#import "core:log"
+#import "core:mem"
+#import "core:os"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
 
-import "core:crypto/hkdf"
-import "core:crypto/pbkdf2"
+#import "core:crypto/hkdf"
+#import "core:crypto/pbkdf2"
 
-import "../common"
+#import "../common"
 
 @(test)
 test_hkdf :: proc(t: ^testing.T) {

@@ -86,9 +86,9 @@ Bindings for [[ raylib v6.0 ; https://www.raylib.com ]].
 */
 package raylib
 
-import "core:c"
-import "core:fmt"
-import "core:mem"
+#import "core:c"
+#import "core:fmt"
+#import "core:mem"
 
 MAX_TEXTFORMAT_BUFFERS :: #config(RAYLIB_MAX_TEXTFORMAT_BUFFERS, 4)
 MAX_TEXT_BUFFER_LENGTH :: #config(RAYLIB_MAX_TEXT_BUFFER_LENGTH, 1024)
@@ -99,52 +99,52 @@ MAX_MATERIAL_MAPS      :: #config(RAYLIB_MAX_MATERIAL_MAPS, 12)
 RAYLIB_SHARED :: #config(RAYLIB_SHARED, false)
 RAYLIB_WASM_LIB :: #config(RAYLIB_WASM_LIB, "wasm/libraylib.web.a")
 
-when ODIN_OS == .Windows {
-	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" when RAYLIB_SHARED else "libcmt"))
-	foreign import lib {
-		"windows/raylibdll.lib" when RAYLIB_SHARED else "windows/raylib.lib" ,
+#if ODIN_OS == .Windows {
+	@(extra_linker_flags="/NODEFAULTLIB:" + ("msvcrt" #if RAYLIB_SHARED else "libcmt"))
+	#foreign #import lib {
+		"windows/raylibdll.lib" #if RAYLIB_SHARED else "windows/raylib.lib" ,
 		"system:Winmm.lib",
 		"system:Gdi32.lib",
 		"system:User32.lib",
 		"system:Shell32.lib",
 	}
-} else when ODIN_OS == .Linux  {
-	when ODIN_ARCH == .arm64 {
-		foreign import lib {
+} else #if ODIN_OS == .Linux  {
+	#if ODIN_ARCH == .arm64 {
+		#foreign #import lib {
 			// Note(bumbread): I'm not sure why in `linux/` folder there are
 			// multiple copies of raylib.so, but since these bindings are for
 			// particular version of the library, I better specify it. Ideally,
 			// though, it's best specified in terms of major (.so.4)
-			"linux-arm64/libraylib.so.600" when RAYLIB_SHARED else "linux-arm64/libraylib.a",
+			"linux-arm64/libraylib.so.600" #if RAYLIB_SHARED else "linux-arm64/libraylib.a",
 			"system:dl",
 			"system:pthread",
 			"system:X11",
 		}
 	} else {
-		foreign import lib {
+		#foreign #import lib {
 			// Note(bumbread): I'm not sure why in `linux/` folder there are
 			// multiple copies of raylib.so, but since these bindings are for
 			// particular version of the library, I better specify it. Ideally,
 			// though, it's best specified in terms of major (.so.4)
-			"linux/libraylib.so.600" when RAYLIB_SHARED else "linux/libraylib.a",
+			"linux/libraylib.so.600" #if RAYLIB_SHARED else "linux/libraylib.a",
 			"system:dl",
 			"system:pthread",
 			"system:X11",
 		}
 	}
-} else when ODIN_OS == .Darwin {
-	foreign import lib {
-		"macos/libraylib.600.dylib" when RAYLIB_SHARED else "macos/libraylib.a",
+} else #if ODIN_OS == .Darwin {
+	#foreign #import lib {
+		"macos/libraylib.600.dylib" #if RAYLIB_SHARED else "macos/libraylib.a",
 		"system:Cocoa.framework",
 		"system:OpenGL.framework",
 		"system:IOKit.framework",
 	}
-} else when ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
-	foreign import lib {
+} else #if ODIN_ARCH == .wasm32 || ODIN_ARCH == .wasm64p32 {
+	#foreign #import lib {
 		RAYLIB_WASM_LIB,
 	}
 } else {
-	foreign import lib "system:raylib"
+	#foreign #import lib "system:raylib"
 }
 
 VERSION_MAJOR :: 6
@@ -261,8 +261,8 @@ NPatchInfo :: struct {
 // GlyphInfo, font characters glyphs info
 GlyphInfo :: struct {
 	value:    rune,               // Character value (Unicode)
-	offsetX:  c.int,              // Character offset X when drawing
-	offsetY:  c.int,              // Character offset Y when drawing
+	offsetX:  c.int,              // Character offset X #if drawing
+	offsetY:  c.int,              // Character offset Y #if drawing
 	advanceX: c.int,              // Character advance position X
 	image:    Image,              // Character image data
 }
@@ -517,7 +517,7 @@ ConfigFlag :: enum c.int {
 	WINDOW_ALWAYS_RUN        = 8,     // Set to allow windows running while minimized
 	WINDOW_TRANSPARENT       = 4,     // Set to allow transparent framebuffer
 	WINDOW_HIGHDPI           = 13,    // Set to support HighDPI
-	WINDOW_MOUSE_PASSTHROUGH = 14,    // Set to support mouse passthrough, only supported when FLAG_WINDOW_UNDECORATED
+	WINDOW_MOUSE_PASSTHROUGH = 14,    // Set to support mouse passthrough, only supported #if FLAG_WINDOW_UNDECORATED
 	BORDERLESS_WINDOWED_MODE = 15,    // Set to run program in borderless windowed mode
 	MSAA_4X_HINT             = 5,     // Set to try enabling MSAA 4X
 	INTERLACED_HINT          = 16,    // Set to try enabling interlaced video format (for V3D)
@@ -930,7 +930,7 @@ AudioCallback :: #type proc "c" (bufferData: rawptr, frames: c.uint)
 
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	//------------------------------------------------------------------------------------
 	// Global Variables Definition
 	//------------------------------------------------------------------------------------
@@ -1264,7 +1264,7 @@ foreign lib {
 	// Basic Shapes Drawing Functions (Module: shapes)
 	//------------------------------------------------------------------------------------
 	// Set texture and rectangle to be used on shapes drawing
-	// NOTE: It can be useful when using basic shapes and one single font,
+	// NOTE: It can be useful #if using basic shapes and one single font,
 	// defining a font char white rectangle would allow drawing everything in a single draw call
 
 	SetShapesTexture :: proc(texture: Texture2D, source: Rectangle) ---     // Set texture and rectangle to be used on shapes drawing
@@ -1525,7 +1525,7 @@ foreign lib {
 
 	// Text font info functions
 
-	SetTextLineSpacing :: proc(spacing: c.int) ---                                                             // Set vertical line spacing when drawing with line-breaks
+	SetTextLineSpacing :: proc(spacing: c.int) ---                                                             // Set vertical line spacing #if drawing with line-breaks
 	MeasureText        :: proc(text: cstring, fontSize: c.int) -> c.int ---                                    // Measure string width for default font
 	MeasureTextEx      :: proc(font: Font, text: cstring, fontSize: f32, spacing: f32) -> Vector2 ---          // Measure string size for Font
 	MeasureTextCodepoints :: proc(font: Font, codepoints: [^]c.int, length: c.int, fontSize, spacing: f32) -> Vector2 --- // Measure string size for an existing array of codepoints for Font
@@ -1776,7 +1776,7 @@ foreign lib {
 //  Check if a gesture have been detected
 IsGestureDetected :: proc "c" (gesture: Gesture) -> bool {
 	@(default_calling_convention="c")
-	foreign lib {
+	#foreign lib {
 		IsGestureDetected :: proc "c" (gesture: Gestures) -> bool ---
 	}
 	return IsGestureDetected({gesture})
@@ -1812,7 +1812,7 @@ MemFree :: proc{
 
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(link_name="MemFree")
 	MemFreePtr :: proc(ptr: rawptr) ---
 }

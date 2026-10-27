@@ -1,6 +1,6 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 DisplayID :: distinct Uint32
 WindowID  :: distinct Uint32
@@ -340,7 +340,7 @@ WINDOW_SURFACE_VSYNC_DISABLED :: 0
 WINDOW_SURFACE_VSYNC_ADAPTIVE :: -1
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetNumVideoDrivers              :: proc() -> c.int ---
 	GetVideoDriver                  :: proc(index: c.int) -> cstring ---
 	GetCurrentVideoDriver           :: proc() -> cstring ---
@@ -442,7 +442,7 @@ HitTestResult :: enum c.int {
 HitTest :: #type proc "c" (win: ^Window, area: ^Point, data: rawptr) -> HitTestResult
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	SetWindowHitTest                :: proc(window: ^Window, callback: HitTest, callback_data: rawptr) -> bool ---
 	SetWindowShape                  :: proc(window: ^Window, shape: ^Surface) -> bool ---
 	FlashWindow                     :: proc(window: ^Window, operation: FlashOperation) -> bool ---
@@ -457,7 +457,7 @@ foreign lib {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GL_LoadLibrary                  :: proc(path: cstring) -> bool ---
 	GL_GetProcAddress               :: proc(procName: cstring) -> FunctionPointer ---
 	EGL_GetProcAddress              :: proc(procName: cstring) -> FunctionPointer ---

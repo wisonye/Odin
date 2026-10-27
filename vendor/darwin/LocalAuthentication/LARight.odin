@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="LARight", objc_superclass=NS.Object)
 Right :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Right, objc_selector="init", objc_name="init")
 	Right_init :: proc(self: ^Right) -> instancetype ---
 
@@ -37,7 +37,7 @@ foreign lib {
 @(objc_class="LAPersistedRight", objc_superclass=Right)
 PersistedRight :: struct { using _: Right}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PersistedRight, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	PersistedRight_new :: proc() -> ^PersistedRight ---
 
@@ -55,7 +55,7 @@ foreign lib {
 @(objc_class="LARightStore", objc_superclass=NS.Object)
 RightStore :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RightStore, objc_selector="rightForIdentifier:completion:", objc_name="rightForIdentifier")
 	RightStore_rightForIdentifier :: proc(self: ^RightStore, identifier: ^NS.String, handler: ^Objc_Block(proc "c" ( _0: ^PersistedRight, _1: ^NS.Error ))) ---
 

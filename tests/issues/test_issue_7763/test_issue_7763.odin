@@ -1,10 +1,10 @@
 package test_issue_7763
 
-import "core:log"
-import "core:testing"
-import "core:encoding/base64"
-import "core:slice"
-import "core:strings"
+#import "core:log"
+#import "core:testing"
+#import "core:encoding/base64"
+#import "core:slice"
+#import "core:strings"
 
 @(test)
 test_issue_7763__nothing :: proc(t: ^testing.T) {

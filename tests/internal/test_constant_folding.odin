@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // Constant folding against the answer the backend produces. A folded constant that is merely
 // wrong still compiles, so a harness comparing accept/reject sees agreement 
@@ -139,7 +139,7 @@ bitwise_constant_folding_matches_runtime :: proc(t: ^testing.T) {
 // `<=` and `<` on a `bit_set` are subset and proper subset, `>=` and `>` superset. The folder
 // asked `(lhs & rhs) <= lhs` where the definition is `(lhs & rhs) == lhs`, which is true for
 // any operands, so `<=` folded true unconditionally; `<` compounded it by requiring `lhs < rhs`
-// where it needs `lhs != rhs`. Under `when` this decides which declarations exist.
+// where it needs `lhs != rhs`. Under `#if` this decides which declarations exist.
 }
 
 @(test)
@@ -196,15 +196,15 @@ bit_set_subset_folding_matches_runtime :: proc(t: ^testing.T) {
 	}
 }
 
-// a mis-folded subset test selects the wrong `when` arm, which changes which declarations exist
+// a mis-folded subset test selects the wrong `#if` arm, which changes which declarations exist
 @(test)
 bit_set_subset_folding_selects_the_right_when_arm :: proc(t: ^testing.T) {
 	B :: bit_set[0..<4]
 
-	when (B{0} < B{0, 1})     { W1 :: 1 } else { W1 :: 0 }
-	when (B{0, 3} <= B{0, 1}) { W2 :: 0 } else { W2 :: 1 }
-	when (B{0, 1} <= B{0, 1}) { W3 :: 1 } else { W3 :: 0 }
-	when (B{0, 1} > B{0})     { W4 :: 1 } else { W4 :: 0 }
+	#if (B{0} < B{0, 1})     { W1 :: 1 } else { W1 :: 0 }
+	#if (B{0, 3} <= B{0, 1}) { W2 :: 0 } else { W2 :: 1 }
+	#if (B{0, 1} <= B{0, 1}) { W3 :: 1 } else { W3 :: 0 }
+	#if (B{0, 1} > B{0})     { W4 :: 1 } else { W4 :: 0 }
 
 	testing.expect_value(t, W1, 1)
 	testing.expect_value(t, W2, 1)
@@ -241,7 +241,7 @@ abs_constant_folding_matches_runtime :: proc(t: ^testing.T) {
 		testing.expect_value(t, abs(quaternion(w = f64(1), x = f64(2), y = f64(2), z = f64(4))), abs(b))
 	}
 
-	// the folded value still selects the right `when` arm
-	when abs(i32(-2147483647)) == 2147483647 { W :: 1 } else { W :: 0 }
+	// the folded value still selects the right `#if` arm
+	#if abs(i32(-2147483647)) == 2147483647 { W :: 1 } else { W :: 0 }
 	testing.expect_value(t, W, 1)
 }

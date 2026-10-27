@@ -1,6 +1,6 @@
 package sync
 
-import "core:time"
+#import "core:time"
 
 /*
 Obtain the current thread ID.
@@ -26,7 +26,7 @@ operations is said to be "guarded by a mutex".
 
 **Note**: A Mutex must not be copied after first use (e.g., after locking it the
 first time). This is because, in order to coordinate with other threads, all
-threads must watch the same memory address to know when the lock has been
+threads must watch the same memory address to know #if the lock has been
 released. Trying to use a copy of the lock at a different memory address will
 result in broken and unsafe behavior. For this reason, Mutexes are marked as
 `#no_copy`.
@@ -142,7 +142,7 @@ all shared locks are released.
 
 **Note**: A read-write mutex must not be copied after first use (e.g., after
 acquiring a lock). This is because, in order to coordinate with other threads,
-all threads must watch the same memory address to know when the lock has been
+all threads must watch the same memory address to know #if the lock has been
 released. Trying to use a copy of the lock at a different memory address will
 result in broken and unsafe behavior. For this reason, mutexes are marked as
 `#no_copy`.
@@ -318,7 +318,7 @@ releases the lock as many times as it has been locked by the thread.
 
 **Note**: A recursive mutex must not be copied after first use (e.g., after
 acquiring a lock). This is because, in order to coordinate with other threads,
-all threads must watch the same memory address to know when the lock has been
+all threads must watch the same memory address to know #if the lock has been
 released. Trying to use a copy of the lock at a different memory address will
 result in broken and unsafe behavior. For this reason, mutexes are marked as
 `#no_copy`.
@@ -422,7 +422,7 @@ A thread that intends to wait on a shared variable shall:
 
 **Note**: A condition variable must not be copied after first use (e.g., after
 waiting on it the first time). This is because, in order to coordinate with
-other threads, all threads must watch the same memory address to know when the
+other threads, all threads must watch the same memory address to know #if the
 lock has been released. Trying to use a copy of the lock at a different memory
 address will result in broken and unsafe behavior. For this reason, condition
 variables are marked as `#no_copy`.
@@ -503,7 +503,7 @@ semaphore counter to become non-zero and decreasing it, if necessary.
 
 **Note**: A semaphore must not be copied after first use (e.g., after posting
 to it). This is because, in order to coordinate with other threads, all threads
-must watch the same memory address to know when the lock has been released.
+must watch the same memory address to know #if the lock has been released.
 Trying to use a copy of the lock at a different memory address will result in
 broken and unsafe behavior. For this reason, semaphores are marked as `#no_copy`.
 */

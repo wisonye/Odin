@@ -10,7 +10,7 @@ Data :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Data, objc_selector="length", objc_name="length")
 	Data_length :: proc(self: ^Data) -> UInteger ---
 
@@ -251,7 +251,7 @@ Data_compressedDataUsingAlgorithm :: #force_inline proc "c" (self: ^Data, algori
 @(objc_class="NSMutableData", objc_superclass=Data)
 MutableData :: struct { using _: Data}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableData, objc_selector="mutableBytes", objc_name="mutableBytes")
 	MutableData_mutableBytes :: proc(self: ^MutableData) -> rawptr ---
 
@@ -328,7 +328,7 @@ MutableData_compressUsingAlgorithm :: #force_inline proc "c" (self: ^MutableData
 @(objc_class="NSDataDetector", objc_superclass=RegularExpression)
 DataDetector :: struct { using _: RegularExpression}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=DataDetector, objc_selector="dataDetectorWithTypes:error:", objc_name="dataDetectorWithTypes_error", objc_is_class_method=true)
 	DataDetector_dataDetectorWithTypes_error :: proc(checkingTypes: TextCheckingTypes, error: ^^Error) -> ^DataDetector ---
 

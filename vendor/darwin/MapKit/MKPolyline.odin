@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_MapKit
 
-import CL "vendor:darwin/CoreLocation"
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import CL "vendor:darwin/CoreLocation"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="MKPolyline", objc_superclass=MultiPoint)
 Polyline :: struct {
@@ -12,7 +12,7 @@ Polyline :: struct {
 	using _: Overlay,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Polyline, objc_selector="polylineWithPoints:count:", objc_name="polylineWithPoints", objc_is_class_method=true)
 	Polyline_polylineWithPoints :: proc(points: ^MapPoint, count: NS.UInteger) -> instancetype ---
 
@@ -24,7 +24,7 @@ foreign lib {
 @(objc_class="MKGeodesicPolyline", objc_superclass=Polyline)
 GeodesicPolyline :: struct { using _: Polyline}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GeodesicPolyline, objc_selector="polylineWithPoints:count:", objc_name="polylineWithPoints", objc_is_class_method=true)
 	GeodesicPolyline_polylineWithPoints :: proc(points: ^MapPoint, count: NS.UInteger) -> instancetype ---
 
@@ -36,7 +36,7 @@ foreign lib {
 @(objc_class="MKPolylineRenderer", objc_superclass=OverlayPathRenderer)
 PolylineRenderer :: struct { using _: OverlayPathRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PolylineRenderer, objc_selector="initWithPolyline:", objc_name="initWithPolyline")
 	PolylineRenderer_initWithPolyline :: proc(self: ^PolylineRenderer, polyline: ^Polyline) -> instancetype ---
 
@@ -60,7 +60,7 @@ foreign lib {
 @(objc_class="MKGradientPolylineRenderer", objc_superclass=PolylineRenderer)
 GradientPolylineRenderer :: struct { using _: PolylineRenderer}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=GradientPolylineRenderer, objc_selector="setColors:atLocations:", objc_name="setColors")
 	GradientPolylineRenderer_setColors :: proc(self: ^GradientPolylineRenderer, colors: ^NS.Array, locations: ^NS.Array) ---
 

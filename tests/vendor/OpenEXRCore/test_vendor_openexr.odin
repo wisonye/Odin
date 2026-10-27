@@ -1,12 +1,12 @@
 #+build windows, darwin
 package test_vendor_openexr
 
-import "core:c"
-import "core:fmt"
-import "core:math"
-import "core:os"
-import "core:testing"
-import exr "vendor:OpenEXRCore"
+#import "core:c"
+#import "core:fmt"
+#import "core:math"
+#import "core:os"
+#import "core:testing"
+#import exr "vendor:OpenEXRCore"
 
 // Tests of the OpenEXRCore library built here (3.5.2), through `vendor:OpenEXRCore`. They write an image with every
 // compression method, read it back, and compare it, which exercises the codecs added in OpenEXR 3.4 and 3.5 (the
@@ -20,7 +20,7 @@ CHANNEL_NAMES := [3]cstring{"B", "G", "R"} // the channel list is sorted by name
 // `sizeof` and `offsetof` of the C structs of OpenEXR 3.5.2 on a 64-bit target.
 @(test)
 layout :: proc(t: ^testing.T) {
-	when size_of(rawptr) == 8 {
+	#if size_of(rawptr) == 8 {
 		testing.expect_value(t, size_of(exr.context_initializer_t), 112)
 		testing.expect_value(t, offset_of(exr.context_initializer_t, size), 0)
 		testing.expect_value(t, offset_of(exr.context_initializer_t, zip_level), 88)

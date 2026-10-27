@@ -1,6 +1,6 @@
 package test_lifetime_markers
 
-import "core:testing"
+#import "core:testing"
 
 // tests the -lifetime-markers compiler flag
 

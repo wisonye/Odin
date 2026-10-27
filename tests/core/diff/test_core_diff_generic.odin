@@ -1,12 +1,12 @@
 package test_core_diff
 
-import "base:runtime"
-import "core:diff"
-import "core:math/rand"
-import "core:mem"
-import "core:slice"
-import "core:strings"
-import "core:testing"
+#import "base:runtime"
+#import "core:diff"
+#import "core:math/rand"
+#import "core:mem"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
 
 /*
 	Harness

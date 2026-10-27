@@ -2,10 +2,10 @@
 
 package rexcode_arm32_tests
 
-import "core:fmt"
-import "core:strings"
-import "core:os"
-import a "../"
+#import "core:fmt"
+#import "core:strings"
+#import "core:os"
+#import a "../"
 
 ok, fail: int
 

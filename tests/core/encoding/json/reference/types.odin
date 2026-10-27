@@ -33,7 +33,7 @@ Using one of these `Specification`s.
 */
 package encoding_json_reference
 
-import "core:strings"
+#import "core:strings"
 
 Specification :: enum {
 	JSON,

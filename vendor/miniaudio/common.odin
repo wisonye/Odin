@@ -1,22 +1,22 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
 MINIAUDIO_SHARED :: #config(MINIAUDIO_SHARED, false)
 
-when MINIAUDIO_SHARED {
+#if MINIAUDIO_SHARED {
 	#panic("Shared linking for miniaudio is not supported yet")
 }
 
 @(private)
-LIB :: "lib/miniaudio.lib" when ODIN_OS == .Windows else "lib/darwin/miniaudio.a" when ODIN_OS == .Darwin else "lib/miniaudio.a"
+LIB :: "lib/miniaudio.lib" #if ODIN_OS == .Windows else "lib/darwin/miniaudio.a" #if ODIN_OS == .Darwin else "lib/miniaudio.a"
 
-when !#exists(LIB) {
+#if !#exists(LIB) {
 	// The Windows and macOS libraries are shipped with the compiler, so a message for them should not be needed.
 	#panic("Could not find the compiled miniaudio library, it can be compiled by running `\"" + ODIN_ROOT + "vendor/miniaudio/src/build_miniaudio.sh\"`")
 }
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 BINDINGS_VERSION_MAJOR    :: 0
 BINDINGS_VERSION_MINOR    :: 11
@@ -37,7 +37,7 @@ version_check :: proc "contextless" () {
 		n += copy(buf[n:], string(version_string()))
 		n += copy(buf[n:], " is linked, make sure to compile the correct miniaudio version by executing `")
 
-		when ODIN_OS == .Windows {
+		#if ODIN_OS == .Windows {
 			n += copy(buf[n:], "vendor\\miniaudio\\src\\build.bat`")
 		} else {
 			n += copy(buf[n:], "vendor/miniaudio/src/build_miniaudio.sh`")
@@ -305,7 +305,7 @@ spinlock :: distinct u32
 
 NO_THREADING :: false
 
-when !NO_THREADING {
+#if !NO_THREADING {
 /* Thread priorities should be ordered such that the default priority of the worker thread is 0. */
 thread_priority :: enum c.int {
 	idle     = -5,
@@ -321,7 +321,7 @@ thread_priority :: enum c.int {
 
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	version :: proc(pMajor, pMinor, pRevision: ^u32) ---
 	version_string :: proc() -> cstring ---
 }
@@ -335,7 +335,7 @@ Miscellaneous Helpers
 ************************************************************************************************************************************************************/
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	/*
 	Retrieves a human readable description of the given result code.
 	*/

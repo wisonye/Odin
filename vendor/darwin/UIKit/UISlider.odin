@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import cffi "core:c"
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UISlider", objc_superclass=Control)
 Slider :: struct {
@@ -13,7 +13,7 @@ Slider :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Slider, objc_selector="setValue:animated:", objc_name="setValue_animated")
 	Slider_setValue_animated :: proc(self: ^Slider, value: cffi.float, animated: bool) ---
 
@@ -147,7 +147,7 @@ SliderTick :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderTick, objc_selector="tickWithPosition:title:image:", objc_name="tickWithPosition", objc_is_class_method=true)
 	SliderTick_tickWithPosition :: proc(position: cffi.float, title: ^NS.String, image: ^Image) -> instancetype ---
 
@@ -182,7 +182,7 @@ SliderTrackConfiguration :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=SliderTrackConfiguration, objc_selector="configurationWithTicks:", objc_name="configurationWithTicks", objc_is_class_method=true)
 	SliderTrackConfiguration_configurationWithTicks :: proc(ticks: ^NS.Array) -> instancetype ---
 

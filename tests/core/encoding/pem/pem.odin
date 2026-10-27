@@ -1,9 +1,9 @@
 package test_core_pem
 
-import "core:bytes"
-import "core:encoding/hex"
-import "core:encoding/pem"
-import "core:testing"
+#import "core:bytes"
+#import "core:encoding/hex"
+#import "core:encoding/pem"
+#import "core:testing"
 
 // RFC 7468 Section 9.
 @(private)

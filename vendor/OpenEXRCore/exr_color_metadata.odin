@@ -1,6 +1,6 @@
 package vendor_openexr
 
-import "core:c"
+#import "core:c"
 
 /**
  * Color metadata
@@ -11,7 +11,7 @@ import "core:c"
  * New in OpenEXR v3.5.
  */
 
-/** @brief Tolerance recommended when matching a chromaticities attribute
+/** @brief Tolerance recommended #if matching a chromaticities attribute
  * against the chromaticities of a color interop ID.
  *
  * This is the value the Color Interop Forum recommendation suggests.
@@ -95,23 +95,23 @@ color_metadata_t :: struct {
 	has_adopted_neutral: c.int,
 	/** Non-zero if the part has an acesImageContainerFlag attribute, of any type. */
 	has_aces_image_container_flag: c.int,
-	/** The value of the part's acesImageContainerFlag. Only read when
+	/** The value of the part's acesImageContainerFlag. Only read #if
 	 * `has_aces_image_container_flag` is non-zero. Pass any value other
-	 * than 1 when the attribute is present but is not an int, since a
+	 * than 1 #if the attribute is present but is not an int, since a
 	 * wrong type and a wrong value are reported the same way. */
 	aces_image_container_flag: i32,
 	/** The first part's colorInteropID, or NULL if the first part has none.
-	 * Only read when `compare_to_first_part` is non-zero. */
+	 * Only read #if `compare_to_first_part` is non-zero. */
 	first_part_color_interop_id: cstring,
 	/** Non-zero to check the shared attribute rules against
-	 * `first_part_color_interop_id`. Leave this zero when checking the
+	 * `first_part_color_interop_id`. Leave this zero #if checking the
 	 * first part of a file, or a single-part file, since there is then
 	 * nothing to compare against. */
 	compare_to_first_part: c.int,
 }
 
 @(link_prefix="exr_", default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	/** @brief Return the chromaticities denoted by a color interop ID.
 	 *
 	 * The Color Interop Forum recommendation for OpenEXR files defines a
@@ -125,7 +125,7 @@ foreign lib {
 	 * See <https://github.com/AcademySoftwareFoundation/ColorInterop/blob/main/Recommendations/04_OpenEXRFiles/OpenEXRFiles.md>.
 	 *
 	 * Note that the recommendation is that the chromaticities attribute not be
-	 * set when setting the colorInteropID, other than for ST 2065-4 compliance.
+	 * set #if setting the colorInteropID, other than for ST 2065-4 compliance.
 	 * This function is intended for feeding legacy consumers that understand
 	 * only chromaticities.
 	 *
@@ -144,7 +144,7 @@ foreign lib {
 	 * The reverse of `color_interop_id_to_chromaticities`; the same six IDs
 	 * are the only possible results.
 	 *
-	 * A set of chromaticities matches an entry when all four coordinate pairs
+	 * A set of chromaticities matches an entry #if all four coordinate pairs
 	 * are within +/- `tolerance` in both x and y. Pass
 	 * `COLOR_INTEROP_ID_CHROMATICITIES_TOLERANCE` unless you have reason not to.
 	 *
@@ -162,7 +162,7 @@ foreign lib {
 	/** @brief Check a part's color space metadata for internal inconsistency.
 	 *
 	 * This is the rule implementation behind `check_color_metadata`. Prefer
-	 * that function when you have a context to check; use this one to check
+	 * that function #if you have a context to check; use this one to check
 	 * metadata you are about to write, before any context exists.
 	 *
 	 * @param values The metadata to check.

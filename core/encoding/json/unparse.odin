@@ -1,9 +1,9 @@
 package encoding_json
 
-import "base:runtime"
-import "core:strings"
-import "core:io"
-import "core:slice"
+#import "base:runtime"
+#import "core:strings"
+#import "core:io"
+#import "core:slice"
 
 Unparse_Error :: union #shared_nil {
 	io.Error,

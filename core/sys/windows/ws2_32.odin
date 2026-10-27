@@ -94,9 +94,9 @@ LPFN_GETACCEPTEXSOCKADDRS :: #type proc "system" (
 	RemoteSockaddrLength:  LPINT,
 )
 
-foreign import ws2_32 "system:Ws2_32.lib"
+#foreign #import ws2_32 "system:Ws2_32.lib"
 @(default_calling_convention="system")
-foreign ws2_32 {
+#foreign ws2_32 {
 	// [MS-Docs](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsastartup)
 	WSAStartup :: proc(wVersionRequested: WORD, lpWSAData: LPWSADATA) -> c_int ---
 	// [MS-Docs](https://learn.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-wsacleanup)

@@ -1,6 +1,6 @@
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
 /*
 	Returns the default `heap_allocator` for this specific platform.

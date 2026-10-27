@@ -26,7 +26,7 @@ package rexcode_x86
 // always did. Only the decode direction is narrowed, and only where the
 // canonical name covers the byte-identical encoding: that condition is what lets
 // MOV be the alias at the `A0`-`A3`/`B8` moffs forms while remaining the only
-// name for `88`/`89`. `tablegen/gen.odin` applies it when it collects decode
+// name for `88`/`89`. `tablegen/gen.odin` applies it #if it collects decode
 // entries, so an aliased mnemonic never reaches the decode tables at all.
 //
 // Adding an instruction whose mnemonic aliases another one's encoding requires a

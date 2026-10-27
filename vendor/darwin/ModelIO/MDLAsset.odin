@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_ModelIO
 
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="MDLAsset", objc_superclass=NS.Object)
 Asset :: struct {
@@ -13,7 +13,7 @@ Asset :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Asset, objc_selector="initWithURL:", objc_name="initWithURL_")
 	Asset_initWithURL_ :: proc(self: ^Asset, _URL: ^NS.URL) -> instancetype ---
 
@@ -160,7 +160,7 @@ AssetResolver :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AssetResolver, objc_selector="canResolveAssetNamed:", objc_name="canResolveAssetNamed")
 	AssetResolver_canResolveAssetNamed :: proc(self: ^AssetResolver, name: ^NS.String) -> bool ---
 
@@ -175,7 +175,7 @@ BundleAssetResolver :: struct {
 	using _: AssetResolver,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=BundleAssetResolver, objc_selector="initWithBundle:", objc_name="initWithBundle")
 	BundleAssetResolver_initWithBundle :: proc(self: ^BundleAssetResolver, path: ^NS.String) -> instancetype ---
 
@@ -193,7 +193,7 @@ PathAssetResolver :: struct {
 	using _: AssetResolver,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PathAssetResolver, objc_selector="initWithPath:", objc_name="initWithPath")
 	PathAssetResolver_initWithPath :: proc(self: ^PathAssetResolver, path: ^NS.String) -> instancetype ---
 
@@ -211,7 +211,7 @@ RelativeAssetResolver :: struct {
 	using _: AssetResolver,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=RelativeAssetResolver, objc_selector="initWithAsset:", objc_name="initWithAsset")
 	RelativeAssetResolver_initWithAsset :: proc(self: ^RelativeAssetResolver, asset: ^Asset) -> instancetype ---
 

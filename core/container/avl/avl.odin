@@ -1,9 +1,9 @@
 // A non-intrusive and non-recursive implementation of `AVL` trees.
 package container_avl
 
-@(require) import "base:intrinsics"
-@(require) import "base:runtime"
-import "core:slice"
+@(require) #import "base:intrinsics"
+@(require) #import "base:runtime"
+#import "core:slice"
 
 // Originally based on the CC0 implementation by Eric Biggers
 // See: https://github.com/ebiggers/avl_tree/
@@ -16,7 +16,7 @@ Direction :: enum i8 {
 	Forward  = 1,
 }
 
-// Ordering specifies order when inserting/finding values into the tree.
+// Ordering specifies order #if inserting/finding values into the tree.
 Ordering :: slice.Ordering
 
 // Tree is an AVL tree.
@@ -649,7 +649,7 @@ node_adjust_balance_factor :: #force_inline proc "contextless" (n: ^Node($Value)
 
 @(private)
 iterator_first :: proc "contextless" (it: ^Iterator($Value)) {
-	// This is private because behavior when the user manually calls
+	// This is private because behavior #if the user manually calls
 	// iterator_first followed by iterator_next is unintuitive, since
 	// the first call to iterator_next MUST return the first node
 	// instead of advancing so that `for node in iterator_next(&next)`

@@ -1,10 +1,10 @@
 // The tokenizer (lexer) for `Odin` files, used to create tooling.
 package odin_tokenizer
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:unicode"
-import "core:unicode/utf8"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:unicode"
+#import "core:unicode/utf8"
 
 Error_Handler :: #type proc(pos: Pos, fmt: string, args: ..any)
 

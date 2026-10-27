@@ -2,7 +2,7 @@
 
 package test_issue_5640
 
-import "core:testing"
+#import "core:testing"
 
 MyStruct :: struct {
     a: u32,
@@ -19,9 +19,9 @@ myfunc :: #force_no_inline proc( f: Foo ) -> bool {
 	return f.x[0] == 45 && f.x[14] == 67
 }
 
-foreign import test_lib "../build/test_issue_5640_c.o"
+#foreign #import test_lib "../build/test_issue_5640_c.o"
 
-foreign test_lib {
+#foreign test_lib {
 	test_stack_next :: proc(
     	r0, r1, r2, r3, r4, r5, r6, r7: i64,
 	    s: MyStruct,

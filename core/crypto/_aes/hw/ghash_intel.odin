@@ -23,9 +23,9 @@
 #+build amd64
 package aes_hw
 
-import "base:intrinsics"
-import "core:crypto/_aes"
-import "core:simd/x86"
+#import "base:intrinsics"
+#import "core:crypto/_aes"
+#import "core:simd/x86"
 
 @(private = "file")
 GHASH_STRIDE_HW :: 4

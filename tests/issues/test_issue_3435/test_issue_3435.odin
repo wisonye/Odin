@@ -1,9 +1,9 @@
 package test_issue_3435
 
-import "base:runtime"
-import "core:mem"
-import "core:testing"
-import "core:time"
+#import "base:runtime"
+#import "core:mem"
+#import "core:testing"
+#import "core:time"
 
 @test
 test_issue_3435 :: proc(t: ^testing.T) {

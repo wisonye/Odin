@@ -1,9 +1,9 @@
 package mem_virtual
 
-import "core:mem"
-import "core:sync"
+#import "core:mem"
+#import "core:sync"
 
-// import "base:sanitizer"
+// #import "base:sanitizer"
 
 Arena_Kind :: enum uint {
 	Growing = 0, // Chained memory blocks (singly linked list).
@@ -39,7 +39,7 @@ DEFAULT_ARENA_GROWING_COMMIT_SIZE        :: 8*mem.Megabyte
 DEFAULT_ARENA_GROWING_MINIMUM_BLOCK_SIZE :: DEFAULT_ARENA_STATIC_COMMIT_SIZE
 
 // 1 GiB on 64-bit systems, 128 MiB on 32-bit systems by default
-DEFAULT_ARENA_STATIC_RESERVE_SIZE :: mem.Gigabyte when size_of(uintptr) == 8 else 128 * mem.Megabyte
+DEFAULT_ARENA_STATIC_RESERVE_SIZE :: mem.Gigabyte #if size_of(uintptr) == 8 else 128 * mem.Megabyte
 
 
 

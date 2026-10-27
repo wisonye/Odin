@@ -5,7 +5,7 @@ package test_issue_7798
 a_real :: proc() {}
 
 A :: proc() {
-    foreign _ {
+    #foreign _ {
         @(link_name = "A_link_name")
         a_fake :: proc "odin" () ---
     }
@@ -14,7 +14,7 @@ A :: proc() {
 
 
 B :: proc() {
-    foreign _ {
+    #foreign _ {
         @(link_name = "B_link_name")
         b_fake :: proc "odin" () ---
     }

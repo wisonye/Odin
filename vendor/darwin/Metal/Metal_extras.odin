@@ -7,9 +7,9 @@ package darwin_Metal
 // are added to the overload group of `<generated proc>` by vendor/darwin/_gen/import_darwinkit.py,
 // e.g. `encoder->setViewports(viewports[:])` alongside `encoder->setViewports(&viewport, 1)`.
 
-import "base:intrinsics"
-import "core:mem"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import "core:mem"
+#import NS "core:sys/darwin/Foundation"
 
 _ :: mem // only used by polymorphic procedures
 

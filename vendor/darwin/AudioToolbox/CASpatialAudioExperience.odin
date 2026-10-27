@@ -2,15 +2,15 @@
 #+build darwin
 package darwin_AudioToolbox
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
 
 _ :: NS
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	@(objc_class="CASpatialAudioExperience")
 	SpatialAudioExperience :: struct { using _: intrinsics.objc_object}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	@(objc_class="CASpatialAudioExperience", objc_superclass=NS.Object)
 	SpatialAudioExperience :: struct {
 		using _: NS.Object,
@@ -19,8 +19,8 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 	}
 }
 
-foreign lib {
-	when ODIN_PLATFORM_SUBTARGET_IOS {
+#foreign lib {
+	#if ODIN_PLATFORM_SUBTARGET_IOS {
 		@(objc_type=SpatialAudioExperience, objc_selector="init", objc_name="init")
 		SpatialAudioExperience_init :: proc(self: ^SpatialAudioExperience) -> instancetype ---
 

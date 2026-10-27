@@ -1,14 +1,14 @@
 package cpp_gen
 
-import "base:intrinsics"
-import "core:fmt"
-import "core:os"
-import "core:strings"
-import "core:slice"
-import "core:reflect"
-import "core:rexcode/isa/x86"
+#import "base:intrinsics"
+#import "core:fmt"
+#import "core:os"
+#import "core:strings"
+#import "core:slice"
+#import "core:reflect"
+#import "core:rexcode/isa/x86"
 
-import gen ".."
+#import gen ".."
 
 ISA_NAME :: "amd64"
 
@@ -468,8 +468,8 @@ main :: proc() {
 		struct PseudoAlias {
 			Mnemonic target; // real instruction emitted
 			AliasSrc src[4]; // how to fill target's four operand slots
-			i16      lit;    // immediate when a src slot is AliasSrc_LIT
-			u16      csr;    // CSR address when a src slot is AliasSrc_CSR_LIT
+			i16      lit;    // immediate #if a src slot is AliasSrc_LIT
+			u16      csr;    // CSR address #if a src slot is AliasSrc_CSR_LIT
 			u8       nargs;  // operands the user supplies (ARG0..<ARGn)
 
 			bool is_nondeterministic() const {

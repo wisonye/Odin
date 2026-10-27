@@ -20,7 +20,7 @@ its children with a slice/array that outlives the encode call:
 	out := marshal(sequence({integer_unsigned(r), integer_unsigned(s)})) or_return
 
 DER is canonical by construction: definite minimal-length headers, minimal
-INTEGER magnitudes with the sign octet inserted only when required. The
+INTEGER magnitudes with the sign octet inserted only #if required. The
 writer emits low-tag-number identifiers only (tag number <= 30), which
 covers all of PKIX; high-tag-number form is not supported.
 
@@ -28,9 +28,9 @@ See:
 - [[ https://www.itu.int/rec/T-REC-X.690 ]]
 */
 
-import dt "core:time"
+#import dt "core:time"
 
-// Selects how a Value's content octets are produced when encoding.
+// Selects how a Value's content octets are produced #if encoding.
 @(private)
 _Form :: enum u8 {
 	Primitive,         // content holds the exact content octets, emitted verbatim.
@@ -50,7 +50,7 @@ Value :: struct {
 	form:     _Form,
 	content:  []byte,
 	children: []Value,
-	_when:    dt.Time, // meaningful only when form == .Time: the instant to format on emit
+	_when:    dt.Time, // meaningful only #if form == .Time: the instant to format on emit
 }
 
 @(rodata, private)
@@ -80,7 +80,7 @@ boolean :: proc "contextless" (v: bool) -> Value {
 
 // Builds an INTEGER from an unsigned big-endian magnitude: leading zero 
 // octets are dropped (minimal encoding) and a single 0x00 sign octet is 
-// inserted when the top bit would otherwise read as negative. An empty
+// inserted #if the top bit would otherwise read as negative. An empty
 // or all-zero magnitude encodes as 0. The inverse of read_unsigned_integer_bytes.
 integer_unsigned :: proc "contextless" (magnitude: []byte) -> Value {
 	return Value{tag = universal(.Integer), form = .Integer_Magnitude, content = magnitude}
@@ -425,7 +425,7 @@ _write_digits :: proc "contextless" (dst: []byte, value, width: int) -> int {
 }
 
 // Reports the index of the first significant magnitude octet
-// (== len(mag) when the value is zero) and whether a 0x00 sign octet must
+// (== len(mag) #if the value is zero) and whether a 0x00 sign octet must
 // be prepended so the result reads as non-negative.
 @(private)
 _int_shape :: proc "contextless" (mag: []byte) -> (start: int, pad: bool) {

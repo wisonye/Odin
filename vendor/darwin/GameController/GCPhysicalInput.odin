@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_GameController
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import cffi "core:c"
 
 @(objc_class="GCPhysicalInputElement")
 PhysicalInputElement :: struct {
@@ -12,7 +12,7 @@ PhysicalInputElement :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicalInputElement, objc_selector="aliases", objc_name="aliases")
 	PhysicalInputElement_aliases :: proc(self: ^PhysicalInputElement) -> ^NS.Set ---
 
@@ -30,7 +30,7 @@ PhysicalInputElementCollection :: struct {
 	using _: NS.FastEnumeration,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicalInputElementCollection, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	PhysicalInputElementCollection_new :: proc() -> ^PhysicalInputElementCollection ---
 
@@ -61,7 +61,7 @@ PhysicalInputExtents :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicalInputExtents, objc_selector="scaledValue", objc_name="scaledValue")
 	PhysicalInputExtents_scaledValue :: proc(self: ^PhysicalInputExtents) -> cffi.double ---
 
@@ -76,7 +76,7 @@ foreign lib {
 @(objc_class="GCPhysicalInputProfile", objc_superclass=NS.Object)
 PhysicalInputProfile :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicalInputProfile, objc_selector="objectForKeyedSubscript:", objc_name="objectForKeyedSubscript")
 	PhysicalInputProfile_objectForKeyedSubscript :: proc(self: ^PhysicalInputProfile, key: ^NS.String) -> ^ControllerElement ---
 
@@ -145,7 +145,7 @@ PhysicalInputSource :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=PhysicalInputSource, objc_selector="elementAliases", objc_name="elementAliases")
 	PhysicalInputSource_elementAliases :: proc(self: ^PhysicalInputSource) -> ^NS.Set ---
 

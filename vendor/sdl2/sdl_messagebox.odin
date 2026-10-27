@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 MessageBoxFlag :: enum u32 {
@@ -29,8 +29,8 @@ MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT :: MessageBoxFlags{.BUTTONS_LEFT_TO_RIGHT}
 MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT :: MessageBoxFlags{.BUTTONS_RIGHT_TO_LEFT}
 
 MessageBoxButtonFlag :: enum u32 {
-	RETURNKEY_DEFAULT = 0,  /**< Marks the default button when return is hit */
-	ESCAPEKEY_DEFAULT = 1,  /**< Marks the default button when escape is hit */
+	RETURNKEY_DEFAULT = 0,  /**< Marks the default button #if return is hit */
+	ESCAPEKEY_DEFAULT = 1,  /**< Marks the default button #if escape is hit */
 }
 MessageBoxButtonFlags :: distinct bit_set[MessageBoxButtonFlag; u32]
 
@@ -73,7 +73,7 @@ MessageBoxData :: struct {
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	ShowMessageBox       :: proc(messageboxdata: ^MessageBoxData, buttonid: ^c.int) -> c.int ---
 	ShowSimpleMessageBox :: proc(flags: MessageBoxFlags, title: cstring, message: cstring, window: ^Window) -> c.int ---
 }

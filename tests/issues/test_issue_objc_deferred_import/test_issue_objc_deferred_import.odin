@@ -3,14 +3,14 @@
 // Expected: 1 error, for `pool_bad`.
 package test_issue_objc_deferred_import
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
-foreign import lib "system:Foundation.framework"
+#foreign #import lib "system:Foundation.framework"
 
 @(objc_class="NSAutoreleasePool")
 AutoreleasePool :: struct {using _: intrinsics.objc_object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=AutoreleasePool, objc_selector="drain", objc_name="drain")
 	AutoreleasePool_drain :: proc(self: ^AutoreleasePool) ---
 }

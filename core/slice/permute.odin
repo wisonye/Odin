@@ -1,6 +1,6 @@
 package slice
 
-import "base:runtime"
+#import "base:runtime"
 
 // An in-place permutation iterator.
 Permutation_Iterator :: struct($T: typeid) {

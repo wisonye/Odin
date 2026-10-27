@@ -6,7 +6,7 @@ package darwin_Foundation
 GarbageCollector :: struct { using _: Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=GarbageCollector, objc_selector="defaultCollector", objc_name="defaultCollector", objc_is_class_method=true)
 	GarbageCollector_defaultCollector :: proc() -> id ---
 

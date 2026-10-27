@@ -2,13 +2,13 @@
 #+build darwin:default
 package darwin_AppKit
 
-import NS "core:sys/darwin/Foundation"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSPressureConfiguration", objc_superclass=NS.Object)
 PressureConfiguration :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PressureConfiguration, objc_selector="initWithPressureBehavior:", objc_name="initWithPressureBehavior")
 	PressureConfiguration_initWithPressureBehavior :: proc(self: ^PressureConfiguration, pressureBehavior: PressureBehavior) -> instancetype ---
 

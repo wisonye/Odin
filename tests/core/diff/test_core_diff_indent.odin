@@ -1,11 +1,11 @@
 package test_core_diff
 
-import "core:diff"
-import "core:fmt"
-import "core:math/rand"
-import "core:slice"
-import "core:strings"
-import "core:testing"
+#import "core:diff"
+#import "core:fmt"
+#import "core:math/rand"
+#import "core:slice"
+#import "core:strings"
+#import "core:testing"
 
 /*
 	Harness

@@ -1,21 +1,21 @@
 #+private
 package os
 
-import "base:runtime"
-import "base:intrinsics"
+#import "base:runtime"
+#import "base:intrinsics"
 
-import "core:sync"
-import "core:slice"
-import "core:strings"
-import "core:sys/linux"
-import "core:sys/posix"
+#import "core:sync"
+#import "core:slice"
+#import "core:strings"
+#import "core:sys/linux"
+#import "core:sys/posix"
 
 _ :: sync
 _ :: slice
 _ :: linux
 _ :: posix
 
-when ODIN_NO_CRT {
+#if ODIN_NO_CRT {
 	// TODO: Override the libc environment functions' weak linkage to
 	//       allow us to interact with 3rd party code that DOES link
 	//       to libc. Otherwise, our environment can be out of sync.

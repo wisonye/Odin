@@ -16,7 +16,7 @@
 
 	    In-Place: Processing such that the input buffer equals the output buffer (i.e. input data modified directly).
 		      This form of processing is generally more efficient than using separate memory for input and output.
-		      However, an XAPO may not perform format conversion when processing in-place.
+		      However, an XAPO may not perform format conversion #if processing in-place.
 
     2.  XAPO member variables are divided into three classifications:
 	    Immutable: Set once via IXAPO.Initialize and remain constant during the lifespan of the XAPO.
@@ -43,7 +43,7 @@
 
 package windows_xaudio2
 
-import win "core:sys/windows"
+#import win "core:sys/windows"
 
 //--------------<D-E-F-I-N-I-T-I-O-N-S>-------------------------------------//
 
@@ -75,7 +75,7 @@ XAPO_FLAG :: enum u32 {
 	BITSPERSAMPLE_MUST_MATCH = 2,
 
 	// Number of input and output buffers must match, applies to XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS.
-	// Also, XAPO_REGISTRATION_PROPERTIES.MinInputBufferCount must equal XAPO_REGISTRATION_PROPERTIES.MinOutputBufferCount and XAPO_REGISTRATION_PROPERTIES.MaxInputBufferCount must equal XAPO_REGISTRATION_PROPERTIES.MaxOutputBufferCount when used.
+	// Also, XAPO_REGISTRATION_PROPERTIES.MinInputBufferCount must equal XAPO_REGISTRATION_PROPERTIES.MinOutputBufferCount and XAPO_REGISTRATION_PROPERTIES.MaxInputBufferCount must equal XAPO_REGISTRATION_PROPERTIES.MaxOutputBufferCount #if used.
 	BUFFERCOUNT_MUST_MATCH = 3,
 
 	// XAPO must be run in-place.  Use this flag only if your DSP implementation cannot process separate input and output buffers.
@@ -92,7 +92,7 @@ XAPO_FLAG :: enum u32 {
 	// XAPO may be run in-place.  If the XAPO is used in a chain such that the requirements for XAPO_FLAG_INPLACE_REQUIRED are met, XAudio2 will ensure the XAPO is run in-place.
 	// If not met, XAudio2 will still run the XAPO albeit with separate input and output buffers.
 	// For example, consider an effect which may be ran in stereo->5.1 mode or mono->mono mode.  When set to stereo->5.1, it will be run with separate input and output buffers as format conversion is not permitted in-place.
-	// However, if configured to run mono->mono, the same XAPO can be run in-place.  Thus the same implementation may be conveniently reused for various input/output configurations, while taking advantage of in-place processing when possible.
+	// However, if configured to run mono->mono, the same XAPO can be run in-place.  Thus the same implementation may be conveniently reused for various input/output configurations, while taking advantage of in-place processing #if possible.
 	INPLACE_SUPPORTED = 4,
 }
 
@@ -108,8 +108,8 @@ XAPO_REGISTRATION_PROPERTIES :: struct #packed {
 	Flags:                XAPO_FLAGS,                                 // XAPO property flags, describes supported input/output configuration
 	MinInputBufferCount:  u32,                                        // minimum number of input buffers required for processing, can be 0
 	MaxInputBufferCount:  u32,                                        // maximum number of input buffers supported for processing, must be >= MinInputBufferCount
-	MinOutputBufferCount: u32,                                        // minimum number of output buffers required for processing, can be 0, must match MinInputBufferCount when XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
-	MaxOutputBufferCount: u32,                                        // maximum number of output buffers supported for processing, must be >= MinOutputBufferCount, must match MaxInputBufferCount when XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
+	MinOutputBufferCount: u32,                                        // minimum number of output buffers required for processing, can be 0, must match MinInputBufferCount #if XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
+	MaxOutputBufferCount: u32,                                        // maximum number of output buffers supported for processing, must be >= MinOutputBufferCount, must match MaxInputBufferCount #if XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
 }
 
 // LockForProcess buffer parameters:
@@ -243,7 +243,7 @@ IXAPO_VTable :: struct {
 	  // PARAMETERS:
 	  //  InputLockedParameterCount  - [in] number of input buffers, must be within [XAPO_REGISTRATION_PROPERTIES.MinInputBufferCount, XAPO_REGISTRATION_PROPERTIES.MaxInputBufferCount]
 	  //  pInputLockedParameters     - [in] array of input locked buffer parameter structures, may be nil if InputLockedParameterCount == 0, otherwise must have InputLockedParameterCount elements
-	  //  OutputLockedParameterCount - [in] number of output buffers, must be within [XAPO_REGISTRATION_PROPERTIES.MinOutputBufferCount, XAPO_REGISTRATION_PROPERTIES.MaxOutputBufferCount], must match InputLockedParameterCount when XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
+	  //  OutputLockedParameterCount - [in] number of output buffers, must be within [XAPO_REGISTRATION_PROPERTIES.MinOutputBufferCount, XAPO_REGISTRATION_PROPERTIES.MaxOutputBufferCount], must match InputLockedParameterCount #if XAPO_FLAG.BUFFERCOUNT_MUST_MATCH used
 	  //  pOutputLockedParameters    - [in] array of output locked buffer parameter structures, may be nil if OutputLockedParameterCount == 0, otherwise must have OutputLockedParameterCount elements
 	  // RETURN VALUE:
 	  //  COM error code

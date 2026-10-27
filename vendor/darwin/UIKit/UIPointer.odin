@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import NS "core:sys/darwin/Foundation"
-import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
 
 @(objc_class="UIPointerAccessory", objc_superclass=NS.Object)
 PointerAccessory :: struct {
@@ -12,7 +12,7 @@ PointerAccessory :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerAccessory, objc_selector="accessoryWithShape:position:", objc_name="accessoryWithShape", objc_is_class_method=true)
 	PointerAccessory_accessoryWithShape :: proc(shape: ^PointerShape, position: PointerAccessoryPosition) -> instancetype ---
 
@@ -47,7 +47,7 @@ PointerEffect :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerEffect, objc_selector="effectWithPreview:", objc_name="effectWithPreview", objc_is_class_method=true)
 	PointerEffect_effectWithPreview :: proc(preview: ^TargetedPreview) -> instancetype ---
 
@@ -66,14 +66,14 @@ foreign lib {
 PointerHighlightEffect :: struct { using _: PointerEffect}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIPointerHoverEffect", objc_superclass=PointerEffect)
 PointerHoverEffect :: struct { using _: PointerEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerHoverEffect, objc_selector="preferredTintMode", objc_name="preferredTintMode")
 	PointerHoverEffect_preferredTintMode :: proc(self: ^PointerHoverEffect) -> PointerEffectTintMode ---
 
@@ -98,14 +98,14 @@ foreign lib {
 PointerLiftEffect :: struct { using _: PointerEffect}
 
 @(default_calling_convention="c")
-foreign lib {}
+#foreign lib {}
 
 
 @(objc_class="UIPointerLockState", objc_superclass=NS.Object)
 PointerLockState :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerLockState, objc_selector="init", objc_name="init")
 	PointerLockState_init :: proc(self: ^PointerLockState) -> instancetype ---
 
@@ -124,7 +124,7 @@ PointerRegion :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerRegion, objc_selector="regionWithRect:identifier:", objc_name="regionWithRect", objc_is_class_method=true)
 	PointerRegion_regionWithRect :: proc(rect: CG.Rect, identifier: ^NS.ObjectProtocol) -> instancetype ---
 
@@ -152,7 +152,7 @@ foreign lib {
 PointerRegionRequest :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerRegionRequest, objc_selector="location", objc_name="location")
 	PointerRegionRequest_location :: proc(self: ^PointerRegionRequest) -> CG.Point ---
 
@@ -168,7 +168,7 @@ PointerShape :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=PointerShape, objc_selector="shapeWithPath:", objc_name="shapeWithPath", objc_is_class_method=true)
 	PointerShape_shapeWithPath :: proc(path: ^BezierPath) -> instancetype ---
 

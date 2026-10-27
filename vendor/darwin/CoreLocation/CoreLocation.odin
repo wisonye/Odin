@@ -2,9 +2,9 @@
 #+build darwin
 package darwin_CoreLocation
 
-import "base:intrinsics"
-import cffi "core:c"
-import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import NS "core:sys/darwin/Foundation"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -14,7 +14,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export, require)
-foreign import lib {
+#foreign #import lib {
 	"system:CoreLocation.framework",
 }
 
@@ -25,7 +25,7 @@ CNPostalAddress :: NS.Object
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="kCLErrorDomain")
 	kCLErrorDomain: ^NS.String
 

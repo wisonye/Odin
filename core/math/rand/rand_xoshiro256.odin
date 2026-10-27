@@ -1,11 +1,11 @@
 package rand
 
-import "base:intrinsics"
-import "base:runtime"
+#import "base:intrinsics"
+#import "base:runtime"
 
-when ODIN_ARCH == .amd64 || ODIN_ARCH == .i386 {
+#if ODIN_ARCH == .amd64 || ODIN_ARCH == .i386 {
 	// LLVM thinks that using SIMD for read_u64 is good,
-	// when it causes a ~3x performance regression.  As
+	// #if it causes a ~3x performance regression.  As
 	// far as I can tell, this behavior is limited to
 	// Intel.
 	@(private = "file")

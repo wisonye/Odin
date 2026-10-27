@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_AVFoundation
 
-import "base:intrinsics"
-import cffi "core:c"
-import CF "core:sys/darwin/CoreFoundation"
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import AT "vendor:darwin/AudioToolbox"
+#import "base:intrinsics"
+#import cffi "core:c"
+#import CF "core:sys/darwin/CoreFoundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import AT "vendor:darwin/AudioToolbox"
 
 id            :: ^intrinsics.objc_object
 SEL           :: ^intrinsics.objc_selector
@@ -18,7 +18,7 @@ Protocol      :: distinct id
 instancetype  :: intrinsics.objc_instancetype
 
 @(export)
-foreign import lib {
+#foreign #import lib {
 	"system:AVFoundation.framework",
 }
 
@@ -44,7 +44,7 @@ SemanticSegmentationMatte  :: ^NS.Object
 
 
 
-foreign lib {
+#foreign lib {
 	@(link_name="AVCoreAnimationBeginTimeAtZero")
 	CoreAnimationBeginTimeAtZero: CF.TimeInterval
 
@@ -1584,7 +1584,7 @@ foreign lib {
 	@(link_name="AVAssetExportPresetAppleProRes4444LPCM")
 	AssetExportPresetAppleProRes4444LPCM: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="AVAssetExportPresetAppleM4VCellular")
 		AssetExportPresetAppleM4VCellular: ^NS.String
 
@@ -1760,7 +1760,7 @@ foreign lib {
 	@(link_name="AVErrorFileTypeKey")
 	ErrorFileTypeKey: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="AVErrorDiscontinuityFlagsKey")
 		ErrorDiscontinuityFlagsKey: ^NS.String
 	}
@@ -2821,7 +2821,7 @@ foreign lib {
 	@(link_name="AVPlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly")
 	PlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly: ^NS.String
 
-	when ODIN_PLATFORM_SUBTARGET == .Default {
+	#if ODIN_PLATFORM_SUBTARGET == .Default {
 		@(link_name="AVPlayerItemTrackVideoFieldModeDeinterlaceFields")
 		PlayerItemTrackVideoFieldModeDeinterlaceFields: ^NS.String
 	}
@@ -4012,7 +4012,7 @@ CaptionConversionValidatorStatus :: enum cffi.long {
 	Stopped    = 3,
 }
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	Error :: enum cffi.long {
 		Unknown                          = -11800,
 		OutOfMemory                      = -11801,
@@ -4100,7 +4100,7 @@ when ODIN_PLATFORM_SUBTARGET == .Default {
 		AutoWhiteBalanceNotLocked        = -11891,
 		FollowExternalSyncDeviceTimedOut = -11892,
 	}
-} else when ODIN_PLATFORM_SUBTARGET_IOS {
+} else #if ODIN_PLATFORM_SUBTARGET_IOS {
 	Error :: enum cffi.long {
 		Unknown                          = -11800,
 		OutOfMemory                      = -11801,
@@ -4261,7 +4261,7 @@ VariantPreference :: enum cffi.ulong {
 VariantPreferences :: bit_set[VariantPreference; cffi.ulong]
 VariantPreferences_None :: VariantPreferences{}
 
-when ODIN_PLATFORM_SUBTARGET == .Default {
+#if ODIN_PLATFORM_SUBTARGET == .Default {
 	ContentAuthorizationStatus :: enum cffi.long {
 		Unknown      = 0,
 		Completed    = 1,

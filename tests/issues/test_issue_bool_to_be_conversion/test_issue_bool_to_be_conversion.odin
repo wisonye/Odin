@@ -1,6 +1,6 @@
 package test_issue_bool_to_be_conversion
 
-import "core:testing"
+#import "core:testing"
 
 // Converting a boolean to a big-endian integer skipped the endian fixup that the integer source
 // path performs, so the result carried a native bit pattern labelled big-endian. The checker

@@ -1,6 +1,6 @@
 package test_issue_proc_constant_instantiation
 
-import "core:testing"
+#import "core:testing"
 
 // Passing the same procedure to a `$` parameter from two calls used to generate two instantiations,
 // each with its own `Box` crashing the compiler.

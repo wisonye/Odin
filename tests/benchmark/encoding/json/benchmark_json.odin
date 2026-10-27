@@ -10,18 +10,18 @@ package benchmark_core_encoding_json
 // any temporary allocations made while unmarshalling show up as real malloc/free calls. Freeing
 // the result is not timed. JSON_BENCH_SCALE multiplies the size of every document.
 
-import "base:runtime"
-import "core:encoding/json"
-import "core:fmt"
-import "core:log"
-import "core:mem"
-import "core:mem/virtual"
-import "core:reflect"
-import "core:strings"
-import "core:testing"
-import "core:text/table"
-import "core:time"
-import ref "../../../core/encoding/json/reference"
+#import "base:runtime"
+#import "core:encoding/json"
+#import "core:fmt"
+#import "core:log"
+#import "core:mem"
+#import "core:mem/virtual"
+#import "core:reflect"
+#import "core:strings"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
+#import ref "../../../core/encoding/json/reference"
 
 SCALE  :: #config(JSON_BENCH_SCALE, 1)
 MIN_MS :: #config(JSON_BENCH_MIN_MS, 300)

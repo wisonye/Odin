@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 SYSWM_TYPE :: enum c.int {
@@ -82,9 +82,9 @@ SysWMinfo :: struct {
 		},
 		uikit: struct {
 			window: rawptr,          /**< The UIKit window */
-			framebuffer: u32,        /**< The GL view's Framebuffer Object. It must be bound when rendering to the screen using GL. */
-			colorbuffer: u32,        /**< The GL view's color Renderbuffer Object. It must be bound when SDL_GL_SwapWindow is called. */
-			resolveFramebuffer: u32, /**< The Framebuffer Object which holds the resolve color Renderbuffer, when MSAA is used. */
+			framebuffer: u32,        /**< The GL view's Framebuffer Object. It must be bound #if rendering to the screen using GL. */
+			colorbuffer: u32,        /**< The GL view's color Renderbuffer Object. It must be bound #if SDL_GL_SwapWindow is called. */
+			resolveFramebuffer: u32, /**< The Framebuffer Object which holds the resolve color Renderbuffer, #if MSAA is used. */
 		},
 		wl: struct {
 			display:       rawptr, /**< Wayland display */
@@ -106,6 +106,6 @@ SysWMinfo :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	GetWindowWMInfo :: proc(window: ^Window, info: ^SysWMinfo) -> bool ---
 }

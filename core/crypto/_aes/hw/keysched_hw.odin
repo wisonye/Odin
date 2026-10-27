@@ -23,10 +23,10 @@
 #+build amd64,arm64,arm32
 package aes_hw
 
-import "base:intrinsics"
-import "core:crypto"
-import "core:crypto/_aes"
-import "core:simd"
+#import "base:intrinsics"
+#import "core:crypto"
+#import "core:crypto/_aes"
+#import "core:simd"
 
 // Inspiration taken from BearSSL's AES-NI implementation.
 //

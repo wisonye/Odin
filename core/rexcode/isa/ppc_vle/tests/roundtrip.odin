@@ -2,10 +2,10 @@
 
 package rexcode_ppc_vle_tests
 
-import "core:fmt"
-import "core:os"
-import v ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import v ".."
+#import "core:rexcode/isa"
 
 check_encode :: proc(name: string, inst: v.Instruction, want_bytes: []u8) {
 	code := make([]u8, 16, context.temp_allocator)

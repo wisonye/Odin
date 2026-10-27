@@ -1,9 +1,9 @@
 // Globals are defined and initialized in the module of their own package
 package test_issue_split_globals
 
-import "core:testing"
-import "other"
-import "other/data"
+#import "core:testing"
+#import "other"
+#import "other/data"
 
 C := other.A + 10*other.B
 D := other.next() + 0*C

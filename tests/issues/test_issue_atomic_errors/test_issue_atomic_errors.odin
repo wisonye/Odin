@@ -1,7 +1,7 @@
 // Atomic analysis errors, and the errors for its attributes
 package test_issues
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 // Atomic writes to @(rodata)
 @(rodata) read_only: u32 = 1

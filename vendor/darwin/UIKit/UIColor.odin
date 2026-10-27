@@ -2,9 +2,9 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="UIColor", objc_superclass=NS.Object)
 Color :: struct {
@@ -14,7 +14,7 @@ Color :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=Color, objc_selector="colorWithWhite:alpha:", objc_name="colorWithWhite", objc_is_class_method=true)
 	Color_colorWithWhite :: proc(white: CG.Float, alpha: CG.Float) -> ^Color ---
 
@@ -315,7 +315,7 @@ Color_colorNamed :: proc {
 ColorEffect :: struct { using _: VisualEffect}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorEffect, objc_selector="effectWithColor:", objc_name="effectWithColor", objc_is_class_method=true)
 	ColorEffect_effectWithColor :: proc(color: ^Color) -> instancetype ---
 }
@@ -325,7 +325,7 @@ foreign lib {
 ColorPickerViewController :: struct { using _: ViewController}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPickerViewController, objc_selector="initWithNibName:bundle:", objc_name="initWithNibName")
 	ColorPickerViewController_initWithNibName :: proc(self: ^ColorPickerViewController, nibNameOrNil: ^NS.String, nibBundleOrNil: ^NS.Bundle) -> instancetype ---
 
@@ -371,7 +371,7 @@ ColorPickerViewControllerDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorPickerViewControllerDelegate, objc_selector="colorPickerViewControllerDidSelectColor:", objc_name="colorPickerViewControllerDidSelectColor")
 	ColorPickerViewControllerDelegate_colorPickerViewControllerDidSelectColor :: proc(self: ^ColorPickerViewControllerDelegate, viewController: ^ColorPickerViewController) ---
 
@@ -387,7 +387,7 @@ foreign lib {
 ColorWell :: struct { using _: Control}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ColorWell, objc_selector="title", objc_name="title")
 	ColorWell_title :: proc(self: ^ColorWell) -> ^NS.String ---
 

@@ -1,11 +1,11 @@
 #+build ignore
 package png_example
 
-import "core:image"
-import "core:image/png"
-import "core:image/tga"
-import "core:fmt"
-import "core:mem"
+#import "core:image"
+#import "core:image/png"
+#import "core:image/tga"
+#import "core:fmt"
+#import "core:mem"
 
 demo :: proc() {
 	options := image.Options{.return_metadata}

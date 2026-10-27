@@ -1,11 +1,11 @@
 package sdl3
 
-import "core:c"
+#import "core:c"
 
 CACHELINE_SIZE :: 128
 
 @(default_calling_convention="c", link_prefix="SDL_", require_results)
-foreign lib {
+#foreign lib {
 	GetNumLogicalCPUCores :: proc() -> c.int ---
 	GetCPUCacheLineSize   :: proc() -> c.int ---
 	HasAltiVec            :: proc() -> bool ---

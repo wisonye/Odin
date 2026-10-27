@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 /* Flag bits in the curl_blob struct: */
 BLOB_COPY   :: blob_flags{.COPY} /* tell libcurl to copy the data */
@@ -19,7 +19,7 @@ blob :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	easy_init    :: proc() -> ^CURL ---
 	easy_setopt  :: proc(curl: ^CURL, option: option, #c_vararg args: ..any) -> code ---
 	easy_perform :: proc(curl: ^CURL) -> code ---
@@ -50,7 +50,7 @@ foreign lib {
 	 * Creates a new curl session handle with the same options set for the handle
 	 * passed in. Duplicating a handle could only be a matter of cloning data and
 	 * options, internal state info and things like persistent connections cannot
-	 * be transferred. It is useful in multithreaded applications when you can run
+	 * be transferred. It is useful in multithreaded applications #if you can run
 	 * curl_easy_duphandle() for each new thread to avoid a series of identical
 	 * curl_easy_setopt() invokes in every thread.
 	 */
@@ -62,7 +62,7 @@ foreign lib {
 	 * DESCRIPTION
 	 *
 	 * Re-initializes a curl handle to the default values. This puts back the
-	 * handle to the same state as it was in when it was just created.
+	 * handle to the same state as it was in #if it was just created.
 	 *
 	 * It does keep: live connections, the Session ID cache, the DNS cache and the
 	 * cookies.

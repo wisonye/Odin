@@ -14,10 +14,10 @@ package rexcode_ppc_tests
 // Categorise failures: BUILD_FAIL, ENCODE_FAIL, DECODE_FAIL, REENCODE_FAIL,
 // BYTE_MISMATCH, MNEMONIC_MISMATCH.
 
-import "core:fmt"
-import "core:os"
-import p ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import p ".."
+#import "core:rexcode/isa"
 
 Stats :: struct {
 	ok, build_fail, encode_fail, decode_fail, reencode_fail, byte_mismatch, mn_alias: int,

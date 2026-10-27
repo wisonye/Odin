@@ -2,7 +2,7 @@
 #+build darwin, netbsd, freebsd, openbsd
 package os
 
-import "core:sys/posix"
+#import "core:sys/posix"
 
 Read_Directory_Iterator_Impl :: struct {
 	dir:      posix.DIR,

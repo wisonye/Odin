@@ -1,8 +1,8 @@
 package miniaudio
 
-import "core:c"
+#import "core:c"
 
-foreign import lib { LIB }
+#foreign #import lib { LIB }
 
 /************************************************************************************************************************************************************
 
@@ -35,7 +35,7 @@ resource_manager_pipeline_notifications :: struct {
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	resource_manager_pipeline_notifications_init :: proc() -> resource_manager_pipeline_notifications ---
 }
 
@@ -62,7 +62,7 @@ resource_manager_job_queue_next                   :: job_queue_next
 RESOURCE_MANAGER_MAX_JOB_THREAD_COUNT :: 64
 
 resource_manager_flag :: enum c.int {
-	/* Indicates ma_resource_manager_next_job() should not block. Only valid when the job thread count is 0. */
+	/* Indicates ma_resource_manager_next_job() should not block. Only valid #if the job thread count is 0. */
 	NON_BLOCKING = 0,
 
 	/* Disables any kind of multithreading. Implicitly enables MA_RESOURCE_MANAGER_FLAG_NON_BLOCKING. */
@@ -120,7 +120,7 @@ resource_manager_data_buffer_node :: struct {
 	result:                       result, /*atomic*/    /* Result from asynchronous loading. When loading set to MA_BUSY. When fully loaded set to MA_SUCCESS. When deleting set to MA_UNAVAILABLE. */
 	executionCounter:             u32, /*atomic*/       /* For allocating execution orders for jobs. */
 	executionPointer:             u32, /*atomic*/       /* For managing the order of execution for asynchronous jobs relating to this object. Incremented as jobs complete processing. */
-	isDataOwnedByResourceManager: b32,                  /* Set to true when the underlying data buffer was allocated the resource manager. Set to false if it is owned by the application (via ma_resource_manager_register_*()). */
+	isDataOwnedByResourceManager: b32,                  /* Set to true #if the underlying data buffer was allocated the resource manager. Set to false if it is owned by the application (via ma_resource_manager_register_*()). */
 	data:                         resource_manager_data_supply,
 	pParent:                      ^resource_manager_data_buffer_node,
 	pChildLo:                     ^resource_manager_data_buffer_node,
@@ -136,7 +136,7 @@ resource_manager_data_buffer :: struct {
 	executionPointer:       u32, /*atomic*/                        /* For managing the order of execution for asynchronous jobs relating to this object. Incremented as jobs complete processing. */
 	seekTargetInPCMFrames:  u64,                                   /* Only updated by the public API. Never written nor read from the job thread. */
 	seekToCursorOnNextRead: b32,                                   /* On the next read we need to seek to the frame cursor. */
-	result:                 result, /*atomic*/                     /* Keeps track of a result of decoding. Set to MA_BUSY while the buffer is still loading. Set to MA_SUCCESS when loading is finished successfully. Otherwise set to some other code. */
+	result:                 result, /*atomic*/                     /* Keeps track of a result of decoding. Set to MA_BUSY while the buffer is still loading. Set to MA_SUCCESS #if loading is finished successfully. Otherwise set to some other code. */
 	isLooping:              b32, /*atomic*/                        /* Can be read and written by different threads at the same time. Must be used atomically. */
 	isConnectorInitialized: b32,                                   /* Used for asynchronous loading to ensure we don't try to initialize the connector multiple times while waiting for the node to fully load. */
 	connector: struct #raw_union {
@@ -152,7 +152,7 @@ resource_manager_data_stream :: struct {
 	flags:                  u32,                  /* The flags that were passed used to initialize the stream. */
 	decoder:                decoder,              /* Used for filling pages with data. This is only ever accessed by the job thread. The public API should never touch this. */
 	isDecoderInitialized:   b32,                  /* Required for determining whether or not the decoder should be uninitialized in MA_JOB_TYPE_RESOURCE_MANAGER_FREE_DATA_STREAM. */
-	totalLengthInPCMFrames: u64,                  /* This is calculated when first loaded by the MA_JOB_TYPE_RESOURCE_MANAGER_LOAD_DATA_STREAM. */
+	totalLengthInPCMFrames: u64,                  /* This is calculated #if first loaded by the MA_JOB_TYPE_RESOURCE_MANAGER_LOAD_DATA_STREAM. */
 	relativeCursor:         u32,                  /* The playback cursor, relative to the current page. Only ever accessed by the public API. Never accessed by the job thread. */
 	absoluteCursor:         u64, /*atomic*/       /* The playback cursor, in absolute position starting from the start of the file. */
 	currentPageIndex:       u32,                  /* Toggles between 0 and 1. Index 0 is the first half of pPageData. Index 1 is the second half. Only ever accessed by the public API. Never accessed by the job thread. */
@@ -167,9 +167,9 @@ resource_manager_data_stream :: struct {
 	pageFrameCount:         [2]u32, /*atomic*/    /* The number of valid PCM frames in each page. Used to determine the last valid frame. */
 
 	/* Written and read by both the public API and the job thread. These must be atomic. */
-	result:                 result, /*atomic*/    /* Result from asynchronous loading. When loading set to MA_BUSY. When initialized set to MA_SUCCESS. When deleting set to MA_UNAVAILABLE. If an error occurs when loading, set to an error code. */
+	result:                 result, /*atomic*/    /* Result from asynchronous loading. When loading set to MA_BUSY. When initialized set to MA_SUCCESS. When deleting set to MA_UNAVAILABLE. If an error occurs #if loading, set to an error code. */
 	isDecoderAtEnd:         b32, /*atomic*/       /* Whether or not the decoder has reached the end. */
-	isPageValid:            [2]b32, /*atomic*/    /* Booleans to indicate whether or not a page is valid. Set to false by the public API, set to true by the job thread. Set to false as the pages are consumed, true when they are filled. */
+	isPageValid:            [2]b32, /*atomic*/    /* Booleans to indicate whether or not a page is valid. Set to false by the public API, set to true by the job thread. Set to false as the pages are consumed, true #if they are filled. */
 	seekCounter:            b32, /*atomic*/       /* When 0, no seeking is being performed. When > 0, a seek is being performed and reading should be delayed with MA_BUSY. */
 }
 
@@ -204,15 +204,15 @@ resource_manager_config :: struct {
 resource_manager :: struct {
 	config:              resource_manager_config,
 	pRootDataBufferNode: ^resource_manager_data_buffer_node,                                               /* The root buffer in the binary tree. */
-	dataBufferBSTLock:   (struct {} when NO_THREADING else mutex),                                         /* For synchronizing access to the data buffer binary tree. */
-	jobThreads:          (struct {} when NO_THREADING else [RESOURCE_MANAGER_MAX_JOB_THREAD_COUNT]thread), /* The threads for executing jobs. */
+	dataBufferBSTLock:   (struct {} #if NO_THREADING else mutex),                                         /* For synchronizing access to the data buffer binary tree. */
+	jobThreads:          (struct {} #if NO_THREADING else [RESOURCE_MANAGER_MAX_JOB_THREAD_COUNT]thread), /* The threads for executing jobs. */
 	jobQueue:            job_queue,                                                                        /* Multi-consumer, multi-producer job queue for managing jobs for asynchronous decoding and streaming. */
 	defaultVFS:          default_vfs,                                                                      /* Only used if a custom VFS is not specified. */
 	log:                 log,                                                                              /* Only used if no log was specified in the config. */
 }
 
 @(default_calling_convention="c", link_prefix="ma_")
-foreign lib {
+#foreign lib {
 	resource_manager_data_source_config_init :: proc() -> resource_manager_data_source_config ---
 	resource_manager_config_init             :: proc() -> resource_manager_config ---
 

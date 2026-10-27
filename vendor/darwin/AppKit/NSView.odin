@@ -2,10 +2,10 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
-import CA "vendor:darwin/QuartzCore"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
+#import CA "vendor:darwin/QuartzCore"
+#import "base:intrinsics"
 
 @(objc_class="NSView", objc_superclass=Responder)
 View :: struct {
@@ -19,7 +19,7 @@ View :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=View, objc_selector="initWithFrame:", objc_name="initWithFrame")
 	View_initWithFrame :: proc(self: ^View, frameRect: NS.Rect) -> instancetype ---
 
@@ -1067,7 +1067,7 @@ View_showDefinitionForAttributedString :: proc {
 ViewAnimation :: struct { using _: Animation}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewAnimation, objc_selector="initWithViewAnimations:", objc_name="initWithViewAnimations")
 	ViewAnimation_initWithViewAnimations :: proc(self: ^ViewAnimation, viewAnimations: ^NS.Array) -> instancetype ---
 
@@ -1086,7 +1086,7 @@ ViewContentSelectionInfo :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewContentSelectionInfo, objc_selector="selectionAnchorRect", objc_name="selectionAnchorRect")
 	ViewContentSelectionInfo_selectionAnchorRect :: proc(self: ^ViewContentSelectionInfo) -> NS.Rect ---
 }
@@ -1101,7 +1101,7 @@ ViewController :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewController, objc_selector="initWithNibName:bundle:", objc_name="initWithNibName")
 	ViewController_initWithNibName :: proc(self: ^ViewController, nibNameOrNil: ^NS.String, nibBundleOrNil: ^NS.Bundle) -> instancetype ---
 
@@ -1280,7 +1280,7 @@ ViewControllerPresentationAnimator :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewControllerPresentationAnimator, objc_selector="animatePresentationOfViewController:fromViewController:", objc_name="animatePresentationOfViewController")
 	ViewControllerPresentationAnimator_animatePresentationOfViewController :: proc(self: ^ViewControllerPresentationAnimator, viewController: ^ViewController, fromViewController: ^ViewController) ---
 
@@ -1296,7 +1296,7 @@ ViewLayerContentScaleDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewLayerContentScaleDelegate, objc_selector="layer:shouldInheritContentsScale:fromWindow:", objc_name="layer")
 	ViewLayerContentScaleDelegate_layer :: proc(self: ^ViewLayerContentScaleDelegate, layer: ^CA.Layer, newScale: CG.Float, window: ^Window) -> bool ---
 }
@@ -1306,7 +1306,7 @@ foreign lib {
 ViewLayoutRegion :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewLayoutRegion, objc_selector="safeAreaLayoutRegionWithCornerAdaptation:", objc_name="safeAreaLayoutRegionWithCornerAdaptation", objc_is_class_method=true)
 	ViewLayoutRegion_safeAreaLayoutRegionWithCornerAdaptation :: proc(adaptivityAxis: ViewLayoutRegionAdaptivityAxis) -> ^ViewLayoutRegion ---
 
@@ -1328,7 +1328,7 @@ ViewToolTipOwner :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ViewToolTipOwner, objc_selector="view:stringForToolTip:point:userData:", objc_name="view")
 	ViewToolTipOwner_view :: proc(self: ^ViewToolTipOwner, view: ^View, tag: ToolTipTag, point: CG.Point, data: rawptr) -> ^NS.String ---
 }

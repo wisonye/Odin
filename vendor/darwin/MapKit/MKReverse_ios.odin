@@ -2,15 +2,15 @@
 #+build darwin:ios
 package darwin_MapKit
 
-import NS "core:sys/darwin/Foundation"
-import CL "vendor:darwin/CoreLocation"
-import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import CL "vendor:darwin/CoreLocation"
+#import "base:intrinsics"
 
 @(objc_class="MKReverseGeocoder", objc_superclass=NS.Object)
 ReverseGeocoder :: struct { using _: NS.Object}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ReverseGeocoder, objc_selector="initWithCoordinate:", objc_name="initWithCoordinate")
 	ReverseGeocoder_initWithCoordinate :: proc(self: ^ReverseGeocoder, coordinate: CL.LocationCoordinate2D) -> instancetype ---
 
@@ -44,7 +44,7 @@ ReverseGeocoderDelegate :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=ReverseGeocoderDelegate, objc_selector="reverseGeocoder:didFindPlacemark:", objc_name="reverseGeocoder_didFindPlacemark")
 	ReverseGeocoderDelegate_reverseGeocoder_didFindPlacemark :: proc(self: ^ReverseGeocoderDelegate, geocoder: ^ReverseGeocoder, placemark: ^Placemark) ---
 

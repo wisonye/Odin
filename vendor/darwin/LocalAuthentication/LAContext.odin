@@ -2,13 +2,13 @@
 #+build darwin
 package darwin_LocalAuthentication
 
-import NS "core:sys/darwin/Foundation"
-import Sec "core:sys/darwin/Security"
+#import NS "core:sys/darwin/Foundation"
+#import Sec "core:sys/darwin/Security"
 
 @(objc_class="LAContext", objc_superclass=NS.Object)
 Context :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Context, objc_selector="canEvaluatePolicy:error:", objc_name="canEvaluatePolicy_error")
 	Context_canEvaluatePolicy_error :: proc(self: ^Context, policy: Policy, error: ^^NS.Error) -> bool ---
 

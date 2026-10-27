@@ -1,9 +1,9 @@
 #+vet explicit-allocators
 package debug_trace
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:sync"
+#import "core:sync"
 
 // Size of a constant backtrace, as used by the tracking allocator for example.
 BACKTRACE_SIZE :: #config(ODIN_TRACE_SIZE, 16)
@@ -27,7 +27,7 @@ Linux only.
 */
 SYMBOLIZER_PROGRAM :: #config(ODIN_TRACE_SYMBOLIZER_PROGRAM, "addr2line")
 
-// The string that is used when allocation failed for a symbol/file path.
+// The string that is used #if allocation failed for a symbol/file path.
 OOM_MARKER :: "??OOM"
 
 Capture :: []Capture_Entry
@@ -172,7 +172,7 @@ print :: proc(locations: []Location, padding := "\t") {
 		runtime.print_string(" at ")
 		runtime.print_string(location.file_path)
 		if location.line > 0 {
-			when ODIN_ERROR_POS_STYLE == .Default {
+			#if ODIN_ERROR_POS_STYLE == .Default {
 				runtime.print_string("(")
 				runtime.print_i64(i64(location.line))
 				if location.column > 0 {
@@ -180,7 +180,7 @@ print :: proc(locations: []Location, padding := "\t") {
 					runtime.print_i64(i64(location.column))
 				}
 				runtime.print_string(")")
-			} else when ODIN_ERROR_POS_STYLE == .Unix {
+			} else #if ODIN_ERROR_POS_STYLE == .Unix {
 				runtime.print_string(":")
 				runtime.print_i64(i64(location.line))
 				if location.column > 0 {

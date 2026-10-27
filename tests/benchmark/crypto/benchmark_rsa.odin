@@ -1,13 +1,13 @@
 package benchmark_core_crypto
 
-import "base:runtime"
-import "core:log"
-import "core:testing"
-import "core:text/table"
-import "core:time"
+#import "base:runtime"
+#import "core:log"
+#import "core:testing"
+#import "core:text/table"
+#import "core:time"
 
-import "core:crypto"
-import "core:crypto/rsa"
+#import "core:crypto"
+#import "core:crypto/rsa"
 
 // RSA key generation is time consuming and high variance, so it takes
 // an unreasonable amount of time to get a semi-sensible value, so this

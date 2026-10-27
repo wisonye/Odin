@@ -2,10 +2,10 @@
 
 package rexcode_ppc_vle_tests
 
-import "core:fmt"
-import "core:os"
-import v ".."
-import "core:rexcode/isa"
+#import "core:fmt"
+#import "core:os"
+#import v ".."
+#import "core:rexcode/isa"
 
 stats: struct { ok, mn_alias, byte_mismatch, encode_fail, decode_fail: int }
 

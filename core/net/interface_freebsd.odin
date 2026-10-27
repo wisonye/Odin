@@ -20,9 +20,9 @@ package net
 		Feoramund:       FreeBSD platform code
 */
 
-import "core:c"
-import "core:strings"
-import "core:sys/freebsd"
+#import "core:c"
+#import "core:strings"
+#import "core:sys/freebsd"
 
 @(private)
 _enumerate_interfaces :: proc(allocator := context.allocator) -> (interfaces: []Network_Interface, err: Interfaces_Error) {

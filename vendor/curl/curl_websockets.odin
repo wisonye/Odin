@@ -1,6 +1,6 @@
 package vendor_curl
 
-import c "core:c/libc"
+#import c "core:c/libc"
 
 
 ws_frame :: struct {
@@ -38,7 +38,7 @@ WS_RAW_MODE   :: 1<<0
 WS_NOAUTOPONG :: 1<<1
 
 @(default_calling_convention="c", link_prefix="curl_")
-foreign lib {
+#foreign lib {
 	/*
 	 * NAME curl_ws_recv()
 	 *
@@ -71,7 +71,7 @@ foreign lib {
 	 * DESCRIPTION
 	 *
 	 * Buffers a websocket frame header with the given flags and length.
-	 * Errors when a previous frame is not complete, e.g. not all its
+	 * Errors #if a previous frame is not complete, e.g. not all its
 	 * payload has been added.
 	 */
 	ws_start_frame :: proc(curl: ^CURL,

@@ -2,9 +2,9 @@
 #+build !js
 package odin_libc
 
-import "core:io"
-import "core:c"
-import "core:os"
+#import "core:io"
+#import "core:c"
+#import "core:os"
 
 _fopen :: proc(path, _mode: cstring) -> FILE {
 	flags: os.File_Flags

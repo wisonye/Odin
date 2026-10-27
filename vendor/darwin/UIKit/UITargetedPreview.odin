@@ -2,8 +2,8 @@
 #+build darwin:ios
 package darwin_UIKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="UITargetedPreview", objc_superclass=NS.Object)
 TargetedPreview :: struct {
@@ -12,7 +12,7 @@ TargetedPreview :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TargetedPreview, objc_selector="initWithView:parameters:target:", objc_name="initWithView_parameters_target")
 	TargetedPreview_initWithView_parameters_target :: proc(self: ^TargetedPreview, view: ^View, parameters: ^PreviewParameters, target: ^PreviewTarget) -> instancetype ---
 
@@ -56,7 +56,7 @@ TargetedPreview_initWithView :: proc {
 TargetedDragPreview :: struct { using _: TargetedPreview}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=TargetedDragPreview, objc_selector="retargetedPreviewWithTarget:", objc_name="retargetedPreviewWithTarget")
 	TargetedDragPreview_retargetedPreviewWithTarget :: proc(self: ^TargetedDragPreview, newTarget: ^DragPreviewTarget) -> ^TargetedDragPreview ---
 

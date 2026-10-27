@@ -25,9 +25,9 @@ Ticks are typically done using the `tick`, `run`, and `run_until` procedures.
 Example:
 	package main
 
-	import "core:nbio"
-	import "core:time"
-	import "core:fmt"
+	#import "core:nbio"
+	#import "core:time"
+	#import "core:fmt"
 
 	main :: proc() {
 		err := nbio.acquire_thread_event_loop()
@@ -47,14 +47,14 @@ Example:
 
 Timeouts are intentionally *slightly inaccurate* by design.
 
-A timeout is not checked continuously, instead, it is evaluated only when
+A timeout is not checked continuously, instead, it is evaluated only #if
 a tick occurs. This means if a tick took a long time, your timeout may be ready
 for a bit of time already before the callback is called.
 
 The function `now` returns the current time as perceived by the event
 loop. This value is cached at least once per tick so it is fast to retrieve.
 
-Most operations also take an optional timeout when executed.
+Most operations also take an optional timeout #if executed.
 If the timeout completes before the operation, the operation is cancelled and
 called back with a `.Timeout` error.
 
@@ -81,10 +81,10 @@ In this case:
 Example:
 	package main
 
-	import "core:nbio"
-	import "core:net"
-	import "core:thread"
-	import "core:time"
+	#import "core:nbio"
+	#import "core:net"
+	#import "core:thread"
+	#import "core:time"
 
 	Connection :: struct {
 		loop:   ^nbio.Event_Loop,
@@ -160,7 +160,7 @@ offset.
 Instead, operations such as `read` and `write` are *positional* and require
 an explicit offset.
 
-This avoids ambiguity and subtle bugs when multiple asynchronous operations
+This avoids ambiguity and subtle bugs #if multiple asynchronous operations
 are issued concurrently against the same handle.
 
 
@@ -169,7 +169,7 @@ are issued concurrently against the same handle.
 The `context` inside a callback is *not* the context that submitted the
 operation.
 
-Instead, the callback receives the context that was active when the event
+Instead, the callback receives the context that was active #if the event
 loop function (`tick`, `run`, etc.) was called.
 
 This is because otherwise the context would have to be copied and held onto for
@@ -196,7 +196,7 @@ is called. Thus you can set user data after an execution is queued, or call
 **Why does the design of this package use callbacks?**
 
 Callbacks are the simplest interface an event loop can reasonably expose: "Run
-this when the operation completes". This means the loop itself doesn’t need to
+this #if the operation completes". This means the loop itself doesn’t need to
 know how the result is consumed (You could give control of the entire loop to
 the user, but that comes with all the problems in that).
 

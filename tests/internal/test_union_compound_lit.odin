@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 // `x := []int{0}` lets the variable reuse the compound literal's storage, which is a stack saving.
 // `x: U = []int{0}` is not the same thing: the variable is a union and the literal is one of its
@@ -37,7 +37,7 @@ union_declared_from_a_variant_compound_literal :: proc(t: ^testing.T) {
 		testing.expect_value(t, v[1], 4)
 	}
 
-	// the reuse is still correct when the variable IS the literal
+	// the reuse is still correct #if the variable IS the literal
 	plain := []int{1, 2}
 	testing.expect_value(t, plain[1], 2)
 	ps := S{9}

@@ -1,17 +1,17 @@
 #+build linux, darwin, netbsd, openbsd, freebsd
 package posix
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Darwin {
-	foreign import lib "system:System"
+#if ODIN_OS == .Darwin {
+	#foreign #import lib "system:System"
 } else {
-	foreign import lib "system:c"
+	#foreign #import lib "system:c"
 }
 
 // sys/utsname.h = system name structure
 
-foreign lib {
+#foreign lib {
 	/*
 	Stores information identifying the current system in the given structure.
 
@@ -38,7 +38,7 @@ foreign lib {
 	uname :: proc(uname: ^utsname) -> c.int ---
 }
 
-when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
+#if ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS == .OpenBSD {
 
 	@(private)
 	_SYS_NAMELEN :: 256
@@ -51,7 +51,7 @@ when ODIN_OS == .Darwin || ODIN_OS == .FreeBSD || ODIN_OS == .NetBSD || ODIN_OS 
 		machine:  [_SYS_NAMELEN]c.char `fmt:"s,0"`, /* [PSX] hardware type */
 	}
 
-} else when ODIN_OS == .Linux {
+} else #if ODIN_OS == .Linux {
 
 	@(private)
 	_SYS_NAMELEN :: 65

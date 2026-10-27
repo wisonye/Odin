@@ -9,7 +9,7 @@ LocalizedNumberFormatRule :: struct {
 	using _: SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=LocalizedNumberFormatRule, objc_selector="new", objc_name="new", objc_is_class_method=true)
 	LocalizedNumberFormatRule_new :: proc() -> ^LocalizedNumberFormatRule ---
 

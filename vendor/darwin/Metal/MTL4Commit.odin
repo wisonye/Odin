@@ -2,14 +2,14 @@
 #+build darwin
 package darwin_Metal
 
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
-import CF "core:sys/darwin/CoreFoundation"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
+#import CF "core:sys/darwin/CoreFoundation"
 
 @(objc_class="MTL4CommitOptions", objc_superclass=NS.Object)
 MTL4CommitOptions :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommitOptions, objc_selector="addFeedbackHandler:", objc_name="addFeedbackHandler")
 	MTL4CommitOptions_addFeedbackHandler :: proc(self: ^MTL4CommitOptions, block: MTL4CommitFeedbackHandler) ---
 }
@@ -21,7 +21,7 @@ MTL4CommitFeedback :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MTL4CommitFeedback, objc_selector="error", objc_name="error")
 	MTL4CommitFeedback_error :: proc(self: ^MTL4CommitFeedback) -> ^NS.Error ---
 

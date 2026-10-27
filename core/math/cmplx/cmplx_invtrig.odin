@@ -1,7 +1,7 @@
 package math_cmplx
 
-import "base:builtin"
-import "core:math"
+#import "base:builtin"
+#import "core:math"
 
 // The original C code, the long comment, and the constants
 // below are from http://netlib.sandia.gov/cephes/c9x-complex/clog.c.

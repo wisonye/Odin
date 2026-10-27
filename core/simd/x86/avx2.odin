@@ -1,7 +1,7 @@
 #+build i386, amd64
 package simd_x86
 
-import "core:simd"
+#import "core:simd"
 
 // Shift packed 32-bit integers in `a` right by the amount specified by
 // the corresponding element in `count` while shifting in zeros, and store the results in `dst`.
@@ -496,8 +496,8 @@ _mm256_avg_epu16 :: #force_inline proc "c" (a, b: __m256i) -> __m256i {
 	return transmute(__m256i)(cast(simd.u16x16)e)
 }
 
-// Negate packed signed 8-bit integers in `a` when the corresponding signed 8-bit integer in `b` is negative, and store the results in `dst`.
-// Element in `dst` are zeroed out when the corresponding element in `b` is zero.
+// Negate packed signed 8-bit integers in `a` #if the corresponding signed 8-bit integer in `b` is negative, and store the results in `dst`.
+// Element in `dst` are zeroed out #if the corresponding element in `b` is zero.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_sign_epi8)
 @(require_results, enable_target_feature="avx2")
@@ -505,8 +505,8 @@ _mm256_sign_epi8 :: #force_inline proc "c" (a, b: __m256i) -> __m256i {
 	return transmute(__m256i)llvm_psignb(transmute(simd.i8x32)a, transmute(simd.i8x32)b)
 }
 
-// Negate packed signed 16-bit integers in `a` when the corresponding signed 16-bit integer in `b` is negative, and store the results in `dst`.
-// Element in `dst` are zeroed out when the corresponding element in `b` is zero.
+// Negate packed signed 16-bit integers in `a` #if the corresponding signed 16-bit integer in `b` is negative, and store the results in `dst`.
+// Element in `dst` are zeroed out #if the corresponding element in `b` is zero.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_sign_epi16)
 @(require_results, enable_target_feature="avx2")
@@ -514,8 +514,8 @@ _mm256_sign_epi16 :: #force_inline proc "c" (a, b: __m256i) -> __m256i {
 	return transmute(__m256i)llvm_psignw(transmute(simd.i16x16)a, transmute(simd.i16x16)b)
 }
 
-// Negate packed signed 32-bit integers in `a` when the corresponding signed 32-bit integer in `b` is negative, and store the results in `dst`.
-// Element in `dst` are zeroed out when the corresponding element in `b` is zero.
+// Negate packed signed 32-bit integers in `a` #if the corresponding signed 32-bit integer in `b` is negative, and store the results in `dst`.
+// Element in `dst` are zeroed out #if the corresponding element in `b` is zero.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_sign_epi32)
 @(require_results, enable_target_feature="avx2")
@@ -751,7 +751,7 @@ _mm256_sll_epi64 :: #force_inline proc "c" (a: __m256i, count: __m128i) -> __m25
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_slli_epi16)
 @(require_results, enable_target_feature="avx2")
 _mm256_slli_epi16 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 16 {
+	#if IMM8 >= 16 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shl(transmute(simd.u16x16)a, simd.u16x16(IMM8))
@@ -763,7 +763,7 @@ _mm256_slli_epi16 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_slli_epi32)
 @(require_results, enable_target_feature="avx2")
 _mm256_slli_epi32 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 32 {
+	#if IMM8 >= 32 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shl(transmute(simd.u32x8)a, simd.u32x8(IMM8))
@@ -775,7 +775,7 @@ _mm256_slli_epi32 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_slli_epi64)
 @(require_results, enable_target_feature="avx2")
 _mm256_slli_epi64 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 64 {
+	#if IMM8 >= 64 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shl(transmute(simd.u64x4)a, simd.u64x4(IMM8))
@@ -811,7 +811,7 @@ _mm256_srl_epi64 :: #force_inline proc "c" (a: __m256i, count: __m128i) -> __m25
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_srli_epi16)
 @(require_results, enable_target_feature="avx2")
 _mm256_srli_epi16 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 16 {
+	#if IMM8 >= 16 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shr(transmute(simd.u16x16)a, simd.u16x16(IMM8))
@@ -823,7 +823,7 @@ _mm256_srli_epi16 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_srli_epi32)
 @(require_results, enable_target_feature="avx2")
 _mm256_srli_epi32 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 32 {
+	#if IMM8 >= 32 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shr(transmute(simd.u32x8)a, simd.u32x8(IMM8))
@@ -835,7 +835,7 @@ _mm256_srli_epi32 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_srli_epi64)
 @(require_results, enable_target_feature="avx2")
 _mm256_srli_epi64 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 64 {
+	#if IMM8 >= 64 {
 		return __m256i(0)
 	} else {
 		return transmute(__m256i)simd.shr(transmute(simd.u64x4)a, simd.u64x4(IMM8))
@@ -1221,48 +1221,48 @@ _mm256_hsubs_epi16 :: #force_inline proc "c" (a, b: __m256i) -> __m256i {
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_alignr_epi8)
 @(require_results, enable_target_feature="avx2")
 _mm256_alignr_epi8 :: #force_inline proc "c" (a, b: __m256i, $IMM8: i32) -> __m256i where 0 <= IMM8, IMM8 < 256 {
-	when IMM8 >= 32 {
+	#if IMM8 >= 32 {
 		return __m256i(0)
-	} else when IMM8 > 16 {
+	} else #if IMM8 > 16 {
 		shift :: u32(IMM8) % 16
 		c, d := __m256i(0), a
 		return transmute(__m256i)simd.shuffle(
 			transmute(simd.i8x32)d,
 			transmute(simd.i8x32)c,
-			(0  + shift) when (0  % 16) < 16 - shift else (0  + 16 + shift),
-			(1  + shift) when (1  % 16) < 16 - shift else (1  + 16 + shift),
-			(2  + shift) when (2  % 16) < 16 - shift else (2  + 16 + shift),
-			(3  + shift) when (3  % 16) < 16 - shift else (3  + 16 + shift),
-			(4  + shift) when (4  % 16) < 16 - shift else (4  + 16 + shift),
-			(5  + shift) when (5  % 16) < 16 - shift else (5  + 16 + shift),
-			(6  + shift) when (6  % 16) < 16 - shift else (6  + 16 + shift),
-			(7  + shift) when (7  % 16) < 16 - shift else (7  + 16 + shift),
-			(8  + shift) when (8  % 16) < 16 - shift else (8  + 16 + shift),
-			(9  + shift) when (9  % 16) < 16 - shift else (9  + 16 + shift),
-			(10 + shift) when (10 % 16) < 16 - shift else (10 + 16 + shift),
-			(11 + shift) when (11 % 16) < 16 - shift else (11 + 16 + shift),
-			(12 + shift) when (12 % 16) < 16 - shift else (12 + 16 + shift),
-			(13 + shift) when (13 % 16) < 16 - shift else (13 + 16 + shift),
-			(14 + shift) when (14 % 16) < 16 - shift else (14 + 16 + shift),
-			(15 + shift) when (15 % 16) < 16 - shift else (15 + 16 + shift),
-			(16 + shift) when (16 % 16) < 16 - shift else (16 + 16 + shift),
-			(17 + shift) when (17 % 16) < 16 - shift else (17 + 16 + shift),
-			(18 + shift) when (18 % 16) < 16 - shift else (18 + 16 + shift),
-			(19 + shift) when (19 % 16) < 16 - shift else (19 + 16 + shift),
-			(20 + shift) when (20 % 16) < 16 - shift else (20 + 16 + shift),
-			(21 + shift) when (21 % 16) < 16 - shift else (21 + 16 + shift),
-			(22 + shift) when (22 % 16) < 16 - shift else (22 + 16 + shift),
-			(23 + shift) when (23 % 16) < 16 - shift else (23 + 16 + shift),
-			(24 + shift) when (24 % 16) < 16 - shift else (24 + 16 + shift),
-			(25 + shift) when (25 % 16) < 16 - shift else (25 + 16 + shift),
-			(26 + shift) when (26 % 16) < 16 - shift else (26 + 16 + shift),
-			(27 + shift) when (27 % 16) < 16 - shift else (27 + 16 + shift),
-			(28 + shift) when (28 % 16) < 16 - shift else (28 + 16 + shift),
-			(29 + shift) when (29 % 16) < 16 - shift else (29 + 16 + shift),
-			(30 + shift) when (30 % 16) < 16 - shift else (30 + 16 + shift),
-			(31 + shift) when (31 % 16) < 16 - shift else (31 + 16 + shift),
+			(0  + shift) #if (0  % 16) < 16 - shift else (0  + 16 + shift),
+			(1  + shift) #if (1  % 16) < 16 - shift else (1  + 16 + shift),
+			(2  + shift) #if (2  % 16) < 16 - shift else (2  + 16 + shift),
+			(3  + shift) #if (3  % 16) < 16 - shift else (3  + 16 + shift),
+			(4  + shift) #if (4  % 16) < 16 - shift else (4  + 16 + shift),
+			(5  + shift) #if (5  % 16) < 16 - shift else (5  + 16 + shift),
+			(6  + shift) #if (6  % 16) < 16 - shift else (6  + 16 + shift),
+			(7  + shift) #if (7  % 16) < 16 - shift else (7  + 16 + shift),
+			(8  + shift) #if (8  % 16) < 16 - shift else (8  + 16 + shift),
+			(9  + shift) #if (9  % 16) < 16 - shift else (9  + 16 + shift),
+			(10 + shift) #if (10 % 16) < 16 - shift else (10 + 16 + shift),
+			(11 + shift) #if (11 % 16) < 16 - shift else (11 + 16 + shift),
+			(12 + shift) #if (12 % 16) < 16 - shift else (12 + 16 + shift),
+			(13 + shift) #if (13 % 16) < 16 - shift else (13 + 16 + shift),
+			(14 + shift) #if (14 % 16) < 16 - shift else (14 + 16 + shift),
+			(15 + shift) #if (15 % 16) < 16 - shift else (15 + 16 + shift),
+			(16 + shift) #if (16 % 16) < 16 - shift else (16 + 16 + shift),
+			(17 + shift) #if (17 % 16) < 16 - shift else (17 + 16 + shift),
+			(18 + shift) #if (18 % 16) < 16 - shift else (18 + 16 + shift),
+			(19 + shift) #if (19 % 16) < 16 - shift else (19 + 16 + shift),
+			(20 + shift) #if (20 % 16) < 16 - shift else (20 + 16 + shift),
+			(21 + shift) #if (21 % 16) < 16 - shift else (21 + 16 + shift),
+			(22 + shift) #if (22 % 16) < 16 - shift else (22 + 16 + shift),
+			(23 + shift) #if (23 % 16) < 16 - shift else (23 + 16 + shift),
+			(24 + shift) #if (24 % 16) < 16 - shift else (24 + 16 + shift),
+			(25 + shift) #if (25 % 16) < 16 - shift else (25 + 16 + shift),
+			(26 + shift) #if (26 % 16) < 16 - shift else (26 + 16 + shift),
+			(27 + shift) #if (27 % 16) < 16 - shift else (27 + 16 + shift),
+			(28 + shift) #if (28 % 16) < 16 - shift else (28 + 16 + shift),
+			(29 + shift) #if (29 % 16) < 16 - shift else (29 + 16 + shift),
+			(30 + shift) #if (30 % 16) < 16 - shift else (30 + 16 + shift),
+			(31 + shift) #if (31 % 16) < 16 - shift else (31 + 16 + shift),
 		)
-	} else when IMM8 == 16 {
+	} else #if IMM8 == 16 {
 		return a
 	} else {
 		shift :: u32(IMM8)
@@ -1270,38 +1270,38 @@ _mm256_alignr_epi8 :: #force_inline proc "c" (a, b: __m256i, $IMM8: i32) -> __m2
 		return transmute(__m256i)simd.shuffle(
 			transmute(simd.i8x32)d,
 			transmute(simd.i8x32)c,
-			(0  + shift) when (0  % 16) < 16 - shift else (0  + 16 + shift),
-			(1  + shift) when (1  % 16) < 16 - shift else (1  + 16 + shift),
-			(2  + shift) when (2  % 16) < 16 - shift else (2  + 16 + shift),
-			(3  + shift) when (3  % 16) < 16 - shift else (3  + 16 + shift),
-			(4  + shift) when (4  % 16) < 16 - shift else (4  + 16 + shift),
-			(5  + shift) when (5  % 16) < 16 - shift else (5  + 16 + shift),
-			(6  + shift) when (6  % 16) < 16 - shift else (6  + 16 + shift),
-			(7  + shift) when (7  % 16) < 16 - shift else (7  + 16 + shift),
-			(8  + shift) when (8  % 16) < 16 - shift else (8  + 16 + shift),
-			(9  + shift) when (9  % 16) < 16 - shift else (9  + 16 + shift),
-			(10 + shift) when (10 % 16) < 16 - shift else (10 + 16 + shift),
-			(11 + shift) when (11 % 16) < 16 - shift else (11 + 16 + shift),
-			(12 + shift) when (12 % 16) < 16 - shift else (12 + 16 + shift),
-			(13 + shift) when (13 % 16) < 16 - shift else (13 + 16 + shift),
-			(14 + shift) when (14 % 16) < 16 - shift else (14 + 16 + shift),
-			(15 + shift) when (15 % 16) < 16 - shift else (15 + 16 + shift),
-			(16 + shift) when (16 % 16) < 16 - shift else (16 + 16 + shift),
-			(17 + shift) when (17 % 16) < 16 - shift else (17 + 16 + shift),
-			(18 + shift) when (18 % 16) < 16 - shift else (18 + 16 + shift),
-			(19 + shift) when (19 % 16) < 16 - shift else (19 + 16 + shift),
-			(20 + shift) when (20 % 16) < 16 - shift else (20 + 16 + shift),
-			(21 + shift) when (21 % 16) < 16 - shift else (21 + 16 + shift),
-			(22 + shift) when (22 % 16) < 16 - shift else (22 + 16 + shift),
-			(23 + shift) when (23 % 16) < 16 - shift else (23 + 16 + shift),
-			(24 + shift) when (24 % 16) < 16 - shift else (24 + 16 + shift),
-			(25 + shift) when (25 % 16) < 16 - shift else (25 + 16 + shift),
-			(26 + shift) when (26 % 16) < 16 - shift else (26 + 16 + shift),
-			(27 + shift) when (27 % 16) < 16 - shift else (27 + 16 + shift),
-			(28 + shift) when (28 % 16) < 16 - shift else (28 + 16 + shift),
-			(29 + shift) when (29 % 16) < 16 - shift else (29 + 16 + shift),
-			(30 + shift) when (30 % 16) < 16 - shift else (30 + 16 + shift),
-			(31 + shift) when (31 % 16) < 16 - shift else (31 + 16 + shift),
+			(0  + shift) #if (0  % 16) < 16 - shift else (0  + 16 + shift),
+			(1  + shift) #if (1  % 16) < 16 - shift else (1  + 16 + shift),
+			(2  + shift) #if (2  % 16) < 16 - shift else (2  + 16 + shift),
+			(3  + shift) #if (3  % 16) < 16 - shift else (3  + 16 + shift),
+			(4  + shift) #if (4  % 16) < 16 - shift else (4  + 16 + shift),
+			(5  + shift) #if (5  % 16) < 16 - shift else (5  + 16 + shift),
+			(6  + shift) #if (6  % 16) < 16 - shift else (6  + 16 + shift),
+			(7  + shift) #if (7  % 16) < 16 - shift else (7  + 16 + shift),
+			(8  + shift) #if (8  % 16) < 16 - shift else (8  + 16 + shift),
+			(9  + shift) #if (9  % 16) < 16 - shift else (9  + 16 + shift),
+			(10 + shift) #if (10 % 16) < 16 - shift else (10 + 16 + shift),
+			(11 + shift) #if (11 % 16) < 16 - shift else (11 + 16 + shift),
+			(12 + shift) #if (12 % 16) < 16 - shift else (12 + 16 + shift),
+			(13 + shift) #if (13 % 16) < 16 - shift else (13 + 16 + shift),
+			(14 + shift) #if (14 % 16) < 16 - shift else (14 + 16 + shift),
+			(15 + shift) #if (15 % 16) < 16 - shift else (15 + 16 + shift),
+			(16 + shift) #if (16 % 16) < 16 - shift else (16 + 16 + shift),
+			(17 + shift) #if (17 % 16) < 16 - shift else (17 + 16 + shift),
+			(18 + shift) #if (18 % 16) < 16 - shift else (18 + 16 + shift),
+			(19 + shift) #if (19 % 16) < 16 - shift else (19 + 16 + shift),
+			(20 + shift) #if (20 % 16) < 16 - shift else (20 + 16 + shift),
+			(21 + shift) #if (21 % 16) < 16 - shift else (21 + 16 + shift),
+			(22 + shift) #if (22 % 16) < 16 - shift else (22 + 16 + shift),
+			(23 + shift) #if (23 % 16) < 16 - shift else (23 + 16 + shift),
+			(24 + shift) #if (24 % 16) < 16 - shift else (24 + 16 + shift),
+			(25 + shift) #if (25 % 16) < 16 - shift else (25 + 16 + shift),
+			(26 + shift) #if (26 % 16) < 16 - shift else (26 + 16 + shift),
+			(27 + shift) #if (27 % 16) < 16 - shift else (27 + 16 + shift),
+			(28 + shift) #if (28 % 16) < 16 - shift else (28 + 16 + shift),
+			(29 + shift) #if (29 % 16) < 16 - shift else (29 + 16 + shift),
+			(30 + shift) #if (30 % 16) < 16 - shift else (30 + 16 + shift),
+			(31 + shift) #if (31 % 16) < 16 - shift else (31 + 16 + shift),
 		)
 	}
 }
@@ -1315,38 +1315,38 @@ _mm256_bslli_epi128 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256
 	return transmute(__m256i)simd.shuffle(
 		simd.i8x32(0),
 		transmute(simd.i8x32)a,
-		0 when shift > 15 || (0  % 16) < shift else (32 + 0  - shift),
-		0 when shift > 15 || (1  % 16) < shift else (32 + 1  - shift),
-		0 when shift > 15 || (2  % 16) < shift else (32 + 2  - shift),
-		0 when shift > 15 || (3  % 16) < shift else (32 + 3  - shift),
-		0 when shift > 15 || (4  % 16) < shift else (32 + 4  - shift),
-		0 when shift > 15 || (5  % 16) < shift else (32 + 5  - shift),
-		0 when shift > 15 || (6  % 16) < shift else (32 + 6  - shift),
-		0 when shift > 15 || (7  % 16) < shift else (32 + 7  - shift),
-		0 when shift > 15 || (8  % 16) < shift else (32 + 8  - shift),
-		0 when shift > 15 || (9  % 16) < shift else (32 + 9  - shift),
-		0 when shift > 15 || (10 % 16) < shift else (32 + 10 - shift),
-		0 when shift > 15 || (11 % 16) < shift else (32 + 11 - shift),
-		0 when shift > 15 || (12 % 16) < shift else (32 + 12 - shift),
-		0 when shift > 15 || (13 % 16) < shift else (32 + 13 - shift),
-		0 when shift > 15 || (14 % 16) < shift else (32 + 14 - shift),
-		0 when shift > 15 || (15 % 16) < shift else (32 + 15 - shift),
-		0 when shift > 15 || (16 % 16) < shift else (32 + 16 - shift),
-		0 when shift > 15 || (17 % 16) < shift else (32 + 17 - shift),
-		0 when shift > 15 || (18 % 16) < shift else (32 + 18 - shift),
-		0 when shift > 15 || (19 % 16) < shift else (32 + 19 - shift),
-		0 when shift > 15 || (20 % 16) < shift else (32 + 20 - shift),
-		0 when shift > 15 || (21 % 16) < shift else (32 + 21 - shift),
-		0 when shift > 15 || (22 % 16) < shift else (32 + 22 - shift),
-		0 when shift > 15 || (23 % 16) < shift else (32 + 23 - shift),
-		0 when shift > 15 || (24 % 16) < shift else (32 + 24 - shift),
-		0 when shift > 15 || (25 % 16) < shift else (32 + 25 - shift),
-		0 when shift > 15 || (26 % 16) < shift else (32 + 26 - shift),
-		0 when shift > 15 || (27 % 16) < shift else (32 + 27 - shift),
-		0 when shift > 15 || (28 % 16) < shift else (32 + 28 - shift),
-		0 when shift > 15 || (29 % 16) < shift else (32 + 29 - shift),
-		0 when shift > 15 || (30 % 16) < shift else (32 + 30 - shift),
-		0 when shift > 15 || (31 % 16) < shift else (32 + 31 - shift),
+		0 #if shift > 15 || (0  % 16) < shift else (32 + 0  - shift),
+		0 #if shift > 15 || (1  % 16) < shift else (32 + 1  - shift),
+		0 #if shift > 15 || (2  % 16) < shift else (32 + 2  - shift),
+		0 #if shift > 15 || (3  % 16) < shift else (32 + 3  - shift),
+		0 #if shift > 15 || (4  % 16) < shift else (32 + 4  - shift),
+		0 #if shift > 15 || (5  % 16) < shift else (32 + 5  - shift),
+		0 #if shift > 15 || (6  % 16) < shift else (32 + 6  - shift),
+		0 #if shift > 15 || (7  % 16) < shift else (32 + 7  - shift),
+		0 #if shift > 15 || (8  % 16) < shift else (32 + 8  - shift),
+		0 #if shift > 15 || (9  % 16) < shift else (32 + 9  - shift),
+		0 #if shift > 15 || (10 % 16) < shift else (32 + 10 - shift),
+		0 #if shift > 15 || (11 % 16) < shift else (32 + 11 - shift),
+		0 #if shift > 15 || (12 % 16) < shift else (32 + 12 - shift),
+		0 #if shift > 15 || (13 % 16) < shift else (32 + 13 - shift),
+		0 #if shift > 15 || (14 % 16) < shift else (32 + 14 - shift),
+		0 #if shift > 15 || (15 % 16) < shift else (32 + 15 - shift),
+		0 #if shift > 15 || (16 % 16) < shift else (32 + 16 - shift),
+		0 #if shift > 15 || (17 % 16) < shift else (32 + 17 - shift),
+		0 #if shift > 15 || (18 % 16) < shift else (32 + 18 - shift),
+		0 #if shift > 15 || (19 % 16) < shift else (32 + 19 - shift),
+		0 #if shift > 15 || (20 % 16) < shift else (32 + 20 - shift),
+		0 #if shift > 15 || (21 % 16) < shift else (32 + 21 - shift),
+		0 #if shift > 15 || (22 % 16) < shift else (32 + 22 - shift),
+		0 #if shift > 15 || (23 % 16) < shift else (32 + 23 - shift),
+		0 #if shift > 15 || (24 % 16) < shift else (32 + 24 - shift),
+		0 #if shift > 15 || (25 % 16) < shift else (32 + 25 - shift),
+		0 #if shift > 15 || (26 % 16) < shift else (32 + 26 - shift),
+		0 #if shift > 15 || (27 % 16) < shift else (32 + 27 - shift),
+		0 #if shift > 15 || (28 % 16) < shift else (32 + 28 - shift),
+		0 #if shift > 15 || (29 % 16) < shift else (32 + 29 - shift),
+		0 #if shift > 15 || (30 % 16) < shift else (32 + 30 - shift),
+		0 #if shift > 15 || (31 % 16) < shift else (32 + 31 - shift),
 	)
 }
 
@@ -1359,38 +1359,38 @@ _mm256_bsrli_epi128 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256
 	return transmute(__m256i)simd.shuffle(
 		simd.i8x32(0),
 		transmute(simd.i8x32)a,
-		0 when shift > 15 || (15 - (0  % 16)) < shift else (32 + 0  + shift),
-		0 when shift > 15 || (15 - (1  % 16)) < shift else (32 + 1  + shift),
-		0 when shift > 15 || (15 - (2  % 16)) < shift else (32 + 2  + shift),
-		0 when shift > 15 || (15 - (3  % 16)) < shift else (32 + 3  + shift),
-		0 when shift > 15 || (15 - (4  % 16)) < shift else (32 + 4  + shift),
-		0 when shift > 15 || (15 - (5  % 16)) < shift else (32 + 5  + shift),
-		0 when shift > 15 || (15 - (6  % 16)) < shift else (32 + 6  + shift),
-		0 when shift > 15 || (15 - (7  % 16)) < shift else (32 + 7  + shift),
-		0 when shift > 15 || (15 - (8  % 16)) < shift else (32 + 8  + shift),
-		0 when shift > 15 || (15 - (9  % 16)) < shift else (32 + 9  + shift),
-		0 when shift > 15 || (15 - (10 % 16)) < shift else (32 + 10 + shift),
-		0 when shift > 15 || (15 - (11 % 16)) < shift else (32 + 11 + shift),
-		0 when shift > 15 || (15 - (12 % 16)) < shift else (32 + 12 + shift),
-		0 when shift > 15 || (15 - (13 % 16)) < shift else (32 + 13 + shift),
-		0 when shift > 15 || (15 - (14 % 16)) < shift else (32 + 14 + shift),
-		0 when shift > 15 || (15 - (15 % 16)) < shift else (32 + 15 + shift),
-		0 when shift > 15 || (15 - (16 % 16)) < shift else (32 + 16 + shift),
-		0 when shift > 15 || (15 - (17 % 16)) < shift else (32 + 17 + shift),
-		0 when shift > 15 || (15 - (18 % 16)) < shift else (32 + 18 + shift),
-		0 when shift > 15 || (15 - (19 % 16)) < shift else (32 + 19 + shift),
-		0 when shift > 15 || (15 - (20 % 16)) < shift else (32 + 20 + shift),
-		0 when shift > 15 || (15 - (21 % 16)) < shift else (32 + 21 + shift),
-		0 when shift > 15 || (15 - (22 % 16)) < shift else (32 + 22 + shift),
-		0 when shift > 15 || (15 - (23 % 16)) < shift else (32 + 23 + shift),
-		0 when shift > 15 || (15 - (24 % 16)) < shift else (32 + 24 + shift),
-		0 when shift > 15 || (15 - (25 % 16)) < shift else (32 + 25 + shift),
-		0 when shift > 15 || (15 - (26 % 16)) < shift else (32 + 26 + shift),
-		0 when shift > 15 || (15 - (27 % 16)) < shift else (32 + 27 + shift),
-		0 when shift > 15 || (15 - (28 % 16)) < shift else (32 + 28 + shift),
-		0 when shift > 15 || (15 - (29 % 16)) < shift else (32 + 29 + shift),
-		0 when shift > 15 || (15 - (30 % 16)) < shift else (32 + 30 + shift),
-		0 when shift > 15 || (15 - (31 % 16)) < shift else (32 + 31 + shift),
+		0 #if shift > 15 || (15 - (0  % 16)) < shift else (32 + 0  + shift),
+		0 #if shift > 15 || (15 - (1  % 16)) < shift else (32 + 1  + shift),
+		0 #if shift > 15 || (15 - (2  % 16)) < shift else (32 + 2  + shift),
+		0 #if shift > 15 || (15 - (3  % 16)) < shift else (32 + 3  + shift),
+		0 #if shift > 15 || (15 - (4  % 16)) < shift else (32 + 4  + shift),
+		0 #if shift > 15 || (15 - (5  % 16)) < shift else (32 + 5  + shift),
+		0 #if shift > 15 || (15 - (6  % 16)) < shift else (32 + 6  + shift),
+		0 #if shift > 15 || (15 - (7  % 16)) < shift else (32 + 7  + shift),
+		0 #if shift > 15 || (15 - (8  % 16)) < shift else (32 + 8  + shift),
+		0 #if shift > 15 || (15 - (9  % 16)) < shift else (32 + 9  + shift),
+		0 #if shift > 15 || (15 - (10 % 16)) < shift else (32 + 10 + shift),
+		0 #if shift > 15 || (15 - (11 % 16)) < shift else (32 + 11 + shift),
+		0 #if shift > 15 || (15 - (12 % 16)) < shift else (32 + 12 + shift),
+		0 #if shift > 15 || (15 - (13 % 16)) < shift else (32 + 13 + shift),
+		0 #if shift > 15 || (15 - (14 % 16)) < shift else (32 + 14 + shift),
+		0 #if shift > 15 || (15 - (15 % 16)) < shift else (32 + 15 + shift),
+		0 #if shift > 15 || (15 - (16 % 16)) < shift else (32 + 16 + shift),
+		0 #if shift > 15 || (15 - (17 % 16)) < shift else (32 + 17 + shift),
+		0 #if shift > 15 || (15 - (18 % 16)) < shift else (32 + 18 + shift),
+		0 #if shift > 15 || (15 - (19 % 16)) < shift else (32 + 19 + shift),
+		0 #if shift > 15 || (15 - (20 % 16)) < shift else (32 + 20 + shift),
+		0 #if shift > 15 || (15 - (21 % 16)) < shift else (32 + 21 + shift),
+		0 #if shift > 15 || (15 - (22 % 16)) < shift else (32 + 22 + shift),
+		0 #if shift > 15 || (15 - (23 % 16)) < shift else (32 + 23 + shift),
+		0 #if shift > 15 || (15 - (24 % 16)) < shift else (32 + 24 + shift),
+		0 #if shift > 15 || (15 - (25 % 16)) < shift else (32 + 25 + shift),
+		0 #if shift > 15 || (15 - (26 % 16)) < shift else (32 + 26 + shift),
+		0 #if shift > 15 || (15 - (27 % 16)) < shift else (32 + 27 + shift),
+		0 #if shift > 15 || (15 - (28 % 16)) < shift else (32 + 28 + shift),
+		0 #if shift > 15 || (15 - (29 % 16)) < shift else (32 + 29 + shift),
+		0 #if shift > 15 || (15 - (30 % 16)) < shift else (32 + 30 + shift),
+		0 #if shift > 15 || (15 - (31 % 16)) < shift else (32 + 31 + shift),
 	)
 }
 
@@ -1403,38 +1403,38 @@ _mm256_slli_si256 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 	return transmute(__m256i)simd.shuffle(
 		simd.i8x32(0),
 		transmute(simd.i8x32)a,
-		0 when shift > 15 || (0  % 16) < shift else (32 + 0  - shift),
-		0 when shift > 15 || (1  % 16) < shift else (32 + 1  - shift),
-		0 when shift > 15 || (2  % 16) < shift else (32 + 2  - shift),
-		0 when shift > 15 || (3  % 16) < shift else (32 + 3  - shift),
-		0 when shift > 15 || (4  % 16) < shift else (32 + 4  - shift),
-		0 when shift > 15 || (5  % 16) < shift else (32 + 5  - shift),
-		0 when shift > 15 || (6  % 16) < shift else (32 + 6  - shift),
-		0 when shift > 15 || (7  % 16) < shift else (32 + 7  - shift),
-		0 when shift > 15 || (8  % 16) < shift else (32 + 8  - shift),
-		0 when shift > 15 || (9  % 16) < shift else (32 + 9  - shift),
-		0 when shift > 15 || (10 % 16) < shift else (32 + 10 - shift),
-		0 when shift > 15 || (11 % 16) < shift else (32 + 11 - shift),
-		0 when shift > 15 || (12 % 16) < shift else (32 + 12 - shift),
-		0 when shift > 15 || (13 % 16) < shift else (32 + 13 - shift),
-		0 when shift > 15 || (14 % 16) < shift else (32 + 14 - shift),
-		0 when shift > 15 || (15 % 16) < shift else (32 + 15 - shift),
-		0 when shift > 15 || (16 % 16) < shift else (32 + 16 - shift),
-		0 when shift > 15 || (17 % 16) < shift else (32 + 17 - shift),
-		0 when shift > 15 || (18 % 16) < shift else (32 + 18 - shift),
-		0 when shift > 15 || (19 % 16) < shift else (32 + 19 - shift),
-		0 when shift > 15 || (20 % 16) < shift else (32 + 20 - shift),
-		0 when shift > 15 || (21 % 16) < shift else (32 + 21 - shift),
-		0 when shift > 15 || (22 % 16) < shift else (32 + 22 - shift),
-		0 when shift > 15 || (23 % 16) < shift else (32 + 23 - shift),
-		0 when shift > 15 || (24 % 16) < shift else (32 + 24 - shift),
-		0 when shift > 15 || (25 % 16) < shift else (32 + 25 - shift),
-		0 when shift > 15 || (26 % 16) < shift else (32 + 26 - shift),
-		0 when shift > 15 || (27 % 16) < shift else (32 + 27 - shift),
-		0 when shift > 15 || (28 % 16) < shift else (32 + 28 - shift),
-		0 when shift > 15 || (29 % 16) < shift else (32 + 29 - shift),
-		0 when shift > 15 || (30 % 16) < shift else (32 + 30 - shift),
-		0 when shift > 15 || (31 % 16) < shift else (32 + 31 - shift),
+		0 #if shift > 15 || (0  % 16) < shift else (32 + 0  - shift),
+		0 #if shift > 15 || (1  % 16) < shift else (32 + 1  - shift),
+		0 #if shift > 15 || (2  % 16) < shift else (32 + 2  - shift),
+		0 #if shift > 15 || (3  % 16) < shift else (32 + 3  - shift),
+		0 #if shift > 15 || (4  % 16) < shift else (32 + 4  - shift),
+		0 #if shift > 15 || (5  % 16) < shift else (32 + 5  - shift),
+		0 #if shift > 15 || (6  % 16) < shift else (32 + 6  - shift),
+		0 #if shift > 15 || (7  % 16) < shift else (32 + 7  - shift),
+		0 #if shift > 15 || (8  % 16) < shift else (32 + 8  - shift),
+		0 #if shift > 15 || (9  % 16) < shift else (32 + 9  - shift),
+		0 #if shift > 15 || (10 % 16) < shift else (32 + 10 - shift),
+		0 #if shift > 15 || (11 % 16) < shift else (32 + 11 - shift),
+		0 #if shift > 15 || (12 % 16) < shift else (32 + 12 - shift),
+		0 #if shift > 15 || (13 % 16) < shift else (32 + 13 - shift),
+		0 #if shift > 15 || (14 % 16) < shift else (32 + 14 - shift),
+		0 #if shift > 15 || (15 % 16) < shift else (32 + 15 - shift),
+		0 #if shift > 15 || (16 % 16) < shift else (32 + 16 - shift),
+		0 #if shift > 15 || (17 % 16) < shift else (32 + 17 - shift),
+		0 #if shift > 15 || (18 % 16) < shift else (32 + 18 - shift),
+		0 #if shift > 15 || (19 % 16) < shift else (32 + 19 - shift),
+		0 #if shift > 15 || (20 % 16) < shift else (32 + 20 - shift),
+		0 #if shift > 15 || (21 % 16) < shift else (32 + 21 - shift),
+		0 #if shift > 15 || (22 % 16) < shift else (32 + 22 - shift),
+		0 #if shift > 15 || (23 % 16) < shift else (32 + 23 - shift),
+		0 #if shift > 15 || (24 % 16) < shift else (32 + 24 - shift),
+		0 #if shift > 15 || (25 % 16) < shift else (32 + 25 - shift),
+		0 #if shift > 15 || (26 % 16) < shift else (32 + 26 - shift),
+		0 #if shift > 15 || (27 % 16) < shift else (32 + 27 - shift),
+		0 #if shift > 15 || (28 % 16) < shift else (32 + 28 - shift),
+		0 #if shift > 15 || (29 % 16) < shift else (32 + 29 - shift),
+		0 #if shift > 15 || (30 % 16) < shift else (32 + 30 - shift),
+		0 #if shift > 15 || (31 % 16) < shift else (32 + 31 - shift),
 	)
 }
 
@@ -1447,38 +1447,38 @@ _mm256_srli_si256 :: #force_inline proc "c" (a: __m256i, $IMM8: i32) -> __m256i 
 	return transmute(__m256i)simd.shuffle(
 		simd.i8x32(0),
 		transmute(simd.i8x32)a,
-		0 when shift > 15 || (15 - (0  % 16)) < shift else (32 + 0  + shift),
-		0 when shift > 15 || (15 - (1  % 16)) < shift else (32 + 1  + shift),
-		0 when shift > 15 || (15 - (2  % 16)) < shift else (32 + 2  + shift),
-		0 when shift > 15 || (15 - (3  % 16)) < shift else (32 + 3  + shift),
-		0 when shift > 15 || (15 - (4  % 16)) < shift else (32 + 4  + shift),
-		0 when shift > 15 || (15 - (5  % 16)) < shift else (32 + 5  + shift),
-		0 when shift > 15 || (15 - (6  % 16)) < shift else (32 + 6  + shift),
-		0 when shift > 15 || (15 - (7  % 16)) < shift else (32 + 7  + shift),
-		0 when shift > 15 || (15 - (8  % 16)) < shift else (32 + 8  + shift),
-		0 when shift > 15 || (15 - (9  % 16)) < shift else (32 + 9  + shift),
-		0 when shift > 15 || (15 - (10 % 16)) < shift else (32 + 10 + shift),
-		0 when shift > 15 || (15 - (11 % 16)) < shift else (32 + 11 + shift),
-		0 when shift > 15 || (15 - (12 % 16)) < shift else (32 + 12 + shift),
-		0 when shift > 15 || (15 - (13 % 16)) < shift else (32 + 13 + shift),
-		0 when shift > 15 || (15 - (14 % 16)) < shift else (32 + 14 + shift),
-		0 when shift > 15 || (15 - (15 % 16)) < shift else (32 + 15 + shift),
-		0 when shift > 15 || (15 - (16 % 16)) < shift else (32 + 16 + shift),
-		0 when shift > 15 || (15 - (17 % 16)) < shift else (32 + 17 + shift),
-		0 when shift > 15 || (15 - (18 % 16)) < shift else (32 + 18 + shift),
-		0 when shift > 15 || (15 - (19 % 16)) < shift else (32 + 19 + shift),
-		0 when shift > 15 || (15 - (20 % 16)) < shift else (32 + 20 + shift),
-		0 when shift > 15 || (15 - (21 % 16)) < shift else (32 + 21 + shift),
-		0 when shift > 15 || (15 - (22 % 16)) < shift else (32 + 22 + shift),
-		0 when shift > 15 || (15 - (23 % 16)) < shift else (32 + 23 + shift),
-		0 when shift > 15 || (15 - (24 % 16)) < shift else (32 + 24 + shift),
-		0 when shift > 15 || (15 - (25 % 16)) < shift else (32 + 25 + shift),
-		0 when shift > 15 || (15 - (26 % 16)) < shift else (32 + 26 + shift),
-		0 when shift > 15 || (15 - (27 % 16)) < shift else (32 + 27 + shift),
-		0 when shift > 15 || (15 - (28 % 16)) < shift else (32 + 28 + shift),
-		0 when shift > 15 || (15 - (29 % 16)) < shift else (32 + 29 + shift),
-		0 when shift > 15 || (15 - (30 % 16)) < shift else (32 + 30 + shift),
-		0 when shift > 15 || (15 - (31 % 16)) < shift else (32 + 31 + shift),
+		0 #if shift > 15 || (15 - (0  % 16)) < shift else (32 + 0  + shift),
+		0 #if shift > 15 || (15 - (1  % 16)) < shift else (32 + 1  + shift),
+		0 #if shift > 15 || (15 - (2  % 16)) < shift else (32 + 2  + shift),
+		0 #if shift > 15 || (15 - (3  % 16)) < shift else (32 + 3  + shift),
+		0 #if shift > 15 || (15 - (4  % 16)) < shift else (32 + 4  + shift),
+		0 #if shift > 15 || (15 - (5  % 16)) < shift else (32 + 5  + shift),
+		0 #if shift > 15 || (15 - (6  % 16)) < shift else (32 + 6  + shift),
+		0 #if shift > 15 || (15 - (7  % 16)) < shift else (32 + 7  + shift),
+		0 #if shift > 15 || (15 - (8  % 16)) < shift else (32 + 8  + shift),
+		0 #if shift > 15 || (15 - (9  % 16)) < shift else (32 + 9  + shift),
+		0 #if shift > 15 || (15 - (10 % 16)) < shift else (32 + 10 + shift),
+		0 #if shift > 15 || (15 - (11 % 16)) < shift else (32 + 11 + shift),
+		0 #if shift > 15 || (15 - (12 % 16)) < shift else (32 + 12 + shift),
+		0 #if shift > 15 || (15 - (13 % 16)) < shift else (32 + 13 + shift),
+		0 #if shift > 15 || (15 - (14 % 16)) < shift else (32 + 14 + shift),
+		0 #if shift > 15 || (15 - (15 % 16)) < shift else (32 + 15 + shift),
+		0 #if shift > 15 || (15 - (16 % 16)) < shift else (32 + 16 + shift),
+		0 #if shift > 15 || (15 - (17 % 16)) < shift else (32 + 17 + shift),
+		0 #if shift > 15 || (15 - (18 % 16)) < shift else (32 + 18 + shift),
+		0 #if shift > 15 || (15 - (19 % 16)) < shift else (32 + 19 + shift),
+		0 #if shift > 15 || (15 - (20 % 16)) < shift else (32 + 20 + shift),
+		0 #if shift > 15 || (15 - (21 % 16)) < shift else (32 + 21 + shift),
+		0 #if shift > 15 || (15 - (22 % 16)) < shift else (32 + 22 + shift),
+		0 #if shift > 15 || (15 - (23 % 16)) < shift else (32 + 23 + shift),
+		0 #if shift > 15 || (15 - (24 % 16)) < shift else (32 + 24 + shift),
+		0 #if shift > 15 || (15 - (25 % 16)) < shift else (32 + 25 + shift),
+		0 #if shift > 15 || (15 - (26 % 16)) < shift else (32 + 26 + shift),
+		0 #if shift > 15 || (15 - (27 % 16)) < shift else (32 + 27 + shift),
+		0 #if shift > 15 || (15 - (28 % 16)) < shift else (32 + 28 + shift),
+		0 #if shift > 15 || (15 - (29 % 16)) < shift else (32 + 29 + shift),
+		0 #if shift > 15 || (15 - (30 % 16)) < shift else (32 + 30 + shift),
+		0 #if shift > 15 || (15 - (31 % 16)) < shift else (32 + 31 + shift),
 	)
 }
 
@@ -1772,10 +1772,10 @@ _mm256_permute2x128_si256 :: #force_inline proc "c" (a, b: __m256i, $IMM8: i32) 
 	return simd.shuffle(
 		c,
 		__m256i(0),
-		4 when ((u32(IMM8) & 0xf) & 0b1000) != 0 else 0,
-		4 when ((u32(IMM8) & 0xf) & 0b1000) != 0 else 1,
-		4 when (((u32(IMM8) & 0xf0) >> 4) & 0b1000) != 0 else 2,
-		4 when (((u32(IMM8) & 0xf0) >> 4) & 0b1000) != 0 else 3,
+		4 #if ((u32(IMM8) & 0xf) & 0b1000) != 0 else 0,
+		4 #if ((u32(IMM8) & 0xf) & 0b1000) != 0 else 1,
+		4 #if (((u32(IMM8) & 0xf0) >> 4) & 0b1000) != 0 else 2,
+		4 #if (((u32(IMM8) & 0xf0) >> 4) & 0b1000) != 0 else 3,
 	)
 }
 
@@ -1826,7 +1826,7 @@ _mm256_permutevar8x32_ps :: #force_inline proc "c" (a: __m256, idx: __m256i) -> 
 }
 
 // Load packed 32-bit integers from memory into `dst` using `mask`
-// (elements are zeroed out when the highest bit is not set in the corresponding element).
+// (elements are zeroed out #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_maskload_epi32)
 @(require_results, enable_target_feature="avx2")
@@ -1836,7 +1836,7 @@ _mm_maskload_epi32 :: #force_inline proc "c" (mem_addr: ^i32, mask: __m128i) -> 
 }
 
 // Load packed 32-bit integers from memory into `dst` using `mask`
-// (elements are zeroed out when the highest bit is not set in the corresponding element).
+// (elements are zeroed out #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_maskload_epi32)
 @(require_results, enable_target_feature="avx2")
@@ -1846,7 +1846,7 @@ _mm256_maskload_epi32 :: #force_inline proc "c" (mem_addr: ^i32, mask: __m256i) 
 }
 
 // Load packed 64-bit integers from memory into `dst` using `mask`
-// (elements are zeroed out when the highest bit is not set in the corresponding element).
+// (elements are zeroed out #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_maskload_epi64)
 @(require_results, enable_target_feature="avx2")
@@ -1856,7 +1856,7 @@ _mm_maskload_epi64 :: #force_inline proc "c" (mem_addr: ^i64, mask: __m128i) -> 
 }
 
 // Load packed 64-bit integers from memory into `dst` using `mask`
-// (elements are zeroed out when the highest bit is not set in the corresponding element).
+// (elements are zeroed out #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_maskload_epi64)
 @(require_results, enable_target_feature="avx2")
@@ -1866,7 +1866,7 @@ _mm256_maskload_epi64 :: #force_inline proc "c" (mem_addr: ^i64, mask: __m256i) 
 }
 
 // Store packed 32-bit integers from `a` into memory using `mask`
-// (elements are not stored when the highest bit is not set in the corresponding element).
+// (elements are not stored #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_maskstore_epi32)
 @(enable_target_feature="avx2")
@@ -1876,7 +1876,7 @@ _mm_maskstore_epi32 :: #force_inline proc "c" (mem_addr: ^i32, mask: __m128i, a:
 }
 
 // Store packed 32-bit integers from `a` into memory using `mask`
-// (elements are not stored when the highest bit is not set in the corresponding element).
+// (elements are not stored #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_maskstore_epi32)
 @(enable_target_feature="avx2")
@@ -1886,7 +1886,7 @@ _mm256_maskstore_epi32 :: #force_inline proc "c" (mem_addr: ^i32, mask: __m256i,
 }
 
 // Store packed 64-bit integers from `a` into memory using `mask`
-// (elements are not stored when the highest bit is not set in the corresponding element).
+// (elements are not stored #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_maskstore_epi64)
 @(enable_target_feature="avx2")
@@ -1896,7 +1896,7 @@ _mm_maskstore_epi64 :: #force_inline proc "c" (mem_addr: ^i64, mask: __m128i, a:
 }
 
 // Store packed 64-bit integers from `a` into memory using `mask`
-// (elements are not stored when the highest bit is not set in the corresponding element).
+// (elements are not stored #if the highest bit is not set in the corresponding element).
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_maskstore_epi64)
 @(enable_target_feature="avx2")
@@ -1925,7 +1925,7 @@ _mm_i32gather_epi32 :: #force_inline proc "c" (slice: ^i32, offsets: __m128i, $S
 // Gather 32-bit integers from memory using 32-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i32gather_epi32)
@@ -1960,7 +1960,7 @@ _mm256_i32gather_epi32 :: #force_inline proc "c" (slice: ^i32, offsets: __m256i,
 // Gather 32-bit integers from memory using 32-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i32gather_epi32)
@@ -1995,7 +1995,7 @@ _mm_i32gather_epi64 :: #force_inline proc "c" (slice: ^i64, offsets: __m128i, $S
 // Gather 64-bit integers from memory using 32-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i32gather_epi64)
@@ -2030,7 +2030,7 @@ _mm256_i32gather_epi64 :: #force_inline proc "c" (slice: ^i64, offsets: __m128i,
 // Gather 64-bit integers from memory using 32-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i32gather_epi64)
@@ -2063,7 +2063,7 @@ _mm_i32gather_pd :: #force_inline proc "c" (slice: ^f64, offsets: __m128i, $SCAL
 
 // Gather double-precision (64-bit) floating-point elements from memory using 32-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i32gather_pd)
@@ -2096,7 +2096,7 @@ _mm256_i32gather_pd :: #force_inline proc "c" (slice: ^f64, offsets: __m128i, $S
 
 // Gather double-precision (64-bit) floating-point elements from memory using 32-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i32gather_pd)
@@ -2129,7 +2129,7 @@ _mm_i32gather_ps :: #force_inline proc "c" (slice: ^f32, offsets: __m128i, $SCAL
 
 // Gather single-precision (32-bit) floating-point elements from memory using 32-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i32gather_ps)
@@ -2162,7 +2162,7 @@ _mm256_i32gather_ps :: #force_inline proc "c" (slice: ^f32, offsets: __m256i, $S
 
 // Gather single-precision (32-bit) floating-point elements from memory using 32-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 32-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i32gather_ps)
@@ -2197,7 +2197,7 @@ _mm_i64gather_epi32 :: #force_inline proc "c" (slice: ^i32, offsets: __m128i, $S
 // Gather 32-bit integers from memory using 64-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i64gather_epi32)
@@ -2232,7 +2232,7 @@ _mm256_i64gather_epi32 :: #force_inline proc "c" (slice: ^i32, offsets: __m256i,
 // Gather 32-bit integers from memory using 64-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i64gather_epi32)
@@ -2267,7 +2267,7 @@ _mm_i64gather_epi64 :: #force_inline proc "c" (slice: ^i64, offsets: __m128i, $S
 // Gather 64-bit integers from memory using 64-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i64gather_epi64)
@@ -2302,7 +2302,7 @@ _mm256_i64gather_epi64 :: #force_inline proc "c" (slice: ^i64, offsets: __m256i,
 // Gather 64-bit integers from memory using 64-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets`
 // (each index is scaled by the factor in `scale`). Gathered elements are merged into
-// `dst` using `mask` (elements are copied from `src` when the highest bit is not set
+// `dst` using `mask` (elements are copied from `src` #if the highest bit is not set
 // in the corresponding element). `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i64gather_epi64)
@@ -2335,7 +2335,7 @@ _mm_i64gather_pd :: #force_inline proc "c" (slice: ^f64, offsets: __m128i, $SCAL
 
 // Gather double-precision (64-bit) floating-point elements from memory using 64-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i64gather_pd)
@@ -2368,7 +2368,7 @@ _mm256_i64gather_pd :: #force_inline proc "c" (slice: ^f64, offsets: __m256i, $S
 
 // Gather double-precision (64-bit) floating-point elements from memory using 64-bit indices. 64-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i64gather_pd)
@@ -2401,7 +2401,7 @@ _mm_i64gather_ps :: #force_inline proc "c" (slice: ^f32, offsets: __m128i, $SCAL
 
 // Gather single-precision (32-bit) floating-point elements from memory using 64-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm_mask_i64gather_ps)
@@ -2434,7 +2434,7 @@ _mm256_i64gather_ps :: #force_inline proc "c" (slice: ^f32, offsets: __m256i, $S
 
 // Gather single-precision (32-bit) floating-point elements from memory using 64-bit indices. 32-bit elements are loaded
 // from addresses starting at `slice` and offset by each 64-bit element in `offsets` (each index is scaled by the factor in `scale`).
-// Gathered elements are merged into `dst` using `mask` (elements are copied from src when the highest bit is not set in the corresponding element).
+// Gathered elements are merged into `dst` using `mask` (elements are copied from src #if the highest bit is not set in the corresponding element).
 // `scale` should be 1, 2, 4 or 8.
 //
 // [Intel's documentation](https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#text=_mm256_mask_i64gather_ps)
@@ -2450,7 +2450,7 @@ _mm256_mask_i64gather_ps :: #force_inline proc "c" (src: __m128, slice: ^f32, of
 }
 
 @(private="file", default_calling_convention="none")
-foreign _ {
+#foreign _ {
 	@(link_name="llvm.x86.avx2.psign.b")         llvm_psignb      :: proc(a: simd.i8x32, b: simd.i8x32) -> simd.i8x32 ---
 	@(link_name="llvm.x86.avx2.psign.w")         llvm_psignw      :: proc(a: simd.i16x16, b: simd.i16x16) -> simd.i16x16 ---
 	@(link_name="llvm.x86.avx2.psign.d")         llvm_psignd      :: proc(a: simd.i32x8, b: simd.i32x8) -> simd.i32x8 ---

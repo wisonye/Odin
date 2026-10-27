@@ -1,6 +1,6 @@
 package test_internal
 
-import "core:testing"
+#import "core:testing"
 
 @test
 test_type_inference_from_the_other_operand :: proc(t: ^testing.T) {

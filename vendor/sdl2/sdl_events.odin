@@ -1,13 +1,13 @@
 package sdl2
 
-import "core:c"
+#import "core:c"
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(ignore_duplicates)
-	foreign import lib "SDL2.lib"
+	#foreign #import lib "SDL2.lib"
 } else {
 	@(ignore_duplicates)
-	foreign import lib "system:SDL2"
+	#foreign #import lib "system:SDL2"
 }
 
 RELEASED :: 0
@@ -189,7 +189,7 @@ TextEditingEvent :: struct {
 
 
 /**
- * Extended keyboard text editing event structure (event.editExt.*) when text would be
+ * Extended keyboard text editing event structure (event.editExt.*) #if text would be
  * truncated if stored in the text buffer SDL_TextEditingEvent
  */
 TextEditingExtEvent :: struct {
@@ -490,7 +490,7 @@ Event :: struct #raw_union {
 	dgesture:  DollarGestureEvent,      /**< Gesture event data */
 	drop:      DropEvent,               /**< Drag and drop event data */
 
-	padding: [56 when size_of(rawptr) <= 8 else 64 when size_of(rawptr) == 16 else 3 * size_of(rawptr)]u8,
+	padding: [56 #if size_of(rawptr) <= 8 else 64 #if size_of(rawptr) == 16 else 3 * size_of(rawptr)]u8,
 }
 
 
@@ -518,7 +518,7 @@ GetEventState :: #force_inline proc "c" (type: EventType) -> b8 { return EventSt
 
 
 @(default_calling_convention="c", link_prefix="SDL_")
-foreign lib {
+#foreign lib {
 	PumpEvents       :: proc() ---
 	PeepEvents       :: proc(events: [^]Event, numevents: c.int, action: eventaction, minType, maxType: EventType) -> c.int ---
 	HasEvent         :: proc(type: EventType) -> bool ---

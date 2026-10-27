@@ -2,12 +2,12 @@
 #+build darwin
 package darwin_Foundation
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 @(objc_class="NSHTTPURLResponse", objc_superclass=URLResponse)
 HTTPURLResponse :: struct { using _: URLResponse}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=HTTPURLResponse, objc_selector="initWithURL:statusCode:HTTPVersion:headerFields:", objc_name="initWithURL")
 	HTTPURLResponse_initWithURL :: proc(self: ^HTTPURLResponse, url: ^URL, statusCode: Integer, HTTPVersion: ^String, headerFields: ^Dictionary) -> instancetype ---
 

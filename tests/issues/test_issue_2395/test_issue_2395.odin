@@ -1,6 +1,6 @@
 // Tests issue #2395 https://github.com/odin-lang/Odin/issues/2395
 
-// Ensures that we no longer raise the faulty error for #no_nil unions when
+// Ensures that we no longer raise the faulty error for #no_nil unions #if
 // then are 2 variants with the polymorphic type. Also ensure that we raise
 // exactly 2 errors from the invalid unions
 package test_issue_2395

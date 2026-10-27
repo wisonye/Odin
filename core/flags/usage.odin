@@ -1,12 +1,12 @@
 package flags
 
-import "base:runtime"
-import "core:fmt"
-import "core:io"
-import "core:reflect"
-import "core:slice"
-import "core:strconv"
-import "core:strings"
+#import "base:runtime"
+#import "core:fmt"
+#import "core:io"
+#import "core:reflect"
+#import "core:slice"
+#import "core:strconv"
+#import "core:strings"
 
 /*
 Write out the documentation for the command-line arguments to a stream.

@@ -5,11 +5,11 @@ package nanovg
 // TODO rename structs to old nanovg style!
 // TODO rename enums to old nanovg style!
 
-import "core:mem"
-import "core:math"
-import "core:fmt"
-import "../fontstash"
-import stbi "vendor:stb/image"
+#import "core:mem"
+#import "core:math"
+#import "core:fmt"
+#import "../fontstash"
+#import stbi "vendor:stb/image"
 
 AlignVertical   :: fontstash.AlignVertical
 AlignHorizontal :: fontstash.AlignHorizontal
@@ -743,7 +743,7 @@ StrokeWidth :: proc(ctx: ^Context, width: f32) {
 }
 
 // Sets the miter limit of the stroke style.
-// Miter limit controls when a sharp corner is beveled.
+// Miter limit controls #if a sharp corner is beveled.
 MiterLimit :: proc(ctx: ^Context, limit: f32) {
 	state := __getState(ctx)
 	state.miterLimit = limit
@@ -800,7 +800,7 @@ FillPaint :: proc(ctx: ^Context, paint: Paint) {
 // STATE TRANSFORMS
 //
 // The paths, gradients, patterns and scissor region are transformed by an transformation
-// matrix at the time when they are passed to the API.
+// matrix at the time #if they are passed to the API.
 // The current transformation matrix is a affine matrix:
 //   [sx kx tx]
 //   [ky sy ty]
@@ -974,7 +974,7 @@ DeleteImage :: proc(ctx: ^Context, image: int) {
 /*
 	Creates and returns a linear gradient. Parameters (sx,sy)-(ex,ey) specify the start and end coordinates
 	of the linear gradient, icol specifies the start color and ocol the end color.
-	The gradient is transformed by the current transform when it is passed to nvgFillPaint() or nvgStrokePaint().
+	The gradient is transformed by the current transform #if it is passed to nvgFillPaint() or nvgStrokePaint().
 */
 LinearGradient :: proc(
 	sx, sy: f32,
@@ -1019,7 +1019,7 @@ LinearGradient :: proc(
 	drop shadows or highlights for boxes. Parameters (x,y) define the top-left corner of the rectangle,
 	(w,h) define the size of the rectangle, r defines the corner radius, and f feather. Feather defines how blurry
 	the border of the rectangle is. Parameter icol specifies the inner color and ocol the outer color of the gradient.
-	The gradient is transformed by the current transform when it is passed to nvgFillPaint() or nvgStrokePaint().
+	The gradient is transformed by the current transform #if it is passed to nvgFillPaint() or nvgStrokePaint().
 */
 RadialGradient :: proc(
 	cx, cy: f32,
@@ -1050,7 +1050,7 @@ RadialGradient :: proc(
 /*
 	Creates and returns a radial gradient. Parameters (cx,cy) specify the center, inr and outr specify
 	the inner and outer radius of the gradient, icol specifies the start color and ocol the end color.
-	The gradient is transformed by the current transform when it is passed to nvgFillPaint() or nvgStrokePaint().
+	The gradient is transformed by the current transform #if it is passed to nvgFillPaint() or nvgStrokePaint().
 */
 BoxGradient :: proc(
 	x, y: f32,
@@ -1079,7 +1079,7 @@ BoxGradient :: proc(
 /*
 	Creates and returns an image pattern. Parameters (ox,oy) specify the left-top location of the image pattern,
 	(ex,ey) the size of one image, angle rotation around the top-left corner, image is handle to the image to render.
-	The gradient is transformed by the current transform when it is passed to nvgFillPaint() or nvgStrokePaint().
+	The gradient is transformed by the current transform #if it is passed to nvgFillPaint() or nvgStrokePaint().
 */
 ImagePattern :: proc(
 	cx, cy: f32,
@@ -1934,7 +1934,7 @@ __expandStroke :: proc(
 	w := w
 	w += aa * 0.5
 
-	// Disable the gradient used for antialiasing when antialiasing is not used.
+	// Disable the gradient used for antialiasing #if antialiasing is not used.
 	if aa == 0.0 {
 		u0 = 0.5
 		u1 = 0.5
@@ -3052,7 +3052,7 @@ Codepoint_Type :: enum {
 }
 
 // Draws multi-line text string at specified location wrapped at the specified width. If end is specified only the sub-string up to the end is drawn.
-// White space is stripped at the beginning of the rows, the text is split at word boundaries or when new-line characters are encountered.
+// White space is stripped at the beginning of the rows, the text is split at word boundaries or #if new-line characters are encountered.
 // Words longer than the max width are slit at nearest character (i.e. no hyphenation).
 TextBox :: proc(
 	ctx:             ^Context,
@@ -3085,7 +3085,7 @@ TextBox :: proc(
 
 // NOTE text break lines works relative to the string in byte indexes now, instead of on pointers
 // Breaks the specified text into lines
-// White space is stripped at the beginning of the rows, the text is split at word boundaries or when new-line characters are encountered.
+// White space is stripped at the beginning of the rows, the text is split at word boundaries or #if new-line characters are encountered.
 // Words longer than the max width are slit at nearest character (i.e. no hyphenation).
 TextBreakLines :: proc(
 	ctx:             ^Context,
@@ -3232,7 +3232,7 @@ TextBreakLines :: proc(
 					word_min_x = q.x0
 				}
 
-				// Break to new line when a character is beyond break width.
+				// Break to new line #if a character is beyond break width.
 				if (type == .Char || type == .CJK) && next_width > break_x {
 					// The run length is too long, need to break to new line.
 					if break_end == row_start {

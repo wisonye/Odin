@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_MetalFX
 
-import "base:intrinsics"
-import NS "core:sys/darwin/Foundation"
-import MTL "vendor:darwin/Metal"
-import cffi "core:c"
+#import "base:intrinsics"
+#import NS "core:sys/darwin/Foundation"
+#import MTL "vendor:darwin/Metal"
+#import cffi "core:c"
 
 @(objc_class="MTLFXFrameInterpolatableScaler")
 FrameInterpolatableScaler :: struct {
@@ -20,7 +20,7 @@ FrameInterpolator :: struct {
 	using _: FrameInterpolatorBase,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FrameInterpolator, objc_selector="encodeToCommandBuffer:", objc_name="encodeToCommandBuffer")
 	FrameInterpolator_encodeToCommandBuffer :: proc(self: ^FrameInterpolator, commandBuffer: ^MTL.CommandBuffer) ---
 }
@@ -32,7 +32,7 @@ FrameInterpolatorDescriptor :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FrameInterpolatorDescriptor, objc_selector="newFrameInterpolatorWithDevice:", objc_name="newFrameInterpolatorWithDevice_")
 	FrameInterpolatorDescriptor_newFrameInterpolatorWithDevice_ :: proc(self: ^FrameInterpolatorDescriptor, device: ^MTL.Device) -> ^FrameInterpolator ---
 
@@ -121,7 +121,7 @@ FrameInterpolatorBase :: struct {
 	using _: NS.ObjectProtocol,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=FrameInterpolatorBase, objc_selector="colorTextureUsage", objc_name="colorTextureUsage")
 	FrameInterpolatorBase_colorTextureUsage :: proc(self: ^FrameInterpolatorBase) -> MTL.TextureUsage ---
 

@@ -1,14 +1,14 @@
 //  Bindings for [[LZ4 ; https://github.com/lz4/lz4]].
 package vendor_compress_lz4
 
-when ODIN_OS == .Windows {
+#if ODIN_OS == .Windows {
 	@(extra_linker_flags="/NODEFAULTLIB:libcmt")
-	foreign import lib { "lib/liblz4_static.lib", "system:ucrt.lib" }
+	#foreign #import lib { "lib/liblz4_static.lib", "system:ucrt.lib" }
 } else {
-	foreign import lib "system:lz4"
+	#foreign #import lib "system:lz4"
 }
 
-import "core:c"
+#import "core:c"
 
 VERSION_MAJOR   ::  1    /* for breaking interface changes  */
 VERSION_MINOR   :: 10    /* for new (non-breaking) interface capabilities */
@@ -35,7 +35,7 @@ DECODER_RING_BUFFER_SIZE :: #force_inline proc "c" (maxBlockSize: c.int) -> c.in
 }
 
 @(default_calling_convention="c", link_prefix="LZ4_")
-foreign lib {
+#foreign lib {
 	versionNumber :: proc() -> c.int ---   /**< library version number; useful to check dll version; requires v1.3.0+ */
 	versionString :: proc() -> cstring --- /**< library version string; useful to check dll version; requires v1.7.5+ */
 
@@ -77,7 +77,7 @@ foreign lib {
 	    Provides the maximum size that LZ4 compression may output in a "worst case" scenario (input data not compressible)
 	    This function is primarily useful for memory allocation purposes (destination buffer size).
 	    Macro LZ4_COMPRESSBOUND() is also provided for compilation-time evaluation (stack memory allocation for example).
-	    Note that LZ4_compress_default() compresses faster when dstCapacity is >= LZ4_compressBound(srcSize)
+	    Note that LZ4_compress_default() compresses faster #if dstCapacity is >= LZ4_compressBound(srcSize)
 	        inputSize  : max supported value is LZ4_MAX_INPUT_SIZE
 	        return : maximum output size in a "worst case" scenario
 	              or 0, if input size is incorrect (too large or negative)
@@ -177,7 +177,7 @@ foreign lib {
 	 *  (e.g., LZ4_compress_fast_continue()).
 	 *
 	 *  An LZ4_stream_t must be initialized once before usage.
-	 *  This is automatically done when created by LZ4_createStream().
+	 *  This is automatically done #if created by LZ4_createStream().
 	 *  However, should the LZ4_stream_t be simply declared on stack (for example),
 	 *  it's necessary to initialize it first, using LZ4_initStream().
 	 *
@@ -360,7 +360,7 @@ foreign lib {
 	 *  However, it's stateless: it doesn't need any LZ4_streamDecode_t state.
 	 *  Dictionary is presumed stable : it must remain accessible and unmodified during decompression.
 	 *  Performance tip : Decompression speed can be substantially increased
-	 *                    when dst == dictStart + dictSize.
+	 *                    #if dst == dictStart + dictSize.
 	 */
 	decompress_safe_usingDict :: proc(src, dst: [^]byte, srcSize, dstCapacity: c.int, dictStart: [^]byte, dictSize: c.int) -> c.int ---
 
@@ -368,7 +368,7 @@ foreign lib {
 	 *  Behaves the same as LZ4_decompress_safe_partial()
 	 *  with the added ability to specify a memory segment for past data.
 	 *  Performance tip : Decompression speed can be substantially increased
-	 *                    when dst == dictStart + dictSize.
+	 *                    #if dst == dictStart + dictSize.
 	 */
 	decompress_safe_partial_usingDict :: proc(src, dst: [^]byte, compressedSize, targetOutputSize, maxOutputSize: c.int, dictStart: [^]byte, dictSize: c.int) -> c.int ---
 
@@ -423,7 +423,7 @@ CLEVEL_MAX     :: 12
 
 
 @(default_calling_convention="c", link_prefix="LZ4_")
-foreign lib {
+#foreign lib {
 	/*! LZ4_compress_HC() :
 	 *  Compress data from `src` into `dst`, using the powerful but slower "HC" algorithm.
 	 * `dst` must be already allocated.

@@ -1,9 +1,9 @@
 #+feature dynamic-literals
 package test_core_hash
 
-import "core:hash"
-import "core:testing"
-import "base:intrinsics"
+#import "core:hash"
+#import "core:testing"
+#import "base:intrinsics"
 
 /*
 	Built-in `#hash`es:

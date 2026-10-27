@@ -1,9 +1,9 @@
 #+private
 package os
 
-import "base:runtime"
-import "core:slice"
-import win32 "core:sys/windows"
+#import "base:runtime"
+#import "core:slice"
+#import win32 "core:sys/windows"
 
 _Platform_Error :: win32.System_Error
 

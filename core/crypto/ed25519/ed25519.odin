@@ -8,9 +8,9 @@ See:
 */
 package ed25519
 
-import "core:crypto"
-import grp "core:crypto/_edwards25519"
-import "core:crypto/sha2"
+#import "core:crypto"
+#import grp "core:crypto/_edwards25519"
+#import "core:crypto/sha2"
 
 // PRIVATE_KEY_SIZE is the byte-encoded private key size.
 PRIVATE_KEY_SIZE :: 32

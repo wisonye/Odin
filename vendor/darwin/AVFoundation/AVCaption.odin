@@ -2,10 +2,10 @@
 #+build darwin
 package darwin_AVFoundation
 
-import CG "core:sys/darwin/CoreGraphics"
-import CM "vendor:darwin/CoreMedia"
-import NS "core:sys/darwin/Foundation"
-import "base:intrinsics"
+#import CG "core:sys/darwin/CoreGraphics"
+#import CM "vendor:darwin/CoreMedia"
+#import NS "core:sys/darwin/Foundation"
+#import "base:intrinsics"
 
 @(objc_class="AVCaption", objc_superclass=NS.Object)
 Caption :: struct {
@@ -15,7 +15,7 @@ Caption :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=Caption, objc_selector="init", objc_name="init")
 	Caption_init :: proc(self: ^Caption) -> instancetype ---
 
@@ -66,7 +66,7 @@ foreign lib {
 @(objc_class="AVMutableCaption", objc_superclass=Caption)
 MutableCaption :: struct { using _: Caption}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableCaption, objc_selector="text", objc_name="text")
 	MutableCaption_text :: proc(self: ^MutableCaption) -> ^NS.String ---
 
@@ -144,7 +144,7 @@ foreign lib {
 @(objc_class="AVCaptionConversionAdjustment", objc_superclass=NS.Object)
 CaptionConversionAdjustment :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionConversionAdjustment, objc_selector="init", objc_name="init")
 	CaptionConversionAdjustment_init :: proc(self: ^CaptionConversionAdjustment) -> instancetype ---
 
@@ -159,7 +159,7 @@ foreign lib {
 @(objc_class="AVCaptionConversionTimeRangeAdjustment", objc_superclass=CaptionConversionAdjustment)
 CaptionConversionTimeRangeAdjustment :: struct { using _: CaptionConversionAdjustment}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionConversionTimeRangeAdjustment, objc_selector="init", objc_name="init")
 	CaptionConversionTimeRangeAdjustment_init :: proc(self: ^CaptionConversionTimeRangeAdjustment) -> instancetype ---
 
@@ -177,7 +177,7 @@ foreign lib {
 @(objc_class="AVCaptionConversionValidator", objc_superclass=NS.Object)
 CaptionConversionValidator :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionConversionValidator, objc_selector="init", objc_name="init")
 	CaptionConversionValidator_init :: proc(self: ^CaptionConversionValidator) -> instancetype ---
 
@@ -213,7 +213,7 @@ foreign lib {
 @(objc_class="AVCaptionConversionWarning", objc_superclass=NS.Object)
 CaptionConversionWarning :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionConversionWarning, objc_selector="init", objc_name="init")
 	CaptionConversionWarning_init :: proc(self: ^CaptionConversionWarning) -> instancetype ---
 
@@ -234,7 +234,7 @@ foreign lib {
 @(objc_class="AVCaptionFormatConformer", objc_superclass=NS.Object)
 CaptionFormatConformer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionFormatConformer, objc_selector="init", objc_name="init")
 	CaptionFormatConformer_init :: proc(self: ^CaptionFormatConformer) -> instancetype ---
 
@@ -270,7 +270,7 @@ CaptionFormatConformer_conformedCaptionForCaption :: #force_inline proc "c" (sel
 @(objc_class="AVCaptionGroup", objc_superclass=NS.Object)
 CaptionGroup :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionGroup, objc_selector="initWithCaptions:timeRange:", objc_name="initWithCaptions")
 	CaptionGroup_initWithCaptions :: proc(self: ^CaptionGroup, captions: ^NS.Array, timeRange: CM.TimeRange) -> instancetype ---
 
@@ -292,7 +292,7 @@ CaptionGroupInternal :: struct { using _: intrinsics.objc_object}
 @(objc_class="AVCaptionGrouper", objc_superclass=NS.Object)
 CaptionGrouper :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionGrouper, objc_selector="addCaption:", objc_name="addCaption")
 	CaptionGrouper_addCaption :: proc(self: ^CaptionGrouper, input: ^Caption) ---
 
@@ -309,7 +309,7 @@ CaptionRegion :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionRegion, objc_selector="encodeWithCoder:", objc_name="encodeWithCoder")
 	CaptionRegion_encodeWithCoder :: proc(self: ^CaptionRegion, encoder: ^NS.Coder) ---
 
@@ -357,7 +357,7 @@ foreign lib {
 @(objc_class="AVMutableCaptionRegion", objc_superclass=CaptionRegion)
 MutableCaptionRegion :: struct { using _: CaptionRegion}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=MutableCaptionRegion, objc_selector="init", objc_name="init")
 	MutableCaptionRegion_init :: proc(self: ^MutableCaptionRegion) -> instancetype ---
 
@@ -399,7 +399,7 @@ foreign lib {
 @(objc_class="AVCaptionRenderer", objc_superclass=NS.Object)
 CaptionRenderer :: struct { using _: NS.Object}
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionRenderer, objc_selector="init", objc_name="init")
 	CaptionRenderer_init :: proc(self: ^CaptionRenderer) -> instancetype ---
 
@@ -436,7 +436,7 @@ CaptionRendererScene :: struct {
 	using _: NS.Copying,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionRendererScene, objc_selector="init", objc_name="init")
 	CaptionRendererScene_init :: proc(self: ^CaptionRendererScene) -> instancetype ---
 
@@ -465,7 +465,7 @@ CaptionRuby :: struct {
 	using _: NS.SecureCoding,
 }
 
-foreign lib {
+#foreign lib {
 	@(objc_type=CaptionRuby, objc_selector="init", objc_name="init")
 	CaptionRuby_init :: proc(self: ^CaptionRuby) -> instancetype ---
 

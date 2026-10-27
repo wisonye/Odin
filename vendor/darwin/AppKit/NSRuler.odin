@@ -2,8 +2,8 @@
 #+build darwin:default
 package darwin_AppKit
 
-import CG "core:sys/darwin/CoreGraphics"
-import NS "core:sys/darwin/Foundation"
+#import CG "core:sys/darwin/CoreGraphics"
+#import NS "core:sys/darwin/Foundation"
 
 @(objc_class="NSRulerMarker", objc_superclass=NS.Object)
 RulerMarker :: struct {
@@ -13,7 +13,7 @@ RulerMarker :: struct {
 }
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RulerMarker, objc_selector="initWithRulerView:markerLocation:image:imageOrigin:", objc_name="initWithRulerView")
 	RulerMarker_initWithRulerView :: proc(self: ^RulerMarker, ruler: ^RulerView, location: CG.Float, image: ^Image, imageOrigin: CG.Point) -> instancetype ---
 
@@ -83,7 +83,7 @@ foreign lib {
 RulerView :: struct { using _: View}
 
 @(default_calling_convention="c")
-foreign lib {
+#foreign lib {
 	@(objc_type=RulerView, objc_selector="registerUnitWithName:abbreviation:unitToPointsConversionFactor:stepUpCycle:stepDownCycle:", objc_name="registerUnitWithName", objc_is_class_method=true)
 	RulerView_registerUnitWithName :: proc(unitName: ^NS.String, abbreviation: ^NS.String, conversionFactor: CG.Float, stepUpCycle: ^NS.Array, stepDownCycle: ^NS.Array) ---
 

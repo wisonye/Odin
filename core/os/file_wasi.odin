@@ -2,11 +2,11 @@
 #+private
 package os
 
-import "base:runtime"
+#import "base:runtime"
 
-import "core:io"
-import "core:sys/wasm/wasi"
-import "core:time"
+#import "core:io"
+#import "core:sys/wasm/wasi"
+#import "core:time"
 
 // NOTE: Don't know if there is a max in wasi.
 MAX_RW :: 1 << 30
@@ -23,7 +23,7 @@ File_Impl :: struct {
 // are the only ones accessible by the application.
 //
 // So in order to facilitate the `os` API (absolute paths etc.) we keep a list
-// of the given directories and match them when needed (notably `os.open`).
+// of the given directories and match them #if needed (notably `os.open`).
 Preopen :: struct {
 	fd:     wasi.fd_t,
 	prefix: string,

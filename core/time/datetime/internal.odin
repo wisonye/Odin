@@ -3,7 +3,7 @@ package datetime
 
 // Internal helper functions for calendrical conversions
 
-import "base:intrinsics"
+#import "base:intrinsics"
 
 sign :: proc "contextless" (v: i64) -> (res: i64) {
 	if v == 0 {
