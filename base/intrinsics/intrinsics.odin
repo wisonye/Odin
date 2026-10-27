@@ -4,6 +4,7 @@ package intrinsics
 
 import "base:runtime"
 
+
 // Package-Related
 is_package_imported :: proc(package_name: string) -> bool ---
 
@@ -34,10 +35,26 @@ cpu_relax          :: proc() ---
 read_cycle_counter :: proc() -> i64 ---
 read_cycle_counter_frequency :: proc() -> i64 ---
 
+// Stack and return addresses
+// `level` 0 is the current procedure, 1 its caller, and so on. An inlined procedure has no frame of its own.
+// A level above 0 follows the saved frame pointers, so it is only reliable when every frame in between keeps one,
+// and it is not allowed on Windows amd64 targets, where frames can only be walked with the unwind tables.
+
+// The address the procedure at `level` returns to. Not allowed on wasm targets.
+return_address :: proc(#const level: u32 = 0) -> rawptr ---
+// The address of the stack frame of the procedure at `level`. A level above 0 is not allowed on wasm targets.
+frame_address  :: proc(#const level: u32 = 0) -> rawptr ---
+// The current value of the stack pointer
+stack_pointer  :: proc() -> rawptr ---
+// The address of the slot holding the current procedure's return address. amd64, i386, and arm64 targets only.
+address_of_return_address :: proc() -> ^rawptr ---
+
 count_ones           :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
 count_zeros          :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
 count_trailing_zeros :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
 count_leading_zeros  :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
+count_trailing_ones  :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
+count_leading_ones   :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
 reverse_bits         :: proc(x: $T) -> T where type_is_integer(T) || type_is_simd_vector(T) ---
 byte_swap            :: proc(x: $T) -> T where type_is_integer(T) || type_is_float(T) ---
 
@@ -75,7 +92,9 @@ prefetch_write_instruction :: proc(address: rawptr, #const locality: i32 /* 0..=
 prefetch_write_data        :: proc(address: rawptr, #const locality: i32 /* 0..=3 */) ---
 
 // Compiler Hints
-expect :: proc(val, expected_val: $T) -> T ---
+expect   :: proc(val, expected_val: $T) -> T ---
+likely   :: proc(val: $T) -> T where type_is_boolean(T) ---
+unlikely :: proc(val: $T) -> T where type_is_boolean(T) ---
 
 // Linux and Darwin Only
 syscall :: proc(id: uintptr, args: ..uintptr) -> uintptr ---
@@ -84,6 +103,10 @@ syscall_bsd :: proc(id: uintptr, args: ..uintptr) -> (uintptr, bool) ---
 
 
 // Atomics
+// Also for `@(synchronizes=...)` on a procedure which acts as an atomic operation with that ordering on what its first
+// argument points to, e.g. `.Acquire` for taking a lock and `.Release` for releasing it: -vet-atomic-access takes plain
+// reads and writes after an acquire, and plain writes before a release, to be synchronized. `@(synchronizes_shared=...)`,
+// as for a shared lock, synchronizes only plain reads.
 Atomic_Memory_Order :: enum {
 	Relaxed = 0, // Unordered
 	Consume = 1, // Monotonic
@@ -91,6 +114,12 @@ Atomic_Memory_Order :: enum {
 	Release = 3,
 	Acq_Rel = 4,
 	Seq_Cst = 5,
+}
+
+// For `@(futex=...)` on a procedure, which waits on or wakes what its first parameter points to
+Futex_Operation :: enum {
+	Wait = 0, // Atomically compares it with what is expected, with no ordering, and sleeps while they are equal
+	Wake = 1, // Wakes what waits on it, without accessing it
 }
 
 atomic_type_is_lock_free :: proc($T: typeid) -> bool ---
@@ -178,6 +207,9 @@ type_is_bit_set          :: proc($T: typeid) -> bool ---
 type_is_bit_field        :: proc($T: typeid) -> bool ---
 type_is_simd_vector      :: proc($T: typeid) -> bool ---
 type_is_matrix           :: proc($T: typeid) -> bool ---
+type_is_fixed_capacity_dynamic_array :: proc($T: typeid) -> bool ---
+
+type_is_internally_pointer_like :: proc($T: typeid) -> bool ---
 
 type_has_nil :: proc($T: typeid) -> bool ---
 
@@ -200,11 +232,16 @@ type_bit_set_underlying_type :: proc($T: typeid) -> typeid where type_is_bit_set
 type_has_field  :: proc($T: typeid, $name: string) -> bool ---
 type_field_type :: proc($T: typeid, $name: string) -> typeid ---
 
+type_field_bit_size :: proc($T: typeid, $name: string) -> int where type_is_bit_field(T) ---
+type_field_bit_offset :: proc($T: typeid, $name: string) -> int where type_is_bit_field(T) ---
+
 type_proc_parameter_count :: proc($T: typeid) -> int where type_is_proc(T) ---
 type_proc_return_count    :: proc($T: typeid) -> int where type_is_proc(T) ---
 
 type_proc_parameter_type  :: proc($T: typeid, index: int) -> typeid where type_is_proc(T) ---
 type_proc_return_type     :: proc($T: typeid, index: int) -> typeid where type_is_proc(T) ---
+
+type_proc_calling_convention :: proc($T: typeid) -> Odin_Calling_Convention where type_is_proc(T) ---
 
 type_struct_field_count          :: proc($T: typeid) -> int  where type_is_struct(T) ---
 type_struct_has_implicit_padding :: proc($T: typeid) -> bool where type_is_struct(T) ---
@@ -219,6 +256,8 @@ type_is_subtype_of  :: proc($T, $U: typeid) -> bool ---
 type_is_superset_of :: proc($Super, $Sub: typeid) -> bool ---
 
 type_field_index_of :: proc($T: typeid, $name: string) -> uintptr ---
+
+type_fixed_capacity_dynamic_array_len_offset :: proc($T: typeid/[dynamic; $N]$E) -> uintptr ---
 
 // "Contiguous" means that the set of enum constants, when sorted, have a difference of either 0 or 1 between consecutive values.
 // This is the exact opposite of "sparse".
@@ -236,7 +275,11 @@ type_merge :: proc($U, $V: typeid) -> typeid where type_is_union(U), type_is_uni
 type_integer_to_unsigned :: proc($T: typeid) -> type where type_is_integer(T), !type_is_unsigned(T) ---
 type_integer_to_signed   :: proc($T: typeid) -> type where type_is_integer(T), type_is_unsigned(T) ---
 
+// Directional: true when U contains every field of V, matched on name and type.
+// Swapping the arguments can change the answer, and an empty V will return true.
 type_has_shared_fields :: proc($U, $V: typeid) -> bool where type_is_struct(U), type_is_struct(V) ---
+
+
 
 // Returns the canonicalized name of the type, of which is used to produce the pseudo-unique 'typeid'
 type_canonical_name :: proc($T: typeid) -> string ---
@@ -338,13 +381,31 @@ simd_trunc   :: proc(a: #simd[N]any_float) -> #simd[N]any_float ---
 // rounding to the nearest integral value; if two values are equally near, rounds to the even one
 simd_nearest :: proc(a: #simd[N]any_float) -> #simd[N]any_float ---
 
-simd_to_bits :: proc(v: #simd[N]T) -> #simd[N]Integer where size_of(T) == size_of(Integer), type_is_unsigned(Integer) ---
+simd_approx_recip      :: proc(x: #simd[N]T) -> #simd[N]T where type_is_float(T)) ---
+simd_approx_recip_sqrt :: proc(x: #simd[N]T) -> #simd[N]T where type_is_float(T)) ---
+
+simd_to_bits        :: proc(v: #simd[N]T) -> #simd[N]Integer where size_of(T) == size_of(Integer), type_is_unsigned(Integer) ---
+simd_to_bits_signed :: proc(v: #simd[N]T) -> #simd[N]Integer where size_of(T) == size_of(Integer), !type_is_unsigned(Integer) ---
 
 // equivalent to a swizzle with descending indices, e.g. reserve(a, 3, 2, 1, 0)
 simd_lanes_reverse :: proc(a: #simd[N]T) -> #simd[N]T ---
 
 simd_lanes_rotate_left  :: proc(a: #simd[N]T, $offset: int) -> #simd[N]T ---
 simd_lanes_rotate_right :: proc(a: #simd[N]T, $offset: int) -> #simd[N]T ---
+
+// return {b[0], a[1], b[2], a[3], ...}
+simd_odd_even :: proc(a, b: #simd[N]T) -> #simd[N]T ---
+
+// Returns the sums of N consecutive lanes
+simd_sums_of_n :: proc(a: #simd[LANES]T, $N: uint) -> #simd[LANES/N]T where is_power_of_two(N) ---
+
+simd_pairwise_add :: proc(a, b: #simd[LANES]T) -> #simd[LANES]T where LANES % 2 == 0 ---
+simd_pairwise_sub :: proc(a, b: #simd[LANES]T) -> #simd[LANES]T where LANES % 2 == 0 ---
+
+simd_interleave   :: proc(a, ..#simd[LANES/N]T)       -> #simd[LANES]T where N >= 1 ---
+simd_deinterleave :: proc(a: #simd[LANES]T, $N: uint) -> (..#simd[LANES/N]T) where N >= 1, LANES % N == 0 --- // returns N multiple vectors
+
+soa_copy_from_slice :: proc(ptr: ^$A/#soa[dynamic]$E, offset: int, args: []$E) ---
 
 // Checks if the current target supports the given target features.
 //
@@ -355,7 +416,7 @@ has_target_feature :: proc($test: $T) -> bool where type_is_string(T) || type_is
 
 
 // Utility Calls
-concatentate :: proc(x, y: $T, z: ..T) -> T where type_is_array(T) || type_is_slice(T) ---
+concatenate :: proc(x, y: $T, z: ..T) -> T where type_is_array(T) || type_is_slice(T) ---
 
 // Returns the value of the procedure where `x` must be a call expression
 procedure_of :: proc(x: $T) -> T where type_is_proc(T) ---
@@ -379,6 +440,14 @@ wasm_memory_atomic_notify32 :: proc(ptr: ^u32, waiters: u32) -> (waiters_woken_u
 x86_cpuid  :: proc(ax, cx: u32) -> (eax, ebx, ecx, edx: u32) ---
 x86_xgetbv :: proc(cx: u32) -> (eax, edx: u32) ---
 
+
+// C specific things
+c_va_list  :: struct{/*platform specific implementation*/}
+
+c_va_start :: proc(list: ^c_va_list, /*#c_vararg parameter*/ args: ..$T) ---
+c_va_end   :: proc(list: ^c_va_list)                                     ---
+c_va_copy  :: proc(dst, src: ^c_va_list)                                 ---
+c_va_arg   :: proc(list: ^c_va_list, $T: typeid) -> T                    ---
 
 
 // Darwin targets only

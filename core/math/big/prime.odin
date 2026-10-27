@@ -101,7 +101,7 @@ internal_int_power_modulo :: proc(res, G, X, P: ^Int, allocator := context.alloc
 		If the modulus is odd or dr != 0 use the montgomery method.
 	*/
 	if internal_int_is_odd(P) || dr != 0 {
-		return _private_int_exponent_mod(res, G, X, P, dr)
+		return _private_int_exponent_mod_fast(res, G, X, P, dr)
 	}
 
 	/*
@@ -833,9 +833,9 @@ internal_int_prime_strong_lucas_selfridge :: proc(a: ^Int, allocator := context.
 /*
 	Performs one Fermat test.
 
-	If "a" were prime then b**a == b (mod a) since the order of
-	the multiplicative sub-group would be phi(a) = a-1.  That means
-	it would be the same as b**(a mod (a-1)) == b**1 == b (mod a).
+	If "a" were prime then `b**a == b (mod a)` since the order of
+	the multiplicative sub-group would be `phi(a) = a-1`.  That means
+	it would be the same as `b**(a mod (a-1)) == b**1 == b (mod a)`.
 
 	Returns `true` if the congruence holds, or `false` otherwise.
 

@@ -69,6 +69,7 @@ gb_internal u64 lb_typeid_kind(lbModule *m, Type *type, u64 id=0) {
 	case Type_SimdVector:      kind = Typeid_Simd_Vector;      break;
 	case Type_SoaPointer:      kind = Typeid_SoaPointer;       break;
 	case Type_BitField:        kind = Typeid_Bit_Field;        break;
+	case Type_FixedCapacityDynamicArray: kind = Typeid_Fixed_Capacity_Dynamic_Array; break;
 	}
 
 	return kind;
@@ -126,38 +127,43 @@ gb_internal lbValue lb_const_array_epi(lbModule *m, lbValue value, isize index) 
 
 
 gb_internal lbValue lb_type_info_member_types_offset(lbModule *m, isize count, i64 *offset_=nullptr) {
-	GB_ASSERT(m == &m->gen->default_module);
-	if (offset_) *offset_ = lb_global_type_info_member_types_index;
-	lbValue offset = lb_const_array_epi(m, lb_global_type_info_member_types.addr, lb_global_type_info_member_types_index);
-	lb_global_type_info_member_types_index += cast(i32)count;
+	lbTypeInfoMembers *members = m->type_info_members;
+	GB_ASSERT(members != nullptr);
+	if (offset_) *offset_ = members->types_index;
+	lbValue offset = lb_const_array_epi(m, members->types.addr, members->types_index);
+	members->types_index += cast(i32)count;
 	return offset;
 }
 gb_internal lbValue lb_type_info_member_names_offset(lbModule *m, isize count, i64 *offset_=nullptr) {
-	GB_ASSERT(m == &m->gen->default_module);
-	if (offset_) *offset_ = lb_global_type_info_member_names_index;
-	lbValue offset = lb_const_array_epi(m, lb_global_type_info_member_names.addr, lb_global_type_info_member_names_index);
-	lb_global_type_info_member_names_index += cast(i32)count;
+	lbTypeInfoMembers *members = m->type_info_members;
+	GB_ASSERT(members != nullptr);
+	if (offset_) *offset_ = members->names_index;
+	lbValue offset = lb_const_array_epi(m, members->names.addr, members->names_index);
+	members->names_index += cast(i32)count;
 	return offset;
 }
 gb_internal lbValue lb_type_info_member_offsets_offset(lbModule *m, isize count, i64 *offset_=nullptr) {
-	GB_ASSERT(m == &m->gen->default_module);
-	if (offset_) *offset_ = lb_global_type_info_member_offsets_index;
-	lbValue offset = lb_const_array_epi(m, lb_global_type_info_member_offsets.addr, lb_global_type_info_member_offsets_index);
-	lb_global_type_info_member_offsets_index += cast(i32)count;
+	lbTypeInfoMembers *members = m->type_info_members;
+	GB_ASSERT(members != nullptr);
+	if (offset_) *offset_ = members->offsets_index;
+	lbValue offset = lb_const_array_epi(m, members->offsets.addr, members->offsets_index);
+	members->offsets_index += cast(i32)count;
 	return offset;
 }
 gb_internal lbValue lb_type_info_member_usings_offset(lbModule *m, isize count, i64 *offset_=nullptr) {
-	GB_ASSERT(m == &m->gen->default_module);
-	if (offset_) *offset_ = lb_global_type_info_member_usings_index;
-	lbValue offset = lb_const_array_epi(m, lb_global_type_info_member_usings.addr, lb_global_type_info_member_usings_index);
-	lb_global_type_info_member_usings_index += cast(i32)count;
+	lbTypeInfoMembers *members = m->type_info_members;
+	GB_ASSERT(members != nullptr);
+	if (offset_) *offset_ = members->usings_index;
+	lbValue offset = lb_const_array_epi(m, members->usings.addr, members->usings_index);
+	members->usings_index += cast(i32)count;
 	return offset;
 }
 gb_internal lbValue lb_type_info_member_tags_offset(lbModule *m, isize count, i64 *offset_=nullptr) {
-	GB_ASSERT(m == &m->gen->default_module);
-	if (offset_) *offset_ = lb_global_type_info_member_tags_index;
-	lbValue offset = lb_const_array_epi(m, lb_global_type_info_member_tags.addr, lb_global_type_info_member_tags_index);
-	lb_global_type_info_member_tags_index += cast(i32)count;
+	lbTypeInfoMembers *members = m->type_info_members;
+	GB_ASSERT(members != nullptr);
+	if (offset_) *offset_ = members->tags_index;
+	lbValue offset = lb_const_array_epi(m, members->tags.addr, members->tags_index);
+	members->tags_index += cast(i32)count;
 	return offset;
 }
 
@@ -200,10 +206,10 @@ gb_internal LLVMTypeRef *lb_setup_modified_types_for_type_info(lbModule *m, isiz
 		vtypes[0] = lb_type(m, t);
 		vtypes[1] = padding;
 		vtypes[2] = tag;
-		LLVMTypeRef variant_type = LLVMStructType(vtypes, gb_count_of(vtypes), true);
+		LLVMTypeRef variant_type = LLVMStructTypeInContext(m->ctx, vtypes, gb_count_of(vtypes), true);
 
 		stypes[variant_index] = variant_type;
-		LLVMTypeRef modified_type = LLVMStructType(stypes, cast(unsigned)(variant_index+1), false);
+		LLVMTypeRef modified_type = LLVMStructTypeInContext(m->ctx, stypes, cast(unsigned)(variant_index+1), false);
 
 		modified_types[i] = modified_type;
 	}
@@ -220,12 +226,34 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 		char name[64] = {};
 		gb_snprintf(name, 63, "__$ti-%lld", cast(long long)index);
 		LLVMValueRef g = LLVMAddGlobal(m->mod, type, name);
-		lb_make_global_private_const(g);
+		if (m->gen->type_info_modules.count > 1) {
+			LLVMSetLinkage(g, LLVMExternalLinkage);
+			LLVMSetVisibility(g, LLVMHiddenVisibility);
+			LLVMSetGlobalConstant(g, true);
+		} else {
+			lb_make_global_private_const(g);
+		}
 		lb_set_odin_rtti_section(g);
+		return g;
+	};
+	auto const &DECLARE_GLOBAL_TYPE_INFO_ENTRY = [](lbModule *m, LLVMTypeRef type, isize index) -> LLVMValueRef {
+		char name[64] = {};
+		gb_snprintf(name, 63, "__$ti-%lld", cast(long long)index);
+		LLVMValueRef g = LLVMAddGlobal(m->mod, type, name);
+		LLVMSetLinkage(g, LLVMExternalLinkage);
+		LLVMSetVisibility(g, LLVMHiddenVisibility);
+		LLVMSetGlobalConstant(g, true);
 		return g;
 	};
 
 	CheckerInfo *info = m->info;
+
+	lbTypeInfoMembers *members = m->type_info_members;
+	bool is_default_module = m == &m->gen->default_module;
+	isize part_count = m->gen->type_info_modules.count;
+	auto const owns = [&](isize entry_index) -> bool {
+		return members != nullptr && entry_index % part_count == m->type_info_part;
+	};
 
 	// Useful types
 	Entity *type_info_flags_entity = find_core_entity(info->checker, str_lit("Type_Info_Flags"));
@@ -244,13 +272,22 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 	LLVMValueRef *giant_const_values = gb_alloc_array(heap_allocator(), LLVMValueRef, global_type_info_data_entity_count);
 	defer (gb_free(heap_allocator(), giant_const_values));
 
-	// zero value is just zero data
-	giant_const_values[0] = ADD_GLOBAL_TYPE_INFO_ENTRY(m, lb_type(m, t_type_info), 0);
-	LLVMSetInitializer(giant_const_values[0], LLVMConstNull(lb_type(m, t_type_info)));
+	if (owns(0)) {
+		giant_const_values[0] = ADD_GLOBAL_TYPE_INFO_ENTRY(m, lb_type(m, t_type_info), 0);
+		LLVMSetInitializer(giant_const_values[0], LLVMConstNull(lb_type(m, t_type_info)));
+	} else if (is_default_module) {
+		giant_const_values[0] = DECLARE_GLOBAL_TYPE_INFO_ENTRY(m, lb_type(m, t_type_info), 0);
+	}
 
 
 	LLVMTypeRef *modified_types = lb_setup_modified_types_for_type_info(m, global_type_info_data_entity_count);
 	defer (gb_free(heap_allocator(), modified_types));
+	auto const entry_type = [&](Type *t) -> LLVMTypeRef {
+		if (t->kind == Type_Named) {
+			return modified_types[0];
+		}
+		return modified_types[lb_typeid_kind(m, t)];
+	};
 	for_array(type_info_type_index, info->type_info_types_hash_map) {
 		auto const &tt = info->type_info_types_hash_map[type_info_type_index];
 		Type *t = tt.type;
@@ -269,13 +306,11 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 		entries_handled[entry_index] = true;
 
 
-		LLVMTypeRef stype = nullptr;
-		if (t->kind == Type_Named) {
-			stype = modified_types[0];
-		} else {
-			stype = modified_types[lb_typeid_kind(m, t)];
+		if (owns(entry_index)) {
+			giant_const_values[entry_index] = ADD_GLOBAL_TYPE_INFO_ENTRY(m, entry_type(t), entry_index);
+		} else if (is_default_module) {
+			giant_const_values[entry_index] = DECLARE_GLOBAL_TYPE_INFO_ENTRY(m, entry_type(t), entry_index);
 		}
-		giant_const_values[entry_index] = ADD_GLOBAL_TYPE_INFO_ENTRY(m, stype, entry_index);
 	}
 	for (isize i = 1; i < global_type_info_data_entity_count; i++) {
 		entries_handled[i] = false;
@@ -285,25 +320,30 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 	LLVMValueRef *small_const_values = gb_alloc_array(heap_allocator(), LLVMValueRef, 6);
 	defer (gb_free(heap_allocator(), small_const_values));
 
-	#define type_info_allocate_values(name) \
-		LLVMValueRef *name##_values = gb_alloc_array(heap_allocator(), LLVMValueRef, type_deref(name.addr.type)->Array.count); \
-		defer (gb_free(heap_allocator(), name##_values));                                                                      \
+	#define type_info_allocate_values(field) \
+		LLVMValueRef *member_##field##_values = nullptr;                                                                         \
+		if (members != nullptr) {                                                                                              \
+			member_##field##_values = gb_alloc_array(heap_allocator(), LLVMValueRef, type_deref(members->field.addr.type)->Array.count); \
+		}                                                                                                                      \
 		defer ({                                                                                                               \
-			Type *at = type_deref(name.addr.type);                                                                         \
-			LLVMTypeRef elem = lb_type(m, at->Array.elem);                                                                 \
-			for (i64 i = 0; i < at->Array.count; i++) {                                                                    \
-				if ((name##_values)[i] == nullptr) {                                                                   \
-					(name##_values)[i] = LLVMConstNull(elem);                                                      \
+			if (members != nullptr) {                                                                                      \
+				Type *at = type_deref(members->field.addr.type);                                                       \
+				LLVMTypeRef elem = lb_type(m, at->Array.elem);                                                         \
+				for (i64 i = 0; i < at->Array.count; i++) {                                                            \
+					if ((member_##field##_values)[i] == nullptr) {                                                 \
+						(member_##field##_values)[i] = LLVMConstNull(elem);                                    \
+					}                                                                                              \
 				}                                                                                                      \
+				LLVMSetInitializer(members->field.addr.value, llvm_const_array(m, elem, member_##field##_values, at->Array.count)); \
+				gb_free(heap_allocator(), member_##field##_values);                                                    \
 			}                                                                                                              \
-			LLVMSetInitializer(name.addr.value, llvm_const_array(m, elem, name##_values, at->Array.count));                   \
 		})
 
-	type_info_allocate_values(lb_global_type_info_member_types);
-	type_info_allocate_values(lb_global_type_info_member_names);
-	type_info_allocate_values(lb_global_type_info_member_offsets);
-	type_info_allocate_values(lb_global_type_info_member_usings);
-	type_info_allocate_values(lb_global_type_info_member_tags);
+	type_info_allocate_values(types);
+	type_info_allocate_values(names);
+	type_info_allocate_values(offsets);
+	type_info_allocate_values(usings);
+	type_info_allocate_values(tags);
 
 
 	auto const get_type_info_ptr = [&](lbModule *m, Type *type) -> LLVMValueRef {
@@ -312,6 +352,9 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 		isize index = lb_type_info_index(m->info, type);
 		GB_ASSERT(index >= 0);
 
+		if (giant_const_values[index] == nullptr) {
+			giant_const_values[index] = DECLARE_GLOBAL_TYPE_INFO_ENTRY(m, entry_type(info->type_info_types_hash_map[index].type), index);
+		}
 		return giant_const_values[index];
 	};
 
@@ -330,14 +373,11 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 			continue;
 		}
 		entries_handled[entry_index] = true;
-
-
-		LLVMTypeRef stype = nullptr;
-		if (t->kind == Type_Named) {
-			stype = modified_types[0];
-		} else {
-			stype = modified_types[lb_typeid_kind(m, t)];
+		if (!owns(entry_index)) {
+			continue;
 		}
+
+		LLVMTypeRef stype = entry_type(t);
 
 		i64 size = type_size_of(t);
 		i64 align = type_align_of(t);
@@ -644,6 +684,21 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 			variant_value = llvm_const_named_struct(m, tag_type, vals, gb_count_of(vals));
 			break;
 		}
+		case Type_FixedCapacityDynamicArray: {
+			tag_type = t_type_info_fixed_capacity_dynamic_array;
+
+			i64 len_offset = type_offset_of(t, 1);
+
+			LLVMValueRef vals[4] = {
+				get_type_info_ptr(m, t->FixedCapacityDynamicArray.elem),
+				lb_const_int(m, t_int, type_size_of(t->FixedCapacityDynamicArray.elem)).value,
+				lb_const_int(m, t_int, t->FixedCapacityDynamicArray.capacity).value,
+				lb_const_int(m, t_uintptr, len_offset).value,
+			};
+
+			variant_value = llvm_const_named_struct(m, tag_type, vals, gb_count_of(vals));
+			break;
+		}
 		case Type_Slice: {
 			tag_type = t_type_info_slice;
 
@@ -691,9 +746,9 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 				lbValue index     = lb_const_int(m, t_int, i);
 				lbValue type_info = lb_const_ptr_offset(m, memory_types, index);
 
-				lb_global_type_info_member_types_values[type_offset+i] = get_type_info_ptr(m, f->type);
+				member_types_values[type_offset+i] = get_type_info_ptr(m, f->type);
 				if (f->token.string.len > 0) {
-					lb_global_type_info_member_names_values[name_offset+i] = lb_const_string(m, f->token.string).value;
+					member_names_values[name_offset+i] = lb_const_string(m, f->token.string).value;
 				}
 			}
 
@@ -774,7 +829,7 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 
 				for (isize variant_index = 0; variant_index < variant_count; variant_index++) {
 					Type *vt = t->Union.variants[variant_index];
-					lb_global_type_info_member_types_values[variant_offset+variant_index] = get_type_info_ptr(m, vt);
+					member_types_values[variant_offset+variant_index] = get_type_info_ptr(m, vt);
 				}
 
 				lbValue count = lb_const_int(m, t_int, variant_count);
@@ -867,18 +922,18 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 					GB_ASSERT(f->kind == Entity_Variable && f->flags & EntityFlag_Field);
 
 
-					lb_global_type_info_member_types_values[types_offset+source_index]     = get_type_info_ptr(m, f->type);
-					lb_global_type_info_member_offsets_values[offsets_offset+source_index] = lb_const_int(m, t_uintptr, foffset).value;
-					lb_global_type_info_member_usings_values[usings_offset+source_index]   = lb_const_bool(m, t_bool, (f->flags&EntityFlag_Using) != 0).value;
+					member_types_values[types_offset+source_index]     = get_type_info_ptr(m, f->type);
+					member_offsets_values[offsets_offset+source_index] = lb_const_int(m, t_uintptr, foffset).value;
+					member_usings_values[usings_offset+source_index]   = lb_const_bool(m, t_bool, (f->flags&EntityFlag_Using) != 0).value;
 
 					if (f->token.string.len > 0) {
-						lb_global_type_info_member_names_values[names_offset+source_index] = lb_const_string(m, f->token.string).value;
+						member_names_values[names_offset+source_index] = lb_const_string(m, f->token.string).value;
 					}
 
 					if (t->Struct.tags != nullptr) {
 						String tag_string = t->Struct.tags[source_index];
 						if (tag_string.len > 0) {
-							lb_global_type_info_member_tags_values[tags_offset+source_index] = lb_const_string(m, tag_string).value;
+							member_tags_values[tags_offset+source_index] = lb_const_string(m, tag_string).value;
 						}
 					}
 
@@ -923,15 +978,25 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 				GB_ASSERT(is_type_typed(t->BitSet.elem));
 
 
-				LLVMValueRef vals[4] = {
-					get_type_info_ptr(m, t->BitSet.elem),
-					LLVMConstNull(lb_type(m, t_type_info_ptr)),
-					lb_const_int(m, t_i64, t->BitSet.lower).value,
-					lb_const_int(m, t_i64, t->BitSet.upper).value,
+				LLVMValueRef vals[5] = {
+					get_type_info_ptr(m, t->BitSet.elem),          // ^Type_Info
+					nullptr,                                       // ^Type_Info
+					nullptr,                                       // bool
+					lb_const_int(m, t_i64, t->BitSet.lower).value, // i64
+					lb_const_int(m, t_i64, t->BitSet.upper).value, // i64
 				};
+				Type *underlying = nullptr;
+				bool explicit_underlying = false;
 				if (t->BitSet.underlying != nullptr) {
+					underlying = t->BitSet.underlying;
+					explicit_underlying = true;
 					vals[1] = get_type_info_ptr(m, t->BitSet.underlying);
+					vals[2] = lb_const_bool(m, t_bool, true).value;
+				} else {
+					underlying = bit_set_to_int(t);
 				}
+				vals[1] = get_type_info_ptr(m, underlying);
+				vals[2] = lb_const_bool(m, t_bool, explicit_underlying).value;
 
 				variant_value = llvm_const_named_struct(m, tag_type, vals, gb_count_of(vals));
 			}
@@ -995,18 +1060,18 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 
 						lbValue index = lb_const_int(m, t_int, source_index);
 						if (f->token.string.len > 0) {
-							lb_global_type_info_member_names_values[names_offset+source_index] = lb_const_string(m, f->token.string).value;
+							member_names_values[names_offset+source_index] = lb_const_string(m, f->token.string).value;
 						}
 
-						lb_global_type_info_member_types_values[types_offset+source_index] = get_type_info_ptr(m, f->type);
+						member_types_values[types_offset+source_index] = get_type_info_ptr(m, f->type);
 
-						lb_global_type_info_member_offsets_values[bit_sizes_offset+source_index] = lb_const_int(m, t_uintptr, bit_size).value;
-						lb_global_type_info_member_offsets_values[bit_offsets_offset+source_index] = lb_const_int(m, t_uintptr, bit_offset).value;
+						member_offsets_values[bit_sizes_offset+source_index] = lb_const_int(m, t_uintptr, bit_size).value;
+						member_offsets_values[bit_offsets_offset+source_index] = lb_const_int(m, t_uintptr, bit_offset).value;
 
 						if (t->BitField.tags) {
 							String tag = t->BitField.tags[source_index];
 							if (tag.len > 0) {
-								lb_global_type_info_member_tags_values[tags_offset+source_index] = lb_const_string(m, tag).value;
+								member_tags_values[tags_offset+source_index] = lb_const_string(m, tag).value;
 							}
 						}
 
@@ -1038,7 +1103,7 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 
 		i64 tag_index = 0;
 		if (tag_type != nullptr) {
-			tag_index = union_variant_index(ut, tag_type);
+			tag_index = union_variant_index_checked(ut, tag_type);
 		}
 		GB_ASSERT(tag_index <= Typeid__COUNT);
 
@@ -1073,6 +1138,9 @@ gb_internal void lb_setup_type_info_data_giant_array(lbModule *m, i64 global_typ
 
 		LLVMSetInitializer(giant_const_values[entry_index], LLVMConstNamedStruct(stype, small_const_values, variant_index+1));
 	}
+	if (!is_default_module) {
+		return;
+	}
 	for (isize i = 0; i < global_type_info_data_entity_count; i++) {
 		auto *ptr = &giant_const_values[i];
 		if (*ptr != nullptr) {
@@ -1099,8 +1167,6 @@ gb_internal void lb_setup_type_info_data(lbModule *m) { // NOTE(bill): Setup typ
 
 	i64 global_type_info_data_entity_count = 0;
 
-	// NOTE(bill): Set the type_table slice with the global backing array
-	lbValue global_type_table = lb_find_runtime_value(m, str_lit("type_table"));
 	Type *type = base_type(lb_global_type_info_data_entity->type);
 	GB_ASSERT(type->kind == Type_Array);
 	global_type_info_data_entity_count = type->Array.count;
@@ -1108,7 +1174,12 @@ gb_internal void lb_setup_type_info_data(lbModule *m) { // NOTE(bill): Setup typ
 	if (true) {
 		lb_setup_type_info_data_giant_array(m, global_type_info_data_entity_count);
 	}
+	if (m != &m->gen->default_module) {
+		return;
+	}
 
+	// NOTE(bill): Set the type_table slice with the global backing array
+	lbValue global_type_table = lb_find_runtime_value(m, str_lit("type_table"));
 	LLVMValueRef data = lb_global_type_info_data_ptr(m).value;
 	data = LLVMConstPointerCast(data, lb_type(m, alloc_type_pointer(type->Array.elem)));
 	LLVMValueRef len = LLVMConstInt(lb_type(m, t_int), type->Array.count, true);

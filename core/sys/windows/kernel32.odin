@@ -117,8 +117,11 @@ foreign kernel32 {
 
 	InitializeCriticalSection             :: proc(CriticalSection: ^CRITICAL_SECTION) ---
 	InitializeCriticalSectionAndSpinCount :: proc(CriticalSection: ^CRITICAL_SECTION, dwSpinCount: DWORD) -> BOOL ---
+	@(synchronizes=.Acquire)
 	EnterCriticalSection                  :: proc(CriticalSection: ^CRITICAL_SECTION) ---
+	@(synchronizes=.Acquire)
 	TryEnterCriticalSection               :: proc(CriticalSection: ^CRITICAL_SECTION) -> BOOLEAN ---
+	@(synchronizes=.Release)
 	LeaveCriticalSection                  :: proc(CriticalSection: ^CRITICAL_SECTION) ---
 	DeleteCriticalSection                 :: proc(CriticalSection: ^CRITICAL_SECTION) ---
 
@@ -159,6 +162,7 @@ foreign kernel32 {
 		lpBytesReturned: LPDWORD,
 		lpOverlapped: LPOVERLAPPED,
 	) -> BOOL ---
+	@(synchronizes=.Release)
 	CreateThread :: proc(
 		lpThreadAttributes: LPSECURITY_ATTRIBUTES,
 		dwStackSize: SIZE_T,
@@ -177,10 +181,11 @@ foreign kernel32 {
 		lpThreadId: LPDWORD,
 	) -> HANDLE ---
 	SwitchToThread       :: proc() -> BOOL ---
+	@(synchronizes=.Release)
 	ResumeThread         :: proc(thread: HANDLE) -> DWORD ---
 	GetThreadPriority    :: proc(thread: HANDLE) -> c_int ---
 	SetThreadPriority    :: proc(thread: HANDLE, priority: c_int) -> BOOL ---
-	GetThreadDescription :: proc(hThread: HANDLE, ppszThreadDescription: ^PCWSTR) -> HRESULT ---
+	GetThreadDescription :: proc(hThread: HANDLE, ppszThreadDescription: ^PWSTR) -> HRESULT ---
 	SetThreadDescription :: proc(hThread: HANDLE, lpThreadDescription: PCWSTR) -> HRESULT ---
 	GetExitCodeThread    :: proc(thread: HANDLE, exit_code: ^DWORD) -> BOOL ---
 	TerminateThread      :: proc(thread: HANDLE, exit_code: DWORD) -> BOOL ---
@@ -201,6 +206,7 @@ foreign kernel32 {
 	) -> DWORD_PTR ---
 
 	CreateSemaphoreW :: proc(attributes: LPSECURITY_ATTRIBUTES, initial_count, maximum_count: LONG, name: LPCWSTR) -> HANDLE ---
+	@(synchronizes=.Release)
 	ReleaseSemaphore :: proc(semaphore: HANDLE, release_count: LONG, previous_count: ^LONG) -> BOOL ---
 
 	CreateWaitableTimerW :: proc(
@@ -223,8 +229,21 @@ foreign kernel32 {
 		WakeContext: PREASON_CONTEXT,
 		TolerableDelay: ULONG,
 	) -> BOOL ---
+	@(synchronizes=.Acquire)
 	WaitForSingleObject :: proc(hHandle: HANDLE, dwMilliseconds: DWORD) -> DWORD ---
+	@(synchronizes=.Acquire)
 	WaitForSingleObjectEx :: proc(hHandle: HANDLE, dwMilliseconds: DWORD, bAlterable: BOOL) -> DWORD ---
+	@(synchronizes=.Acq_Rel)
+	EnterSynchronizationBarrier :: proc(
+		lpBarrier: ^SYNCHRONIZATION_BARRIER,
+		dwFlags: SYNCHRONIZATION_BARRIER_FLAGS,
+	) -> BOOL ---
+	InitializeSynchronizationBarrier :: proc(
+		lpBarrier: ^SYNCHRONIZATION_BARRIER,
+		lTotalThreads: LONG,
+		lSpinCount: LONG,
+	) -> BOOL ---
+	DeleteSynchronizationBarrier :: proc(lpBarrier: ^SYNCHRONIZATION_BARRIER) -> BOOL ---
 	Sleep :: proc(dwMilliseconds: DWORD) ---
 	GetProcessId :: proc(handle: HANDLE) -> DWORD ---
 	CopyFileW :: proc(
@@ -360,15 +379,15 @@ foreign kernel32 {
 		dwReserved: DWORD,
 		nNumberOfBytesToLockLow: DWORD,
 		nNumberOfBytesToLockHigh: DWORD,
-		lpOverlapped: ^LPOVERLAPPED,
+		lpOverlapped: LPOVERLAPPED,
 	) -> BOOL ---
 	UnlockFileEx :: proc(
 		hFile: HANDLE,
 		dwReserved: DWORD,
 		nNumberOfBytesToUnlockLow: DWORD,
 		nNumberOfBytesToLockHigh: DWORD,
-		lpOverlapped: ^LPOVERLAPPED,
-	) -> BOOL --- 
+		lpOverlapped: LPOVERLAPPED,
+	) -> BOOL ---
 
 	GetFileTime :: proc(
 		hFile: HANDLE,
@@ -408,13 +427,16 @@ foreign kernel32 {
 		dwDesiredAccess: DWORD,
 	) -> HANDLE ---
 	ResetEvent :: proc(hEvent: HANDLE) -> BOOL ---
+	@(synchronizes=.Release)
 	SetEvent :: proc(hEvent: HANDLE) -> BOOL ---
+	@(synchronizes=.Acquire)
 	WaitForMultipleObjects :: proc(
 		nCount: DWORD,
 		lpHandles: ^HANDLE,
 		bWaitAll: BOOL,
 		dwMilliseconds: DWORD,
 	) -> DWORD ---
+	@(synchronizes=.Acquire)
 	WaitForMultipleObjectsEx :: proc(
 		nCount: DWORD,
 		lpHandles: ^HANDLE,
@@ -460,7 +482,8 @@ foreign kernel32 {
 	GlobalAlloc   :: proc(flags: UINT, bytes: SIZE_T) -> LPVOID ---
 	GlobalReAlloc :: proc(mem: LPVOID, bytes: SIZE_T, flags: UINT) -> LPVOID ---
 	GlobalFree    :: proc(mem: LPVOID) -> LPVOID ---
-	
+	GlobalSize    :: proc(Mem: LPVOID) -> SIZE_T ---
+
 	GlobalLock   :: proc(hMem: HGLOBAL) -> LPVOID ---
 	GlobalUnlock :: proc(hMem: HGLOBAL) -> BOOL ---
 
@@ -474,6 +497,17 @@ foreign kernel32 {
 		lpOverlapped: LPOVERLAPPED,
 		lpCompletionRoutine: LPOVERLAPPED_COMPLETION_ROUTINE,
 	) -> BOOL ---
+	ReadDirectoryChangesExW :: proc(
+		hDirectory: HANDLE,
+		lpBuffer: LPVOID,
+		nBufferLength: DWORD,
+		bWatchSubtree: BOOL,
+		dwNotifyFilter: DWORD,
+		lpBytesReturned: LPDWORD,
+		lpOverlapped: LPOVERLAPPED,
+		lpCompletionRoutine: LPOVERLAPPED_COMPLETION_ROUTINE,
+		ReadDirectoryNotifyInformationClass: READ_DIRECTORY_NOTIFY_INFORMATION_CLASS,
+	) -> BOOL ---
 	FindFirstChangeNotificationW :: proc(
 		lpPathName: LPWSTR,
 		bWatchSubtree: BOOL,
@@ -483,11 +517,17 @@ foreign kernel32 {
 	FindCloseChangeNotification :: proc(hChangeHandle: HANDLE) -> BOOL ---
 
 	InitializeSRWLock          :: proc(SRWLock: ^SRWLOCK) ---
+	@(synchronizes=.Acquire)
 	AcquireSRWLockExclusive    :: proc(SRWLock: ^SRWLOCK) ---
+	@(synchronizes=.Acquire)
 	TryAcquireSRWLockExclusive :: proc(SRWLock: ^SRWLOCK) -> BOOLEAN ---
+	@(synchronizes=.Release)
 	ReleaseSRWLockExclusive    :: proc(SRWLock: ^SRWLOCK) ---
+	@(synchronizes_shared=.Acquire)
 	AcquireSRWLockShared       :: proc(SRWLock: ^SRWLOCK) ---
+	@(synchronizes_shared=.Acquire)
 	TryAcquireSRWLockShared    :: proc(SRWLock: ^SRWLOCK) -> BOOLEAN ---
+	@(synchronizes_shared=.Release)
 	ReleaseSRWLockShared       :: proc(SRWLock: ^SRWLOCK) ---
 
 	InitializeConditionVariable :: proc(ConditionVariable: ^CONDITION_VARIABLE) ---
@@ -517,7 +557,7 @@ foreign kernel32 {
 	LoadLibraryW               :: proc(c_str: LPCWSTR) -> HMODULE ---
 	LoadLibraryExW             :: proc(c_str: LPCWSTR, hFile: HANDLE, dwFlags: LoadLibraryEx_Flags) -> HMODULE ---
 	FreeLibrary                :: proc(h: HMODULE) -> BOOL ---
-	FreeLibraryAndExitThread   :: proc(hLibModule: HMODULE, dwExitCode: DWORD) -> VOID ---
+	FreeLibraryAndExitThread   :: proc(hLibModule: HMODULE, dwExitCode: DWORD) ---
 	GetProcAddress             :: proc(h: HMODULE, c_str: LPCSTR) -> rawptr ---
 
 	LoadResource                :: proc(hModule: HMODULE, hResInfo: HRSRC) -> HGLOBAL ---
@@ -549,17 +589,18 @@ foreign kernel32 {
 	DisconnectNamedPipe :: proc(hNamedPipe: HANDLE) -> BOOL ---
 	WaitNamedPipeW      :: proc(lpNamedPipeName: LPCWSTR, nTimeOut: DWORD) -> BOOL ---
 
-	AllocConsole               :: proc() -> BOOL ---
-	AttachConsole              :: proc(dwProcessId: DWORD) -> BOOL ---
-	SetConsoleCtrlHandler      :: proc(HandlerRoutine: PHANDLER_ROUTINE, Add: BOOL) -> BOOL ---
-	GenerateConsoleCtrlEvent   :: proc(dwCtrlEvent: DWORD, dwProcessGroupId: DWORD) -> BOOL ---
-	FreeConsole                :: proc() -> BOOL ---
-	GetConsoleWindow           :: proc() -> HWND ---
-	GetConsoleScreenBufferInfo :: proc(hConsoleOutput: HANDLE, lpConsoleScreenBufferInfo: PCONSOLE_SCREEN_BUFFER_INFO) -> BOOL ---
-	SetConsoleScreenBufferSize :: proc(hConsoleOutput: HANDLE, dwSize: COORD) -> BOOL ---
-	SetConsoleWindowInfo       :: proc(hConsoleOutput: HANDLE, bAbsolute: BOOL, lpConsoleWindow: ^SMALL_RECT) -> BOOL ---
-	GetConsoleCursorInfo       :: proc(hConsoleOutput: HANDLE, lpConsoleCursorInfo: PCONSOLE_CURSOR_INFO) -> BOOL ---
-	SetConsoleCursorInfo       :: proc(hConsoleOutput: HANDLE, lpConsoleCursorInfo: PCONSOLE_CURSOR_INFO) -> BOOL ---
+	AllocConsole                 :: proc() -> BOOL ---
+	AttachConsole                :: proc(dwProcessId: DWORD) -> BOOL ---
+	SetConsoleCtrlHandler        :: proc(HandlerRoutine: PHANDLER_ROUTINE, Add: BOOL) -> BOOL ---
+	GenerateConsoleCtrlEvent     :: proc(dwCtrlEvent: DWORD, dwProcessGroupId: DWORD) -> BOOL ---
+	FreeConsole                  :: proc() -> BOOL ---
+	GetConsoleWindow             :: proc() -> HWND ---
+	GetConsoleScreenBufferInfo   :: proc(hConsoleOutput: HANDLE, lpConsoleScreenBufferInfo: PCONSOLE_SCREEN_BUFFER_INFO) -> BOOL ---
+	GetConsoleScreenBufferInfoEx :: proc(hConsoleOutput: HANDLE, lpConsoleScreenBufferInfoEx: PCONSOLE_SCREEN_BUFFER_INFOEX) -> BOOL ---
+	SetConsoleScreenBufferSize   :: proc(hConsoleOutput: HANDLE, dwSize: COORD) -> BOOL ---
+	SetConsoleWindowInfo         :: proc(hConsoleOutput: HANDLE, bAbsolute: BOOL, lpConsoleWindow: ^SMALL_RECT) -> BOOL ---
+	GetConsoleCursorInfo         :: proc(hConsoleOutput: HANDLE, lpConsoleCursorInfo: PCONSOLE_CURSOR_INFO) -> BOOL ---
+	SetConsoleCursorInfo         :: proc(hConsoleOutput: HANDLE, lpConsoleCursorInfo: PCONSOLE_CURSOR_INFO) -> BOOL ---
 
 	GetDiskFreeSpaceExW :: proc(
 		lpDirectoryName: LPCWSTR,
@@ -1174,6 +1215,79 @@ foreign kernel32 {
 	) -> BOOL ---
 }
 
+
+MEM_REPLACE_PLACEHOLDER  :: 0x00004000
+MEM_RESERVE_PLACEHOLDER  :: 0x00040000
+MEM_PRESERVE_PLACEHOLDER :: 0x00000002
+MEM_RESET_UNDO           ::  0x1000000
+MEM_64K_PAGES            :: 0x20400000
+MEM_PHYSICAL             :: 0x00400000
+
+MEM_EXTENDED_PARAMETER_TYPE :: enum c_int {
+	MemExtendedParameterInvalidType = 0,
+	MemExtendedParameterAddressRequirements,
+	MemExtendedParameterNumaNode,
+	MemExtendedParameterPartitionHandle,
+	MemExtendedParameterUserPhysicalHandle,
+	MemExtendedParameterAttributeFlags,
+	MemExtendedParameterImageMachine,
+}
+
+MEM_EXTENDED_PARAMETER_NONPAGED	      :: 0x02
+MEM_EXTENDED_PARAMETER_NONPAGED_LARGE :: 0x08
+MEM_EXTENDED_PARAMETER_NONPAGED_HUGE  :: 0x10
+MEM_EXTENDED_PARAMETER_EC_CODE        :: 0x40
+
+MEM_ADDRESS_REQUIREMENTS :: struct {
+	LowestStartingAddress: PVOID,
+	HighestEndingAddress:  PVOID,
+	Alignment:             SIZE_T,
+}
+PMEM_ADDRESS_REQUIREMENTS :: ^MEM_ADDRESS_REQUIREMENTS
+
+MEM_EXTENDED_PARAMETER_TYPE_BITS :: 8
+
+MEM_EXTENDED_PARAMETER :: struct {
+	using DUMMYSTRUCTNAME: bit_field DWORD64 {
+		Type:        MEM_EXTENDED_PARAMETER_TYPE | MEM_EXTENDED_PARAMETER_TYPE_BITS,
+		Reserved:    DWORD64                     | 64 - MEM_EXTENDED_PARAMETER_TYPE_BITS,
+	},
+	using DUMMYUNIONNAME: struct #raw_union {
+		ULong64: DWORD64,
+		Pointer: PVOID,
+		Size:    SIZE_T,
+		Handle:  HANDLE,
+		ULong:   DWORD,
+	},
+}
+
+
+@(default_calling_convention="system")
+foreign one_core {
+	VirtualAlloc2 :: proc(
+		Process:            HANDLE,
+		BaseAddress:        LPVOID,
+		Size:               SIZE_T,
+		AllocationType:     ULONG,
+		PageProtection:     ULONG,
+		ExtendedParameters: ^MEM_EXTENDED_PARAMETER,
+		ParameterCount:     ULONG,
+	) -> LPVOID ---
+
+	MapViewOfFile3 :: proc(
+		FileMappingHandle:  HANDLE,
+		ProcessHandle:      HANDLE,
+		BaseAddress:        PVOID,
+		Offset:             ULONG64,
+		ViewSize:           SIZE_T,
+		AllocationType:     ULONG,
+		PageProtection:     ULONG,
+		ExtendedParameters: ^MEM_EXTENDED_PARAMETER,
+		ParameterCount:     ULONG,
+	) -> PVOID ---
+}
+
+
 HandlerRoutine :: proc "system" (dwCtrlType: DWORD) -> BOOL
 PHANDLER_ROUTINE :: HandlerRoutine
 
@@ -1307,3 +1421,110 @@ foreign kernel32 {
 	CreateActCtxW  :: proc(pActCtx: ^ACTCTXW) -> HANDLE ---
 	ActivateActCtx :: proc(hActCtx: HANDLE, lpCookie: ^ULONG_PTR) -> BOOL ---
 }
+
+
+GROUP_AFFINITY :: struct {
+	Mask:       KAFFINITY,
+	Group:      WORD,
+	Reserved:   [3]WORD,
+}
+
+CPU_SET_INFORMATION_TYPE :: enum u32 {
+	CpuSetInformation,
+}
+
+SYSTEM_CPU_SET_INFORMATION :: struct {
+	Size: DWORD,
+	Type: CPU_SET_INFORMATION_TYPE,
+	using _: struct #raw_union {
+		CpuSet: struct {
+			Id:                       DWORD,
+			Group:                    WORD,
+			LogicalProcessorIndex:    BYTE,
+			CoreIndex:                BYTE,
+			LastLevelCacheIndex:      BYTE,
+			NumaNodeIndex:            BYTE,
+			EfficiencyClass:          BYTE,
+			using _: struct #raw_union {
+				AllFlags:   BYTE,
+				using _: bit_field u8 {
+					Parked:                   BYTE | 1,
+					Allocated:                BYTE | 1,
+					AllocatedToTargetProcess: BYTE | 1,
+					RealTime:                 BYTE | 1,
+					ReservedFlags:            BYTE | 4,
+				},
+			},
+			using _: struct #raw_union {
+				Reserved:           DWORD,
+				SchedulingClass:    BYTE,
+			},
+			AllocationTag:        DWORD64,
+		},
+	},
+}
+
+@(default_calling_convention = "system")
+foreign kernel32 {
+	GetSystemCpuSetInformation :: proc(
+		Information: ^SYSTEM_CPU_SET_INFORMATION,
+		BufferLength: ULONG,
+		ReturnedLength: ^ULONG,
+		Process: HANDLE,
+		Flags: ULONG,
+	) -> BOOL ---
+
+	GetProcessDefaultCpuSets :: proc(
+		Process: HANDLE,
+		CpuSetIds: ^ULONG,
+		CpuSetIdCount: ULONG,
+		RequiredIdCount: ^ULONG,
+	) -> BOOL ---
+
+	SetProcessDefaultCpuSets :: proc(
+		Process: HANDLE,
+		CpuSetIds: ^ULONG,
+		CpuSetIdCount: ULONG,
+	) -> BOOL ---
+
+	GetThreadSelectedCpuSets :: proc(
+		Thread: HANDLE,
+		CpuSetIds: ^ULONG,
+		CpuSetIdCount: ULONG,
+		RequiredIdCount: ^ULONG,
+	) -> BOOL ---
+
+	SetThreadSelectedCpuSets :: proc(
+		Thread: HANDLE,
+		CpuSetIds: ^ULONG,
+		CpuSetIdCount: ULONG,
+	) -> BOOL ---
+
+	GetProcessDefaultCpuSetMasks :: proc(
+		Process: HANDLE,
+		CpuSetMasks: ^GROUP_AFFINITY,
+		CpuSetMaskCount: USHORT,
+		RequiredMaskCount: ^USHORT,
+	) -> BOOL ---
+
+	SetProcessDefaultCpuSetMasks :: proc(
+		Process: HANDLE,
+		CpuSetMasks: ^GROUP_AFFINITY,
+		CpuSetMaskCount: USHORT,
+	) -> BOOL ---
+
+	GetThreadSelectedCpuSetMasks :: proc(
+		Thread: HANDLE,
+		CpuSetMasks: ^GROUP_AFFINITY,
+		CpuSetMaskCount: USHORT,
+		RequiredMaskCount: ^USHORT,
+	) -> BOOL ---
+
+	SetThreadSelectedCpuSetMasks :: proc(
+		Thread: HANDLE,
+		CpuSetMasks: ^GROUP_AFFINITY,
+		CpuSetMaskCount: USHORT,
+	) -> BOOL ---
+}
+
+

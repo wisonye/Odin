@@ -182,8 +182,9 @@ gb_internal isize string_index_byte(String const &s, u8 x) {
 }
 
 gb_internal gb_inline bool str_eq(String const &a, String const &b) {
-	if (a.len != b.len) return false;
-	if (a.len == 0) return true;
+	if (a.len != b.len)   return false;
+	if (a.len == 0)       return true;
+	if (a.text == b.text) return true;
 	return memcmp(a.text, b.text, a.len) == 0;
 }
 gb_internal gb_inline bool str_ne(String const &a, String const &b) { return !str_eq(a, b);                }
@@ -213,7 +214,7 @@ template <> bool operator != (String const &a, char const (&b)[1]) { return a.le
 gb_internal gb_inline bool str_eq(String16 const &a, String16 const &b) {
 	if (a.len != b.len) return false;
 	if (a.len == 0) return true;
-	return memcmp(a.text, b.text, a.len) == 0;
+	return memcmp(a.text, b.text, a.len * gb_size_of(u16)) == 0;
 }
 gb_internal gb_inline bool str_ne(String16 const &a, String16 const &b) { return !str_eq(a, b);                }
 gb_internal gb_inline bool str_lt(String16 const &a, String16 const &b) { return string16_compare(a, b) < 0;     }
@@ -290,6 +291,20 @@ gb_internal String string_split_iterator(String_Iterator *it, const char sep) {
 	}
 	it->pos = end;
 	return substring(it->str, start, end);
+}
+
+// NOTE: `string_split_iterator` returns a zero-length `String` both for an empty element and at
+// exhaustion, so a loop that stops on an empty result stops at the first empty element instead.
+// This skips empty elements and stops only once the iterator is exhausted.
+gb_internal bool string_split_iterator_next(String_Iterator *it, char const sep, String *str_) {
+	while (it->pos < it->str.len) {
+		String str = string_split_iterator(it, sep);
+		if (str.len != 0) {
+			*str_ = str;
+			return true;
+		}
+	}
+	return false;
 }
 
 gb_internal gb_inline bool is_separator(u8 const &ch) {
@@ -491,17 +506,7 @@ gb_internal bool string_contains_string(String const &haystack, String const &ne
 gb_internal String filename_from_path(String s) {
 	isize i = string_extension_position(s);
 	if (i >= 0) {
-		s = substring(s, 0, i);
-		return s;
-	}
-	if (i > 0) {
-		isize j = 0;
-		for (j = s.len-1; j >= 0; j--) {
-			if (is_separator(s[j])) {
-				break;
-			}
-		}
-		return substring(s, j+1, s.len);
+		return substring(s, 0, i);
 	}
 	return make_string(nullptr, 0);
 }
@@ -515,6 +520,13 @@ gb_internal String filename_without_directory(String s) {
 		}
 	}
 	return substring(s, gb_max(j+1, 0), s.len);
+}
+
+gb_internal String clone_string(gbAllocator a, String const &x) {
+	u8 *data = gb_alloc_array(a, u8, x.len+1);
+	gb_memmove(data, x.text, x.len);
+	data[x.len] = 0;
+	return make_string(data, x.len);
 }
 
 gb_internal String concatenate_strings(gbAllocator a, String const &x, String const &y) {
@@ -635,26 +647,107 @@ gb_internal String normalize_path(gbAllocator a, String const &path, String cons
 #elif defined(GB_SYSTEM_UNIX) || defined(GB_SYSTEM_OSX)
 	#include <wchar.h>
 
+	gb_internal void utf16_encode_surrogate_pair(Rune r, u16 *r1, u16 *r2) {
+		static Rune const _surr_self = 0x10000;
+		static Rune const _surr1 = 0xd800;
+		static Rune const _surr2 = 0xdc00;
+		Rune r_ = r - _surr_self;
+		*r1 = _surr1 + ((r_ >> 10) & 0x3ff);
+		*r2 = _surr2 + (r_ & 0x3ff);
+	}
+
+	gb_internal isize utf16_decode(u16 const *s, isize n, Rune *r) {
+		static Rune const _surr1     = 0xd800;
+		static Rune const _surr2     = 0xdc00;
+		static Rune const _surr3     = 0xe000;
+		static Rune const _surr_self = 0x10000;
+		if (n < 1) {
+			*r = GB_RUNE_INVALID;
+			return 0;
+		}
+		u16 c = s[0];
+		if (c < 0xd800 || c > 0xdfff) {
+			*r = cast(Rune)c;
+			return 1;
+		}
+		if (c >= 0xdc00) {
+			*r = GB_RUNE_INVALID;
+			return 1;
+		}
+		if (n < 2) {
+			*r = GB_RUNE_INVALID;
+			return 1;
+		}
+		u16 c2 = s[1];
+		if (c2 < 0xdc00 || c2 > 0xdfff) {
+			*r = GB_RUNE_INVALID;
+			return 1;
+		}
+		*r = (((c-_surr1)<<10) | (c2 - _surr2)) + _surr_self;
+		return 2;
+	}
+
 	gb_internal int convert_multibyte_to_widechar(char const *multibyte_input, usize input_length, wchar_t *output, usize output_size) {
-		String	string = copy_string(heap_allocator(), make_string(cast(u8 const*)multibyte_input, input_length)); /* Guarantee NULL terminator */
-		u8*		input = string.text;
+		u16 *out = cast(u16 *)output;
+		String s = make_string(cast(u8 const *)multibyte_input, input_length);
+		isize i = 0;
+		isize output_len = 0;
+		while (i < s.len) {
+			Rune r = 0;
+			isize width = utf8_decode(s.text + i, s.len - i, &r);
+			if (r == GB_RUNE_INVALID) {
+				return -1;
+			}
+			i += width;
+			if (r < 0x10000) {
+				if (out) {
+					if (cast(usize)output_len+1 > output_size) {
+						return -1;
+					}
+					out[output_len] = cast(u16)r;
+				}
+				output_len += 1;
+			} else {
+				if (out) {
+					if (cast(usize)output_len+2 > output_size) {
+						return -1;
+					}
+					u16 r1, r2;
+					utf16_encode_surrogate_pair(r, &r1, &r2);
+					out[output_len+0] = r1;
+					out[output_len+1] = r2;
+				}
+				output_len += 2;
+			}
+		}
 
-		mbstate_t	ps = { 0 };
-		size_t	result = mbsrtowcs(output, cast(const char**)&input, output_size, &ps);
-
-		gb_free(heap_allocator(), string.text);
-		return (result == (size_t)-1) ? -1 : (int)result;
+		return cast(int)output_len;
 	}
 
 	gb_internal int convert_widechar_to_multibyte(wchar_t const *widechar_input, usize input_length, char* output, usize output_size) {
-		String	string = copy_string(heap_allocator(), make_string(cast(u8 const*)widechar_input, input_length)); /* Guarantee NULL terminator */
-		u8*		input = string.text;
+		u16 const *in = cast(u16 const *)widechar_input;
+		isize i = 0;
+		isize output_len = 0;
+		while (i < input_length) {
+			Rune r;
+			isize width = utf16_decode(in + i, input_length - i, &r);
+			if (r == GB_RUNE_INVALID) {
+				return -1;
+			}
+			i += width;
 
-		mbstate_t	ps = { 0 };
-		size_t	result = wcsrtombs(output, cast(const wchar_t**)&input, output_size, &ps);
+			u8 buf[4];
+			isize char_len = gb_utf8_encode_rune(buf, r);
 
-		gb_free(heap_allocator(), string.text);
-		return (result == (size_t)-1) ? -1 : (int)result;
+			if(output) {
+				if (cast(usize)output_len+cast(usize)char_len > output_size) {
+					return -1;
+				}
+				gb_memmove(output + output_len, buf, char_len);
+			}
+			output_len += char_len;
+		}
+		return cast(int)output_len;
 	}
 #else
 #error Implement system
@@ -880,9 +973,10 @@ gb_internal String quote_to_ascii(gbAllocator a, String16 str, u8 quote='"') {
 		}
 		if (width == 1 && r == GB_RUNE_INVALID) {
 			array_add(&buf, cast(u8)'\\');
-			array_add(&buf, cast(u8)'x');
-			array_add(&buf, cast(u8)lower_hex[s[0]>>4]);
-			array_add(&buf, cast(u8)lower_hex[s[0]&0xf]);
+			array_add(&buf, cast(u8)'u');
+			for (isize i = 12; i >= 0; i -= 4) {
+				array_add(&buf, cast(u8)lower_hex[(s[0]>>i)&0xf]);
+			}
 			continue;
 		}
 
@@ -1153,6 +1247,291 @@ gb_internal i32 unquote_string(gbAllocator a, String *s_, u8 quote=0, bool has_c
 	return 2;
 }
 
+// Escape-process the already-delimiter-stripped body of a triple-quoted
+// string. `force_new` is true when `s` already points at a freshly allocated
+// buffer, so the "no escapes" fast path still reports a new allocation.
+//
+// 0 == failure
+// 1 == original memory
+// 2 == new allocation
+gb_internal i32 unquote_string_triple_content(gbAllocator a, String *s_, String s, bool has_carriage_return, bool force_new) {
+	if (!string_contains_char(s, '\\')) {
+		if (has_carriage_return) {
+			*s_ = strip_carriage_return(a, s);
+			return 2;
+		}
+		*s_ = s;
+		return force_new ? 2 : 1;
+	}
+	if (has_carriage_return) {
+		s = strip_carriage_return(a, s);
+	}
+	u8 rune_temp[4] = {};
+	isize buf_len = 3*s.len / 2 + 1;
+	u8 *buf = gb_alloc_array(a, u8, buf_len);
+	isize offset = 0;
+	while (s.len > 0) {
+		String tail_string = {};
+		Rune r = 0;
+		bool multiple_bytes = false;
+		// NOTE: quote==0 makes unquote_char treat `"` as an ordinary byte
+		// (it only rejects a bare quote when quote is '"' or '\''), while
+		// `\\` escapes — including `\"` — are still handled.
+		bool success = unquote_char(s, 0, &r, &multiple_bytes, &tail_string);
+		if (!success) {
+			gb_free(a, buf);
+			return 0;
+		}
+		s = tail_string;
+		if (r < 0x80 || !multiple_bytes) {
+			buf[offset++] = cast(u8)r;
+		} else {
+			isize size = gb_utf8_encode_rune(rune_temp, r);
+			gb_memmove(buf+offset, rune_temp, size);
+			offset += size;
+		}
+	}
+	*s_ = make_string(buf, offset);
+	return 2;
+}
+
+gb_internal bool triple_string_deindent(gbAllocator a, String body, String *out) {
+	// Opening delimiter's line (up to the first newline) must be blank.
+	isize first_nl = 0;
+	while (body.text[first_nl] != '\n') {
+		first_nl += 1;
+	}
+	for (isize i = 0; i < first_nl; i++) {
+		u8 c = body.text[i];
+		if (c != ' ' && c != '\t' && c != '\r') {
+			return false;
+		}
+	}
+
+	// Closing delimiter's line: whitespace after the final newline is the
+	// indentation prefix removed from each content line.
+	isize last_nl = body.len - 1;
+	while (body.text[last_nl] != '\n') {
+		last_nl -= 1;
+	}
+	String indent = make_string(body.text+last_nl+1, body.len-(last_nl+1));
+	for (isize i = 0; i < indent.len; i++) {
+		u8 c = indent.text[i];
+		if (c != ' ' && c != '\t') {
+			return false;
+		}
+	}
+
+	String content = make_string(body.text+first_nl+1, last_nl-(first_nl+1));
+
+	u8 *dbuf = gb_alloc_array(a, u8, content.len+1);
+	isize dlen = 0;
+	isize li = 0;
+	for (;;) {
+		isize le = li;
+		while (le < content.len && content.text[le] != '\n') {
+			le += 1;
+		}
+		isize len = le - li;
+		if (len > 0 && content.text[li+len-1] == '\r') {
+			len -= 1; // normalize CRLF line endings
+		}
+
+		bool blank = true;
+		for (isize k = 0; k < len; k++) {
+			u8 c = content.text[li+k];
+			if (c != ' ' && c != '\t') {
+				blank = false;
+				break;
+			}
+		}
+		if (blank) {
+			// A whitespace-only line contributes an empty line.
+		} else {
+			if (len < indent.len) {
+				gb_free(a, dbuf);
+				return false; // content line is less indented than the closing delimiter
+			}
+			for (isize k = 0; k < indent.len; k++) {
+				if (content.text[li+k] != indent.text[k]) {
+					gb_free(a, dbuf);
+					return false; // indentation whitespace does not match
+				}
+			}
+			for (isize k = indent.len; k < len; k++) {
+				dbuf[dlen++] = content.text[li+k];
+			}
+		}
+
+		if (le >= content.len) {
+			break;
+		}
+		dbuf[dlen++] = '\n';
+		li = le + 1;
+	}
+
+	*out = make_string(dbuf, dlen);
+	return true;
+}
+
+
+enum TripleStringErrorKind {
+	TripleStringError_None = 0,
+	TripleStringError_InvalidLiteral,        // malformed delimiters (shouldn't occur for a real token)
+	TripleStringError_ContentOnOpeningLine,  // text after the opening delimiter on its own line
+	TripleStringError_ClosingNotOnOwnLine,   // closing delimiter is not alone on its line
+	TripleStringError_UnderIndented,         // a content line is indented less than the closing delimiter
+	TripleStringError_IndentationMismatch,   // a line's indentation whitespace differs from the closing delimiter
+	TripleStringError_InvalidEscape,         // bad escape sequence (only reachable for `"""` strings)
+};
+
+// `out_err` receives the failure reason and `out_err_offset` a byte offset into
+// the *token string* (i.e. into *s_ on entry) pointing at the offending
+// character, or -1 when no precise location is available. Both are only
+// meaningful when the function returns 0.
+//
+// 0 == failure
+// 1 == original memory
+// 2 == new allocation
+gb_internal i32 unquote_string_triple(gbAllocator a, String *s_, bool has_carriage_return=false,
+                                      TripleStringErrorKind *out_err=nullptr, isize *out_err_offset=nullptr) {
+	if (out_err)        *out_err = TripleStringError_None;
+	if (out_err_offset) *out_err_offset = -1;
+
+	#define TRIPLE_FAIL(kind, off) do {                  \
+		if (out_err)        *out_err = (kind);       \
+		if (out_err_offset) *out_err_offset = (off); \
+		return 0;                                    \
+	} while (0)
+
+	String s = *s_;
+	isize n = s.len;
+	if (n < 6) {
+		TRIPLE_FAIL(TripleStringError_InvalidLiteral, 0);
+	}
+	u8 quote = s[0];
+	if (quote != '"' && quote != '`') {
+		TRIPLE_FAIL(TripleStringError_InvalidLiteral, 0);
+	}
+	if (!(s[0]   == quote && s[1]   == quote && s[2]   == quote) ||
+	    !(s[n-1] == quote && s[n-2] == quote && s[n-3] == quote)) {
+		TRIPLE_FAIL(TripleStringError_InvalidLiteral, 0);
+	}
+
+	bool raw = (quote == '`');
+	String body = make_string(s.text+3, s.len-6); // body begins at token offset 3
+
+	// Single-line form: no indentation handling
+	if (!string_contains_char(body, '\n')) {
+		if (raw) {
+			if (has_carriage_return) {
+				*s_ = strip_carriage_return(a, body);
+				return 2;
+			}
+			*s_ = body;
+			return 1;
+		}
+		i32 r = unquote_string_triple_content(a, s_, body, has_carriage_return, false);
+		if (r == 0) {
+			TRIPLE_FAIL(TripleStringError_InvalidEscape, -1);
+		}
+		return r;
+	}
+
+	// Opening delimiter's line must be whitespace only.
+	isize first_nl = 0;
+	while (body.text[first_nl] != '\n') {
+		first_nl += 1;
+	}
+	for (isize i = 0; i < first_nl; i++) {
+		u8 c = body.text[i];
+		if (c != ' ' && c != '\t' && c != '\r') {
+			TRIPLE_FAIL(TripleStringError_ContentOnOpeningLine, 3 + i);
+		}
+	}
+
+	// Closing delimiter's line: whitespace after the final newline is the indent prefix.
+	isize last_nl = body.len - 1;
+	while (body.text[last_nl] != '\n') {
+		last_nl -= 1;
+	}
+	String indent = make_string(body.text+last_nl+1, body.len-(last_nl+1));
+	for (isize i = 0; i < indent.len; i++) {
+		u8 c = indent.text[i];
+		if (c != ' ' && c != '\t') {
+			TRIPLE_FAIL(TripleStringError_ClosingNotOnOwnLine, 3 + (last_nl+1) + i);
+		}
+	}
+
+	String content = make_string(body.text+first_nl+1, last_nl-(first_nl+1));
+	isize content_base = 3 + (first_nl+1); // token offset of the content start
+
+	u8 *dbuf = gb_alloc_array(a, u8, content.len+1);
+	isize dlen = 0;
+	isize li = 0;
+	for (;;) {
+		isize le = li;
+		while (le < content.len && content.text[le] != '\n') {
+			le += 1;
+		}
+		isize len = le - li;
+		if (len > 0 && content.text[li+len-1] == '\r') {
+			len -= 1; // normalize CRLF
+		}
+
+		bool blank = true;
+		for (isize k = 0; k < len; k++) {
+			u8 c = content.text[li+k];
+			if (c != ' ' && c != '\t') {
+				blank = false;
+				break;
+			}
+		}
+		if (!blank) {
+			isize ws = 0;
+			while (ws < len && (content.text[li+ws] == ' ' || content.text[li+ws] == '\t')) {
+				ws += 1;
+			}
+			isize ws_end_off = content_base + li + ws;
+
+			for (isize k = 0; k < indent.len; k++) {
+				if (k >= len || content.text[li+k] != indent.text[k]) {
+					u8 lc = 0;
+					if (k < len) {
+						lc = content.text[li+k];
+					}
+					gb_free(a, dbuf);
+
+					if (k < len && (lc == ' ' || lc == '\t')) {
+						TRIPLE_FAIL(TripleStringError_IndentationMismatch, ws_end_off);
+					}
+					TRIPLE_FAIL(TripleStringError_UnderIndented, ws_end_off);
+				}
+			}
+			for (isize k = indent.len; k < len; k++) {
+				dbuf[dlen++] = content.text[li+k];
+			}
+		}
+		if (le >= content.len) {
+			break;
+		}
+		dbuf[dlen++] = '\n';
+		li = le + 1;
+	}
+
+	String di = make_string(dbuf, dlen);
+	if (raw) {
+		*s_ = di;
+		return 2;
+	}
+	i32 r = unquote_string_triple_content(a, s_, di, false, true);
+	if (r == 0) {
+		TRIPLE_FAIL(TripleStringError_InvalidEscape, -1);
+	}
+	return r;
+
+	#undef TRIPLE_FAIL
+}
 
 
 gb_internal bool string_is_valid_identifier(String str) {

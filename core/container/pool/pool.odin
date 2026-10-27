@@ -1,12 +1,12 @@
 package container_pool
 
 import "base:intrinsics"
+import "base:runtime"
 import "base:sanitizer"
-
-import "core:mem"
 import "core:sync"
 
 _ :: sanitizer
+_ :: sync
 
 DEFAULT_BLOCK_SIZE :: _DEFAULT_BLOCK_SIZE
 
@@ -29,11 +29,18 @@ Pool :: struct($T: typeid) {
 	num_outstanding: int,
 	num_ready:       int,
 	link_off:        uintptr,
+	// Guards free_list.  An untagged Treiber stack is vulnerable to ABA:
+	// between get's head load and its CAS, another thread can pop the head,
+	// reuse it, and push it back — the CAS then succeeds and installs a
+	// stale next pointer, handing an in-flight element to two owners.
+	// A tagged head would keep this lock-free but requires a double-width
+	// CAS, which is not portably available.
+	mu:              sync.Mutex,
 	free_list:       ^T,
 }
 
 @(require_results)
-init :: proc(p: ^Pool($T), $link_field: string, block_size: uint = DEFAULT_BLOCK_SIZE) -> (err: mem.Allocator_Error)
+init :: proc(p: ^Pool($T), $link_field: string, block_size: uint = DEFAULT_BLOCK_SIZE) -> (err: runtime.Allocator_Error)
 	where intrinsics.type_has_field(T, link_field),
 	      intrinsics.type_field_type(T, link_field) == ^T {
 	p.link_off = offset_of_by_string(T, link_field)
@@ -41,7 +48,7 @@ init :: proc(p: ^Pool($T), $link_field: string, block_size: uint = DEFAULT_BLOCK
 }
 
 destroy :: proc(p: ^Pool($T)) {
-	elem := sync.atomic_exchange_explicit(&p.free_list, nil, .Acquire)
+	elem := sync.atomic_exchange_explicit(&p.free_list, nil, .Relaxed)
 
 	sync.atomic_store_explicit(&p.num_ready, 0, .Relaxed)
 
@@ -57,40 +64,38 @@ destroy :: proc(p: ^Pool($T)) {
 	p.arena = {}
 }
 
-@(require_results)
-get :: proc(p: ^Pool($T)) -> (elem: ^T, err: mem.Allocator_Error) #optional_allocator_error {
+@(require_results, synchronizes=.Acquire)
+get :: proc(p: ^Pool($T)) -> (elem: ^T, err: runtime.Allocator_Error) #optional_allocator_error {
 	defer sync.atomic_add_explicit(&p.num_outstanding, 1, .Relaxed)
 
-	for {
-		elem = sync.atomic_load_explicit(&p.free_list, .Acquire)
-		if elem == nil {
-			// NOTE: pool arena has an internal lock.
-			return new(T, _pool_arena_allocator(&p.arena))
-		}
-
-		if _, ok := sync.atomic_compare_exchange_weak_explicit(&p.free_list, elem, _get_next(p, elem), .Acquire, .Relaxed); ok {
-			_set_next(p, elem, nil)
-			_unpoison_elem(p, elem)
-			sync.atomic_sub_explicit(&p.num_ready, 1, .Relaxed)
-			return
-		}
+	sync.mutex_lock(&p.mu)
+	elem = p.free_list
+	if elem == nil {
+		sync.mutex_unlock(&p.mu)
+		// NOTE: pool arena has an internal lock.
+		return new(T, _pool_arena_allocator(&p.arena))
 	}
+	p.free_list = _get_next(p, elem)
+	sync.mutex_unlock(&p.mu)
+
+	_set_next(p, elem, nil)
+	_unpoison_elem(p, elem)
+	sync.atomic_sub_explicit(&p.num_ready, 1, .Relaxed)
+	return
 }
 
+@(synchronizes=.Release)
 put :: proc(p: ^Pool($T), elem: ^T) {
-	mem.zero_item(elem)
+	intrinsics.mem_zero(elem, size_of(T))
 	_poison_elem(p, elem)
 
 	defer sync.atomic_sub_explicit(&p.num_outstanding, 1, .Relaxed)
 	defer sync.atomic_add_explicit(&p.num_ready, 1, .Relaxed)
 
-	for {
-		head := sync.atomic_load_explicit(&p.free_list, .Relaxed)
-		_set_next(p, elem, head)
-		if _, ok := sync.atomic_compare_exchange_weak_explicit(&p.free_list, head, elem, .Release, .Relaxed); ok {
-			return
-		}
-	}
+	sync.mutex_lock(&p.mu)
+	_set_next(p, elem, p.free_list)
+	p.free_list = elem
+	sync.mutex_unlock(&p.mu)
 }
 
 num_outstanding :: proc(p: ^Pool($T)) -> int {
@@ -113,28 +118,30 @@ _set_next :: proc(p: ^Pool($T), elem: ^T, next: ^T) {
 	(^^T)(uintptr(elem) + p.link_off)^ = next
 }
 
-@(disabled=.Address not_in ODIN_SANITIZER_FLAGS)
 _poison_elem :: proc(p: ^Pool($T), elem: ^T) {
-	if p.link_off > 0 {
-		sanitizer.address_poison_rawptr(elem, int(p.link_off))
-	}
+	when .Address in ODIN_SANITIZER_FLAGS {
+		if p.link_off > 0 {
+			sanitizer.address_poison_rawptr(elem, int(p.link_off))
+		}
 
-	len := size_of(T) - p.link_off - size_of(rawptr)
-	if len > 0 {
-		ptr := rawptr(uintptr(elem) + p.link_off + size_of(rawptr))
-		sanitizer.address_poison_rawptr(ptr, int(len))
+		len := size_of(T) - p.link_off - size_of(rawptr)
+		if len > 0 {
+			ptr := rawptr(uintptr(elem) + p.link_off + size_of(rawptr))
+			sanitizer.address_poison_rawptr(ptr, int(len))
+		}
 	}
 }
 
-@(disabled=.Address not_in ODIN_SANITIZER_FLAGS)
 _unpoison_elem :: proc(p: ^Pool($T), elem: ^T) {
-	if p.link_off > 0 {
-		sanitizer.address_unpoison_rawptr(elem, int(p.link_off))
-	}
+	when .Address in ODIN_SANITIZER_FLAGS {
+		if p.link_off > 0 {
+			sanitizer.address_unpoison_rawptr(elem, int(p.link_off))
+		}
 
-	len := size_of(T) - p.link_off - size_of(rawptr)
-	if len > 0 {
-		ptr := rawptr(uintptr(elem) + p.link_off + size_of(rawptr))
-		sanitizer.address_unpoison_rawptr(ptr, int(len))
+		len := size_of(T) - p.link_off - size_of(rawptr)
+		if len > 0 {
+			ptr := rawptr(uintptr(elem) + p.link_off + size_of(rawptr))
+			sanitizer.address_unpoison_rawptr(ptr, int(len))
+		}
 	}
 }

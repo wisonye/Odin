@@ -3,7 +3,6 @@ package strings
 import "base:runtime"
 import "core:unicode/utf8"
 import "core:strconv"
-import "core:mem"
 import "core:io"
 /*
 Type definition for a procedure that flushes a Builder
@@ -35,7 +34,8 @@ Returns:
 - res: The new Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_make_none :: proc(allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: mem.Allocator_Error) #optional_allocator_error {
+@(require_results)
+builder_make_none :: proc(allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	return Builder{buf=make([dynamic]byte, allocator, loc) or_return }, nil
 }
 /*
@@ -51,7 +51,8 @@ Returns:
 - res: The new Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_make_len :: proc(len: int, allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: mem.Allocator_Error) #optional_allocator_error {
+@(require_results)
+builder_make_len :: proc(len: int, allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	return Builder{buf=make([dynamic]byte, len, allocator, loc) or_return }, nil
 }
 /*
@@ -68,7 +69,8 @@ Returns:
 - res: The new Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_make_len_cap :: proc(len, cap: int, allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: mem.Allocator_Error) #optional_allocator_error {
+@(require_results)
+builder_make_len_cap :: proc(len, cap: int, allocator := context.allocator, loc := #caller_location) -> (res: Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	return Builder{buf=make([dynamic]byte, len, cap, allocator, loc) or_return }, nil
 }
 /*
@@ -116,7 +118,7 @@ Returns:
 - res: A pointer to the initialized Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_init_none :: proc(b: ^Builder, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: mem.Allocator_Error) #optional_allocator_error {
+builder_init_none :: proc(b: ^Builder, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	b.buf = make([dynamic]byte, allocator, loc) or_return
 	return b, nil
 }
@@ -135,7 +137,7 @@ Returns:
 - res: A pointer to the initialized Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_init_len :: proc(b: ^Builder, len: int, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: mem.Allocator_Error) #optional_allocator_error {
+builder_init_len :: proc(b: ^Builder, len: int, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	b.buf = make([dynamic]byte, len, allocator, loc) or_return
 	return b, nil
 }
@@ -153,7 +155,7 @@ Returns:
 - res: A pointer to the initialized Builder
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-builder_init_len_cap :: proc(b: ^Builder, len, cap: int, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: mem.Allocator_Error) #optional_allocator_error {
+builder_init_len_cap :: proc(b: ^Builder, len, cap: int, allocator := context.allocator, loc := #caller_location) -> (res: ^Builder, err: runtime.Allocator_Error) #optional_allocator_error {
 	b.buf = make([dynamic]byte, len, cap, allocator, loc) or_return
 	return b, nil
 }
@@ -194,6 +196,7 @@ Inputs:
 Returns:
 - res: the io.Stream
 */
+@(require_results)
 to_stream :: proc(b: ^Builder) -> (res: io.Stream) {
 	return io.Stream{procedure=_builder_stream_proc, data=b}
 }
@@ -206,6 +209,7 @@ Inputs:
 Returns:
 - res: The io.Writer
 */
+@(require_results)
 to_writer :: proc(b: ^Builder) -> (res: io.Writer) {
 	return io.to_writer(to_stream(b))
 }
@@ -268,9 +272,21 @@ Output:
 	ab
 
 */
+@(require_results)
 builder_from_bytes :: proc(backing: []byte) -> (res: Builder) {
-	return Builder{ buf = mem.buffer_from_slice(backing) }
+	return Builder{
+		buf = transmute([dynamic]byte)runtime.Raw_Dynamic_Array{
+			data      = raw_data(backing),
+			len       = 0,
+			cap       = len(backing),
+			allocator = runtime.Allocator{
+				procedure = runtime.nil_allocator_proc,
+				data = nil,
+			},
+		},
+	}
 }
+
 // Alias to `builder_from_bytes`
 builder_from_slice :: builder_from_bytes
 /*
@@ -282,6 +298,7 @@ Inputs:
 Returns:
 - res: The contents of the Builder's buffer, as a string
 */
+@(require_results)
 to_string :: proc(b: Builder) -> (res: string) {
 	return string(b.buf[:])
 }
@@ -296,6 +313,7 @@ Inputs:
 Returns:
 - res: A cstring of the Builder's buffer
 */
+@(require_results)
 unsafe_to_cstring :: proc(b: ^Builder, loc := #caller_location) -> (res: cstring) {
 	append(&b.buf, 0, loc)
 	pop(&b.buf)
@@ -311,7 +329,8 @@ Returns:
 - res: A cstring of the Builder's buffer upon success
 - err: An optional allocator error if one occured, `nil` otherwise
 */
-to_cstring :: proc(b: ^Builder, loc := #caller_location) -> (res: cstring, err: mem.Allocator_Error) #optional_allocator_error {
+@(require_results)
+to_cstring :: proc(b: ^Builder, loc := #caller_location) -> (res: cstring, err: runtime.Allocator_Error) #optional_allocator_error {
 	n := append(&b.buf, 0, loc) or_return
 	if n != 1 {
 		return nil, .Out_Of_Memory
@@ -331,6 +350,7 @@ Inputs:
 Returns:
 - res: The length of the Builder's buffer
 */
+@(require_results)
 builder_len :: proc(b: Builder) -> (res: int) {
 	return len(b.buf)
 }
@@ -343,6 +363,7 @@ Inputs:
 Returns:
 - res: The capacity of the Builder's buffer
 */
+@(require_results)
 builder_cap :: proc(b: Builder) -> (res: int) {
 	return cap(b.buf)
 }
@@ -355,6 +376,7 @@ Inputs:
 Returns:
 - res: The available space left in the Builder's buffer
 */
+@(require_results)
 builder_space :: proc(b: Builder) -> (res: int) {
 	return cap(b.buf) - len(b.buf)
 }
@@ -443,7 +465,7 @@ Example:
 
 	write_rune_example :: proc() {
 		builder := strings.builder_make()
-		strings.write_rune(&builder, 'ä')     // 2 None
+		strings.write_rune(&builder, 'ä')       // 2 None
 		strings.write_rune(&builder, 'b')       // 1 None
 		fmt.println(strings.to_string(builder)) // -> äb
 	}
@@ -453,8 +475,16 @@ Output:
 	äb
 
 */
-write_rune :: proc(b: ^Builder, r: rune) -> (res: int, err: io.Error) {
-	return io.write_rune(to_writer(b), r)
+write_rune :: proc(b: ^Builder, r: rune, loc := #caller_location) -> (n: int) {
+	n0 := len(b.buf)
+	if r < utf8.RUNE_SELF {
+		append(&b.buf, cast(byte)r, loc)
+	} else {
+		buf, w := utf8.encode_rune(r)
+		append(&b.buf, ..buf[:w], loc=loc)
+	}
+	n1 := len(b.buf)
+	return n1-n0
 }
 /*
 Appends a quoted rune to the Builder and returns the number of bytes written
@@ -476,7 +506,7 @@ Example:
 	write_quoted_rune_example :: proc() {
 		builder := strings.builder_make()
 		strings.write_string(&builder, "abc")      // 3
-		strings.write_quoted_rune(&builder, 'ä') // 4
+		strings.write_quoted_rune(&builder, 'ä')   // 4
 		strings.write_string(&builder, "abc")      // 3
 		fmt.println(strings.to_string(builder))    // -> abc'ä'abc
 	}
@@ -851,7 +881,7 @@ Returns:
 - replaced: The number of replacements
 - err: if any allocation errors occurred
 */
-builder_replace_all :: proc(b: ^Builder, old, new: string) -> (replaced: int, err: mem.Allocator_Error) {
+builder_replace_all :: proc(b: ^Builder, old, new: string) -> (replaced: int, err: runtime.Allocator_Error) {
 	return builder_replace(b, old, new, -1)
 }
 
@@ -870,7 +900,7 @@ Returns:
 - replaced: The number of replacements
 - err: if any allocation errors occurred
 */
-builder_replace :: proc(b: ^Builder, old, new: string, n: int, loc := #caller_location) -> (replaced: int, err: mem.Allocator_Error) {
+builder_replace :: proc(b: ^Builder, old, new: string, n: int, loc := #caller_location) -> (replaced: int, err: runtime.Allocator_Error) {
 	if old == new || n == 0 {
 		return
 	}

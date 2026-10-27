@@ -10,7 +10,7 @@ package xxhash
 		Jeroen van Rijn: Initial implementation.
 */
 
-import "core:mem"
+import "base:runtime"
 import "base:intrinsics"
 
 /*
@@ -121,7 +121,7 @@ XXH3_init_state :: proc(state: ^XXH3_state) {
 }
 
 XXH3_create_state :: proc(allocator := context.allocator) -> (res: ^XXH3_state, err: Error) {
-	state, mem_error := mem.new_aligned(XXH3_state, 64, allocator)
+	state, mem_error := runtime.new_aligned(XXH3_state, 64, allocator)
 	err = nil if mem_error == nil else .Error
 
 	XXH3_init_state(state)
@@ -179,7 +179,7 @@ XXH3_reset_internal :: proc(state: ^XXH3_state, seed: XXH64_hash, secret: []u8, 
 XXH3_consume_stripes :: #force_inline proc(
 		acc: []xxh_u64, stripes_so_far: ^uint, stripes_per_block: uint, input: []u8,
 		number_of_stripes: uint, secret: []u8, secret_limit: uint,
-		f_acc512: XXH3_accumulate_512_f, f_scramble: XXH3_scramble_accumulator_f) {
+		f_acc512: XXH3_accumulate_512_f, f_scramble: XXH3_scramble_accumulator_f)  #no_bounds_check {
 
 	assert(number_of_stripes <= stripes_per_block) /* can handle max 1 scramble per invocation */
 	assert(stripes_so_far^ < stripes_per_block)
@@ -206,7 +206,7 @@ XXH3_consume_stripes :: #force_inline proc(
 XXH3_update :: #force_inline proc(
 		state: ^XXH3_state, input: []u8,
 		f_acc512: XXH3_accumulate_512_f,
-		f_scramble: XXH3_scramble_accumulator_f) -> (err: Error) {
+		f_scramble: XXH3_scramble_accumulator_f) -> (err: Error) #no_bounds_check {
 
 	input  := input
 	length := len(input)

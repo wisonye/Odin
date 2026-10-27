@@ -3,12 +3,10 @@ package slice
 
 import "base:intrinsics"
 import "base:builtin"
-import "core:math/bits"
 import "base:runtime"
 
 _ :: intrinsics
 _ :: builtin
-_ :: bits
 _ :: runtime
 
 /*
@@ -332,17 +330,6 @@ equal :: proc "contextless" (a, b: $T/[]$E) -> bool where intrinsics.type_is_com
 		return false
 	}
 	when intrinsics.type_is_simple_compare(E) {
-		if len(a) == 0 {
-			// Empty slices are always equivalent to each other.
-			//
-			// This check is here in the event that a slice with a `data` of
-			// nil is compared against a slice with a non-nil `data` but a
-			// length of zero.
-			//
-			// In that case, `memory_compare` would return -1 or +1 because one
-			// of the pointers is nil.
-			return true
-		}
 		return runtime.memory_compare(raw_data(a), raw_data(b), len(a)*size_of(E)) == 0
 	} else {
 		for i in 0..<len(a) {
@@ -435,6 +422,9 @@ fill :: proc "contextless" (array: $T/[]$E, value: E) #no_bounds_check {
 }
 
 rotate_left :: proc "contextless" (array: $T/[]$E, mid: int) {
+	if len(array) == 0 {
+		return
+	}
 	n := len(array)
 	m := mid %% n
 	k := n - m
@@ -562,7 +552,7 @@ last_ptr :: proc(array: $T/[]$E) -> ^E {
 
 @(require_results)
 get :: proc "contextless" (array: $T/[]$E, index: int) -> (value: E, ok: bool) {
-	#bounds_check if uint(index) < len(array) {
+	#no_bounds_check if uint(index) < len(array) {
 		value = array[index]
 		ok = true
 	}
@@ -933,7 +923,7 @@ If `elems` is out of bounds (more than the total) this will trigger a bounds che
 Example:
 	import "core:fmt"
 	import "core:slice"
-	
+
 	advance_slices_example :: proc() {
 		slices := [][]byte {
 			{1, 2, 3, 4},

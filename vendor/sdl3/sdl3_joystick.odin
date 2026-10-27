@@ -2,10 +2,6 @@ package sdl3
 
 import "core:c"
 
-@(link_prefix="SDL_")
-foreign lib {
-	joystick_lock: ^Mutex
-}
 
 Joystick :: struct {}
 JoystickID :: distinct Uint32
@@ -39,7 +35,9 @@ JOYSTICK_AXIS_MIN :: -32768
 
 @(default_calling_convention="c", link_prefix="SDL_")
 foreign lib {
+	@(synchronizes=.Acquire)
 	LockJoysticks                  :: proc() ---
+	@(synchronizes=.Release)
 	UnlockJoysticks                :: proc() ---
 	HasJoystick                    :: proc() -> bool ---
 	GetJoysticks                   :: proc(count: ^c.int) -> [^]JoystickID ---

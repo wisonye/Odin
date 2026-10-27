@@ -8,6 +8,11 @@ read_ptr :: proc(r: Reader, p: rawptr, byte_size: int, n_read: ^int = nil) -> (n
 	return read(r, ([^]byte)(p)[:byte_size], n_read)
 }
 
+read_slice :: proc(r: Reader, slice: $S/[]$T, n_read: ^int = nil) -> (n: int, err: Error) {
+	size := len(slice)*size_of(T)
+	return read_ptr(r, raw_data(slice), size, n_read)
+}
+
 write_ptr :: proc(w: Writer, p: rawptr, byte_size: int, n_written: ^int = nil) -> (n: int, err: Error) {
 	return write(w, ([^]byte)(p)[:byte_size], n_written)
 }
@@ -19,6 +24,12 @@ read_ptr_at :: proc(r: Reader_At, p: rawptr, byte_size: int, offset: i64, n_read
 write_ptr_at :: proc(w: Writer_At, p: rawptr, byte_size: int, offset: i64, n_written: ^int = nil) -> (n: int, err: Error) {
 	return write_at(w, ([^]byte)(p)[:byte_size], offset, n_written)
 }
+
+write_slice :: proc(w: Writer, slice: $S/[]$T, n_written: ^int = nil) -> (n: int, err: Error) {
+	size := len(slice)*size_of(T)
+	return write_ptr(w, raw_data(slice), size, n_written)
+}
+
 
 write_u64 :: proc(w: Writer, i: u64, base: int = 10, n_written: ^int = nil) -> (n: int, err: Error) {
 	buf: [64]byte
@@ -504,4 +515,101 @@ _section_reader_proc :: proc(stream_data: rawptr, mode: Stream_Mode, p: []byte, 
 	}
 	return 0, nil
 
+}
+
+
+// Counting_Stream passes everything on to an underlying stream, counting the bytes read and written and how
+// often each mode is used.
+//
+// With a nil underlying stream it takes every write and discards it, which measures output without keeping it.
+// It then seeks as a file would, keeping `pos` and `size`, so `size` is how large a file the writes would have made
+// even when they seek back or write at an offset; reads always give .EOF, as nothing written is kept;
+// and flushing, closing and destroying do nothing.
+Counting_Stream :: struct {
+	s:             Stream,           // underlying stream, or nil to discard writes
+	bytes_read:    i64,              // by .Read and .Read_At, as the underlying stream reports them
+	bytes_written: i64,              // by .Write and .Write_At, as the underlying stream reports them
+	calls:         [Stream_Mode]i64, // how many times each mode was used
+
+	// Only with a nil underlying stream
+	pos:  i64, // where the next .Write lands
+	size: i64, // the end of the furthest write
+}
+
+@(private)
+_counting_stream_proc :: proc(stream_data: rawptr, mode: Stream_Mode, p: []byte, offset: i64, whence: Seek_From) -> (n: i64, err: Error) {
+	c := (^Counting_Stream)(stream_data)
+	c.calls[mode] += 1
+
+	if c.s.procedure == nil {
+		switch mode {
+		case .Write:
+			c.bytes_written += i64(len(p))
+			c.pos           += i64(len(p))
+			c.size           = max(c.size, c.pos)
+			return i64(len(p)), nil
+
+		case .Write_At:
+			if offset < 0 {
+				return 0, .Invalid_Offset
+			}
+			c.bytes_written += i64(len(p))
+			c.size           = max(c.size, offset + i64(len(p)))
+			return i64(len(p)), nil
+
+		case .Read, .Read_At:
+			return 0, .EOF
+
+		case .Seek:
+			pos: i64
+			switch whence {
+			case .Start:   pos = offset
+			case .Current: pos = c.pos + offset
+			case .End:     pos = c.size + offset
+			case:          return 0, .Invalid_Whence
+			}
+			if pos < 0 {
+				return 0, .Invalid_Offset
+			}
+			c.pos = pos
+			return pos, nil
+
+		case .Size:
+			return c.size, nil
+
+		case .Flush, .Close, .Destroy:
+			return 0, nil
+
+		case .Query:
+			return query_utility({.Write, .Write_At, .Read, .Read_At, .Seek, .Size, .Flush, .Close, .Destroy, .Query})
+		}
+		return 0, .Unsupported
+	}
+
+	if mode == .Query {
+		return query_utility(query(c.s) + {.Query})
+	}
+
+	// Bytes are counted as the underlying stream reports them, errors included, so a short write counts what went through
+	n, err = c.s.procedure(c.s.data, mode, p, offset, whence)
+	#partial switch mode {
+	case .Read, .Read_At:
+		c.bytes_read += n
+	case .Write, .Write_At:
+		c.bytes_written += n
+	}
+	return
+}
+
+// counting_stream_init returns a Stream that counts what passes through it to 's', with its counts reset.
+// A nil 's' discards every write, keeping only where it would have landed.
+counting_stream_init :: proc(c: ^Counting_Stream, s: Stream) -> Stream {
+	c^ = {s = s}
+	return counting_stream_to_stream(c)
+}
+
+counting_stream_to_stream :: proc(c: ^Counting_Stream) -> (s: Stream) {
+	s.data = c
+	s.procedure = _counting_stream_proc
+	return
 }

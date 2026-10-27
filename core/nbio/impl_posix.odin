@@ -7,12 +7,10 @@ import    "core:container/pool"
 import    "core:container/queue"
 import    "core:mem"
 import    "core:net"
-import    "core:slice"
 import    "core:strings"
 import    "core:sys/posix"
 import    "core:time"
 import kq "core:sys/kqueue"
-import sa "core:container/small_array"
 
 @(private="package")
 _FULLY_SUPPORTED :: true
@@ -24,7 +22,7 @@ _Event_Loop :: struct {
 	// that would be the same (ident, filter) pair we need to bundle the operations under one kevent.
 	submitted: map[Queue_Identifier]^Operation,
 	// Holds all events we want to flush. Flushing is done each tick at which point this is emptied.
-	pending:   sa.Small_Array(QUEUE_SIZE, kq.KEvent),
+	pending:   [dynamic; QUEUE_SIZE]kq.KEvent,
 	// Holds what should be in `pending` but didn't fit.
 	// When `pending`is flushed these are moved to `pending`.
 	overflow:  queue.Queue(kq.KEvent),
@@ -64,12 +62,12 @@ _Dial :: struct {}
 
 @(private="package")
 _Recv :: struct {
-	small_bufs: [1][]byte,
+	bufs: Bufs,
 }
 
 @(private="package")
 _Send :: struct {
-	small_bufs: [1][]byte,
+	bufs: Bufs,
 }
 
 @(private="package")
@@ -117,11 +115,12 @@ _init :: proc(l: ^Event_Loop, allocator: mem.Allocator) -> (rerr: General_Error)
 
 	l.kqueue = kqueue
 
-	sa.append(&l.pending, kq.KEvent{
+	append(&l.pending, kq.KEvent{
 		ident  = IDENT_WAKE_UP,
 		filter = .User,
 		flags  = {.Add, .Enable, .Clear},
 	})
+	__tick(l, 0) // Tick to enqueue wake up, allowing wake ups before the user's first tick.
 
 	return nil
 }
@@ -151,7 +150,7 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 	}
 
 	if NBIO_DEBUG {
-		npending := sa.len(l.pending)
+		npending := len(l.pending)
 		if npending > 0 {
 			debug("queueing", npending, "new events, there are", int(len(l.submitted)), "events pending")
 		} else {
@@ -178,9 +177,9 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 		results_buf: [128]kq.KEvent
 		results := kevent(l, results_buf[:], ts_pointer) or_return
 
-		sa.clear(&l.pending)
+		clear(&l.pending)
 		for overflow in queue.pop_front_safe(&l.overflow) {
-			sa.append(&l.pending, overflow) or_break
+			(append(&l.pending, overflow) != 0) or_break
 		}
 
 		l.now = time.now()
@@ -203,7 +202,7 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 
 	kevent :: proc(l: ^Event_Loop, buf: []kq.KEvent, ts: ^posix.timespec) -> ([]kq.KEvent, General_Error) {
 		for {
-			new_events, err := kq.kevent(l.kqueue, sa.slice(&l.pending), buf, ts)
+			new_events, err := kq.kevent(l.kqueue, l.pending[:], buf, ts)
 			#partial switch err {
 			case nil:
 				assert(new_events >= 0)
@@ -337,6 +336,12 @@ __tick :: proc(l: ^Event_Loop, timeout: time.Duration) -> General_Error {
 				if .Error in event.flags { curr._impl.flags += {.Error} }
 				if .EOF   in event.flags { curr._impl.flags += {.EOF} }
 				curr._impl.result = event.data
+
+				// Remove refs to the list in case the operation would still block and `add_pending`
+				// is executed on it again.
+				curr._impl.prev = nil
+				curr._impl.next = nil
+
 				handle_completed(curr)
 			}
 		}
@@ -575,14 +580,14 @@ handle_completed :: proc(op: ^Operation) {
 	case .Send:
 		if send_exec(op) == .Done {
 			maybe_callback(op)
-			bufs_destroy(op.send.bufs, op.l.allocator)
+			bufs_delete(&op.send._impl.bufs, op.send.bufs, op.l.allocator)
 			cleanup(op)
 		}
 		return
 	case .Recv:
 		if recv_exec(op) == .Done {
 			maybe_callback(op)
-			bufs_destroy(op.recv.bufs, op.l.allocator)
+			bufs_delete(&op.recv._impl.bufs, op.recv.bufs, op.l.allocator)
 			cleanup(op)
 		}
 		return
@@ -739,6 +744,11 @@ poll_exec :: proc(op: ^Operation) -> Op_Result {
 		return .Done
 	}
 
+	if .EOF in op._impl.flags {
+		op.poll.result = .Ready
+		return .Done
+	}
+
 	filter: kq.Filter
 	switch op.poll.event {
 	case .Receive: filter = .Read
@@ -778,10 +788,7 @@ send_exec :: proc(op: ^Operation) -> Op_Result {
 		return .Done
 	}
 
-	total: int
-	bufs := slice.advance_slices(op.send.bufs, op.send.sent)
-	bufs, total = constraint_bufs_to_max_rw(op.send.bufs)
-
+	bufs, total := bufs_to_process(&op.send._impl.bufs, op.send.bufs, op.send.sent)
 	sock, n := sendv(op.send.socket, bufs, op.send.endpoint)
 	if n < 0 {
 		if posix.errno() == .EWOULDBLOCK {
@@ -803,7 +810,7 @@ send_exec :: proc(op: ^Operation) -> Op_Result {
 
 	op.send.sent += n
 
-	if op.send.sent < total {
+	if n < total {
 		return send_exec(op)
 	}
 
@@ -840,10 +847,7 @@ recv_exec :: proc(op: ^Operation) -> Op_Result {
 		return .Done
 	}
 
-	total: int
-	bufs := slice.advance_slices(op.recv.bufs, op.recv.received)
-	bufs, total = constraint_bufs_to_max_rw(op.recv.bufs)
-
+	bufs, total := bufs_to_process(&op.recv._impl.bufs, op.recv.bufs, op.recv.received)
 	_, is_tcp := op.recv.socket.(net.TCP_Socket)
 
 	sock, n := recvv(op.recv.socket, bufs, &op.recv.source)
@@ -870,7 +874,7 @@ recv_exec :: proc(op: ^Operation) -> Op_Result {
 	assert(is_tcp || op.recv.received == 0)
 	op.recv.received += n
 
-	if is_tcp && n != 0 && op.recv.received < total {
+	if is_tcp && n != 0 && n < total {
 		return recv_exec(op)
 	}
 
@@ -1161,6 +1165,8 @@ stat_exec :: proc(op: ^Operation) {
 
 add_pending :: proc(op: ^Operation, filter: kq.Filter, ident: uintptr) {
 	debug("adding pending", op.type)
+	assert(op._impl.next == nil)
+	assert(op._impl.prev == nil)
 	op._impl.flags += {.For_Kernel}
 
 	_, val, just_inserted, err := map_entry(&op.l.submitted, Queue_Identifier{ ident = ident, filter = filter })
@@ -1187,7 +1193,7 @@ add_pending :: proc(op: ^Operation, filter: kq.Filter, ident: uintptr) {
 }
 
 append_pending :: #force_inline proc(l: ^Event_Loop, ev: kq.KEvent) {
-	if !sa.append(&l.pending, ev) {
+	if append(&l.pending, ev) == 0 {
 		warn("queue is full, adding to overflow, should QUEUE_SIZE be increased?")
 		_, err := queue.append(&l.overflow, ev)
 		ensure(err == nil, "allocation failure")
@@ -1324,7 +1330,7 @@ timeout_and_delete :: proc(target: ^Operation) {
 				flags  = {.Add, .Enable, .One_Shot},
 				udata  = target._impl.next,
 			}
-			if !sa.append(&target.l.pending, ev) {
+			if append(&target.l.pending, ev) == 0 {
 				warn("just removed the head operation of a list of multiple, and the queue is full, have to force this update through inefficiently")
 				// This has to happen the next time we submit or we could have udata pointing wrong.
 				// Very inefficient but probably never hit.

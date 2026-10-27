@@ -16,8 +16,6 @@ package math_big
 */
 
 import "base:intrinsics"
-import "core:mem"
-import "core:os"
 
 /*
 	This version of `itoa` allocates on behalf of the caller. The caller must free the string.
@@ -144,7 +142,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 		written = len(buffer) - available
 		if written < size {
 			diff := size - written
-			mem.copy(&buffer[0], &buffer[diff], written)
+			intrinsics.mem_copy(&buffer[0], &buffer[diff], written)
 		}
 		return written, nil
 	}
@@ -177,7 +175,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 		written = len(buffer) - available
 		if written < size {
 			diff := size - written
-			mem.copy(&buffer[0], &buffer[diff], written)
+			intrinsics.mem_copy(&buffer[0], &buffer[diff], written)
 		}
 		return written, nil
 	}
@@ -218,7 +216,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 		written = len(buffer) - available
 		if written < size {
 			diff := size - written
-			mem.copy(&buffer[0], &buffer[diff], written)
+			intrinsics.mem_copy(&buffer[0], &buffer[diff], written)
 		}
 		return written, nil
 	}
@@ -228,7 +226,7 @@ int_itoa_raw :: proc(a: ^Int, radix: i8, buffer: []u8, size := int(-1), zero_ter
 	//               If we optimize `itoa` further, this needs to be evaluated.
 	itoa_method := _itoa_raw_full
 
-	when !MATH_BIG_FORCE_32_BIT && ODIN_OPTIMIZATION_MODE >= .Size {
+	when ODIN_OPTIMIZATION_MODE >= .Size {
 		if count >= 32768 {
 			itoa_method = _itoa_raw_old
 		}
@@ -279,36 +277,115 @@ int_atoi :: proc(res: ^Int, input: string, radix := i8(10), allocator := context
 	/*
 		Process each digit of the string.
 	*/
+
 	ch: rune
-	for len(input) > 0 {
-		/* if the radix <= 36 the conversion is case insensitive
-		 * this allows numbers like 1AB and 1ab to represent the same value
-		 * [e.g. in hex]
+
+	if platform_int_is_power_of_two(int(radix)) {
+
+		/*
+			For power-of-two bases, pack several digits into one native limb at once.
+			This reduces the number of bigint multiply/add steps by a factor of roughly
+			_DIGIT_BITS / log2(radix), while also preallocating the accumulator to avoid
+			excessive reallocations on large hex inputs.
 		*/
 
-		ch = rune(input[0])
-		if radix <= 36 && ch >= 'a' && ch <= 'z' {
-			ch -= 32 // 'a' - 'A'
+		bits_per_digit := 0
+		power_of_two := DIGIT(radix)
+		for power_of_two > 1 {
+			power_of_two >>= 1
+			bits_per_digit += 1
+		}
+		
+		/*
+			Ex.: Radix 16
+			-> 4 bits per digit
+			-> can fit 15 hex digits from the input into one 63-bit DIGIT
+		*/
+		digits_per_chunk := _DIGIT_BITS / bits_per_digit
+		assert(digits_per_chunk > 1, "Optimized path was expecting to fit multiple input digits into one DIGIT. Did the allowed radix range change (2..64)?")
+
+		/*
+			Preallocate everything at once.
+			The number of DIGIT elements is: ceildiv(len(input), chunk_digits)
+		*/
+		internal_grow(res, max(1, (len(input) + digits_per_chunk - 1) / digits_per_chunk)) or_return
+
+		chunk_value: DIGIT
+		chunk_count := 0  // Number of input digits we have already processed in the current chunk_value DIGIT
+		for len(input) > 0 {
+			ch = rune(input[0])
+			if radix <= 36 && ch >= 'a' && ch <= 'z' {
+				ch -= 32
+			}
+
+			pos := ch - '+'
+			if RADIX_TABLE_REVERSE_SIZE <= u32(pos) {
+				break
+			}
+			y := RADIX_TABLE_REVERSE[pos]
+			if y >= u8(radix) {
+				break
+			}
+
+			chunk_value = (chunk_value << uint(bits_per_digit)) | DIGIT(y)
+			chunk_count += 1
+			input = input[1:]
+
+			if chunk_count == digits_per_chunk || len(input) == 0 {
+				// Submit chunk.
+				// NOTE(bplu4t2f): Maybe this could be optimized further. For any given input digit,
+				//                 we can predict exactly where it will go in the output, eliminating
+				//                 the need for shl + add.
+				if res.used == 0 {
+					internal_set(res, chunk_value) or_return
+				} else {
+					internal_shl(res, res, bits_per_digit * chunk_count) or_return
+					internal_add(res, res, chunk_value) or_return
+				}
+				chunk_value = 0
+				chunk_count = 0
+			}
 		}
 
-		pos := ch - '+'
-		if RADIX_TABLE_REVERSE_SIZE <= u32(pos) {
-			break
-		}
-		y := RADIX_TABLE_REVERSE[pos]
-		/* if the char was found in the map
-		 * and is less than the given radix add it
-		 * to the number, otherwise exit the loop.
-		 */
-		if y >= u8(radix) {
-			break
-		}
+	} else {
 
-		internal_mul(res, res, DIGIT(radix)) or_return
-		internal_add(res, res, DIGIT(y))     or_return
+		/*
+			Path for non-power-of-two bases.
+		*/
 
-		input = input[1:]
+		for len(input) > 0 {
+			/*
+				if the radix <= 36 the conversion is case insensitive
+				this allows numbers like 1AB and 1ab to represent the same value
+				[e.g. in hex]
+			*/
+
+			ch = rune(input[0])
+			if radix <= 36 && ch >= 'a' && ch <= 'z' {
+				ch -= 32 // 'a' - 'A'
+			}
+
+			pos := ch - '+'
+			if RADIX_TABLE_REVERSE_SIZE <= u32(pos) {
+				break
+			}
+			y := RADIX_TABLE_REVERSE[pos]
+			/*
+				if the char was found in the map
+				and is less than the given radix add it
+				to the number, otherwise exit the loop.
+			*/
+			if y >= u8(radix) {
+				break
+			}
+
+			internal_mul(res, res, DIGIT(radix)) or_return
+			internal_add(res, res, DIGIT(y))     or_return
+
+			input = input[1:]
+		}
 	}
+
 	/*
 		If an illegal character was found, fail.
 	*/
@@ -386,64 +463,7 @@ radix_size :: proc(a: ^Int, radix: i8, zero_terminate := false, allocator := con
 	return size, nil
 }
 
-/*
-	We might add functions to read and write byte-encoded Ints from/to files, using `int_to_bytes_*` functions.
 
-	LibTomMath allows exporting/importing to/from a file in ASCII, but it doesn't support a much more compact representation in binary, even though it has several pack functions int_to_bytes_* (which I expanded upon and wrote Python interoperable versions of as well), and (un)pack, which is GMP compatible.
-	Someone could implement their own read/write binary int procedures, of course.
-
-	Could be worthwhile to add a canonical binary file representation with an optional small header that says it's an Odin big.Int, big.Rat or Big.Float, byte count for each component that follows, flag for big/little endian and a flag that says a checksum exists at the end of the file.
-	For big.Rat and big.Float the header couldn't be optional, because we'd have no way to distinguish where the components end.
-*/
-
-/*
-	Read an Int from an ASCII file.
-*/
-internal_int_read_from_ascii_file :: proc(a: ^Int, filename: string, radix := i8(10), allocator := context.allocator) -> (err: Error) {
-	context.allocator = allocator
-
-	/*
-		We can either read the entire file at once, or read a bunch at a time and keep multiplying by the radix.
-		For now, we'll read the entire file. Eventually we'll replace this with a copy that duplicates the logic
-		of `atoi` so we don't need to read the entire file.
-	*/
-
-	res, ok := os.read_entire_file(filename, allocator)
-	defer delete(res, allocator)
-
-	if !ok {
-		return .Cannot_Read_File
-	}
-
-	as := string(res)
-	return atoi(a, as, radix)
-}
-
-/*
-	Write an Int to an ASCII file.
-*/
-internal_int_write_to_ascii_file :: proc(a: ^Int, filename: string, radix := i8(10), allocator := context.allocator) -> (err: Error) {
-	context.allocator = allocator
-
-	/*
-		For now we'll convert the Int using itoa and writing the result in one go.
-		If we want to preserve memory we could duplicate the itoa logic and write backwards.
-	*/
-
-	as := itoa(a, radix) or_return
-	defer delete(as)
-
-	l := len(as)
-	assert(l > 0)
-
-	data := transmute([]u8)mem.Raw_Slice{
-		data = raw_data(as),
-		len  = l,
-	}
-
-	ok := os.write_entire_file(filename, data, truncate=true)
-	return nil if ok else .Cannot_Write_File
-}
 
 /*
 	Calculate the size needed for `internal_int_pack`.
@@ -698,7 +718,7 @@ _itoa_raw_full :: proc(a: ^Int, radix: i8, buffer: []u8, zero_terminate := false
 	written = len(buffer) - available
 	if written < len(buffer) {
 		diff := len(buffer) - written
-		mem.copy(&buffer[0], &buffer[diff], written)
+		intrinsics.mem_copy(&buffer[0], &buffer[diff], written)
 	}
 	return written, nil
 }
@@ -746,7 +766,7 @@ _itoa_raw_old :: proc(a: ^Int, radix: i8, buffer: []u8, zero_terminate := false,
 	written = len(buffer) - available
 	if written < len(buffer) {
 		diff := len(buffer) - written
-		mem.copy(&buffer[0], &buffer[diff], written)
+		intrinsics.mem_copy(&buffer[0], &buffer[diff], written)
 	}
 	return written, nil
 }

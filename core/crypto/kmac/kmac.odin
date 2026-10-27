@@ -32,9 +32,13 @@ sum :: proc(sec_strength: int, dst, msg, key, domain_sep: []byte) {
 }
 
 // verify will verify the KMAC tag computed with the specified security
-// strength, key and domain separator over msg and return true iff the
+// strength, key and domain separator over msg and return true if and only if (⟺) the
 // tag is valid.
 verify :: proc(sec_strength: int, tag, msg, key, domain_sep: []byte, allocator := context.temp_allocator) -> bool {
+	if len(tag) < MIN_TAG_SIZE {
+		return false
+	}
+
 	derived_tag := make([]byte, len(tag), allocator)
 	defer(delete(derived_tag))
 

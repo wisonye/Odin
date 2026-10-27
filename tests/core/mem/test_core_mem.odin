@@ -38,7 +38,7 @@ test_tlsf_bitscan :: proc(t: ^testing.T) {
 			testing.expectf(t, res == test.exp, "Expected tlsf.fls(0x%08x) == %v, got %v", test.v, test.exp, res)
 		case .fls_uint:
 			res := tlsf.fls_uint(test.v.?)
-			testing.expectf(t, res == test.exp, "Expected tlsf.fls_uint(0x%16x) == %v, got %v", test.v, test.exp, res)
+			testing.expectf(t, res == test.exp, "Expected tlsf.fls_uint(0x%016x) == %v, got %v", test.v, test.exp, res)
 		}
 	}
 }
@@ -55,6 +55,33 @@ test_align_bumping_block_limit :: proc(t: ^testing.T) {
 	data, err = virtual.arena_alloc(&a, 896, 64)
 	testing.expect_value(t, err, nil)
 	testing.expect(t, len(data) == 896)
+}
+
+@(test)
+test_large_minimum_block_size :: proc(t: ^testing.T) {
+	a: virtual.Arena
+	defer virtual.arena_destroy(&a)
+
+	init_err := virtual.arena_init_growing(&a, 16*mem.Megabyte)
+	testing.expect_value(t, init_err, nil)
+
+	align : uint = 4
+	for _ in 0..<6 {
+		data, err := virtual.arena_alloc(&a, 18874368, align)
+		testing.expect_value(t, err, nil)
+		testing.expect(t, len(data) == 18874368)
+		testing.expect(t, uintptr(raw_data(data)) & uintptr(align-1) == 0)
+		align *= 2
+		virtual.arena_free_all(&a)
+	}
+
+	align = 4
+	for _ in 0..<32 {
+		data, err := virtual.arena_alloc(&a, 1048576, align)
+		testing.expect_value(t, err, nil)
+		testing.expect(t, len(data) == 1048576)
+		testing.expect(t, uintptr(raw_data(data)) & uintptr(align-1) == 0)
+	}
 }
 
 @(test)
@@ -294,6 +321,56 @@ test_buddy :: proc(t: ^testing.T) {
 	mem.buddy_allocator_init(&ba, buf[delta:delta+N/2], size_of(mem.Buddy_Block))
 	basic_sanity_test(t, mem.buddy_allocator(&ba), N / 16)
 	basic_sanity_test(t, mem.buddy_allocator(&ba), N / 16)
+}
+
+@test
+test_scratch_memory_reuse :: proc(t: ^testing.T) {
+	SIZE :: 8192
+
+	sa : mem.Scratch_Allocator
+
+	// The scratch allocator should not use the backing allocator, since all
+	// allocation sizes are less than SIZE.
+	mem.scratch_init(&sa, SIZE)
+	defer mem.scratch_destroy(&sa)
+
+	a, a_err := mem.scratch_alloc_bytes(&sa, 4096)
+	testing.expect(t, a_err == nil)
+
+	b, b_err := mem.scratch_alloc_bytes(&sa, 2048)
+	testing.expect(t, b_err == nil)
+
+	// Will cause a memory reset, reusing the backing memory at offset 0.
+	c, c_err := mem.scratch_alloc_bytes(&sa, 4096)
+	testing.expect(t, c_err == nil)
+
+	fail_if_allocations_overlap(t, a, b)
+	testing.expect(t, raw_data(a) == raw_data(c), "Memory not reused")
+	testing.expect(t, len(sa.leaked_allocations) == 0, "Backing allocator used")
+}
+
+@test
+test_scratch_backing_allocator :: proc(t: ^testing.T) {
+	SIZE :: 8192
+
+	sa : mem.Scratch_Allocator
+	mem.scratch_init(&sa, SIZE)
+	defer mem.scratch_destroy(&sa)
+
+	// Will be allocated in the scratch memory
+	a, a_err := mem.scratch_alloc(&sa, 4096)
+	testing.expect(t, a_err == nil)
+
+	// Will be allocated by the backing allocator
+	b, b_err := mem.scratch_alloc(&sa, 8193)
+	testing.expect(t, b_err == nil)
+
+	testing.expect(t, a == raw_data(sa.data))
+	testing.expect(
+		t,
+		len(sa.leaked_allocations) == 1 && raw_data(sa.leaked_allocations[0]) == b,
+		"Backing allocator not used",
+	)
 }
 
 @test

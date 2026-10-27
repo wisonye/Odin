@@ -213,7 +213,7 @@ rt_sigreturn :: proc "c" () -> ! {
 /*
 	Alter an action taken by a process.
 */
-rt_sigaction :: proc "contextless" (sig: Signal, sigaction: ^Sig_Action($T), old_sigaction: ^Sig_Action($U)) -> Errno {
+rt_sigaction :: proc "contextless" (sig: Signal, sigaction: ^Sig_Action, old_sigaction: ^Sig_Action) -> Errno {
 	// NOTE(jason): It appears that the restorer is required for i386 and amd64
 	when ODIN_ARCH == .i386 || ODIN_ARCH == .amd64 {
 		sigaction.flags += {.RESTORER}
@@ -419,7 +419,15 @@ dup :: proc "contextless" (fd: Fd) -> (Fd, Errno) {
 dup2 :: proc "contextless" (old: Fd, new: Fd) -> (Fd, Errno) {
 	when ODIN_ARCH == .arm64 || ODIN_ARCH == .riscv64 {
 		ret := syscall(SYS_dup3, old, new, 0)
-		return errno_unwrap(ret, Fd)
+
+		// Differences between dup2 and dup3 are:
+		//   - dup3 takes a flags argument
+		//   - dup2 does not return EINVAL
+		fd, errno := errno_unwrap(ret, Fd)
+		if errno == .EINVAL {
+			errno = .NONE
+		}
+		return fd, errno
 	} else {
 		ret := syscall(SYS_dup2, old, new)
 		return errno_unwrap(ret, Fd)
@@ -2207,7 +2215,7 @@ when ODIN_ARCH == .amd64 || ODIN_ARCH == .i386 {
 	Available since Linux 1.0.
 */
 adjtimex :: proc "contextless" (buf: ^Timex) -> (Clock_State, Errno) {
-	ret := syscall(SYS_adjtimex)
+	ret := syscall(SYS_adjtimex, buf)
 	return errno_unwrap(ret, Clock_State)
 }
 
@@ -2523,6 +2531,7 @@ time :: proc "contextless" (tloc: ^uint) -> (Errno) {
 /*
 	Wait on a futex until it's signaled.
 */
+@(futex=.Wait)
 futex_wait :: proc "contextless" (futex: ^Futex, op: Futex_Wait_Type, flags: Futex_Flags, val: u32, timeout: ^Time_Spec = nil) -> (Errno) {
 	futex_flags := cast(u32) op + transmute(u32) flags
 	ret := syscall(SYS_futex, futex, futex_flags, val, timeout)
@@ -2533,6 +2542,7 @@ futex_wait :: proc "contextless" (futex: ^Futex, op: Futex_Wait_Type, flags: Fut
 	Wake up other threads on a futex
 	n_wakeup specifies the number of processes to wakeup. Specify max(i32) to wake up all processes waiting
 */
+@(futex=.Wake)
 futex_wake :: proc "contextless" (futex: ^Futex, op: Futex_Wake_Type, flags: Futex_Flags, n_wakeup: i32) -> (int, Errno) {
 	futex_flags := cast(u32) op + transmute(u32) flags
 	ret := syscall(SYS_futex, futex, futex_flags, n_wakeup)
@@ -2581,6 +2591,7 @@ futex_wake_op :: proc "contextless" (futex: ^Futex, op: Futex_Wake_Op_Type, flag
 /*
 	Same as wait, but mask specifies bits that must be equal for the mutex to wake up.
 */
+@(futex=.Wait)
 futex_wait_bitset :: proc "contextless" (futex: ^Futex, op: Futex_Wait_Bitset_Type, flags: Futex_Flags, val: u32,
 	timeout: ^Time_Spec, mask: u32) -> (int, Errno) {
 	futex_flags := cast(u32) op + transmute(u32) flags
@@ -2591,6 +2602,7 @@ futex_wait_bitset :: proc "contextless" (futex: ^Futex, op: Futex_Wait_Bitset_Ty
 /*
 	Wake up on bitset.
 */
+@(futex=.Wake)
 futex_wake_bitset :: proc "contextless" (futex: ^Futex, op: Futex_Wake_Bitset_Type, flags: Futex_Flags, n_wakeup: u32, mask: u32) -> (int, Errno) {
 	futex_flags := cast(u32) op + transmute(u32) flags
 	ret := syscall(SYS_futex, futex, futex_flags, n_wakeup, 0, 0, mask)
@@ -2616,9 +2628,9 @@ futex :: proc{
 	If you are running on a system with less than 128 cores you can use `linux.Cpu_Set` as the type for the mask argument.
 	Otherwise use an array of integers.
 */
-sched_setaffinity :: proc "contextless" (pid: Pid, cpusetsize: uint, mask: rawptr) -> (Errno) {
+sched_setaffinity :: proc "contextless" (pid: Pid, cpusetsize: uint, mask: rawptr) -> (int, Errno) {
 	ret := syscall(SYS_sched_setaffinity, pid, cpusetsize, mask)
-	return Errno(-ret)
+	return errno_unwrap(ret, int)
 }
 
 /*
@@ -2628,9 +2640,9 @@ sched_setaffinity :: proc "contextless" (pid: Pid, cpusetsize: uint, mask: rawpt
 	If you are running on a system with less than 128 cores you can use `linux.Cpu_Set` as the type for the mask argument.
 	Otherwise use an array of integers.
 */
-sched_getaffinity :: proc "contextless" (pid: Pid, cpusetsize: uint, mask: rawptr) -> (Errno) {
+sched_getaffinity :: proc "contextless" (pid: Pid, cpusetsize: uint, mask: rawptr) -> (int, Errno) {
 	ret := syscall(SYS_sched_getaffinity, pid, cpusetsize, mask)
-	return Errno(-ret)
+	return errno_unwrap(ret, int)
 }
 
 // TODO(flysand): set_thread_area

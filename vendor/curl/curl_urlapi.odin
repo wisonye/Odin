@@ -38,6 +38,7 @@ Ucode :: enum c.int {
 	E_BAD_USER,            /* 29 */
 	E_LACKS_IDN,           /* 30 */
 	E_TOO_LARGE,           /* 31 */
+	E_BACKSLASH,
 }
 
 UPart :: enum c.int {
@@ -130,7 +131,7 @@ foreign lib {
 	 * error code. The passed in string will be copied. Passing a NULL instead of
 	 * a part string, clears that part.
 	 */
-	url_set :: proc(handle: ^CURLU, what: ^UPart, part: cstring, flags: UFlags) -> Ucode ---
+	url_set :: proc(handle: ^CURLU, what: UPart, part: cstring, flags: UFlags) -> Ucode ---
 
 	/*
 	 * curl_url_strerror() turns a CURLUcode value into the equivalent human

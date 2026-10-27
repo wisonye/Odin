@@ -11,11 +11,11 @@ when ODIN_OS == .Windows {
 	foreign import zlib "system:z"
 }
 
-VERSION         :: "1.2.12"
-VERNUM          :: 0x12c0
+VERSION         :: "1.3.2"
+VERNUM          :: 0x1320
 VER_MAJOR       :: 1
-VER_MINOR       :: 2
-VER_REVISION    :: 12
+VER_MINOR       :: 3
+VER_REVISION    :: 2
 VER_SUBREVISION :: 0
 
 voidp           :: rawptr
@@ -149,7 +149,9 @@ foreign zlib {
 	deflateParams        :: proc(strm: z_streamp, level, strategy: c.int) -> c.int ---
 	deflateTune          :: proc(strm: z_streamp, good_length, max_lazy, nice_length, max_chain: c.int) -> c.int ---
 	deflateBound         :: proc(strm: z_streamp, sourceLen: uLong) -> uLong ---
+	deflateBound_z       :: proc(strm: z_streamp, sourceLen: size_t) -> size_t ---
 	deflatePending       :: proc(strm: z_streamp, pending: [^]c.uint, bits: [^]c.int) -> c.int ---
+	deflateUsed          :: proc(strm: z_streamp, bits: ^c.int) -> c.int ---
 	deflatePrime         :: proc(strm: z_streamp, bits, value: c.int) -> c.int ---
 	deflateSetHeader     :: proc(strm: z_streamp, head: gz_headerp) -> c.int ---
 	inflateSetDictionary :: proc(strm: z_streamp, dictionary: [^]Bytef, dictLength: uInt) -> c.int ---
@@ -165,10 +167,15 @@ foreign zlib {
 	inflateBackEnd       :: proc(strm: z_streamp) -> c.int ---
 	zlibCompileFlags     :: proc() -> uLong ---
 	compress             :: proc(dest: [^]Bytef, destLen: ^uLongf, source: [^]Bytef, sourceLen: uLong) -> c.int ---
+	compress_z           :: proc(dest: [^]Bytef, destLen: ^size_t, source: [^]Bytef, sourceLen: size_t) -> c.int ---
 	compress2            :: proc(dest: [^]Bytef, destLen: ^uLongf, source: [^]Bytef, sourceLen: uLong, level: c.int) -> c.int ---
+	compress2_z          :: proc(dest: [^]Bytef, destLen: ^size_t, source: [^]Bytef, sourceLen: size_t, level: c.int) -> c.int ---
 	compressBound        :: proc(sourceLen: uLong) -> uLong ---
+	compressBound_z      :: proc(sourceLen: size_t) -> size_t ---
 	uncompress           :: proc(dest: [^]Bytef, destLen: ^uLongf, source: [^]Bytef, sourceLen: uLong) -> c.int ---
+	uncompress_z         :: proc(dest: [^]Bytef, destLen: ^size_t, source: [^]Bytef, sourceLen: size_t) -> c.int ---
 	uncompress2          :: proc(dest: [^]Bytef, destLen: ^uLongf, source: [^]Bytef, sourceLen: ^uLong) -> c.int ---
+	uncompress2_z        :: proc(dest: [^]Bytef, destLen: ^size_t, source: [^]Bytef, sourceLen: ^size_t) -> c.int ---
 	gzdopen              :: proc(fd: c.int, mode: cstring) -> gzFile ---
 	gzbuffer             :: proc(file: gzFile, size: c.uint) -> c.int ---
 	gzsetparams          :: proc(file: gzFile, level, strategy: c.int) -> c.int ---
@@ -222,7 +229,7 @@ foreign zlib {
 @(default_calling_convention="c")
 foreign zlib {
 	deflateInit_         :: proc(strm: z_streamp, level: c.int, version: cstring, stream_size: c.int) -> c.int ---
-	inflateInit_         :: proc(strm: z_streamp, level: c.int, version: cstring, stream_size: c.int) -> c.int ---
+	inflateInit_         :: proc(strm: z_streamp, version: cstring, stream_size: c.int) -> c.int ---
 	deflateInit2_        :: proc(strm: z_streamp, level, method, windowBits, memLevel, strategy: c.int, version: cstring, stream_size: c.int) -> c.int ---
 	inflateInit2_        :: proc(strm: z_streamp, windowBits: c.int, version: cstring, stream_size: c.int) -> c.int ---
 	inflateBackInit_     :: proc(strm: z_streamp, windowBits: c.int, window: [^]c.uchar, version: cstring, stream_size: c.int) -> c.int ---
@@ -236,8 +243,8 @@ deflateInit :: #force_inline proc "c" (strm: z_streamp, level: c.int) -> c.int {
 	return deflateInit_(strm, level, VERSION, c.int(size_of(z_stream)))
 }
 
-inflateInit :: #force_inline proc "c" (strm: z_streamp, level: c.int) -> c.int {
-	return inflateInit_(strm, level, VERSION, c.int(size_of(z_stream)))
+inflateInit :: #force_inline proc "c" (strm: z_streamp) -> c.int {
+	return inflateInit_(strm, VERSION, c.int(size_of(z_stream)))
 }
 
 deflateInit2 :: #force_inline proc "c" (strm: z_streamp, level, method, windowBits, memLevel, strategy: c.int) -> c.int {

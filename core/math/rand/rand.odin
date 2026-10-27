@@ -4,7 +4,6 @@ package rand
 import "base:intrinsics"
 import "base:runtime"
 import "core:math"
-import "core:mem"
 
 Generator :: runtime.Random_Generator
 
@@ -562,7 +561,7 @@ uint_max :: proc(n: uint, gen := context.random_generator) -> (val: uint) {
 Generates a random unsigned 32 bit value in the range `[lo, hi)` using the provided random number generator. If no generator is provided the global random number generator will be used.
 
 Inputs:
-- lo: The lower bound of the generated number, this value is inclusice
+- lo: The lower bound of the generated number, this value is inclusive
 - hi: The upper bound of the generated number, this value is exclusive
 
 Returns:
@@ -1031,11 +1030,11 @@ Returns:
 - err: An allocator error if one occured, `nil` otherwise
 
 Example:
+	import "base:runtime"
 	import "core:math/rand"
-	import "core:mem"
 	import "core:fmt"
 
-	perm_example :: proc() -> (err: mem.Allocator_Error) {
+	perm_example :: proc() -> (err: runtime.Allocator_Error) {
 		data := rand.perm(4) or_return
 		fmt.println(data)
 		defer delete(data, context.allocator)
@@ -1045,12 +1044,12 @@ Example:
 
 Possible Output:
 
-	[7201011, 3, 9123, 231131]
-	[19578, 910081, 131, 7]
+	[3, 2, 0, 1]
+	[1, 0, 2, 3]
 
 */
 @(require_results)
-perm :: proc(n: int, allocator := context.allocator, gen := context.random_generator) -> (res: []int, err: mem.Allocator_Error) #optional_allocator_error {
+perm :: proc(n: int, allocator := context.allocator, gen := context.random_generator) -> (res: []int, err: runtime.Allocator_Error) #optional_allocator_error {
 	m := make([]int, n, allocator) or_return
 	for i := 0; i < n; i += 1 {
 		j := int_max(i+1, gen)
@@ -1155,7 +1154,7 @@ choice_enum :: proc($T: typeid, gen := context.random_generator) -> T where intr
 		}
 	} else {
 		values := runtime.type_info_base(type_info_of(T)).variant.(runtime.Type_Info_Enum).values
-		return T(choice(values))
+		return T(choice(values, gen))
 	}
 }
 

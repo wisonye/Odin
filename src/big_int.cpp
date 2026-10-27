@@ -16,14 +16,25 @@ void MP_FREE(void *mem, size_t size) {
 #else
 
 void *MP_MALLOC(size_t size) {
-	return gb_alloc(permanent_allocator(), cast(isize)size);
+	Arena *arena = get_arena(ThreadArena_Permanent);
+	return arena_alloc(arena, cast(isize)size, 16);
 }
 void *MP_REALLOC(void *mem, size_t oldsize, size_t newsize) {
-	return gb_resize(permanent_allocator(), mem, cast(isize)oldsize, cast(isize)newsize);
+	if (newsize < oldsize) {
+		return mem;
+	}
+	if (newsize == 0) {
+		return mem;
+	}
+	Arena *arena = get_arena(ThreadArena_Permanent);
+	void *new_mem = arena_alloc(arena, cast(isize)newsize, 16);
+	gb_memcopy(new_mem, mem, oldsize);
+	return new_mem;
 }
 void *MP_CALLOC(size_t nmemb, size_t size) {
-	size_t total = nmemb*size;
-	return gb_alloc(permanent_allocator(), cast(isize)total);
+	Arena *arena = get_arena(ThreadArena_Permanent);
+	isize total_size = cast(isize)(nmemb * size);
+	return arena_alloc(arena, total_size, 16);
 }
 void MP_FREE(void *mem, size_t size) {
 	// DO NOTHING
@@ -45,6 +56,8 @@ gb_internal void big_int_from_string(BigInt *dst, String const &s, bool *success
 gb_internal void big_int_dealloc(BigInt *dst) {
 	mp_clear(dst);
 }
+
+gb_internal bool big_int_can_be_represented_in_64_bits(BigInt const *x);
 
 gb_internal BigInt big_int_make(BigInt const *b, bool abs=false);
 gb_internal BigInt big_int_make_abs(BigInt const *b);
@@ -87,20 +100,15 @@ gb_internal void big_int_rem_eq(BigInt *dst, BigInt const *x);
 gb_internal bool big_int_is_neg(BigInt const *x);
 gb_internal void big_int_neg(BigInt *dst, BigInt const *x);
 
+// NOTE: libtommath allows the output to alias an input, so `dst` is not copied first
 gb_internal void big_int_add_eq(BigInt *dst, BigInt const *x) {
-	BigInt res = {};
-	big_int_init(&res, dst);
-	big_int_add(dst, &res, x);
+	big_int_add(dst, dst, x);
 }
 gb_internal void big_int_sub_eq(BigInt *dst, BigInt const *x) {
-	BigInt res = {};
-	big_int_init(&res, dst);
-	big_int_sub(dst, &res, x);
+	big_int_sub(dst, dst, x);
 }
 gb_internal void big_int_shl_eq(BigInt *dst, BigInt const *x) {
-	BigInt res = {};
-	big_int_init(&res, dst);
-	big_int_shl(dst, &res, x);
+	big_int_shl(dst, dst, x);
 }
 gb_internal void big_int_shr_eq(BigInt *dst, BigInt const *x) {
 	BigInt res = {};
@@ -108,9 +116,7 @@ gb_internal void big_int_shr_eq(BigInt *dst, BigInt const *x) {
 	big_int_shr(dst, &res, x);
 }
 gb_internal void big_int_mul_eq(BigInt *dst, BigInt const *x) {
-	BigInt res = {};
-	big_int_init(&res, dst);
-	big_int_mul(dst, &res, x);
+	big_int_mul(dst, dst, x);
 }
 gb_internal void big_int_quo_eq(BigInt *dst, BigInt const *x) {
 	BigInt res = {};
@@ -197,9 +203,12 @@ gb_internal void big_int_from_string(BigInt *dst, String const &s, bool *success
 
 	BigInt b = {};
 	big_int_from_u64(&b, base);
+	defer (big_int_dealloc(&b));
+
 	mp_zero(dst);
 
 	isize i = 0;
+	isize digit_count = 0;
 	for (; i < len; i++) {
 		Rune r = cast(Rune)text[i];
 
@@ -223,19 +232,42 @@ gb_internal void big_int_from_string(BigInt *dst, String const &s, bool *success
 				*success = false;
 			}
 			break;
+		} else {
+			digit_count += 1;
 		}
-		BigInt val = big_int_make_u64(v);
-		big_int_mul_eq(dst, &b);
-		big_int_add_eq(dst, &val);
+
+		mp_mul_d(dst, cast(mp_digit)base, dst);
+		mp_add_d(dst, cast(mp_digit)v, dst);
+	}
+	if (digit_count == 0) {
+		// a base prefix with only digit separators after it, `0x_`, has no digits at all
+		*success = false;
+		return;
 	}
 	if (i < len && (text[i] == 'e' || text[i] == 'E')) {
 		i += 1;
-		GB_ASSERT(base == 10);
-		GB_ASSERT(text[i] != '-');
+		if (base != 10) {
+			// An exponent is only meaningful for a base 10 literal.
+			*success = false;
+			return;
+		}
+		if (i >= len) {
+			// Nothing follows the exponent marker.
+			*success = false;
+			return;
+		}
+		if (text[i] == '-') {
+			// A negative exponent is never an integer.
+			// The caller is expected to parse the value as a float instead.
+			*success = false;
+			return;
+		}
 		if (text[i] == '+') {
 			i += 1;
 		}
+
 		u64 exp = 0;
+		isize exp_digits = 0;
 		for (; i < len; i++) {
 			char r = cast(char)text[i];
 			if (r == '_') {
@@ -246,13 +278,26 @@ gb_internal void big_int_from_string(BigInt *dst, String const &s, bool *success
 				v = u64_digit_value(r);
 			} else {
 				*success = false;
-				break;
+				return;
 			}
 			exp *= 10;
 			exp += v;
+			exp_digits += 1;
 		}
+		if (exp_digits == 0) {
+			*success = false;
+			return;
+		}
+
+		// NOTE(bill): Just limit the maximum exponent to bigger than the actual maximum to allow for keeping overflows
+		if (exp > 512) {
+			*success = false;
+			return;
+		}
+
 		BigInt tmp = {};
 		mp_init(&tmp);
+		defer (big_int_dealloc(&tmp));
 		big_int_exp_u64(&tmp, &b, exp, success);
 		big_int_mul_eq(dst, &tmp);
 	}
@@ -263,6 +308,10 @@ gb_internal void big_int_from_string(BigInt *dst, String const &s, bool *success
 }
 
 
+
+gb_internal bool big_int_can_be_represented_in_64_bits(BigInt const *x) {
+	return mp_count_bits(x) <= 64;
+}
 
 gb_internal u64 big_int_to_u64(BigInt const *x) {
 	GB_ASSERT(x->sign == 0);
@@ -318,9 +367,15 @@ gb_internal void big_int_shl(BigInt *dst, BigInt const *x, BigInt const *y) {
 
 gb_internal void big_int_shr(BigInt *dst, BigInt const *x, BigInt const *y) {
 	u32 yy = mp_get_u32(y);
-	BigInt d = {};
-	mp_div_2d(x, yy, dst, &d);
-	big_int_dealloc(&d);
+
+	BigInt rem = {};
+	defer (mp_clear(&rem));
+
+	mp_div_2d(x, yy, dst, &rem);
+
+	if (mp_isneg(x) && !mp_iszero(&rem)) {
+		mp_sub_d(dst, 1, dst);
+	}
 }
 
 gb_internal void big_int_mul_u64(BigInt *dst, BigInt const *x, u64 y) {
@@ -396,6 +451,14 @@ gb_internal void big_int_rem(BigInt *z, BigInt const *x, BigInt const *y) {
 	big_int_quo_rem(x, y, &q, z);
 	big_int_dealloc(&q);
 }
+gb_internal void big_int_mod_mod(BigInt *z, BigInt const *x, BigInt const *y) {
+	BigInt q = {};
+	big_int_rem(&q, x, y);
+	big_int_add(&q, &q, y);
+	big_int_rem(z, &q, y);
+	big_int_dealloc(&q);
+
+}
 
 gb_internal void big_int_euclidean_mod(BigInt *z, BigInt const *x, BigInt const *y) {
 	BigInt y0 = {};
@@ -420,7 +483,8 @@ gb_internal void big_int_and(BigInt *dst, BigInt const *x, BigInt const *y) {
 
 gb_internal void big_int_and_not(BigInt *dst, BigInt const *x, BigInt const *y) {
 	if (mp_iszero(x)) {
-		big_int_init(dst, y);
+		// 0 &~ y == 0 & ~y == 0
+		big_int_from_i64(dst, 0);
 		return;
 	}
 	if (mp_iszero(y)) {
@@ -436,13 +500,13 @@ gb_internal void big_int_and_not(BigInt *dst, BigInt const *x, BigInt const *y) 
 			mp_decr(&x1);
 			mp_decr(&y1);
 
-			BigInt ny1 = {};
-			mp_complement(&y1, &ny1);
-			mp_and(&x1, &ny1, dst);
+			BigInt nx1 = {};
+			mp_complement(&x1, &nx1);
+			mp_and(&y1, &nx1, dst);
 
 			big_int_dealloc(&x1);
 			big_int_dealloc(&y1);
-			big_int_dealloc(&ny1);
+			big_int_dealloc(&nx1);
 			return;
 		}
 
@@ -463,6 +527,7 @@ gb_internal void big_int_and_not(BigInt *dst, BigInt const *x, BigInt const *y) 
 		BigInt z1 = {};
 		big_int_or(&z1, &x1, &y1);
 		mp_add_d(&z1, 1, dst);
+		big_int_neg(dst, dst);
 
 		big_int_dealloc(&x1);
 		big_int_dealloc(&y1);
@@ -572,6 +637,27 @@ gb_internal String big_int_to_string(gbAllocator allocator, BigInt const *x, u64
 		return make_string(buf, 1);
 	}
 
+	if (mp_count_bits(x) <= 64) {
+		u64 magnitude = mp_get_mag_u64(x);
+		char digits[64];
+		isize digit_count = 0;
+		do {
+			digits[digit_count++] = digit_to_char(cast(u8)(magnitude % base));
+			magnitude /= base;
+		} while (magnitude != 0);
+
+		isize len = digit_count + (x->sign != MP_ZPOS ? 1 : 0);
+		u8 *text = gb_alloc_array(allocator, u8, len);
+		isize i = 0;
+		if (x->sign != MP_ZPOS) {
+			text[i++] = '-';
+		}
+		while (digit_count > 0) {
+			text[i++] = digits[--digit_count];
+		}
+		return make_string(text, len);
+	}
+
 	Array<char> buf = {};
 	array_init(&buf, allocator, 0, 32);
 
@@ -625,7 +711,9 @@ gb_internal String big_int_to_string(gbAllocator allocator, BigInt const *x, u64
 		big_int_dealloc(&r);
 		big_int_dealloc(&b);
 
-		for (isize i = first_word_idx; i < buf.count/2; i++) {
+		// NOTE: only the digits are reversed, not the leading '-'. 
+		isize digit_count = buf.count - first_word_idx;
+		for (isize i = first_word_idx; i < first_word_idx + digit_count/2; i++) {
 			isize j = buf.count + first_word_idx - i - 1;
 			char tmp = buf[i];
 			buf[i] = buf[j];

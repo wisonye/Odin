@@ -1,6 +1,6 @@
 // Generates Documentation
 
-gb_global int print_entity_kind_ordering[Entity_Count] = {
+gb_global int print_entity_kind_ordering[] = {
 	/*Invalid*/     -1,
 	/*Constant*/    0,
 	/*Variable*/    1,
@@ -12,8 +12,10 @@ gb_global int print_entity_kind_ordering[Entity_Count] = {
 	/*LibraryName*/ -1,
 	/*Nil*/         -1,
 	/*Label*/       -1,
+	/*AsmTemplate*/ 5,
 };
-gb_global char const *print_entity_names[Entity_Count] = {
+GB_STATIC_ASSERT(gb_count_of(print_entity_kind_ordering) == Entity_Count);
+gb_global char const *print_entity_names[] = {
 	/*Invalid*/     "",
 	/*Constant*/    "constants",
 	/*Variable*/    "variables",
@@ -25,7 +27,9 @@ gb_global char const *print_entity_names[Entity_Count] = {
 	/*LibraryName*/ "library names",
 	/*Nil*/         "",
 	/*Label*/       "",
+	/*AsmTemplate*/ "asm templates",
 };
+GB_STATIC_ASSERT(gb_count_of(print_entity_names) == Entity_Count);
 
 
 gb_internal GB_COMPARE_PROC(cmp_entities_for_printing) {
@@ -52,6 +56,37 @@ gb_internal GB_COMPARE_PROC(cmp_entities_for_printing) {
 	if (res == 0) {
 		res = string_compare(x->token.string, y->token.string);
 	}
+	return res;
+}
+
+gb_internal GB_COMPARE_PROC(cmp_entities_for_printing_by_order_in_src) {
+	GB_ASSERT(a != nullptr);
+	GB_ASSERT(b != nullptr);
+	Entity *x = *cast(Entity **)a;
+	Entity *y = *cast(Entity **)b;
+	int res = 0;
+	if (x->pkg != y->pkg) {
+		if (x->pkg == nullptr) {
+			return -1;
+		}
+		if (y->pkg == nullptr) {
+			return +1;
+		}
+		res = string_compare(x->pkg->name, y->pkg->name);
+		if (res != 0) {
+			return res;
+		}
+	}
+
+	u64 sx = x->order_in_src;
+	u64 sy = y->order_in_src;
+	res = u64_cmp(sx, sy);
+
+	if (res) {
+		return res;
+	}
+	res = i32_cmp(x->token.pos.offset, y->token.pos.offset);
+
 	return res;
 }
 
@@ -226,6 +261,7 @@ gb_internal void print_doc_package(CheckerInfo *info, AstPackage *pkg) {
 			case Entity_ProcGroup:
 			case Entity_ImportName:
 			case Entity_LibraryName:
+			case Entity_AsmTemplate:
 				// Fine
 				break;
 			}
@@ -237,18 +273,37 @@ gb_internal void print_doc_package(CheckerInfo *info, AstPackage *pkg) {
 			}
 			array_add(&entities, e);
 		}
-		array_sort(entities, cmp_entities_for_printing);
+
+		bool in_src_order = build_context.cmd_doc_flags & CmdDocFlag_InSourceOrder;
+
+		if (in_src_order) {
+			array_sort(entities, cmp_entities_for_printing_by_order_in_src);
+		} else {
+			array_sort(entities, cmp_entities_for_printing);
+		}
 
 		bool show_docs = (build_context.cmd_doc_flags & CmdDocFlag_Short) == 0;
 
+		AstFile *curr_file = nullptr;
 		EntityKind curr_entity_kind = Entity_Invalid;
 		for (Entity *e : entities) {
-			if (curr_entity_kind != e->kind) {
-				if (curr_entity_kind != Entity_Invalid) {
-					print_doc_line(0, "");
+			if (in_src_order) {
+				if (curr_file != e->file) {
+					if (curr_file != nullptr) {
+						print_doc_line(0, "");
+					}
+					curr_file = e->file;
+					String filename = remove_directory_from_path(curr_file->fullpath);
+					print_doc_line(1, "file: %.*s", LIT(filename));
 				}
-				curr_entity_kind = e->kind;
-				print_doc_line(1, "%s", print_entity_names[e->kind]);
+			} else {
+				if (curr_entity_kind != e->kind) {
+					if (curr_entity_kind != Entity_Invalid) {
+						print_doc_line(0, "");
+					}
+					curr_entity_kind = e->kind;
+					print_doc_line(1, "%s", print_entity_names[e->kind]);
+				}
 			}
 
 			Ast *type_expr = nullptr;
@@ -303,7 +358,6 @@ gb_internal void print_doc_package(CheckerInfo *info, AstPackage *pkg) {
 			print_doc_line(2, filename);
 		}
 	}
-
 }
 
 gb_internal void generate_documentation(Checker *c) {

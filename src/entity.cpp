@@ -15,7 +15,8 @@ struct DeclInfo;
 	ENTITY_KIND(ImportName) \
 	ENTITY_KIND(LibraryName) \
 	ENTITY_KIND(Nil) \
-	ENTITY_KIND(Label)
+	ENTITY_KIND(Label) \
+	ENTITY_KIND(AsmTemplate)
 
 enum EntityKind {
 #define ENTITY_KIND(k) GB_JOIN2(Entity_, k),
@@ -75,7 +76,8 @@ enum EntityFlag : u64 {
 	EntityFlag_Init          = 1ull<<31,
 	EntityFlag_Subtype       = 1ull<<32,
 	EntityFlag_Fini          = 1ull<<33,
-	
+	EntityFlag_PolyConstArg  = 1ull<<34, // passed to a `$` parameter, so a local procedure may be called outside its parent
+
 	EntityFlag_CustomLinkName = 1ull<<40,
 	EntityFlag_CustomLinkage_Internal = 1ull<<41,
 	EntityFlag_CustomLinkage_Strong   = 1ull<<42,
@@ -111,6 +113,7 @@ enum ParameterValueKind {
 struct ParameterValue {
 	ParameterValueKind kind;
 	Ast *original_ast_expr;
+	Entity *proc_entity;
 	union {
 		ExactValue value;
 		Ast *ast_value;
@@ -137,11 +140,22 @@ enum ProcedureOptimizationMode : u8 {
 	ProcedureOptimizationMode_FavorSize,
 };
 
+// see `@(futex=...)`
+enum ProcedureFutex : u8 {
+	ProcedureFutex_None,
+	ProcedureFutex_Wait,
+	ProcedureFutex_Wake,
+};
+
 
 BlockingMutex global_type_name_objc_metadata_mutex;
 
+struct TypeNameObjCMetadata;
+
+gb_internal TypeNameObjCMetadata *entity_objc_metadata(struct Entity *e);
+
 struct TypeNameObjCMetadataEntry {
-	String name;
+	InternedString interned;
 	Entity *entity;
 };
 struct TypeNameObjCMetadata {
@@ -151,26 +165,72 @@ struct TypeNameObjCMetadata {
 };
 
 gb_internal TypeNameObjCMetadata *create_type_name_obj_c_metadata() {
-	TypeNameObjCMetadata *md = gb_alloc_item(permanent_allocator(), TypeNameObjCMetadata);
-	md->mutex = gb_alloc_item(permanent_allocator(), BlockingMutex);
+	TypeNameObjCMetadata *md = permanent_alloc_item<TypeNameObjCMetadata>();
+	md->mutex = permanent_alloc_item<BlockingMutex>();
 	array_init(&md->type_entries,  heap_allocator());
 	array_init(&md->value_entries, heap_allocator());
 	return md;
 }
 
+enum AsmTemplateEntityDeclKind : u8 {
+	AsmTemplateEntityDecl_Invalid,
+	AsmTemplateEntityDecl_Register,
+	AsmTemplateEntityDecl_Memory,
+	AsmTemplateEntityDecl_Immediate,
+
+	AsmTemplateEntityDecl_COUNT
+};
+
+enum AsmTemplateEntityDeclParamGroup : u8 {
+	AsmTemplateEntityDeclParamGroup_Unknown,
+	AsmTemplateEntityDeclParamGroup_Input,
+	AsmTemplateEntityDeclParamGroup_Output,
+	AsmTemplateEntityDeclParamGroup_Scratch,
+
+	AsmTemplateEntityDeclParamGroup_COUNT
+};
+
+struct AsmTemplateEntityDecl {
+	Entity *                        entity;
+	Entity *                        tied_entity;
+	AsmTemplateEntityDeclKind       kind;
+	AsmTemplateEntityDeclParamGroup param_group;
+	AsmRegClass                     reg_class;
+
+	String                          pin;
+	String                          pin_flag; // e.g. %flags.zf
+
+	i32 total_index;
+
+	i32 param_index;  // index into the Proc signature's params (inputs), else -1
+	i32 result_index; // index into results (outputs), else -1
+	i32 tie; // InOut: index into operands[] of the tied output; else -1
+
+	i32 view_of; // total_index of the source operand this is a width-view of, else -1
+	i32 view_bits; // the view width in bits, otherwise 0
+
+	bool no_init;
+};
+
 // An Entity is a named "thing" in the language
 struct Entity {
 	EntityKind  kind;
+	i32         global_graph_node; // 1 + the index of its node in the global groups' graph, 0 if it is none
 	u64         id;
 	std::atomic<u64>         flags;
 	std::atomic<EntityState> state;
+	Futex                    checking_thread; // 1 + the index of the thread in `check_entity_decl` for it, else 0
 	std::atomic<i32>         min_dep_count;
 	Token       token;
 	Scope *     scope;
 	Type *      type;
 	std::atomic<Ast *> identifier; // Can be nullptr
+
+	std::atomic<InternedString> interned_name;
+	std::atomic<u32> interned_name_hash;
+
 	DeclInfo *  decl_info;
-	DeclInfo *  parent_proc_decl; // nullptr if in file/global scope
+	std::atomic<DeclInfo *> parent_proc_decl; // nullptr if in file/global scope
 	AstFile *   file;
 	AstPackage *pkg;
 
@@ -180,14 +240,9 @@ struct Entity {
 
 	Entity *    aliased_of;
 
-	union {
-		struct lbModule *code_gen_module;
-		struct cgModule *cg_module;
-	};
-	union {
-		struct lbProcedure *code_gen_procedure;
-		struct cgProcedure *cg_procedure;
-	};
+	std::atomic<struct lbModule *> code_gen_module;
+	std::atomic<struct lbProcedure *> code_gen_procedure;
+	std::atomic<String *>             ir_mangled_name; // the backend's name for it, published once as modules may name it in parallel
 
 	u64         order_in_src;
 	String      deprecated_message;
@@ -206,6 +261,7 @@ struct Entity {
 			i32 field_group_index;
 			CommentGroup *docs;
 			CommentGroup *comment;
+			Ast *init_expr; // only used for enum values
 		} Constant;
 		struct {
 			Ast *type_expr; // only used for some variables within procedure bodies
@@ -225,6 +281,7 @@ struct Entity {
 			String     link_prefix;
 			String     link_suffix;
 			String     link_section;
+			i64        custom_align;
 			CommentGroup *docs;
 			CommentGroup *comment;
 			bool       is_foreign;
@@ -235,7 +292,6 @@ struct Entity {
 		struct {
 			Type * type_parameter_specialization;
 			Type * original_type_for_parapoly;
-			String ir_mangled_name;
 			bool   is_type_alias;
 			bool   objc_is_implementation;
 			Type*  objc_superclass;
@@ -251,6 +307,7 @@ struct Entity {
 			String  link_name;
 			String  link_prefix;
 			String  link_suffix;
+			String  link_section;
 			String  objc_selector_name;
 			Entity *objc_class;
 			DeferredProcedure deferred_procedure;
@@ -258,6 +315,13 @@ struct Entity {
 			struct GenProcsData *gen_procs;
 			BlockingMutex gen_procs_mutex;
 			ProcedureOptimizationMode optimization_mode;
+			ProcedureFutex            futex;
+			i32                       futex_parameter; // the index of what `futex` waits on or wakes
+			u8                        synchronizes;        // OdinAtomicMemoryOrder, see `@(synchronizes=...)`
+			bool                      synchronizes_shared; // see `@(synchronizes_shared=...)`
+
+			u64     fast_math_flags;
+
 			bool    is_foreign                 : 1;
 			bool    is_export                  : 1;
 			bool    generated_from_polymorphic : 1;
@@ -273,6 +337,7 @@ struct Entity {
 			bool    is_objc_class_method       : 1;
 		} Procedure;
 		struct {
+			bool is_asm_group;
 			Array<Entity *> entities;
 		} ProcGroup;
 		struct {
@@ -296,9 +361,63 @@ struct Entity {
 			String name;
 			Ast *node;
 			Ast *parent;
+
+			i32 asm_block_index;
 		} Label;
+		struct {
+			Ast *node;
+			Type *proc_type; // of its signature, as an asm group can make the entity's type invalid before its body is checked
+			bool is_volatile;
+			bool is_align_stack;
+			bool is_pure;
+
+			bool has_observable_side_effect;
+
+			Scope *param_scope;
+			Scope *label_scope;
+			Array<AsmTemplateEntityDecl> decls;
+
+			StringSet clobber_registers_set;
+			StringSet preserve_registers_set;
+			bool      clobber_flags;
+			bool      clobber_memory;
+		} AsmTemplate;
 	};
 };
+
+
+gb_internal AsmRegClass check_asm_reg_class_from_type(Type *type);
+gb_internal bool is_type_internally_pointer_like(Type *t);
+
+gb_internal InternedString entity_interned_name(Entity *entity) {
+	auto name = entity->interned_name.load();
+	if (name.value == 0) {
+		name = string_interner_insert(entity->token.string);
+		entity->interned_name.store(name);
+		entity->interned_name_hash.store(name.hash());
+	}
+	return name;
+}
+
+
+gb_internal AsmTemplateEntityDecl asm_template_entity_decl_default(Entity *entity) {
+	AsmTemplateEntityDecl ed = {};
+	ed.kind = AsmTemplateEntityDecl_Register;
+	if (is_type_internally_pointer_like(entity->type)) {
+		ed.kind = AsmTemplateEntityDecl_Memory;
+	}
+	ed.reg_class = check_asm_reg_class_from_type(entity->type);
+	ed.entity = entity;
+	ed.total_index  = -1;
+	ed.param_index  = -1;
+	ed.result_index = -1;
+	ed.tie          = -1;
+	ed.view_of      = -1;
+	ed.view_bits    =  0;
+
+	return ed;
+}
+
 
 gb_internal bool is_entity_kind_exported(EntityKind kind, bool allow_builtin = false) {
 	switch (kind) {
@@ -344,18 +463,36 @@ gb_internal bool entity_has_deferred_procedure(Entity *e) {
 
 gb_global std::atomic<u64> global_entity_id;
 
-gb_internal Entity *alloc_entity(EntityKind kind, Scope *scope, Token token, Type *type) {
-	gbAllocator a = permanent_allocator();
-	Entity *entity = gb_alloc_item(a, Entity);
-	entity->kind   = kind;
-	entity->state  = EntityState_Unresolved;
-	entity->scope  = scope;
-	entity->token  = token;
-	entity->type   = type;
-	entity->id     = 1 + global_entity_id.fetch_add(1);
-	if (token.pos.file_id) {
-		entity->file = thread_unsafe_get_ast_file_from_id(token.pos.file_id);
+gb_global thread_local u64 entity_id_next;
+gb_global thread_local u64 entity_id_end;
+
+gb_internal u64 next_entity_id(void) {
+	if (entity_id_next == entity_id_end) {
+		enum {ENTITY_ID_BLOCK = 1024};
+		entity_id_next = global_entity_id.fetch_add(ENTITY_ID_BLOCK, std::memory_order_relaxed);
+		entity_id_end  = entity_id_next + ENTITY_ID_BLOCK;
 	}
+	return 1 + entity_id_next++;
+}
+
+// NOTE(bill): This exists to allow for bulk allocations of entities all at once to improve performance for type generation
+#define INTERNAL_ENTITY_INIT(e_, kind_, scope_, token_, type_) do {                  \
+	(e_)->kind   = (kind_);                                                      \
+	(e_)->state  = EntityState_Unresolved;                                       \
+	(e_)->scope  = (scope_);                                                     \
+	(e_)->token  = (token_);                                                     \
+	(e_)->type   = (type_);                                                      \
+	(e_)->id     = next_entity_id();                                             \
+	if ((token_).pos.file_id) {                                                  \
+		e_->file = thread_unsafe_get_ast_file_from_id((token_).pos.file_id); \
+	}                                                                            \
+} while (0)
+
+
+gb_internal Entity *alloc_entity(EntityKind kind, Scope *scope, Token token, Type *type) {
+	Entity *entity = permanent_alloc_item<Entity>();
+	INTERNAL_ENTITY_INIT(entity, kind, scope, token, type);
+	entity_interned_name(entity);
 	return entity;
 }
 
@@ -370,7 +507,7 @@ gb_internal Entity *alloc_entity_using_variable(Entity *parent, Token token, Typ
 	token.pos = parent->token.pos;
 	Entity *entity = alloc_entity(Entity_Variable, parent->scope, token, type);
 	entity->using_parent = parent;
-	entity->parent_proc_decl = parent->parent_proc_decl;
+	entity->parent_proc_decl.store(parent->parent_proc_decl, std::memory_order_relaxed);
 	entity->using_expr = using_expr;
 	entity->flags |= EntityFlag_Using;
 	entity->flags |= EntityFlag_Used;
@@ -392,10 +529,9 @@ gb_internal Entity *alloc_entity_type_name(Scope *scope, Token token, Type *type
 }
 
 gb_internal Entity *alloc_entity_param(Scope *scope, Token token, Type *type, bool is_using, bool is_value) {
-	Entity *entity = alloc_entity_variable(scope, token, type);
+	Entity *entity = alloc_entity_variable(scope, token, type, EntityState_Resolved);
 	entity->flags |= EntityFlag_Used;
 	entity->flags |= EntityFlag_Param;
-	entity->state = EntityState_Resolved;
 	if (is_using) entity->flags |= EntityFlag_Using;
 	if (is_value) entity->flags |= EntityFlag_Value;
 	return entity;
@@ -412,11 +548,10 @@ gb_internal Entity *alloc_entity_const_param(Scope *scope, Token token, Type *ty
 
 
 gb_internal Entity *alloc_entity_field(Scope *scope, Token token, Type *type, bool is_using, i32 field_index, EntityState state = EntityState_Unresolved) {
-	Entity *entity = alloc_entity_variable(scope, token, type);
+	Entity *entity = alloc_entity_variable(scope, token, type, state);
 	entity->Variable.field_index = field_index;
 	if (is_using) entity->flags |= EntityFlag_Using;
 	entity->flags |= EntityFlag_Field;
-	entity->state = state;
 	return entity;
 }
 
@@ -460,8 +595,12 @@ gb_internal Entity *alloc_entity_library_name(Scope *scope, Token token, Type *t
 }
 
 
-
-
+gb_internal Entity *alloc_entity_asm_template(Scope *scope, Token token, Type *type, Ast *node) {
+	GB_ASSERT(node->kind == Ast_AsmTemplate);
+	Entity *entity = alloc_entity(Entity_AsmTemplate, scope, token, type);
+	entity->AsmTemplate.node = node;
+	return entity;
+}
 
 gb_internal Entity *alloc_entity_nil(String name, Type *type) {
 	Entity *entity = alloc_entity(Entity_Nil, nullptr, make_token_ident(name), type);
@@ -472,6 +611,7 @@ gb_internal Entity *alloc_entity_label(Scope *scope, Token token, Type *type, As
 	Entity *entity = alloc_entity(Entity_Label, scope, token, type);
 	entity->Label.node = node;
 	entity->Label.parent = parent;
+	entity->Label.asm_block_index = -1;
 	entity->state = EntityState_Resolved;
 	return entity;
 }

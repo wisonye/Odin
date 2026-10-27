@@ -1,16 +1,16 @@
 /*
 Bindings for [[ miniaudio ; https://miniaud.io/docs ]] audio playback and capture library.
 
-Choice of public domain or MIT-0. See license statements at the end of this file.
-miniaudio - v0.11.21 - 2023-11-15
+Choice of public domain or MIT-0. See license statements at the end of this file.\
+miniaudio - v0.11.25 - 2026-03-04
 
 David Reid - mackron@gmail.com
 
-Website:       https://miniaud.io
-Documentation: https://miniaud.io/docs
+Website:       https://miniaud.io\
+Documentation: https://miniaud.io/docs\
 GitHub:        https://github.com/mackron/miniaudio
 
-1. Introduction
+1\. Introduction
 ===============
 miniaudio is a single file library for audio playback and capture. To use it, do the following in
 one .c file:
@@ -300,7 +300,7 @@ The engine encapsulates both the resource manager and the node graph to create a
 use high level API. The resource manager and node graph APIs are covered in more later sections of
 this manual.
 
-The code below shows how you can initialize an engine using it's default configuration.
+The code below shows how you can initialize an engine using its default configuration.
 
     ```c
     ma_result result;
@@ -388,7 +388,7 @@ Sounds are not started by default. Start a sound with `ma_sound_start()` and sto
 `ma_sound_stop()`. When a sound is stopped, it is not rewound to the start. Use
 `ma_sound_seek_to_pcm_frame(&sound, 0)` to seek back to the start of a sound. By default, starting
 and stopping sounds happens immediately, but sometimes it might be convenient to schedule the sound
-the be started and/or stopped at a specific time. This can be done with the following functions:
+to be started and/or stopped at a specific time. This can be done with the following functions:
 
     ```c
     ma_sound_set_start_time_in_pcm_frames()
@@ -455,10 +455,15 @@ is at the end, use `ma_sound_at_end()`. Looping of a sound can be controlled wit
 
 
 
-2. Building
+2\. Building
 ===========
 miniaudio should work cleanly out of the box without the need to download or install any
 dependencies. See below for platform-specific details.
+
+This library has been designed to be added directly to your source tree which is the preferred way
+of using it, but you can compile it as a normal library if that's your preference. Be careful if
+compiling as a shared object because miniaudio is not ABI compatible between any release, including
+bug fix releases. It's recommended you link statically
 
 Note that GCC and Clang require `-msse2`, `-mavx2`, etc. for SIMD optimizations.
 
@@ -529,7 +534,7 @@ you'll need to disable run-time linking with `MA_NO_RUNTIME_LINKING` and link wi
 The Emscripten build emits Web Audio JavaScript directly and should compile cleanly out of the box.
 You cannot use `-std=c*` compiler flags, nor `-ansi`.
 
-You can enable the use of AudioWorkets by defining `MA_ENABLE_AUDIO_WORKLETS` and then compiling
+You can enable the use of AudioWorklets by defining `MA_ENABLE_AUDIO_WORKLETS` and then compiling
 with the following options:
 
     -sAUDIO_WORKLET=1 -sWASM_WORKERS=1 -sASYNCIFY
@@ -717,7 +722,7 @@ To run locally, you'll need to use emrun:
     +----------------------------------+--------------------------------------------------------------------+
 
 
-3. Definitions
+3\. Definitions
 ==============
 This section defines common terms used throughout miniaudio. Unfortunately there is often ambiguity
 in the use of terms throughout the audio space, so this section is intended to clarify how miniaudio
@@ -768,7 +773,7 @@ All formats are native-endian.
 
 
 
-4. Data Sources
+4\. Data Sources
 ===============
 The data source abstraction in miniaudio is used for retrieving audio data from some source. A few
 examples include `ma_decoder`, `ma_noise` and `ma_waveform`. You will need to be familiar with data
@@ -878,7 +883,7 @@ read data within a certain range of the underlying data. To do this you can use 
 
 This is useful if you have a sound bank where many sounds are stored in the same file and you want
 the data source to only play one of those sub-sounds. Note that once the range is set, everything
-that takes a position, such as cursors and loop points, should always be relatvie to the start of
+that takes a position, such as cursors and loop points, should always be relative to the start of
 the range. When the range is set, any previously defined loop point will be reset.
 
 Custom loop points can also be used with data sources. By default, data sources will loop after
@@ -886,7 +891,7 @@ they reach the end of the data source, but if you need to loop at a specific loc
 the following:
 
     ```c
-    result = ma_data_set_loop_point_in_pcm_frames(pDataSource, loopBegInFrames, loopEndInFrames);
+    result = ma_data_source_set_loop_point_in_pcm_frames(pDataSource, loopBegInFrames, loopEndInFrames);
     if (result != MA_SUCCESS) {
         return result;  // Failed to set the loop point.
     }
@@ -1020,7 +1025,7 @@ init/uninit functions.
 
 
 
-5. Engine
+5\. Engine
 =========
 The `ma_engine` API is a high level API for managing and mixing sounds and effect processing. The
 `ma_engine` object encapsulates a resource manager and a node graph, both of which will be
@@ -1522,7 +1527,7 @@ resource manager and configure it appropriately. See the "Resource Management" s
 details on how to set this up.
 
 
-6. Resource Management
+6\. Resource Management
 ======================
 Many programs will want to manage sound resources for things such as reference counting and
 streaming. This is supported by miniaudio via the `ma_resource_manager` API.
@@ -2024,7 +2029,7 @@ thread.
 
 
 
-7. Node Graph
+7\. Node Graph
 =============
 miniaudio's routing infrastructure follows a node graph paradigm. The idea is that you create a
 node whose outputs are attached to inputs of another node, thereby creating a graph. There are
@@ -2495,7 +2500,7 @@ used. The same general process applies to detachment. See `ma_node_attach_output
 
 
 
-8. Decoding
+8\. Decoding
 ===========
 The `ma_decoder` API is used for reading audio files. Decoders are completely decoupled from
 devices and can be used independently. Built-in support is included for the following formats:
@@ -2657,7 +2662,7 @@ opportunity to clean up and internal data.
 
 
 
-9. Encoding
+9\. Encoding
 ===========
 The `ma_encoding` API is used for writing audio files. The only supported output format is WAV.
 This can be disabled by specifying the following option before the implementation of miniaudio:
@@ -2713,7 +2718,7 @@ Encoders must be uninitialized with `ma_encoder_uninit()`.
 
 
 
-10. Data Conversion
+10\. Data Conversion
 ===================
 A data conversion API is included with miniaudio which supports the majority of data conversion
 requirements. This supports conversion between sample formats, channel counts (with channel
@@ -3147,7 +3152,7 @@ is required. This can be retrieved in terms of both the input rate and the outpu
 
 
 
-11. Filtering
+11\. Filtering
 =============
 
 11.1. Biquad Filtering
@@ -3336,7 +3341,7 @@ the high shelf filter does the same thing for high frequencies.
 
 
 
-12. Waveform and Noise Generation
+12\. Waveform and Noise Generation
 =================================
 
 12.1. Waveforms
@@ -3434,7 +3439,7 @@ Below are the supported noise types.
 
 
 
-13. Audio Buffers
+13\. Audio Buffers
 =================
 miniaudio supports reading from a buffer of raw audio data via the `ma_audio_buffer` API. This can
 read from memory that's managed by the application, but can also handle the memory management for
@@ -3536,7 +3541,7 @@ as an error when returned by `ma_audio_buffer_unmap()`.
 
 
 
-14. Ring Buffers
+14\. Ring Buffers
 ================
 miniaudio supports lock free (single producer, single consumer) ring buffers which are exposed via
 the `ma_rb` and `ma_pcm_rb` APIs. The `ma_rb` API operates on bytes, whereas the `ma_pcm_rb`
@@ -3605,7 +3610,7 @@ producer thread.
 
 
 
-15. Backends
+15\. Backends
 ============
 The following backends are supported by miniaudio. These are listed in order of default priority.
 When no backend is specified when initializing a context or device, miniaudio will attempt to use
@@ -3699,7 +3704,7 @@ BSD
 
 
 
-16. Optimization Tips
+16\. Optimization Tips
 =====================
 See below for some tips on improving performance.
 
@@ -3726,7 +3731,7 @@ See below for some tips on improving performance.
 
 
 
-17. Miscellaneous Notes
+17\. Miscellaneous Notes
 =======================
 - Automatic stream routing is enabled on a per-backend basis. Support is explicitly enabled for
   WASAPI and Core Audio, however other backends such as PulseAudio may naturally support it, though

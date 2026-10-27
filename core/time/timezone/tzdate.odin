@@ -10,10 +10,6 @@ region_load :: proc(reg: string, allocator := context.allocator) ->  (out_reg: ^
 	return _region_load(reg, allocator)
 }
 
-region_load_from_file :: proc(file_path, reg: string, allocator := context.allocator) ->  (out_reg: ^datetime.TZ_Region, ok: bool) {
-	return load_tzif_file(file_path, reg, allocator)
-}
-
 region_load_from_buffer :: proc(buffer: []u8, reg: string, allocator := context.allocator) ->  (out_reg: ^datetime.TZ_Region, ok: bool) {
 	return parse_tzif(buffer, reg, allocator)
 }
@@ -191,8 +187,7 @@ datetime_to_utc :: proc(dt: datetime.DateTime) -> (out: datetime.DateTime, succe
 	tm := time.datetime_to_time(dt) or_return
 	record := region_get_nearest(dt.tz, tm) or_return
 
-	secs := time.time_to_unix(tm)
-	adj_time := time.unix(secs - record.utc_offset, 0)
+	adj_time := time.time_add(tm, -time.Duration(record.utc_offset) * time.Second)
 	adj_dt := time.time_to_datetime(adj_time) or_return
 	return adj_dt, true
 }
@@ -224,8 +219,7 @@ datetime_to_tz :: proc(dt: datetime.DateTime, tz: ^datetime.TZ_Region) -> (out: 
 	tm := time.datetime_to_time(dt) or_return
 	record := region_get_nearest(tz, tm) or_return
 
-	secs := time.time_to_unix(tm)
-	adj_time := time.unix(secs + record.utc_offset, i64(dt.nano))
+	adj_time := time.time_add(tm, time.Duration(record.utc_offset) * time.Second)
 	adj_dt := time.time_to_datetime(adj_time) or_return
 	adj_dt.tz = tz
 

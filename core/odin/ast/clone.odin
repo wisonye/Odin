@@ -196,11 +196,6 @@ clone_node :: proc(node: ^Node) -> ^Node {
 			r.expr = clone(r.expr)
 		case ^Auto_Cast:
 			r.expr = clone(r.expr)
-		case ^Inline_Asm_Expr:
-			r.param_types        = clone(r.param_types)
-			r.return_type        = clone(r.return_type)
-			r.constraints_string = clone(r.constraints_string)
-			r.asm_string         = clone(r.asm_string)
 
 		case ^Bad_Stmt:
 			// empty
@@ -239,6 +234,7 @@ clone_node :: proc(node: ^Node) -> ^Node {
 			r.body = clone(r.body)
 		case ^Range_Stmt:
 			r.label = clone(r.label)
+			r.init = clone(r.init)
 			r.vals = clone(r.vals)
 			r.expr = clone(r.expr)
 			r.body = clone(r.body)
@@ -310,10 +306,16 @@ clone_node :: proc(node: ^Node) -> ^Node {
 		case ^Multi_Pointer_Type:
 			r.elem = clone(r.elem)
 		case ^Array_Type:
+			r.tag  = clone(r.tag)
 			r.len  = clone(r.len)
 			r.elem = clone(r.elem)
 		case ^Dynamic_Array_Type:
+			r.tag  = clone(r.tag)
 			r.elem = clone(r.elem)
+		case ^Fixed_Capacity_Dynamic_Array_Type:
+			r.tag      = clone(r.tag)
+			r.capacity = clone(r.capacity)
+			r.elem     = clone(r.elem)
 		case ^Struct_Type:
 			r.poly_params = auto_cast clone(r.poly_params)
 			r.align = clone(r.align)
@@ -347,6 +349,40 @@ clone_node :: proc(node: ^Node) -> ^Node {
 			r.name     = clone(r.name)
 			r.type     = clone(r.type)
 			r.bit_size = clone(r.bit_size)
+		case ^Asm_Template:
+			r.type         = auto_cast clone(r.type)
+			r.specs        = clone(r.specs)
+			r.clobbers     = clone(r.clobbers)
+			r.instructions = clone(r.instructions)
+		case ^Asm_Spec:
+			r.name        = auto_cast clone(r.name)
+			r.tied_name   = auto_cast clone(r.tied_name)
+			r.type        = clone(r.type)
+			r.value       = clone(r.value)
+			r.directives  = clone(r.directives)
+		case ^Asm_Register:
+			// okay
+		case ^Asm_Clobber:
+			r.value = clone(r.value)
+		case ^Asm_Label:
+			// okay
+		case ^Asm_Label_Decl:
+			r.label = auto_cast clone(r.label)
+		case ^Asm_Instruction:
+			r.name     = auto_cast clone(r.name)
+			r.operands = clone(r.operands)
+		case ^Asm_Memory_Operand:
+			r.segment_override = clone(r.segment_override)
+			r.base             = clone(r.base)
+			r.index            = clone(r.index)
+			r.scale            = clone(r.scale)
+			r.disp             = clone(r.disp)
+			r.type             = clone(r.type)
+		case ^Asm_Register_Group:
+			r.registers = clone(r.registers)
+			r.type      = clone(r.type)
+		case ^Asm_Directive:
+			r.operands = clone(r.operands)
 		case:
 			fmt.panicf("Unhandled node kind: %v", r)
 		}

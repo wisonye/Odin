@@ -285,6 +285,32 @@ _marshal_into_encoder :: proc(e: Encoder, v: any, ti: ^runtime.Type_Info) -> (er
 		}
 		return
 
+
+	case runtime.Type_Info_Fixed_Capacity_Dynamic_Array:
+		array_data := uintptr(v.data)
+		array_len := (^int)(array_data + info.len_offset)^
+		if info.elem.id == byte {
+					raw := runtime.Raw_Slice{v.data, array_len}
+					return err_conv(_encode_bytes(e, transmute([]byte)raw))
+		}
+
+		err_conv(_encode_u64(e, u64(array_len), .Array)) or_return
+
+		if impl, ok := _tag_implementations_type[info.elem.id]; ok {
+			for i in 0..<array_len {
+				data := array_data + uintptr(i*info.elem_size)
+				impl->marshal(e, any{rawptr(data), info.elem.id}) or_return
+			}
+			return
+		}
+
+		elem_ti := runtime.type_info_core(type_info_of(info.elem.id))
+		for i in 0..<array_len {
+			data := array_data + uintptr(i*info.elem_size)
+			_marshal_into_encoder(e, any{rawptr(data), info.elem.id}, elem_ti) or_return
+		}
+		return
+
 	case runtime.Type_Info_Slice:
 		if info.elem.id == byte {
 			raw := (^[]byte)(v.data)
@@ -365,7 +391,7 @@ _marshal_into_encoder :: proc(e: Encoder, v: any, ti: ^runtime.Type_Info) -> (er
 			}
 
 			Encoded_Entry :: struct {
-				key:     ^[dynamic]byte,
+				key:     [dynamic]byte,
 				val_idx: uintptr,
 			}
 
@@ -450,7 +476,7 @@ _marshal_into_encoder :: proc(e: Encoder, v: any, ti: ^runtime.Type_Info) -> (er
 					key := rawptr(runtime.map_cell_index_dynamic(ks, info.map_info.ks, bucket_index))
 					key_builder := strings.builder_make(0, 8, e.temp_allocator) or_return
 					marshal_into(Encoder{e.flags, strings.to_stream(&key_builder), e.temp_allocator}, any{ key, info.key.id }) or_return
-					append(&entries, Encoded_Entry{ &key_builder.buf, bucket_index }) or_return
+					append(&entries, Encoded_Entry{ key_builder.buf, bucket_index }) or_return
 				}
 
 				slice.sort_by_cmp(entries[:], proc(a, b: Encoded_Entry) -> slice.Ordering {
@@ -459,7 +485,7 @@ _marshal_into_encoder :: proc(e: Encoder, v: any, ti: ^runtime.Type_Info) -> (er
 
 				for entry in entries {
 					io.write_full(e.writer, entry.key[:]) or_return
-					delete(entry.key^)
+					delete(entry.key)
 
 					value := rawptr(runtime.map_cell_index_dynamic(vs, info.map_info.vs, entry.val_idx))
 					marshal_into(e, any{ value, info.value.id }) or_return
@@ -589,8 +615,8 @@ _marshal_into_encoder :: proc(e: Encoder, v: any, ti: ^runtime.Type_Info) -> (er
 		return marshal_into(e, any{v.data, vti.id})
 
 	case runtime.Type_Info_Bit_Set:
-		// Store bit_set as big endian just like the protocol.
-		do_byte_swap := !reflect.bit_set_is_big_endian(v)
+		// Convert the bit set storage to a native integer before encoding.
+		do_byte_swap := reflect.bit_set_is_big_endian(v) != (ODIN_ENDIAN == .Big)
 		switch ti.size * 8 {
 		case  0:
 			return _encode_u8(e.writer, 0)

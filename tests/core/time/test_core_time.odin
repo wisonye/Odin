@@ -2,6 +2,7 @@ package test_core_time
 
 import "core:testing"
 import "core:time"
+@(require) import "core:log"
 import dt "core:time/datetime"
 import tz "core:time/timezone"
 
@@ -15,8 +16,8 @@ test_time_and_date_formatting :: proc(t: ^testing.T) {
 		d := time.Duration(now._nsec)
 
 		testing.expect_value(t, time.to_string_hms       (now, buf[:]),               "00:12:44")
-		testing.expect_value(t, time.to_string_hms_12    (now, buf[:]),               "00:12:44 am")
-		testing.expect_value(t, time.to_string_hms_12    (now, buf[:],  {"㏂", "㏘"}), "00:12:44㏂")
+		testing.expect_value(t, time.to_string_hms_12    (now, buf[:]),               "12:12:44 am")
+		testing.expect_value(t, time.to_string_hms_12    (now, buf[:],  {"㏂", "㏘"}), "12:12:44㏂")
 		testing.expect_value(t, time.to_string_hms       (d,   buf[:]),               "00:12:44")
 
 		testing.expect_value(t, time.to_string_yyyy_mm_dd(now, buf[:]),               "1677-09-21")
@@ -346,7 +347,7 @@ date_component_roundtrip_test :: proc(t: ^testing.T, moment: dt.DateTime) {
 	testing.expectf(
 		t,
 		ok,
-		"Expected %4d-%2d-%2d %2d:%2d:%2d, got %4d-%2d-%2d %2d:%2d:%2d",
+		"Expected %04d-%02d-%02d %02d:%02d:%02d, got %04d-%02d-%02d %02d:%02d:%02d",
 		moment.year, moment.month, moment.day, moment.hour, moment.minute, moment.second, YYYY, MM, DD, hh, mm, ss,
 	)
 }
@@ -354,18 +355,77 @@ date_component_roundtrip_test :: proc(t: ^testing.T, moment: dt.DateTime) {
 datetime_eq :: proc(dt1: dt.DateTime, dt2: dt.DateTime) -> bool {
 	return (
 		dt1.year == dt2.year && dt1.month == dt2.month   && dt1.day == dt2.day &&
-		dt1.hour == dt2.hour && dt1.minute == dt2.minute && dt1.second == dt2.second
+		dt1.hour == dt2.hour && dt1.minute == dt2.minute && dt1.second == dt2.second &&
+		dt1.nano == dt2.nano
 	)
 }
 
 @test
+test_convert_timezone_fractional_timestamp :: proc(t: ^testing.T) {
+	utc_now := time.unix(1750697120, 478850200)
+	utc_date_time, utc_ok := time.time_to_datetime(utc_now)
+	testing.expect(t, utc_ok)
+
+	van_tz, van_ok := tz.region_load("America/Vancouver")
+	testing.expect(t, van_ok)
+	defer tz.region_destroy(van_tz)
+	van_date_time, van_converted := tz.datetime_to_tz(utc_date_time, van_tz)
+	testing.expect(t, van_converted)
+	returned_date_time, returned := tz.datetime_to_utc(van_date_time)
+	testing.expect(t, returned)
+
+	utc_time, utc_valid := time.compound_to_time(utc_date_time)
+	van_time, van_valid := time.compound_to_time(returned_date_time)
+	testing.expect(t, utc_valid && van_valid)
+	testing.expect_value(t, van_time, utc_time)
+}
+
+@test
+test_convert_timezone_normalized_timestamp :: proc(t: ^testing.T) {
+	zone := dt.TZ_Region{rrule = {has_dst = false, std_offset = 3600}}
+	cases := [3]struct {
+		input, normalized, utc: dt.DateTime,
+	}{
+		{
+			{{2024, 1, 1}, {0, 0, 0, 123456789}, nil},
+			{{2024, 1, 1}, {0, 0, 0, 123456789}, nil},
+			{{2023, 12, 31}, {23, 0, 0, 123456789}, nil},
+		},
+		{
+			{{2024, 1, 1}, {0, 0, 59, 1000000000}, nil},
+			{{2024, 1, 1}, {0, 1, 0, 0}, nil},
+			{{2023, 12, 31}, {23, 1, 0, 0}, nil},
+		},
+		{
+			{{1969, 12, 31}, {23, 59, 59, 123456789}, nil},
+			{{1969, 12, 31}, {23, 59, 59, 123456789}, nil},
+			{{1969, 12, 31}, {22, 59, 59, 123456789}, nil},
+		},
+	}
+	for tc in cases {
+		input := tc.input
+		input.tz = &zone
+		utc, utc_ok := tz.datetime_to_utc(input)
+		testing.expect(t, utc_ok)
+		testing.expect(t, datetime_eq(utc, tc.utc))
+		testing.expect(t, utc.tz == nil)
+
+		local, local_ok := tz.datetime_to_tz(tc.utc, &zone)
+		testing.expect(t, local_ok)
+		testing.expect(t, datetime_eq(local, tc.normalized))
+		testing.expect(t, local.tz == &zone)
+	}
+}
+
+@test
 test_convert_timezone_roundtrip :: proc(t: ^testing.T) {
-	dst_dt, _ := dt.components_to_datetime(2024, 10, 4, 23, 47, 0)
-	std_dt, _ := dt.components_to_datetime(2024, 11, 4, 23, 47, 0)
+	dst_dt, _ := dt.components_to_datetime(2024, 10, 4, 23, 47, 0, 123456789)
+	std_dt, _ := dt.components_to_datetime(2024, 11, 4, 23, 47, 0, 987654321)
 
 	local_tz, local_load_ok := tz.region_load("local")
-	testing.expectf(t, local_load_ok, "Failed to load local timezone")
 	defer tz.region_destroy(local_tz)
+
+	testing.expectf(t, local_load_ok, "Failed to load local timezone")
 
 	edm_tz, edm_load_ok := tz.region_load("America/Edmonton")
 	testing.expectf(t, edm_load_ok, "Failed to load America/Edmonton timezone")
