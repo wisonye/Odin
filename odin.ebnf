@@ -91,9 +91,9 @@ TopLevelStmt    = ImportDecl ";"
 
 /* Import Declarations */
 
-ImportDecl         = { Attribute } "import" [ IDENT ] STRING_LIT ;
+ImportDecl         = { Attribute } "#import" [ IDENT ] STRING_LIT ;
 
-ForeignImportDecl  = { Attribute } "foreign" "import" [ IDENT ] ( STRING_LIT | "{" ForeignImportPathList "}" ) ;
+ForeignImportDecl  = { Attribute } "#foreign" "#import" [ IDENT ] ( STRING_LIT | "{" ForeignImportPathList "}" ) ;
 
 ForeignImportPathList = Expr { "," Expr } [ "," ] ;
 
@@ -110,7 +110,7 @@ ExprList         = Expr { "," Expr } ;
 
 /* Foreign Block Declaration */
 
-ForeignBlock     = { Attribute } "foreign" [ IDENT ] "{" { ForeignDecl ";" } "}" ;
+ForeignBlock     = { Attribute } "#foreign" [ IDENT ] "{" { ForeignDecl ";" } "}" ;
 
 ForeignDecl      = { Attribute } ValueDecl ;
 
@@ -169,8 +169,8 @@ IfStmt           = "if" [ SimpleStmt ";" ] Expr StmtBody
                    { "else" "if" [ SimpleStmt ";" ] Expr StmtBody }
                    [ "else" StmtBody ] ;
 
-WhenStmt         = "when" Expr StmtBody
-                   { "else" "when" Expr StmtBody }
+WhenStmt         = "#if" Expr StmtBody
+                   { "else" "#if" Expr StmtBody }
                    [ "else" StmtBody ] ;
 
 ForStmt          = [ Label ] [ ForDirectivePrefix ]
@@ -243,7 +243,7 @@ OrElseExpr       = TernaryExpr { "or_else" TernaryExpr } ;
 TernaryExpr      = RangeExprLvl
                  | RangeExprLvl "?"    RangeExprLvl ":"    TernaryExpr
                  | RangeExprLvl "if"   RangeExprLvl "else" TernaryExpr
-                 | RangeExprLvl "when" RangeExprLvl "else" TernaryExpr ;
+                 | RangeExprLvl "#if" RangeExprLvl "else" TernaryExpr ;
 
 RangeExprLvl     =  LogicalOrExpr [ "..<" | "..=" ] LogicalOrExpr ;
 
@@ -435,7 +435,7 @@ BitFieldField    = IDENT ":" Type "|" Expr ;
 ProcType         = "proc" [ CallingConvention ] "(" [ ProcParamList ] ")"
                    [ "->" ProcResults ] ;
 
-ProcLiteral      = ProcType [ WhereClause ] ( ProcBody | "---" ) ; /* --- = no body / foreign  */
+ProcLiteral      = ProcType [ WhereClause ] ( ProcBody | "---" ) ; /* --- = no body / #foreign  */
 ProcGroup        = "proc" "{" ProcGroupList "}" ;                  /* procedure group          */
 
 
