@@ -2466,7 +2466,7 @@ gb_internal void add_entity_and_decl_info(CheckerContext *c, Ast *identifier, En
 	}
 
 	if (c->trial_entities != nullptr) {
-		// NOTE(bill): a scratch copy for a global 'when' trial, put in no scope or queue
+		// NOTE(bill): a scratch copy for a global '#if' trial, put in no scope or queue
 		e->flags &= ~EntityFlag_Lazy;
 		e->file = c->file;
 		e->decl_info = d;
@@ -4824,7 +4824,7 @@ gb_internal DECL_ATTRIBUTE_PROC(var_decl_attribute) {
 		if (ac->init_expr_list_count > 0) {
 			error(elem, "A thread local variable declaration cannot have initialization values");
 		} else if (c->foreign_context.curr_library) {
-			error(elem, "A foreign block variable cannot be thread local");
+			error(elem, "A #foreign block variable cannot be thread local");
 		} else if (ac->is_export) {
 			error(elem, "An exported variable cannot be thread local");
 		} else if (ev.kind == ExactValue_Invalid) {
@@ -5287,10 +5287,10 @@ gb_internal void check_collect_entities_from_when_stmt(CheckerContext *c, AstWhe
 	if (!ws->is_cond_determined) {
 		check_expr(c, &operand, ws->cond);
 		if (operand.mode != Addressing_Invalid && !is_type_boolean(operand.type)) {
-			error(ws->cond, "Non-boolean condition in 'when' statement");
+			error(ws->cond, "Non-boolean condition in '#if' statement");
 		}
 		if (operand.mode != Addressing_Constant) {
-			error(ws->cond, "Non-constant condition in 'when' statement");
+			error(ws->cond, "Non-constant condition in '#if' statement");
 		}
 
 		ws->is_cond_determined = true;
@@ -5301,7 +5301,7 @@ gb_internal void check_collect_entities_from_when_stmt(CheckerContext *c, AstWhe
 	}
 
 	if (ws->body == nullptr || ws->body->kind != Ast_BlockStmt) {
-		error(ws->cond, "Invalid body for 'when' statement");
+		error(ws->cond, "Invalid body for '#if' statement");
 	} else {
 		if (ws->determined_cond) {
 			check_collect_entities(c, ws->body->BlockStmt.stmts);
@@ -5314,7 +5314,7 @@ gb_internal void check_collect_entities_from_when_stmt(CheckerContext *c, AstWhe
 				check_collect_entities_from_when_stmt(c, &ws->else_stmt->WhenStmt);
 				break;
 			default:
-				error(ws->else_stmt, "Invalid 'else' statement in 'when' statement");
+				error(ws->else_stmt, "Invalid 'else' statement in '#if' statement");
 				break;
 			}
 		}
@@ -5589,7 +5589,7 @@ gb_internal void check_collect_value_decl(CheckerContext *c, Ast *decl) {
 						} else if (is_arch_wasm()) {
 							ERROR_BLOCK();
 							error(init, "For wasm related targets, it is required that you either define the"
-							            " @(default_calling_convention=<string>) on the foreign block or"
+							            " @(default_calling_convention=<string>) on the #foreign block or"
 							            " explicitly assign it on the procedure signature");
 							error_line("\tSuggestion: when dealing with normal Odin code (e.g. js_wasm32), use \"contextless\"; when dealing with Emscripten like code, use \"c\"\n");
 						}
@@ -5617,14 +5617,14 @@ gb_internal void check_collect_value_decl(CheckerContext *c, Ast *decl) {
 				ast_node(pg, ProcGroup, init);
 				e = alloc_entity_proc_group(d->scope, token, nullptr);
 				if (fl != nullptr) {
-					error(name, "Procedure groups are not allowed within a foreign block");
+					error(name, "Procedure groups are not allowed within a #foreign block");
 				}
 			} else if (init->kind == Ast_AsmGroup) {
 				ast_node(ag, AsmGroup, init);
 				e = alloc_entity_proc_group(d->scope, token, nullptr);
 				e->ProcGroup.is_asm_group = true;
 				if (fl != nullptr) {
-					error(name, "Asm template groups are not allowed within a foreign block");
+					error(name, "Asm template groups are not allowed within a #foreign block");
 				}
 			}else if (init->kind == Ast_AsmTemplate) {
 				if (c->scope->flags&ScopeFlag_Type) {
@@ -5634,7 +5634,7 @@ gb_internal void check_collect_value_decl(CheckerContext *c, Ast *decl) {
 				ast_node(at, AsmTemplate, init);
 				e = alloc_entity_asm_template(d->scope, token, nullptr, init);
 				if (fl != nullptr) {
-					error(name, "Asm templates are not allowed within a foreign block");
+					error(name, "Asm templates are not allowed within a #foreign block");
 				}
 				d->init_expr = init;
 			} else {
@@ -5660,7 +5660,7 @@ gb_internal void check_collect_value_decl(CheckerContext *c, Ast *decl) {
 					ERROR_BLOCK();
 
 					AstKind kind = init->kind;
-					error(name, "Only procedures and variables are allowed to be in a foreign block, got %.*s", LIT(ast_strings[kind]));
+					error(name, "Only procedures and variables are allowed to be in a #foreign block, got %.*s", LIT(ast_strings[kind]));
 					if (kind == Ast_ProcType) {
 						error_line("\tDid you forget to append '---' to the procedure?\n");
 					}
@@ -5812,7 +5812,7 @@ gb_internal void check_collect_entities(CheckerContext *c, Slice<Ast *> const &n
 
 		case_ast_node(id, ImportDecl, decl);
 			if (curr_file == nullptr) {
-				error(decl, "import declarations are only allowed in the file scope");
+				error(decl, "#import declarations are only allowed in the file scope");
 				// NOTE(bill): _Should_ be caught by the parser
 				continue;
 			}
@@ -5830,7 +5830,7 @@ gb_internal void check_collect_entities(CheckerContext *c, Slice<Ast *> const &n
 		case_end;
 
 		case_ast_node(fb, ForeignBlockDecl, decl);
-			// NOTE(bill): other global ones are resolved like global 'when's, see `resolve_global_decl_sources`
+			// NOTE(bill): other global ones are resolved like global '#if's, see `resolve_global_decl_sources`
 			if (curr_file != nullptr && is_foreign_block_collected_with_its_file(decl)) {
 				check_add_foreign_block_decl(c, decl);
 			}
@@ -5846,10 +5846,10 @@ gb_internal void check_collect_entities(CheckerContext *c, Slice<Ast *> const &n
 
 	// correct_type_aliases(c);
 
-	// NOTE(bill): 'when' stmts need to be handled after the other as the condition may refer to something
+	// NOTE(bill): '#if' stmts need to be handled after the other as the condition may refer to something
 	// declared after this stmt in source
 	if (curr_file == nullptr) {
-		// For 'foreign' block statements that are not in file scope.
+		// For '#foreign' block statements that are not in file scope.
 		for_array(decl_index, nodes) {
 			Ast *decl = nodes[decl_index];
 			if (decl->kind == Ast_ForeignBlockDecl) {
@@ -6219,7 +6219,7 @@ gb_internal void check_add_import_decl(CheckerContext *ctx, Ast *decl) {
 			error(token, "Import name '%.*s' is not a valid identifier", LIT(id->import_name.string));
 		} else {
 			error(id->token, "Import name '%.*s' is not a valid identifier", LIT(invalid_name));
-			error_line("\tSuggestion: Rename the directory or explicitly set an import name like this 'import <new_name> %.*s'", LIT(id->relpath.string));
+			error_line("\tSuggestion: Rename the directory or explicitly set an #import name like this '#import <new_name> %.*s'", LIT(id->relpath.string));
 		}
 	} else {
 		GB_ASSERT(id->import_name.pos.line != 0);
@@ -6365,7 +6365,7 @@ gb_internal void check_foreign_import_fullpaths(Checker *c) {
 			    str_eq_ignore_case(ext, ".hxx") ||
 			    false
 			) {
-				error(fl->token, "With 'foreign import', you cannot import a %.*s file/directory, you must precompile the library and link against that", LIT(ext));
+				error(fl->token, "With '#foreign #import', you cannot #import a %.*s file/directory, you must precompile the library and link against that", LIT(ext));
 				break;
 			}
 		}
@@ -6391,7 +6391,7 @@ gb_internal void check_foreign_import_fullpaths(Checker *c) {
 		String module_name = str_lit("env");
 		GB_ASSERT (foreign_library->kind == Entity_LibraryName);
 		if (foreign_library->LibraryName.paths.count != 1) {
-			error(foreign_library->token, "'foreign import' for '%.*s' architecture may only have one path, got %td",
+			error(foreign_library->token, "'#foreign #import' for '%.*s' architecture may only have one path, got %td",
 			      LIT(target_arch_names[build_context.metrics.arch]), foreign_library->LibraryName.paths.count);
 		}
 
@@ -6581,7 +6581,7 @@ gb_internal WORKER_TASK_PROC(correct_type_aliases_worker_proc) {
 gb_internal void check_import_entities(Checker *c) {
 	TEMPORARY_ALLOCATOR_GUARD();
 
-	TIME_SECTION("check_import_entities - export entities, scan 'when' and 'foreign' blocks, sort packages");
+	TIME_SECTION("check_import_entities - export entities, scan '#if' and '#foreign' blocks, sort packages");
 	TaskGroup group = {};
 	check_export_entities(c, &group);
 	Array<GlobalDeclScan> scans = start_global_decl_scans(c, &group);
@@ -6644,7 +6644,7 @@ gb_internal void check_import_entities(Checker *c) {
 	thread_pool_wait(&group);
 
 	TIME_SECTION("check_import_entities - imports");
-	// NOTE(bill): every import first, as resolving a 'when' may check declarations in any package
+	// NOTE(bill): every #import first, as resolving a '#if' may check declarations in any package
 	u64 stage_start = global_import_stage_begin();
 	for (ImportGraphNode *node : package_order) {
 		for (AstFile *f : node->pkg->files) {
@@ -6654,7 +6654,7 @@ gb_internal void check_import_entities(Checker *c) {
 	thread_pool_wait(&group);
 	global_import_stage_end(GlobalImportStage_Imports, stage_start);
 
-	TIME_SECTION("check_import_entities - resolve 'when' and 'foreign' blocks");
+	TIME_SECTION("check_import_entities - resolve '#if' and '#foreign' blocks");
 	resolve_global_decl_sources(c, package_order, scans);
 }
 
@@ -8221,7 +8221,7 @@ gb_internal void check_parsed_files(Checker *c) {
 	TIME_SECTION("check procedure bodies");
 	check_procedure_bodies(c);
 
-	TIME_SECTION("check foreign import fullpaths");
+	TIME_SECTION("check #foreign #import fullpaths");
 	check_foreign_import_fullpaths(c);
 
 	TIME_SECTION("add entities from procedure bodies");
